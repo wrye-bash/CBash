@@ -738,3 +738,140 @@ UINT32 FNVRecord::Write(FileWriter &writer, const bool &bMastersChanged, FormIDR
         Unload();
     return recSize + 24;
     }
+
+TES5Record::TES5Record(unsigned char *_recData):
+    Record(_recData),
+    formVersion(0)
+    {
+    memset(&versionControl2[0], 0x00, 2);
+    }
+
+TES5Record::~TES5Record()
+    {
+    //
+    }
+
+bool TES5Record::Read()
+    {
+    if(IsLoaded() || IsChanged())
+        return false;
+    UINT32 recSize = *(UINT32*)&recData[-20];
+
+    //Check against the original record flags to see if it is compressed since the current flags may have changed
+    if ((*(UINT32*)&recData[-16] & fIsCompressed) != 0)
+        {
+        unsigned char localBuffer[BUFFERSIZE];
+        UINT32 expandedRecSize = *(UINT32*)recData;
+        unsigned char *buffer = (expandedRecSize >= BUFFERSIZE) ? new unsigned char[expandedRecSize] : &localBuffer[0];
+        uncompress(buffer, (uLongf*)&expandedRecSize, &recData[4], recSize - 4);
+        ParseRecord(buffer, buffer + expandedRecSize, true);
+        if(buffer != &localBuffer[0])
+            delete [] buffer;
+        }
+    else
+        ParseRecord(recData, recData + recSize);
+
+    IsLoaded(true);
+    return true;
+    }
+
+UINT32 TES5Record::Write(FileWriter &writer, const bool &bMastersChanged, FormIDResolver &expander, FormIDResolver &collapser, std::vector<FormIDResolver *> &Expanders)
+    {
+    UINT32 recSize = 0;
+    UINT32 recType = GetType();
+
+    collapser.Accept(formID);
+
+    if(!IsChanged())
+        {
+        if(bMastersChanged || flags != *(UINT32*)&recData[-16])
+            {
+            //if masters have changed, all formIDs have to be updated...
+            //or if the flags have changed internally (notably fIsDeleted or fIsCompressed, possibly others)
+            //so the record can't just be written as is.
+            if(Read())
+                {
+                //if(expander.IsValid(data)) //optimization disabled for testing
+                //    VisitFormIDs(expander);
+                //printer("Looking for correct expander\n");
+                SINT32 index = -1;
+                for(UINT32 x = 0; x < Expanders.size(); ++x)
+                    if(IsValid(*Expanders[x]))
+                        {
+                        //if(index != -1)
+                        //    {
+                        //    printer("Multiple 'Correct' expanders found (%08X)! Using last one found (likely incorrect unless lucky)\n", formID);
+                        //    printer("  %i:   %08X, %08X, %08X\n", index, Expanders[index]->FileStart, data, Expanders[index]->FileEnd);
+                        //    printer("  %i:   %08X, %08X, %08X\n", x, Expanders[x]->FileStart, data, Expanders[x]->FileEnd);
+                        //    printer("Expanders:\n");
+                        //    for(UINT32 z = 0; z < Expanders.size(); ++z)
+                        //        printer("  %i of %i:   %08X, %08X\n", z, Expanders.size(), Expanders[z]->FileStart, Expanders[z]->FileEnd);
+                        //    }
+                        index = x;
+                        break;
+                        }
+                if(index == -1)
+                    {
+                    printer("Unable to find the correct expander!\n");
+                    VisitFormIDs(expander);
+                    }
+                else
+                    VisitFormIDs(*Expanders[index]);
+                }
+            }
+        else
+            {
+            //if masters have not changed, the record can just be written from the read buffer
+            recSize = *(UINT32*)&recData[-20];
+
+            writer.file_write(&recType, 4);
+            writer.file_write(&recSize, 4);
+            writer.file_write(&flags, 4);
+            writer.file_write(&formID, 4);
+            writer.file_write(&flagsUnk, 4);
+            writer.file_write(&formVersion, 2);
+            writer.file_write(&versionControl2[0], 2);
+            writer.file_write(recData, recSize);
+            Unload();
+            return recSize + 24;
+            }
+        }
+
+    VisitFormIDs(collapser);
+
+    if(!IsDeleted())
+        {
+        //IsCompressed(true); //Test code
+        WriteRecord(writer);
+        recSize = IsCompressed() ? writer.record_compress() : writer.record_size();
+        writer.file_write(&recType, 4);
+        writer.file_write(&recSize, 4);
+        writer.file_write(&flags, 4);
+        writer.file_write(&formID, 4);
+        writer.file_write(&flagsUnk, 4);
+        writer.file_write(&formVersion, 2);
+        writer.file_write(&versionControl2[0], 2);
+        //if(IsCompressed())
+        //    {
+        //    printer("Compressed: %08X\n", formID);
+        //    }
+        writer.record_flush();
+        }
+    else
+        {
+        writer.file_write(&recType, 4);
+        writer.file_write(&recSize, 4);
+        writer.file_write(&flags, 4);
+        writer.file_write(&formID, 4);
+        writer.file_write(&flagsUnk, 4);
+        writer.file_write(&formVersion, 2);
+        writer.file_write(&versionControl2[0], 2);
+        }
+
+    expander.Accept(formID);
+    if(IsChanged())
+        VisitFormIDs(expander);
+    else
+        Unload();
+    return recSize + 24;
+    }
