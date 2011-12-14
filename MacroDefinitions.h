@@ -62,11 +62,11 @@
                                     printer("%02X ", buffer[-x]); \
                                 for(UINT32 x = 0; x < 32; x++) \
                                     printer("%02X ", buffer[x]); \
-                                printer("\n\n"); \
-                                for(SINT32 x = 32; x > 0; x--) \
-                                    printer("%c", buffer[-x]); \
-                                for(UINT32 x = 0; x < 32; x++) \
-                                    printer("%c", buffer[x]); \
+                             /* printer("\n\n");*/ \
+                             /* for(SINT32 x = 32; x > 0; x--)*/ \
+                             /*     printer("%c", buffer[-x]);*/ \
+                             /* for(UINT32 x = 0; x < 32; x++)*/ \
+                             /*     printer("%c", buffer[x]);*/ \
                                 printer("\n");
 #else
     //don't touch

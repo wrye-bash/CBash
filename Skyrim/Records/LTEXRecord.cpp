@@ -36,7 +36,7 @@
 #include "..\..\Common.h"
 #include "LTEXRecord.h"
 
-namespace TES5
+namespace Sk
 {
 
 LTEXRecord::LTEXHNAM::LTEXHNAM():
@@ -93,6 +93,7 @@ LTEXRecord::LTEXRecord(LTEXRecord *srcRecord):
     HNAM = srcRecord->HNAM;
     SNAM = srcRecord->SNAM;
     GNAM = srcRecord->GNAM;
+    MNAM = srcRecord->MNAM;
     return;
     }
 
@@ -327,10 +328,14 @@ SINT32 LTEXRecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer,
                 break;
             case REV32(GNAM):
                 GNAM.Read(buffer, subSize);
-                break;
+		break;
+	    /* Skyrim --------------------------------------- */
+	    case REV32(MNAM): // 4 bytes
+		MNAM.Read(buffer, subSize, CompressedOnDisk);
+		break;
             default:
                 //printer("FileName = %s\n", FileName);
-                printer("  LTEX: %08X - Unknown subType = %04x\n", formID, subType);
+                printer("  LTEX: %08X - Unknown subType = %04x [%c%c%c%c]\n", formID, subType, (subType >> 0) & 0xFF, (subType >> 8) & 0xFF, (subType >> 16) & 0xFF, (subType >> 24) & 0xFF);
                 CBASH_CHUNK_DEBUG
                 printer("  Size = %i\n", subSize);
                 printer("  CurPos = %04x\n\n", buffer - 6);
@@ -352,6 +357,7 @@ SINT32 LTEXRecord::Unload()
     HNAM.Unload();
     SNAM.Unload();
     GNAM.Unload();
+    MNAM.Unload();
     return 1;
     }
 
@@ -364,6 +370,7 @@ SINT32 LTEXRecord::WriteRecord(FileWriter &writer)
     WRITE(HNAM);
     WRITE(SNAM);
     WRITE(GNAM);
+    WRITE(MNAM);
     return -1;
     }
 
@@ -375,7 +382,8 @@ bool LTEXRecord::operator ==(const LTEXRecord &other) const
             TNAM == other.TNAM &&
             HNAM == other.HNAM &&
             SNAM == other.SNAM &&
-            GNAM == other.GNAM);
+	    GNAM == other.GNAM &&
+	    MNAM == other.MNAM);
     }
 
 bool LTEXRecord::operator !=(const LTEXRecord &other) const

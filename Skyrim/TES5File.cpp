@@ -256,6 +256,14 @@ SINT32 TES5File::Load(RecordOp &read_parser, RecordOp &indexer, std::vector<Form
 	    case REV32(LTEX):
 		LTEX.Read(buffer_start, buffer_position, group_buffer_end, indexer, parser, DeletedRecords, processor, FileName);
 		break;
+	    case eIgCELL:
+	    case REV32(CELL):
+		CELL.Read(buffer_start, buffer_position, group_buffer_end, indexer, parser, DeletedRecords, processor, FileName);
+		break;
+	  //case eIgWRLD: //Same as normal
+	    case REV32(WRLD): // EDID: Tamriel
+		WRLD.Read(buffer_start, buffer_position, group_buffer_end, indexer, parser, DeletedRecords, processor, FileName, read_parser, CELL);
+		break;
 
 	    case eIgGMST:
 	    case REV32(GMST):
@@ -347,10 +355,6 @@ SINT32 TES5File::Load(RecordOp &read_parser, RecordOp &indexer, std::vector<Form
 	    case REV32(REGN): // EDID: SovngardeIntWeather
 	    case eIgNAVI:
 	    case REV32(NAVI): // EDID: ...
-	    case eIgCELL:
-	    case REV32(CELL): // EDID: ...
-	  //case eIgWRLD: //Same as normal
-	    case REV32(WRLD): // EDID: Tamriel
 	    case eIgDIAL:
 	    case REV32(DIAL): // EDID: ...
 	  //case eIgQUST: //Same as normal
@@ -548,10 +552,6 @@ SINT32 TES5File::Load(RecordOp &read_parser, RecordOp &indexer, std::vector<Form
             case REV32(SCPT):
                 SCPT.Read(buffer_start, buffer_position, group_buffer_end, indexer, parser, DeletedRecords, processor, FileName);
                 break;
-            //case eIgLTEX: //Same as normal
-            case REV32(LTEX):
-                LTEX.Read(buffer_start, buffer_position, group_buffer_end, indexer, parser, DeletedRecords, processor, FileName);
-                break;
             case eIgENCH:
             case REV32(ENCH):
                 ENCH.Read(buffer_start, buffer_position, group_buffer_end, indexer, parser, DeletedRecords, processor, FileName);
@@ -695,14 +695,6 @@ SINT32 TES5File::Load(RecordOp &read_parser, RecordOp &indexer, std::vector<Form
             case eIgNAVI:
             case REV32(NAVI):
                 NAVI.Read(buffer_start, buffer_position, group_buffer_end, indexer, parser, DeletedRecords, processor, FileName);
-                break;
-            case eIgCELL:
-            case REV32(CELL):
-                CELL.Read(buffer_start, buffer_position, group_buffer_end, indexer, parser, DeletedRecords, processor, FileName);
-                break;
-            //case eIgWRLD: //Same as normal
-            case REV32(WRLD):
-                WRLD.Read(buffer_start, buffer_position, group_buffer_end, indexer, parser, DeletedRecords, processor, FileName, read_parser, CELL);
                 break;
             case eIgDIAL:
             case REV32(DIAL):
@@ -952,7 +944,22 @@ SINT32 TES5File::Load(RecordOp &read_parser, RecordOp &indexer, std::vector<Form
 UINT32 TES5File::GetNumRecords(const UINT32 &RecordType)
     {
     switch(RecordType)
-        {
+	{
+	case REV32(LTEX):
+	    return (UINT32)LTEX.pool.used_object_capacity();
+	case REV32(CELL):
+	    return (UINT32)CELL.cell_pool.used_object_capacity();
+	case REV32(LAND):
+	    return (UINT32)WRLD.land_pool.used_object_capacity();
+	case REV32(WCEL):
+	    return (UINT32)WRLD.cell_pool.used_object_capacity();
+	///////////////////////////////////////////////
+	case REV32(CLLS):
+	    return (UINT32)CELL.cell_pool.used_object_capacity() + 
+		   (UINT32)WRLD.cell_pool.used_object_capacity();
+	///////////////////////////////////////////////
+	case REV32(WRLD):
+	    return (UINT32)WRLD.wrld_pool.used_object_capacity();
 	  /*
         case REV32(GMST):
             return (UINT32)GMST.pool.used_object_capacity();
@@ -982,8 +989,6 @@ UINT32 TES5File::GetNumRecords(const UINT32 &RecordType)
             return (UINT32)MGEF.pool.used_object_capacity();
         case REV32(SCPT):
             return (UINT32)SCPT.pool.used_object_capacity();
-        case REV32(LTEX):
-            return (UINT32)LTEX.pool.used_object_capacity();
         case REV32(ENCH):
             return (UINT32)ENCH.pool.used_object_capacity();
         case REV32(SPEL):
@@ -1056,8 +1061,6 @@ UINT32 TES5File::GetNumRecords(const UINT32 &RecordType)
             return (UINT32)REGN.pool.used_object_capacity();
         case REV32(NAVI):
             return (UINT32)NAVI.pool.used_object_capacity();
-        case REV32(CELL):
-            return (UINT32)CELL.cell_pool.used_object_capacity();
         ///////////////////////////////////////////////
         //These return the absolute total number of these SubRecords
         //Use the GetFieldAttribute API instead if you want the number
@@ -1082,15 +1085,7 @@ UINT32 TES5File::GetNumRecords(const UINT32 &RecordType)
             return (UINT32)CELL.pcbe_pool.used_object_capacity();
         case REV32(NAVM):
             return (UINT32)CELL.navm_pool.used_object_capacity();
-        case REV32(LAND):
-            return (UINT32)WRLD.land_pool.used_object_capacity();
-        case REV32(WCEL):
-            return (UINT32)WRLD.cell_pool.used_object_capacity();
-        case REV32(CLLS):
-            return (UINT32)CELL.cell_pool.used_object_capacity() + (UINT32)WRLD.cell_pool.used_object_capacity();
         ///////////////////////////////////////////////
-        case REV32(WRLD):
-            return (UINT32)WRLD.wrld_pool.used_object_capacity();
         case REV32(DIAL):
             return (UINT32)DIAL.dial_pool.used_object_capacity();
         case REV32(QUST):
@@ -1206,7 +1201,81 @@ Record * TES5File::CreateRecord(const UINT32 &RecordType, STRING const &RecordEd
     Record *newRecord = NULL;
 
     switch(RecordType)
-        {
+    {
+	case REV32(LTEX):
+	    return LTEX.pool.construct(SourceRecord, this, true);
+	case REV32(WCEL):
+	    if(ParentRecord == NULL || ParentRecord->GetType() != REV32(WRLD))
+	    {
+	      printer("TES5File::CreateRecord: Error - Unable to create world CELL record in mod \"%s\". Parent record type (%s) is invalid, only WRLD records can be world CELL parents.\n", ModName, ParentRecord->GetStrType());
+	      return NULL;
+	    }
+
+	    //If a world cell already exists, return it instead of making a new one
+	    if(((Sk::WRLDRecord *)ParentRecord)->CELL != NULL)
+	    {
+	      options.ExistingReturned = true;
+	      return ((Sk::WRLDRecord *)ParentRecord)->CELL;
+	    }
+
+	    ((Sk::WRLDRecord *)ParentRecord)->CELL = WRLD.cell_pool.construct(SourceRecord, ParentRecord, false);
+	    ((Sk::CELLRecord *)((Sk::WRLDRecord *)ParentRecord)->CELL)->IsInterior(false);
+	    return ((Sk::WRLDRecord *)ParentRecord)->CELL;
+	case REV32(CELL):
+	    if(ParentRecord == NULL)
+	    {
+	      newRecord = CELL.cell_pool.construct(SourceRecord, this, true);
+	      ((Sk::CELLRecord *)newRecord)->IsInterior(true);
+	      return newRecord;
+	    }
+	    else
+	    {
+	      if(ParentRecord->GetType() != REV32(WRLD))
+	      {
+		printer("TES5File::CreateRecord: Error - Unable to create CELL record in mod \"%s\". Parent record type (%s) is invalid, only WRLD records can be CELL parents.\n", ModName, ParentRecord->GetStrType());
+		return NULL;
+	      }
+
+	      //If the SourceRecord is a world cell, then the copy will be a world cell
+	      if(SourceRecord != NULL && ((Sk::WRLDRecord *)((Sk::CELLRecord *)SourceRecord)->GetParentRecord())->CELL == SourceRecord)
+	      {
+		//If a world cell already exists, return it instead of making a new one
+		if(((Sk::WRLDRecord *)ParentRecord)->CELL != NULL)
+		{
+		  options.ExistingReturned = true;
+		  return ((Sk::WRLDRecord *)ParentRecord)->CELL;
+		}
+
+		newRecord = ((Sk::WRLDRecord *)ParentRecord)->CELL = WRLD.cell_pool.construct(SourceRecord, ParentRecord, false);
+	      }
+	      else
+	      {
+		newRecord = WRLD.cell_pool.construct(SourceRecord, ParentRecord, false);
+		((Sk::WRLDRecord *)ParentRecord)->CELLS.push_back(newRecord);
+	      }
+
+	      ((Sk::CELLRecord *)newRecord)->IsInterior(false);
+	      return newRecord;
+	    }
+	case REV32(WRLD):
+	    return WRLD.wrld_pool.construct(SourceRecord, this, true);
+	case REV32(LAND):
+	    if(ParentRecord == NULL || ParentRecord->GetType() != REV32(CELL))
+	    {
+	      printer("TES5File::CreateRecord: Error - Unable to create LAND record in mod \"%s\". Parent record type (%s) is invalid, only CELL records can be LAND parents.\n", ModName, ParentRecord->GetStrType());
+	      return NULL;
+	    }
+
+	    //If a cell land already exists, return it instead of making a new one
+	    if(((Sk::CELLRecord *)ParentRecord)->LAND != NULL)
+	    {
+	      options.ExistingReturned = true;
+	      return ((Sk::CELLRecord *)ParentRecord)->LAND;
+	    }
+
+	    ((Sk::CELLRecord *)ParentRecord)->LAND = WRLD.land_pool.construct(SourceRecord, ParentRecord, false);
+	    return ((Sk::CELLRecord *)ParentRecord)->LAND;
+
 	  /*
         case REV32(GMST):
             if(RecordEditorID == NULL && SourceRecord == NULL)
@@ -1218,10 +1287,10 @@ Record * TES5File::CreateRecord(const UINT32 &RecordType, STRING const &RecordEd
 
             if(RecordEditorID != NULL)
                 {
-                ((TES5::GMSTRecord *)newRecord)->EDID.Copy(RecordEditorID);
-                ((TES5::GMSTRecord *)newRecord)->DATA.format = ((TES5::GMSTRecord *)newRecord)->EDID.value[0];
+                ((Sk::GMSTRecord *)newRecord)->EDID.Copy(RecordEditorID);
+                ((Sk::GMSTRecord *)newRecord)->DATA.format = ((Sk::GMSTRecord *)newRecord)->EDID.value[0];
                 }
-            break;
+	    break;
         case REV32(TXST):
             return TXST.pool.construct(SourceRecord, this, true);
         case REV32(MICN):
@@ -1248,8 +1317,6 @@ Record * TES5File::CreateRecord(const UINT32 &RecordType, STRING const &RecordEd
             return MGEF.pool.construct(SourceRecord, this, true);
         case REV32(SCPT):
             return SCPT.pool.construct(SourceRecord, this, true);
-        case REV32(LTEX):
-            return LTEX.pool.construct(SourceRecord, this, true);
         case REV32(ENCH):
             return ENCH.pool.construct(SourceRecord, this, true);
         case REV32(SPEL):
@@ -1322,61 +1389,6 @@ Record * TES5File::CreateRecord(const UINT32 &RecordType, STRING const &RecordEd
             return REGN.pool.construct(SourceRecord, this, true);
         case REV32(NAVI):
             return NAVI.pool.construct(SourceRecord, this, true);
-        case REV32(WCEL):
-            if(ParentRecord == NULL || ParentRecord->GetType() != REV32(WRLD))
-                {
-                printer("TES5File::CreateRecord: Error - Unable to create world CELL record in mod \"%s\". Parent record type (%s) is invalid, only WRLD records can be world CELL parents.\n", ModName, ParentRecord->GetStrType());
-                return NULL;
-                }
-
-            //If a world cell already exists, return it instead of making a new one
-            if(((TES5::WRLDRecord *)ParentRecord)->CELL != NULL)
-                {
-                options.ExistingReturned = true;
-                return ((TES5::WRLDRecord *)ParentRecord)->CELL;
-                }
-
-            ((TES5::WRLDRecord *)ParentRecord)->CELL = WRLD.cell_pool.construct(SourceRecord, ParentRecord, false);
-            ((TES5::CELLRecord *)((TES5::WRLDRecord *)ParentRecord)->CELL)->IsInterior(false);
-            return ((TES5::WRLDRecord *)ParentRecord)->CELL;
-        case REV32(CELL):
-            if(ParentRecord == NULL)
-                {
-                newRecord = CELL.cell_pool.construct(SourceRecord, this, true);
-                ((TES5::CELLRecord *)newRecord)->IsInterior(true);
-                return newRecord;
-                }
-            else
-                {
-                if(ParentRecord->GetType() != REV32(WRLD))
-                    {
-                    printer("TES5File::CreateRecord: Error - Unable to create CELL record in mod \"%s\". Parent record type (%s) is invalid, only WRLD records can be CELL parents.\n", ModName, ParentRecord->GetStrType());
-                    return NULL;
-                    }
-
-                //If the SourceRecord is a world cell, then the copy will be a world cell
-                if(SourceRecord != NULL && ((TES5::WRLDRecord *)((TES5::CELLRecord *)SourceRecord)->GetParentRecord())->CELL == SourceRecord)
-                    {
-                    //If a world cell already exists, return it instead of making a new one
-                    if(((TES5::WRLDRecord *)ParentRecord)->CELL != NULL)
-                        {
-                        options.ExistingReturned = true;
-                        return ((TES5::WRLDRecord *)ParentRecord)->CELL;
-                        }
-
-                    newRecord = ((TES5::WRLDRecord *)ParentRecord)->CELL = WRLD.cell_pool.construct(SourceRecord, ParentRecord, false);
-                    }
-                else
-                    {
-                    newRecord = WRLD.cell_pool.construct(SourceRecord, ParentRecord, false);
-                    ((TES5::WRLDRecord *)ParentRecord)->CELLS.push_back(newRecord);
-                    }
-
-                ((TES5::CELLRecord *)newRecord)->IsInterior(false);
-                return newRecord;
-                }
-        case REV32(WRLD):
-            return WRLD.wrld_pool.construct(SourceRecord, this, true);
         case REV32(DIAL):
             return DIAL.dial_pool.construct(SourceRecord, this, true);
         case REV32(INFO):
@@ -1386,8 +1398,8 @@ Record * TES5File::CreateRecord(const UINT32 &RecordType, STRING const &RecordEd
                 return NULL;
                 }
 
-            ((TES5::DIALRecord *)ParentRecord)->INFO.push_back(DIAL.info_pool.construct(SourceRecord, ParentRecord, false));
-            return ((TES5::DIALRecord *)ParentRecord)->INFO.back();
+            ((Sk::DIALRecord *)ParentRecord)->INFO.push_back(DIAL.info_pool.construct(SourceRecord, ParentRecord, false));
+            return ((Sk::DIALRecord *)ParentRecord)->INFO.back();
         case REV32(ACHR):
             if(ParentRecord == NULL || ParentRecord->GetType() != REV32(CELL))
                 {
@@ -1395,8 +1407,8 @@ Record * TES5File::CreateRecord(const UINT32 &RecordType, STRING const &RecordEd
                 return NULL;
                 }
 
-            ((TES5::CELLRecord *)ParentRecord)->ACHR.push_back(CELL.achr_pool.construct(SourceRecord, ParentRecord, false));
-            return ((TES5::CELLRecord *)ParentRecord)->ACHR.back();
+            ((Sk::CELLRecord *)ParentRecord)->ACHR.push_back(CELL.achr_pool.construct(SourceRecord, ParentRecord, false));
+            return ((Sk::CELLRecord *)ParentRecord)->ACHR.back();
         case REV32(ACRE):
             if(ParentRecord == NULL || ParentRecord->GetType() != REV32(CELL))
                 {
@@ -1404,8 +1416,8 @@ Record * TES5File::CreateRecord(const UINT32 &RecordType, STRING const &RecordEd
                 return NULL;
                 }
 
-            ((TES5::CELLRecord *)ParentRecord)->ACRE.push_back(CELL.acre_pool.construct(SourceRecord, ParentRecord, false));
-            return ((TES5::CELLRecord *)ParentRecord)->ACRE.back();
+            ((Sk::CELLRecord *)ParentRecord)->ACRE.push_back(CELL.acre_pool.construct(SourceRecord, ParentRecord, false));
+            return ((Sk::CELLRecord *)ParentRecord)->ACRE.back();
         case REV32(REFR):
             if(ParentRecord == NULL || ParentRecord->GetType() != REV32(CELL))
                 {
@@ -1413,8 +1425,8 @@ Record * TES5File::CreateRecord(const UINT32 &RecordType, STRING const &RecordEd
                 return NULL;
                 }
 
-            ((TES5::CELLRecord *)ParentRecord)->REFR.push_back(CELL.refr_pool.construct(SourceRecord, ParentRecord, false));
-            return ((TES5::CELLRecord *)ParentRecord)->REFR.back();
+            ((Sk::CELLRecord *)ParentRecord)->REFR.push_back(CELL.refr_pool.construct(SourceRecord, ParentRecord, false));
+            return ((Sk::CELLRecord *)ParentRecord)->REFR.back();
         case REV32(PGRE):
             if(ParentRecord == NULL || ParentRecord->GetType() != REV32(CELL))
                 {
@@ -1422,8 +1434,8 @@ Record * TES5File::CreateRecord(const UINT32 &RecordType, STRING const &RecordEd
                 return NULL;
                 }
 
-            ((TES5::CELLRecord *)ParentRecord)->PGRE.push_back(CELL.pgre_pool.construct(SourceRecord, ParentRecord, false));
-            return ((TES5::CELLRecord *)ParentRecord)->PGRE.back();
+            ((Sk::CELLRecord *)ParentRecord)->PGRE.push_back(CELL.pgre_pool.construct(SourceRecord, ParentRecord, false));
+            return ((Sk::CELLRecord *)ParentRecord)->PGRE.back();
         case REV32(PMIS):
             if(ParentRecord == NULL || ParentRecord->GetType() != REV32(CELL))
                 {
@@ -1431,8 +1443,8 @@ Record * TES5File::CreateRecord(const UINT32 &RecordType, STRING const &RecordEd
                 return NULL;
                 }
 
-            ((TES5::CELLRecord *)ParentRecord)->PMIS.push_back(CELL.pmis_pool.construct(SourceRecord, ParentRecord, false));
-            return ((TES5::CELLRecord *)ParentRecord)->PMIS.back();
+            ((Sk::CELLRecord *)ParentRecord)->PMIS.push_back(CELL.pmis_pool.construct(SourceRecord, ParentRecord, false));
+            return ((Sk::CELLRecord *)ParentRecord)->PMIS.back();
         case REV32(PBEA):
             if(ParentRecord == NULL || ParentRecord->GetType() != REV32(CELL))
                 {
@@ -1440,8 +1452,8 @@ Record * TES5File::CreateRecord(const UINT32 &RecordType, STRING const &RecordEd
                 return NULL;
                 }
 
-            ((TES5::CELLRecord *)ParentRecord)->PBEA.push_back(CELL.pbea_pool.construct(SourceRecord, ParentRecord, false));
-            return ((TES5::CELLRecord *)ParentRecord)->PBEA.back();
+            ((Sk::CELLRecord *)ParentRecord)->PBEA.push_back(CELL.pbea_pool.construct(SourceRecord, ParentRecord, false));
+            return ((Sk::CELLRecord *)ParentRecord)->PBEA.back();
         case REV32(PFLA):
             if(ParentRecord == NULL || ParentRecord->GetType() != REV32(CELL))
                 {
@@ -1449,8 +1461,8 @@ Record * TES5File::CreateRecord(const UINT32 &RecordType, STRING const &RecordEd
                 return NULL;
                 }
 
-            ((TES5::CELLRecord *)ParentRecord)->PFLA.push_back(CELL.pfla_pool.construct(SourceRecord, ParentRecord, false));
-            return ((TES5::CELLRecord *)ParentRecord)->PFLA.back();
+            ((Sk::CELLRecord *)ParentRecord)->PFLA.push_back(CELL.pfla_pool.construct(SourceRecord, ParentRecord, false));
+            return ((Sk::CELLRecord *)ParentRecord)->PFLA.back();
         case REV32(PCBE):
             if(ParentRecord == NULL || ParentRecord->GetType() != REV32(CELL))
                 {
@@ -1458,8 +1470,8 @@ Record * TES5File::CreateRecord(const UINT32 &RecordType, STRING const &RecordEd
                 return NULL;
                 }
 
-            ((TES5::CELLRecord *)ParentRecord)->PCBE.push_back(CELL.pcbe_pool.construct(SourceRecord, ParentRecord, false));
-            return ((TES5::CELLRecord *)ParentRecord)->PCBE.back();
+            ((Sk::CELLRecord *)ParentRecord)->PCBE.push_back(CELL.pcbe_pool.construct(SourceRecord, ParentRecord, false));
+            return ((Sk::CELLRecord *)ParentRecord)->PCBE.back();
         case REV32(NAVM):
             if(ParentRecord == NULL || ParentRecord->GetType() != REV32(CELL))
                 {
@@ -1467,24 +1479,8 @@ Record * TES5File::CreateRecord(const UINT32 &RecordType, STRING const &RecordEd
                 return NULL;
                 }
 
-            ((TES5::CELLRecord *)ParentRecord)->NAVM.push_back(CELL.navm_pool.construct(SourceRecord, ParentRecord, false));
-            return ((TES5::CELLRecord *)ParentRecord)->NAVM.back();
-        case REV32(LAND):
-            if(ParentRecord == NULL || ParentRecord->GetType() != REV32(CELL))
-                {
-                printer("TES5File::CreateRecord: Error - Unable to create LAND record in mod \"%s\". Parent record type (%s) is invalid, only CELL records can be LAND parents.\n", ModName, ParentRecord->GetStrType());
-                return NULL;
-                }
-
-            //If a cell land already exists, return it instead of making a new one
-            if(((TES5::CELLRecord *)ParentRecord)->LAND != NULL)
-                {
-                options.ExistingReturned = true;
-                return ((TES5::CELLRecord *)ParentRecord)->LAND;
-                }
-
-            ((TES5::CELLRecord *)ParentRecord)->LAND = WRLD.land_pool.construct(SourceRecord, ParentRecord, false);
-            return ((TES5::CELLRecord *)ParentRecord)->LAND;
+            ((Sk::CELLRecord *)ParentRecord)->NAVM.push_back(CELL.navm_pool.construct(SourceRecord, ParentRecord, false));
+            return ((Sk::CELLRecord *)ParentRecord)->NAVM.back();
         case REV32(QUST):
             return QUST.pool.construct(SourceRecord, this, true);
         case REV32(IDLE):
@@ -1590,7 +1586,202 @@ Record * TES5File::CreateRecord(const UINT32 &RecordType, STRING const &RecordEd
 SINT32 TES5File::DeleteRecord(Record *&curRecord, RecordOp &deindexer)
     {
     switch(curRecord->GetType())
-        {
+	{
+	case REV32(LTEX):
+	    deindexer.Accept(curRecord);
+	    LTEX.pool.destroy(curRecord);
+	    return 1;
+	case REV32(CELL):
+	    {
+	      Sk::WRLDRecord *wrld_record = (Sk::WRLDRecord *)curRecord->GetParentRecord();
+	      bool cell_found = false;
+	      if(wrld_record != NULL)
+	      {
+		if(wrld_record->CELL == curRecord)
+		{
+		  wrld_record->CELL = NULL;
+		  cell_found = true;
+		}
+		else
+		{
+		  for(UINT32 ListIndex = 0; ListIndex < wrld_record->CELLS.size(); ++ListIndex)
+		  {
+		    if(wrld_record->CELLS[ListIndex] == curRecord)
+		    {
+		      wrld_record->CELLS.erase(wrld_record->CELLS.begin() + ListIndex);
+		      cell_found = true;
+		      break;
+		    }
+		  }
+		}
+		if(!cell_found)
+		{
+		  printer("TES5File::DeleteRecord: Error - Unable to delete record type (%s) with parent type (%s) in mod \"%s\". The parent record (%08X) does not contain the record to be deleted (%08X).\n", curRecord->GetStrType(), curRecord->GetParentRecord()->GetStrType(), ModName, curRecord->GetParentRecord()->formID, curRecord->formID);
+		  return 0;
+		}
+	      }
+	      Sk::CELLRecord *cell_record = (Sk::CELLRecord *)curRecord;
+
+	      /*
+	      for(UINT32 ListIndex = 0; ListIndex < cell_record->ACHR.size(); ++ListIndex)
+	      {
+		deindexer.Accept(cell_record->ACHR[ListIndex]);
+		CELL.achr_pool.destroy(cell_record->ACHR[ListIndex]);
+	      }
+
+	      for(UINT32 ListIndex = 0; ListIndex < cell_record->ACRE.size(); ++ListIndex)
+	      {
+		deindexer.Accept(cell_record->ACRE[ListIndex]);
+		CELL.acre_pool.destroy(cell_record->ACRE[ListIndex]);
+	      }
+
+	      for(UINT32 ListIndex = 0; ListIndex < cell_record->REFR.size(); ++ListIndex)
+	      {
+		deindexer.Accept(cell_record->REFR[ListIndex]);
+		CELL.refr_pool.destroy(cell_record->REFR[ListIndex]);
+	      }
+
+	      for(UINT32 ListIndex = 0; ListIndex < cell_record->PGRE.size(); ++ListIndex)
+	      {
+		deindexer.Accept(cell_record->PGRE[ListIndex]);
+		CELL.pgre_pool.destroy(cell_record->PGRE[ListIndex]);
+	      }
+
+	      for(UINT32 ListIndex = 0; ListIndex < cell_record->PMIS.size(); ++ListIndex)
+	      {
+		deindexer.Accept(cell_record->PMIS[ListIndex]);
+		CELL.pmis_pool.destroy(cell_record->PMIS[ListIndex]);
+	      }
+
+	      for(UINT32 ListIndex = 0; ListIndex < cell_record->PBEA.size(); ++ListIndex)
+	      {
+		deindexer.Accept(cell_record->PBEA[ListIndex]);
+		CELL.pbea_pool.destroy(cell_record->PBEA[ListIndex]);
+	      }
+
+	      for(UINT32 ListIndex = 0; ListIndex < cell_record->PFLA.size(); ++ListIndex)
+	      {
+		deindexer.Accept(cell_record->PFLA[ListIndex]);
+		CELL.pfla_pool.destroy(cell_record->PFLA[ListIndex]);
+	      }
+
+	      for(UINT32 ListIndex = 0; ListIndex < cell_record->PCBE.size(); ++ListIndex)
+	      {
+		deindexer.Accept(cell_record->PCBE[ListIndex]);
+		CELL.pcbe_pool.destroy(cell_record->PCBE[ListIndex]);
+	      }
+
+	      for(UINT32 ListIndex = 0; ListIndex < cell_record->NAVM.size(); ++ListIndex)
+	      {
+		deindexer.Accept(cell_record->NAVM[ListIndex]);
+		CELL.navm_pool.destroy(cell_record->NAVM[ListIndex]);
+	      }
+	      */
+
+	      deindexer.Accept(cell_record->LAND);
+	      WRLD.land_pool.destroy(cell_record->LAND);
+
+	      deindexer.Accept(curRecord);
+	      if(cell_found)
+		WRLD.cell_pool.destroy(curRecord);
+	      else
+		CELL.cell_pool.destroy(curRecord);
+	    }
+	    return 1;
+	case REV32(WRLD):
+	    {
+	      Sk::WRLDRecord *wrld_record = (Sk::WRLDRecord *)curRecord;
+
+	      Sk::CELLRecord *cell_record = (Sk::CELLRecord *)wrld_record->CELL;
+	      if(cell_record != NULL) //Add it to list of cells to be deleted
+		wrld_record->CELLS.push_back(cell_record);
+
+	      for(UINT32 ListIndex = 0; ListIndex < wrld_record->CELLS.size(); ++ListIndex)
+	      {
+		cell_record = (Sk::CELLRecord *)wrld_record->CELLS[ListIndex];
+
+		/*
+		for(UINT32 ListX2Index = 0; ListX2Index < cell_record->ACHR.size(); ++ListX2Index)
+		{
+		  deindexer.Accept(cell_record->ACHR[ListX2Index]);
+		  CELL.achr_pool.destroy(cell_record->ACHR[ListX2Index]);
+		}
+
+		for(UINT32 ListX2Index = 0; ListX2Index < cell_record->ACRE.size(); ++ListX2Index)
+		{
+		  deindexer.Accept(cell_record->ACRE[ListX2Index]);
+		  CELL.acre_pool.destroy(cell_record->ACRE[ListX2Index]);
+		}
+
+		for(UINT32 ListX2Index = 0; ListX2Index < cell_record->REFR.size(); ++ListX2Index)
+		{
+		  deindexer.Accept(cell_record->REFR[ListX2Index]);
+		  CELL.refr_pool.destroy(cell_record->REFR[ListX2Index]);
+		}
+
+		for(UINT32 ListX2Index = 0; ListX2Index < cell_record->PGRE.size(); ++ListX2Index)
+		{
+		  deindexer.Accept(cell_record->PGRE[ListX2Index]);
+		  CELL.pgre_pool.destroy(cell_record->PGRE[ListX2Index]);
+		}
+
+		for(UINT32 ListX2Index = 0; ListX2Index < cell_record->PMIS.size(); ++ListX2Index)
+		{
+		  deindexer.Accept(cell_record->PMIS[ListX2Index]);
+		  CELL.pmis_pool.destroy(cell_record->PMIS[ListX2Index]);
+		}
+
+		for(UINT32 ListX2Index = 0; ListX2Index < cell_record->PBEA.size(); ++ListX2Index)
+		{
+		  deindexer.Accept(cell_record->PBEA[ListX2Index]);
+		  CELL.pbea_pool.destroy(cell_record->PBEA[ListX2Index]);
+		}
+
+		for(UINT32 ListX2Index = 0; ListX2Index < cell_record->PFLA.size(); ++ListX2Index)
+		{
+		  deindexer.Accept(cell_record->PFLA[ListX2Index]);
+		  CELL.pfla_pool.destroy(cell_record->PFLA[ListX2Index]);
+		}
+
+		for(UINT32 ListX2Index = 0; ListX2Index < cell_record->PCBE.size(); ++ListX2Index)
+		{
+		  deindexer.Accept(cell_record->PCBE[ListX2Index]);
+		  CELL.pcbe_pool.destroy(cell_record->PCBE[ListX2Index]);
+		}
+
+		for(UINT32 ListX2Index = 0; ListX2Index < cell_record->NAVM.size(); ++ListX2Index)
+		{
+		  deindexer.Accept(cell_record->NAVM[ListX2Index]);
+		  CELL.navm_pool.destroy(cell_record->NAVM[ListX2Index]);
+		}
+		*/
+
+		deindexer.Accept(cell_record->LAND);
+		WRLD.land_pool.destroy(cell_record->LAND);
+
+		deindexer.Accept((Record *&)cell_record);
+		WRLD.cell_pool.destroy(cell_record);
+	      }
+
+	      deindexer.Accept(curRecord);
+	      WRLD.wrld_pool.destroy(curRecord);
+	    }
+	    return 1;
+	case REV32(LAND):
+	    {
+	      Sk::CELLRecord *cell_record = (Sk::CELLRecord *)curRecord->GetParentRecord();
+
+	      if(cell_record->LAND != curRecord)
+	      {
+		printer("TES5File::DeleteRecord: Error - Unable to delete record type (%s) with parent type (%s) in mod \"%s\". The parent record (%08X) does not contain the record to be deleted (%08X).\n", curRecord->GetStrType(), curRecord->GetParentRecord()->GetStrType(), ModName, curRecord->GetParentRecord()->formID, curRecord->formID);
+		return 0;
+	      }
+
+	      cell_record->LAND = NULL;
+	      deindexer.Accept(curRecord);
+	      WRLD.land_pool.destroy(curRecord);
+	    }
+	    return 1;
 	  /*
         case REV32(GMST):
             deindexer.Accept(curRecord);
@@ -1647,10 +1838,6 @@ SINT32 TES5File::DeleteRecord(Record *&curRecord, RecordOp &deindexer)
         case REV32(SCPT):
             deindexer.Accept(curRecord);
             SCPT.pool.destroy(curRecord);
-            return 1;
-        case REV32(LTEX):
-            deindexer.Accept(curRecord);
-            LTEX.pool.destroy(curRecord);
             return 1;
         case REV32(ENCH):
             deindexer.Accept(curRecord);
@@ -1796,179 +1983,9 @@ SINT32 TES5File::DeleteRecord(Record *&curRecord, RecordOp &deindexer)
             deindexer.Accept(curRecord);
             NAVI.pool.destroy(curRecord);
             return 1;
-        case REV32(CELL):
-            {
-            TES5::WRLDRecord *wrld_record = (TES5::WRLDRecord *)curRecord->GetParentRecord();
-            bool cell_found = false;
-            if(wrld_record != NULL)
-                {
-                if(wrld_record->CELL == curRecord)
-                    {
-                    wrld_record->CELL = NULL;
-                    cell_found = true;
-                    }
-                else
-                    {
-                    for(UINT32 ListIndex = 0; ListIndex < wrld_record->CELLS.size(); ++ListIndex)
-                        {
-                        if(wrld_record->CELLS[ListIndex] == curRecord)
-                            {
-                            wrld_record->CELLS.erase(wrld_record->CELLS.begin() + ListIndex);
-                            cell_found = true;
-                            break;
-                            }
-                        }
-                    }
-                if(!cell_found)
-                    {
-                    printer("TES5File::DeleteRecord: Error - Unable to delete record type (%s) with parent type (%s) in mod \"%s\". The parent record (%08X) does not contain the record to be deleted (%08X).\n", curRecord->GetStrType(), curRecord->GetParentRecord()->GetStrType(), ModName, curRecord->GetParentRecord()->formID, curRecord->formID);
-                    return 0;
-                    }
-                }
-            TES5::CELLRecord *cell_record = (TES5::CELLRecord *)curRecord;
-            for(UINT32 ListIndex = 0; ListIndex < cell_record->ACHR.size(); ++ListIndex)
-                {
-                deindexer.Accept(cell_record->ACHR[ListIndex]);
-                CELL.achr_pool.destroy(cell_record->ACHR[ListIndex]);
-                }
-
-            for(UINT32 ListIndex = 0; ListIndex < cell_record->ACRE.size(); ++ListIndex)
-                {
-                deindexer.Accept(cell_record->ACRE[ListIndex]);
-                CELL.acre_pool.destroy(cell_record->ACRE[ListIndex]);
-                }
-
-            for(UINT32 ListIndex = 0; ListIndex < cell_record->REFR.size(); ++ListIndex)
-                {
-                deindexer.Accept(cell_record->REFR[ListIndex]);
-                CELL.refr_pool.destroy(cell_record->REFR[ListIndex]);
-                }
-
-            for(UINT32 ListIndex = 0; ListIndex < cell_record->PGRE.size(); ++ListIndex)
-                {
-                deindexer.Accept(cell_record->PGRE[ListIndex]);
-                CELL.pgre_pool.destroy(cell_record->PGRE[ListIndex]);
-                }
-
-            for(UINT32 ListIndex = 0; ListIndex < cell_record->PMIS.size(); ++ListIndex)
-                {
-                deindexer.Accept(cell_record->PMIS[ListIndex]);
-                CELL.pmis_pool.destroy(cell_record->PMIS[ListIndex]);
-                }
-
-            for(UINT32 ListIndex = 0; ListIndex < cell_record->PBEA.size(); ++ListIndex)
-                {
-                deindexer.Accept(cell_record->PBEA[ListIndex]);
-                CELL.pbea_pool.destroy(cell_record->PBEA[ListIndex]);
-                }
-
-            for(UINT32 ListIndex = 0; ListIndex < cell_record->PFLA.size(); ++ListIndex)
-                {
-                deindexer.Accept(cell_record->PFLA[ListIndex]);
-                CELL.pfla_pool.destroy(cell_record->PFLA[ListIndex]);
-                }
-
-            for(UINT32 ListIndex = 0; ListIndex < cell_record->PCBE.size(); ++ListIndex)
-                {
-                deindexer.Accept(cell_record->PCBE[ListIndex]);
-                CELL.pcbe_pool.destroy(cell_record->PCBE[ListIndex]);
-                }
-
-            for(UINT32 ListIndex = 0; ListIndex < cell_record->NAVM.size(); ++ListIndex)
-                {
-                deindexer.Accept(cell_record->NAVM[ListIndex]);
-                CELL.navm_pool.destroy(cell_record->NAVM[ListIndex]);
-                }
-
-            deindexer.Accept(cell_record->LAND);
-            WRLD.land_pool.destroy(cell_record->LAND);
-
-            deindexer.Accept(curRecord);
-            if(cell_found)
-                WRLD.cell_pool.destroy(curRecord);
-            else
-                CELL.cell_pool.destroy(curRecord);
-            }
-            return 1;
-        case REV32(WRLD):
-            {
-            TES5::WRLDRecord *wrld_record = (TES5::WRLDRecord *)curRecord;
-
-            TES5::CELLRecord *cell_record = (TES5::CELLRecord *)wrld_record->CELL;
-            if(cell_record != NULL) //Add it to list of cells to be deleted
-                wrld_record->CELLS.push_back(cell_record);
-
-            for(UINT32 ListIndex = 0; ListIndex < wrld_record->CELLS.size(); ++ListIndex)
-                {
-                cell_record = (TES5::CELLRecord *)wrld_record->CELLS[ListIndex];
-                for(UINT32 ListX2Index = 0; ListX2Index < cell_record->ACHR.size(); ++ListX2Index)
-                    {
-                    deindexer.Accept(cell_record->ACHR[ListX2Index]);
-                    CELL.achr_pool.destroy(cell_record->ACHR[ListX2Index]);
-                    }
-
-                for(UINT32 ListX2Index = 0; ListX2Index < cell_record->ACRE.size(); ++ListX2Index)
-                    {
-                    deindexer.Accept(cell_record->ACRE[ListX2Index]);
-                    CELL.acre_pool.destroy(cell_record->ACRE[ListX2Index]);
-                    }
-
-                for(UINT32 ListX2Index = 0; ListX2Index < cell_record->REFR.size(); ++ListX2Index)
-                    {
-                    deindexer.Accept(cell_record->REFR[ListX2Index]);
-                    CELL.refr_pool.destroy(cell_record->REFR[ListX2Index]);
-                    }
-
-                for(UINT32 ListX2Index = 0; ListX2Index < cell_record->PGRE.size(); ++ListX2Index)
-                    {
-                    deindexer.Accept(cell_record->PGRE[ListX2Index]);
-                    CELL.pgre_pool.destroy(cell_record->PGRE[ListX2Index]);
-                    }
-
-                for(UINT32 ListX2Index = 0; ListX2Index < cell_record->PMIS.size(); ++ListX2Index)
-                    {
-                    deindexer.Accept(cell_record->PMIS[ListX2Index]);
-                    CELL.pmis_pool.destroy(cell_record->PMIS[ListX2Index]);
-                    }
-
-                for(UINT32 ListX2Index = 0; ListX2Index < cell_record->PBEA.size(); ++ListX2Index)
-                    {
-                    deindexer.Accept(cell_record->PBEA[ListX2Index]);
-                    CELL.pbea_pool.destroy(cell_record->PBEA[ListX2Index]);
-                    }
-
-                for(UINT32 ListX2Index = 0; ListX2Index < cell_record->PFLA.size(); ++ListX2Index)
-                    {
-                    deindexer.Accept(cell_record->PFLA[ListX2Index]);
-                    CELL.pfla_pool.destroy(cell_record->PFLA[ListX2Index]);
-                    }
-
-                for(UINT32 ListX2Index = 0; ListX2Index < cell_record->PCBE.size(); ++ListX2Index)
-                    {
-                    deindexer.Accept(cell_record->PCBE[ListX2Index]);
-                    CELL.pcbe_pool.destroy(cell_record->PCBE[ListX2Index]);
-                    }
-
-                for(UINT32 ListX2Index = 0; ListX2Index < cell_record->NAVM.size(); ++ListX2Index)
-                    {
-                    deindexer.Accept(cell_record->NAVM[ListX2Index]);
-                    CELL.navm_pool.destroy(cell_record->NAVM[ListX2Index]);
-                    }
-
-                deindexer.Accept(cell_record->LAND);
-                WRLD.land_pool.destroy(cell_record->LAND);
-
-                deindexer.Accept((Record *&)cell_record);
-                WRLD.cell_pool.destroy(cell_record);
-                }
-
-            deindexer.Accept(curRecord);
-            WRLD.wrld_pool.destroy(curRecord);
-            }
-            return 1;
         case REV32(DIAL):
             {
-            TES5::DIALRecord *dial_record = (TES5::DIALRecord *)curRecord;
+            Sk::DIALRecord *dial_record = (Sk::DIALRecord *)curRecord;
             for(UINT32 ListIndex = 0; ListIndex < dial_record->INFO.size(); ++ListIndex)
                 {
                 deindexer.Accept(dial_record->INFO[ListIndex]);
@@ -1981,7 +1998,7 @@ SINT32 TES5File::DeleteRecord(Record *&curRecord, RecordOp &deindexer)
             return 1;
         case REV32(INFO):
             {
-            TES5::DIALRecord *dial_record = (TES5::DIALRecord *)curRecord->GetParentRecord();
+            Sk::DIALRecord *dial_record = (Sk::DIALRecord *)curRecord->GetParentRecord();
             bool info_found = false;
             for(UINT32 ListIndex = 0; ListIndex < dial_record->INFO.size(); ++ListIndex)
                 {
@@ -2004,7 +2021,7 @@ SINT32 TES5File::DeleteRecord(Record *&curRecord, RecordOp &deindexer)
             return 1;
         case REV32(ACHR):
             {
-            TES5::CELLRecord *cell_record = (TES5::CELLRecord *)curRecord->GetParentRecord();
+            Sk::CELLRecord *cell_record = (Sk::CELLRecord *)curRecord->GetParentRecord();
             bool achr_found = false;
             for(UINT32 ListIndex = 0; ListIndex < cell_record->ACHR.size(); ++ListIndex)
                 {
@@ -2027,7 +2044,7 @@ SINT32 TES5File::DeleteRecord(Record *&curRecord, RecordOp &deindexer)
             return 1;
         case REV32(ACRE):
             {
-            TES5::CELLRecord *cell_record = (TES5::CELLRecord *)curRecord->GetParentRecord();
+            Sk::CELLRecord *cell_record = (Sk::CELLRecord *)curRecord->GetParentRecord();
             bool child_found = false;
             for(UINT32 ListIndex = 0; ListIndex < cell_record->ACRE.size(); ++ListIndex)
                 {
@@ -2050,7 +2067,7 @@ SINT32 TES5File::DeleteRecord(Record *&curRecord, RecordOp &deindexer)
             return 1;
         case REV32(REFR):
             {
-            TES5::CELLRecord *cell_record = (TES5::CELLRecord *)curRecord->GetParentRecord();
+            Sk::CELLRecord *cell_record = (Sk::CELLRecord *)curRecord->GetParentRecord();
             bool child_found = false;
             for(UINT32 ListIndex = 0; ListIndex < cell_record->REFR.size(); ++ListIndex)
                 {
@@ -2073,7 +2090,7 @@ SINT32 TES5File::DeleteRecord(Record *&curRecord, RecordOp &deindexer)
             return 1;
         case REV32(PGRE):
             {
-            TES5::CELLRecord *cell_record = (TES5::CELLRecord *)curRecord->GetParentRecord();
+            Sk::CELLRecord *cell_record = (Sk::CELLRecord *)curRecord->GetParentRecord();
             bool child_found = false;
             for(UINT32 ListIndex = 0; ListIndex < cell_record->PGRE.size(); ++ListIndex)
                 {
@@ -2096,7 +2113,7 @@ SINT32 TES5File::DeleteRecord(Record *&curRecord, RecordOp &deindexer)
             return 1;
         case REV32(PMIS):
             {
-            TES5::CELLRecord *cell_record = (TES5::CELLRecord *)curRecord->GetParentRecord();
+            Sk::CELLRecord *cell_record = (Sk::CELLRecord *)curRecord->GetParentRecord();
             bool child_found = false;
             for(UINT32 ListIndex = 0; ListIndex < cell_record->PMIS.size(); ++ListIndex)
                 {
@@ -2119,7 +2136,7 @@ SINT32 TES5File::DeleteRecord(Record *&curRecord, RecordOp &deindexer)
             return 1;
         case REV32(PBEA):
             {
-            TES5::CELLRecord *cell_record = (TES5::CELLRecord *)curRecord->GetParentRecord();
+            Sk::CELLRecord *cell_record = (Sk::CELLRecord *)curRecord->GetParentRecord();
             bool child_found = false;
             for(UINT32 ListIndex = 0; ListIndex < cell_record->PBEA.size(); ++ListIndex)
                 {
@@ -2142,7 +2159,7 @@ SINT32 TES5File::DeleteRecord(Record *&curRecord, RecordOp &deindexer)
             return 1;
         case REV32(PFLA):
             {
-            TES5::CELLRecord *cell_record = (TES5::CELLRecord *)curRecord->GetParentRecord();
+            Sk::CELLRecord *cell_record = (Sk::CELLRecord *)curRecord->GetParentRecord();
             bool child_found = false;
             for(UINT32 ListIndex = 0; ListIndex < cell_record->PFLA.size(); ++ListIndex)
                 {
@@ -2165,7 +2182,7 @@ SINT32 TES5File::DeleteRecord(Record *&curRecord, RecordOp &deindexer)
             return 1;
         case REV32(PCBE):
             {
-            TES5::CELLRecord *cell_record = (TES5::CELLRecord *)curRecord->GetParentRecord();
+            Sk::CELLRecord *cell_record = (Sk::CELLRecord *)curRecord->GetParentRecord();
             bool child_found = false;
             for(UINT32 ListIndex = 0; ListIndex < cell_record->PCBE.size(); ++ListIndex)
                 {
@@ -2188,7 +2205,7 @@ SINT32 TES5File::DeleteRecord(Record *&curRecord, RecordOp &deindexer)
             return 1;
         case REV32(NAVM):
             {
-            TES5::CELLRecord *cell_record = (TES5::CELLRecord *)curRecord->GetParentRecord();
+            Sk::CELLRecord *cell_record = (Sk::CELLRecord *)curRecord->GetParentRecord();
             bool child_found = false;
             for(UINT32 ListIndex = 0; ListIndex < cell_record->NAVM.size(); ++ListIndex)
                 {
@@ -2207,21 +2224,6 @@ SINT32 TES5File::DeleteRecord(Record *&curRecord, RecordOp &deindexer)
 
             deindexer.Accept(curRecord);
             CELL.navm_pool.destroy(curRecord);
-            }
-            return 1;
-        case REV32(LAND):
-            {
-            TES5::CELLRecord *cell_record = (TES5::CELLRecord *)curRecord->GetParentRecord();
-
-            if(cell_record->LAND != curRecord)
-                {
-                printer("TES5File::DeleteRecord: Error - Unable to delete record type (%s) with parent type (%s) in mod \"%s\". The parent record (%08X) does not contain the record to be deleted (%08X).\n", curRecord->GetStrType(), curRecord->GetParentRecord()->GetStrType(), ModName, curRecord->GetParentRecord()->formID, curRecord->formID);
-                return 0;
-                }
-
-            cell_record->LAND = NULL;
-            deindexer.Accept(curRecord);
-            WRLD.land_pool.destroy(curRecord);
             }
             return 1;
         case REV32(QUST):
@@ -2453,6 +2455,9 @@ SINT32 TES5File::Save(STRING const &SaveName, std::vector<FormIDResolver *> &Exp
     TES4.Write(writer, bMastersChanged, expander, collapser, Expanders);
 
     //ADD DEFINITIONS HERE
+    formCount += LTEX.Write(writer, Expanders, expander, collapser, bMastersChanged, CloseMod);
+    formCount += CELL.Write(writer, Expanders, expander, collapser, bMastersChanged, CloseMod);
+    formCount += WRLD.Write(writer, Expanders, expander, collapser, bMastersChanged, CloseMod, FormIDHandler, CELL, indexer);
     /*
     formCount += GMST.Write(writer, Expanders, expander, collapser, bMastersChanged, CloseMod);
     formCount += TXST.Write(writer, Expanders, expander, collapser, bMastersChanged, CloseMod);
@@ -2468,7 +2473,6 @@ SINT32 TES5File::Save(STRING const &SaveName, std::vector<FormIDResolver *> &Exp
     formCount += ASPC.Write(writer, Expanders, expander, collapser, bMastersChanged, CloseMod);
     formCount += MGEF.Write(writer, Expanders, expander, collapser, bMastersChanged, CloseMod);
     formCount += SCPT.Write(writer, Expanders, expander, collapser, bMastersChanged, CloseMod);
-    formCount += LTEX.Write(writer, Expanders, expander, collapser, bMastersChanged, CloseMod);
     formCount += ENCH.Write(writer, Expanders, expander, collapser, bMastersChanged, CloseMod);
     formCount += SPEL.Write(writer, Expanders, expander, collapser, bMastersChanged, CloseMod);
     formCount += ACTI.Write(writer, Expanders, expander, collapser, bMastersChanged, CloseMod);
@@ -2505,8 +2509,6 @@ SINT32 TES5File::Save(STRING const &SaveName, std::vector<FormIDResolver *> &Exp
     formCount += CLMT.Write(writer, Expanders, expander, collapser, bMastersChanged, CloseMod);
     formCount += REGN.Write(writer, Expanders, expander, collapser, bMastersChanged, CloseMod);
     formCount += NAVI.Write(writer, Expanders, expander, collapser, bMastersChanged, CloseMod);
-    formCount += CELL.Write(writer, Expanders, expander, collapser, bMastersChanged, CloseMod);
-    formCount += WRLD.Write(writer, Expanders, expander, collapser, bMastersChanged, CloseMod, FormIDHandler, CELL, indexer);
     formCount += DIAL.Write(writer, Expanders, expander, collapser, bMastersChanged, CloseMod);
     formCount += QUST.Write(writer, Expanders, expander, collapser, bMastersChanged, CloseMod);
     formCount += IDLE.Write(writer, Expanders, expander, collapser, bMastersChanged, CloseMod);
@@ -2577,6 +2579,12 @@ void TES5File::VisitAllRecords(RecordOp &op)
     Record *temp = &TES4;
     op.Accept(temp);
     }
+
+    LTEX.pool.VisitRecords(op);
+    WRLD.land_pool.VisitRecords(op);
+    CELL.cell_pool.VisitRecords(op);
+    WRLD.cell_pool.VisitRecords(op);
+    WRLD.wrld_pool.VisitRecords(op);
     /*
     GMST.pool.VisitRecords(op);
     TXST.pool.VisitRecords(op);
@@ -2592,7 +2600,6 @@ void TES5File::VisitAllRecords(RecordOp &op)
     ASPC.pool.VisitRecords(op);
     MGEF.pool.VisitRecords(op);
     SCPT.pool.VisitRecords(op);
-    LTEX.pool.VisitRecords(op);
     ENCH.pool.VisitRecords(op);
     SPEL.pool.VisitRecords(op);
     ACTI.pool.VisitRecords(op);
@@ -2639,12 +2646,8 @@ void TES5File::VisitAllRecords(RecordOp &op)
     CELL.pfla_pool.VisitRecords(op);
     CELL.pcbe_pool.VisitRecords(op);
     CELL.navm_pool.VisitRecords(op);
-    WRLD.land_pool.VisitRecords(op);
     DIAL.info_pool.VisitRecords(op);
 
-    CELL.cell_pool.VisitRecords(op);
-    WRLD.cell_pool.VisitRecords(op);
-    WRLD.wrld_pool.VisitRecords(op);
     DIAL.dial_pool.VisitRecords(op);
     QUST.pool.VisitRecords(op);
     IDLE.pool.VisitRecords(op);
@@ -2713,7 +2716,22 @@ void TES5File::VisitRecords(const UINT32 &RecordType, RecordOp &op)
             Record *temp = &TES4;
             op.Accept(temp);
             }
-            break;
+	    break;
+	case REV32(LTEX):
+	    LTEX.pool.VisitRecords(op);
+	    break;
+	case REV32(CELL):
+	    CELL.cell_pool.VisitRecords(op);
+	    break;
+	case REV32(WRLD):
+	    WRLD.wrld_pool.VisitRecords(op);
+	    break;
+	case REV32(LAND):
+	    WRLD.land_pool.VisitRecords(op);
+	    break;
+	case REV32(WCEL):
+	    WRLD.cell_pool.VisitRecords(op);
+	    break;
 	    /*
         case REV32(GMST):
             GMST.pool.VisitRecords(op);
@@ -2756,9 +2774,6 @@ void TES5File::VisitRecords(const UINT32 &RecordType, RecordOp &op)
             break;
         case REV32(SCPT):
             SCPT.pool.VisitRecords(op);
-            break;
-        case REV32(LTEX):
-            LTEX.pool.VisitRecords(op);
             break;
         case REV32(ENCH):
             ENCH.pool.VisitRecords(op);
@@ -2868,9 +2883,6 @@ void TES5File::VisitRecords(const UINT32 &RecordType, RecordOp &op)
         case REV32(NAVI):
             NAVI.pool.VisitRecords(op);
             break;
-        case REV32(CELL):
-            CELL.cell_pool.VisitRecords(op);
-            break;
         case REV32(ACHR):
             CELL.achr_pool.VisitRecords(op);
             break;
@@ -2897,15 +2909,6 @@ void TES5File::VisitRecords(const UINT32 &RecordType, RecordOp &op)
             break;
         case REV32(NAVM):
             CELL.navm_pool.VisitRecords(op);
-            break;
-        case REV32(WRLD):
-            WRLD.wrld_pool.VisitRecords(op);
-            break;
-        case REV32(LAND):
-            WRLD.land_pool.VisitRecords(op);
-            break;
-        case REV32(WCEL):
-            WRLD.cell_pool.VisitRecords(op);
             break;
         case REV32(CLLS):
             CELL.cell_pool.VisitRecords(op);

@@ -36,7 +36,7 @@
 #include "..\..\..\Common.h"
 #include "..\LTEXRecord.h"
 
-namespace TES5
+namespace Sk
 {
 UINT32 LTEXRecord::GetFieldAttribute(FIELD_IDENTIFIERS, UINT32 WhichAttribute)
     {

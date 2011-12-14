@@ -101,6 +101,8 @@ TES4Record::TES4Record(TES4Record *srcRecord):
         }
     ONAM = srcRecord->ONAM;
     SCRN = srcRecord->SCRN;
+    INTV = srcRecord->INTV;
+    PURG = srcRecord->PURG;
     return;
     }
 
@@ -187,7 +189,8 @@ SINT32 TES4Record::ParseRecord(unsigned char *buffer, unsigned char *end_buffer,
                 break;
             case REV32(DELE):
                 DELE.Read(buffer, subSize, CompressedOnDisk);
-                break;
+		break;
+	    /* Fall-Out ------------------------------------- */
             case REV32(ONAM):
                 ONAM.Read(buffer, subSize);
                 break;
@@ -195,12 +198,12 @@ SINT32 TES4Record::ParseRecord(unsigned char *buffer, unsigned char *end_buffer,
                 SCRN.Read(buffer, subSize, CompressedOnDisk);
 		break;
 	    /* Skyrim --------------------------------------- */
-	    case REV32(INTV):
+	    case REV32(INTV): // 4 bytes
 		INTV.Read(buffer, subSize, CompressedOnDisk);
 		break;
             default:
                 //printer("FileName = %s\n", FileName);
-                printer("  TES4: %08X - Unknown subType = %04x\n", formID, subType);
+                printer("  TES4: %08X - Unknown subType = %04x [%c%c%c%c]\n", formID, subType, (subType >> 0) & 0xFF, (subType >> 8) & 0xFF, (subType >> 16) & 0xFF, (subType >> 24) & 0xFF);
                 printer("  Size = %i\n", subSize);
                 printer("  CurPos = %04x\n\n", buffer - 6);
                 buffer = end_buffer;
@@ -231,7 +234,7 @@ SINT32 TES4Record::WriteRecord(FileWriter &writer)
                 {
                 writer.record_write_subrecord(REV32(MAST), MAST[p], (UINT32)strlen(MAST[p]) + 1);
                 writer.record_write_subrecord(REV32(DATA), &DATA[0], sizeof(DATA));
-                }
+	      }
             break;
         case eIsFallout3:
             printer("TES4Record::WriteRecord: Error - Unable to write TES4 record. Fallout 3 support not yet implemented.\n");
@@ -260,7 +263,9 @@ SINT32 TES4Record::WriteRecord(FileWriter &writer)
 		{
 		writer.record_write_subrecord(REV32(MAST), MAST[p], (UINT32)strlen(MAST[p]) + 1);
 		writer.record_write_subrecord(REV32(DATA), &DATA[0], sizeof(DATA));
-		}
+	      }
+	    WRITE(INTV);
+	    WRITE(PURG);
 	    break;
         }
 
@@ -323,7 +328,9 @@ bool TES4Record::operator ==(const TES4Record &other) const
         versionControl2[1] == other.versionControl2[1] &&
         SCRN == other.SCRN &&
         MAST.size() == other.MAST.size() &&
-        ONAM == other.ONAM)
+	ONAM == other.ONAM &&
+	INTV == other.INTV &&
+	PURG == other.PURG)
         {
         //Record order kinda sorta but doesn't really matter on masters, so equality testing is easy
         //The order determines the mod index of all formIDs in the mod file

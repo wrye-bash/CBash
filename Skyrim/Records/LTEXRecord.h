@@ -37,7 +37,7 @@
 #include "..\..\Common.h"
 #include "..\..\GenericRecord.h"
 
-namespace TES5
+namespace Sk
 {
 class LTEXRecord : public TES5Record //Landscape Texture
     {
@@ -79,7 +79,8 @@ class LTEXRecord : public TES5Record //Landscape Texture
         OptSimpleSubRecord<FORMID> TNAM; //Texture
         ReqSubRecord<LTEXHNAM> HNAM; //Havok Data
         ReqSimpleSubRecord<UINT8> SNAM; //Texture Specular Exponent
-        UnorderedSparseArray<FORMID> GNAM; //Grasses
+	UnorderedSparseArray<FORMID> GNAM; //Grasses
+	RawRecord MNAM; //Unknown (Skyrim)
 
         LTEXRecord(unsigned char *_recData=NULL);
         LTEXRecord(LTEXRecord *srcRecord);
