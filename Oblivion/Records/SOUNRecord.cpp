@@ -1,0 +1,285 @@
+/* ***** BEGIN LICENSE BLOCK *****
+ * Version: MPL 1.1/GPL 2.0/LGPL 2.1
+ *
+ * The contents of this file are subject to the Mozilla Public License Version
+ * 1.1 (the "License"); you may not use this file except in compliance with
+ * the License. You may obtain a copy of the License at
+ * http://www.mozilla.org/MPL/
+ *
+ * Software distributed under the License is distributed on an "AS IS" basis,
+ * WITHOUT WARRANTY OF ANY KIND, either express or implied. See the License
+ * for the specific language governing rights and limitations under the
+ * License.
+ *
+ * The Original Code is CBash code.
+ *
+ * The Initial Developer of the Original Code is
+ * Waruddar.
+ * Portions created by the Initial Developer are Copyright (C) 2010
+ * the Initial Developer. All Rights Reserved.
+ *
+ * Contributor(s):
+ *
+ * Alternatively, the contents of this file may be used under the terms of
+ * either the GNU General Public License Version 2 or later (the "GPL"), or
+ * the GNU Lesser General Public License Version 2.1 or later (the "LGPL"),
+ * in which case the provisions of the GPL or the LGPL are applicable instead
+ * of those above. If you wish to allow use of your version of this file only
+ * under the terms of either the GPL or the LGPL, and not to allow others to
+ * use your version of this file under the terms of the MPL, indicate your
+ * decision by deleting the provisions above and replace them with the notice
+ * and other provisions required by the GPL or the LGPL. If you do not delete
+ * the provisions above, a recipient may use your version of this file under
+ * the terms of any one of the MPL, the GPL or the LGPL.
+ *
+ * ***** END LICENSE BLOCK ***** */
+#include "..\..\Common.h"
+#include "SOUNRecord.h"
+
+namespace Ob
+{
+SOUNRecord::SOUNSNDX::SOUNSNDX():
+    minDistance(0),
+    maxDistance(0),
+    freqAdjustment(0),
+    unused1(0),
+    flags(0),
+    staticAtten(0),
+    stopTime(0),
+    startTime(0)
+    {
+    memset(&unused2[0], 0x00, sizeof(unused2));
+    }
+
+SOUNRecord::SOUNSNDX::~SOUNSNDX()
+    {
+    //
+    }
+
+bool SOUNRecord::SOUNSNDX::operator ==(const SOUNSNDX &other) const
+    {
+    return (minDistance == other.minDistance &&
+            maxDistance == other.maxDistance &&
+            freqAdjustment == other.freqAdjustment &&
+            flags == other.flags &&
+            staticAtten == other.staticAtten &&
+            stopTime == other.stopTime &&
+            startTime == other.startTime);
+    }
+
+bool SOUNRecord::SOUNSNDX::operator !=(const SOUNSNDX &other) const
+    {
+    return !(*this == other);
+    }
+
+SOUNRecord::SOUNRecord(unsigned char *_recData):
+    Record(_recData)
+    {
+    //
+    }
+
+SOUNRecord::SOUNRecord(SOUNRecord *srcRecord):
+    Record()
+    {
+    if(srcRecord == NULL)
+        return;
+
+    flags = srcRecord->flags;
+    formID = srcRecord->formID;
+    flagsUnk = srcRecord->flagsUnk;
+
+    recData = srcRecord->recData;
+    if(!srcRecord->IsChanged())
+        return;
+
+    EDID = srcRecord->EDID;
+    FNAM = srcRecord->FNAM;
+    SNDX = srcRecord->SNDX;
+    }
+
+SOUNRecord::~SOUNRecord()
+    {
+    //
+    }
+
+bool SOUNRecord::IsRandomFrequencyShift()
+    {
+    return (SNDX.value.flags & fIsRandomFrequencyShift) != 0;
+    }
+
+void SOUNRecord::IsRandomFrequencyShift(bool value)
+    {
+    SNDX.value.flags = value ? (SNDX.value.flags | fIsRandomFrequencyShift) : (SNDX.value.flags & ~fIsRandomFrequencyShift);
+    }
+
+bool SOUNRecord::IsPlayAtRandom()
+    {
+    return (SNDX.value.flags & fIsPlayAtRandom) != 0;
+    }
+
+void SOUNRecord::IsPlayAtRandom(bool value)
+    {
+    SNDX.value.flags = value ? (SNDX.value.flags | fIsPlayAtRandom) : (SNDX.value.flags & ~fIsPlayAtRandom);
+    }
+
+bool SOUNRecord::IsEnvironmentIgnored()
+    {
+    return (SNDX.value.flags & fIsEnvironmentIgnored) != 0;
+    }
+
+void SOUNRecord::IsEnvironmentIgnored(bool value)
+    {
+    SNDX.value.flags = value ? (SNDX.value.flags | fIsEnvironmentIgnored) : (SNDX.value.flags & ~fIsEnvironmentIgnored);
+    }
+
+bool SOUNRecord::IsRandomLocation()
+    {
+    return (SNDX.value.flags & fIsRandomLocation) != 0;
+    }
+
+void SOUNRecord::IsRandomLocation(bool value)
+    {
+    SNDX.value.flags = value ? (SNDX.value.flags | fIsRandomLocation) : (SNDX.value.flags & ~fIsRandomLocation);
+    }
+
+bool SOUNRecord::IsLoop()
+    {
+    return (SNDX.value.flags & fIsLoop) != 0;
+    }
+
+void SOUNRecord::IsLoop(bool value)
+    {
+    SNDX.value.flags = value ? (SNDX.value.flags | fIsLoop) : (SNDX.value.flags & ~fIsLoop);
+    }
+
+bool SOUNRecord::IsMenuSound()
+    {
+    return (SNDX.value.flags & fIsMenuSound) != 0;
+    }
+
+void SOUNRecord::IsMenuSound(bool value)
+    {
+    SNDX.value.flags = value ? (SNDX.value.flags | fIsMenuSound) : (SNDX.value.flags & ~fIsMenuSound);
+    }
+
+bool SOUNRecord::Is2D()
+    {
+    return (SNDX.value.flags & fIs2D) != 0;
+    }
+
+void SOUNRecord::Is2D(bool value)
+    {
+    SNDX.value.flags = value ? (SNDX.value.flags | fIs2D) : (SNDX.value.flags & ~fIs2D);
+    }
+
+bool SOUNRecord::Is360LFE()
+    {
+    return (SNDX.value.flags & fIs360LFE) != 0;
+    }
+
+void SOUNRecord::Is360LFE(bool value)
+    {
+    SNDX.value.flags = value ? (SNDX.value.flags | fIs360LFE) : (SNDX.value.flags & ~fIs360LFE);
+    }
+
+bool SOUNRecord::IsFlagMask(unsigned short Mask, bool Exact)
+    {
+    return Exact ? ((SNDX.value.flags & Mask) == Mask) : ((SNDX.value.flags & Mask) != 0);
+    }
+
+void SOUNRecord::SetFlagMask(unsigned short Mask)
+    {
+    SNDX.value.flags = Mask;
+    }
+
+UINT32 SOUNRecord::GetType()
+    {
+    return REV32(SOUN);
+    }
+
+STRING SOUNRecord::GetStrType()
+    {
+    return "SOUN";
+    }
+
+SINT32 SOUNRecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk)
+    {
+    UINT32 subType = 0;
+    UINT32 subSize = 0;
+    while(buffer < end_buffer){
+        subType = *(UINT32 *)buffer;
+        buffer += 4;
+        switch(subType)
+            {
+            case REV32(XXXX):
+                buffer += 2;
+                subSize = *(UINT32 *)buffer;
+                buffer += 4;
+                subType = *(UINT32 *)buffer;
+                buffer += 6;
+                break;
+            default:
+                subSize = *(UINT16 *)buffer;
+                buffer += 2;
+                break;
+            }
+        switch(subType)
+            {
+            case REV32(EDID):
+                EDID.Read(buffer, subSize, CompressedOnDisk);
+                break;
+            case REV32(FNAM):
+                FNAM.Read(buffer, subSize, CompressedOnDisk);
+                break;
+            case REV32(SNDD):
+            case REV32(SNDX):
+                SNDX.Read(buffer, subSize);
+                break;
+            default:
+                //printer("FileName = %s\n", FileName);
+                printer("  SOUN: %08X - Unknown subType = %04x\n", formID, subType);
+                CBASH_CHUNK_DEBUG
+                printer("  Size = %i\n", subSize);
+                printer("  CurPos = %04x\n\n", buffer - 6);
+                buffer = end_buffer;
+                break;
+            }
+        };
+    return 0;
+    }
+
+SINT32 SOUNRecord::Unload()
+    {
+    IsChanged(false);
+    IsLoaded(false);
+    EDID.Unload();
+    FNAM.Unload();
+    SNDX.Unload();
+    return 1;
+    }
+
+SINT32 SOUNRecord::WriteRecord(FileWriter &writer)
+    {
+    WRITE(EDID);
+    WRITE(FNAM);
+    WRITE(SNDX);
+    return -1;
+    }
+
+bool SOUNRecord::operator ==(const SOUNRecord &other) const
+    {
+    return (EDID.equalsi(other.EDID) &&
+            FNAM.equalsi(other.FNAM) &&
+            SNDX == other.SNDX);
+    }
+
+bool SOUNRecord::operator !=(const SOUNRecord &other) const
+    {
+    return !(*this == other);
+    }
+
+bool SOUNRecord::equals(Record *other)
+    {
+    return *this == *(SOUNRecord *)other;
+    }
+}

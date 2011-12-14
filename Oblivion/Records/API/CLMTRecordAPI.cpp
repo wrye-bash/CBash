@@ -1,0 +1,330 @@
+/* ***** BEGIN LICENSE BLOCK *****
+ * Version: MPL 1.1/GPL 2.0/LGPL 2.1
+ *
+ * The contents of this file are subject to the Mozilla Public License Version
+ * 1.1 (the "License"); you may not use this file except in compliance with
+ * the License. You may obtain a copy of the License at
+ * http://www.mozilla.org/MPL/
+ *
+ * Software distributed under the License is distributed on an "AS IS" basis,
+ * WITHOUT WARRANTY OF ANY KIND, either express or implied. See the License
+ * for the specific language governing rights and limitations under the
+ * License.
+ *
+ * The Original Code is CBash code.
+ *
+ * The Initial Developer of the Original Code is
+ * Waruddar.
+ * Portions created by the Initial Developer are Copyright (C) 2010
+ * the Initial Developer. All Rights Reserved.
+ *
+ * Contributor(s):
+ *
+ * Alternatively, the contents of this file may be used under the terms of
+ * either the GNU General Public License Version 2 or later (the "GPL"), or
+ * the GNU Lesser General Public License Version 2.1 or later (the "LGPL"),
+ * in which case the provisions of the GPL or the LGPL are applicable instead
+ * of those above. If you wish to allow use of your version of this file only
+ * under the terms of either the GPL or the LGPL, and not to allow others to
+ * use your version of this file under the terms of the MPL, indicate your
+ * decision by deleting the provisions above and replace them with the notice
+ * and other provisions required by the GPL or the LGPL. If you do not delete
+ * the provisions above, a recipient may use your version of this file under
+ * the terms of any one of the MPL, the GPL or the LGPL.
+ *
+ * ***** END LICENSE BLOCK ***** */
+#include "..\..\..\Common.h"
+#include "..\CLMTRecord.h"
+
+namespace Ob
+{
+UINT32 CLMTRecord::GetFieldAttribute(FIELD_IDENTIFIERS, UINT32 WhichAttribute)
+    {
+    switch(FieldID)
+        {
+        case 0: //recType
+            return GetType();
+        case 1: //flags1
+            return UINT32_FLAG_FIELD;
+        case 2: //fid
+            return FORMID_FIELD;
+        case 3: //flags2
+            return UINT32_FLAG_FIELD;
+        case 4: //eid
+            return ISTRING_FIELD;
+        case 5: //weathers
+            if(ListFieldID == 0) //weathers
+                {
+                switch(WhichAttribute)
+                    {
+                    case 0: //fieldType
+                        return LIST_FIELD;
+                    case 1: //fieldSize
+                        return (UINT32)Weathers.value.size();
+                    default:
+                        return UNKNOWN_FIELD;
+                    }
+                }
+
+            if(ListIndex >= Weathers.value.size())
+                return UNKNOWN_FIELD;
+
+            switch(ListFieldID)
+                {
+                case 1: //weather
+                    return FORMID_FIELD;
+                case 2: //chance
+                    return SINT32_FIELD;
+                default:
+                    return UNKNOWN_FIELD;
+                }
+            return UNKNOWN_FIELD;
+        case 6: //sunPath
+            return ISTRING_FIELD;
+        case 7: //glarePath
+            return ISTRING_FIELD;
+        case 8: //modPath
+            return ISTRING_FIELD;
+        case 9: //modb
+            return FLOAT32_FIELD;
+        case 10: //modt_p
+            switch(WhichAttribute)
+                {
+                case 0: //fieldType
+                    return UINT8_ARRAY_FIELD;
+                case 1: //fieldSize
+                    return MODL.IsLoaded() ? MODL->MODT.GetSize() : 0;
+                default:
+                    return UNKNOWN_FIELD;
+                }
+            return UNKNOWN_FIELD;
+        case 11: //riseBegin
+            return UINT8_FIELD;
+        case 12: //riseEnd
+            return UINT8_FIELD;
+        case 13: //setBegin
+            return UINT8_FIELD;
+        case 14: //setEnd
+            return UINT8_FIELD;
+        case 15: //volatility
+            return UINT8_FIELD;
+        case 16: //phaseLength
+            return UINT8_FIELD;
+        default:
+            return UNKNOWN_FIELD;
+        }
+    return UNKNOWN_FIELD;
+    }
+
+void * CLMTRecord::GetField(FIELD_IDENTIFIERS, void **FieldValues)
+    {
+    switch(FieldID)
+        {
+        case 1: //flags1
+            return &flags;
+        case 2: //fid
+            return &formID;
+        case 3: //flags2
+            return &flagsUnk;
+        case 4: //eid
+            return EDID.value;
+        case 5: //weathers
+            if(ListIndex >= Weathers.value.size())
+                return NULL;
+
+            switch(ListFieldID)
+                {
+                case 1: //weather
+                    return &Weathers.value[ListIndex].weather;
+                case 2: //chance
+                    return &Weathers.value[ListIndex].chance;
+                default:
+                    return NULL;
+                }
+            return NULL;
+        case 6: //sunPath
+            return FNAM.value;
+        case 7: //glarePath
+            return GNAM.value;
+        case 8: //modPath
+            return MODL.IsLoaded() ? MODL->MODL.value : NULL;
+        case 9: //modb
+            return MODL.IsLoaded() ? &MODL->MODB.value : NULL;
+        case 10: //modt_p
+            *FieldValues = MODL.IsLoaded() ? MODL->MODT.value : NULL;
+            return NULL;
+        case 11: //riseBegin
+            return &TNAM.value.riseBegin;
+        case 12: //riseEnd
+            return &TNAM.value.riseEnd;
+        case 13: //setBegin
+            return &TNAM.value.setBegin;
+        case 14: //setEnd
+            return &TNAM.value.setEnd;
+        case 15: //volatility
+            return &TNAM.value.volatility;
+        case 16: //phaseLength
+            return &TNAM.value.phaseLength;
+        default:
+            return NULL;
+        }
+    return NULL;
+    }
+
+bool CLMTRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
+    {
+    switch(FieldID)
+        {
+        case 1: //flags1
+            SetHeaderFlagMask(*(UINT32 *)FieldValue);
+            break;
+        case 3: //flags2
+            SetHeaderUnknownFlagMask(*(UINT32 *)FieldValue);
+            break;
+        case 4: //eid
+            EDID.Copy((STRING)FieldValue);
+            break;
+        case 5: //weathers
+            if(ListFieldID == 0) //weathersSize
+                {
+                Weathers.resize(ArraySize);
+                return false;
+                }
+
+            if(ListIndex >= Weathers.value.size())
+                break;
+
+            switch(ListFieldID)
+                {
+                case 1: //weather
+                    Weathers.value[ListIndex].weather = *(FORMID *)FieldValue;
+                    return true;
+                case 2: //chance
+                    Weathers.value[ListIndex].chance = *(SINT32 *)FieldValue;
+                    break;
+                default:
+                    break;
+                }
+            break;
+        case 6: //sunPath
+            FNAM.Copy((STRING)FieldValue);
+            break;
+        case 7: //glarePath
+            GNAM.Copy((STRING)FieldValue);
+            break;
+        case 8: //modPath
+            MODL.Load();
+            MODL->MODL.Copy((STRING)FieldValue);
+            break;
+        case 9: //modb
+            MODL.Load();
+            MODL->MODB.value = *(FLOAT32 *)FieldValue;
+            break;
+        case 10: //modt_p
+            MODL.Load();
+            MODL->MODT.Copy((UINT8ARRAY)FieldValue, ArraySize);
+            break;
+        case 11: //riseBegin
+            TNAM.value.riseBegin = *(UINT8 *)FieldValue;
+            break;
+        case 12: //riseEnd
+            TNAM.value.riseEnd = *(UINT8 *)FieldValue;
+            break;
+        case 13: //setBegin
+            TNAM.value.setBegin = *(UINT8 *)FieldValue;
+            break;
+        case 14: //setEnd
+            TNAM.value.setEnd = *(UINT8 *)FieldValue;
+            break;
+        case 15: //volatility
+            TNAM.value.volatility = *(UINT8 *)FieldValue;
+            break;
+        case 16: //phaseLength
+            TNAM.value.phaseLength = *(UINT8 *)FieldValue;
+            break;
+        default:
+            break;
+        }
+    return false;
+    }
+
+void CLMTRecord::DeleteField(FIELD_IDENTIFIERS)
+    {
+    CLMTTNAM defaultTNAM;
+    CLMTWLST defaultWLST;
+
+    switch(FieldID)
+        {
+        case 1: //flags1
+            SetHeaderFlagMask(0);
+            return;
+        case 3: //flags2
+            flagsUnk = 0;
+            return;
+        case 4: //eid
+            EDID.Unload();
+            return;
+        case 5: //weathers
+            if(ListFieldID == 0) //weathers
+                {
+                Weathers.Unload();
+                return;
+                }
+
+            if(ListIndex >= Weathers.value.size())
+                return;
+
+            switch(ListFieldID)
+                {
+                case 1: //weather
+                    Weathers.value[ListIndex].weather = defaultWLST.weather;
+                    return;
+                case 2: //chance
+                    Weathers.value[ListIndex].chance = defaultWLST.chance;
+                    return;
+                default:
+                    return;
+                }
+            return;
+        case 6: //sunPath
+            FNAM.Unload();
+            return;
+        case 7: //glarePath
+            GNAM.Unload();
+            return;
+        case 8: //modPath
+            if(MODL.IsLoaded())
+                MODL->MODL.Unload();
+            return;
+        case 9: //modb
+            if(MODL.IsLoaded())
+                MODL->MODB.Unload();
+            return;
+        case 10: //modt_p
+            if(MODL.IsLoaded())
+                MODL->MODT.Unload();
+            return;
+        case 11: //riseBegin
+            TNAM.value.riseBegin = defaultTNAM.riseBegin;
+            return;
+        case 12: //riseEnd
+            TNAM.value.riseEnd = defaultTNAM.riseEnd;
+            return;
+        case 13: //setBegin
+            TNAM.value.setBegin = defaultTNAM.setBegin;
+            return;
+        case 14: //setEnd
+            TNAM.value.setEnd = defaultTNAM.setEnd;
+            return;
+        case 15: //volatility
+            TNAM.value.volatility = defaultTNAM.volatility;
+            return;
+        case 16: //phaseLength
+            TNAM.value.phaseLength = defaultTNAM.phaseLength;
+            return;
+        default:
+            return;
+        }
+    return;
+    }
+}
