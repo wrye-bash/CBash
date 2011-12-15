@@ -19,6 +19,7 @@
  * the Initial Developer. All Rights Reserved.
  *
  * Contributor(s):
+ * Ethatron
  *
  * Alternatively, the contents of this file may be used under the terms of
  * either the GNU General Public License Version 2 or later (the "GPL"), or
@@ -51,5 +52,9 @@ void * MATTRecord::GetField(FIELD_IDENTIFIERS, void **FieldValues)
 bool MATTRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
     {
     return false;
+  }
+
+void MATTRecord::DeleteField(FIELD_IDENTIFIERS)
+    {
     }
 }

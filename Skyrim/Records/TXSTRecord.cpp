@@ -70,6 +70,8 @@ TXSTRecord::TXSTRecord(TXSTRecord *srcRecord):
     TX03 = srcRecord->TX03;
     TX04 = srcRecord->TX04;
     TX05 = srcRecord->TX05;
+    TX06 = srcRecord->TX06;
+    TX07 = srcRecord->TX07;
 
     DODT = srcRecord->DODT;
     DNAM = srcRecord->DNAM;
@@ -206,7 +208,14 @@ SINT32 TXSTRecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer,
                 break;
             case REV32(TX05):
                 TX05.Read(buffer, subSize, CompressedOnDisk);
-                break;
+		break;
+	    /* Skyrim --------------------------------------- */
+	    case REV32(TX06):
+		TX06.Read(buffer, subSize, CompressedOnDisk);
+		break;
+	    case REV32(TX07):
+		TX07.Read(buffer, subSize, CompressedOnDisk);
+		break;
             case REV32(DODT):
                 DODT.Read(buffer, subSize);
                 break;
@@ -238,6 +247,8 @@ SINT32 TXSTRecord::Unload()
     TX03.Unload();
     TX04.Unload();
     TX05.Unload();
+    TX06.Unload();
+    TX07.Unload();
     DODT.Unload();
     DNAM.Unload();
     return 1;
@@ -253,6 +264,8 @@ SINT32 TXSTRecord::WriteRecord(FileWriter &writer)
     WRITE(TX03);
     WRITE(TX04);
     WRITE(TX05);
+    WRITE(TX06);
+    WRITE(TX07);
     WRITE(DODT);
     WRITE(DNAM);
     return -1;
@@ -269,7 +282,9 @@ bool TXSTRecord::operator ==(const TXSTRecord &other) const
             TX02.equalsi(other.TX02) &&
             TX03.equalsi(other.TX03) &&
             TX04.equalsi(other.TX04) &&
-            TX05.equalsi(other.TX05)
+	    TX05.equalsi(other.TX05) &&
+	    TX06.equalsi(other.TX06) &&
+	    TX07.equalsi(other.TX07)
             );
     }
 

@@ -63,7 +63,9 @@ class TXSTRecord : public TES5Record //Texture Set
         StringRecord TX02; //Environment Map Mask / ?
         StringRecord TX03; //Glow Map / Unused
         StringRecord TX04; //Parallax Map / Unused
-        StringRecord TX05; //Environment Map / Unused
+	StringRecord TX05; //Environment Map / Unused
+	StringRecord TX06; //Unknown (Skyrim)
+	StringRecord TX07; //Unknown (Skyrim)
         OptSubRecord<GENDODT> DODT; //Decal Data
         SemiOptSimpleSubRecord<UINT16> DNAM; //Flags
 

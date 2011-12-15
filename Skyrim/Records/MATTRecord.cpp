@@ -19,6 +19,7 @@
  * the Initial Developer. All Rights Reserved.
  *
  * Contributor(s):
+ * Ethatron
  *
  * Alternatively, the contents of this file may be used under the terms of
  * either the GNU General Public License Version 2 or later (the "GPL"), or
@@ -67,6 +68,7 @@ MATTRecord::MATTRecord(MATTRecord *srcRecord):
     BNAM = srcRecord->BNAM;
     FNAM = srcRecord->FNAM;
     HNAM = srcRecord->HNAM;
+    PNAM = srcRecord->PNAM;
     return;
     }
 
@@ -108,24 +110,27 @@ SINT32 MATTRecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer,
             }
         switch(subType)
             {
-            case REV32(EDID):
+	    case REV32(EDID): // MaterialInsect
                 EDID.Read(buffer, subSize, CompressedOnDisk);
                 break;
-            case REV32(MNAM):
+            case REV32(MNAM): // Insect
                 MNAM.Read(buffer, subSize, CompressedOnDisk);
                 break;
-            case REV32(CNAM):
+	    case REV32(CNAM): // 12 bytes, f1 f0 f0 3e - b9 b8 b8 3d - b9 b8 b8 3d, flags?
                 CNAM.Read(buffer, subSize, CompressedOnDisk);
                 break;
-            case REV32(BNAM):
+            case REV32(BNAM): // 4 bytes, 00 00 80 3e, flags
                 BNAM.Read(buffer, subSize, CompressedOnDisk);
                 break;
-            case REV32(FNAM):
+            case REV32(FNAM): // 4 bytes, 02 00 00 00, flags
                 FNAM.Read(buffer, subSize, CompressedOnDisk);
                 break;
-            case REV32(HNAM):
-                HNAM.Read(buffer, subSize, CompressedOnDisk);
-                break;
+            case REV32(HNAM): // 4 bytes, 86 a2 05 00, formID -> IPDS (PHYBodyMedium), Havok NAMe
+                HNAM.Read(buffer, subSize);
+		break;
+	    case REV32(PNAM): // 4 bytes, 47 2f 01 00, formID -> MATT, Parent NAMe
+		PNAM.Read(buffer, subSize);
+		break;
             default:
                 //printer("FileName = %s\n", FileName);
                 printer("  MATT: %08X - Unknown subType = %04x [%c%c%c%c]\n", formID, subType, (subType >> 0) & 0xFF, (subType >> 8) & 0xFF, (subType >> 16) & 0xFF, (subType >> 24) & 0xFF);
@@ -149,6 +154,7 @@ SINT32 MATTRecord::Unload()
     BNAM.Unload();
     FNAM.Unload();
     HNAM.Unload();
+    PNAM.Unload();
     return 1;
     }
 
@@ -160,6 +166,7 @@ SINT32 MATTRecord::WriteRecord(FileWriter &writer)
     WRITE(BNAM);
     WRITE(FNAM);
     WRITE(HNAM);
+    WRITE(PNAM);
     return -1;
     }
 
@@ -169,7 +176,8 @@ bool MATTRecord::operator ==(const MATTRecord &other) const
             CNAM == other.CNAM &&
             BNAM == other.BNAM &&
             FNAM == other.FNAM &&
-            HNAM == other.HNAM);
+	    HNAM == other.HNAM &&
+	    PNAM == other.PNAM);
     }
 
 bool MATTRecord::operator !=(const MATTRecord &other) const

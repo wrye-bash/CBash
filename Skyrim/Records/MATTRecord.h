@@ -19,6 +19,7 @@
  * the Initial Developer. All Rights Reserved.
  *
  * Contributor(s):
+ * Ethatron
  *
  * Alternatively, the contents of this file may be used under the terms of
  * either the GNU General Public License Version 2 or later (the "GPL"), or
@@ -47,8 +48,9 @@ class MATTRecord : public TES5Record //Material Type
         StringRecord MNAM; //Material name (Skyrim)
         RawRecord CNAM; //Unknown (Skyrim)
         RawRecord BNAM; //Unknown (Skyrim)
-        RawRecord FNAM; //Unknown (Skyrim)
-        RawRecord HNAM; //Unknown (Skyrim)
+	RawRecord FNAM; //Unknown (Skyrim)
+	ReqSimpleSubRecord<FORMID> HNAM; //Havok Name (Skyrim)
+	ReqSimpleSubRecord<FORMID> PNAM; //Material Parent (Skyrim)
 
         MATTRecord(unsigned char *_recData=NULL);
         MATTRecord(MATTRecord *srcRecord);

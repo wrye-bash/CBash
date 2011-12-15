@@ -119,6 +119,8 @@ class RecordProcessor
 		if (filter_records.count(header.type) == 0)
 		    return false;
 		if (header.type != REV32(LTEX))
+	        if (header.type != REV32(TXST))
+		if (header.type != REV32(MATT))
 		if (filter_wspaces.count(activewspace) == 0)
 		    return false;
 	    }
@@ -127,6 +129,8 @@ class RecordProcessor
 		if (filter_records.count(header.type) != 0)
 		    return false;
 		if (header.type != REV32(LTEX))
+		if (header.type != REV32(TXST))
+		if (header.type != REV32(MATT))
 		if (filter_wspaces.count(activewspace) != 0)
 		    return false;
 	    }

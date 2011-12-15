@@ -320,17 +320,17 @@ SINT32 LTEXRecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer,
             case REV32(TNAM):
                 TNAM.Read(buffer, subSize);
                 break;
-            case REV32(HNAM):
+            case REV32(HNAM): // 2 bytes, 02 00, flags
                 HNAM.Read(buffer, subSize);
                 break;
-            case REV32(SNAM):
+            case REV32(SNAM): // 1 byte, 1e, flags
                 SNAM.Read(buffer, subSize);
                 break;
             case REV32(GNAM):
                 GNAM.Read(buffer, subSize);
 		break;
 	    /* Skyrim --------------------------------------- */
-	    case REV32(MNAM): // 4 bytes
+	    case REV32(MNAM): // 4 bytes, 47 2f 01 00, formID -> MATT, Material NAMe
 		MNAM.Read(buffer, subSize);
 		break;
             default:

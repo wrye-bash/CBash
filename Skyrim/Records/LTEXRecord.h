@@ -76,11 +76,11 @@ class LTEXRecord : public TES5Record //Landscape Texture
         StringRecord EDID; //Editor ID
         StringRecord ICON; //Large Icon Filename
         StringRecord MICO; //Small Icon Filename
-        OptSimpleSubRecord<FORMID> TNAM; //Texture
+        OptSimpleSubRecord<FORMID> TNAM; //Texture (Skyrim) -> TXST
         ReqSubRecord<LTEXHNAM> HNAM; //Havok Data
         ReqSimpleSubRecord<UINT8> SNAM; //Texture Specular Exponent
 	UnorderedSparseArray<FORMID> GNAM; //Grasses
-        ReqSimpleSubRecord<FORMID> MNAM; //Texture (Skyrim)
+        ReqSimpleSubRecord<FORMID> MNAM; //Material (Skyrim) -> MATT
 
         LTEXRecord(unsigned char *_recData=NULL);
         LTEXRecord(LTEXRecord *srcRecord);
