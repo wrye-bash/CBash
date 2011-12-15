@@ -331,7 +331,7 @@ SINT32 LTEXRecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer,
 		break;
 	    /* Skyrim --------------------------------------- */
 	    case REV32(MNAM): // 4 bytes
-		MNAM.Read(buffer, subSize, CompressedOnDisk);
+		MNAM.Read(buffer, subSize);
 		break;
             default:
                 //printer("FileName = %s\n", FileName);

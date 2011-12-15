@@ -40,10 +40,11 @@
 #include "../GenericRecord.h"
 #include "../GRUPRecord.h"
 #include "Records/LTEXRecord.h"
+#include "Records/TXSTRecord.h"
+#include "Records/CELLRecord.h"
 #include "Records/WRLDRecord.h"
 /*
 #include "Records/GMSTRecord.h"
-#include "Records/TXSTRecord.h"
 #include "Records/MICNRecord.h"
 #include "Records/GLOBRecord.h"
 #include "Records/CLASRecord.h"
@@ -92,7 +93,6 @@
 #include "Records/CLMTRecord.h"
 #include "Records/REGNRecord.h"
 #include "Records/NAVIRecord.h"
-#include "Records/CELLRecord.h"
 #include "Records/DIALRecord.h"
 #include "Records/QUSTRecord.h"
 #include "Records/IDLERecord.h"
@@ -147,11 +147,11 @@ class TES5File : public ModFile
     {
     public:
 	TES5GRUPRecords<Sk::LTEXRecord, REV32(LTEX), 5> LTEX;
+        TES5GRUPRecords<Sk::TXSTRecord, REV32(TXST), 5> TXST;
 	TES5GRUPRecords<Sk::WRLDRecord, REV32(WRLD), 5> WRLD;
 	TES5GRUPRecords<Sk::CELLRecord, REV32(CELL), 5> CELL;
 /*
         TES5GRUPRecords<Sk::GMSTRecord, REV32(GMST), 5, true> GMST;
-        TES5GRUPRecords<Sk::TXSTRecord, REV32(TXST), 5> TXST;
         TES5GRUPRecords<Sk::MICNRecord, REV32(MICN), 5> MICN;
         TES5GRUPRecords<Sk::GLOBRecord, REV32(GLOB), 5> GLOB;
         TES5GRUPRecords<Sk::CLASRecord, REV32(CLAS), 5> CLAS;

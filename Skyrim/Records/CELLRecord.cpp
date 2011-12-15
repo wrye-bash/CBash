@@ -119,6 +119,14 @@ CELLRecord::CELLRecord(CELLRecord *srcRecord):
 
 CELLRecord::~CELLRecord()
     {
+    //
+    //ACHRs are owned at the mod level, so must be destroyed there
+    //ACREs are owned at the mod level, so must be destroyed there
+    //REFRs are owned at the mod level, so must be destroyed there
+    //PGRD is owned at the mod level, so must be destroyed there
+    //LAND is owned at the mod level, so must be destroyed there
+    //Parent is a shared pointer that's deleted when the WRLD group is deleted
+
     /*
     for(UINT32 x = 0; x < ACHR.size(); ++x)
         delete ACHR[x];
@@ -138,9 +146,9 @@ CELLRecord::~CELLRecord()
         delete PCBE[x];
     for(UINT32 x = 0; x < NAVM.size(); ++x)
 	delete NAVM[x];
-    */
 
     delete LAND;
+    */
     }
 
 bool CELLRecord::VisitFormIDs(FormIDOp &op)

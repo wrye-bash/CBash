@@ -39,88 +39,51 @@
 
 namespace Sk
 {
-class LTEXRecord : public TES5Record //Landscape Texture
+class TXSTRecord : public TES5Record //Texture Set
     {
     private:
-        struct LTEXHNAM
+        enum flagsFlags
             {
-            UINT8   types, friction, restitution;
-
-            LTEXHNAM();
-            ~LTEXHNAM();
-
-            bool operator ==(const LTEXHNAM &other) const;
-            bool operator !=(const LTEXHNAM &other) const;
+            fIsNoSpecularMap = 0x00000001
             };
 
-        enum typesTypes
+        enum DODTFlags
             {
-            eStone = 0,
-            eCloth,
-            eDirt,
-            eGlass,
-            eGrass,
-            eMetal,
-            eOrganic,
-            eSkin,
-            eWater,
-            eWood,
-            eHeavyStone,
-            eHeavyMetal,
-            eHeavyWood,
-            eChain,
-            eSnow,
+            fIsParallax      = 0x00000001,
+            fIsAlphaBlending = 0x00000002,
+            fIsAlphaTesting  = 0x00000004
             };
 
     public:
         StringRecord EDID; //Editor ID
-        StringRecord ICON; //Large Icon Filename
-        StringRecord MICO; //Small Icon Filename
-        OptSimpleSubRecord<FORMID> TNAM; //Texture
-        ReqSubRecord<LTEXHNAM> HNAM; //Havok Data
-        ReqSimpleSubRecord<UINT8> SNAM; //Texture Specular Exponent
-	UnorderedSparseArray<FORMID> GNAM; //Grasses
-        ReqSimpleSubRecord<FORMID> MNAM; //Texture (Skyrim)
+        ReqSubRecord<GENOBND> OBND; //Object Bounds
+        //Textures (RGB/A)
+        StringRecord TX00; //Base Image / Transparency
+        StringRecord TX01; //Normal Map / Specular
+        StringRecord TX02; //Environment Map Mask / ?
+        StringRecord TX03; //Glow Map / Unused
+        StringRecord TX04; //Parallax Map / Unused
+        StringRecord TX05; //Environment Map / Unused
+        OptSubRecord<GENDODT> DODT; //Decal Data
+        SemiOptSimpleSubRecord<UINT16> DNAM; //Flags
 
-        LTEXRecord(unsigned char *_recData=NULL);
-        LTEXRecord(LTEXRecord *srcRecord);
-        ~LTEXRecord();
+        TXSTRecord(unsigned char *_recData=NULL);
+        TXSTRecord(TXSTRecord *srcRecord);
+        ~TXSTRecord();
 
-        bool   VisitFormIDs(FormIDOp &op);
+        bool   IsNoSpecularMap();
+        void   IsNoSpecularMap(bool value);
+        bool   IsFlagMask(UINT16 Mask, bool Exact=false);
+        void   SetFlagMask(UINT16 Mask);
 
-        bool   IsStone();
-        void   IsStone(bool value);
-        bool   IsCloth();
-        void   IsCloth(bool value);
-        bool   IsDirt();
-        void   IsDirt(bool value);
-        bool   IsGlass();
-        void   IsGlass(bool value);
-        bool   IsGrass();
-        void   IsGrass(bool value);
-        bool   IsMetal();
-        void   IsMetal(bool value);
-        bool   IsOrganic();
-        void   IsOrganic(bool value);
-        bool   IsSkin();
-        void   IsSkin(bool value);
-        bool   IsWater();
-        void   IsWater(bool value);
-        bool   IsWood();
-        void   IsWood(bool value);
-        bool   IsHeavyStone();
-        void   IsHeavyStone(bool value);
-        bool   IsHeavyMetal();
-        void   IsHeavyMetal(bool value);
-        bool   IsHeavyWood();
-        void   IsHeavyWood(bool value);
-        bool   IsChain();
-        void   IsChain(bool value);
-        bool   IsSnow();
-        void   IsSnow(bool value);
-
-        bool   IsType(UINT8 Type);
-        void   SetType(UINT8 Type);
+        bool   IsObjectParallax();
+        void   IsObjectParallax(bool value);
+        bool   IsObjectAlphaBlending();
+        void   IsObjectAlphaBlending(bool value);
+        bool   IsObjectAlphaTesting();
+        void   IsObjectAlphaTesting(bool value);
+        bool   IsObjectFlagMask(UINT8 Mask, bool Exact=false);
+        void   SetObjectFlagMask(UINT8 Mask);
 
         UINT32 GetFieldAttribute(DEFAULTED_FIELD_IDENTIFIERS, UINT32 WhichAttribute=0);
         void * GetField(DEFAULTED_FIELD_IDENTIFIERS, void **FieldValues=NULL);
@@ -134,8 +97,8 @@ class LTEXRecord : public TES5Record //Landscape Texture
         SINT32 Unload();
         SINT32 WriteRecord(FileWriter &writer);
 
-        bool operator ==(const LTEXRecord &other) const;
-        bool operator !=(const LTEXRecord &other) const;
+        bool operator ==(const TXSTRecord &other) const;
+        bool operator !=(const TXSTRecord &other) const;
         bool equals(Record *other);
     };
 }

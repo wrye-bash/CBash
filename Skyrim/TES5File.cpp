@@ -256,6 +256,10 @@ SINT32 TES5File::Load(RecordOp &read_parser, RecordOp &indexer, std::vector<Form
 	    case REV32(LTEX):
 		LTEX.Read(buffer_start, buffer_position, group_buffer_end, indexer, parser, DeletedRecords, processor, FileName);
 		break;
+	  //case eIgTXST:
+	    case REV32(TXST): // EDID: VaerminaRobes
+                TXST.Read(buffer_start, buffer_position, group_buffer_end, indexer, parser, DeletedRecords, processor, FileName);
+                break;
 	    case eIgCELL:
 	    case REV32(CELL):
 		CELL.Read(buffer_start, buffer_position, group_buffer_end, indexer, parser, DeletedRecords, processor, FileName);
@@ -267,8 +271,6 @@ SINT32 TES5File::Load(RecordOp &read_parser, RecordOp &indexer, std::vector<Form
 
 	    case eIgGMST:
 	    case REV32(GMST):
-	  //case eIgTXST:
-	    case REV32(TXST): // EDID: VaerminaRobes
 	    case eIgGLOB:
 	    case REV32(GLOB): // EDID: DecapitationChance
 	    case eIgCLAS:
@@ -500,10 +502,6 @@ SINT32 TES5File::Load(RecordOp &read_parser, RecordOp &indexer, std::vector<Form
             case REV32(GMST):
                 GMST.Read(buffer_start, buffer_position, group_buffer_end, indexer, read_parser, DeletedRecords, processor, FileName);
 		break;
-            //case eIgTXST: //Same as normal
-            case REV32(TXST):
-                TXST.Read(buffer_start, buffer_position, group_buffer_end, indexer, parser, DeletedRecords, processor, FileName);
-                break;
             case eIgMICN:
             case REV32(MICN):
                 MICN.Read(buffer_start, buffer_position, group_buffer_end, indexer, parser, DeletedRecords, processor, FileName);
@@ -947,6 +945,8 @@ UINT32 TES5File::GetNumRecords(const UINT32 &RecordType)
 	{
 	case REV32(LTEX):
 	    return (UINT32)LTEX.pool.used_object_capacity();
+        case REV32(TXST):
+            return (UINT32)TXST.pool.used_object_capacity();
 	case REV32(CELL):
 	    return (UINT32)CELL.cell_pool.used_object_capacity();
 	case REV32(LAND):
@@ -955,7 +955,7 @@ UINT32 TES5File::GetNumRecords(const UINT32 &RecordType)
 	    return (UINT32)WRLD.cell_pool.used_object_capacity();
 	///////////////////////////////////////////////
 	case REV32(CLLS):
-	    return (UINT32)CELL.cell_pool.used_object_capacity() + 
+	    return (UINT32)CELL.cell_pool.used_object_capacity() +
 		   (UINT32)WRLD.cell_pool.used_object_capacity();
 	///////////////////////////////////////////////
 	case REV32(WRLD):
@@ -963,8 +963,6 @@ UINT32 TES5File::GetNumRecords(const UINT32 &RecordType)
 	  /*
         case REV32(GMST):
             return (UINT32)GMST.pool.used_object_capacity();
-        case REV32(TXST):
-            return (UINT32)TXST.pool.used_object_capacity();
         case REV32(MICN):
             return (UINT32)MICN.pool.used_object_capacity();
         case REV32(GLOB):
@@ -1204,6 +1202,8 @@ Record * TES5File::CreateRecord(const UINT32 &RecordType, STRING const &RecordEd
     {
 	case REV32(LTEX):
 	    return LTEX.pool.construct(SourceRecord, this, true);
+        case REV32(TXST):
+            return TXST.pool.construct(SourceRecord, this, true);
 	case REV32(WCEL):
 	    if(ParentRecord == NULL || ParentRecord->GetType() != REV32(WRLD))
 	    {
@@ -1291,8 +1291,6 @@ Record * TES5File::CreateRecord(const UINT32 &RecordType, STRING const &RecordEd
                 ((Sk::GMSTRecord *)newRecord)->DATA.format = ((Sk::GMSTRecord *)newRecord)->EDID.value[0];
                 }
 	    break;
-        case REV32(TXST):
-            return TXST.pool.construct(SourceRecord, this, true);
         case REV32(MICN):
             return MICN.pool.construct(SourceRecord, this, true);
         case REV32(GLOB):
@@ -1591,6 +1589,10 @@ SINT32 TES5File::DeleteRecord(Record *&curRecord, RecordOp &deindexer)
 	    deindexer.Accept(curRecord);
 	    LTEX.pool.destroy(curRecord);
 	    return 1;
+        case REV32(TXST):
+            deindexer.Accept(curRecord);
+            TXST.pool.destroy(curRecord);
+            return 1;
 	case REV32(CELL):
 	    {
 	      Sk::WRLDRecord *wrld_record = (Sk::WRLDRecord *)curRecord->GetParentRecord();
@@ -1786,10 +1788,6 @@ SINT32 TES5File::DeleteRecord(Record *&curRecord, RecordOp &deindexer)
         case REV32(GMST):
             deindexer.Accept(curRecord);
             GMST.pool.destroy(curRecord);
-            return 1;
-        case REV32(TXST):
-            deindexer.Accept(curRecord);
-            TXST.pool.destroy(curRecord);
             return 1;
         case REV32(MICN):
             deindexer.Accept(curRecord);
@@ -2456,11 +2454,11 @@ SINT32 TES5File::Save(STRING const &SaveName, std::vector<FormIDResolver *> &Exp
 
     //ADD DEFINITIONS HERE
     formCount += LTEX.Write(writer, Expanders, expander, collapser, bMastersChanged, CloseMod);
+    formCount += TXST.Write(writer, Expanders, expander, collapser, bMastersChanged, CloseMod);
     formCount += CELL.Write(writer, Expanders, expander, collapser, bMastersChanged, CloseMod);
     formCount += WRLD.Write(writer, Expanders, expander, collapser, bMastersChanged, CloseMod, FormIDHandler, CELL, indexer);
     /*
     formCount += GMST.Write(writer, Expanders, expander, collapser, bMastersChanged, CloseMod);
-    formCount += TXST.Write(writer, Expanders, expander, collapser, bMastersChanged, CloseMod);
     formCount += MICN.Write(writer, Expanders, expander, collapser, bMastersChanged, CloseMod);
     formCount += GLOB.Write(writer, Expanders, expander, collapser, bMastersChanged, CloseMod);
     formCount += CLAS.Write(writer, Expanders, expander, collapser, bMastersChanged, CloseMod);
@@ -2581,13 +2579,13 @@ void TES5File::VisitAllRecords(RecordOp &op)
     }
 
     LTEX.pool.VisitRecords(op);
+    TXST.pool.VisitRecords(op);
     WRLD.land_pool.VisitRecords(op);
     CELL.cell_pool.VisitRecords(op);
     WRLD.cell_pool.VisitRecords(op);
     WRLD.wrld_pool.VisitRecords(op);
     /*
     GMST.pool.VisitRecords(op);
-    TXST.pool.VisitRecords(op);
     MICN.pool.VisitRecords(op);
     GLOB.pool.VisitRecords(op);
     CLAS.pool.VisitRecords(op);
@@ -2720,6 +2718,9 @@ void TES5File::VisitRecords(const UINT32 &RecordType, RecordOp &op)
 	case REV32(LTEX):
 	    LTEX.pool.VisitRecords(op);
 	    break;
+        case REV32(TXST):
+            TXST.pool.VisitRecords(op);
+            break;
 	case REV32(CELL):
 	    CELL.cell_pool.VisitRecords(op);
 	    break;
@@ -2735,9 +2736,6 @@ void TES5File::VisitRecords(const UINT32 &RecordType, RecordOp &op)
 	    /*
         case REV32(GMST):
             GMST.pool.VisitRecords(op);
-            break;
-        case REV32(TXST):
-            TXST.pool.VisitRecords(op);
             break;
         case REV32(MICN):
             MICN.pool.VisitRecords(op);
