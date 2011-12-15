@@ -260,6 +260,10 @@ SINT32 TES5File::Load(RecordOp &read_parser, RecordOp &indexer, std::vector<Form
 	    case REV32(TXST): // EDID: VaerminaRobes
                 TXST.Read(buffer_start, buffer_position, group_buffer_end, indexer, parser, DeletedRecords, processor, FileName);
                 break;
+	  //case eIgMATT:
+	    case REV32(MATT): // EDID: MaterialInsect (new record-type)
+                MATT.Read(buffer_start, buffer_position, group_buffer_end, indexer, parser, DeletedRecords, processor, FileName);
+                break;
 	    case eIgCELL:
 	    case REV32(CELL):
 		CELL.Read(buffer_start, buffer_position, group_buffer_end, indexer, parser, DeletedRecords, processor, FileName);
@@ -443,8 +447,6 @@ SINT32 TES5File::Load(RecordOp &read_parser, RecordOp &indexer, std::vector<Form
 	    case REV32(SPGD): // EDID: SovngardeStardust (new record-type)
 	    case eIgRFCT:
 	    case REV32(RFCT): // EDID: MGTeleportOutEffectNoRefraction (new record-type)
-	  //case eIgMATT:
-	    case REV32(MATT): // EDID: MaterialInsect (new record-type)
 	    case eIgLCTN:
 	    case REV32(LCTN): // EDID: RiftenMercerHouseInteriorLocation (new record-type)
 	  //case eIgFSTP:
@@ -947,6 +949,8 @@ UINT32 TES5File::GetNumRecords(const UINT32 &RecordType)
 	    return (UINT32)LTEX.pool.used_object_capacity();
         case REV32(TXST):
             return (UINT32)TXST.pool.used_object_capacity();
+        case REV32(MATT):
+            return (UINT32)MATT.pool.used_object_capacity();
 	case REV32(CELL):
 	    return (UINT32)CELL.cell_pool.used_object_capacity();
 	case REV32(LAND):
@@ -1204,6 +1208,8 @@ Record * TES5File::CreateRecord(const UINT32 &RecordType, STRING const &RecordEd
 	    return LTEX.pool.construct(SourceRecord, this, true);
         case REV32(TXST):
             return TXST.pool.construct(SourceRecord, this, true);
+        case REV32(MATT):
+            return MATT.pool.construct(SourceRecord, this, true);
 	case REV32(WCEL):
 	    if(ParentRecord == NULL || ParentRecord->GetType() != REV32(WRLD))
 	    {
@@ -1592,6 +1598,10 @@ SINT32 TES5File::DeleteRecord(Record *&curRecord, RecordOp &deindexer)
         case REV32(TXST):
             deindexer.Accept(curRecord);
             TXST.pool.destroy(curRecord);
+            return 1;
+        case REV32(MATT):
+            deindexer.Accept(curRecord);
+            MATT.pool.destroy(curRecord);
             return 1;
 	case REV32(CELL):
 	    {
@@ -2455,6 +2465,7 @@ SINT32 TES5File::Save(STRING const &SaveName, std::vector<FormIDResolver *> &Exp
     //ADD DEFINITIONS HERE
     formCount += LTEX.Write(writer, Expanders, expander, collapser, bMastersChanged, CloseMod);
     formCount += TXST.Write(writer, Expanders, expander, collapser, bMastersChanged, CloseMod);
+    formCount += MATT.Write(writer, Expanders, expander, collapser, bMastersChanged, CloseMod);
     formCount += CELL.Write(writer, Expanders, expander, collapser, bMastersChanged, CloseMod);
     formCount += WRLD.Write(writer, Expanders, expander, collapser, bMastersChanged, CloseMod, FormIDHandler, CELL, indexer);
     /*
@@ -2580,6 +2591,7 @@ void TES5File::VisitAllRecords(RecordOp &op)
 
     LTEX.pool.VisitRecords(op);
     TXST.pool.VisitRecords(op);
+    MATT.pool.VisitRecords(op);
     WRLD.land_pool.VisitRecords(op);
     CELL.cell_pool.VisitRecords(op);
     WRLD.cell_pool.VisitRecords(op);
@@ -2720,6 +2732,9 @@ void TES5File::VisitRecords(const UINT32 &RecordType, RecordOp &op)
 	    break;
         case REV32(TXST):
             TXST.pool.VisitRecords(op);
+            break;
+        case REV32(MATT):
+            MATT.pool.VisitRecords(op);
             break;
 	case REV32(CELL):
 	    CELL.cell_pool.VisitRecords(op);

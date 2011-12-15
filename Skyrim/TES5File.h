@@ -41,6 +41,7 @@
 #include "../GRUPRecord.h"
 #include "Records/LTEXRecord.h"
 #include "Records/TXSTRecord.h"
+#include "Records/MATTRecord.h"
 #include "Records/CELLRecord.h"
 #include "Records/WRLDRecord.h"
 /*
@@ -148,6 +149,7 @@ class TES5File : public ModFile
     public:
 	TES5GRUPRecords<Sk::LTEXRecord, REV32(LTEX), 5> LTEX;
         TES5GRUPRecords<Sk::TXSTRecord, REV32(TXST), 5> TXST;
+        TES5GRUPRecords<Sk::MATTRecord, REV32(TXST), 5> MATT;
 	TES5GRUPRecords<Sk::WRLDRecord, REV32(WRLD), 5> WRLD;
 	TES5GRUPRecords<Sk::CELLRecord, REV32(CELL), 5> CELL;
 /*
