@@ -96,9 +96,12 @@ WRLDRecord::WRLDRecord(WRLDRecord *srcRecord):
 
 WRLDRecord::~WRLDRecord()
     {
+      /* TODO: PROBLEMS! */
+#if 0
     delete CELL;
     for(UINT32 x = 0; x < CELLS.size(); ++x)
-        delete CELLS[x];
+      delete CELLS[x];
+#endif
     }
 
 bool WRLDRecord::VisitFormIDs(FormIDOp &op)

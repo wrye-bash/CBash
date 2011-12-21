@@ -104,14 +104,14 @@ class CELLRecord : public TES5Record //Cell
         RawRecord XCET; //Unknown
         OptSimpleSubRecord<FORMID> XEZN; //Encounter Zone
         OptSimpleSubRecord<FORMID> XCCM; //Climate
-        OptSimpleSubRecord<FORMID> XCWT; //Water
+        OptSimpleSubRecord<FORMID> XCWT; //Water -> WATR
 //      OptSubRecord<TES5XOWN> Ownership; //Owner
         OptSimpleSubRecord<FORMID> XCAS; //Acoustic Space
         RawRecord XCMT; //Unused
 	OptSimpleSubRecord<FORMID> XCMO; //Music Type
 	RawRecord TVDT; //Unknown (Skyrim)
 	RawRecord MHDT; //Unknown (Skyrim)
-	RawRecord XLCN; //Unknown (Skyrim)
+	OptSimpleSubRecord<FORMID> XLCN; //Unknown (Skyrim) -> LCTN
 	RawRecord XWCN; //Unknown (Skyrim)
 	RawRecord XWCU; //Unknown (Skyrim)
 	

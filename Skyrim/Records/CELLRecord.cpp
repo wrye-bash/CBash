@@ -544,7 +544,7 @@ SINT32 CELLRecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer,
 		MHDT.Read(buffer, subSize, CompressedOnDisk);
 		break;
 	    case REV32(XLCN): // 4 bytes
-		XLCN.Read(buffer, subSize, CompressedOnDisk);
+		XLCN.Read(buffer, subSize);
 		break;
 	    case REV32(XWCN): // 4 bytes
 		XWCN.Read(buffer, subSize, CompressedOnDisk);
