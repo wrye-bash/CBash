@@ -66,7 +66,9 @@ class WRLDRecord : public Record
         StringRecord FULL; //Name
         OptSimpleSubRecord<FORMID> WNAM; //Parent Worldspace
         OptSimpleSubRecord<FORMID> CNAM; //Climate
-        OptSimpleSubRecord<FORMID/*, 0x18*/> NAM2; //Water
+	OptSimpleSubRecord<FORMID/*, 0x18*/> NAM2; //Water
+	SemiOptSimpleFloatSubRecord<flt_0> NAM4; //LOD Water Height
+	OptZeroSubRecord<GENDNAM> DNAM; //Land Data
         StringRecord ICON; //Large Icon Filename
         SemiOptSubRecord<GENMNAM> MNAM; //Map Data
         ReqSimpleSubRecord<UINT8, fSmallWorld> DATA; //Flags

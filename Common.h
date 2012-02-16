@@ -1109,6 +1109,78 @@ struct OptSimpleSubRecord
         return value != other.value;
         }
     };
+//Used for subrecords that are optional
+//Even if loaded, they are considered unloaded if they're equal to their defaults
+//Should only be used with simple data types (int, float, etc) and not structs
+template<class T>
+struct OptZeroSubRecord
+{
+  T value;
+
+  OptZeroSubRecord()
+  {
+    //
+    Unload();
+  }
+
+  ~OptZeroSubRecord()
+  {
+    //
+  }
+
+  UINT32 GetSize() const
+  {
+    return sizeof(T);
+  }
+
+  bool IsLoaded() const
+  {
+    struct OptZeroSubRecord zero; return (this == zero);
+  }
+
+  void Load()
+  {
+    //
+  }
+
+  void Unload()
+  {
+    memset(&value, 0, GetSize());
+  }
+
+  bool Read(unsigned char *&buffer, const UINT32 &subSize)
+  {
+    return ReadChunk(buffer, subSize, &value, sizeof(T), false);
+  }
+
+  void Write(UINT32 _Type, FileWriter &writer)
+  {
+    if(value != defaultValue)
+      writer.record_write_subrecord(_Type, &value, sizeof(T));
+  }
+
+  void ReqWrite(UINT32 _Type, FileWriter &writer)
+  {
+    writer.record_write_subrecord(_Type, &value, sizeof(T));
+  }
+
+  OptZeroSubRecord<T>& operator = (const OptZeroSubRecord<T> &rhs)
+  {
+    if(this != &rhs)
+      memcpy(value, rhs.value, GetSize());
+    return *this;
+  }
+
+  bool operator ==(const OptZeroSubRecord<T> &other) const
+  {
+    return  !memcmp(&value, &zero.value, GetSize());
+  }
+
+  bool operator !=(const OptZeroSubRecord<T> &other) const
+  {
+    return !!memcmp(&value, &zero.value, GetSize());
+  }
+};
 
 template<const float &defaultValue=flt_0>
 struct OptSimpleFloatSubRecord
