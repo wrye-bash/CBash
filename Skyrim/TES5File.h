@@ -44,6 +44,7 @@
 #include "Records/MATTRecord.h"
 #include "Records/CELLRecord.h"
 #include "Records/WRLDRecord.h"
+#include "Records/AACTRecord.h"
 /*
 #include "Records/GMSTRecord.h"
 #include "Records/MICNRecord.h"
@@ -147,11 +148,12 @@
 class TES5File : public ModFile
     {
     public:
-	TES5GRUPRecords<Sk::LTEXRecord, REV32(LTEX), 5> LTEX;
+        TES5GRUPRecords<Sk::LTEXRecord, REV32(LTEX), 5> LTEX;
         TES5GRUPRecords<Sk::TXSTRecord, REV32(TXST), 5> TXST;
         TES5GRUPRecords<Sk::MATTRecord, REV32(TXST), 5> MATT;
-	TES5GRUPRecords<Sk::WRLDRecord, REV32(WRLD), 5> WRLD;
-	TES5GRUPRecords<Sk::CELLRecord, REV32(CELL), 5> CELL;
+        TES5GRUPRecords<Sk::WRLDRecord, REV32(WRLD), 5> WRLD;
+        TES5GRUPRecords<Sk::CELLRecord, REV32(CELL), 5> CELL;
+        TES5GRUPRecords<Sk::AACTRecord, REV32(AACT), 6> AACT;
 /*
         TES5GRUPRecords<Sk::GMSTRecord, REV32(GMST), 5, true> GMST;
         TES5GRUPRecords<Sk::MICNRecord, REV32(MICN), 5> MICN;
@@ -260,11 +262,11 @@ class TES5File : public ModFile
         SINT32   Load(RecordOp &read_parser, RecordOp &indexer, std::vector<FormIDResolver *> &Expanders, std::vector<Record *> &DeletedRecords);
         UINT32   GetNumRecords(const UINT32 &RecordType);
         STRING   GetMasterName(UINT8 &CollapsedIndex);
-	Record * CreateRecord(const UINT32 &RecordType, STRING const &RecordEditorID, Record *&SourceRecord, Record *&ParentRecord, CreationFlags &options);
+        Record * CreateRecord(const UINT32 &RecordType, STRING const &RecordEditorID, Record *&SourceRecord, Record *&ParentRecord, CreationFlags &options);
         SINT32   DeleteRecord(Record *&curRecord, RecordOp &deindexer);
         SINT32   Save(STRING const &SaveName, std::vector<FormIDResolver *> &Expanders, bool CloseMod, RecordOp &indexer);
 
-	void	 SetFilter(bool inclusive, boost::unordered_set<UINT32> &RecordTypes, boost::unordered_set<FORMID> &WorldSpaces);
+        void     SetFilter(bool inclusive, boost::unordered_set<UINT32> &RecordTypes, boost::unordered_set<FORMID> &WorldSpaces);
 
         void     VisitAllRecords(RecordOp &op);
         void     VisitRecords(const UINT32 &RecordType, RecordOp &op);
