@@ -208,14 +208,14 @@ SINT32 TXSTRecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer,
                 break;
             case REV32(TX05):
                 TX05.Read(buffer, subSize, CompressedOnDisk);
-		break;
+                break;
 	    /* Skyrim --------------------------------------- */
-	    case REV32(TX06):
-		TX06.Read(buffer, subSize, CompressedOnDisk);
-		break;
-	    case REV32(TX07):
-		TX07.Read(buffer, subSize, CompressedOnDisk);
-		break;
+            case REV32(TX06):
+                TX06.Read(buffer, subSize, CompressedOnDisk);
+                break;
+            case REV32(TX07):
+                TX07.Read(buffer, subSize, CompressedOnDisk);
+                break;
             case REV32(DODT):
                 DODT.Read(buffer, subSize);
                 break;

@@ -155,7 +155,7 @@ class TES4File : public ModFile
         GRUPRecords<Ob::LVSPRecord, REV32(LVSP), 20> LVSP;
         GRUPRecords<Ob::ANIORecord, REV32(ANIO), 20> ANIO;
         GRUPRecords<Ob::WATRRecord, REV32(WATR), 20> WATR;
-	GRUPRecords<Ob::EFSHRecord, REV32(EFSH), 20> EFSH;
+        GRUPRecords<Ob::EFSHRecord, REV32(EFSH), 20> EFSH;
 
         TES4File(Collection *_Parent, STRING FileName, STRING ModName, const UINT32 _flags);
         ~TES4File();
@@ -167,7 +167,7 @@ class TES4File : public ModFile
         SINT32   DeleteRecord(Record *&curRecord, RecordOp &deindexer);
         SINT32   Save(STRING const &SaveName, std::vector<FormIDResolver *> &Expanders, bool CloseMod, RecordOp &indexer);
 
-	void	 SetFilter(bool inclusive, boost::unordered_set<UINT32> &RecordTypes, boost::unordered_set<FORMID> &WorldSpaces);
+        void	 SetFilter(bool inclusive, boost::unordered_set<UINT32> &RecordTypes, boost::unordered_set<FORMID> &WorldSpaces);
 
         void     VisitAllRecords(RecordOp &op);
         void     VisitRecords(const UINT32 &RecordType, RecordOp &op);
