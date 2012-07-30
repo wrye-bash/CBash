@@ -46,6 +46,7 @@
 #include "Records/WRLDRecord.h"
 #include "Records/AACTRecord.h"
 #include "Records/ASTPRecord.h"
+#include "Records/ASPCRecord.h"
 /*
 #include "Records/GMSTRecord.h"
 #include "Records/MICNRecord.h"
@@ -156,6 +157,7 @@ class TES5File : public ModFile
         TES5GRUPRecords<Sk::CELLRecord, REV32(CELL), 5> CELL;
         TES5GRUPRecords<Sk::AACTRecord, REV32(AACT), 5> AACT;
         TES5GRUPRecords<Sk::ASTPRecord, REV32(ASTP), 5> ASTP;
+        TES5GRUPRecords<Sk::ASPCRecord, REV32(ASPC), 5> ASPC;
 /*
         TES5GRUPRecords<Sk::GMSTRecord, REV32(GMST), 5, true> GMST;
         TES5GRUPRecords<Sk::MICNRecord, REV32(MICN), 5> MICN;
