@@ -55,7 +55,7 @@ class LVLIRecord : public TES5Record //Leveled Item
         StringRecord EDID; //Editor ID
         ReqSubRecord<GENOBND> OBND; //Object bounds
         ReqSimpleSubRecord<UINT8> LVLD; //Chance none
-        SemiOptSimpleSubRecord<UINT8> LVLF; //Flags
+        ReqSimpleSubRecord<UINT8> LVLF; //Flags
         // ReqSimpleSubRecord<UINT8> LLCT; //Count
         UnorderedSparseArray<FNVLVLO *> Entries; //Leveled List Entries
         OptSimpleSubRecord<FORMID> LVLG; // List owner

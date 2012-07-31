@@ -40,13 +40,13 @@
 namespace Sk {
 
 LVLIRecord::LVLIRecord(unsigned char *_recData):
-    FNVRecord(_recData)
+    TES5Record(_recData)
     {
         //
     }
 
 LVLIRecord::LVLIRecord(LVLIRecord *srcRecord):
-    TESVRecord()
+    TES5Record()
     {
         if(srcRecord == NULL)
             return;
@@ -112,14 +112,14 @@ void LVLIRecord::IsCalcForEachItem(bool value)
         LVLF.value = value ? (LVLF.value | fCalcForEachItem) : (LVLF.value & ~fCalcForEachItem);
     }
 
-bool LVLIRecord::IsUseAll()
+bool LVLIRecord::IsUseAllSpells()
     {
-        return (LVLF.value & fUseAll) != 0;
+        return (LVLF.value & fUseAllSpells) != 0;
     }
 
-void LVLIRecord::IsUseAll(bool value)
+void LVLIRecord::IsUseAllSpells(bool value)
     {
-        LVLF.value = value ? (LVLF.value | fUseAll) : (LVLF.value & ~fUseAll);
+        LVLF.value = value ? (LVLF.value | fUseAllSpells) : (LVLF.value & ~fUseAllSpells);
     }
 
 bool LVLIRecord::IsFlagMask(UINT8 Mask, bool Exact)
@@ -226,8 +226,8 @@ SINT32 LVLIRecord::WriteRecord(FileWriter &writer)
         WRITE(LVLD);
         WRITE(LVLF);
         //  Write LLCT
-        UINT8 count = Entries.size();
-        writer.write_subrecord(REV32(LLCT),&count,sizeof(count));
+        UINT8 count = Entries.value.size();
+        writer.record_write_subrecord(REV32(LLCT),&count,sizeof(count));
         Entries.Write(writer);
         WRITE(LVLG);
         return -1;
