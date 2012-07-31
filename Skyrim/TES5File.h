@@ -49,6 +49,7 @@
 #include "Records/ASPCRecord.h"
 #include "Records/LVLIRecord.h"
 #include "Records/LVSPRecord.h"
+#include "Records/LVLNRecord.h"
 /*
 #include "Records/GMSTRecord.h"
 #include "Records/MICNRecord.h"
@@ -87,7 +88,6 @@
 #include "Records/NPC_Record.h"
 #include "Records/CREARecord.h"
 #include "Records/LVLCRecord.h"
-#include "Records/LVLNRecord.h"
 #include "Records/KEYMRecord.h"
 #include "Records/ALCHRecord.h"
 #include "Records/IDLMRecord.h"
@@ -161,6 +161,7 @@ class TES5File : public ModFile
         TES5GRUPRecords<Sk::ASPCRecord, REV32(ASPC), 5> ASPC;
         TES5GRUPRecords<Sk::LVLIRecord, REV32(LVLI), 5> LVLI;
         TES5GRUPRecords<Sk::LVSPRecord, REV32(LVSP), 5> LVSP;
+        TES5GRUPRecords<Sk::LVLNRecord, REV32(LVLN), 5> LVLN;
 /*
         TES5GRUPRecords<Sk::GMSTRecord, REV32(GMST), 5, true> GMST;
         TES5GRUPRecords<Sk::MICNRecord, REV32(MICN), 5> MICN;
