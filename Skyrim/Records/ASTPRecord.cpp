@@ -88,7 +88,7 @@ void ASTPRecord::IsRelated(bool value)
 
 bool ASTPRecord::IsFlagMask(UINT32 Mask, bool Exact) const
     {
-        return Exact ? ((DATA.value & Mask) == Mask) : (DATA.value & Mask);
+        return Exact ? ((DATA.value & Mask) == Mask) : (DATA.value & Mask) != 0;
     }
 
 void ASTPRecord::SetFlagMask(UINT32 Mask)
