@@ -371,3 +371,25 @@
 #define WRITEREQ(x)         x.ReqWrite(REV32(x), writer)
 #define WRITEAS(x,y)        x.Write(REV32(y), writer)
 #define WRITEEMPTY(x)       writer.record_write_subheader(REV32(x), 0);
+
+// 3 methods to flip bits conditionally
+#ifdef BITSET_BRANCHING // slowest method
+    #define SETBIT(var,mask,set) var = set ? (var | mask) : (var & ~mask)
+#elif defined BITSET_NO_SUPERSCALAR
+    // Uses more operations, but avoids branching
+    // Usually about 5-10% faster than branching
+    #define SETBIT(var,mask,set) \
+        __pragma(warning(push)) \
+        __pragma(warning(disable:4804)) \
+        var ^= (-set ^ var) & mask \
+        __pramga(warning(pop))
+#else // Superscalar CPU method
+      // Pretty much all modern CPU's are superscalar
+      // About 16% faster than the non-branching method
+    #define SETBIT(var,mask,set) \
+        __pragma(warning(push)) \
+        __pragma(warning(disable:4804)) \
+        var = (var & ~mask) | (-set & mask) \
+        __pragma(warning(pop))
+    #undef _mypush
+#endif
