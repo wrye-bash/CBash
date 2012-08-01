@@ -278,6 +278,36 @@ SINT32 TES5File::Load(RecordOp &read_parser, RecordOp &indexer, std::vector<Form
                 AACT.Read(buffer_start, buffer_position, group_buffer_end, indexer, parser, DeletedRecords, processor, FileName);
                 break;
 
+          //case eIgASPC:  //Same as normal
+            case REV32(ASPC): // EDID: ExtMQFlashbackInteriorAcousticSpace
+                ASPC.Read(buffer_start, buffer_position, group_buffer_end, indexer, parser, DeletedRecords, processor, FileName);
+                break;
+
+          //case eIgLVLN: //Same as normal
+            case REV32(LVLN): // EDID: LCharDwarvenCenturion
+                LVLN.Read(buffer_start, buffer_position, group_buffer_end, indexer, parser, DeletedRecords, processor, FileName);
+                break;
+
+          //case eIgLVLI: //Same as normal
+            case REV32(LVLI): // EDID: SublistEnchArmorShield06Dragonscale05
+                LVLI.Read(buffer_start, buffer_position, group_buffer_end, indexer, parser, DeletedRecords, processor, FileName);
+                break;
+
+          //case eIgLVSP:
+            case REV32(LVSP): // EDID: LSpellDragonFrostBreath (Oblivion type)
+                LVSP.Read(buffer_start, buffer_position, group_buffer_end, indexer, parser, DeletedRecords, processor, FileName);
+                break;
+
+          //case eIgARTO:
+            case REV32(ARTO): // EDID: FXDragonsBaneSwordStreakObject (new record-type)
+                ARTO.Read(buffer_start, buffer_position, group_buffer_end, indexer, parser, DeletedRecords, processor, FileName);
+                break;
+
+          //case eIgASTP:
+            case REV32(ASTP): // EDID: FavorTarget (new record-type)
+                ASTP.Read(buffer_start, buffer_position, group_buffer_end, indexer, parser, DeletedRecords, processor, FileName);
+                break;
+
             case eIgGMST:
             case REV32(GMST):
 
@@ -304,8 +334,7 @@ SINT32 TES5File::Load(RecordOp &read_parser, RecordOp &indexer, std::vector<Form
 
             case eIgSOUN:
             case REV32(SOUN): // EDID: OBJWindmillSolitudeLP
-      //case eIgASPC:  //Same as normal
-        case REV32(ASPC): // EDID: ExtMQFlashbackInteriorAcousticSpace
+
         case eIgMGEF:
         case REV32(MGEF): // EDID: BanishDmgHealthFFTargetActor
         case eIgSCPT:
@@ -352,8 +381,6 @@ SINT32 TES5File::Load(RecordOp &read_parser, RecordOp &indexer, std::vector<Form
         case REV32(AMMO): // EDID: DwarvenSphereBolt02
       //case eIgNPC_: //Same as normal
         case REV32(NPC_): // EDID: ...
-      //case eIgLVLN: //Same as normal
-        case REV32(LVLN): // EDID: LCharDwarvenCenturion
         case eIgKEYM:
         case REV32(KEYM): // EDID: RiftenConfiscatedGoodsChestKey
         case eIgALCH:
@@ -364,8 +391,6 @@ SINT32 TES5File::Load(RecordOp &read_parser, RecordOp &indexer, std::vector<Form
         case REV32(COBJ): // EDID: TemperWeaponSkyforgeSteelWarAxe
       //case eIgPROJ: //Same as normal
         case REV32(PROJ): // EDID: VoiceDismayProjectile03
-      //case eIgLVLI: //Same as normal
-        case REV32(LVLI): // EDID: SublistEnchArmorShield06Dragonscale05
       //case eIgWTHR: //Same as normal
         case REV32(WTHR): // EDID: SovngardeDark
         case eIgCLMT:
@@ -441,8 +466,6 @@ SINT32 TES5File::Load(RecordOp &read_parser, RecordOp &indexer, std::vector<Form
         case REV32(FLOR): // EDID: DeadFXSalmon02 (Oblivion type)
         case eIgSLGM:
         case REV32(SLGM): // EDID: FFRiften14SoulGem (Oblivion type)
-      //case eIgLVSP:
-        case REV32(LVSP): // EDID: LSpellDragonFrostBreath (Oblivion type)
 
       //case eIgKYWD:
         case REV32(KYWD): // EDID: PowerAttackBash (new record-type)
@@ -486,12 +509,8 @@ SINT32 TES5File::Load(RecordOp &read_parser, RecordOp &indexer, std::vector<Form
         case REV32(RELA): // EDID: IngeAtAfAlan (new record-type)
         case eIgSCEN:
         case REV32(SCEN): // EDID: MQSovngardeConv2SceneStarter (new record-type)
-      //case eIgASTP:
-        case REV32(ASTP): // EDID: FavorTarget (new record-type)
       //case eIgOTFT:
         case REV32(OTFT): // EDID: MQ101MagePrisonerOutfit (new record-type)
-      //case eIgARTO:
-        case REV32(ARTO): // EDID: FXDragonsBaneSwordStreakObject (new record-type)
         case eIgMATO:
         case REV32(MATO): // EDID: SnowMaterialWinterhold (new record-type)
         case eIgMOVT:

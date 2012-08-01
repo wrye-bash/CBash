@@ -39,17 +39,19 @@
 #include "../ModFile.h"
 #include "../GenericRecord.h"
 #include "../GRUPRecord.h"
-#include "Records/LTEXRecord.h"
-#include "Records/TXSTRecord.h"
-#include "Records/MATTRecord.h"
-#include "Records/CELLRecord.h"
-#include "Records/WRLDRecord.h"
+
 #include "Records/AACTRecord.h"
-#include "Records/ASTPRecord.h"
+#include "Records/ARTORecord.h"
 #include "Records/ASPCRecord.h"
+#include "Records/ASTPRecord.h"
+#include "Records/CELLRecord.h"
+#include "Records/LTEXRecord.h"
 #include "Records/LVLIRecord.h"
-#include "Records/LVSPRecord.h"
 #include "Records/LVLNRecord.h"
+#include "Records/LVSPRecord.h"
+#include "Records/MATTRecord.h"
+#include "Records/TXSTRecord.h"
+#include "Records/WRLDRecord.h"
 /*
 #include "Records/GMSTRecord.h"
 #include "Records/MICNRecord.h"
@@ -162,6 +164,7 @@ class TES5File : public ModFile
         TES5GRUPRecords<Sk::LVLIRecord, REV32(LVLI), 5> LVLI;
         TES5GRUPRecords<Sk::LVSPRecord, REV32(LVSP), 5> LVSP;
         TES5GRUPRecords<Sk::LVLNRecord, REV32(LVLN), 5> LVLN;
+        TES5GRUPRecords<Sk::ARTORecord, REV32(ARTO), 5> ARTO;
 /*
         TES5GRUPRecords<Sk::GMSTRecord, REV32(GMST), 5, true> GMST;
         TES5GRUPRecords<Sk::MICNRecord, REV32(MICN), 5> MICN;
