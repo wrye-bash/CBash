@@ -459,7 +459,7 @@ bool WTHRRecord::IsUnk1()
 
 void WTHRRecord::IsUnk1(bool value)
     {
-    DATA.value.weatherType = value ? (DATA.value.weatherType | fUnk1) : (DATA.value.weatherType & ~fUnk1);
+    SETBIT(DATA.value.weatherType, fUnk1, value);
     }
 
 bool WTHRRecord::IsUnk2()
@@ -469,7 +469,7 @@ bool WTHRRecord::IsUnk2()
 
 void WTHRRecord::IsUnk2(bool value)
     {
-    DATA.value.weatherType = value ? (DATA.value.weatherType | fUnk2) : (DATA.value.weatherType & ~fUnk2);
+    SETBIT(DATA.value.weatherType, fUnk2, value);
     }
 
 bool WTHRRecord::IsType(UINT8 Type)

@@ -143,7 +143,7 @@ bool FACTRecord::IsHiddenFromPC()
 
 void FACTRecord::IsHiddenFromPC(bool value)
     {
-    DATA.value.flags = value ? (DATA.value.flags | fIsHiddenFromPC) : (DATA.value.flags & ~fIsHiddenFromPC);
+    SETBIT(DATA.value.flags, fIsHiddenFromPC, value);
     }
 
 bool FACTRecord::IsEvil()
@@ -153,7 +153,7 @@ bool FACTRecord::IsEvil()
 
 void FACTRecord::IsEvil(bool value)
     {
-    DATA.value.flags = value ? (DATA.value.flags | fIsEvil) : (DATA.value.flags & ~fIsEvil);
+    SETBIT(DATA.value.flags, fIsEvil, value);
     }
 
 bool FACTRecord::IsSpecialCombat()
@@ -163,7 +163,7 @@ bool FACTRecord::IsSpecialCombat()
 
 void FACTRecord::IsSpecialCombat(bool value)
     {
-    DATA.value.flags = value ? (DATA.value.flags | fIsSpecialCombat) : (DATA.value.flags & ~fIsSpecialCombat);
+    SETBIT(DATA.value.flags, fIsSpecialCombat, value);
     }
 
 bool FACTRecord::IsTrackCrime()
@@ -173,7 +173,7 @@ bool FACTRecord::IsTrackCrime()
 
 void FACTRecord::IsTrackCrime(bool value)
     {
-    DATA.value.flags = value ? (DATA.value.flags | fIsTrackCrime) : (DATA.value.flags & ~fIsTrackCrime);
+    SETBIT(DATA.value.flags, fIsTrackCrime, value);
     }
 
 bool FACTRecord::IsAllowSell()
@@ -183,7 +183,7 @@ bool FACTRecord::IsAllowSell()
 
 void FACTRecord::IsAllowSell(bool value)
     {
-    DATA.value.flags = value ? (DATA.value.flags | fIsAllowSell) : (DATA.value.flags & ~fIsAllowSell);
+    SETBIT(DATA.value.flags, fIsAllowSell, value);
     }
 
 bool FACTRecord::IsFlagMask(UINT16 Mask, bool Exact)

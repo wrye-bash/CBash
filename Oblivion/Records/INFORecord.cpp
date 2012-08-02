@@ -383,7 +383,7 @@ bool INFORecord::IsGoodbye()
 
 void INFORecord::IsGoodbye(bool value)
     {
-    DATA.value.flags = value ? (DATA.value.flags | fIsGoodbye) : (DATA.value.flags & ~fIsGoodbye);
+    SETBIT(DATA.value.flags, fIsGoodbye, value);
     }
 
 bool INFORecord::IsRandom()
@@ -393,7 +393,7 @@ bool INFORecord::IsRandom()
 
 void INFORecord::IsRandom(bool value)
     {
-    DATA.value.flags = value ? (DATA.value.flags | fIsRandom) : (DATA.value.flags & ~fIsRandom);
+    SETBIT(DATA.value.flags, fIsRandom, value);
     }
 
 bool INFORecord::IsSayOnce()
@@ -403,7 +403,7 @@ bool INFORecord::IsSayOnce()
 
 void INFORecord::IsSayOnce(bool value)
     {
-    DATA.value.flags = value ? (DATA.value.flags | fIsSayOnce) : (DATA.value.flags & ~fIsSayOnce);
+    SETBIT(DATA.value.flags, fIsSayOnce, value);
     }
 
 bool INFORecord::IsRunImmediately()
@@ -413,7 +413,7 @@ bool INFORecord::IsRunImmediately()
 
 void INFORecord::IsRunImmediately(bool value)
     {
-    DATA.value.flags = value ? (DATA.value.flags | fIsRunImmediately) : (DATA.value.flags & ~fIsRunImmediately);
+    SETBIT(DATA.value.flags, fIsRunImmediately, value);
     }
 
 bool INFORecord::IsInfoRefusal()
@@ -423,7 +423,7 @@ bool INFORecord::IsInfoRefusal()
 
 void INFORecord::IsInfoRefusal(bool value)
     {
-    DATA.value.flags = value ? (DATA.value.flags | fIsInfoRefusal) : (DATA.value.flags & ~fIsInfoRefusal);
+    SETBIT(DATA.value.flags, fIsInfoRefusal, value);
     }
 
 bool INFORecord::IsRandomEnd()
@@ -433,7 +433,7 @@ bool INFORecord::IsRandomEnd()
 
 void INFORecord::IsRandomEnd(bool value)
     {
-    DATA.value.flags = value ? (DATA.value.flags | fIsRandomEnd) : (DATA.value.flags & ~fIsRandomEnd);
+    SETBIT(DATA.value.flags, fIsRandomEnd, value);
     }
 
 bool INFORecord::IsRunForRumors()
@@ -443,7 +443,7 @@ bool INFORecord::IsRunForRumors()
 
 void INFORecord::IsRunForRumors(bool value)
     {
-    DATA.value.flags = value ? (DATA.value.flags | fIsRunForRumors) : (DATA.value.flags & ~fIsRunForRumors);
+    SETBIT(DATA.value.flags, fIsRunForRumors, value);
     }
 
 bool INFORecord::IsFlagMask(UINT8 Mask, bool Exact)

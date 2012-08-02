@@ -140,7 +140,7 @@ bool ACRERecord::IsOppositeParent()
 void ACRERecord::IsOppositeParent(bool value)
     {
     if(!XESP.IsLoaded()) return;
-    XESP->flags = value ? (XESP->flags | fIsOppositeParent) : (XESP->flags & ~fIsOppositeParent);
+    SETBIT(XESP->flags, fIsOppositeParent, value);
     }
 
 bool ACRERecord::IsPopIn()
@@ -151,7 +151,7 @@ bool ACRERecord::IsPopIn()
 void ACRERecord::IsPopIn(bool value)
     {
     if(!XESP.IsLoaded()) return;
-    XESP->flags = value ? (XESP->flags | fIsPopIn) : (XESP->flags & ~fIsPopIn);
+    SETBIT(XESP->flags, fIsPopIn, value);
     }
 
 bool ACRERecord::IsFlagMask(UINT8 Mask, bool Exact)

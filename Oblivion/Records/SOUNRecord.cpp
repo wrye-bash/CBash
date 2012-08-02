@@ -109,7 +109,7 @@ bool SOUNRecord::IsRandomFrequencyShift()
 
 void SOUNRecord::IsRandomFrequencyShift(bool value)
     {
-    SNDX.value.flags = value ? (SNDX.value.flags | fIsRandomFrequencyShift) : (SNDX.value.flags & ~fIsRandomFrequencyShift);
+    SETBIT(SNDX.value.flags, fIsRandomFrequencyShift, value);
     }
 
 bool SOUNRecord::IsPlayAtRandom()
@@ -119,7 +119,7 @@ bool SOUNRecord::IsPlayAtRandom()
 
 void SOUNRecord::IsPlayAtRandom(bool value)
     {
-    SNDX.value.flags = value ? (SNDX.value.flags | fIsPlayAtRandom) : (SNDX.value.flags & ~fIsPlayAtRandom);
+    SETBIT(SNDX.value.flags, fIsPlayAtRandom, value);
     }
 
 bool SOUNRecord::IsEnvironmentIgnored()
@@ -129,7 +129,7 @@ bool SOUNRecord::IsEnvironmentIgnored()
 
 void SOUNRecord::IsEnvironmentIgnored(bool value)
     {
-    SNDX.value.flags = value ? (SNDX.value.flags | fIsEnvironmentIgnored) : (SNDX.value.flags & ~fIsEnvironmentIgnored);
+    SETBIT(SNDX.value.flags, fIsEnvironmentIgnored, value);
     }
 
 bool SOUNRecord::IsRandomLocation()
@@ -139,7 +139,7 @@ bool SOUNRecord::IsRandomLocation()
 
 void SOUNRecord::IsRandomLocation(bool value)
     {
-    SNDX.value.flags = value ? (SNDX.value.flags | fIsRandomLocation) : (SNDX.value.flags & ~fIsRandomLocation);
+    SETBIT(SNDX.value.flags, fIsRandomLocation, value);
     }
 
 bool SOUNRecord::IsLoop()
@@ -149,7 +149,7 @@ bool SOUNRecord::IsLoop()
 
 void SOUNRecord::IsLoop(bool value)
     {
-    SNDX.value.flags = value ? (SNDX.value.flags | fIsLoop) : (SNDX.value.flags & ~fIsLoop);
+    SETBIT(SNDX.value.flags, fIsLoop, value);
     }
 
 bool SOUNRecord::IsMenuSound()
@@ -159,7 +159,7 @@ bool SOUNRecord::IsMenuSound()
 
 void SOUNRecord::IsMenuSound(bool value)
     {
-    SNDX.value.flags = value ? (SNDX.value.flags | fIsMenuSound) : (SNDX.value.flags & ~fIsMenuSound);
+    SETBIT(SNDX.value.flags, fIsMenuSound, value);
     }
 
 bool SOUNRecord::Is2D()
@@ -169,7 +169,7 @@ bool SOUNRecord::Is2D()
 
 void SOUNRecord::Is2D(bool value)
     {
-    SNDX.value.flags = value ? (SNDX.value.flags | fIs2D) : (SNDX.value.flags & ~fIs2D);
+    SETBIT(SNDX.value.flags, fIs2D, value);
     }
 
 bool SOUNRecord::Is360LFE()
@@ -179,7 +179,7 @@ bool SOUNRecord::Is360LFE()
 
 void SOUNRecord::Is360LFE(bool value)
     {
-    SNDX.value.flags = value ? (SNDX.value.flags | fIs360LFE) : (SNDX.value.flags & ~fIs360LFE);
+    SETBIT(SNDX.value.flags, fIs360LFE, value);
     }
 
 bool SOUNRecord::IsFlagMask(unsigned short Mask, bool Exact)

@@ -119,7 +119,7 @@ bool NAVMRecord::NAVMNVTR::IsTriangle0External()
 
 void NAVMRecord::NAVMNVTR::IsTriangle0External(bool value)
     {
-    flags = value ? (flags | fIsTriangle0External) : (flags & ~fIsTriangle0External);
+    SETBIT(flags, fIsTriangle0External, value);
     }
 
 bool NAVMRecord::NAVMNVTR::IsTriangle1External()
@@ -129,7 +129,7 @@ bool NAVMRecord::NAVMNVTR::IsTriangle1External()
 
 void NAVMRecord::NAVMNVTR::IsTriangle1External(bool value)
     {
-    flags = value ? (flags | fIsTriangle1External) : (flags & ~fIsTriangle1External);
+    SETBIT(flags, fIsTriangle1External, value);
     }
 
 bool NAVMRecord::NAVMNVTR::IsTriangle2External()
@@ -139,7 +139,7 @@ bool NAVMRecord::NAVMNVTR::IsTriangle2External()
 
 void NAVMRecord::NAVMNVTR::IsTriangle2External(bool value)
     {
-    flags = value ? (flags | fIsTriangle2External) : (flags & ~fIsTriangle2External);
+    SETBIT(flags, fIsTriangle2External, value);
     }
 
 bool NAVMRecord::NAVMNVTR::IsUnknown4()
@@ -149,7 +149,7 @@ bool NAVMRecord::NAVMNVTR::IsUnknown4()
 
 void NAVMRecord::NAVMNVTR::IsUnknown4(bool value)
     {
-    flags = value ? (flags | fIsUnknown4) : (flags & ~fIsUnknown4);
+    SETBIT(flags, fIsUnknown4, value);
     }
 
 bool NAVMRecord::NAVMNVTR::IsUnknown5()
@@ -159,7 +159,7 @@ bool NAVMRecord::NAVMNVTR::IsUnknown5()
 
 void NAVMRecord::NAVMNVTR::IsUnknown5(bool value)
     {
-    flags = value ? (flags | fIsUnknown5) : (flags & ~fIsUnknown5);
+    SETBIT(flags, fIsUnknown5, value);
     }
 
 bool NAVMRecord::NAVMNVTR::IsUnknown6()
@@ -169,7 +169,7 @@ bool NAVMRecord::NAVMNVTR::IsUnknown6()
 
 void NAVMRecord::NAVMNVTR::IsUnknown6(bool value)
     {
-    flags = value ? (flags | fIsUnknown6) : (flags & ~fIsUnknown6);
+    SETBIT(flags, fIsUnknown6, value);
     }
 
 bool NAVMRecord::NAVMNVTR::IsUnknown7()
@@ -179,7 +179,7 @@ bool NAVMRecord::NAVMNVTR::IsUnknown7()
 
 void NAVMRecord::NAVMNVTR::IsUnknown7(bool value)
     {
-    flags = value ? (flags | fIsUnknown7) : (flags & ~fIsUnknown7);
+    SETBIT(flags, fIsUnknown7, value);
     }
 
 bool NAVMRecord::NAVMNVTR::IsUnknown8()
@@ -189,7 +189,7 @@ bool NAVMRecord::NAVMNVTR::IsUnknown8()
 
 void NAVMRecord::NAVMNVTR::IsUnknown8(bool value)
     {
-    flags = value ? (flags | fIsUnknown8) : (flags & ~fIsUnknown8);
+    SETBIT(flags, fIsUnknown8, value);
     }
 
 bool NAVMRecord::NAVMNVTR::IsUnknown9()
@@ -199,7 +199,7 @@ bool NAVMRecord::NAVMNVTR::IsUnknown9()
 
 void NAVMRecord::NAVMNVTR::IsUnknown9(bool value)
     {
-    flags = value ? (flags | fIsUnknown9) : (flags & ~fIsUnknown9);
+    SETBIT(flags, fIsUnknown9, value);
     }
 
 bool NAVMRecord::NAVMNVTR::IsUnknown10()
@@ -209,7 +209,7 @@ bool NAVMRecord::NAVMNVTR::IsUnknown10()
 
 void NAVMRecord::NAVMNVTR::IsUnknown10(bool value)
     {
-    flags = value ? (flags | fIsUnknown10) : (flags & ~fIsUnknown10);
+    SETBIT(flags, fIsUnknown10, value);
     }
 
 bool NAVMRecord::NAVMNVTR::IsUnknown11()
@@ -219,7 +219,7 @@ bool NAVMRecord::NAVMNVTR::IsUnknown11()
 
 void NAVMRecord::NAVMNVTR::IsUnknown11(bool value)
     {
-    flags = value ? (flags | fIsUnknown11) : (flags & ~fIsUnknown11);
+    SETBIT(flags, fIsUnknown11, value);
     }
 
 bool NAVMRecord::NAVMNVTR::IsUnknown12()
@@ -229,7 +229,7 @@ bool NAVMRecord::NAVMNVTR::IsUnknown12()
 
 void NAVMRecord::NAVMNVTR::IsUnknown12(bool value)
     {
-    flags = value ? (flags | fIsUnknown12) : (flags & ~fIsUnknown12);
+    SETBIT(flags, fIsUnknown12, value);
     }
 
 bool NAVMRecord::NAVMNVTR::IsUnknown13()
@@ -239,7 +239,7 @@ bool NAVMRecord::NAVMNVTR::IsUnknown13()
 
 void NAVMRecord::NAVMNVTR::IsUnknown13(bool value)
     {
-    flags = value ? (flags | fIsUnknown13) : (flags & ~fIsUnknown13);
+    SETBIT(flags, fIsUnknown13, value);
     }
 
 bool NAVMRecord::NAVMNVTR::IsUnknown14()
@@ -249,7 +249,7 @@ bool NAVMRecord::NAVMNVTR::IsUnknown14()
 
 void NAVMRecord::NAVMNVTR::IsUnknown14(bool value)
     {
-    flags = value ? (flags | fIsUnknown14) : (flags & ~fIsUnknown14);
+    SETBIT(flags, fIsUnknown14, value);
     }
 
 bool NAVMRecord::NAVMNVTR::IsUnknown15()
@@ -259,7 +259,7 @@ bool NAVMRecord::NAVMNVTR::IsUnknown15()
 
 void NAVMRecord::NAVMNVTR::IsUnknown15(bool value)
     {
-    flags = value ? (flags | fIsUnknown15) : (flags & ~fIsUnknown15);
+    SETBIT(flags, fIsUnknown15, value);
     }
 
 bool NAVMRecord::NAVMNVTR::IsUnknown16()
@@ -269,7 +269,7 @@ bool NAVMRecord::NAVMNVTR::IsUnknown16()
 
 void NAVMRecord::NAVMNVTR::IsUnknown16(bool value)
     {
-    flags = value ? (flags | fIsUnknown16) : (flags & ~fIsUnknown16);
+    SETBIT(flags, fIsUnknown16, value);
     }
 
 bool NAVMRecord::NAVMNVTR::IsUnknown17()
@@ -279,7 +279,7 @@ bool NAVMRecord::NAVMNVTR::IsUnknown17()
 
 void NAVMRecord::NAVMNVTR::IsUnknown17(bool value)
     {
-    flags = value ? (flags | fIsUnknown17) : (flags & ~fIsUnknown17);
+    SETBIT(flags, fIsUnknown17, value);
     }
 
 bool NAVMRecord::NAVMNVTR::IsUnknown18()
@@ -289,7 +289,7 @@ bool NAVMRecord::NAVMNVTR::IsUnknown18()
 
 void NAVMRecord::NAVMNVTR::IsUnknown18(bool value)
     {
-    flags = value ? (flags | fIsUnknown18) : (flags & ~fIsUnknown18);
+    SETBIT(flags, fIsUnknown18, value);
     }
 
 bool NAVMRecord::NAVMNVTR::IsUnknown19()
@@ -299,7 +299,7 @@ bool NAVMRecord::NAVMNVTR::IsUnknown19()
 
 void NAVMRecord::NAVMNVTR::IsUnknown19(bool value)
     {
-    flags = value ? (flags | fIsUnknown19) : (flags & ~fIsUnknown19);
+    SETBIT(flags, fIsUnknown19, value);
     }
 
 bool NAVMRecord::NAVMNVTR::IsUnknown20()
@@ -309,7 +309,7 @@ bool NAVMRecord::NAVMNVTR::IsUnknown20()
 
 void NAVMRecord::NAVMNVTR::IsUnknown20(bool value)
     {
-    flags = value ? (flags | fIsUnknown20) : (flags & ~fIsUnknown20);
+    SETBIT(flags, fIsUnknown20, value);
     }
 
 bool NAVMRecord::NAVMNVTR::IsUnknown21()
@@ -319,7 +319,7 @@ bool NAVMRecord::NAVMNVTR::IsUnknown21()
 
 void NAVMRecord::NAVMNVTR::IsUnknown21(bool value)
     {
-    flags = value ? (flags | fIsUnknown21) : (flags & ~fIsUnknown21);
+    SETBIT(flags, fIsUnknown21, value);
     }
 
 bool NAVMRecord::NAVMNVTR::IsUnknown22()
@@ -329,7 +329,7 @@ bool NAVMRecord::NAVMNVTR::IsUnknown22()
 
 void NAVMRecord::NAVMNVTR::IsUnknown22(bool value)
     {
-    flags = value ? (flags | fIsUnknown22) : (flags & ~fIsUnknown22);
+    SETBIT(flags, fIsUnknown22, value);
     }
 
 bool NAVMRecord::NAVMNVTR::IsUnknown23()
@@ -339,7 +339,7 @@ bool NAVMRecord::NAVMNVTR::IsUnknown23()
 
 void NAVMRecord::NAVMNVTR::IsUnknown23(bool value)
     {
-    flags = value ? (flags | fIsUnknown23) : (flags & ~fIsUnknown23);
+    SETBIT(flags, fIsUnknown23, value);
     }
 
 bool NAVMRecord::NAVMNVTR::IsUnknown24()
@@ -349,7 +349,7 @@ bool NAVMRecord::NAVMNVTR::IsUnknown24()
 
 void NAVMRecord::NAVMNVTR::IsUnknown24(bool value)
     {
-    flags = value ? (flags | fIsUnknown24) : (flags & ~fIsUnknown24);
+    SETBIT(flags, fIsUnknown24, value);
     }
 
 bool NAVMRecord::NAVMNVTR::IsUnknown25()
@@ -359,7 +359,7 @@ bool NAVMRecord::NAVMNVTR::IsUnknown25()
 
 void NAVMRecord::NAVMNVTR::IsUnknown25(bool value)
     {
-    flags = value ? (flags | fIsUnknown25) : (flags & ~fIsUnknown25);
+    SETBIT(flags, fIsUnknown25, value);
     }
 
 bool NAVMRecord::NAVMNVTR::IsUnknown26()
@@ -369,7 +369,7 @@ bool NAVMRecord::NAVMNVTR::IsUnknown26()
 
 void NAVMRecord::NAVMNVTR::IsUnknown26(bool value)
     {
-    flags = value ? (flags | fIsUnknown26) : (flags & ~fIsUnknown26);
+    SETBIT(flags, fIsUnknown26, value);
     }
 
 bool NAVMRecord::NAVMNVTR::IsUnknown27()
@@ -379,7 +379,7 @@ bool NAVMRecord::NAVMNVTR::IsUnknown27()
 
 void NAVMRecord::NAVMNVTR::IsUnknown27(bool value)
     {
-    flags = value ? (flags | fIsUnknown27) : (flags & ~fIsUnknown27);
+    SETBIT(flags, fIsUnknown27, value);
     }
 
 bool NAVMRecord::NAVMNVTR::IsUnknown28()
@@ -389,7 +389,7 @@ bool NAVMRecord::NAVMNVTR::IsUnknown28()
 
 void NAVMRecord::NAVMNVTR::IsUnknown28(bool value)
     {
-    flags = value ? (flags | fIsUnknown28) : (flags & ~fIsUnknown28);
+    SETBIT(flags, fIsUnknown28, value);
     }
 
 bool NAVMRecord::NAVMNVTR::IsUnknown29()
@@ -399,7 +399,7 @@ bool NAVMRecord::NAVMNVTR::IsUnknown29()
 
 void NAVMRecord::NAVMNVTR::IsUnknown29(bool value)
     {
-    flags = value ? (flags | fIsUnknown29) : (flags & ~fIsUnknown29);
+    SETBIT(flags, fIsUnknown29, value);
     }
 
 bool NAVMRecord::NAVMNVTR::IsUnknown30()
@@ -409,7 +409,7 @@ bool NAVMRecord::NAVMNVTR::IsUnknown30()
 
 void NAVMRecord::NAVMNVTR::IsUnknown30(bool value)
     {
-    flags = value ? (flags | fIsUnknown30) : (flags & ~fIsUnknown30);
+    SETBIT(flags, fIsUnknown30, value);
     }
 
 bool NAVMRecord::NAVMNVTR::IsUnknown31()
@@ -419,7 +419,7 @@ bool NAVMRecord::NAVMNVTR::IsUnknown31()
 
 void NAVMRecord::NAVMNVTR::IsUnknown31(bool value)
     {
-    flags = value ? (flags | fIsUnknown31) : (flags & ~fIsUnknown31);
+    SETBIT(flags, fIsUnknown31, value);
     }
 
 bool NAVMRecord::NAVMNVTR::IsUnknown32()
@@ -429,7 +429,7 @@ bool NAVMRecord::NAVMNVTR::IsUnknown32()
 
 void NAVMRecord::NAVMNVTR::IsUnknown32(bool value)
     {
-    flags = value ? (flags | fIsUnknown32) : (flags & ~fIsUnknown32);
+    SETBIT(flags, fIsUnknown32, value);
     }
 
 bool NAVMRecord::NAVMNVTR::IsFlagMask(UINT32 Mask, bool Exact)

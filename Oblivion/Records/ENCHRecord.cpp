@@ -116,7 +116,7 @@ bool ENCHRecord::IsNoAutoCalc()
 
 void ENCHRecord::IsNoAutoCalc(bool value)
     {
-    ENIT.value.flags = value ? (ENIT.value.flags | fIsNoAutoCalc) : (ENIT.value.flags & ~fIsNoAutoCalc);
+    SETBIT(ENIT.value.flags, fIsNoAutoCalc, value);
     }
 
 bool ENCHRecord::IsFlagMask(UINT8 Mask, bool Exact)

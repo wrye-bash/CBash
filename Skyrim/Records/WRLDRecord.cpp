@@ -137,7 +137,7 @@ bool WRLDRecord::IsSmallWorld()
 
 void WRLDRecord::IsSmallWorld(bool value)
     {
-    DATA.value = value ? (DATA.value | fIsSmallWorld) : (DATA.value & ~fIsSmallWorld);
+    SETBIT(DATA.value, fIsSmallWorld, value);
     }
 
 bool WRLDRecord::IsNoFastTravel()
@@ -147,7 +147,7 @@ bool WRLDRecord::IsNoFastTravel()
 
 void WRLDRecord::IsNoFastTravel(bool value)
     {
-    DATA.value = value ? (DATA.value | fIsNoFastTravel) : (DATA.value & ~fIsNoFastTravel);
+    SETBIT(DATA.value, fIsNoFastTravel, value);
     }
 
 bool WRLDRecord::IsFastTravel()
@@ -167,7 +167,7 @@ bool WRLDRecord::IsNoLODWater()
 
 void WRLDRecord::IsNoLODWater(bool value)
     {
-    DATA.value = value ? (DATA.value | fIsNoLODWater) : (DATA.value & ~fIsNoLODWater);
+    SETBIT(DATA.value, fIsNoLODWater, value);
     }
 
 bool WRLDRecord::IsLODWater()
@@ -188,7 +188,7 @@ bool WRLDRecord::IsNoLODNoise()
 
 void WRLDRecord::IsNoLODNoise(bool value)
     {
-    DATA.value = value ? (DATA.value | fIsNoLODNoise) : (DATA.value & ~fIsNoLODNoise);
+    SETBIT(DATA.value, fIsNoLODNoise, value);
     }
 
 bool WRLDRecord::IsLODNoise()
@@ -208,7 +208,7 @@ bool WRLDRecord::IsNoNPCFallDmg()
 
 void WRLDRecord::IsNoNPCFallDmg(bool value)
     {
-    DATA.value = value ? (DATA.value | fIsNoNPCFallDmg) : (DATA.value & ~fIsNoNPCFallDmg);
+    SETBIT(DATA.value, fIsNoNPCFallDmg, value);
     }
 
 bool WRLDRecord::IsNPCFallDmg()
@@ -239,7 +239,7 @@ bool WRLDRecord::IsUseLandData()
 
 void WRLDRecord::IsUseLandData(bool value)
     {
-    PNAM.value = value ? (PNAM.value | fIsUseLandData) : (PNAM.value & ~fIsUseLandData);
+    SETBIT(PNAM.value, fIsUseLandData, value);
     }
 
 bool WRLDRecord::IsUseLODData()
@@ -249,7 +249,7 @@ bool WRLDRecord::IsUseLODData()
 
 void WRLDRecord::IsUseLODData(bool value)
     {
-    PNAM.value = value ? (PNAM.value | fIsUseLODData) : (PNAM.value & ~fIsUseLODData);
+    SETBIT(PNAM.value, fIsUseLODData, value);
     }
 
 bool WRLDRecord::IsUseMapData()
@@ -259,7 +259,7 @@ bool WRLDRecord::IsUseMapData()
 
 void WRLDRecord::IsUseMapData(bool value)
     {
-    PNAM.value = value ? (PNAM.value | fIsUseMapData) : (PNAM.value & ~fIsUseMapData);
+    SETBIT(PNAM.value, fIsUseMapData, value);
     }
 
 bool WRLDRecord::IsUseWaterData()
@@ -269,7 +269,7 @@ bool WRLDRecord::IsUseWaterData()
 
 void WRLDRecord::IsUseWaterData(bool value)
     {
-    PNAM.value = value ? (PNAM.value | fIsUseWaterData) : (PNAM.value & ~fIsUseWaterData);
+    SETBIT(PNAM.value, fIsUseWaterData, value);
     }
 
 bool WRLDRecord::IsUseClimateData()
@@ -279,7 +279,7 @@ bool WRLDRecord::IsUseClimateData()
 
 void WRLDRecord::IsUseClimateData(bool value)
     {
-    PNAM.value = value ? (PNAM.value | fIsUseClimateData) : (PNAM.value & ~fIsUseClimateData);
+    SETBIT(PNAM.value, fIsUseClimateData, value);
     }
 
 bool WRLDRecord::IsUseImageSpaceData()
@@ -289,7 +289,7 @@ bool WRLDRecord::IsUseImageSpaceData()
 
 void WRLDRecord::IsUseImageSpaceData(bool value)
     {
-    PNAM.value = value ? (PNAM.value | fIsUseImageSpaceData) : (PNAM.value & ~fIsUseImageSpaceData);
+    SETBIT(PNAM.value, fIsUseImageSpaceData, value);
     }
 
 bool WRLDRecord::IsNeedsWaterAdjustment()
@@ -299,7 +299,7 @@ bool WRLDRecord::IsNeedsWaterAdjustment()
 
 void WRLDRecord::IsNeedsWaterAdjustment(bool value)
     {
-    PNAM.value = value ? (PNAM.value | fIsNeedsWaterAdjustment) : (PNAM.value & ~fIsNeedsWaterAdjustment);
+    SETBIT(PNAM.value, fIsNeedsWaterAdjustment, value);
     }
 
 bool WRLDRecord::IsUseFlagMask(UINT16 Mask, bool Exact)

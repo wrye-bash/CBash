@@ -337,7 +337,7 @@ bool CREARecord::IsBiped()
 
 void CREARecord::IsBiped(bool value)
     {
-    ACBS.value.flags = value ? (ACBS.value.flags | fIsBiped) : (ACBS.value.flags & ~fIsBiped);
+    SETBIT(ACBS.value.flags, fIsBiped, value);
     }
 
 bool CREARecord::IsEssential()
@@ -347,7 +347,7 @@ bool CREARecord::IsEssential()
 
 void CREARecord::IsEssential(bool value)
     {
-    ACBS.value.flags = value ? (ACBS.value.flags | fIsEssential) : (ACBS.value.flags & ~fIsEssential);
+    SETBIT(ACBS.value.flags, fIsEssential, value);
     }
 
 bool CREARecord::IsWeaponAndShield()
@@ -357,7 +357,7 @@ bool CREARecord::IsWeaponAndShield()
 
 void CREARecord::IsWeaponAndShield(bool value)
     {
-    ACBS.value.flags = value ? (ACBS.value.flags | fIsWeaponAndShield) : (ACBS.value.flags & ~fIsWeaponAndShield);
+    SETBIT(ACBS.value.flags, fIsWeaponAndShield, value);
     }
 
 bool CREARecord::IsRespawn()
@@ -367,7 +367,7 @@ bool CREARecord::IsRespawn()
 
 void CREARecord::IsRespawn(bool value)
     {
-    ACBS.value.flags = value ? (ACBS.value.flags | fIsRespawn) : (ACBS.value.flags & ~fIsRespawn);
+    SETBIT(ACBS.value.flags, fIsRespawn, value);
     }
 
 bool CREARecord::IsSwims()
@@ -377,7 +377,7 @@ bool CREARecord::IsSwims()
 
 void CREARecord::IsSwims(bool value)
     {
-    ACBS.value.flags = value ? (ACBS.value.flags | fIsSwims) : (ACBS.value.flags & ~fIsSwims);
+    SETBIT(ACBS.value.flags, fIsSwims, value);
     }
 
 bool CREARecord::IsFlies()
@@ -387,7 +387,7 @@ bool CREARecord::IsFlies()
 
 void CREARecord::IsFlies(bool value)
     {
-    ACBS.value.flags = value ? (ACBS.value.flags | fIsFlies) : (ACBS.value.flags & ~fIsFlies);
+    SETBIT(ACBS.value.flags, fIsFlies, value);
     }
 
 bool CREARecord::IsWalks()
@@ -397,7 +397,7 @@ bool CREARecord::IsWalks()
 
 void CREARecord::IsWalks(bool value)
     {
-    ACBS.value.flags = value ? (ACBS.value.flags | fIsWalks) : (ACBS.value.flags & ~fIsWalks);
+    SETBIT(ACBS.value.flags, fIsWalks, value);
     }
 
 bool CREARecord::IsPCLevelOffset()
@@ -407,7 +407,7 @@ bool CREARecord::IsPCLevelOffset()
 
 void CREARecord::IsPCLevelOffset(bool value)
     {
-    ACBS.value.flags = value ? (ACBS.value.flags | fIsPCLevelOffset) : (ACBS.value.flags & ~fIsPCLevelOffset);
+    SETBIT(ACBS.value.flags, fIsPCLevelOffset, value);
     }
 
 bool CREARecord::IsNoLowLevel()
@@ -417,7 +417,7 @@ bool CREARecord::IsNoLowLevel()
 
 void CREARecord::IsNoLowLevel(bool value)
     {
-    ACBS.value.flags = value ? (ACBS.value.flags | fIsNoLowLevel) : (ACBS.value.flags & ~fIsNoLowLevel);
+    SETBIT(ACBS.value.flags, fIsNoLowLevel, value);
     }
 
 bool CREARecord::IsLowLevel()
@@ -437,7 +437,7 @@ bool CREARecord::IsNoBloodSpray()
 
 void CREARecord::IsNoBloodSpray(bool value)
     {
-    ACBS.value.flags = value ? (ACBS.value.flags | fIsNoBloodSpray) : (ACBS.value.flags & ~fIsNoBloodSpray);
+    SETBIT(ACBS.value.flags, fIsNoBloodSpray, value);
     }
 
 bool CREARecord::IsBloodSpray()
@@ -457,7 +457,7 @@ bool CREARecord::IsNoBloodDecal()
 
 void CREARecord::IsNoBloodDecal(bool value)
     {
-    ACBS.value.flags = value ? (ACBS.value.flags | fIsNoBloodDecal) : (ACBS.value.flags & ~fIsNoBloodDecal);
+    SETBIT(ACBS.value.flags, fIsNoBloodDecal, value);
     }
 
 bool CREARecord::IsBloodDecal()
@@ -477,7 +477,7 @@ bool CREARecord::IsNoHead()
 
 void CREARecord::IsNoHead(bool value)
     {
-    ACBS.value.flags = value ? (ACBS.value.flags | fIsNoHead) : (ACBS.value.flags & ~fIsNoHead);
+    SETBIT(ACBS.value.flags, fIsNoHead, value);
     }
 
 bool CREARecord::IsHead()
@@ -497,7 +497,7 @@ bool CREARecord::IsNoRightArm()
 
 void CREARecord::IsNoRightArm(bool value)
     {
-    ACBS.value.flags = value ? (ACBS.value.flags | fIsNoRightArm) : (ACBS.value.flags & ~fIsNoRightArm);
+    SETBIT(ACBS.value.flags, fIsNoRightArm, value);
     }
 
 bool CREARecord::IsRightArm()
@@ -517,7 +517,7 @@ bool CREARecord::IsNoLeftArm()
 
 void CREARecord::IsNoLeftArm(bool value)
     {
-    ACBS.value.flags = value ? (ACBS.value.flags | fIsNoLeftArm) : (ACBS.value.flags & ~fIsNoLeftArm);
+    SETBIT(ACBS.value.flags, fIsNoLeftArm, value);
     }
 
 bool CREARecord::IsLeftArm()
@@ -537,7 +537,7 @@ bool CREARecord::IsNoCombatInWater()
 
 void CREARecord::IsNoCombatInWater(bool value)
     {
-    ACBS.value.flags = value ? (ACBS.value.flags | fIsNoCombatInWater) : (ACBS.value.flags & ~fIsNoCombatInWater);
+    SETBIT(ACBS.value.flags, fIsNoCombatInWater, value);
     }
 
 bool CREARecord::IsCombatInWater()
@@ -557,7 +557,7 @@ bool CREARecord::IsNoShadow()
 
 void CREARecord::IsNoShadow(bool value)
     {
-    ACBS.value.flags = value ? (ACBS.value.flags | fIsNoShadow) : (ACBS.value.flags & ~fIsNoShadow);
+    SETBIT(ACBS.value.flags, fIsNoShadow, value);
     }
 
 bool CREARecord::IsShadow()
@@ -577,7 +577,7 @@ bool CREARecord::IsNoCorpseCheck()
 
 void CREARecord::IsNoCorpseCheck(bool value)
     {
-    ACBS.value.flags = value ? (ACBS.value.flags | fIsNoCorpseCheck) : (ACBS.value.flags & ~fIsNoCorpseCheck);
+    SETBIT(ACBS.value.flags, fIsNoCorpseCheck, value);
     }
 
 bool CREARecord::IsCorpseCheck()
@@ -783,7 +783,7 @@ bool CREARecord::IsServicesWeapons()
 
 void CREARecord::IsServicesWeapons(bool value)
     {
-    AIDT.value.flags = value ? (AIDT.value.flags | fWeapons) : (AIDT.value.flags & ~fWeapons);
+    SETBIT(AIDT.value.flags, fWeapons, value);
     }
 
 bool CREARecord::IsServicesArmor()
@@ -793,7 +793,7 @@ bool CREARecord::IsServicesArmor()
 
 void CREARecord::IsServicesArmor(bool value)
     {
-    AIDT.value.flags = value ? (AIDT.value.flags | fArmor) : (AIDT.value.flags & ~fArmor);
+    SETBIT(AIDT.value.flags, fArmor, value);
     }
 
 bool CREARecord::IsServicesClothing()
@@ -803,7 +803,7 @@ bool CREARecord::IsServicesClothing()
 
 void CREARecord::IsServicesClothing(bool value)
     {
-    AIDT.value.flags = value ? (AIDT.value.flags | fClothing) : (AIDT.value.flags & ~fClothing);
+    SETBIT(AIDT.value.flags, fClothing, value);
     }
 
 bool CREARecord::IsServicesBooks()
@@ -813,7 +813,7 @@ bool CREARecord::IsServicesBooks()
 
 void CREARecord::IsServicesBooks(bool value)
     {
-    AIDT.value.flags = value ? (AIDT.value.flags | fBooks) : (AIDT.value.flags & ~fBooks);
+    SETBIT(AIDT.value.flags, fBooks, value);
     }
 
 bool CREARecord::IsServicesIngredients()
@@ -823,7 +823,7 @@ bool CREARecord::IsServicesIngredients()
 
 void CREARecord::IsServicesIngredients(bool value)
     {
-    AIDT.value.flags = value ? (AIDT.value.flags | fIngredients) : (AIDT.value.flags & ~fIngredients);
+    SETBIT(AIDT.value.flags, fIngredients, value);
     }
 
 bool CREARecord::IsServicesLights()
@@ -833,7 +833,7 @@ bool CREARecord::IsServicesLights()
 
 void CREARecord::IsServicesLights(bool value)
     {
-    AIDT.value.flags = value ? (AIDT.value.flags | fLights) : (AIDT.value.flags & ~fLights);
+    SETBIT(AIDT.value.flags, fLights, value);
     }
 
 bool CREARecord::IsServicesApparatus()
@@ -843,7 +843,7 @@ bool CREARecord::IsServicesApparatus()
 
 void CREARecord::IsServicesApparatus(bool value)
     {
-    AIDT.value.flags = value ? (AIDT.value.flags | fApparatus) : (AIDT.value.flags & ~fApparatus);
+    SETBIT(AIDT.value.flags, fApparatus, value);
     }
 
 bool CREARecord::IsServicesMiscItems()
@@ -853,7 +853,7 @@ bool CREARecord::IsServicesMiscItems()
 
 void CREARecord::IsServicesMiscItems(bool value)
     {
-    AIDT.value.flags = value ? (AIDT.value.flags | fMiscItems) : (AIDT.value.flags & ~fMiscItems);
+    SETBIT(AIDT.value.flags, fMiscItems, value);
     }
 
 bool CREARecord::IsServicesSpells()
@@ -863,7 +863,7 @@ bool CREARecord::IsServicesSpells()
 
 void CREARecord::IsServicesSpells(bool value)
     {
-    AIDT.value.flags = value ? (AIDT.value.flags | fSpells) : (AIDT.value.flags & ~fSpells);
+    SETBIT(AIDT.value.flags, fSpells, value);
     }
 
 bool CREARecord::IsServicesMagicItems()
@@ -873,7 +873,7 @@ bool CREARecord::IsServicesMagicItems()
 
 void CREARecord::IsServicesMagicItems(bool value)
     {
-    AIDT.value.flags = value ? (AIDT.value.flags | fMagicItems) : (AIDT.value.flags & ~fMagicItems);
+    SETBIT(AIDT.value.flags, fMagicItems, value);
     }
 
 bool CREARecord::IsServicesPotions()
@@ -883,7 +883,7 @@ bool CREARecord::IsServicesPotions()
 
 void CREARecord::IsServicesPotions(bool value)
     {
-    AIDT.value.flags = value ? (AIDT.value.flags | fPotions) : (AIDT.value.flags & ~fPotions);
+    SETBIT(AIDT.value.flags, fPotions, value);
     }
 
 bool CREARecord::IsServicesTraining()
@@ -893,7 +893,7 @@ bool CREARecord::IsServicesTraining()
 
 void CREARecord::IsServicesTraining(bool value)
     {
-    AIDT.value.flags = value ? (AIDT.value.flags | fTraining) : (AIDT.value.flags & ~fTraining);
+    SETBIT(AIDT.value.flags, fTraining, value);
     }
 
 bool CREARecord::IsServicesRecharge()
@@ -903,7 +903,7 @@ bool CREARecord::IsServicesRecharge()
 
 void CREARecord::IsServicesRecharge(bool value)
     {
-    AIDT.value.flags = value ? (AIDT.value.flags | fRecharge) : (AIDT.value.flags & ~fRecharge);
+    SETBIT(AIDT.value.flags, fRecharge, value);
     }
 
 bool CREARecord::IsServicesRepair()
@@ -913,7 +913,7 @@ bool CREARecord::IsServicesRepair()
 
 void CREARecord::IsServicesRepair(bool value)
     {
-    AIDT.value.flags = value ? (AIDT.value.flags | fRepair) : (AIDT.value.flags & ~fRepair);
+    SETBIT(AIDT.value.flags, fRepair, value);
     }
 
 bool CREARecord::IsServicesFlagMask(UINT32 Mask, bool Exact)

@@ -125,7 +125,7 @@ bool CLASRecord::IsPlayable()
 
 void CLASRecord::IsPlayable(bool value)
     {
-    DATA.value.flags = value ? (DATA.value.flags | fIsPlayable) : (DATA.value.flags & ~fIsPlayable);
+    SETBIT(DATA.value.flags, fIsPlayable, value);
     }
 
 bool CLASRecord::IsGuard()
@@ -135,7 +135,7 @@ bool CLASRecord::IsGuard()
 
 void CLASRecord::IsGuard(bool value)
     {
-    DATA.value.flags = value ? (DATA.value.flags | fIsGuard) : (DATA.value.flags & ~fIsGuard);
+    SETBIT(DATA.value.flags, fIsGuard, value);
     }
 
 bool CLASRecord::IsFlagMask(UINT32 Mask, bool Exact)
@@ -155,7 +155,7 @@ bool CLASRecord::IsServicesWeapons()
 
 void CLASRecord::IsServicesWeapons(bool value)
     {
-    DATA.value.services = value ? (DATA.value.services | fWeapons) : (DATA.value.services & ~fWeapons);
+    SETBIT(DATA.value.services, fWeapons, value);
     }
 
 bool CLASRecord::IsServicesArmor()
@@ -165,7 +165,7 @@ bool CLASRecord::IsServicesArmor()
 
 void CLASRecord::IsServicesArmor(bool value)
     {
-    DATA.value.services = value ? (DATA.value.services | fArmor) : (DATA.value.services & ~fArmor);
+    SETBIT(DATA.value.services, fArmor, value);
     }
 
 bool CLASRecord::IsServicesClothing()
@@ -175,7 +175,7 @@ bool CLASRecord::IsServicesClothing()
 
 void CLASRecord::IsServicesClothing(bool value)
     {
-    DATA.value.services = value ? (DATA.value.services | fClothing) : (DATA.value.services & ~fClothing);
+    SETBIT(DATA.value.services, fClothing, value);
     }
 
 bool CLASRecord::IsServicesBooks()
@@ -185,7 +185,7 @@ bool CLASRecord::IsServicesBooks()
 
 void CLASRecord::IsServicesBooks(bool value)
     {
-    DATA.value.services = value ? (DATA.value.services | fBooks) : (DATA.value.services & ~fBooks);
+    SETBIT(DATA.value.services, fBooks, value);
     }
 
 bool CLASRecord::IsServicesIngredients()
@@ -195,7 +195,7 @@ bool CLASRecord::IsServicesIngredients()
 
 void CLASRecord::IsServicesIngredients(bool value)
     {
-    DATA.value.services = value ? (DATA.value.services | fIngredients) : (DATA.value.services & ~fIngredients);
+    SETBIT(DATA.value.services, fIngredients, value);
     }
 
 bool CLASRecord::IsServicesLights()
@@ -205,7 +205,7 @@ bool CLASRecord::IsServicesLights()
 
 void CLASRecord::IsServicesLights(bool value)
     {
-    DATA.value.services = value ? (DATA.value.services | fLights) : (DATA.value.services & ~fLights);
+    SETBIT(DATA.value.services, fLights, value);
     }
 
 bool CLASRecord::IsServicesApparatus()
@@ -215,7 +215,7 @@ bool CLASRecord::IsServicesApparatus()
 
 void CLASRecord::IsServicesApparatus(bool value)
     {
-    DATA.value.services = value ? (DATA.value.services | fApparatus) : (DATA.value.services & ~fApparatus);
+    SETBIT(DATA.value.services, fApparatus, value);
     }
 
 bool CLASRecord::IsServicesMiscItems()
@@ -225,7 +225,7 @@ bool CLASRecord::IsServicesMiscItems()
 
 void CLASRecord::IsServicesMiscItems(bool value)
     {
-    DATA.value.services = value ? (DATA.value.services | fMiscItems) : (DATA.value.services & ~fMiscItems);
+    SETBIT(DATA.value.services, fMiscItems, value);
     }
 
 bool CLASRecord::IsServicesSpells()
@@ -235,7 +235,7 @@ bool CLASRecord::IsServicesSpells()
 
 void CLASRecord::IsServicesSpells(bool value)
     {
-    DATA.value.services = value ? (DATA.value.services | fSpells) : (DATA.value.services & ~fSpells);
+    SETBIT(DATA.value.services, fSpells, value);
     }
 
 bool CLASRecord::IsServicesMagicItems()
@@ -245,7 +245,7 @@ bool CLASRecord::IsServicesMagicItems()
 
 void CLASRecord::IsServicesMagicItems(bool value)
     {
-    DATA.value.services = value ? (DATA.value.services | fMagicItems) : (DATA.value.services & ~fMagicItems);
+    SETBIT(DATA.value.services, fMagicItems, value);
     }
 
 bool CLASRecord::IsServicesPotions()
@@ -255,7 +255,7 @@ bool CLASRecord::IsServicesPotions()
 
 void CLASRecord::IsServicesPotions(bool value)
     {
-    DATA.value.services = value ? (DATA.value.services | fPotions) : (DATA.value.services & ~fPotions);
+    SETBIT(DATA.value.services, fPotions, value);
     }
 
 bool CLASRecord::IsServicesTraining()
@@ -265,7 +265,7 @@ bool CLASRecord::IsServicesTraining()
 
 void CLASRecord::IsServicesTraining(bool value)
     {
-    DATA.value.services = value ? (DATA.value.services | fTraining) : (DATA.value.services & ~fTraining);
+    SETBIT(DATA.value.services, fTraining, value);
     }
 
 bool CLASRecord::IsServicesRecharge()
@@ -275,7 +275,7 @@ bool CLASRecord::IsServicesRecharge()
 
 void CLASRecord::IsServicesRecharge(bool value)
     {
-    DATA.value.services = value ? (DATA.value.services | fRecharge) : (DATA.value.services & ~fRecharge);
+    SETBIT(DATA.value.services, fRecharge, value);
     }
 
 bool CLASRecord::IsServicesRepair()
@@ -285,7 +285,7 @@ bool CLASRecord::IsServicesRepair()
 
 void CLASRecord::IsServicesRepair(bool value)
     {
-    DATA.value.services = value ? (DATA.value.services | fRepair) : (DATA.value.services & ~fRepair);
+    SETBIT(DATA.value.services, fRepair, value);
     }
 
 bool CLASRecord::IsServicesFlagMask(UINT32 Mask, bool Exact)

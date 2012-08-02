@@ -137,7 +137,7 @@ bool ACHRRecord::IsOppositeParent()
 void ACHRRecord::IsOppositeParent(bool value)
     {
     if(!XESP.IsLoaded()) return;
-    XESP->flags = value ? (XESP->flags | fIsOppositeParent) : (XESP->flags & ~fIsOppositeParent);
+    SETBIT(XESP->flags, fIsOppositeParent, value);
     }
 
 bool ACHRRecord::IsPopIn()
@@ -148,7 +148,7 @@ bool ACHRRecord::IsPopIn()
 void ACHRRecord::IsPopIn(bool value)
     {
     if(!XESP.IsLoaded()) return;
-    XESP->flags = value ? (XESP->flags | fIsPopIn) : (XESP->flags & ~fIsPopIn);
+    SETBIT(XESP->flags, fIsPopIn, value);
     }
 
 bool ACHRRecord::IsFlagMask(UINT8 Mask, bool Exact)

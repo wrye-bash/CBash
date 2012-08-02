@@ -174,7 +174,7 @@ bool CELLRecord::IsInterior()
 
 void CELLRecord::IsInterior(bool value)
     {
-    DATA.value = value ? (DATA.value | fIsInterior) : (DATA.value & ~fIsInterior);
+    SETBIT(DATA.value, fIsInterior, value);
     }
 
 bool CELLRecord::IsHasWater()
@@ -184,7 +184,7 @@ bool CELLRecord::IsHasWater()
 
 void CELLRecord::IsHasWater(bool value)
     {
-    DATA.value = value ? (DATA.value | fHasWater) : (DATA.value & ~fHasWater);
+    SETBIT(DATA.value, fHasWater, value);
     }
 
 bool CELLRecord::IsInvertFastTravel()
@@ -194,7 +194,7 @@ bool CELLRecord::IsInvertFastTravel()
 
 void CELLRecord::IsInvertFastTravel(bool value)
     {
-    DATA.value = value ? (DATA.value | fInvertFastTravel) : (DATA.value & ~fInvertFastTravel);
+    SETBIT(DATA.value, fInvertFastTravel, value);
     }
 
 bool CELLRecord::IsForceHideLand()
@@ -204,7 +204,7 @@ bool CELLRecord::IsForceHideLand()
 
 void CELLRecord::IsForceHideLand(bool value)
     {
-    DATA.value = value ? (DATA.value | fForceHideLand) : (DATA.value & ~fForceHideLand);
+    SETBIT(DATA.value, fForceHideLand, value);
     }
 
 bool CELLRecord::IsPublicPlace()
@@ -214,7 +214,7 @@ bool CELLRecord::IsPublicPlace()
 
 void CELLRecord::IsPublicPlace(bool value)
     {
-    DATA.value = value ? (DATA.value | fPublicPlace) : (DATA.value & ~fPublicPlace);
+    SETBIT(DATA.value, fPublicPlace, value);
     }
 
 bool CELLRecord::IsHandChanged()
@@ -224,7 +224,7 @@ bool CELLRecord::IsHandChanged()
 
 void CELLRecord::IsHandChanged(bool value)
     {
-    DATA.value = value ? (DATA.value | fHandChanged) : (DATA.value & ~fHandChanged);
+    SETBIT(DATA.value, fHandChanged, value);
     }
 
 bool CELLRecord::IsBehaveLikeExterior()
@@ -234,7 +234,7 @@ bool CELLRecord::IsBehaveLikeExterior()
 
 void CELLRecord::IsBehaveLikeExterior(bool value)
     {
-    DATA.value = value ? (DATA.value | fBehaveLikeExterior) : (DATA.value & ~fBehaveLikeExterior);
+    SETBIT(DATA.value, fBehaveLikeExterior, value);
     }
 
 bool CELLRecord::IsFlagMask(UINT8 Mask, bool Exact)

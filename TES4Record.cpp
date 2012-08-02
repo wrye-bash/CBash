@@ -131,7 +131,7 @@ bool TES4Record::IsESM()
 void TES4Record::IsESM(bool value)
     {
     if(!IsLoaded()) return;
-    flags = value ? (flags | fIsESM) : (flags & ~fIsESM);
+    SETBIT(flags, fIsESM, value);
     }
 
 UINT32 TES4Record::GetType()

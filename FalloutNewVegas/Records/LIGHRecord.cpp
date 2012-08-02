@@ -138,7 +138,7 @@ bool LIGHRecord::IsDynamic()
 
 void LIGHRecord::IsDynamic(bool value)
     {
-    DATA.value.flags = value ? (DATA.value.flags | fIsDynamic) : (DATA.value.flags & ~fIsDynamic);
+    SETBIT(DATA.value.flags, fIsDynamic, value);
     }
 
 bool LIGHRecord::IsCanTake()
@@ -148,7 +148,7 @@ bool LIGHRecord::IsCanTake()
 
 void LIGHRecord::IsCanTake(bool value)
     {
-    DATA.value.flags = value ? (DATA.value.flags | fIsCanTake) : (DATA.value.flags & ~fIsCanTake);
+    SETBIT(DATA.value.flags, fIsCanTake, value);
     }
 
 bool LIGHRecord::IsTakeable()
@@ -158,7 +158,7 @@ bool LIGHRecord::IsTakeable()
 
 void LIGHRecord::IsTakeable(bool value)
     {
-    DATA.value.flags = value ? (DATA.value.flags | fIsCanTake) : (DATA.value.flags & ~fIsCanTake);
+    SETBIT(DATA.value.flags, fIsCanTake, value);
     }
 
 bool LIGHRecord::IsNegative()
@@ -168,7 +168,7 @@ bool LIGHRecord::IsNegative()
 
 void LIGHRecord::IsNegative(bool value)
     {
-    DATA.value.flags = value ? (DATA.value.flags | fIsNegative) : (DATA.value.flags & ~fIsNegative);
+    SETBIT(DATA.value.flags, fIsNegative, value);
     }
 
 bool LIGHRecord::IsFlickers()
@@ -178,7 +178,7 @@ bool LIGHRecord::IsFlickers()
 
 void LIGHRecord::IsFlickers(bool value)
     {
-    DATA.value.flags = value ? (DATA.value.flags | fIsFlickers) : (DATA.value.flags & ~fIsFlickers);
+    SETBIT(DATA.value.flags, fIsFlickers, value);
     }
 
 bool LIGHRecord::IsOffByDefault()
@@ -188,7 +188,7 @@ bool LIGHRecord::IsOffByDefault()
 
 void LIGHRecord::IsOffByDefault(bool value)
     {
-    DATA.value.flags = value ? (DATA.value.flags | fIsOffByDefault) : (DATA.value.flags & ~fIsOffByDefault);
+    SETBIT(DATA.value.flags, fIsOffByDefault, value);
     }
 
 bool LIGHRecord::IsFlickerSlow()
@@ -198,7 +198,7 @@ bool LIGHRecord::IsFlickerSlow()
 
 void LIGHRecord::IsFlickerSlow(bool value)
     {
-    DATA.value.flags = value ? (DATA.value.flags | fIsFlickerSlow) : (DATA.value.flags & ~fIsFlickerSlow);
+    SETBIT(DATA.value.flags, fIsFlickerSlow, value);
     }
 
 bool LIGHRecord::IsPulse()
@@ -208,7 +208,7 @@ bool LIGHRecord::IsPulse()
 
 void LIGHRecord::IsPulse(bool value)
     {
-    DATA.value.flags = value ? (DATA.value.flags | fIsPulse) : (DATA.value.flags & ~fIsPulse);
+    SETBIT(DATA.value.flags, fIsPulse, value);
     }
 
 bool LIGHRecord::IsPulseSlow()
@@ -218,7 +218,7 @@ bool LIGHRecord::IsPulseSlow()
 
 void LIGHRecord::IsPulseSlow(bool value)
     {
-    DATA.value.flags = value ? (DATA.value.flags | fIsPulseSlow) : (DATA.value.flags & ~fIsPulseSlow);
+    SETBIT(DATA.value.flags, fIsPulseSlow, value);
     }
 
 bool LIGHRecord::IsSpotLight()
@@ -228,7 +228,7 @@ bool LIGHRecord::IsSpotLight()
 
 void LIGHRecord::IsSpotLight(bool value)
     {
-    DATA.value.flags = value ? (DATA.value.flags | fIsSpotLight) : (DATA.value.flags & ~fIsSpotLight);
+    SETBIT(DATA.value.flags, fIsSpotLight, value);
     }
 
 bool LIGHRecord::IsSpotShadow()
@@ -238,7 +238,7 @@ bool LIGHRecord::IsSpotShadow()
 
 void LIGHRecord::IsSpotShadow(bool value)
     {
-    DATA.value.flags = value ? (DATA.value.flags | fIsSpotShadow) : (DATA.value.flags & ~fIsSpotShadow);
+    SETBIT(DATA.value.flags, fIsSpotShadow, value);
     }
 
 bool LIGHRecord::IsFlagMask(UINT32 Mask, bool Exact)

@@ -96,7 +96,7 @@ bool INGRRecord::IsNoAutoCalc()
 
 void INGRRecord::IsNoAutoCalc(bool value)
     {
-    ENIT.value.flags = value ? (ENIT.value.flags | fIsNoAutoCalc) : (ENIT.value.flags & ~fIsNoAutoCalc);
+    SETBIT(ENIT.value.flags, fIsNoAutoCalc, value);
     }
 
 bool INGRRecord::IsFood()
@@ -106,7 +106,7 @@ bool INGRRecord::IsFood()
 
 void INGRRecord::IsFood(bool value)
     {
-    ENIT.value.flags = value ? (ENIT.value.flags | fIsFood) : (ENIT.value.flags & ~fIsFood);
+    SETBIT(ENIT.value.flags, fIsFood, value);
     }
 
 bool INGRRecord::IsFlagMask(UINT8 Mask, bool Exact)

@@ -272,7 +272,7 @@ bool CSTYRecord::IsUseChanceForAttack()
 
 void CSTYRecord::IsUseChanceForAttack(bool value)
     {
-    CSTD.value.flags = value ? (CSTD.value.flags | fIsUseChanceForAttack) : (CSTD.value.flags & ~fIsUseChanceForAttack);
+    SETBIT(CSTD.value.flags, fIsUseChanceForAttack, value);
     }
 
 bool CSTYRecord::IsMeleeAlertOK()
@@ -282,7 +282,7 @@ bool CSTYRecord::IsMeleeAlertOK()
 
 void CSTYRecord::IsMeleeAlertOK(bool value)
     {
-    CSTD.value.flags = value ? (CSTD.value.flags | fIsMeleeAlertOK) : (CSTD.value.flags & ~fIsMeleeAlertOK);
+    SETBIT(CSTD.value.flags, fIsMeleeAlertOK, value);
     }
 
 bool CSTYRecord::IsFleeForSurvival()
@@ -292,7 +292,7 @@ bool CSTYRecord::IsFleeForSurvival()
 
 void CSTYRecord::IsFleeForSurvival(bool value)
     {
-    CSTD.value.flags = value ? (CSTD.value.flags | fIsFleeForSurvival) : (CSTD.value.flags & ~fIsFleeForSurvival);
+    SETBIT(CSTD.value.flags, fIsFleeForSurvival, value);
     }
 
 bool CSTYRecord::IsIgnoreThreats()
@@ -302,7 +302,7 @@ bool CSTYRecord::IsIgnoreThreats()
 
 void CSTYRecord::IsIgnoreThreats(bool value)
     {
-    CSTD.value.flags = value ? (CSTD.value.flags | fIsIgnoreThreats) : (CSTD.value.flags & ~fIsIgnoreThreats);
+    SETBIT(CSTD.value.flags, fIsIgnoreThreats, value);
     }
 
 bool CSTYRecord::IsIgnoreDamagingSelf()
@@ -312,7 +312,7 @@ bool CSTYRecord::IsIgnoreDamagingSelf()
 
 void CSTYRecord::IsIgnoreDamagingSelf(bool value)
     {
-    CSTD.value.flags = value ? (CSTD.value.flags | fIsIgnoreDamagingSelf) : (CSTD.value.flags & ~fIsIgnoreDamagingSelf);
+    SETBIT(CSTD.value.flags, fIsIgnoreDamagingSelf, value);
     }
 
 bool CSTYRecord::IsIgnoreDamagingGroup()
@@ -322,7 +322,7 @@ bool CSTYRecord::IsIgnoreDamagingGroup()
 
 void CSTYRecord::IsIgnoreDamagingGroup(bool value)
     {
-    CSTD.value.flags = value ? (CSTD.value.flags | fIsIgnoreDamagingGroup) : (CSTD.value.flags & ~fIsIgnoreDamagingGroup);
+    SETBIT(CSTD.value.flags, fIsIgnoreDamagingGroup, value);
     }
 
 bool CSTYRecord::IsIgnoreDamagingSpectator()
@@ -332,7 +332,7 @@ bool CSTYRecord::IsIgnoreDamagingSpectator()
 
 void CSTYRecord::IsIgnoreDamagingSpectator(bool value)
     {
-    CSTD.value.flags = value ? (CSTD.value.flags | fIsIgnoreDamagingSpectator) : (CSTD.value.flags & ~fIsIgnoreDamagingSpectator);
+    SETBIT(CSTD.value.flags, fIsIgnoreDamagingSpectator, value);
     }
 
 bool CSTYRecord::IsNoUseStealthboy()
@@ -342,7 +342,7 @@ bool CSTYRecord::IsNoUseStealthboy()
 
 void CSTYRecord::IsNoUseStealthboy(bool value)
     {
-    CSTD.value.flags = value ? (CSTD.value.flags | fIsNoUseStealthboy) : (CSTD.value.flags & ~fIsNoUseStealthboy);
+    SETBIT(CSTD.value.flags, fIsNoUseStealthboy, value);
     }
 
 bool CSTYRecord::IsFlagMask(UINT16 Mask, bool Exact)

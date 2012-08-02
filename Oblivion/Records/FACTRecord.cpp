@@ -115,7 +115,7 @@ bool FACTRecord::IsHiddenFromPC()
 
 void FACTRecord::IsHiddenFromPC(bool value)
     {
-    DATA.value = value ? (DATA.value | fIsHiddenFromPC) : (DATA.value & ~fIsHiddenFromPC);
+    SETBIT(DATA.value, fIsHiddenFromPC, value);
     }
 
 bool FACTRecord::IsEvil()
@@ -125,7 +125,7 @@ bool FACTRecord::IsEvil()
 
 void FACTRecord::IsEvil(bool value)
     {
-    DATA.value = value ? (DATA.value | fIsEvil) : (DATA.value & ~fIsEvil);
+    SETBIT(DATA.value, fIsEvil, value);
     }
 
 bool FACTRecord::IsSpecialCombat()
@@ -135,7 +135,7 @@ bool FACTRecord::IsSpecialCombat()
 
 void FACTRecord::IsSpecialCombat(bool value)
     {
-    DATA.value = value ? (DATA.value | fIsSpecialCombat) : (DATA.value & ~fIsSpecialCombat);
+    SETBIT(DATA.value, fIsSpecialCombat, value);
     }
 
 bool FACTRecord::IsFlagMask(UINT8 Mask, bool Exact)

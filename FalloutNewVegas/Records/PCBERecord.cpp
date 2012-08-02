@@ -137,7 +137,7 @@ bool PCBERecord::IsOppositeParent()
 void PCBERecord::IsOppositeParent(bool value)
     {
     if(!XESP.IsLoaded()) return;
-    XESP->flags = value ? (XESP->flags | fIsOppositeParent) : (XESP->flags & ~fIsOppositeParent);
+    SETBIT(XESP->flags, fIsOppositeParent, value);
     }
 
 bool PCBERecord::IsPopIn()
@@ -148,7 +148,7 @@ bool PCBERecord::IsPopIn()
 void PCBERecord::IsPopIn(bool value)
     {
     if(!XESP.IsLoaded()) return;
-    XESP->flags = value ? (XESP->flags | fIsPopIn) : (XESP->flags & ~fIsPopIn);
+    SETBIT(XESP->flags, fIsPopIn, value);
     }
 
 bool PCBERecord::IsFlagMask(UINT8 Mask, bool Exact)

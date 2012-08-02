@@ -101,7 +101,7 @@ bool DOORRecord::IsOblivionGate()
 
 void DOORRecord::IsOblivionGate(bool value)
     {
-    FNAM.value = value ? (FNAM.value | fIsOblivionGate) : (FNAM.value & ~fIsOblivionGate);
+    SETBIT(FNAM.value, fIsOblivionGate, value);
     }
 
 bool DOORRecord::IsAutomatic()
@@ -111,7 +111,7 @@ bool DOORRecord::IsAutomatic()
 
 void DOORRecord::IsAutomatic(bool value)
     {
-    FNAM.value = value ? (FNAM.value | fIsAutomatic) : (FNAM.value & ~fIsAutomatic);
+    SETBIT(FNAM.value, fIsAutomatic, value);
     }
 
 bool DOORRecord::IsHidden()
@@ -121,7 +121,7 @@ bool DOORRecord::IsHidden()
 
 void DOORRecord::IsHidden(bool value)
     {
-    FNAM.value = value ? (FNAM.value | fIsHidden) : (FNAM.value & ~fIsHidden);
+    SETBIT(FNAM.value, fIsHidden, value);
     }
 
 bool DOORRecord::IsMinimalUse()
@@ -131,7 +131,7 @@ bool DOORRecord::IsMinimalUse()
 
 void DOORRecord::IsMinimalUse(bool value)
     {
-    FNAM.value = value ? (FNAM.value | fIsMinimalUse) : (FNAM.value & ~fIsMinimalUse);
+    SETBIT(FNAM.value, fIsMinimalUse, value);
     }
 
 bool DOORRecord::IsFlagMask(UINT8 Mask, bool Exact)

@@ -76,7 +76,7 @@ bool EYESRecord::IsPlayable()
 
 void EYESRecord::IsPlayable(bool value)
     {
-    DATA.value = value ? (DATA.value | fIsPlayable) : (DATA.value & ~fIsPlayable);
+    SETBIT(DATA.value, fIsPlayable, value);
     }
 
 bool EYESRecord::IsFlagMask(UINT8 Mask, bool Exact)

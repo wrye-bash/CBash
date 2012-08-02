@@ -269,7 +269,7 @@ bool DIALRecord::IsRumors()
 
 void DIALRecord::IsRumors(bool value)
     {
-    DATA.value.flags = value ? (DATA.value.flags | fIsRumors) : (DATA.value.flags & ~fIsRumors);
+    SETBIT(DATA.value.flags, fIsRumors, value);
     }
 
 bool DIALRecord::IsTopLevel()
@@ -279,7 +279,7 @@ bool DIALRecord::IsTopLevel()
 
 void DIALRecord::IsTopLevel(bool value)
     {
-    DATA.value.flags = value ? (DATA.value.flags | fIsTopLevel) : (DATA.value.flags & ~fIsTopLevel);
+    SETBIT(DATA.value.flags, fIsTopLevel, value);
     }
 
 bool DIALRecord::IsFlagMask(UINT8 Mask, bool Exact)

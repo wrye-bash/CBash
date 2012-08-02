@@ -89,7 +89,7 @@ bool FURNRecord::IsAnim01()
 
 void FURNRecord::IsAnim01(bool value)
     {
-    MNAM.value = value ? (MNAM.value | fIsAnim01) : (MNAM.value & ~fIsAnim01);
+    SETBIT(MNAM.value, fIsAnim01, value);
     }
 
 bool FURNRecord::IsAnim02()
@@ -99,7 +99,7 @@ bool FURNRecord::IsAnim02()
 
 void FURNRecord::IsAnim02(bool value)
     {
-    MNAM.value = value ? (MNAM.value | fIsAnim02) : (MNAM.value & ~fIsAnim02);
+    SETBIT(MNAM.value, fIsAnim02, value);
     }
 
 bool FURNRecord::IsAnim03()
@@ -109,7 +109,7 @@ bool FURNRecord::IsAnim03()
 
 void FURNRecord::IsAnim03(bool value)
     {
-    MNAM.value = value ? (MNAM.value | fIsAnim03) : (MNAM.value & ~fIsAnim03);
+    SETBIT(MNAM.value, fIsAnim03, value);
     }
 
 bool FURNRecord::IsAnim04()
@@ -119,7 +119,7 @@ bool FURNRecord::IsAnim04()
 
 void FURNRecord::IsAnim04(bool value)
     {
-    MNAM.value = value ? (MNAM.value | fIsAnim04) : (MNAM.value & ~fIsAnim04);
+    SETBIT(MNAM.value, fIsAnim04, value);
     }
 
 bool FURNRecord::IsAnim05()
@@ -129,7 +129,7 @@ bool FURNRecord::IsAnim05()
 
 void FURNRecord::IsAnim05(bool value)
     {
-    MNAM.value = value ? (MNAM.value | fIsAnim05) : (MNAM.value & ~fIsAnim05);
+    SETBIT(MNAM.value, fIsAnim05, value);
     }
 
 bool FURNRecord::IsAnim06()
@@ -139,7 +139,7 @@ bool FURNRecord::IsAnim06()
 
 void FURNRecord::IsAnim06(bool value)
     {
-    MNAM.value = value ? (MNAM.value | fIsAnim06) : (MNAM.value & ~fIsAnim06);
+    SETBIT(MNAM.value, fIsAnim06, value);
     }
 
 bool FURNRecord::IsAnim07()
@@ -149,7 +149,7 @@ bool FURNRecord::IsAnim07()
 
 void FURNRecord::IsAnim07(bool value)
     {
-    MNAM.value = value ? (MNAM.value | fIsAnim07) : (MNAM.value & ~fIsAnim07);
+    SETBIT(MNAM.value, fIsAnim07, value);
     }
 
 bool FURNRecord::IsAnim08()
@@ -159,7 +159,7 @@ bool FURNRecord::IsAnim08()
 
 void FURNRecord::IsAnim08(bool value)
     {
-    MNAM.value = value ? (MNAM.value | fIsAnim08) : (MNAM.value & ~fIsAnim08);
+    SETBIT(MNAM.value, fIsAnim08, value);
     }
 
 bool FURNRecord::IsAnim09()
@@ -169,7 +169,7 @@ bool FURNRecord::IsAnim09()
 
 void FURNRecord::IsAnim09(bool value)
     {
-    MNAM.value = value ? (MNAM.value | fIsAnim09) : (MNAM.value & ~fIsAnim09);
+    SETBIT(MNAM.value, fIsAnim09, value);
     }
 
 bool FURNRecord::IsAnim10()
@@ -179,7 +179,7 @@ bool FURNRecord::IsAnim10()
 
 void FURNRecord::IsAnim10(bool value)
     {
-    MNAM.value = value ? (MNAM.value | fIsAnim10) : (MNAM.value & ~fIsAnim10);
+    SETBIT(MNAM.value, fIsAnim10, value);
     }
 
 bool FURNRecord::IsAnim11()
@@ -189,7 +189,7 @@ bool FURNRecord::IsAnim11()
 
 void FURNRecord::IsAnim11(bool value)
     {
-    MNAM.value = value ? (MNAM.value | fIsAnim11) : (MNAM.value & ~fIsAnim11);
+    SETBIT(MNAM.value, fIsAnim11, value);
     }
 
 bool FURNRecord::IsAnim12()
@@ -199,7 +199,7 @@ bool FURNRecord::IsAnim12()
 
 void FURNRecord::IsAnim12(bool value)
     {
-    MNAM.value = value ? (MNAM.value | fIsAnim12) : (MNAM.value & ~fIsAnim12);
+    SETBIT(MNAM.value, fIsAnim12, value);
     }
 
 bool FURNRecord::IsAnim13()
@@ -209,7 +209,7 @@ bool FURNRecord::IsAnim13()
 
 void FURNRecord::IsAnim13(bool value)
     {
-    MNAM.value = value ? (MNAM.value | fIsAnim13) : (MNAM.value & ~fIsAnim13);
+    SETBIT(MNAM.value, fIsAnim13, value);
     }
 
 bool FURNRecord::IsAnim14()
@@ -219,7 +219,7 @@ bool FURNRecord::IsAnim14()
 
 void FURNRecord::IsAnim14(bool value)
     {
-    MNAM.value = value ? (MNAM.value | fIsAnim14) : (MNAM.value & ~fIsAnim14);
+    SETBIT(MNAM.value, fIsAnim14, value);
     }
 
 bool FURNRecord::IsAnim15()
@@ -229,7 +229,7 @@ bool FURNRecord::IsAnim15()
 
 void FURNRecord::IsAnim15(bool value)
     {
-    MNAM.value = value ? (MNAM.value | fIsAnim15) : (MNAM.value & ~fIsAnim15);
+    SETBIT(MNAM.value, fIsAnim15, value);
     }
 
 bool FURNRecord::IsAnim16()
@@ -239,7 +239,7 @@ bool FURNRecord::IsAnim16()
 
 void FURNRecord::IsAnim16(bool value)
     {
-    MNAM.value = value ? (MNAM.value | fIsAnim16) : (MNAM.value & ~fIsAnim16);
+    SETBIT(MNAM.value, fIsAnim16, value);
     }
 
 bool FURNRecord::IsAnim17()
@@ -249,7 +249,7 @@ bool FURNRecord::IsAnim17()
 
 void FURNRecord::IsAnim17(bool value)
     {
-    MNAM.value = value ? (MNAM.value | fIsAnim17) : (MNAM.value & ~fIsAnim17);
+    SETBIT(MNAM.value, fIsAnim17, value);
     }
 
 bool FURNRecord::IsAnim18()
@@ -259,7 +259,7 @@ bool FURNRecord::IsAnim18()
 
 void FURNRecord::IsAnim18(bool value)
     {
-    MNAM.value = value ? (MNAM.value | fIsAnim18) : (MNAM.value & ~fIsAnim18);
+    SETBIT(MNAM.value, fIsAnim18, value);
     }
 
 bool FURNRecord::IsAnim19()
@@ -269,7 +269,7 @@ bool FURNRecord::IsAnim19()
 
 void FURNRecord::IsAnim19(bool value)
     {
-    MNAM.value = value ? (MNAM.value | fIsAnim19) : (MNAM.value & ~fIsAnim19);
+    SETBIT(MNAM.value, fIsAnim19, value);
     }
 
 bool FURNRecord::IsAnim20()
@@ -279,7 +279,7 @@ bool FURNRecord::IsAnim20()
 
 void FURNRecord::IsAnim20(bool value)
     {
-    MNAM.value = value ? (MNAM.value | fIsAnim20) : (MNAM.value & ~fIsAnim20);
+    SETBIT(MNAM.value, fIsAnim20, value);
     }
 
 bool FURNRecord::IsAnim21()
@@ -289,7 +289,7 @@ bool FURNRecord::IsAnim21()
 
 void FURNRecord::IsAnim21(bool value)
     {
-    MNAM.value = value ? (MNAM.value | fIsAnim21) : (MNAM.value & ~fIsAnim21);
+    SETBIT(MNAM.value, fIsAnim21, value);
     }
 
 bool FURNRecord::IsAnim22()
@@ -299,7 +299,7 @@ bool FURNRecord::IsAnim22()
 
 void FURNRecord::IsAnim22(bool value)
     {
-    MNAM.value = value ? (MNAM.value | fIsAnim22) : (MNAM.value & ~fIsAnim22);
+    SETBIT(MNAM.value, fIsAnim22, value);
     }
 
 bool FURNRecord::IsAnim23()
@@ -309,7 +309,7 @@ bool FURNRecord::IsAnim23()
 
 void FURNRecord::IsAnim23(bool value)
     {
-    MNAM.value = value ? (MNAM.value | fIsAnim23) : (MNAM.value & ~fIsAnim23);
+    SETBIT(MNAM.value, fIsAnim23, value);
     }
 
 bool FURNRecord::IsAnim24()
@@ -319,7 +319,7 @@ bool FURNRecord::IsAnim24()
 
 void FURNRecord::IsAnim24(bool value)
     {
-    MNAM.value = value ? (MNAM.value | fIsAnim24) : (MNAM.value & ~fIsAnim24);
+    SETBIT(MNAM.value, fIsAnim24, value);
     }
 
 bool FURNRecord::IsAnim25()
@@ -329,7 +329,7 @@ bool FURNRecord::IsAnim25()
 
 void FURNRecord::IsAnim25(bool value)
     {
-    MNAM.value = value ? (MNAM.value | fIsAnim25) : (MNAM.value & ~fIsAnim25);
+    SETBIT(MNAM.value, fIsAnim25, value);
     }
 
 bool FURNRecord::IsAnim26()
@@ -339,7 +339,7 @@ bool FURNRecord::IsAnim26()
 
 void FURNRecord::IsAnim26(bool value)
     {
-    MNAM.value = value ? (MNAM.value | fIsAnim26) : (MNAM.value & ~fIsAnim26);
+    SETBIT(MNAM.value, fIsAnim26, value);
     }
 
 bool FURNRecord::IsAnim27()
@@ -349,7 +349,7 @@ bool FURNRecord::IsAnim27()
 
 void FURNRecord::IsAnim27(bool value)
     {
-    MNAM.value = value ? (MNAM.value | fIsAnim27) : (MNAM.value & ~fIsAnim27);
+    SETBIT(MNAM.value, fIsAnim27, value);
     }
 
 bool FURNRecord::IsAnim28()
@@ -359,7 +359,7 @@ bool FURNRecord::IsAnim28()
 
 void FURNRecord::IsAnim28(bool value)
     {
-    MNAM.value = value ? (MNAM.value | fIsAnim28) : (MNAM.value & ~fIsAnim28);
+    SETBIT(MNAM.value, fIsAnim28, value);
     }
 
 bool FURNRecord::IsAnim29()
@@ -369,7 +369,7 @@ bool FURNRecord::IsAnim29()
 
 void FURNRecord::IsAnim29(bool value)
     {
-    MNAM.value = value ? (MNAM.value | fIsAnim29) : (MNAM.value & ~fIsAnim29);
+    SETBIT(MNAM.value, fIsAnim29, value);
     }
 
 bool FURNRecord::IsAnim30()
@@ -379,7 +379,7 @@ bool FURNRecord::IsAnim30()
 
 void FURNRecord::IsAnim30(bool value)
     {
-    MNAM.value = value ? (MNAM.value | fIsAnim30) : (MNAM.value & ~fIsAnim30);
+    SETBIT(MNAM.value, fIsAnim30, value);
     }
 
 bool FURNRecord::IsSitAnim()

@@ -239,7 +239,7 @@ bool CSTYRecord::IsUseAdvanced()
 
 void CSTYRecord::IsUseAdvanced(bool value)
     {
-    CSTD.value.flagsA = value ? (CSTD.value.flagsA | fIsUseAdvanced) : (CSTD.value.flagsA & ~fIsUseAdvanced);
+    SETBIT(CSTD.value.flagsA, fIsUseAdvanced, value);
     }
 
 bool CSTYRecord::IsUseChanceForAttack()
@@ -249,7 +249,7 @@ bool CSTYRecord::IsUseChanceForAttack()
 
 void CSTYRecord::IsUseChanceForAttack(bool value)
     {
-    CSTD.value.flagsA = value ? (CSTD.value.flagsA | fIsUseChanceForAttack) : (CSTD.value.flagsA & ~fIsUseChanceForAttack);
+    SETBIT(CSTD.value.flagsA, fIsUseChanceForAttack, value);
     }
 
 bool CSTYRecord::IsIgnoreAllies()
@@ -259,7 +259,7 @@ bool CSTYRecord::IsIgnoreAllies()
 
 void CSTYRecord::IsIgnoreAllies(bool value)
     {
-    CSTD.value.flagsA = value ? (CSTD.value.flagsA | fIsIgnoreAllies) : (CSTD.value.flagsA & ~fIsIgnoreAllies);
+    SETBIT(CSTD.value.flagsA, fIsIgnoreAllies, value);
     }
 
 bool CSTYRecord::IsWillYield()
@@ -269,7 +269,7 @@ bool CSTYRecord::IsWillYield()
 
 void CSTYRecord::IsWillYield(bool value)
     {
-    CSTD.value.flagsA = value ? (CSTD.value.flagsA | fIsWillYield) : (CSTD.value.flagsA & ~fIsWillYield);
+    SETBIT(CSTD.value.flagsA, fIsWillYield, value);
     }
 
 bool CSTYRecord::IsRejectsYields()
@@ -279,7 +279,7 @@ bool CSTYRecord::IsRejectsYields()
 
 void CSTYRecord::IsRejectsYields(bool value)
     {
-    CSTD.value.flagsA = value ? (CSTD.value.flagsA | fIsRejectsYields) : (CSTD.value.flagsA & ~fIsRejectsYields);
+    SETBIT(CSTD.value.flagsA, fIsRejectsYields, value);
     }
 
 bool CSTYRecord::IsFleeingDisabled()
@@ -289,7 +289,7 @@ bool CSTYRecord::IsFleeingDisabled()
 
 void CSTYRecord::IsFleeingDisabled(bool value)
     {
-    CSTD.value.flagsA = value ? (CSTD.value.flagsA | fIsFleeingDisabled) : (CSTD.value.flagsA & ~fIsFleeingDisabled);
+    SETBIT(CSTD.value.flagsA, fIsFleeingDisabled, value);
     }
 
 bool CSTYRecord::IsPrefersRanged()
@@ -299,7 +299,7 @@ bool CSTYRecord::IsPrefersRanged()
 
 void CSTYRecord::IsPrefersRanged(bool value)
     {
-    CSTD.value.flagsA = value ? (CSTD.value.flagsA | fIsPrefersRanged) : (CSTD.value.flagsA & ~fIsPrefersRanged);
+    SETBIT(CSTD.value.flagsA, fIsPrefersRanged, value);
     }
 
 bool CSTYRecord::IsMeleeAlertOK()
@@ -309,7 +309,7 @@ bool CSTYRecord::IsMeleeAlertOK()
 
 void CSTYRecord::IsMeleeAlertOK(bool value)
     {
-    CSTD.value.flagsA = value ? (CSTD.value.flagsA | fIsMeleeAlertOK) : (CSTD.value.flagsA & ~fIsMeleeAlertOK);
+    SETBIT(CSTD.value.flagsA, fIsMeleeAlertOK, value);
     }
 
 bool CSTYRecord::IsFlagAMask(UINT8 Mask, bool Exact)
@@ -329,7 +329,7 @@ bool CSTYRecord::IsDoNotAcquire()
 
 void CSTYRecord::IsDoNotAcquire(bool value)
     {
-    CSTD.value.flagsB = value ? (CSTD.value.flagsB | fIsDoNotAcquire) : (CSTD.value.flagsB & ~fIsDoNotAcquire);
+    SETBIT(CSTD.value.flagsB, fIsDoNotAcquire, value);
     }
 
 bool CSTYRecord::IsFlagBMask(UINT32 Mask, bool Exact)

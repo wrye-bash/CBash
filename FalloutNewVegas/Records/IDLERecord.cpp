@@ -130,7 +130,7 @@ bool IDLERecord::IsNoAttacking()
 
 void IDLERecord::IsNoAttacking(bool value)
     {
-    DATA.value.flags = value ? (DATA.value.flags | fIsNoAttacking) : (DATA.value.flags & ~fIsNoAttacking);
+    SETBIT(DATA.value.flags, fIsNoAttacking, value);
     }
 
 bool IDLERecord::IsFlagMask(UINT8 Mask, bool Exact)
@@ -290,7 +290,7 @@ bool IDLERecord::IsUnknown1()
 
 void IDLERecord::IsUnknown1(bool value)
     {
-    DATA.value.group = value ? (DATA.value.group | fIsUnknown1) : (DATA.value.group & ~fIsUnknown1);
+    SETBIT(DATA.value.group, fIsUnknown1, value);
     }
 
 bool IDLERecord::IsNotReturnFile()
@@ -300,7 +300,7 @@ bool IDLERecord::IsNotReturnFile()
 
 void IDLERecord::IsNotReturnFile(bool value)
     {
-    DATA.value.group = value ? (DATA.value.group | fIsNotReturnFile) : (DATA.value.group & ~fIsNotReturnFile);
+    SETBIT(DATA.value.group, fIsNotReturnFile, value);
     }
 
 bool IDLERecord::IsReturnFile()

@@ -105,7 +105,7 @@ bool WRLDRecord::IsSmallWorld()
 
 void WRLDRecord::IsSmallWorld(bool value)
     {
-    DATA.value = value ? (DATA.value | fSmallWorld) : (DATA.value & ~fSmallWorld);
+    SETBIT(DATA.value, fSmallWorld, value);
     }
 
 bool WRLDRecord::IsNoFastTravel()
@@ -115,7 +115,7 @@ bool WRLDRecord::IsNoFastTravel()
 
 void WRLDRecord::IsNoFastTravel(bool value)
     {
-    DATA.value = value ? (DATA.value | fNoFastTravel) : (DATA.value & ~fNoFastTravel);
+    SETBIT(DATA.value, fNoFastTravel, value);
     }
 
 bool WRLDRecord::IsFastTravel()
@@ -135,7 +135,7 @@ bool WRLDRecord::IsOblivionWorldspace()
 
 void WRLDRecord::IsOblivionWorldspace(bool value)
     {
-    DATA.value = value ? (DATA.value | fOblivionWorldspace) : (DATA.value & ~fOblivionWorldspace);
+    SETBIT(DATA.value, fOblivionWorldspace, value);
     }
 
 bool WRLDRecord::IsNoLODWater()
@@ -145,7 +145,7 @@ bool WRLDRecord::IsNoLODWater()
 
 void WRLDRecord::IsNoLODWater(bool value)
     {
-    DATA.value = value ? (DATA.value | fNoLODWater) : (DATA.value & ~fNoLODWater);
+    SETBIT(DATA.value, fNoLODWater, value);
     }
 
 bool WRLDRecord::IsLODWater()

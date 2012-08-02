@@ -205,7 +205,7 @@ bool RACERecord::IsPlayable()
 
 void RACERecord::IsPlayable(bool value)
     {
-    DATA.value.flags = value ? (DATA.value.flags | fIsPlayable) : (DATA.value.flags & ~fIsPlayable);
+    SETBIT(DATA.value.flags, fIsPlayable, value);
     }
 
 bool RACERecord::IsFlagMask(UINT32 Mask, bool Exact)

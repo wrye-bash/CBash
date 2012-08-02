@@ -118,7 +118,7 @@ bool SPELRecord::IsManualCost()
 
 void SPELRecord::IsManualCost(bool value)
     {
-    SPIT.value.flags = value ? (SPIT.value.flags | fIsManualCost) : (SPIT.value.flags & ~fIsManualCost);
+    SETBIT(SPIT.value.flags, fIsManualCost, value);
     }
 
 bool SPELRecord::IsStartSpell()
@@ -128,7 +128,7 @@ bool SPELRecord::IsStartSpell()
 
 void SPELRecord::IsStartSpell(bool value)
     {
-    SPIT.value.flags = value ? (SPIT.value.flags | fIsStartSpell) : (SPIT.value.flags & ~fIsStartSpell);
+    SETBIT(SPIT.value.flags, fIsStartSpell, value);
     }
 
 bool SPELRecord::IsSilenceImmune()
@@ -138,7 +138,7 @@ bool SPELRecord::IsSilenceImmune()
 
 void SPELRecord::IsSilenceImmune(bool value)
     {
-    SPIT.value.flags = value ? (SPIT.value.flags | fIsSilenceImmune) : (SPIT.value.flags & ~fIsSilenceImmune);
+    SETBIT(SPIT.value.flags, fIsSilenceImmune, value);
     }
 
 bool SPELRecord::IsAreaEffectIgnoresLOS()
@@ -148,7 +148,7 @@ bool SPELRecord::IsAreaEffectIgnoresLOS()
 
 void SPELRecord::IsAreaEffectIgnoresLOS(bool value)
     {
-    SPIT.value.flags = value ? (SPIT.value.flags | fIsAreaEffectIgnoresLOS) : (SPIT.value.flags & ~fIsAreaEffectIgnoresLOS);
+    SETBIT(SPIT.value.flags, fIsAreaEffectIgnoresLOS, value);
     }
 
 bool SPELRecord::IsAEIgnoresLOS()
@@ -158,7 +158,7 @@ bool SPELRecord::IsAEIgnoresLOS()
 
 void SPELRecord::IsAEIgnoresLOS(bool value)
     {
-    SPIT.value.flags = value ? (SPIT.value.flags | fIsAreaEffectIgnoresLOS) : (SPIT.value.flags & ~fIsAreaEffectIgnoresLOS);
+    SETBIT(SPIT.value.flags, fIsAreaEffectIgnoresLOS, value);
     }
 
 bool SPELRecord::IsScriptAlwaysApplies()
@@ -168,7 +168,7 @@ bool SPELRecord::IsScriptAlwaysApplies()
 
 void SPELRecord::IsScriptAlwaysApplies(bool value)
     {
-    SPIT.value.flags = value ? (SPIT.value.flags | fIsScriptAlwaysApplies) : (SPIT.value.flags & ~fIsScriptAlwaysApplies);
+    SETBIT(SPIT.value.flags, fIsScriptAlwaysApplies, value);
     }
 
 bool SPELRecord::IsDisallowAbsorbReflect()
@@ -178,7 +178,7 @@ bool SPELRecord::IsDisallowAbsorbReflect()
 
 void SPELRecord::IsDisallowAbsorbReflect(bool value)
     {
-    SPIT.value.flags = value ? (SPIT.value.flags | fIsDisallowAbsorbReflect) : (SPIT.value.flags & ~fIsDisallowAbsorbReflect);
+    SETBIT(SPIT.value.flags, fIsDisallowAbsorbReflect, value);
     }
 
 bool SPELRecord::IsDisallowAbsorb()
@@ -188,7 +188,7 @@ bool SPELRecord::IsDisallowAbsorb()
 
 void SPELRecord::IsDisallowAbsorb(bool value)
     {
-    SPIT.value.flags = value ? (SPIT.value.flags | fIsDisallowAbsorbReflect) : (SPIT.value.flags & ~fIsDisallowAbsorbReflect);
+    SETBIT(SPIT.value.flags, fIsDisallowAbsorbReflect, value);
     }
 
 bool SPELRecord::IsDisallowReflect()
@@ -198,7 +198,7 @@ bool SPELRecord::IsDisallowReflect()
 
 void SPELRecord::IsDisallowReflect(bool value)
     {
-    SPIT.value.flags = value ? (SPIT.value.flags | fIsDisallowAbsorbReflect) : (SPIT.value.flags & ~fIsDisallowAbsorbReflect);
+    SETBIT(SPIT.value.flags, fIsDisallowAbsorbReflect, value);
     }
 
 bool SPELRecord::IsTouchExplodesWOTarget()
@@ -208,7 +208,7 @@ bool SPELRecord::IsTouchExplodesWOTarget()
 
 void SPELRecord::IsTouchExplodesWOTarget(bool value)
     {
-    SPIT.value.flags = value ? (SPIT.value.flags | fIsTouchExplodesWOTarget) : (SPIT.value.flags & ~fIsTouchExplodesWOTarget);
+    SETBIT(SPIT.value.flags, fIsTouchExplodesWOTarget, value);
     }
 
 bool SPELRecord::IsTouchExplodes()
@@ -218,7 +218,7 @@ bool SPELRecord::IsTouchExplodes()
 
 void SPELRecord::IsTouchExplodes(bool value)
     {
-    SPIT.value.flags = value ? (SPIT.value.flags | fIsTouchExplodesWOTarget) : (SPIT.value.flags & ~fIsTouchExplodesWOTarget);
+    SETBIT(SPIT.value.flags, fIsTouchExplodesWOTarget, value);
     }
 
 bool SPELRecord::IsFlagMask(UINT8 Mask, bool Exact)

@@ -182,7 +182,7 @@ bool AMMORecord::IsNotNormalWeapon()
 
 void AMMORecord::IsNotNormalWeapon(bool value)
     {
-    DATA.value.flags = value ? (DATA.value.flags | fIsNotNormalWeapon) : (DATA.value.flags & ~fIsNotNormalWeapon);
+    SETBIT(DATA.value.flags, fIsNotNormalWeapon, value);
     }
 
 bool AMMORecord::IsNonPlayable()
@@ -192,7 +192,7 @@ bool AMMORecord::IsNonPlayable()
 
 void AMMORecord::IsNonPlayable(bool value)
     {
-    DATA.value.flags = value ? (DATA.value.flags | fIsNonPlayable) : (DATA.value.flags & ~fIsNonPlayable);
+    SETBIT(DATA.value.flags, fIsNonPlayable, value);
     }
 
 bool AMMORecord::IsFlagMask(UINT8 Mask, bool Exact)

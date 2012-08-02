@@ -207,7 +207,7 @@ bool REFRRecord::IsUseDefault()
 
 void REFRRecord::IsUseDefault(bool value)
     {
-    XACT.value = value ? (XACT.value | fIsUseDefault) : (XACT.value & ~fIsUseDefault);
+    SETBIT(XACT.value, fIsUseDefault, value);
     }
 
 bool REFRRecord::IsActivate()
@@ -217,7 +217,7 @@ bool REFRRecord::IsActivate()
 
 void REFRRecord::IsActivate(bool value)
     {
-    XACT.value = value ? (XACT.value | fIsActivate) : (XACT.value & ~fIsActivate);
+    SETBIT(XACT.value, fIsActivate, value);
     }
 
 bool REFRRecord::IsOpen()
@@ -227,7 +227,7 @@ bool REFRRecord::IsOpen()
 
 void REFRRecord::IsOpen(bool value)
     {
-    XACT.value = value ? (XACT.value | fIsOpen) : (XACT.value & ~fIsOpen);
+    SETBIT(XACT.value, fIsOpen, value);
     }
 
 bool REFRRecord::IsOpenByDefault()
@@ -237,7 +237,7 @@ bool REFRRecord::IsOpenByDefault()
 
 void REFRRecord::IsOpenByDefault(bool value)
     {
-    XACT.value = value ? (XACT.value | fIsOpenByDefault) : (XACT.value & ~fIsOpenByDefault);
+    SETBIT(XACT.value, fIsOpenByDefault, value);
     }
 
 bool REFRRecord::IsActionFlagMask(UINT32 Mask, bool Exact)
@@ -259,7 +259,7 @@ bool REFRRecord::IsOppositeParent()
 void REFRRecord::IsOppositeParent(bool value)
     {
     if(!XESP.IsLoaded()) return;
-    XESP->flags = value ? (XESP->flags | fIsOppositeParent) : (XESP->flags & ~fIsOppositeParent);
+    SETBIT(XESP->flags, fIsOppositeParent, value);
     }
 
 bool REFRRecord::IsPopIn()
@@ -271,7 +271,7 @@ bool REFRRecord::IsPopIn()
 void REFRRecord::IsPopIn(bool value)
     {
     if(!XESP.IsLoaded()) return;
-    XESP->flags = value ? (XESP->flags | fIsPopIn) : (XESP->flags & ~fIsPopIn);
+    SETBIT(XESP->flags, fIsPopIn, value);
     }
 
 bool REFRRecord::IsParentFlagMask(UINT8 Mask, bool Exact)
@@ -295,7 +295,7 @@ bool REFRRecord::IsNoAlarm()
 void REFRRecord::IsNoAlarm(bool value)
     {
     if(!XTEL.IsLoaded()) return;
-    XTEL->flags = value ? (XTEL->flags | fIsNoAlarm) : (XTEL->flags & ~fIsNoAlarm);
+    SETBIT(XTEL->flags, fIsNoAlarm, value);
     }
 
 bool REFRRecord::IsDestFlagMask(UINT32 Mask, bool Exact)
@@ -319,7 +319,7 @@ bool REFRRecord::IsVisible()
 void REFRRecord::IsVisible(bool value)
     {
     if(!MapData.IsLoaded()) return;
-    MapData->FNAM.value = value ? (MapData->FNAM.value | fIsVisible) : (MapData->FNAM.value & ~fIsVisible);
+    SETBIT(MapData->FNAM.value, fIsVisible, value);
     }
 
 bool REFRRecord::IsCanTravelTo()
@@ -331,7 +331,7 @@ bool REFRRecord::IsCanTravelTo()
 void REFRRecord::IsCanTravelTo(bool value)
     {
     if(!MapData.IsLoaded()) return;
-    MapData->FNAM.value = value ? (MapData->FNAM.value | fIsCanTravelTo) : (MapData->FNAM.value & ~fIsCanTravelTo);
+    SETBIT(MapData->FNAM.value, fIsCanTravelTo, value);
     }
 
 bool REFRRecord::IsMapFlagMask(UINT8 Mask, bool Exact)
@@ -355,7 +355,7 @@ bool REFRRecord::IsLeveledLock()
 void REFRRecord::IsLeveledLock(bool value)
     {
     if(!XLOC.IsLoaded()) return;
-    XLOC->flags = value ? (XLOC->flags | fIsLeveledLock) : (XLOC->flags & ~fIsLeveledLock);
+    SETBIT(XLOC->flags, fIsLeveledLock, value);
     }
 
 bool REFRRecord::IsLockFlagMask(UINT8 Mask, bool Exact)

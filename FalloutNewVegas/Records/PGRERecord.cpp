@@ -137,7 +137,7 @@ bool PGRERecord::IsOppositeParent()
 void PGRERecord::IsOppositeParent(bool value)
     {
     if(!XESP.IsLoaded()) return;
-    XESP->flags = value ? (XESP->flags | fIsOppositeParent) : (XESP->flags & ~fIsOppositeParent);
+    SETBIT(XESP->flags, fIsOppositeParent, value);
     }
 
 bool PGRERecord::IsPopIn()
@@ -148,7 +148,7 @@ bool PGRERecord::IsPopIn()
 void PGRERecord::IsPopIn(bool value)
     {
     if(!XESP.IsLoaded()) return;
-    XESP->flags = value ? (XESP->flags | fIsPopIn) : (XESP->flags & ~fIsPopIn);
+    SETBIT(XESP->flags, fIsPopIn, value);
     }
 
 bool PGRERecord::IsFlagMask(UINT8 Mask, bool Exact)

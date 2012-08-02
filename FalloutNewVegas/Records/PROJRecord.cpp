@@ -175,7 +175,7 @@ bool PROJRecord::IsHitscan()
 
 void PROJRecord::IsHitscan(bool value)
     {
-    DATA.value.flags = value ? (DATA.value.flags | fIsHitscan) : (DATA.value.flags & ~fIsHitscan);
+    SETBIT(DATA.value.flags, fIsHitscan, value);
     }
 
 bool PROJRecord::IsExplosion()
@@ -185,7 +185,7 @@ bool PROJRecord::IsExplosion()
 
 void PROJRecord::IsExplosion(bool value)
     {
-    DATA.value.flags = value ? (DATA.value.flags | fIsExplosion) : (DATA.value.flags & ~fIsExplosion);
+    SETBIT(DATA.value.flags, fIsExplosion, value);
     }
 
 bool PROJRecord::IsAltTrigger()
@@ -195,7 +195,7 @@ bool PROJRecord::IsAltTrigger()
 
 void PROJRecord::IsAltTrigger(bool value)
     {
-    DATA.value.flags = value ? (DATA.value.flags | fIsAltTrigger) : (DATA.value.flags & ~fIsAltTrigger);
+    SETBIT(DATA.value.flags, fIsAltTrigger, value);
     }
 
 bool PROJRecord::IsMuzzleFlash()
@@ -205,7 +205,7 @@ bool PROJRecord::IsMuzzleFlash()
 
 void PROJRecord::IsMuzzleFlash(bool value)
     {
-    DATA.value.flags = value ? (DATA.value.flags | fIsMuzzleFlash) : (DATA.value.flags & ~fIsMuzzleFlash);
+    SETBIT(DATA.value.flags, fIsMuzzleFlash, value);
     }
 
 bool PROJRecord::IsDisableable()
@@ -215,7 +215,7 @@ bool PROJRecord::IsDisableable()
 
 void PROJRecord::IsDisableable(bool value)
     {
-    DATA.value.flags = value ? (DATA.value.flags | fIsDisableable) : (DATA.value.flags & ~fIsDisableable);
+    SETBIT(DATA.value.flags, fIsDisableable, value);
     }
 
 bool PROJRecord::IsPickupable()
@@ -225,7 +225,7 @@ bool PROJRecord::IsPickupable()
 
 void PROJRecord::IsPickupable(bool value)
     {
-    DATA.value.flags = value ? (DATA.value.flags | fIsPickupable) : (DATA.value.flags & ~fIsPickupable);
+    SETBIT(DATA.value.flags, fIsPickupable, value);
     }
 
 bool PROJRecord::IsSupersonic()
@@ -235,7 +235,7 @@ bool PROJRecord::IsSupersonic()
 
 void PROJRecord::IsSupersonic(bool value)
     {
-    DATA.value.flags = value ? (DATA.value.flags | fIsSupersonic) : (DATA.value.flags & ~fIsSupersonic);
+    SETBIT(DATA.value.flags, fIsSupersonic, value);
     }
 
 bool PROJRecord::IsPinsLimbs()
@@ -245,7 +245,7 @@ bool PROJRecord::IsPinsLimbs()
 
 void PROJRecord::IsPinsLimbs(bool value)
     {
-    DATA.value.flags = value ? (DATA.value.flags | fIsPinsLimbs) : (DATA.value.flags & ~fIsPinsLimbs);
+    SETBIT(DATA.value.flags, fIsPinsLimbs, value);
     }
 
 bool PROJRecord::IsPassSmallTransparent()
@@ -255,7 +255,7 @@ bool PROJRecord::IsPassSmallTransparent()
 
 void PROJRecord::IsPassSmallTransparent(bool value)
     {
-    DATA.value.flags = value ? (DATA.value.flags | fIsPassSmallTransparent) : (DATA.value.flags & ~fIsPassSmallTransparent);
+    SETBIT(DATA.value.flags, fIsPassSmallTransparent, value);
     }
 
 bool PROJRecord::IsDetonates()
@@ -265,7 +265,7 @@ bool PROJRecord::IsDetonates()
 
 void PROJRecord::IsDetonates(bool value)
     {
-    DATA.value.flags = value ? (DATA.value.flags | fIsDetonates) : (DATA.value.flags & ~fIsDetonates);
+    SETBIT(DATA.value.flags, fIsDetonates, value);
     }
 
 bool PROJRecord::IsRotation()
@@ -275,7 +275,7 @@ bool PROJRecord::IsRotation()
 
 void PROJRecord::IsRotation(bool value)
     {
-    DATA.value.flags = value ? (DATA.value.flags | fIsRotation) : (DATA.value.flags & ~fIsRotation);
+    SETBIT(DATA.value.flags, fIsRotation, value);
     }
 
 bool PROJRecord::IsFlagMask(UINT16 Mask, bool Exact)

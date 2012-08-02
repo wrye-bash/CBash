@@ -137,7 +137,7 @@ bool PBEARecord::IsOppositeParent()
 void PBEARecord::IsOppositeParent(bool value)
     {
     if(!XESP.IsLoaded()) return;
-    XESP->flags = value ? (XESP->flags | fIsOppositeParent) : (XESP->flags & ~fIsOppositeParent);
+    SETBIT(XESP->flags, fIsOppositeParent, value);
     }
 
 bool PBEARecord::IsPopIn()
@@ -148,7 +148,7 @@ bool PBEARecord::IsPopIn()
 void PBEARecord::IsPopIn(bool value)
     {
     if(!XESP.IsLoaded()) return;
-    XESP->flags = value ? (XESP->flags | fIsPopIn) : (XESP->flags & ~fIsPopIn);
+    SETBIT(XESP->flags, fIsPopIn, value);
     }
 
 bool PBEARecord::IsFlagMask(UINT8 Mask, bool Exact)

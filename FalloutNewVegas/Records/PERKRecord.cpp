@@ -69,7 +69,7 @@ bool PERKRecord::PERKEffect::IsScriptEnabled()
 
 void PERKRecord::PERKEffect::IsScriptEnabled(bool value)
     {
-    SCHR.value.flags = value ? (SCHR.value.flags | fIsEnabled) : (SCHR.value.flags & ~fIsEnabled);
+    SETBIT(SCHR.value.flags, fIsEnabled, value);
     }
 
 bool PERKRecord::PERKEffect::IsScriptFlagMask(UINT16 Mask, bool Exact)

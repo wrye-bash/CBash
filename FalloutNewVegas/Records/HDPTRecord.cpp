@@ -98,7 +98,7 @@ bool HDPTRecord::IsPlayable()
 
 void HDPTRecord::IsPlayable(bool value)
     {
-    DATA.value = value ? (DATA.value | fIsPlayable) : (DATA.value & ~fIsPlayable);
+    SETBIT(DATA.value, fIsPlayable, value);
     }
 
 bool HDPTRecord::IsFlagMask(UINT8 Mask, bool Exact)

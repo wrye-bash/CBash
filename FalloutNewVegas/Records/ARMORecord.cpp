@@ -241,7 +241,7 @@ bool ARMORecord::IsHead()
 
 void ARMORecord::IsHead(bool value)
     {
-    BMDT.value.bipedFlags = value ? (BMDT.value.bipedFlags | fIsHead) : (BMDT.value.bipedFlags & ~fIsHead);
+    SETBIT(BMDT.value.bipedFlags, fIsHead, value);
     }
 
 bool ARMORecord::IsHair()
@@ -251,7 +251,7 @@ bool ARMORecord::IsHair()
 
 void ARMORecord::IsHair(bool value)
     {
-    BMDT.value.bipedFlags = value ? (BMDT.value.bipedFlags | fIsHair) : (BMDT.value.bipedFlags & ~fIsHair);
+    SETBIT(BMDT.value.bipedFlags, fIsHair, value);
     }
 
 bool ARMORecord::IsUpperBody()
@@ -261,7 +261,7 @@ bool ARMORecord::IsUpperBody()
 
 void ARMORecord::IsUpperBody(bool value)
     {
-    BMDT.value.bipedFlags = value ? (BMDT.value.bipedFlags | fIsUpperBody) : (BMDT.value.bipedFlags & ~fIsUpperBody);
+    SETBIT(BMDT.value.bipedFlags, fIsUpperBody, value);
     }
 
 bool ARMORecord::IsLeftHand()
@@ -271,7 +271,7 @@ bool ARMORecord::IsLeftHand()
 
 void ARMORecord::IsLeftHand(bool value)
     {
-    BMDT.value.bipedFlags = value ? (BMDT.value.bipedFlags | fIsLeftHand) : (BMDT.value.bipedFlags & ~fIsLeftHand);
+    SETBIT(BMDT.value.bipedFlags, fIsLeftHand, value);
     }
 
 bool ARMORecord::IsRightHand()
@@ -281,7 +281,7 @@ bool ARMORecord::IsRightHand()
 
 void ARMORecord::IsRightHand(bool value)
     {
-    BMDT.value.bipedFlags = value ? (BMDT.value.bipedFlags | fIsRightHand) : (BMDT.value.bipedFlags & ~fIsRightHand);
+    SETBIT(BMDT.value.bipedFlags, fIsRightHand, value);
     }
 
 bool ARMORecord::IsWeapon()
@@ -291,7 +291,7 @@ bool ARMORecord::IsWeapon()
 
 void ARMORecord::IsWeapon(bool value)
     {
-    BMDT.value.bipedFlags = value ? (BMDT.value.bipedFlags | fIsWeapon) : (BMDT.value.bipedFlags & ~fIsWeapon);
+    SETBIT(BMDT.value.bipedFlags, fIsWeapon, value);
     }
 
 bool ARMORecord::IsPipBoy()
@@ -301,7 +301,7 @@ bool ARMORecord::IsPipBoy()
 
 void ARMORecord::IsPipBoy(bool value)
     {
-    BMDT.value.bipedFlags = value ? (BMDT.value.bipedFlags | fIsPipBoy) : (BMDT.value.bipedFlags & ~fIsPipBoy);
+    SETBIT(BMDT.value.bipedFlags, fIsPipBoy, value);
     }
 
 bool ARMORecord::IsBackpack()
@@ -311,7 +311,7 @@ bool ARMORecord::IsBackpack()
 
 void ARMORecord::IsBackpack(bool value)
     {
-    BMDT.value.bipedFlags = value ? (BMDT.value.bipedFlags | fIsBackpack) : (BMDT.value.bipedFlags & ~fIsBackpack);
+    SETBIT(BMDT.value.bipedFlags, fIsBackpack, value);
     }
 
 bool ARMORecord::IsNecklace()
@@ -321,7 +321,7 @@ bool ARMORecord::IsNecklace()
 
 void ARMORecord::IsNecklace(bool value)
     {
-    BMDT.value.bipedFlags = value ? (BMDT.value.bipedFlags | fIsNecklace) : (BMDT.value.bipedFlags & ~fIsNecklace);
+    SETBIT(BMDT.value.bipedFlags, fIsNecklace, value);
     }
 
 bool ARMORecord::IsHeadband()
@@ -331,7 +331,7 @@ bool ARMORecord::IsHeadband()
 
 void ARMORecord::IsHeadband(bool value)
     {
-    BMDT.value.bipedFlags = value ? (BMDT.value.bipedFlags | fIsHeadband) : (BMDT.value.bipedFlags & ~fIsHeadband);
+    SETBIT(BMDT.value.bipedFlags, fIsHeadband, value);
     }
 
 bool ARMORecord::IsHat()
@@ -341,7 +341,7 @@ bool ARMORecord::IsHat()
 
 void ARMORecord::IsHat(bool value)
     {
-    BMDT.value.bipedFlags = value ? (BMDT.value.bipedFlags | fIsHat) : (BMDT.value.bipedFlags & ~fIsHat);
+    SETBIT(BMDT.value.bipedFlags, fIsHat, value);
     }
 
 bool ARMORecord::IsEyeGlasses()
@@ -351,7 +351,7 @@ bool ARMORecord::IsEyeGlasses()
 
 void ARMORecord::IsEyeGlasses(bool value)
     {
-    BMDT.value.bipedFlags = value ? (BMDT.value.bipedFlags | fIsEyeGlasses) : (BMDT.value.bipedFlags & ~fIsEyeGlasses);
+    SETBIT(BMDT.value.bipedFlags, fIsEyeGlasses, value);
     }
 
 bool ARMORecord::IsNoseRing()
@@ -361,7 +361,7 @@ bool ARMORecord::IsNoseRing()
 
 void ARMORecord::IsNoseRing(bool value)
     {
-    BMDT.value.bipedFlags = value ? (BMDT.value.bipedFlags | fIsNoseRing) : (BMDT.value.bipedFlags & ~fIsNoseRing);
+    SETBIT(BMDT.value.bipedFlags, fIsNoseRing, value);
     }
 
 bool ARMORecord::IsEarrings()
@@ -371,7 +371,7 @@ bool ARMORecord::IsEarrings()
 
 void ARMORecord::IsEarrings(bool value)
     {
-    BMDT.value.bipedFlags = value ? (BMDT.value.bipedFlags | fIsEarrings) : (BMDT.value.bipedFlags & ~fIsEarrings);
+    SETBIT(BMDT.value.bipedFlags, fIsEarrings, value);
     }
 
 bool ARMORecord::IsMask()
@@ -381,7 +381,7 @@ bool ARMORecord::IsMask()
 
 void ARMORecord::IsMask(bool value)
     {
-    BMDT.value.bipedFlags = value ? (BMDT.value.bipedFlags | fIsMask) : (BMDT.value.bipedFlags & ~fIsMask);
+    SETBIT(BMDT.value.bipedFlags, fIsEarrings, value);
     }
 
 bool ARMORecord::IsChoker()
@@ -391,7 +391,7 @@ bool ARMORecord::IsChoker()
 
 void ARMORecord::IsChoker(bool value)
     {
-    BMDT.value.bipedFlags = value ? (BMDT.value.bipedFlags | fIsChoker) : (BMDT.value.bipedFlags & ~fIsChoker);
+    SETBIT(BMDT.value.bipedFlags, fIsChoker, value);
     }
 
 bool ARMORecord::IsMouthObject()
@@ -401,7 +401,7 @@ bool ARMORecord::IsMouthObject()
 
 void ARMORecord::IsMouthObject(bool value)
     {
-    BMDT.value.bipedFlags = value ? (BMDT.value.bipedFlags | fIsMouthObject) : (BMDT.value.bipedFlags & ~fIsMouthObject);
+    SETBIT(BMDT.value.bipedFlags, fIsMouthObject, value);
     }
 
 bool ARMORecord::IsBodyAddon1()
@@ -411,7 +411,7 @@ bool ARMORecord::IsBodyAddon1()
 
 void ARMORecord::IsBodyAddon1(bool value)
     {
-    BMDT.value.bipedFlags = value ? (BMDT.value.bipedFlags | fIsBodyAddon1) : (BMDT.value.bipedFlags & ~fIsBodyAddon1);
+    SETBIT(BMDT.value.bipedFlags, fIsBodyAddon1, value);
     }
 
 bool ARMORecord::IsBodyAddon2()
@@ -421,7 +421,7 @@ bool ARMORecord::IsBodyAddon2()
 
 void ARMORecord::IsBodyAddon2(bool value)
     {
-    BMDT.value.bipedFlags = value ? (BMDT.value.bipedFlags | fIsBodyAddon2) : (BMDT.value.bipedFlags & ~fIsBodyAddon2);
+    SETBIT(BMDT.value.bipedFlags, fIsBodyAddon2, value);
     }
 
 bool ARMORecord::IsBodyAddon3()
@@ -431,7 +431,7 @@ bool ARMORecord::IsBodyAddon3()
 
 void ARMORecord::IsBodyAddon3(bool value)
     {
-    BMDT.value.bipedFlags = value ? (BMDT.value.bipedFlags | fIsBodyAddon3) : (BMDT.value.bipedFlags & ~fIsBodyAddon3);
+    SETBIT(BMDT.value.bipedFlags, fIsBodyAddon3, value);
     }
 
 bool ARMORecord::IsFlagMask(UINT32 Mask, bool Exact)
@@ -451,7 +451,7 @@ bool ARMORecord::IsUnknown1()
 
 void ARMORecord::IsUnknown1(bool value)
     {
-    BMDT.value.generalFlags = value ? (BMDT.value.generalFlags | fIsUnknown1) : (BMDT.value.generalFlags & ~fIsUnknown1);
+    SETBIT(BMDT.value.generalFlags, fIsUnknown1, value);
     }
 
 bool ARMORecord::IsUnknown2()
@@ -461,7 +461,7 @@ bool ARMORecord::IsUnknown2()
 
 void ARMORecord::IsUnknown2(bool value)
     {
-    BMDT.value.generalFlags = value ? (BMDT.value.generalFlags | fIsUnknown2) : (BMDT.value.generalFlags & ~fIsUnknown2);
+    SETBIT(BMDT.value.generalFlags, fIsUnknown2, value);
     }
 
 bool ARMORecord::IsHasBackpack()
@@ -471,7 +471,7 @@ bool ARMORecord::IsHasBackpack()
 
 void ARMORecord::IsHasBackpack(bool value)
     {
-    BMDT.value.generalFlags = value ? (BMDT.value.generalFlags | fIsHasBackpack) : (BMDT.value.generalFlags & ~fIsHasBackpack);
+    SETBIT(BMDT.value.generalFlags, fIsHasBackpack, value);
     }
 
 bool ARMORecord::IsMedium()
@@ -481,7 +481,7 @@ bool ARMORecord::IsMedium()
 
 void ARMORecord::IsMedium(bool value)
     {
-    BMDT.value.generalFlags = value ? (BMDT.value.generalFlags | fIsMedium) : (BMDT.value.generalFlags & ~fIsMedium);
+    SETBIT(BMDT.value.generalFlags, fIsMedium, value);
     }
 
 bool ARMORecord::IsUnknown3()
@@ -491,7 +491,7 @@ bool ARMORecord::IsUnknown3()
 
 void ARMORecord::IsUnknown3(bool value)
     {
-    BMDT.value.generalFlags = value ? (BMDT.value.generalFlags | fIsUnknown3) : (BMDT.value.generalFlags & ~fIsUnknown3);
+    SETBIT(BMDT.value.generalFlags, fIsUnknown3, value);
     }
 
 bool ARMORecord::IsPowerArmor()
@@ -501,7 +501,7 @@ bool ARMORecord::IsPowerArmor()
 
 void ARMORecord::IsPowerArmor(bool value)
     {
-    BMDT.value.generalFlags = value ? (BMDT.value.generalFlags | fIsPowerArmor) : (BMDT.value.generalFlags & ~fIsPowerArmor);
+    SETBIT(BMDT.value.generalFlags, fIsPowerArmor, value);
     }
 
 bool ARMORecord::IsNonPlayable()
@@ -511,7 +511,7 @@ bool ARMORecord::IsNonPlayable()
 
 void ARMORecord::IsNonPlayable(bool value)
     {
-    BMDT.value.generalFlags = value ? (BMDT.value.generalFlags | fIsNonPlayable) : (BMDT.value.generalFlags & ~fIsNonPlayable);
+    SETBIT(BMDT.value.generalFlags, fIsNonPlayable, value);
     }
 
 bool ARMORecord::IsHeavy()
@@ -521,7 +521,7 @@ bool ARMORecord::IsHeavy()
 
 void ARMORecord::IsHeavy(bool value)
     {
-    BMDT.value.generalFlags = value ? (BMDT.value.generalFlags | fIsHeavy) : (BMDT.value.generalFlags & ~fIsHeavy);
+    SETBIT(BMDT.value.generalFlags, fIsHeavy, value);
     }
 
 bool ARMORecord::IsExtraFlagMask(UINT8 Mask, bool Exact)
@@ -541,7 +541,7 @@ bool ARMORecord::IsModulatesVoice()
 
 void ARMORecord::IsModulatesVoice(bool value)
     {
-    DNAM.value.flags = value ? (DNAM.value.flags | fIsModulatesVoice) : (DNAM.value.flags & ~fIsModulatesVoice);
+    SETBIT(DNAM.value.flags, fIsModulatesVoice, value);
     }
 
 bool ARMORecord::IsVoiceFlagMask(UINT16 Mask, bool Exact)

@@ -119,7 +119,7 @@ bool ENCHRecord::IsNoAutoCalc()
 
 void ENCHRecord::IsNoAutoCalc(bool value)
     {
-    ENIT.value.flags = value ? (ENIT.value.flags | fIsNoAutoCalc) : (ENIT.value.flags & ~fIsNoAutoCalc);
+    SETBIT(ENIT.value.flags, fIsNoAutoCalc, value);
     }
 
 bool ENCHRecord::IsHideEffect()
@@ -129,7 +129,7 @@ bool ENCHRecord::IsHideEffect()
 
 void ENCHRecord::IsHideEffect(bool value)
     {
-    ENIT.value.flags = value ? (ENIT.value.flags | fIsHideEffect) : (ENIT.value.flags & ~fIsHideEffect);
+    SETBIT(ENIT.value.flags, fIsHideEffect, value);
     }
 
 bool ENCHRecord::IsFlagMask(UINT8 Mask, bool Exact)

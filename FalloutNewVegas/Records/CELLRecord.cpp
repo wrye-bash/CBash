@@ -172,7 +172,7 @@ bool CELLRecord::IsInterior()
 
 void CELLRecord::IsInterior(bool value)
     {
-    DATA.value = value ? (DATA.value | fIsInterior) : (DATA.value & ~fIsInterior);
+    SETBIT(DATA.value, fIsInterior, value);
     }
 
 bool CELLRecord::IsHasWater()
@@ -182,7 +182,7 @@ bool CELLRecord::IsHasWater()
 
 void CELLRecord::IsHasWater(bool value)
     {
-    DATA.value = value ? (DATA.value | fHasWater) : (DATA.value & ~fHasWater);
+    SETBIT(DATA.value, fHasWater, value);
     }
 
 bool CELLRecord::IsInvertFastTravel()
@@ -192,7 +192,7 @@ bool CELLRecord::IsInvertFastTravel()
 
 void CELLRecord::IsInvertFastTravel(bool value)
     {
-    DATA.value = value ? (DATA.value | fInvertFastTravel) : (DATA.value & ~fInvertFastTravel);
+    SETBIT(DATA.value, fInvertFastTravel, value);
     }
 
 bool CELLRecord::IsForceHideLand()
@@ -204,7 +204,7 @@ bool CELLRecord::IsForceHideLand()
 void CELLRecord::IsForceHideLand(bool value)
     {
     if(IsInterior()) return;
-    DATA.value = value ? (DATA.value | fForceHideLand) : (DATA.value & ~fForceHideLand);
+    SETBIT(DATA.value, fForceHideLand, value);
     }
 
 bool CELLRecord::IsOblivionInterior()
@@ -216,7 +216,7 @@ bool CELLRecord::IsOblivionInterior()
 void CELLRecord::IsOblivionInterior(bool value)
     {
     if(!IsInterior()) return;
-    DATA.value = value ? (DATA.value | fIsOblivionInterior) : (DATA.value & ~fIsOblivionInterior);
+    SETBIT(DATA.value, fIsOblivionInterior, value);
     }
 
 bool CELLRecord::IsPublicPlace()
@@ -226,7 +226,7 @@ bool CELLRecord::IsPublicPlace()
 
 void CELLRecord::IsPublicPlace(bool value)
     {
-    DATA.value = value ? (DATA.value | fPublicPlace) : (DATA.value & ~fPublicPlace);
+    SETBIT(DATA.value, fPublicPlace, value);
     }
 
 bool CELLRecord::IsHandChanged()
@@ -236,7 +236,7 @@ bool CELLRecord::IsHandChanged()
 
 void CELLRecord::IsHandChanged(bool value)
     {
-    DATA.value = value ? (DATA.value | fHandChanged) : (DATA.value & ~fHandChanged);
+    SETBIT(DATA.value, fHandChanged, value);
     }
 
 bool CELLRecord::IsBehaveLikeExterior()
@@ -246,7 +246,7 @@ bool CELLRecord::IsBehaveLikeExterior()
 
 void CELLRecord::IsBehaveLikeExterior(bool value)
     {
-    DATA.value = value ? (DATA.value | fBehaveLikeExterior) : (DATA.value & ~fBehaveLikeExterior);
+    SETBIT(DATA.value, fBehaveLikeExterior, value);
     }
 
 bool CELLRecord::IsFlagMask(UINT8 Mask, bool Exact)
@@ -268,7 +268,7 @@ bool CELLRecord::IsQuad1ForceHidden()
 void CELLRecord::IsQuad1ForceHidden(bool value)
     {
     if(!XCLC.IsLoaded()) return;
-    XCLC->flags = value ? (XCLC->flags | fIsQuad1ForceHidden) : (XCLC->flags & ~fIsQuad1ForceHidden);
+    SETBIT(XCLC->flags, fIsQuad1ForceHidden, value);
     }
 
 bool CELLRecord::IsQuad2ForceHidden()
@@ -280,7 +280,7 @@ bool CELLRecord::IsQuad2ForceHidden()
 void CELLRecord::IsQuad2ForceHidden(bool value)
     {
     if(!XCLC.IsLoaded()) return;
-    XCLC->flags = value ? (XCLC->flags | fIsQuad2ForceHidden) : (XCLC->flags & ~fIsQuad2ForceHidden);
+    SETBIT(XCLC->flags, fIsQuad2ForceHidden, value);
     }
 
 bool CELLRecord::IsQuad3ForceHidden()
@@ -292,7 +292,7 @@ bool CELLRecord::IsQuad3ForceHidden()
 void CELLRecord::IsQuad3ForceHidden(bool value)
     {
     if(!XCLC.IsLoaded()) return;
-    XCLC->flags = value ? (XCLC->flags | fIsQuad3ForceHidden) : (XCLC->flags & ~fIsQuad3ForceHidden);
+    SETBIT(XCLC->flags, fIsQuad3ForceHidden, value);
     }
 
 bool CELLRecord::IsQuad4ForceHidden()
@@ -304,7 +304,7 @@ bool CELLRecord::IsQuad4ForceHidden()
 void CELLRecord::IsQuad4ForceHidden(bool value)
     {
     if(!XCLC.IsLoaded()) return;
-    XCLC->flags = value ? (XCLC->flags | fIsQuad4ForceHidden) : (XCLC->flags & ~fIsQuad4ForceHidden);
+    SETBIT(XCLC->flags, fIsQuad4ForceHidden, value);
     }
 
 bool CELLRecord::IsQuadFlagMask(UINT32 Mask, bool Exact)
@@ -326,7 +326,7 @@ bool CELLRecord::IsLightAmbientInherited()
 
 void CELLRecord::IsLightAmbientInherited(bool value)
     {
-    LNAM.value = value ? (LNAM.value | fIsAmbientInherited) : (LNAM.value & ~fIsAmbientInherited);
+    SETBIT(LNAM.value, fIsAmbientInherited, value);
     }
 
 bool CELLRecord::IsLightDirectionalColorInherited()
@@ -336,7 +336,7 @@ bool CELLRecord::IsLightDirectionalColorInherited()
 
 void CELLRecord::IsLightDirectionalColorInherited(bool value)
     {
-    LNAM.value = value ? (LNAM.value | fIsDirectionalColorInherited) : (LNAM.value & ~fIsDirectionalColorInherited);
+    SETBIT(LNAM.value, fIsDirectionalColorInherited, value);
     }
 
 bool CELLRecord::IsLightFogColorInherited()
@@ -346,7 +346,7 @@ bool CELLRecord::IsLightFogColorInherited()
 
 void CELLRecord::IsLightFogColorInherited(bool value)
     {
-    LNAM.value = value ? (LNAM.value | fIsFogColorInherited) : (LNAM.value & ~fIsFogColorInherited);
+    SETBIT(LNAM.value, fIsFogColorInherited, value);
     }
 
 bool CELLRecord::IsLightFogNearInherited()
@@ -356,7 +356,7 @@ bool CELLRecord::IsLightFogNearInherited()
 
 void CELLRecord::IsLightFogNearInherited(bool value)
     {
-    LNAM.value = value ? (LNAM.value | fIsFogNearInherited) : (LNAM.value & ~fIsFogNearInherited);
+    SETBIT(LNAM.value, fIsFogNearInherited, value);
     }
 
 bool CELLRecord::IsLightFogFarInherited()
@@ -366,7 +366,7 @@ bool CELLRecord::IsLightFogFarInherited()
 
 void CELLRecord::IsLightFogFarInherited(bool value)
     {
-    LNAM.value = value ? (LNAM.value | fIsFogFarInherited) : (LNAM.value & ~fIsFogFarInherited);
+    SETBIT(LNAM.value, fIsFogFarInherited, value);
     }
 
 bool CELLRecord::IsLightDirectionalRotationInherited()
@@ -376,7 +376,7 @@ bool CELLRecord::IsLightDirectionalRotationInherited()
 
 void CELLRecord::IsLightDirectionalRotationInherited(bool value)
     {
-    LNAM.value = value ? (LNAM.value | fIsDirectionalRotationInherited) : (LNAM.value & ~fIsDirectionalRotationInherited);
+    SETBIT(LNAM.value, fIsDirectionalRotationInherited, value);
     }
 
 bool CELLRecord::IsLightDirectionalFadeInherited()
@@ -386,7 +386,7 @@ bool CELLRecord::IsLightDirectionalFadeInherited()
 
 void CELLRecord::IsLightDirectionalFadeInherited(bool value)
     {
-    LNAM.value = value ? (LNAM.value | fIsDirectionalFadeInherited) : (LNAM.value & ~fIsDirectionalFadeInherited);
+    SETBIT(LNAM.value, fIsDirectionalFadeInherited, value);
     }
 
 bool CELLRecord::IsLightFogClipInherited()
@@ -396,7 +396,7 @@ bool CELLRecord::IsLightFogClipInherited()
 
 void CELLRecord::IsLightFogClipInherited(bool value)
     {
-    LNAM.value = value ? (LNAM.value | fIsFogClipInherited) : (LNAM.value & ~fIsFogClipInherited);
+    SETBIT(LNAM.value, fIsFogClipInherited, value);
     }
 
 bool CELLRecord::IsLightFogPowerInherited()
@@ -406,7 +406,7 @@ bool CELLRecord::IsLightFogPowerInherited()
 
 void CELLRecord::IsLightFogPowerInherited(bool value)
     {
-    LNAM.value = value ? (LNAM.value | fIsFogPowerInherited) : (LNAM.value & ~fIsFogPowerInherited);
+    SETBIT(LNAM.value, fIsFogPowerInherited, value);
     }
 
 bool CELLRecord::IsLightFlagMask(UINT32 Mask, bool Exact)

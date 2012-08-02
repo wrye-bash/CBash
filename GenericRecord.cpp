@@ -126,7 +126,7 @@ bool Record::SetParent(void *_Parent, bool IsMod)
     if(Parent != NULL)
         return false;
 
-    CBash_Flags = IsMod ? (CBash_Flags | _fIsParentMod) : (CBash_Flags & ~_fIsParentMod);
+    SETBIT(CBash_Flags, _fIsParentMod, IsMod);
     Parent = _Parent;
     return true;
     }
@@ -160,7 +160,7 @@ bool Record::IsWinningDetermined() const
 
 void Record::IsWinningDetermined(bool value)
     {
-    CBash_Flags = value ? (CBash_Flags | _fIsWinningDetermined) : (CBash_Flags & ~_fIsWinningDetermined);
+    SETBIT(CBash_Flags, _fIsWinningDetermined, value);
     }
 
 bool Record::IsWinning() const
@@ -171,7 +171,7 @@ bool Record::IsWinning() const
 void Record::IsWinning(bool value)
     {
     IsWinningDetermined(true);
-    CBash_Flags = value ? (CBash_Flags | _fIsWinning) : (CBash_Flags & ~_fIsWinning);
+    SETBIT(CBash_Flags, _fIsWinning, value);
     }
 
 bool Record::IsExtendedWinning() const
@@ -182,7 +182,7 @@ bool Record::IsExtendedWinning() const
 void Record::IsExtendedWinning(bool value)
     {
     IsWinningDetermined(true);
-    CBash_Flags = value ? (CBash_Flags | _fIsExtendedWinning) : (CBash_Flags & ~_fIsExtendedWinning);
+    SETBIT(CBash_Flags, _fIsExtendedWinning, value);
     }
 
 //bool Record::HasInvalidFormIDs() const
@@ -399,7 +399,7 @@ bool Record::IsDeleted() const
 
 void Record::IsDeleted(bool value)
     {
-    flags = value ? (flags | fIsDeleted) : (flags & ~fIsDeleted);
+    SETBIT(flags, fIsDeleted, value);
     }
 
 bool Record::IsBorderRegion()
@@ -409,7 +409,7 @@ bool Record::IsBorderRegion()
 
 void Record::IsBorderRegion(bool value)
     {
-    flags = value ? (flags | fIsBorderRegion) : (flags & ~fIsBorderRegion);
+    SETBIT(flags, fIsBorderRegion, value);
     }
 
 bool Record::IsTurnOffFire()
@@ -419,7 +419,7 @@ bool Record::IsTurnOffFire()
 
 void Record::IsTurnOffFire(bool value)
     {
-    flags = value ? (flags | fIsTurnOffFire) : (flags & ~fIsTurnOffFire);
+    SETBIT(flags, fIsTurnOffFire, value);
     }
 
 bool Record::IsCastsShadows()
@@ -429,7 +429,7 @@ bool Record::IsCastsShadows()
 
 void Record::IsCastsShadows(bool value)
     {
-    flags = value ? (flags | fIsCastsShadows) : (flags & ~fIsCastsShadows);
+    SETBIT(flags, fIsCastsShadows, value);
     }
 
 bool Record::IsQuestOrPersistent()
@@ -439,7 +439,7 @@ bool Record::IsQuestOrPersistent()
 
 void Record::IsQuestOrPersistent(bool value)
     {
-    flags = value ? (flags | fIsQuestOrPersistent) : (flags & ~fIsQuestOrPersistent);
+    SETBIT(flags, fIsQuestOrPersistent, value);
     }
 
 bool Record::IsQuest()
@@ -449,7 +449,7 @@ bool Record::IsQuest()
 
 void Record::IsQuest(bool value)
     {
-    flags = value ? (flags | fIsQuestOrPersistent) : (flags & ~fIsQuestOrPersistent);
+    SETBIT(flags, fIsQuestOrPersistent, value);
     }
 
 bool Record::IsPersistent()
@@ -459,7 +459,7 @@ bool Record::IsPersistent()
 
 void Record::IsPersistent(bool value)
     {
-    flags = value ? (flags | fIsQuestOrPersistent) : (flags & ~fIsQuestOrPersistent);
+    SETBIT(flags, fIsQuestOrPersistent, value);
     }
 
 bool Record::IsInitiallyDisabled()
@@ -469,7 +469,7 @@ bool Record::IsInitiallyDisabled()
 
 void Record::IsInitiallyDisabled(bool value)
     {
-    flags = value ? (flags | fIsInitiallyDisabled) : (flags & ~fIsInitiallyDisabled);
+    SETBIT(flags, fIsInitiallyDisabled, value);
     }
 
 bool Record::IsIgnored()
@@ -479,7 +479,7 @@ bool Record::IsIgnored()
 
 void Record::IsIgnored(bool value)
     {
-    flags = value ? (flags | fIsIgnored) : (flags & ~fIsIgnored);
+    SETBIT(flags, fIsIgnored, value);
     }
 
 bool Record::IsVisibleWhenDistant()
@@ -489,7 +489,7 @@ bool Record::IsVisibleWhenDistant()
 
 void Record::IsVisibleWhenDistant(bool value)
     {
-    flags = value ? (flags | fIsVisibleWhenDistant) : (flags & ~fIsVisibleWhenDistant);
+    SETBIT(flags, fIsVisibleWhenDistant, value);
     }
 
 bool Record::IsVWD()
@@ -499,7 +499,7 @@ bool Record::IsVWD()
 
 void Record::IsVWD(bool value)
     {
-    flags = value ? (flags | fIsVisibleWhenDistant) : (flags & ~fIsVisibleWhenDistant);
+    SETBIT(flags, fIsVisibleWhenDistant, value);
     }
 
 bool Record::IsTemporary()
@@ -519,7 +519,7 @@ bool Record::IsDangerousOrOffLimits()
 
 void Record::IsDangerousOrOffLimits(bool value)
     {
-    flags = value ? (flags | fIsDangerousOrOffLimits) : (flags & ~fIsDangerousOrOffLimits);
+    SETBIT(flags, fIsDangerousOrOffLimits, value);
     }
 
 bool Record::IsDangerous()
@@ -529,7 +529,7 @@ bool Record::IsDangerous()
 
 void Record::IsDangerous(bool value)
     {
-    flags = value ? (flags | fIsDangerousOrOffLimits) : (flags & ~fIsDangerousOrOffLimits);
+    SETBIT(flags, fIsDangerousOrOffLimits, value);
     }
 
 bool Record::IsOffLimits()
@@ -539,7 +539,7 @@ bool Record::IsOffLimits()
 
 void Record::IsOffLimits(bool value)
     {
-    flags = value ? (flags | fIsDangerousOrOffLimits) : (flags & ~fIsDangerousOrOffLimits);
+    SETBIT(flags, fIsDangerousOrOffLimits, value);
     }
 
 bool Record::IsCompressed()
@@ -549,7 +549,7 @@ bool Record::IsCompressed()
 
 void Record::IsCompressed(bool value)
     {
-    flags = value ? (flags | fIsCompressed) : (flags & ~fIsCompressed);
+    SETBIT(flags, fIsCompressed, value);
     }
 
 bool Record::IsCantWait()
@@ -559,7 +559,7 @@ bool Record::IsCantWait()
 
 void Record::IsCantWait(bool value)
     {
-    flags = value ? (flags | fIsCantWait) : (flags & ~fIsCantWait);
+    SETBIT(flags, fIsCantWait, value);
     }
 
 bool Record::IsHeaderFlagMask(UINT32 Mask, bool Exact)
@@ -589,7 +589,7 @@ bool Record::IsLoaded()
 
 void Record::IsLoaded(bool value)
     {
-    CBash_Flags = value ? (CBash_Flags | _fIsLoaded) : (CBash_Flags & ~_fIsLoaded);
+    SETBIT(CBash_Flags, _fIsLoaded, value);
     }
 
 bool Record::IsChanged()
@@ -599,7 +599,7 @@ bool Record::IsChanged()
 
 void Record::IsChanged(bool value)
     {
-    CBash_Flags = value ? (CBash_Flags | _fIsChanged) : (CBash_Flags & ~_fIsChanged);
+    SETBIT(CBash_Flags, _fIsChanged, value);
     }
 
 FNVRecord::FNVRecord(unsigned char *_recData):

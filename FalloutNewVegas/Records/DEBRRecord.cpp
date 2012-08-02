@@ -58,7 +58,7 @@ bool DEBRRecord::DEBRModel::IsHasCollisionData()
 
 void DEBRRecord::DEBRModel::IsHasCollisionData(bool value)
     {
-    flags = value ? (flags | fIsHasCollisionData) : (flags & ~fIsHasCollisionData);
+    SETBIT(flags, fIsHasCollisionData, value);
     }
 
 bool DEBRRecord::DEBRModel::IsFlagMask(UINT8 Mask, bool Exact)

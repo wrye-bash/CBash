@@ -70,7 +70,7 @@ bool QUSTRecord::QUSTEntry::IsCompletes()
 
 void QUSTRecord::QUSTEntry::IsCompletes(bool value)
     {
-    QSDT.value = value ? (QSDT.value | fIsCompletes) : (QSDT.value & ~fIsCompletes);
+    SETBIT(QSDT.value, fIsCompletes, value);
     }
 
 bool QUSTRecord::QUSTEntry::IsFailed()
@@ -80,7 +80,7 @@ bool QUSTRecord::QUSTEntry::IsFailed()
 
 void QUSTRecord::QUSTEntry::IsFailed(bool value)
     {
-    QSDT.value = value ? (QSDT.value | fIsFailed) : (QSDT.value & ~fIsFailed);
+    SETBIT(QSDT.value, fIsFailed, value);
     }
 
 bool QUSTRecord::QUSTEntry::IsFlagMask(UINT8 Mask, bool Exact)
@@ -100,7 +100,7 @@ bool QUSTRecord::QUSTEntry::IsScriptEnabled()
 
 void QUSTRecord::QUSTEntry::IsScriptEnabled(bool value)
     {
-    SCHR.value.flags = value ? (SCHR.value.flags | fIsEnabled) : (SCHR.value.flags & ~fIsEnabled);
+    SETBIT(SCHR.value.flags, fIsEnabled, value);
     }
 
 bool QUSTRecord::QUSTEntry::IsScriptFlagMask(UINT16 Mask, bool Exact)
@@ -235,7 +235,7 @@ bool QUSTRecord::QUSTTarget::IsIgnoresLocks()
 
 void QUSTRecord::QUSTTarget::IsIgnoresLocks(bool value)
     {
-    QSTA.value.flags = value ? (QSTA.value.flags | fIsIgnoresLocks) : (QSTA.value.flags & ~fIsIgnoresLocks);
+    SETBIT(QSTA.value.flags, fIsIgnoresLocks, value);
     }
 
 bool QUSTRecord::QUSTTarget::IsFlagMask(UINT8 Mask, bool Exact)
@@ -368,7 +368,7 @@ bool QUSTRecord::IsStartEnabled()
 
 void QUSTRecord::IsStartEnabled(bool value)
     {
-    DATA.value.flags = value ? (DATA.value.flags | fIsStartEnabled) : (DATA.value.flags & ~fIsStartEnabled);
+    SETBIT(DATA.value.flags, fIsStartEnabled, value);
     }
 
 bool QUSTRecord::IsRepeatedTopics()
@@ -378,7 +378,7 @@ bool QUSTRecord::IsRepeatedTopics()
 
 void QUSTRecord::IsRepeatedTopics(bool value)
     {
-    DATA.value.flags = value ? (DATA.value.flags | fIsRepeatedTopics) : (DATA.value.flags & ~fIsRepeatedTopics);
+    SETBIT(DATA.value.flags, fIsRepeatedTopics, value);
     }
 
 bool QUSTRecord::IsRepeatedStages()
@@ -388,7 +388,7 @@ bool QUSTRecord::IsRepeatedStages()
 
 void QUSTRecord::IsRepeatedStages(bool value)
     {
-    DATA.value.flags = value ? (DATA.value.flags | fIsRepeatedStages) : (DATA.value.flags & ~fIsRepeatedStages);
+    SETBIT(DATA.value.flags, fIsRepeatedStages, value);
     }
 
 bool QUSTRecord::IsUnknown()
@@ -398,7 +398,7 @@ bool QUSTRecord::IsUnknown()
 
 void QUSTRecord::IsUnknown(bool value)
     {
-    DATA.value.flags = value ? (DATA.value.flags | fIsUnknown) : (DATA.value.flags & ~fIsUnknown);
+    SETBIT(DATA.value.flags, fIsUnknown, value);
     }
 
 bool QUSTRecord::IsFlagMask(UINT8 Mask, bool Exact)

@@ -198,7 +198,7 @@ bool PACKRecord::IsOffersServices()
 
 void PACKRecord::IsOffersServices(bool value)
     {
-    PKDT.value.flags = value ? (PKDT.value.flags | fIsOffersServices) : (PKDT.value.flags & ~fIsOffersServices);
+    SETBIT(PKDT.value.flags, fIsOffersServices, value);
     }
 
 bool PACKRecord::IsMustReachLocation()
@@ -208,7 +208,7 @@ bool PACKRecord::IsMustReachLocation()
 
 void PACKRecord::IsMustReachLocation(bool value)
     {
-    PKDT.value.flags = value ? (PKDT.value.flags | fIsMustReachLocation) : (PKDT.value.flags & ~fIsMustReachLocation);
+    SETBIT(PKDT.value.flags, fIsMustReachLocation, value);
     }
 
 bool PACKRecord::IsMustComplete()
@@ -218,7 +218,7 @@ bool PACKRecord::IsMustComplete()
 
 void PACKRecord::IsMustComplete(bool value)
     {
-    PKDT.value.flags = value ? (PKDT.value.flags | fIsMustComplete) : (PKDT.value.flags & ~fIsMustComplete);
+    SETBIT(PKDT.value.flags, fIsMustComplete, value);
     }
 
 bool PACKRecord::IsLockAtStart()
@@ -228,7 +228,7 @@ bool PACKRecord::IsLockAtStart()
 
 void PACKRecord::IsLockAtStart(bool value)
     {
-    PKDT.value.flags = value ? (PKDT.value.flags | fIsLockAtStart) : (PKDT.value.flags & ~fIsLockAtStart);
+    SETBIT(PKDT.value.flags, fIsLockAtStart, value);
     }
 
 bool PACKRecord::IsLockAtEnd()
@@ -238,7 +238,7 @@ bool PACKRecord::IsLockAtEnd()
 
 void PACKRecord::IsLockAtEnd(bool value)
     {
-    PKDT.value.flags = value ? (PKDT.value.flags | fIsLockAtEnd) : (PKDT.value.flags & ~fIsLockAtEnd);
+    SETBIT(PKDT.value.flags, fIsLockAtEnd, value);
     }
 
 bool PACKRecord::IsLockAtLocation()
@@ -248,7 +248,7 @@ bool PACKRecord::IsLockAtLocation()
 
 void PACKRecord::IsLockAtLocation(bool value)
     {
-    PKDT.value.flags = value ? (PKDT.value.flags | fIsLockAtLocation) : (PKDT.value.flags & ~fIsLockAtLocation);
+    SETBIT(PKDT.value.flags, fIsLockAtLocation, value);
     }
 
 bool PACKRecord::IsUnlockAtStart()
@@ -258,7 +258,7 @@ bool PACKRecord::IsUnlockAtStart()
 
 void PACKRecord::IsUnlockAtStart(bool value)
     {
-    PKDT.value.flags = value ? (PKDT.value.flags | fIsUnlockAtStart) : (PKDT.value.flags & ~fIsUnlockAtStart);
+    SETBIT(PKDT.value.flags, fIsUnlockAtStart, value);
     }
 
 bool PACKRecord::IsUnlockAtEnd()
@@ -268,7 +268,7 @@ bool PACKRecord::IsUnlockAtEnd()
 
 void PACKRecord::IsUnlockAtEnd(bool value)
     {
-    PKDT.value.flags = value ? (PKDT.value.flags | fIsUnlockAtEnd) : (PKDT.value.flags & ~fIsUnlockAtEnd);
+    SETBIT(PKDT.value.flags, fIsUnlockAtEnd, value);
     }
 
 bool PACKRecord::IsUnlockAtLocation()
@@ -278,7 +278,7 @@ bool PACKRecord::IsUnlockAtLocation()
 
 void PACKRecord::IsUnlockAtLocation(bool value)
     {
-    PKDT.value.flags = value ? (PKDT.value.flags | fIsUnlockAtLocation) : (PKDT.value.flags & ~fIsUnlockAtLocation);
+    SETBIT(PKDT.value.flags, fIsUnlockAtLocation, value);
     }
 
 bool PACKRecord::IsContinueIfPcNear()
@@ -288,7 +288,7 @@ bool PACKRecord::IsContinueIfPcNear()
 
 void PACKRecord::IsContinueIfPcNear(bool value)
     {
-    PKDT.value.flags = value ? (PKDT.value.flags | fIsContinueIfPcNear) : (PKDT.value.flags & ~fIsContinueIfPcNear);
+    SETBIT(PKDT.value.flags, fIsContinueIfPcNear, value);
     }
 
 bool PACKRecord::IsOncePerDay()
@@ -298,7 +298,7 @@ bool PACKRecord::IsOncePerDay()
 
 void PACKRecord::IsOncePerDay(bool value)
     {
-    PKDT.value.flags = value ? (PKDT.value.flags | fIsOncePerDay) : (PKDT.value.flags & ~fIsOncePerDay);
+    SETBIT(PKDT.value.flags, fIsOncePerDay, value);
     }
 
 bool PACKRecord::IsSkipFallout()
@@ -308,7 +308,7 @@ bool PACKRecord::IsSkipFallout()
 
 void PACKRecord::IsSkipFallout(bool value)
     {
-    PKDT.value.flags = value ? (PKDT.value.flags | fIsSkipFallout) : (PKDT.value.flags & ~fIsSkipFallout);
+    SETBIT(PKDT.value.flags, fIsSkipFallout, value);
     }
 
 bool PACKRecord::IsAlwaysRun()
@@ -318,7 +318,7 @@ bool PACKRecord::IsAlwaysRun()
 
 void PACKRecord::IsAlwaysRun(bool value)
     {
-    PKDT.value.flags = value ? (PKDT.value.flags | fIsAlwaysRun) : (PKDT.value.flags & ~fIsAlwaysRun);
+    SETBIT(PKDT.value.flags, fIsAlwaysRun, value);
     }
 
 bool PACKRecord::IsAlwaysSneak()
@@ -328,7 +328,7 @@ bool PACKRecord::IsAlwaysSneak()
 
 void PACKRecord::IsAlwaysSneak(bool value)
     {
-    PKDT.value.flags = value ? (PKDT.value.flags | fIsAlwaysSneak) : (PKDT.value.flags & ~fIsAlwaysSneak);
+    SETBIT(PKDT.value.flags, fIsAlwaysSneak, value);
     }
 
 bool PACKRecord::IsAllowSwimming()
@@ -338,7 +338,7 @@ bool PACKRecord::IsAllowSwimming()
 
 void PACKRecord::IsAllowSwimming(bool value)
     {
-    PKDT.value.flags = value ? (PKDT.value.flags | fIsAllowSwimming) : (PKDT.value.flags & ~fIsAllowSwimming);
+    SETBIT(PKDT.value.flags, fIsAllowSwimming, value);
     }
 
 bool PACKRecord::IsAllowFalls()
@@ -348,7 +348,7 @@ bool PACKRecord::IsAllowFalls()
 
 void PACKRecord::IsAllowFalls(bool value)
     {
-    PKDT.value.flags = value ? (PKDT.value.flags | fIsAllowFalls) : (PKDT.value.flags & ~fIsAllowFalls);
+    SETBIT(PKDT.value.flags, fIsAllowFalls, value);
     }
 
 bool PACKRecord::IsUnequipArmor()
@@ -358,7 +358,7 @@ bool PACKRecord::IsUnequipArmor()
 
 void PACKRecord::IsUnequipArmor(bool value)
     {
-    PKDT.value.flags = value ? (PKDT.value.flags | fIsUnequipArmor) : (PKDT.value.flags & ~fIsUnequipArmor);
+    SETBIT(PKDT.value.flags, fIsUnequipArmor, value);
     }
 
 bool PACKRecord::IsUnequipWeapons()
@@ -368,7 +368,7 @@ bool PACKRecord::IsUnequipWeapons()
 
 void PACKRecord::IsUnequipWeapons(bool value)
     {
-    PKDT.value.flags = value ? (PKDT.value.flags | fIsUnequipWeapons) : (PKDT.value.flags & ~fIsUnequipWeapons);
+    SETBIT(PKDT.value.flags, fIsUnequipWeapons, value);
     }
 
 bool PACKRecord::IsDefensiveCombat()
@@ -378,7 +378,7 @@ bool PACKRecord::IsDefensiveCombat()
 
 void PACKRecord::IsDefensiveCombat(bool value)
     {
-    PKDT.value.flags = value ? (PKDT.value.flags | fIsDefensiveCombat) : (PKDT.value.flags & ~fIsDefensiveCombat);
+    SETBIT(PKDT.value.flags, fIsDefensiveCombat, value);
     }
 
 bool PACKRecord::IsUseHorse()
@@ -388,7 +388,7 @@ bool PACKRecord::IsUseHorse()
 
 void PACKRecord::IsUseHorse(bool value)
     {
-    PKDT.value.flags = value ? (PKDT.value.flags | fIsUseHorse) : (PKDT.value.flags & ~fIsUseHorse);
+    SETBIT(PKDT.value.flags, fIsUseHorse, value);
     }
 
 bool PACKRecord::IsNoIdleAnims()
@@ -398,7 +398,7 @@ bool PACKRecord::IsNoIdleAnims()
 
 void PACKRecord::IsNoIdleAnims(bool value)
     {
-    PKDT.value.flags = value ? (PKDT.value.flags | fIsNoIdleAnims) : (PKDT.value.flags & ~fIsNoIdleAnims);
+    SETBIT(PKDT.value.flags, fIsNoIdleAnims, value);
     }
 
 bool PACKRecord::IsFlagMask(UINT32 Mask, bool Exact)

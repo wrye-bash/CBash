@@ -90,7 +90,7 @@ bool TERMRecord::TERMMenu::IsAddNote()
 
 void TERMRecord::TERMMenu::IsAddNote(bool value)
     {
-    ANAM.value = value ? (ANAM.value | fIsAddNote) : (ANAM.value & ~fIsAddNote);
+    SETBIT(ANAM.value, fIsAddNote, value);
     }
 
 bool TERMRecord::TERMMenu::IsForceRedraw()
@@ -100,7 +100,7 @@ bool TERMRecord::TERMMenu::IsForceRedraw()
 
 void TERMRecord::TERMMenu::IsForceRedraw(bool value)
     {
-    ANAM.value = value ? (ANAM.value | fIsForceRedraw) : (ANAM.value & ~fIsForceRedraw);
+    SETBIT(ANAM.value, fIsForceRedraw, value);
     }
 
 bool TERMRecord::TERMMenu::IsFlagMask(UINT8 Mask, bool Exact)
@@ -120,7 +120,7 @@ bool TERMRecord::TERMMenu::IsScriptEnabled()
 
 void TERMRecord::TERMMenu::IsScriptEnabled(bool value)
     {
-    SCHR.value.flags = value ? (SCHR.value.flags | fIsEnabled) : (SCHR.value.flags & ~fIsEnabled);
+    SETBIT(SCHR.value.flags, fIsEnabled, value);
     }
 
 bool TERMRecord::TERMMenu::IsScriptFlagMask(UINT16 Mask, bool Exact)
@@ -283,7 +283,7 @@ bool TERMRecord::IsLeveled()
 
 void TERMRecord::IsLeveled(bool value)
     {
-    DNAM.value.flags = value ? (DNAM.value.flags | fIsLeveled) : (DNAM.value.flags & ~fIsLeveled);
+    SETBIT(DNAM.value.flags, fIsLeveled, value);
     }
 
 bool TERMRecord::IsUnlocked()
@@ -293,7 +293,7 @@ bool TERMRecord::IsUnlocked()
 
 void TERMRecord::IsUnlocked(bool value)
     {
-    DNAM.value.flags = value ? (DNAM.value.flags | fIsUnlocked) : (DNAM.value.flags & ~fIsUnlocked);
+    SETBIT(DNAM.value.flags, fIsUnlocked, value);
     }
 
 bool TERMRecord::IsAlternateColors()
@@ -303,7 +303,7 @@ bool TERMRecord::IsAlternateColors()
 
 void TERMRecord::IsAlternateColors(bool value)
     {
-    DNAM.value.flags = value ? (DNAM.value.flags | fIsAlternateColors) : (DNAM.value.flags & ~fIsAlternateColors);
+    SETBIT(DNAM.value.flags, fIsAlternateColors, value);
     }
 
 bool TERMRecord::IsHideWelcomeTextWhenDisplayingImage()
@@ -313,7 +313,7 @@ bool TERMRecord::IsHideWelcomeTextWhenDisplayingImage()
 
 void TERMRecord::IsHideWelcomeTextWhenDisplayingImage(bool value)
     {
-    DNAM.value.flags = value ? (DNAM.value.flags | fIsHideWelcomeTextWhenDisplayingImage) : (DNAM.value.flags & ~fIsHideWelcomeTextWhenDisplayingImage);
+    SETBIT(DNAM.value.flags, fIsHideWelcomeTextWhenDisplayingImage, value);
     }
 
 bool TERMRecord::IsFlagMask(UINT8 Mask, bool Exact)

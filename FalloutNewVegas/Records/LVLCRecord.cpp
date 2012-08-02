@@ -102,7 +102,7 @@ bool LVLCRecord::IsCalcFromAllLevels()
 
 void LVLCRecord::IsCalcFromAllLevels(bool value)
     {
-    LVLF.value = value ? (LVLF.value | fCalcFromAllLevels) : (LVLF.value & ~fCalcFromAllLevels);
+    SETBIT(LVLF.value, fCalcFromAllLevels, value);
     }
 
 bool LVLCRecord::IsCalcForEachItem()
@@ -112,7 +112,7 @@ bool LVLCRecord::IsCalcForEachItem()
 
 void LVLCRecord::IsCalcForEachItem(bool value)
     {
-    LVLF.value = value ? (LVLF.value | fCalcForEachItem) : (LVLF.value & ~fCalcForEachItem);
+    SETBIT(LVLF.value, fCalcForEachItem, value);
     }
 
 bool LVLCRecord::IsUseAll()
@@ -122,7 +122,7 @@ bool LVLCRecord::IsUseAll()
 
 void LVLCRecord::IsUseAll(bool value)
     {
-    LVLF.value = value ? (LVLF.value | fUseAll) : (LVLF.value & ~fUseAll);
+    SETBIT(LVLF.value, fUseAll, value);
     }
 
 bool LVLCRecord::IsFlagMask(UINT8 Mask, bool Exact)

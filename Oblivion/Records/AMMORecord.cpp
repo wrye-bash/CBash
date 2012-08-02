@@ -120,7 +120,7 @@ bool AMMORecord::IsNotNormalWeapon()
 
 void AMMORecord::IsNotNormalWeapon(bool value)
     {
-    DATA.value.flags = value ? (DATA.value.flags | fIsNotNormalWeapon) : (DATA.value.flags & ~fIsNotNormalWeapon);
+    SETBIT(DATA.value.flags, fIsNotNormalWeapon, value);
     }
 
 bool AMMORecord::IsNotNormal()
@@ -130,7 +130,7 @@ bool AMMORecord::IsNotNormal()
 
 void AMMORecord::IsNotNormal(bool value)
     {
-    DATA.value.flags = value ? (DATA.value.flags | fIsNotNormalWeapon) : (DATA.value.flags & ~fIsNotNormalWeapon);
+    SETBIT(DATA.value.flags, fIsNotNormalWeapon, value);
     }
 
 bool AMMORecord::IsNormalWeapon()

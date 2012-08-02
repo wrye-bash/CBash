@@ -128,7 +128,7 @@ bool SOUNRecord::IsRandomFrequencyShift()
 
 void SOUNRecord::IsRandomFrequencyShift(bool value)
     {
-    SNDD.value.flags = value ? (SNDD.value.flags | fIsRandomFrequencyShift) : (SNDD.value.flags & ~fIsRandomFrequencyShift);
+    SETBIT(SNDD.value.flags, fIsRandomFrequencyShift, value);
     }
 
 bool SOUNRecord::IsPlayAtRandom()
@@ -138,7 +138,7 @@ bool SOUNRecord::IsPlayAtRandom()
 
 void SOUNRecord::IsPlayAtRandom(bool value)
     {
-    SNDD.value.flags = value ? (SNDD.value.flags | fIsPlayAtRandom) : (SNDD.value.flags & ~fIsPlayAtRandom);
+    SETBIT(SNDD.value.flags, fIsPlayAtRandom, value);
     }
 
 bool SOUNRecord::IsEnvironmentIgnored()
@@ -148,7 +148,7 @@ bool SOUNRecord::IsEnvironmentIgnored()
 
 void SOUNRecord::IsEnvironmentIgnored(bool value)
     {
-    SNDD.value.flags = value ? (SNDD.value.flags | fIsEnvironmentIgnored) : (SNDD.value.flags & ~fIsEnvironmentIgnored);
+    SETBIT(SNDD.value.flags, fIsEnvironmentIgnored, value);
     }
 
 bool SOUNRecord::IsRandomLocation()
@@ -158,7 +158,7 @@ bool SOUNRecord::IsRandomLocation()
 
 void SOUNRecord::IsRandomLocation(bool value)
     {
-    SNDD.value.flags = value ? (SNDD.value.flags | fIsRandomLocation) : (SNDD.value.flags & ~fIsRandomLocation);
+    SETBIT(SNDD.value.flags, fIsRandomLocation, value);
     }
 
 bool SOUNRecord::IsLoop()
@@ -168,7 +168,7 @@ bool SOUNRecord::IsLoop()
 
 void SOUNRecord::IsLoop(bool value)
     {
-    SNDD.value.flags = value ? (SNDD.value.flags | fIsLoop) : (SNDD.value.flags & ~fIsLoop);
+    SETBIT(SNDD.value.flags, fIsLoop, value);
     }
 
 bool SOUNRecord::IsMenuSound()
@@ -178,7 +178,7 @@ bool SOUNRecord::IsMenuSound()
 
 void SOUNRecord::IsMenuSound(bool value)
     {
-    SNDD.value.flags = value ? (SNDD.value.flags | fIsMenuSound) : (SNDD.value.flags & ~fIsMenuSound);
+    SETBIT(SNDD.value.flags, fIsMenuSound, value);
     }
 
 bool SOUNRecord::Is2D()
@@ -188,7 +188,7 @@ bool SOUNRecord::Is2D()
 
 void SOUNRecord::Is2D(bool value)
     {
-    SNDD.value.flags = value ? (SNDD.value.flags | fIs2D) : (SNDD.value.flags & ~fIs2D);
+    SETBIT(SNDD.value.flags, fIs2D, value);
     }
 
 bool SOUNRecord::Is360LFE()
@@ -198,7 +198,7 @@ bool SOUNRecord::Is360LFE()
 
 void SOUNRecord::Is360LFE(bool value)
     {
-    SNDD.value.flags = value ? (SNDD.value.flags | fIs360LFE) : (SNDD.value.flags & ~fIs360LFE);
+    SETBIT(SNDD.value.flags, fIs360LFE, value);
     }
 
 bool SOUNRecord::IsDialogueSound()
@@ -208,7 +208,7 @@ bool SOUNRecord::IsDialogueSound()
 
 void SOUNRecord::IsDialogueSound(bool value)
     {
-    SNDD.value.flags = value ? (SNDD.value.flags | fIsDialogueSound) : (SNDD.value.flags & ~fIsDialogueSound);
+    SETBIT(SNDD.value.flags, fIsDialogueSound, value);
     }
 
 bool SOUNRecord::IsEnvelopeFast()
@@ -218,7 +218,7 @@ bool SOUNRecord::IsEnvelopeFast()
 
 void SOUNRecord::IsEnvelopeFast(bool value)
     {
-    SNDD.value.flags = value ? (SNDD.value.flags | fIsEnvelopeFast) : (SNDD.value.flags & ~fIsEnvelopeFast);
+    SETBIT(SNDD.value.flags, fIsEnvelopeFast, value);
     }
 
 bool SOUNRecord::IsEnvelopeSlow()
@@ -228,7 +228,7 @@ bool SOUNRecord::IsEnvelopeSlow()
 
 void SOUNRecord::IsEnvelopeSlow(bool value)
     {
-    SNDD.value.flags = value ? (SNDD.value.flags | fIsEnvelopeSlow) : (SNDD.value.flags & ~fIsEnvelopeSlow);
+    SETBIT(SNDD.value.flags, fIsEnvelopeSlow, value);
     }
 
 bool SOUNRecord::Is2DRadius()
@@ -238,7 +238,7 @@ bool SOUNRecord::Is2DRadius()
 
 void SOUNRecord::Is2DRadius(bool value)
     {
-    SNDD.value.flags = value ? (SNDD.value.flags | fIs2DRadius) : (SNDD.value.flags & ~fIs2DRadius);
+    SETBIT(SNDD.value.flags, fIs2DRadius, value);
     }
 
 bool SOUNRecord::IsMuteWhenSubmerged()
@@ -248,7 +248,7 @@ bool SOUNRecord::IsMuteWhenSubmerged()
 
 void SOUNRecord::IsMuteWhenSubmerged(bool value)
     {
-    SNDD.value.flags = value ? (SNDD.value.flags | fIsMuteWhenSubmerged) : (SNDD.value.flags & ~fIsMuteWhenSubmerged);
+    SETBIT(SNDD.value.flags, fIsMuteWhenSubmerged, value);
     }
 
 bool SOUNRecord::IsFlagMask(UINT32 Mask, bool Exact)

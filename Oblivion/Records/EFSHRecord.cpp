@@ -205,7 +205,7 @@ bool EFSHRecord::IsNoMemShader()
 
 void EFSHRecord::IsNoMemShader(bool value)
     {
-    DATA.value.flags = value ? (DATA.value.flags | fIsNoMemShader) : (DATA.value.flags & ~fIsNoMemShader);
+    SETBIT(DATA.value.flags, fIsNoMemShader, value);
     }
 
 bool EFSHRecord::IsNoMembraneShader()
@@ -215,7 +215,7 @@ bool EFSHRecord::IsNoMembraneShader()
 
 void EFSHRecord::IsNoMembraneShader(bool value)
     {
-    DATA.value.flags = value ? (DATA.value.flags | fIsNoMemShader) : (DATA.value.flags & ~fIsNoMemShader);
+    SETBIT(DATA.value.flags, fIsNoMemShader, value);
     }
 
 bool EFSHRecord::IsNoPartShader()
@@ -225,7 +225,7 @@ bool EFSHRecord::IsNoPartShader()
 
 void EFSHRecord::IsNoPartShader(bool value)
     {
-    DATA.value.flags = value ? (DATA.value.flags | fIsNoPartShader) : (DATA.value.flags & ~fIsNoPartShader);
+    SETBIT(DATA.value.flags, fIsNoPartShader, value);
     }
 
 bool EFSHRecord::IsNoParticleShader()
@@ -235,7 +235,7 @@ bool EFSHRecord::IsNoParticleShader()
 
 void EFSHRecord::IsNoParticleShader(bool value)
     {
-    DATA.value.flags = value ? (DATA.value.flags | fIsNoPartShader) : (DATA.value.flags & ~fIsNoPartShader);
+    SETBIT(DATA.value.flags, fIsNoPartShader, value);
     }
 
 bool EFSHRecord::IsEdgeInverse()
@@ -245,7 +245,7 @@ bool EFSHRecord::IsEdgeInverse()
 
 void EFSHRecord::IsEdgeInverse(bool value)
     {
-    DATA.value.flags = value ? (DATA.value.flags | fIsEdgeInverse) : (DATA.value.flags & ~fIsEdgeInverse);
+    SETBIT(DATA.value.flags, fIsEdgeInverse, value);
     }
 
 bool EFSHRecord::IsEdgeEffectInverse()
@@ -255,7 +255,7 @@ bool EFSHRecord::IsEdgeEffectInverse()
 
 void EFSHRecord::IsEdgeEffectInverse(bool value)
     {
-    DATA.value.flags = value ? (DATA.value.flags | fIsEdgeInverse) : (DATA.value.flags & ~fIsEdgeInverse);
+    SETBIT(DATA.value.flags, fIsEdgeInverse, value);
     }
 
 bool EFSHRecord::IsMemSkinOnly()
@@ -265,7 +265,7 @@ bool EFSHRecord::IsMemSkinOnly()
 
 void EFSHRecord::IsMemSkinOnly(bool value)
     {
-    DATA.value.flags = value ? (DATA.value.flags | fIsMemSkinOnly) : (DATA.value.flags & ~fIsMemSkinOnly);
+    SETBIT(DATA.value.flags, fIsMemSkinOnly, value);
     }
 
 bool EFSHRecord::IsMembraneShaderSkinOnly()
@@ -275,7 +275,7 @@ bool EFSHRecord::IsMembraneShaderSkinOnly()
 
 void EFSHRecord::IsMembraneShaderSkinOnly(bool value)
     {
-    DATA.value.flags = value ? (DATA.value.flags | fIsMemSkinOnly) : (DATA.value.flags & ~fIsMemSkinOnly);
+    SETBIT(DATA.value.flags, fIsMemSkinOnly, value);
     }
 
 bool EFSHRecord::IsFlagMask(UINT8 Mask, bool Exact)

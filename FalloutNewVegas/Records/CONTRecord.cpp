@@ -146,7 +146,7 @@ bool CONTRecord::IsRespawn()
 
 void CONTRecord::IsRespawn(bool value)
     {
-    DATA.value.flags = value ? (DATA.value.flags | fIsRespawn) : (DATA.value.flags & ~fIsRespawn);
+    SETBIT(DATA.value.flags, fIsRespawn, value);
     }
 
 bool CONTRecord::IsFlagMask(UINT8 Mask, bool Exact)

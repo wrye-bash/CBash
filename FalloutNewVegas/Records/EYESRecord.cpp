@@ -80,7 +80,7 @@ bool EYESRecord::IsPlayable()
 
 void EYESRecord::IsPlayable(bool value)
     {
-    DATA.value = value ? (DATA.value | fIsPlayable) : (DATA.value & ~fIsPlayable);
+    SETBIT(DATA.value, fIsPlayable, value);
     }
 
 bool EYESRecord::IsNotMale()
@@ -90,7 +90,7 @@ bool EYESRecord::IsNotMale()
 
 void EYESRecord::IsNotMale(bool value)
     {
-    DATA.value = value ? (DATA.value | fIsNotMale) : (DATA.value & ~fIsNotMale);
+    SETBIT(DATA.value, fIsNotMale, value);
     }
 
 bool EYESRecord::IsMale()
@@ -110,7 +110,7 @@ bool EYESRecord::IsNotFemale()
 
 void EYESRecord::IsNotFemale(bool value)
     {
-    DATA.value = value ? (DATA.value | fIsNotFemale) : (DATA.value & ~fIsNotFemale);
+    SETBIT(DATA.value, fIsNotFemale, value);
     }
 
 bool EYESRecord::IsFemale()

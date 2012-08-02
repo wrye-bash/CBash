@@ -77,7 +77,7 @@ bool HAIRRecord::IsPlayable()
 
 void HAIRRecord::IsPlayable(bool value)
     {
-    DATA.value = value ? (DATA.value | fIsPlayable) : (DATA.value & ~fIsPlayable);
+    SETBIT(DATA.value, fIsPlayable, value);
     }
 
 bool HAIRRecord::IsNotMale()
@@ -87,7 +87,7 @@ bool HAIRRecord::IsNotMale()
 
 void HAIRRecord::IsNotMale(bool value)
     {
-    DATA.value = value ? (DATA.value | fIsNotMale) : (DATA.value & ~fIsNotMale);
+    SETBIT(DATA.value, fIsNotMale, value);
     }
 
 bool HAIRRecord::IsMale()
@@ -107,7 +107,7 @@ bool HAIRRecord::IsNotFemale()
 
 void HAIRRecord::IsNotFemale(bool value)
     {
-    DATA.value = value ? (DATA.value | fIsNotFemale) : (DATA.value & ~fIsNotFemale);
+    SETBIT(DATA.value, fIsNotFemale, value);
     }
 
 bool HAIRRecord::IsFemale()
@@ -127,7 +127,7 @@ bool HAIRRecord::IsFixedColor()
 
 void HAIRRecord::IsFixedColor(bool value)
     {
-    DATA.value = value ? (DATA.value | fIsFixedColor) : (DATA.value & ~fIsFixedColor);
+    SETBIT(DATA.value, fIsFixedColor, value);
     }
 
 bool HAIRRecord::IsFlagMask(UINT8 Mask, bool Exact)

@@ -273,7 +273,7 @@ bool NPC_Record::IsFemale()
 
 void NPC_Record::IsFemale(bool value)
     {
-    ACBS.value.flags = value ? (ACBS.value.flags | fIsFemale) : (ACBS.value.flags & ~fIsFemale);
+    SETBIT(ACBS.value.flags, fIsFemale, value);
     }
 
 bool NPC_Record::IsEssential()
@@ -283,7 +283,7 @@ bool NPC_Record::IsEssential()
 
 void NPC_Record::IsEssential(bool value)
     {
-    ACBS.value.flags = value ? (ACBS.value.flags | fIsEssential) : (ACBS.value.flags & ~fIsEssential);
+    SETBIT(ACBS.value.flags, fIsEssential, value);
     }
 
 bool NPC_Record::IsCharGenFacePreset()
@@ -293,7 +293,7 @@ bool NPC_Record::IsCharGenFacePreset()
 
 void NPC_Record::IsCharGenFacePreset(bool value)
     {
-    ACBS.value.flags = value ? (ACBS.value.flags | fIsCharGenFacePreset) : (ACBS.value.flags & ~fIsCharGenFacePreset);
+    SETBIT(ACBS.value.flags, fIsCharGenFacePreset, value);
     }
 
 bool NPC_Record::IsRespawn()
@@ -303,7 +303,7 @@ bool NPC_Record::IsRespawn()
 
 void NPC_Record::IsRespawn(bool value)
     {
-    ACBS.value.flags = value ? (ACBS.value.flags | fIsRespawn) : (ACBS.value.flags & ~fIsRespawn);
+    SETBIT(ACBS.value.flags, fIsRespawn, value);
     }
 
 bool NPC_Record::IsAutoCalcStats()
@@ -313,7 +313,7 @@ bool NPC_Record::IsAutoCalcStats()
 
 void NPC_Record::IsAutoCalcStats(bool value)
     {
-    ACBS.value.flags = value ? (ACBS.value.flags | fIsAutoCalcStats) : (ACBS.value.flags & ~fIsAutoCalcStats);
+    SETBIT(ACBS.value.flags, fIsAutoCalcStats, value);
     }
 
 bool NPC_Record::IsPCLevelOffset()
@@ -323,7 +323,7 @@ bool NPC_Record::IsPCLevelOffset()
 
 void NPC_Record::IsPCLevelOffset(bool value)
     {
-    ACBS.value.flags = value ? (ACBS.value.flags | fIsPCLevelOffset) : (ACBS.value.flags & ~fIsPCLevelOffset);
+    SETBIT(ACBS.value.flags, fIsPCLevelOffset, value);
     }
 
 bool NPC_Record::IsUseTemplate()
@@ -333,7 +333,7 @@ bool NPC_Record::IsUseTemplate()
 
 void NPC_Record::IsUseTemplate(bool value)
     {
-    ACBS.value.flags = value ? (ACBS.value.flags | fIsUseTemplate) : (ACBS.value.flags & ~fIsUseTemplate);
+    SETBIT(ACBS.value.flags, fIsUseTemplate, value);
     }
 
 bool NPC_Record::IsNoLowLevel()
@@ -343,7 +343,7 @@ bool NPC_Record::IsNoLowLevel()
 
 void NPC_Record::IsNoLowLevel(bool value)
     {
-    ACBS.value.flags = value ? (ACBS.value.flags | fIsNoLowLevel) : (ACBS.value.flags & ~fIsNoLowLevel);
+    SETBIT(ACBS.value.flags, fIsNoLowLevel, value);
     }
 
 bool NPC_Record::IsNoBloodSpray()
@@ -353,7 +353,7 @@ bool NPC_Record::IsNoBloodSpray()
 
 void NPC_Record::IsNoBloodSpray(bool value)
     {
-    ACBS.value.flags = value ? (ACBS.value.flags | fIsNoBloodSpray) : (ACBS.value.flags & ~fIsNoBloodSpray);
+    SETBIT(ACBS.value.flags, fIsNoBloodSpray, value);
     }
 
 bool NPC_Record::IsNoBloodDecal()
@@ -363,7 +363,7 @@ bool NPC_Record::IsNoBloodDecal()
 
 void NPC_Record::IsNoBloodDecal(bool value)
     {
-    ACBS.value.flags = value ? (ACBS.value.flags | fIsNoBloodDecal) : (ACBS.value.flags & ~fIsNoBloodDecal);
+    SETBIT(ACBS.value.flags, fIsNoBloodDecal, value);
     }
 
 bool NPC_Record::IsNoVATSMelee()
@@ -373,7 +373,7 @@ bool NPC_Record::IsNoVATSMelee()
 
 void NPC_Record::IsNoVATSMelee(bool value)
     {
-    ACBS.value.flags = value ? (ACBS.value.flags | fIsNoVATSMelee) : (ACBS.value.flags & ~fIsNoVATSMelee);
+    SETBIT(ACBS.value.flags, fIsNoVATSMelee, value);
     }
 
 bool NPC_Record::IsCanBeAllRaces()
@@ -383,7 +383,7 @@ bool NPC_Record::IsCanBeAllRaces()
 
 void NPC_Record::IsCanBeAllRaces(bool value)
     {
-    ACBS.value.flags = value ? (ACBS.value.flags | fIsCanBeAllRaces) : (ACBS.value.flags & ~fIsCanBeAllRaces);
+    SETBIT(ACBS.value.flags, fIsCanBeAllRaces, value);
     }
 
 bool NPC_Record::IsAutoCalcService()
@@ -393,7 +393,7 @@ bool NPC_Record::IsAutoCalcService()
 
 void NPC_Record::IsAutoCalcService(bool value)
     {
-    ACBS.value.flags = value ? (ACBS.value.flags | fIsAutoCalcService) : (ACBS.value.flags & ~fIsAutoCalcService);
+    SETBIT(ACBS.value.flags, fIsAutoCalcService, value);
     }
 
 bool NPC_Record::IsNoKnockdowns()
@@ -403,7 +403,7 @@ bool NPC_Record::IsNoKnockdowns()
 
 void NPC_Record::IsNoKnockdowns(bool value)
     {
-    ACBS.value.flags = value ? (ACBS.value.flags | fIsNoKnockdowns) : (ACBS.value.flags & ~fIsNoKnockdowns);
+    SETBIT(ACBS.value.flags, fIsNoKnockdowns, value);
     }
 
 bool NPC_Record::IsNotPushable()
@@ -413,7 +413,7 @@ bool NPC_Record::IsNotPushable()
 
 void NPC_Record::IsNotPushable(bool value)
     {
-    ACBS.value.flags = value ? (ACBS.value.flags | fIsNotPushable) : (ACBS.value.flags & ~fIsNotPushable);
+    SETBIT(ACBS.value.flags, fIsNotPushable, value);
     }
 
 bool NPC_Record::IsNoHeadTracking()
@@ -423,7 +423,7 @@ bool NPC_Record::IsNoHeadTracking()
 
 void NPC_Record::IsNoHeadTracking(bool value)
     {
-    ACBS.value.flags = value ? (ACBS.value.flags | fIsNoHeadTracking) : (ACBS.value.flags & ~fIsNoHeadTracking);
+    SETBIT(ACBS.value.flags, fIsNoHeadTracking, value);
     }
 
 bool NPC_Record::IsFlagMask(UINT32 Mask, bool Exact)
@@ -443,7 +443,7 @@ bool NPC_Record::IsUseTraits()
 
 void NPC_Record::IsUseTraits(bool value)
     {
-    ACBS.value.templateFlags = value ? (ACBS.value.templateFlags | fIsUseTraits) : (ACBS.value.templateFlags & ~fIsUseTraits);
+    SETBIT(ACBS.value.templateFlags, fIsUseTraits, value);
     }
 
 bool NPC_Record::IsUseStats()
@@ -453,7 +453,7 @@ bool NPC_Record::IsUseStats()
 
 void NPC_Record::IsUseStats(bool value)
     {
-    ACBS.value.templateFlags = value ? (ACBS.value.templateFlags | fIsUseStats) : (ACBS.value.templateFlags & ~fIsUseStats);
+    SETBIT(ACBS.value.templateFlags, fIsUseStats, value);
     }
 
 bool NPC_Record::IsUseFactions()
@@ -463,7 +463,7 @@ bool NPC_Record::IsUseFactions()
 
 void NPC_Record::IsUseFactions(bool value)
     {
-    ACBS.value.templateFlags = value ? (ACBS.value.templateFlags | fIsUseFactions) : (ACBS.value.templateFlags & ~fIsUseFactions);
+    SETBIT(ACBS.value.templateFlags, fIsUseFactions, value);
     }
 
 bool NPC_Record::IsUseAEList()
@@ -473,7 +473,7 @@ bool NPC_Record::IsUseAEList()
 
 void NPC_Record::IsUseAEList(bool value)
     {
-    ACBS.value.templateFlags = value ? (ACBS.value.templateFlags | fIsUseAEList) : (ACBS.value.templateFlags & ~fIsUseAEList);
+    SETBIT(ACBS.value.templateFlags, fIsUseAEList, value);
     }
 
 bool NPC_Record::IsUseAIData()
@@ -483,7 +483,7 @@ bool NPC_Record::IsUseAIData()
 
 void NPC_Record::IsUseAIData(bool value)
     {
-    ACBS.value.templateFlags = value ? (ACBS.value.templateFlags | fIsUseAIData) : (ACBS.value.templateFlags & ~fIsUseAIData);
+    SETBIT(ACBS.value.templateFlags, fIsUseAIData, value);
     }
 
 bool NPC_Record::IsUseAIPackages()
@@ -493,7 +493,7 @@ bool NPC_Record::IsUseAIPackages()
 
 void NPC_Record::IsUseAIPackages(bool value)
     {
-    ACBS.value.templateFlags = value ? (ACBS.value.templateFlags | fIsUseAIPackages) : (ACBS.value.templateFlags & ~fIsUseAIPackages);
+    SETBIT(ACBS.value.templateFlags, fIsUseAIPackages, value);
     }
 
 bool NPC_Record::IsUseModelAnim()
@@ -503,7 +503,7 @@ bool NPC_Record::IsUseModelAnim()
 
 void NPC_Record::IsUseModelAnim(bool value)
     {
-    ACBS.value.templateFlags = value ? (ACBS.value.templateFlags | fIsUseModelAnim) : (ACBS.value.templateFlags & ~fIsUseModelAnim);
+    SETBIT(ACBS.value.templateFlags, fIsUseModelAnim, value);
     }
 
 bool NPC_Record::IsUseBaseData()
@@ -513,7 +513,7 @@ bool NPC_Record::IsUseBaseData()
 
 void NPC_Record::IsUseBaseData(bool value)
     {
-    ACBS.value.templateFlags = value ? (ACBS.value.templateFlags | fIsUseBaseData) : (ACBS.value.templateFlags & ~fIsUseBaseData);
+    SETBIT(ACBS.value.templateFlags, fIsUseBaseData, value);
     }
 
 bool NPC_Record::IsUseInventory()
@@ -523,7 +523,7 @@ bool NPC_Record::IsUseInventory()
 
 void NPC_Record::IsUseInventory(bool value)
     {
-    ACBS.value.templateFlags = value ? (ACBS.value.templateFlags | fIsUseInventory) : (ACBS.value.templateFlags & ~fIsUseInventory);
+    SETBIT(ACBS.value.templateFlags, fIsUseInventory, value);
     }
 
 bool NPC_Record::IsUseScript()
@@ -533,7 +533,7 @@ bool NPC_Record::IsUseScript()
 
 void NPC_Record::IsUseScript(bool value)
     {
-    ACBS.value.templateFlags = value ? (ACBS.value.templateFlags | fIsUseScript) : (ACBS.value.templateFlags & ~fIsUseScript);
+    SETBIT(ACBS.value.templateFlags, fIsUseScript, value);
     }
 
 bool NPC_Record::IsTemplateFlagMask(UINT16 Mask, bool Exact)

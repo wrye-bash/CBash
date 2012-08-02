@@ -83,7 +83,7 @@ bool ASTPRecord::IsRelated() const
 
 void ASTPRecord::IsRelated(bool value)
     {
-        DATA.value = value ? (DATA.value | fIsRelated) : (DATA.value & ~fIsRelated);
+        SETBIT(DATA.value, fIsRelated, value);
     }
 
 bool ASTPRecord::IsFlagMask(UINT32 Mask, bool Exact) const

@@ -221,7 +221,7 @@ bool NPC_Record::IsFemale()
 
 void NPC_Record::IsFemale(bool value)
     {
-    ACBS.value.flags = value ? (ACBS.value.flags | fIsFemale) : (ACBS.value.flags & ~fIsFemale);
+    SETBIT(ACBS.value.flags, fIsFemale, value);
     }
 
 bool NPC_Record::IsMale()
@@ -241,7 +241,7 @@ bool NPC_Record::IsEssential()
 
 void NPC_Record::IsEssential(bool value)
     {
-    ACBS.value.flags = value ? (ACBS.value.flags | fIsEssential) : (ACBS.value.flags & ~fIsEssential);
+    SETBIT(ACBS.value.flags, fIsEssential, value);
     }
 
 bool NPC_Record::IsRespawn()
@@ -251,7 +251,7 @@ bool NPC_Record::IsRespawn()
 
 void NPC_Record::IsRespawn(bool value)
     {
-    ACBS.value.flags = value ? (ACBS.value.flags | fIsRespawn) : (ACBS.value.flags & ~fIsRespawn);
+    SETBIT(ACBS.value.flags, fIsRespawn, value);
     }
 
 bool NPC_Record::IsAutoCalc()
@@ -261,7 +261,7 @@ bool NPC_Record::IsAutoCalc()
 
 void NPC_Record::IsAutoCalc(bool value)
     {
-    ACBS.value.flags = value ? (ACBS.value.flags | fIsAutoCalc) : (ACBS.value.flags & ~fIsAutoCalc);
+    SETBIT(ACBS.value.flags, fIsAutoCalc, value);
     }
 
 bool NPC_Record::IsPCLevelOffset()
@@ -271,7 +271,7 @@ bool NPC_Record::IsPCLevelOffset()
 
 void NPC_Record::IsPCLevelOffset(bool value)
     {
-    ACBS.value.flags = value ? (ACBS.value.flags | fIsPCLevelOffset) : (ACBS.value.flags & ~fIsPCLevelOffset);
+    SETBIT(ACBS.value.flags, fIsPCLevelOffset, value);
     }
 
 bool NPC_Record::IsNoLowLevel()
@@ -281,7 +281,7 @@ bool NPC_Record::IsNoLowLevel()
 
 void NPC_Record::IsNoLowLevel(bool value)
     {
-    ACBS.value.flags = value ? (ACBS.value.flags | fIsNoLowLevel) : (ACBS.value.flags & ~fIsNoLowLevel);
+    SETBIT(ACBS.value.flags, fIsNoLowLevel, value);
     }
 
 bool NPC_Record::IsLowLevel()
@@ -301,7 +301,7 @@ bool NPC_Record::IsNoRumors()
 
 void NPC_Record::IsNoRumors(bool value)
     {
-    ACBS.value.flags = value ? (ACBS.value.flags | fIsNoRumors) : (ACBS.value.flags & ~fIsNoRumors);
+    SETBIT(ACBS.value.flags, fIsNoRumors, value);
     }
 
 bool NPC_Record::IsRumors()
@@ -321,7 +321,7 @@ bool NPC_Record::IsSummonable()
 
 void NPC_Record::IsSummonable(bool value)
     {
-    ACBS.value.flags = value ? (ACBS.value.flags | fIsSummonable) : (ACBS.value.flags & ~fIsSummonable);
+    SETBIT(ACBS.value.flags, fIsSummonable, value);
     }
 
 bool NPC_Record::IsNoPersuasion()
@@ -331,7 +331,7 @@ bool NPC_Record::IsNoPersuasion()
 
 void NPC_Record::IsNoPersuasion(bool value)
     {
-    ACBS.value.flags = value ? (ACBS.value.flags | fIsNoPersuasion) : (ACBS.value.flags & ~fIsNoPersuasion);
+    SETBIT(ACBS.value.flags, fIsNoPersuasion, value);
     }
 
 bool NPC_Record::IsPersuasion()
@@ -351,7 +351,7 @@ bool NPC_Record::IsCanCorpseCheck()
 
 void NPC_Record::IsCanCorpseCheck(bool value)
     {
-    ACBS.value.flags = value ? (ACBS.value.flags | fIsCanCorpseCheck) : (ACBS.value.flags & ~fIsCanCorpseCheck);
+    SETBIT(ACBS.value.flags, fIsCanCorpseCheck, value);
     }
 
 bool NPC_Record::IsFlagMask(UINT32 Mask, bool Exact)
@@ -371,7 +371,7 @@ bool NPC_Record::IsServicesWeapons()
 
 void NPC_Record::IsServicesWeapons(bool value)
     {
-    AIDT.value.flags = value ? (AIDT.value.flags | fWeapons) : (AIDT.value.flags & ~fWeapons);
+    SETBIT(AIDT.value.flags, fWeapons, value);
     }
 
 bool NPC_Record::IsServicesArmor()
@@ -381,7 +381,7 @@ bool NPC_Record::IsServicesArmor()
 
 void NPC_Record::IsServicesArmor(bool value)
     {
-    AIDT.value.flags = value ? (AIDT.value.flags | fArmor) : (AIDT.value.flags & ~fArmor);
+    SETBIT(AIDT.value.flags, fArmor, value);
     }
 
 bool NPC_Record::IsServicesClothing()
@@ -391,7 +391,7 @@ bool NPC_Record::IsServicesClothing()
 
 void NPC_Record::IsServicesClothing(bool value)
     {
-    AIDT.value.flags = value ? (AIDT.value.flags | fClothing) : (AIDT.value.flags & ~fClothing);
+    SETBIT(AIDT.value.flags, fClothing, value);
     }
 
 bool NPC_Record::IsServicesBooks()
@@ -401,7 +401,7 @@ bool NPC_Record::IsServicesBooks()
 
 void NPC_Record::IsServicesBooks(bool value)
     {
-    AIDT.value.flags = value ? (AIDT.value.flags | fBooks) : (AIDT.value.flags & ~fBooks);
+    SETBIT(AIDT.value.flags, fBooks, value);
     }
 
 bool NPC_Record::IsServicesIngredients()
@@ -411,7 +411,7 @@ bool NPC_Record::IsServicesIngredients()
 
 void NPC_Record::IsServicesIngredients(bool value)
     {
-    AIDT.value.flags = value ? (AIDT.value.flags | fIngredients) : (AIDT.value.flags & ~fIngredients);
+    SETBIT(AIDT.value.flags, fIngredients, value);
     }
 
 bool NPC_Record::IsServicesLights()
@@ -421,7 +421,7 @@ bool NPC_Record::IsServicesLights()
 
 void NPC_Record::IsServicesLights(bool value)
     {
-    AIDT.value.flags = value ? (AIDT.value.flags | fLights) : (AIDT.value.flags & ~fLights);
+    SETBIT(AIDT.value.flags, fLights, value);
     }
 
 bool NPC_Record::IsServicesApparatus()
@@ -431,7 +431,7 @@ bool NPC_Record::IsServicesApparatus()
 
 void NPC_Record::IsServicesApparatus(bool value)
     {
-    AIDT.value.flags = value ? (AIDT.value.flags | fApparatus) : (AIDT.value.flags & ~fApparatus);
+    SETBIT(AIDT.value.flags, fApparatus, value);
     }
 
 bool NPC_Record::IsServicesMiscItems()
@@ -441,7 +441,7 @@ bool NPC_Record::IsServicesMiscItems()
 
 void NPC_Record::IsServicesMiscItems(bool value)
     {
-    AIDT.value.flags = value ? (AIDT.value.flags | fMiscItems) : (AIDT.value.flags & ~fMiscItems);
+    SETBIT(AIDT.value.flags, fMiscItems, value);
     }
 
 bool NPC_Record::IsServicesSpells()
@@ -451,7 +451,7 @@ bool NPC_Record::IsServicesSpells()
 
 void NPC_Record::IsServicesSpells(bool value)
     {
-    AIDT.value.flags = value ? (AIDT.value.flags | fSpells) : (AIDT.value.flags & ~fSpells);
+    SETBIT(AIDT.value.flags, fSpells, value);
     }
 
 bool NPC_Record::IsServicesMagicItems()
@@ -461,7 +461,7 @@ bool NPC_Record::IsServicesMagicItems()
 
 void NPC_Record::IsServicesMagicItems(bool value)
     {
-    AIDT.value.flags = value ? (AIDT.value.flags | fMagicItems) : (AIDT.value.flags & ~fMagicItems);
+    SETBIT(AIDT.value.flags, fMagicItems, value);
     }
 
 bool NPC_Record::IsServicesPotions()
@@ -471,7 +471,7 @@ bool NPC_Record::IsServicesPotions()
 
 void NPC_Record::IsServicesPotions(bool value)
     {
-    AIDT.value.flags = value ? (AIDT.value.flags | fPotions) : (AIDT.value.flags & ~fPotions);
+    SETBIT(AIDT.value.flags, fPotions, value);
     }
 
 bool NPC_Record::IsServicesTraining()
@@ -481,7 +481,7 @@ bool NPC_Record::IsServicesTraining()
 
 void NPC_Record::IsServicesTraining(bool value)
     {
-    AIDT.value.flags = value ? (AIDT.value.flags | fTraining) : (AIDT.value.flags & ~fTraining);
+    SETBIT(AIDT.value.flags, fTraining, value);
     }
 
 bool NPC_Record::IsServicesRecharge()
@@ -491,7 +491,7 @@ bool NPC_Record::IsServicesRecharge()
 
 void NPC_Record::IsServicesRecharge(bool value)
     {
-    AIDT.value.flags = value ? (AIDT.value.flags | fRecharge) : (AIDT.value.flags & ~fRecharge);
+    SETBIT(AIDT.value.flags, fRecharge, value);
     }
 
 bool NPC_Record::IsServicesRepair()
@@ -501,7 +501,7 @@ bool NPC_Record::IsServicesRepair()
 
 void NPC_Record::IsServicesRepair(bool value)
     {
-    AIDT.value.flags = value ? (AIDT.value.flags | fRepair) : (AIDT.value.flags & ~fRepair);
+    SETBIT(AIDT.value.flags, fRepair, value);
     }
 
 bool NPC_Record::IsServicesFlagMask(UINT32 Mask, bool Exact)

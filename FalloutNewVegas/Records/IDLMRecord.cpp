@@ -93,7 +93,7 @@ bool IDLMRecord::IsRunInSequence()
 
 void IDLMRecord::IsRunInSequence(bool value)
     {
-    IDLF.value = value ? (IDLF.value | fIsRunInSequence) : (IDLF.value & ~fIsRunInSequence);
+    SETBIT(IDLF.value, fIsRunInSequence, value);
     }
 
 bool IDLMRecord::IsDoOnce()
@@ -103,7 +103,7 @@ bool IDLMRecord::IsDoOnce()
 
 void IDLMRecord::IsDoOnce(bool value)
     {
-    IDLF.value = value ? (IDLF.value | fIsDoOnce) : (IDLF.value & ~fIsDoOnce);
+    SETBIT(IDLF.value, fIsDoOnce, value);
     }
 
 bool IDLMRecord::IsFlagMask(UINT8 Mask, bool Exact)

@@ -191,7 +191,7 @@ bool INFORecord::INFOResponse::IsUseEmotionAnim()
 
 void INFORecord::INFOResponse::IsUseEmotionAnim(bool value)
     {
-    TRDT.value.flags = value ? (TRDT.value.flags | fIsUseEmotionAnim) : (TRDT.value.flags & ~fIsUseEmotionAnim);
+    SETBIT(TRDT.value.flags, fIsUseEmotionAnim, value);
     }
 
 bool INFORecord::INFOResponse::IsFlagMask(UINT8 Mask, bool Exact)
@@ -338,7 +338,7 @@ bool INFORecord::IsGoodbye()
 
 void INFORecord::IsGoodbye(bool value)
     {
-    DATA.value.flags = value ? (DATA.value.flags | fIsGoodbye) : (DATA.value.flags & ~fIsGoodbye);
+    SETBIT(DATA.value.flags, fIsGoodbye, value);
     }
 
 bool INFORecord::IsRandom()
@@ -348,7 +348,7 @@ bool INFORecord::IsRandom()
 
 void INFORecord::IsRandom(bool value)
     {
-    DATA.value.flags = value ? (DATA.value.flags | fIsRandom) : (DATA.value.flags & ~fIsRandom);
+    SETBIT(DATA.value.flags, fIsRandom, value);
     }
 
 bool INFORecord::IsSayOnce()
@@ -358,7 +358,7 @@ bool INFORecord::IsSayOnce()
 
 void INFORecord::IsSayOnce(bool value)
     {
-    DATA.value.flags = value ? (DATA.value.flags | fIsSayOnce) : (DATA.value.flags & ~fIsSayOnce);
+    SETBIT(DATA.value.flags, fIsSayOnce, value);
     }
 
 bool INFORecord::IsRunImmediately()
@@ -368,7 +368,7 @@ bool INFORecord::IsRunImmediately()
 
 void INFORecord::IsRunImmediately(bool value)
     {
-    DATA.value.flags = value ? (DATA.value.flags | fIsRunImmediately) : (DATA.value.flags & ~fIsRunImmediately);
+    SETBIT(DATA.value.flags, fIsRunImmediately, value);
     }
 
 bool INFORecord::IsInfoRefusal()
@@ -378,7 +378,7 @@ bool INFORecord::IsInfoRefusal()
 
 void INFORecord::IsInfoRefusal(bool value)
     {
-    DATA.value.flags = value ? (DATA.value.flags | fIsInfoRefusal) : (DATA.value.flags & ~fIsInfoRefusal);
+    SETBIT(DATA.value.flags, fIsInfoRefusal, value);
     }
 
 bool INFORecord::IsRandomEnd()
@@ -388,7 +388,7 @@ bool INFORecord::IsRandomEnd()
 
 void INFORecord::IsRandomEnd(bool value)
     {
-    DATA.value.flags = value ? (DATA.value.flags | fIsRandomEnd) : (DATA.value.flags & ~fIsRandomEnd);
+    SETBIT(DATA.value.flags, fIsRandomEnd, value);
     }
 
 bool INFORecord::IsRunForRumors()
@@ -398,7 +398,7 @@ bool INFORecord::IsRunForRumors()
 
 void INFORecord::IsRunForRumors(bool value)
     {
-    DATA.value.flags = value ? (DATA.value.flags | fIsRunForRumors) : (DATA.value.flags & ~fIsRunForRumors);
+    SETBIT(DATA.value.flags, fIsRunForRumors, value);
     }
 
 bool INFORecord::IsSpeechChallenge()
@@ -408,7 +408,7 @@ bool INFORecord::IsSpeechChallenge()
 
 void INFORecord::IsSpeechChallenge(bool value)
     {
-    DATA.value.flags = value ? (DATA.value.flags | fIsSpeechChallenge) : (DATA.value.flags & ~fIsSpeechChallenge);
+    SETBIT(DATA.value.flags, fIsSpeechChallenge, value);
     }
 
 bool INFORecord::IsSayOnceADay()
@@ -418,7 +418,7 @@ bool INFORecord::IsSayOnceADay()
 
 void INFORecord::IsSayOnceADay(bool value)
     {
-    DATA.value.flags = value ? (DATA.value.flags | fIsSayOnceADay) : (DATA.value.flags & ~fIsSayOnceADay);
+    SETBIT(DATA.value.flags, fIsSayOnceADay, value);
     }
 
 bool INFORecord::IsAlwaysDarken()
@@ -428,7 +428,7 @@ bool INFORecord::IsAlwaysDarken()
 
 void INFORecord::IsAlwaysDarken(bool value)
     {
-    DATA.value.flags = value ? (DATA.value.flags | fIsAlwaysDarken) : (DATA.value.flags & ~fIsAlwaysDarken);
+    SETBIT(DATA.value.flags, fIsAlwaysDarken, value);
     }
 
 bool INFORecord::IsFlagMask(UINT16 Mask, bool Exact)
@@ -448,7 +448,7 @@ bool INFORecord::IsBeginScriptEnabled()
 
 void INFORecord::IsBeginScriptEnabled(bool value)
     {
-    BeginSCHR.value.flags = value ? (BeginSCHR.value.flags | fIsEnabled) : (BeginSCHR.value.flags & ~fIsEnabled);
+    SETBIT(BeginSCHR.value.flags, fIsEnabled, value);
     }
 
 bool INFORecord::IsBeginScriptFlagMask(UINT16 Mask, bool Exact)
@@ -468,7 +468,7 @@ bool INFORecord::IsEndScriptEnabled()
 
 void INFORecord::IsEndScriptEnabled(bool value)
     {
-    EndSCHR.value.flags = value ? (EndSCHR.value.flags | fIsEnabled) : (EndSCHR.value.flags & ~fIsEnabled);
+    SETBIT(EndSCHR.value.flags, fIsEnabled, value);
     }
 
 bool INFORecord::IsEndScriptFlagMask(UINT16 Mask, bool Exact)

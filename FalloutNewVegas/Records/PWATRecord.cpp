@@ -118,7 +118,7 @@ bool PWATRecord::IsReflects()
 
 void PWATRecord::IsReflects(bool value)
     {
-    DNAM.value.flags = value ? (DNAM.value.flags | fIsReflects) : (DNAM.value.flags & ~fIsReflects);
+    SETBIT(DNAM.value.flags, fIsReflects, value);
     }
 
 bool PWATRecord::IsReflectsActors()
@@ -128,7 +128,7 @@ bool PWATRecord::IsReflectsActors()
 
 void PWATRecord::IsReflectsActors(bool value)
     {
-    DNAM.value.flags = value ? (DNAM.value.flags | fIsReflectsActors) : (DNAM.value.flags & ~fIsReflectsActors);
+    SETBIT(DNAM.value.flags, fIsReflectsActors, value);
     }
 
 bool PWATRecord::IsReflectsLand()
@@ -138,7 +138,7 @@ bool PWATRecord::IsReflectsLand()
 
 void PWATRecord::IsReflectsLand(bool value)
     {
-    DNAM.value.flags = value ? (DNAM.value.flags | fIsReflectsLand) : (DNAM.value.flags & ~fIsReflectsLand);
+    SETBIT(DNAM.value.flags, fIsReflectsLand, value);
     }
 
 bool PWATRecord::IsReflectsLODLand()
@@ -148,7 +148,7 @@ bool PWATRecord::IsReflectsLODLand()
 
 void PWATRecord::IsReflectsLODLand(bool value)
     {
-    DNAM.value.flags = value ? (DNAM.value.flags | fIsReflectsLODLand) : (DNAM.value.flags & ~fIsReflectsLODLand);
+    SETBIT(DNAM.value.flags, fIsReflectsLODLand, value);
     }
 
 bool PWATRecord::IsReflectsLODBuildings()
@@ -158,7 +158,7 @@ bool PWATRecord::IsReflectsLODBuildings()
 
 void PWATRecord::IsReflectsLODBuildings(bool value)
     {
-    DNAM.value.flags = value ? (DNAM.value.flags | fIsReflectsLODBuildings) : (DNAM.value.flags & ~fIsReflectsLODBuildings);
+    SETBIT(DNAM.value.flags, fIsReflectsLODBuildings, value);
     }
 
 bool PWATRecord::IsReflectsTrees()
@@ -168,7 +168,7 @@ bool PWATRecord::IsReflectsTrees()
 
 void PWATRecord::IsReflectsTrees(bool value)
     {
-    DNAM.value.flags = value ? (DNAM.value.flags | fIsReflectsTrees) : (DNAM.value.flags & ~fIsReflectsTrees);
+    SETBIT(DNAM.value.flags, fIsReflectsTrees, value);
     }
 
 bool PWATRecord::IsReflectsSky()
@@ -178,7 +178,7 @@ bool PWATRecord::IsReflectsSky()
 
 void PWATRecord::IsReflectsSky(bool value)
     {
-    DNAM.value.flags = value ? (DNAM.value.flags | fIsReflectsSky) : (DNAM.value.flags & ~fIsReflectsSky);
+    SETBIT(DNAM.value.flags, fIsReflectsSky, value);
     }
 
 bool PWATRecord::IsReflectsDynamicObjects()
@@ -188,7 +188,7 @@ bool PWATRecord::IsReflectsDynamicObjects()
 
 void PWATRecord::IsReflectsDynamicObjects(bool value)
     {
-    DNAM.value.flags = value ? (DNAM.value.flags | fIsReflectsDynamicObjects) : (DNAM.value.flags & ~fIsReflectsDynamicObjects);
+    SETBIT(DNAM.value.flags, fIsReflectsDynamicObjects, value);
     }
 
 bool PWATRecord::IsReflectsDeadBodies()
@@ -198,7 +198,7 @@ bool PWATRecord::IsReflectsDeadBodies()
 
 void PWATRecord::IsReflectsDeadBodies(bool value)
     {
-    DNAM.value.flags = value ? (DNAM.value.flags | fIsReflectsDeadBodies) : (DNAM.value.flags & ~fIsReflectsDeadBodies);
+    SETBIT(DNAM.value.flags, fIsReflectsDeadBodies, value);
     }
 
 bool PWATRecord::IsRefracts()
@@ -208,7 +208,7 @@ bool PWATRecord::IsRefracts()
 
 void PWATRecord::IsRefracts(bool value)
     {
-    DNAM.value.flags = value ? (DNAM.value.flags | fIsRefracts) : (DNAM.value.flags & ~fIsRefracts);
+    SETBIT(DNAM.value.flags, fIsRefracts, value);
     }
 
 bool PWATRecord::IsRefractsActors()
@@ -218,7 +218,7 @@ bool PWATRecord::IsRefractsActors()
 
 void PWATRecord::IsRefractsActors(bool value)
     {
-    DNAM.value.flags = value ? (DNAM.value.flags | fIsRefractsActors) : (DNAM.value.flags & ~fIsRefractsActors);
+    SETBIT(DNAM.value.flags, fIsRefractsActors, value);
     }
 
 bool PWATRecord::IsRefractsLand()
@@ -228,7 +228,7 @@ bool PWATRecord::IsRefractsLand()
 
 void PWATRecord::IsRefractsLand(bool value)
     {
-    DNAM.value.flags = value ? (DNAM.value.flags | fIsRefractsLand) : (DNAM.value.flags & ~fIsRefractsLand);
+    SETBIT(DNAM.value.flags, fIsRefractsLand, value);
     }
 
 bool PWATRecord::IsRefractsDynamicObjects()
@@ -238,7 +238,7 @@ bool PWATRecord::IsRefractsDynamicObjects()
 
 void PWATRecord::IsRefractsDynamicObjects(bool value)
     {
-    DNAM.value.flags = value ? (DNAM.value.flags | fIsRefractsDynamicObjects) : (DNAM.value.flags & ~fIsRefractsDynamicObjects);
+    SETBIT(DNAM.value.flags, fIsRefractsDynamicObjects, value);
     }
 
 bool PWATRecord::IsRefractsDeadBodies()
@@ -248,7 +248,7 @@ bool PWATRecord::IsRefractsDeadBodies()
 
 void PWATRecord::IsRefractsDeadBodies(bool value)
     {
-    DNAM.value.flags = value ? (DNAM.value.flags | fIsRefractsDeadBodies) : (DNAM.value.flags & ~fIsRefractsDeadBodies);
+    SETBIT(DNAM.value.flags, fIsRefractsDeadBodies, value);
     }
 
 bool PWATRecord::IsSilhouetteReflections()
@@ -258,7 +258,7 @@ bool PWATRecord::IsSilhouetteReflections()
 
 void PWATRecord::IsSilhouetteReflections(bool value)
     {
-    DNAM.value.flags = value ? (DNAM.value.flags | fIsSilhouetteReflections) : (DNAM.value.flags & ~fIsSilhouetteReflections);
+    SETBIT(DNAM.value.flags, fIsSilhouetteReflections, value);
     }
 
 bool PWATRecord::IsDepth()
@@ -268,7 +268,7 @@ bool PWATRecord::IsDepth()
 
 void PWATRecord::IsDepth(bool value)
     {
-    DNAM.value.flags = value ? (DNAM.value.flags | fIsDepth) : (DNAM.value.flags & ~fIsDepth);
+    SETBIT(DNAM.value.flags, fIsDepth, value);
     }
 
 bool PWATRecord::IsObjectTextureCoordinates()
@@ -278,7 +278,7 @@ bool PWATRecord::IsObjectTextureCoordinates()
 
 void PWATRecord::IsObjectTextureCoordinates(bool value)
     {
-    DNAM.value.flags = value ? (DNAM.value.flags | fIsObjectTextureCoordinates) : (DNAM.value.flags & ~fIsObjectTextureCoordinates);
+    SETBIT(DNAM.value.flags, fIsObjectTextureCoordinates, value);
     }
 
 bool PWATRecord::IsNoUnderwaterFog()
@@ -288,7 +288,7 @@ bool PWATRecord::IsNoUnderwaterFog()
 
 void PWATRecord::IsNoUnderwaterFog(bool value)
     {
-    DNAM.value.flags = value ? (DNAM.value.flags | fIsNoUnderwaterFog) : (DNAM.value.flags & ~fIsNoUnderwaterFog);
+    SETBIT(DNAM.value.flags, fIsNoUnderwaterFog, value);
     }
 
 bool PWATRecord::IsFlagMask(UINT32 Mask, bool Exact)

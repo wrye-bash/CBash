@@ -155,7 +155,7 @@ bool MGEFRecord::IsHostile()
 
 void MGEFRecord::IsHostile(bool value)
     {
-    DATA.value.flags = value ? (DATA.value.flags | fIsHostile) : (DATA.value.flags & ~fIsHostile);
+    SETBIT(DATA.value.flags, fIsHostile, value);
     }
 
 bool MGEFRecord::IsRecover()
@@ -165,7 +165,7 @@ bool MGEFRecord::IsRecover()
 
 void MGEFRecord::IsRecover(bool value)
     {
-    DATA.value.flags = value ? (DATA.value.flags | fIsRecover) : (DATA.value.flags & ~fIsRecover);
+    SETBIT(DATA.value.flags, fIsRecover, value);
     }
 
 bool MGEFRecord::IsDetrimental()
@@ -175,7 +175,7 @@ bool MGEFRecord::IsDetrimental()
 
 void MGEFRecord::IsDetrimental(bool value)
     {
-    DATA.value.flags = value ? (DATA.value.flags | fIsDetrimental) : (DATA.value.flags & ~fIsDetrimental);
+    SETBIT(DATA.value.flags, fIsDetrimental, value);
     }
 
 bool MGEFRecord::IsSelf()
@@ -185,7 +185,7 @@ bool MGEFRecord::IsSelf()
 
 void MGEFRecord::IsSelf(bool value)
     {
-    DATA.value.flags = value ? (DATA.value.flags | fIsSelf) : (DATA.value.flags & ~fIsSelf);
+    SETBIT(DATA.value.flags, fIsSelf, value);
     }
 
 bool MGEFRecord::IsTouch()
@@ -195,7 +195,7 @@ bool MGEFRecord::IsTouch()
 
 void MGEFRecord::IsTouch(bool value)
     {
-    DATA.value.flags = value ? (DATA.value.flags | fIsTouch) : (DATA.value.flags & ~fIsTouch);
+    SETBIT(DATA.value.flags, fIsTouch, value);
     }
 
 bool MGEFRecord::IsTarget()
@@ -205,7 +205,7 @@ bool MGEFRecord::IsTarget()
 
 void MGEFRecord::IsTarget(bool value)
     {
-    DATA.value.flags = value ? (DATA.value.flags | fIsTarget) : (DATA.value.flags & ~fIsTarget);
+    SETBIT(DATA.value.flags, fIsTarget, value);
     }
 
 bool MGEFRecord::IsNoDuration()
@@ -215,7 +215,7 @@ bool MGEFRecord::IsNoDuration()
 
 void MGEFRecord::IsNoDuration(bool value)
     {
-    DATA.value.flags = value ? (DATA.value.flags | fIsNoDuration) : (DATA.value.flags & ~fIsNoDuration);
+    SETBIT(DATA.value.flags, fIsNoDuration, value);
     }
 
 bool MGEFRecord::IsNoMagnitude()
@@ -225,7 +225,7 @@ bool MGEFRecord::IsNoMagnitude()
 
 void MGEFRecord::IsNoMagnitude(bool value)
     {
-    DATA.value.flags = value ? (DATA.value.flags | fIsNoMagnitude) : (DATA.value.flags & ~fIsNoMagnitude);
+    SETBIT(DATA.value.flags, fIsNoMagnitude, value);
     }
 
 bool MGEFRecord::IsNoArea()
@@ -235,7 +235,7 @@ bool MGEFRecord::IsNoArea()
 
 void MGEFRecord::IsNoArea(bool value)
     {
-    DATA.value.flags = value ? (DATA.value.flags | fIsNoArea) : (DATA.value.flags & ~fIsNoArea);
+    SETBIT(DATA.value.flags, fIsNoArea, value);
     }
 
 bool MGEFRecord::IsFXPersist()
@@ -245,7 +245,7 @@ bool MGEFRecord::IsFXPersist()
 
 void MGEFRecord::IsFXPersist(bool value)
     {
-    DATA.value.flags = value ? (DATA.value.flags | fIsFXPersist) : (DATA.value.flags & ~fIsFXPersist);
+    SETBIT(DATA.value.flags, fIsFXPersist, value);
     }
 
 bool MGEFRecord::IsGoryVisuals()
@@ -255,7 +255,7 @@ bool MGEFRecord::IsGoryVisuals()
 
 void MGEFRecord::IsGoryVisuals(bool value)
     {
-    DATA.value.flags = value ? (DATA.value.flags | fIsGoryVisuals) : (DATA.value.flags & ~fIsGoryVisuals);
+    SETBIT(DATA.value.flags, fIsGoryVisuals, value);
     }
 
 bool MGEFRecord::IsDisplayNameOnly()
@@ -265,7 +265,7 @@ bool MGEFRecord::IsDisplayNameOnly()
 
 void MGEFRecord::IsDisplayNameOnly(bool value)
     {
-    DATA.value.flags = value ? (DATA.value.flags | fIsDisplayNameOnly) : (DATA.value.flags & ~fIsDisplayNameOnly);
+    SETBIT(DATA.value.flags, fIsDisplayNameOnly, value);
     }
 
 bool MGEFRecord::IsRadioBroadcast()
@@ -275,7 +275,7 @@ bool MGEFRecord::IsRadioBroadcast()
 
 void MGEFRecord::IsRadioBroadcast(bool value)
     {
-    DATA.value.flags = value ? (DATA.value.flags | fIsRadioBroadcast) : (DATA.value.flags & ~fIsRadioBroadcast);
+    SETBIT(DATA.value.flags, fIsRadioBroadcast, value);
     }
 
 bool MGEFRecord::IsUseSkill()
@@ -285,7 +285,7 @@ bool MGEFRecord::IsUseSkill()
 
 void MGEFRecord::IsUseSkill(bool value)
     {
-    DATA.value.flags = value ? (DATA.value.flags | fIsUseSkill) : (DATA.value.flags & ~fIsUseSkill);
+    SETBIT(DATA.value.flags, fIsUseSkill, value);
     }
 
 bool MGEFRecord::IsUseAttr()
@@ -295,7 +295,7 @@ bool MGEFRecord::IsUseAttr()
 
 void MGEFRecord::IsUseAttr(bool value)
     {
-    DATA.value.flags = value ? (DATA.value.flags | fIsUseAttr) : (DATA.value.flags & ~fIsUseAttr);
+    SETBIT(DATA.value.flags, fIsUseAttr, value);
     }
 
 bool MGEFRecord::IsPainless()
@@ -305,7 +305,7 @@ bool MGEFRecord::IsPainless()
 
 void MGEFRecord::IsPainless(bool value)
     {
-    DATA.value.flags = value ? (DATA.value.flags | fIsPainless) : (DATA.value.flags & ~fIsPainless);
+    SETBIT(DATA.value.flags, fIsPainless, value);
     }
 
 bool MGEFRecord::IsSprayType()
@@ -373,7 +373,7 @@ bool MGEFRecord::IsNoHitEffect()
 
 void MGEFRecord::IsNoHitEffect(bool value)
     {
-    DATA.value.flags = value ? (DATA.value.flags | fIsNoHitEffect) : (DATA.value.flags & ~fIsNoHitEffect);
+    SETBIT(DATA.value.flags, fIsNoHitEffect, value);
     }
 
 bool MGEFRecord::IsPersistOnDeath()
@@ -383,7 +383,7 @@ bool MGEFRecord::IsPersistOnDeath()
 
 void MGEFRecord::IsPersistOnDeath(bool value)
     {
-    DATA.value.flags = value ? (DATA.value.flags | fIsPersistOnDeath) : (DATA.value.flags & ~fIsPersistOnDeath);
+    SETBIT(DATA.value.flags, fIsPersistOnDeath, value);
     }
 
 bool MGEFRecord::IsUnknown1()
@@ -393,7 +393,7 @@ bool MGEFRecord::IsUnknown1()
 
 void MGEFRecord::IsUnknown1(bool value)
     {
-    DATA.value.flags = value ? (DATA.value.flags | fIsUnknown1) : (DATA.value.flags & ~fIsUnknown1);
+    SETBIT(DATA.value.flags, fIsUnknown1, value);
     }
 
 bool MGEFRecord::IsFlagMask(UINT32 Mask, bool Exact)

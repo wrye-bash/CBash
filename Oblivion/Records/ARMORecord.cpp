@@ -126,7 +126,7 @@ bool ARMORecord::IsHead()
 
 void ARMORecord::IsHead(bool value)
     {
-    BMDT.value = value ? (BMDT.value | fIsHead) : (BMDT.value & ~fIsHead);
+    SETBIT(BMDT.value, fIsHead, value);
     }
 
 bool ARMORecord::IsHair()
@@ -136,7 +136,7 @@ bool ARMORecord::IsHair()
 
 void ARMORecord::IsHair(bool value)
     {
-    BMDT.value = value ? (BMDT.value | fIsHair) : (BMDT.value & ~fIsHair);
+    SETBIT(BMDT.value, fIsHair, value);
     }
 
 bool ARMORecord::IsUpperBody()
@@ -146,7 +146,7 @@ bool ARMORecord::IsUpperBody()
 
 void ARMORecord::IsUpperBody(bool value)
     {
-    BMDT.value = value ? (BMDT.value | fIsUpperBody) : (BMDT.value & ~fIsUpperBody);
+    SETBIT(BMDT.value, fIsUpperBody, value);
     }
 
 bool ARMORecord::IsLowerBody()
@@ -156,7 +156,7 @@ bool ARMORecord::IsLowerBody()
 
 void ARMORecord::IsLowerBody(bool value)
     {
-    BMDT.value = value ? (BMDT.value | fIsLowerBody) : (BMDT.value & ~fIsLowerBody);
+    SETBIT(BMDT.value, fIsLowerBody, value);
     }
 
 bool ARMORecord::IsHand()
@@ -166,7 +166,7 @@ bool ARMORecord::IsHand()
 
 void ARMORecord::IsHand(bool value)
     {
-    BMDT.value = value ? (BMDT.value | fIsHand) : (BMDT.value & ~fIsHand);
+    SETBIT(BMDT.value, fIsHand, value);
     }
 
 bool ARMORecord::IsFoot()
@@ -176,7 +176,7 @@ bool ARMORecord::IsFoot()
 
 void ARMORecord::IsFoot(bool value)
     {
-    BMDT.value = value ? (BMDT.value | fIsFoot) : (BMDT.value & ~fIsFoot);
+    SETBIT(BMDT.value, fIsFoot, value);
     }
 
 bool ARMORecord::IsRightRing()
@@ -186,7 +186,7 @@ bool ARMORecord::IsRightRing()
 
 void ARMORecord::IsRightRing(bool value)
     {
-    BMDT.value = value ? (BMDT.value | fIsRightRing) : (BMDT.value & ~fIsRightRing);
+    SETBIT(BMDT.value, fIsRightRing, value);
     }
 
 bool ARMORecord::IsLeftRing()
@@ -196,7 +196,7 @@ bool ARMORecord::IsLeftRing()
 
 void ARMORecord::IsLeftRing(bool value)
     {
-    BMDT.value = value ? (BMDT.value | fIsLeftRing) : (BMDT.value & ~fIsLeftRing);
+    SETBIT(BMDT.value, fIsLeftRing, value);
     }
 
 bool ARMORecord::IsAmulet()
@@ -206,7 +206,7 @@ bool ARMORecord::IsAmulet()
 
 void ARMORecord::IsAmulet(bool value)
     {
-    BMDT.value = value ? (BMDT.value | fIsAmulet) : (BMDT.value & ~fIsAmulet);
+    SETBIT(BMDT.value, fIsAmulet, value);
     }
 
 bool ARMORecord::IsWeapon()
@@ -216,7 +216,7 @@ bool ARMORecord::IsWeapon()
 
 void ARMORecord::IsWeapon(bool value)
     {
-    BMDT.value = value ? (BMDT.value | fIsWeapon) : (BMDT.value & ~fIsWeapon);
+    SETBIT(BMDT.value, fIsWeapon, value);
     }
 
 bool ARMORecord::IsBackWeapon()
@@ -226,7 +226,7 @@ bool ARMORecord::IsBackWeapon()
 
 void ARMORecord::IsBackWeapon(bool value)
     {
-    BMDT.value = value ? (BMDT.value | fIsBackWeapon) : (BMDT.value & ~fIsBackWeapon);
+    SETBIT(BMDT.value, fIsBackWeapon, value);
     }
 
 bool ARMORecord::IsSideWeapon()
@@ -236,7 +236,7 @@ bool ARMORecord::IsSideWeapon()
 
 void ARMORecord::IsSideWeapon(bool value)
     {
-    BMDT.value = value ? (BMDT.value | fIsSideWeapon) : (BMDT.value & ~fIsSideWeapon);
+    SETBIT(BMDT.value, fIsSideWeapon, value);
     }
 
 bool ARMORecord::IsQuiver()
@@ -246,7 +246,7 @@ bool ARMORecord::IsQuiver()
 
 void ARMORecord::IsQuiver(bool value)
     {
-    BMDT.value = value ? (BMDT.value | fIsQuiver) : (BMDT.value & ~fIsQuiver);
+    SETBIT(BMDT.value, fIsQuiver, value);
     }
 
 bool ARMORecord::IsShield()
@@ -256,7 +256,7 @@ bool ARMORecord::IsShield()
 
 void ARMORecord::IsShield(bool value)
     {
-    BMDT.value = value ? (BMDT.value | fIsShield) : (BMDT.value & ~fIsShield);
+    SETBIT(BMDT.value, fIsShield, value);
     }
 
 bool ARMORecord::IsTorch()
@@ -266,7 +266,7 @@ bool ARMORecord::IsTorch()
 
 void ARMORecord::IsTorch(bool value)
     {
-    BMDT.value = value ? (BMDT.value | fIsTorch) : (BMDT.value & ~fIsTorch);
+    SETBIT(BMDT.value, fIsTorch, value);
     }
 
 bool ARMORecord::IsTail()
@@ -276,7 +276,7 @@ bool ARMORecord::IsTail()
 
 void ARMORecord::IsTail(bool value)
     {
-    BMDT.value = value ? (BMDT.value | fIsTail) : (BMDT.value & ~fIsTail);
+    SETBIT(BMDT.value, fIsTail, value);
     }
 
 bool ARMORecord::IsHideRings()
@@ -286,7 +286,7 @@ bool ARMORecord::IsHideRings()
 
 void ARMORecord::IsHideRings(bool value)
     {
-    BMDT.value = value ? (BMDT.value | fIsHideRings) : (BMDT.value & ~fIsHideRings);
+    SETBIT(BMDT.value, fIsHideRings, value);
     }
 
 bool ARMORecord::IsHideAmulets()
@@ -296,7 +296,7 @@ bool ARMORecord::IsHideAmulets()
 
 void ARMORecord::IsHideAmulets(bool value)
     {
-    BMDT.value = value ? (BMDT.value | fIsHideAmulets) : (BMDT.value & ~fIsHideAmulets);
+    SETBIT(BMDT.value, fIsHideAmulets, value);
     }
 
 bool ARMORecord::IsNonPlayable()
@@ -306,7 +306,7 @@ bool ARMORecord::IsNonPlayable()
 
 void ARMORecord::IsNonPlayable(bool value)
     {
-    BMDT.value = value ? (BMDT.value | fIsNonPlayable) : (BMDT.value & ~fIsNonPlayable);
+    SETBIT(BMDT.value, fIsNonPlayable, value);
     }
 
 bool ARMORecord::IsHeavyArmor()
@@ -316,7 +316,7 @@ bool ARMORecord::IsHeavyArmor()
 
 void ARMORecord::IsHeavyArmor(bool value)
     {
-    BMDT.value = value ? (BMDT.value | fIsHeavyArmor) : (BMDT.value & ~fIsHeavyArmor);
+    SETBIT(BMDT.value, fIsHeavyArmor, value);
     }
 
 bool ARMORecord::IsFlagMask(UINT32 Mask, bool Exact)

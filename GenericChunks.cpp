@@ -209,7 +209,7 @@ bool GENVARS::IsLongOrShort()
 
 void GENVARS::IsLongOrShort(bool value)
     {
-    SLSD.value.flags = value ? (SLSD.value.flags | fIsLongOrShort) : (SLSD.value.flags & ~fIsLongOrShort);
+    SETBIT(SLSD.value.flags, fIsLongOrShort, value);
     }
 
 bool GENVARS::IsFlagMask(UINT8 Mask, bool Exact)
@@ -1554,7 +1554,7 @@ bool GENCTDA::IsOr()
 
 void GENCTDA::IsOr(bool value)
     {
-    operType = value ? (operType | fIsOr) : (operType & ~fIsOr);
+    SETBIT(operType, fIsOr, value);
     }
 
 bool GENCTDA::IsRunOnTarget()
@@ -1564,7 +1564,7 @@ bool GENCTDA::IsRunOnTarget()
 
 void GENCTDA::IsRunOnTarget(bool value)
     {
-    operType = value ? (operType | fIsRunOnTarget) : (operType & ~fIsRunOnTarget);
+    SETBIT(operType, fIsRunOnTarget, value);
     }
 
 bool GENCTDA::IsUseGlobal() const
@@ -1574,7 +1574,7 @@ bool GENCTDA::IsUseGlobal() const
 
 void GENCTDA::IsUseGlobal(bool value)
     {
-    operType = value ? (operType | fIsUseGlobal) : (operType & ~fIsUseGlobal);
+    SETBIT(operType, fIsUseGlobal, value);
     }
 
 bool GENCTDA::IsFlagMask(UINT8 Mask, bool Exact)
@@ -2264,7 +2264,7 @@ bool GENPATROL::IsScriptEnabled()
 
 void GENPATROL::IsScriptEnabled(bool value)
     {
-    SCHR.value.flags = value ? (SCHR.value.flags | fIsEnabled) : (SCHR.value.flags & ~fIsEnabled);
+    SETBIT(SCHR.value.flags, fIsEnabled, value);
     }
 
 bool GENPATROL::IsScriptFlagMask(UINT16 Mask, bool Exact)
@@ -2642,7 +2642,7 @@ bool FNVMODEL::IsHead()
 
 void FNVMODEL::IsHead(bool value)
     {
-    MODD.value = value ? (MODD.value | fIsHead) : (MODD.value & ~fIsHead);
+    SETBIT(MODD.value, fIsHead, value);
     }
 
 bool FNVMODEL::IsTorso()
@@ -2652,7 +2652,7 @@ bool FNVMODEL::IsTorso()
 
 void FNVMODEL::IsTorso(bool value)
     {
-    MODD.value = value ? (MODD.value | fIsTorso) : (MODD.value & ~fIsTorso);
+    SETBIT(MODD.value, fIsTorso, value);
     }
 
 bool FNVMODEL::IsRightHand()
@@ -2662,7 +2662,7 @@ bool FNVMODEL::IsRightHand()
 
 void FNVMODEL::IsRightHand(bool value)
     {
-    MODD.value = value ? (MODD.value | fIsRightHand) : (MODD.value & ~fIsRightHand);
+    SETBIT(MODD.value, fIsRightHand, value);
     }
 
 bool FNVMODEL::IsLeftHand()
@@ -2672,7 +2672,7 @@ bool FNVMODEL::IsLeftHand()
 
 void FNVMODEL::IsLeftHand(bool value)
     {
-    MODD.value = value ? (MODD.value | fIsLeftHand) : (MODD.value & ~fIsLeftHand);
+    SETBIT(MODD.value, fIsLeftHand, value);
     }
 
 bool FNVMODEL::IsFlagMask(UINT8 Mask, bool Exact)
@@ -2715,7 +2715,7 @@ bool FNVBIPEDMODEL::IsHead()
 
 void FNVBIPEDMODEL::IsHead(bool value)
     {
-    MODD.value = value ? (MODD.value | fIsHead) : (MODD.value & ~fIsHead);
+    SETBIT(MODD.value, fIsHead, value);
     }
 
 bool FNVBIPEDMODEL::IsTorso()
@@ -2725,7 +2725,7 @@ bool FNVBIPEDMODEL::IsTorso()
 
 void FNVBIPEDMODEL::IsTorso(bool value)
     {
-    MODD.value = value ? (MODD.value | fIsTorso) : (MODD.value & ~fIsTorso);
+    SETBIT(MODD.value, fIsTorso, value);
     }
 
 bool FNVBIPEDMODEL::IsRightHand()
@@ -2735,7 +2735,7 @@ bool FNVBIPEDMODEL::IsRightHand()
 
 void FNVBIPEDMODEL::IsRightHand(bool value)
     {
-    MODD.value = value ? (MODD.value | fIsRightHand) : (MODD.value & ~fIsRightHand);
+    SETBIT(MODD.value, fIsRightHand, value);
     }
 
 bool FNVBIPEDMODEL::IsLeftHand()
@@ -2745,7 +2745,7 @@ bool FNVBIPEDMODEL::IsLeftHand()
 
 void FNVBIPEDMODEL::IsLeftHand(bool value)
     {
-    MODD.value = value ? (MODD.value | fIsLeftHand) : (MODD.value & ~fIsLeftHand);
+    SETBIT(MODD.value, fIsLeftHand, value);
     }
 
 bool FNVBIPEDMODEL::IsFlagMask(UINT8 Mask, bool Exact)
@@ -3026,7 +3026,7 @@ bool FNVCTDA::IsOr()
 
 void FNVCTDA::IsOr(bool value)
     {
-    operType = value ? (operType | fIsOr) : (operType & ~fIsOr);
+    SETBIT(operType, fIsOr, value);
     }
 
 bool FNVCTDA::IsRunOnTarget()
@@ -3036,7 +3036,7 @@ bool FNVCTDA::IsRunOnTarget()
 
 void FNVCTDA::IsRunOnTarget(bool value)
     {
-    operType = value ? (operType | fIsRunOnTarget) : (operType & ~fIsRunOnTarget);
+    SETBIT(operType, fIsRunOnTarget, value);
     }
 
 bool FNVCTDA::IsUseGlobal() const
@@ -3046,7 +3046,7 @@ bool FNVCTDA::IsUseGlobal() const
 
 void FNVCTDA::IsUseGlobal(bool value)
     {
-    operType = value ? (operType | fIsUseGlobal) : (operType & ~fIsUseGlobal);
+    SETBIT(operType, fIsUseGlobal, value);
     }
 
 bool FNVCTDA::IsFlagMask(UINT8 Mask, bool Exact)
@@ -3270,7 +3270,7 @@ bool DESTSTAGE::IsCapDamage()
 
 void DESTSTAGE::IsCapDamage(bool value)
     {
-    DSTD.value.flags = value ? (DSTD.value.flags | fIsCapDamage) : (DSTD.value.flags & ~fIsCapDamage);
+    SETBIT(DSTD.value.flags, fIsCapDamage, value);
     }
 
 bool DESTSTAGE::IsDisable()
@@ -3280,7 +3280,7 @@ bool DESTSTAGE::IsDisable()
 
 void DESTSTAGE::IsDisable(bool value)
     {
-    DSTD.value.flags = value ? (DSTD.value.flags | fIsDisable) : (DSTD.value.flags & ~fIsDisable);
+    SETBIT(DSTD.value.flags, fIsDisable, value);
     }
 
 bool DESTSTAGE::IsDestroy()
@@ -3290,7 +3290,7 @@ bool DESTSTAGE::IsDestroy()
 
 void DESTSTAGE::IsDestroy(bool value)
     {
-    DSTD.value.flags = value ? (DSTD.value.flags | fIsDestroy) : (DSTD.value.flags & ~fIsDestroy);
+    SETBIT(DSTD.value.flags, fIsDestroy, value);
     }
 
 bool DESTSTAGE::IsFlagMask(UINT8 Mask, bool Exact)
@@ -3358,7 +3358,7 @@ bool GENDESTRUCT::IsVATSTargetable()
 
 void GENDESTRUCT::IsVATSTargetable(bool value)
     {
-    DEST.value.flags = value ? (DEST.value.flags | fIsVATSTargetable) : (DEST.value.flags & ~fIsVATSTargetable);
+    SETBIT(DEST.value.flags, fIsVATSTargetable, value);
     }
 
 bool GENDESTRUCT::IsFlagMask(UINT8 Mask, bool Exact)
@@ -3904,7 +3904,7 @@ bool GENACTPARENT::IsParentActivateOnly()
 
 void GENACTPARENT::IsParentActivateOnly(bool value)
     {
-    XAPD.value = value ? (XAPD.value | fIsParentActivateOnly) : (XAPD.value & ~fIsParentActivateOnly);
+    SETBIT(XAPD.value, fIsParentActivateOnly, value);
     }
 
 bool GENACTPARENT::IsFlagMask(UINT8 Mask, bool Exact)

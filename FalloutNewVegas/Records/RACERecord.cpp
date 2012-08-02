@@ -332,7 +332,7 @@ bool RACERecord::IsPlayable()
 
 void RACERecord::IsPlayable(bool value)
     {
-    DATA.value.flags = value ? (DATA.value.flags | fIsPlayable) : (DATA.value.flags & ~fIsPlayable);
+    SETBIT(DATA.value.flags, fIsPlayable, value);
     }
 
 bool RACERecord::IsChild()
@@ -342,7 +342,7 @@ bool RACERecord::IsChild()
 
 void RACERecord::IsChild(bool value)
     {
-    DATA.value.flags = value ? (DATA.value.flags | fIsChild) : (DATA.value.flags & ~fIsChild);
+    SETBIT(DATA.value.flags, fIsChild, value);
     }
 
 bool RACERecord::IsFlagMask(UINT32 Mask, bool Exact)

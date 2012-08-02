@@ -118,7 +118,7 @@ bool BPTDRecord::BPTDPart::IsSeverable()
 
 void BPTDRecord::BPTDPart::IsSeverable(bool value)
     {
-    BPND.value.flags = value ? (BPND.value.flags | fIsSeverable) : (BPND.value.flags & ~fIsSeverable);
+    SETBIT(BPND.value.flags, fIsSeverable, value);
     }
 
 bool BPTDRecord::BPTDPart::IsIKData()
@@ -128,7 +128,7 @@ bool BPTDRecord::BPTDPart::IsIKData()
 
 void BPTDRecord::BPTDPart::IsIKData(bool value)
     {
-    BPND.value.flags = value ? (BPND.value.flags | fIsIKData) : (BPND.value.flags & ~fIsIKData);
+    SETBIT(BPND.value.flags, fIsIKData, value);
     }
 
 bool BPTDRecord::BPTDPart::IsIKDataBipedData()
@@ -138,7 +138,7 @@ bool BPTDRecord::BPTDPart::IsIKDataBipedData()
 
 void BPTDRecord::BPTDPart::IsIKDataBipedData(bool value)
     {
-    BPND.value.flags = value ? (BPND.value.flags | fIsIKDataBipedData) : (BPND.value.flags & ~fIsIKDataBipedData);
+    SETBIT(BPND.value.flags, fIsIKDataBipedData, value);
     }
 
 bool BPTDRecord::BPTDPart::IsExplodable()
@@ -148,7 +148,7 @@ bool BPTDRecord::BPTDPart::IsExplodable()
 
 void BPTDRecord::BPTDPart::IsExplodable(bool value)
     {
-    BPND.value.flags = value ? (BPND.value.flags | fIsExplodable) : (BPND.value.flags & ~fIsExplodable);
+    SETBIT(BPND.value.flags, fIsExplodable, value);
     }
 
 bool BPTDRecord::BPTDPart::IsIKDataIsHead()
@@ -158,7 +158,7 @@ bool BPTDRecord::BPTDPart::IsIKDataIsHead()
 
 void BPTDRecord::BPTDPart::IsIKDataIsHead(bool value)
     {
-    BPND.value.flags = value ? (BPND.value.flags | fIsIKDataIsHead) : (BPND.value.flags & ~fIsIKDataIsHead);
+    SETBIT(BPND.value.flags, fIsIKDataIsHead, value);
     }
 
 bool BPTDRecord::BPTDPart::IsIKDataHeadTracking()
@@ -168,7 +168,7 @@ bool BPTDRecord::BPTDPart::IsIKDataHeadTracking()
 
 void BPTDRecord::BPTDPart::IsIKDataHeadTracking(bool value)
     {
-    BPND.value.flags = value ? (BPND.value.flags | fIsIKDataHeadTracking) : (BPND.value.flags & ~fIsIKDataHeadTracking);
+    SETBIT(BPND.value.flags, fIsIKDataHeadTracking, value);
     }
 
 bool BPTDRecord::BPTDPart::IsAbsoluteHitChance()
@@ -178,7 +178,7 @@ bool BPTDRecord::BPTDPart::IsAbsoluteHitChance()
 
 void BPTDRecord::BPTDPart::IsAbsoluteHitChance(bool value)
     {
-    BPND.value.flags = value ? (BPND.value.flags | fIsAbsoluteHitChance) : (BPND.value.flags & ~fIsAbsoluteHitChance);
+    SETBIT(BPND.value.flags, fIsAbsoluteHitChance, value);
     }
 
 bool BPTDRecord::BPTDPart::IsFlagMask(UINT8 Mask, bool Exact)

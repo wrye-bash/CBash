@@ -193,7 +193,7 @@ bool WATRRecord::IsCausesDmg()
 
 void WATRRecord::IsCausesDmg(bool value)
     {
-    FNAM.value = value ? (FNAM.value | fIsCausesDamage) : (FNAM.value & ~fIsCausesDamage);
+    SETBIT(FNAM.value, fIsCausesDamage, value);
     }
 
 bool WATRRecord::IsCausesDamage()
@@ -203,7 +203,7 @@ bool WATRRecord::IsCausesDamage()
 
 void WATRRecord::IsCausesDamage(bool value)
     {
-    FNAM.value = value ? (FNAM.value | fIsCausesDamage) : (FNAM.value & ~fIsCausesDamage);
+    SETBIT(FNAM.value, fIsCausesDamage, value);
     }
 
 bool WATRRecord::IsReflective()
@@ -213,7 +213,7 @@ bool WATRRecord::IsReflective()
 
 void WATRRecord::IsReflective(bool value)
     {
-    FNAM.value = value ? (FNAM.value | fIsReflective) : (FNAM.value & ~fIsReflective);
+    SETBIT(FNAM.value, fIsReflective, value);
     }
 
 bool WATRRecord::IsFlagMask(UINT8 Mask, bool Exact)

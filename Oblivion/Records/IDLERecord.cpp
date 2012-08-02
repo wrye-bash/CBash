@@ -215,7 +215,7 @@ bool IDLERecord::IsNotReturnFile()
 
 void IDLERecord::IsNotReturnFile(bool value)
     {
-    ANAM.value = value ? (ANAM.value | fIsNotReturnFile) : (ANAM.value & ~fIsNotReturnFile);
+    SETBIT(ANAM.value, fIsNotReturnFile, value);
     }
 
 bool IDLERecord::IsReturnFile()

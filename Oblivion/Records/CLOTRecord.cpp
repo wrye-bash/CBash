@@ -99,7 +99,7 @@ bool CLOTRecord::IsHead()
 
 void CLOTRecord::IsHead(bool value)
     {
-    BMDT.value = value ? (BMDT.value | fIsHead) : (BMDT.value & ~fIsHead);
+    SETBIT(BMDT.value, fIsHead, value);
     }
 
 bool CLOTRecord::IsHair()
@@ -109,7 +109,7 @@ bool CLOTRecord::IsHair()
 
 void CLOTRecord::IsHair(bool value)
     {
-    BMDT.value = value ? (BMDT.value | fIsHair) : (BMDT.value & ~fIsHair);
+    SETBIT(BMDT.value, fIsHair, value);
     }
 
 bool CLOTRecord::IsUpperBody()
@@ -119,7 +119,7 @@ bool CLOTRecord::IsUpperBody()
 
 void CLOTRecord::IsUpperBody(bool value)
     {
-    BMDT.value = value ? (BMDT.value | fIsUpperBody) : (BMDT.value & ~fIsUpperBody);
+    SETBIT(BMDT.value, fIsUpperBody, value);
     }
 
 bool CLOTRecord::IsLowerBody()
@@ -129,7 +129,7 @@ bool CLOTRecord::IsLowerBody()
 
 void CLOTRecord::IsLowerBody(bool value)
     {
-    BMDT.value = value ? (BMDT.value | fIsLowerBody) : (BMDT.value & ~fIsLowerBody);
+    SETBIT(BMDT.value, fIsLowerBody, value);
     }
 
 bool CLOTRecord::IsHand()
@@ -139,7 +139,7 @@ bool CLOTRecord::IsHand()
 
 void CLOTRecord::IsHand(bool value)
     {
-    BMDT.value = value ? (BMDT.value | fIsHand) : (BMDT.value & ~fIsHand);
+    SETBIT(BMDT.value, fIsHand, value);
     }
 
 bool CLOTRecord::IsFoot()
@@ -149,7 +149,7 @@ bool CLOTRecord::IsFoot()
 
 void CLOTRecord::IsFoot(bool value)
     {
-    BMDT.value = value ? (BMDT.value | fIsFoot) : (BMDT.value & ~fIsFoot);
+    SETBIT(BMDT.value, fIsFoot, value);
     }
 
 bool CLOTRecord::IsRightRing()
@@ -159,7 +159,7 @@ bool CLOTRecord::IsRightRing()
 
 void CLOTRecord::IsRightRing(bool value)
     {
-    BMDT.value = value ? (BMDT.value | fIsRightRing) : (BMDT.value & ~fIsRightRing);
+    SETBIT(BMDT.value, fIsRightRing, value);
     }
 
 bool CLOTRecord::IsLeftRing()
@@ -169,7 +169,7 @@ bool CLOTRecord::IsLeftRing()
 
 void CLOTRecord::IsLeftRing(bool value)
     {
-    BMDT.value = value ? (BMDT.value | fIsLeftRing) : (BMDT.value & ~fIsLeftRing);
+    SETBIT(BMDT.value, fIsLeftRing, value);
     }
 
 bool CLOTRecord::IsAmulet()
@@ -179,7 +179,7 @@ bool CLOTRecord::IsAmulet()
 
 void CLOTRecord::IsAmulet(bool value)
     {
-    BMDT.value = value ? (BMDT.value | fIsAmulet) : (BMDT.value & ~fIsAmulet);
+    SETBIT(BMDT.value, fIsAmulet, value);
     }
 
 bool CLOTRecord::IsWeapon()
@@ -189,7 +189,7 @@ bool CLOTRecord::IsWeapon()
 
 void CLOTRecord::IsWeapon(bool value)
     {
-    BMDT.value = value ? (BMDT.value | fIsWeapon) : (BMDT.value & ~fIsWeapon);
+    SETBIT(BMDT.value, fIsWeapon, value);
     }
 
 bool CLOTRecord::IsBackWeapon()
@@ -199,7 +199,7 @@ bool CLOTRecord::IsBackWeapon()
 
 void CLOTRecord::IsBackWeapon(bool value)
     {
-    BMDT.value = value ? (BMDT.value | fIsBackWeapon) : (BMDT.value & ~fIsBackWeapon);
+    SETBIT(BMDT.value, fIsBackWeapon, value);
     }
 
 bool CLOTRecord::IsSideWeapon()
@@ -209,7 +209,7 @@ bool CLOTRecord::IsSideWeapon()
 
 void CLOTRecord::IsSideWeapon(bool value)
     {
-    BMDT.value = value ? (BMDT.value | fIsSideWeapon) : (BMDT.value & ~fIsSideWeapon);
+    SETBIT(BMDT.value, fIsSideWeapon, value);
     }
 
 bool CLOTRecord::IsQuiver()
@@ -219,7 +219,7 @@ bool CLOTRecord::IsQuiver()
 
 void CLOTRecord::IsQuiver(bool value)
     {
-    BMDT.value = value ? (BMDT.value | fIsQuiver) : (BMDT.value & ~fIsQuiver);
+    SETBIT(BMDT.value, fIsQuiver, value);
     }
 
 bool CLOTRecord::IsShield()
@@ -229,7 +229,7 @@ bool CLOTRecord::IsShield()
 
 void CLOTRecord::IsShield(bool value)
     {
-    BMDT.value = value ? (BMDT.value | fIsShield) : (BMDT.value & ~fIsShield);
+    SETBIT(BMDT.value, fIsShield, value);
     }
 
 bool CLOTRecord::IsTorch()
@@ -239,7 +239,7 @@ bool CLOTRecord::IsTorch()
 
 void CLOTRecord::IsTorch(bool value)
     {
-    BMDT.value = value ? (BMDT.value | fIsTorch) : (BMDT.value & ~fIsTorch);
+    SETBIT(BMDT.value, fIsTorch, value);
     }
 
 bool CLOTRecord::IsTail()
@@ -249,7 +249,7 @@ bool CLOTRecord::IsTail()
 
 void CLOTRecord::IsTail(bool value)
     {
-    BMDT.value = value ? (BMDT.value | fIsTail) : (BMDT.value & ~fIsTail);
+    SETBIT(BMDT.value, fIsTail, value);
     }
 
 bool CLOTRecord::IsHideRings()
@@ -259,7 +259,7 @@ bool CLOTRecord::IsHideRings()
 
 void CLOTRecord::IsHideRings(bool value)
     {
-    BMDT.value = value ? (BMDT.value | fIsHideRings) : (BMDT.value & ~fIsHideRings);
+    SETBIT(BMDT.value, fIsHideRings, value);
     }
 
 bool CLOTRecord::IsHideAmulets()
@@ -269,7 +269,7 @@ bool CLOTRecord::IsHideAmulets()
 
 void CLOTRecord::IsHideAmulets(bool value)
     {
-    BMDT.value = value ? (BMDT.value | fIsHideAmulets) : (BMDT.value & ~fIsHideAmulets);
+    SETBIT(BMDT.value, fIsHideAmulets, value);
     }
 
 bool CLOTRecord::IsNonPlayable()
@@ -279,7 +279,7 @@ bool CLOTRecord::IsNonPlayable()
 
 void CLOTRecord::IsNonPlayable(bool value)
     {
-    BMDT.value = value ? (BMDT.value | fIsNonPlayable) : (BMDT.value & ~fIsNonPlayable);
+    SETBIT(BMDT.value, fIsNonPlayable, value);
     }
 
 bool CLOTRecord::IsFlagMask(UINT32 Mask, bool Exact)

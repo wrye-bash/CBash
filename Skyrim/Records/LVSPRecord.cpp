@@ -96,7 +96,7 @@ bool LVSPRecord::IsCalcFromAllLevels()
 
 void LVSPRecord::IsCalcFromAllLevels(bool value)
     {
-        LVLF.value = value ? (LVLF.value | fCalcFromAllLevels) : (LVLF.value & ~fCalcFromAllLevels);
+        SETBIT(LVLF.value, fCalcFromAllLevels, value);
     }
 
 bool LVSPRecord::IsCalcForEachItem()
@@ -106,7 +106,7 @@ bool LVSPRecord::IsCalcForEachItem()
 
 void LVSPRecord::IsCalcForEachItem(bool value)
     {
-        LVLF.value = value ? (LVLF.value | fCalcForEachItem) : (LVLF.value & ~fCalcForEachItem);
+        SETBIT(LVLF.value, fCalcForEachItem, value);
     }
 
 bool LVSPRecord::IsUseAllSpells()
@@ -116,7 +116,7 @@ bool LVSPRecord::IsUseAllSpells()
 
 void LVSPRecord::IsUseAllSpells(bool value)
     {
-        LVLF.value = value ? (LVLF.value | fUseAllSpells) : (LVLF.value & ~fUseAllSpells);
+        SETBIT(LVLF.value, fUseAllSpells, value);
     }
 
 bool LVSPRecord::IsFlagMask(UINT8 Mask, bool Exact)

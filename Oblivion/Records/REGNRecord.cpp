@@ -121,7 +121,7 @@ bool REGNRecord::REGNRDSD::IsPleasant()
 
 void REGNRecord::REGNRDSD::IsPleasant(bool value)
     {
-    flags = value ? (flags | fIsPleasant) : (flags & ~fIsPleasant);
+    SETBIT(flags, fIsPleasant, value);
     }
 
 bool REGNRecord::REGNRDSD::IsCloudy()
@@ -131,7 +131,7 @@ bool REGNRecord::REGNRDSD::IsCloudy()
 
 void REGNRecord::REGNRDSD::IsCloudy(bool value)
     {
-    flags = value ? (flags | fIsCloudy) : (flags & ~fIsCloudy);
+    SETBIT(flags, fIsCloudy, value);
     }
 
 bool REGNRecord::REGNRDSD::IsRainy()
@@ -141,7 +141,7 @@ bool REGNRecord::REGNRDSD::IsRainy()
 
 void REGNRecord::REGNRDSD::IsRainy(bool value)
     {
-    flags = value ? (flags | fIsRainy) : (flags & ~fIsRainy);
+    SETBIT(flags, fIsRainy, value);
     }
 
 bool REGNRecord::REGNRDSD::IsSnowy()
@@ -151,7 +151,7 @@ bool REGNRecord::REGNRDSD::IsSnowy()
 
 void REGNRecord::REGNRDSD::IsSnowy(bool value)
     {
-    flags = value ? (flags | fIsSnowy) : (flags & ~fIsSnowy);
+    SETBIT(flags, fIsSnowy, value);
     }
 
 bool REGNRecord::REGNRDSD::IsFlagMask(UINT32 Mask, bool Exact)
@@ -233,7 +233,7 @@ bool REGNRecord::REGNRDOT::IsConformToSlope()
 
 void REGNRecord::REGNRDOT::IsConformToSlope(bool value)
     {
-    flags = value ? (flags | fIsConformToSlope) : (flags & ~fIsConformToSlope);
+    SETBIT(flags, fIsConformToSlope, value);
     }
 
 bool REGNRecord::REGNRDOT::IsPaintVertices()
@@ -243,7 +243,7 @@ bool REGNRecord::REGNRDOT::IsPaintVertices()
 
 void REGNRecord::REGNRDOT::IsPaintVertices(bool value)
     {
-    flags = value ? (flags | fIsPaintVertices) : (flags & ~fIsPaintVertices);
+    SETBIT(flags, fIsPaintVertices, value);
     }
 
 bool REGNRecord::REGNRDOT::IsSizeVariance()
@@ -253,7 +253,7 @@ bool REGNRecord::REGNRDOT::IsSizeVariance()
 
 void REGNRecord::REGNRDOT::IsSizeVariance(bool value)
     {
-    flags = value ? (flags | fIsSizeVariance) : (flags & ~fIsSizeVariance);
+    SETBIT(flags, fIsSizeVariance, value);
     }
 
 bool REGNRecord::REGNRDOT::IsXVariance()
@@ -263,7 +263,7 @@ bool REGNRecord::REGNRDOT::IsXVariance()
 
 void REGNRecord::REGNRDOT::IsXVariance(bool value)
     {
-    flags = value ? (flags | fIsXVariance) : (flags & ~fIsXVariance);
+    SETBIT(flags, fIsXVariance, value);
     }
 
 bool REGNRecord::REGNRDOT::IsYVariance()
@@ -273,7 +273,7 @@ bool REGNRecord::REGNRDOT::IsYVariance()
 
 void REGNRecord::REGNRDOT::IsYVariance(bool value)
     {
-    flags = value ? (flags | fIsYVariance) : (flags & ~fIsYVariance);
+    SETBIT(flags, fIsYVariance, value);
     }
 
 bool REGNRecord::REGNRDOT::IsZVariance()
@@ -283,7 +283,7 @@ bool REGNRecord::REGNRDOT::IsZVariance()
 
 void REGNRecord::REGNRDOT::IsZVariance(bool value)
     {
-    flags = value ? (flags | fIsZVariance) : (flags & ~fIsZVariance);
+    SETBIT(flags, fIsZVariance, value);
     }
 
 bool REGNRecord::REGNRDOT::IsTree()
@@ -293,7 +293,7 @@ bool REGNRecord::REGNRDOT::IsTree()
 
 void REGNRecord::REGNRDOT::IsTree(bool value)
     {
-    flags = value ? (flags | fIsTree) : (flags & ~fIsTree);
+    SETBIT(flags, fIsTree, value);
     }
 
 bool REGNRecord::REGNRDOT::IsHugeRock()
@@ -303,7 +303,7 @@ bool REGNRecord::REGNRDOT::IsHugeRock()
 
 void REGNRecord::REGNRDOT::IsHugeRock(bool value)
     {
-    flags = value ? (flags | fIsHugeRock) : (flags & ~fIsHugeRock);
+    SETBIT(flags, fIsHugeRock, value);
     }
 
 bool REGNRecord::REGNRDOT::IsFlagMask(UINT8 Mask, bool Exact)
@@ -373,7 +373,7 @@ bool REGNRecord::REGNEntry::IsOverride()
 
 void REGNRecord::REGNEntry::IsOverride(bool value)
     {
-    RDAT.value.flags = value ? (RDAT.value.flags | fIsOverride) : (RDAT.value.flags & ~fIsOverride);
+    SETBIT(RDAT.value.flags, fIsOverride, value);
     }
 
 bool REGNRecord::REGNEntry::IsFlagMask(UINT8 Mask, bool Exact)

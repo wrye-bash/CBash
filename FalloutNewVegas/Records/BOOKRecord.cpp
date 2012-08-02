@@ -137,7 +137,7 @@ bool BOOKRecord::IsFixed()
 
 void BOOKRecord::IsFixed(bool value)
     {
-    DATA.value.flags = value ? (DATA.value.flags | fIsFixed) : (DATA.value.flags & ~fIsFixed);
+    SETBIT(DATA.value.flags, fIsFixed, value);
     }
 
 bool BOOKRecord::IsCantBeTaken()
@@ -147,7 +147,7 @@ bool BOOKRecord::IsCantBeTaken()
 
 void BOOKRecord::IsCantBeTaken(bool value)
     {
-    DATA.value.flags = value ? (DATA.value.flags | fIsFixed) : (DATA.value.flags & ~fIsFixed);
+    SETBIT(DATA.value.flags, fIsFixed, value);
     }
 
 bool BOOKRecord::IsFlagMask(UINT8 Mask, bool Exact)

@@ -462,7 +462,7 @@ bool WEAPRecord::IsNotNormalWeapon()
 
 void WEAPRecord::IsNotNormalWeapon(bool value)
     {
-    DNAM.value.flags1 = value ? (DNAM.value.flags1 | fIsNotNormalWeapon) : (DNAM.value.flags1 & ~fIsNotNormalWeapon);
+    SETBIT(DNAM.value.flags1, fIsNotNormalWeapon, value);
     }
 
 bool WEAPRecord::IsAutomatic()
@@ -472,7 +472,7 @@ bool WEAPRecord::IsAutomatic()
 
 void WEAPRecord::IsAutomatic(bool value)
     {
-    DNAM.value.flags1 = value ? (DNAM.value.flags1 | fIsAutomatic) : (DNAM.value.flags1 & ~fIsAutomatic);
+    SETBIT(DNAM.value.flags1, fIsAutomatic, value);
     }
 
 bool WEAPRecord::IsHasScope()
@@ -482,7 +482,7 @@ bool WEAPRecord::IsHasScope()
 
 void WEAPRecord::IsHasScope(bool value)
     {
-    DNAM.value.flags1 = value ? (DNAM.value.flags1 | fIsHasScope) : (DNAM.value.flags1 & ~fIsHasScope);
+    SETBIT(DNAM.value.flags1, fIsHasScope, value);
     }
 
 bool WEAPRecord::IsCantDrop()
@@ -492,7 +492,7 @@ bool WEAPRecord::IsCantDrop()
 
 void WEAPRecord::IsCantDrop(bool value)
     {
-    DNAM.value.flags1 = value ? (DNAM.value.flags1 | fIsCantDrop) : (DNAM.value.flags1 & ~fIsCantDrop);
+    SETBIT(DNAM.value.flags1, fIsCantDrop, value);
     }
 
 bool WEAPRecord::IsHideBackpack()
@@ -502,7 +502,7 @@ bool WEAPRecord::IsHideBackpack()
 
 void WEAPRecord::IsHideBackpack(bool value)
     {
-    DNAM.value.flags1 = value ? (DNAM.value.flags1 | fIsHideBackpack) : (DNAM.value.flags1 & ~fIsHideBackpack);
+    SETBIT(DNAM.value.flags1, fIsHideBackpack, value);
     }
 
 bool WEAPRecord::IsEmbeddedWeapon()
@@ -512,7 +512,7 @@ bool WEAPRecord::IsEmbeddedWeapon()
 
 void WEAPRecord::IsEmbeddedWeapon(bool value)
     {
-    DNAM.value.flags1 = value ? (DNAM.value.flags1 | fIsEmbeddedWeapon) : (DNAM.value.flags1 & ~fIsEmbeddedWeapon);
+    SETBIT(DNAM.value.flags1, fIsEmbeddedWeapon, value);
     }
 
 bool WEAPRecord::IsDontUse1stPersonISAnimations()
@@ -522,7 +522,7 @@ bool WEAPRecord::IsDontUse1stPersonISAnimations()
 
 void WEAPRecord::IsDontUse1stPersonISAnimations(bool value)
     {
-    DNAM.value.flags1 = value ? (DNAM.value.flags1 | fIsDontUse1stPersonISAnimations) : (DNAM.value.flags1 & ~fIsDontUse1stPersonISAnimations);
+    SETBIT(DNAM.value.flags1, fIsDontUse1stPersonISAnimations, value);
     }
 
 bool WEAPRecord::IsNonPlayable()
@@ -532,7 +532,7 @@ bool WEAPRecord::IsNonPlayable()
 
 void WEAPRecord::IsNonPlayable(bool value)
     {
-    DNAM.value.flags1 = value ? (DNAM.value.flags1 | fIsNonPlayable) : (DNAM.value.flags1 & ~fIsNonPlayable);
+    SETBIT(DNAM.value.flags1, fIsNonPlayable, value);
     }
 
 bool WEAPRecord::IsFlagMask(UINT8 Mask, bool Exact)
@@ -552,7 +552,7 @@ bool WEAPRecord::IsPlayerOnly()
 
 void WEAPRecord::IsPlayerOnly(bool value)
     {
-    DNAM.value.flags2 = value ? (DNAM.value.flags2 | fIsPlayerOnly) : (DNAM.value.flags2 & ~fIsPlayerOnly);
+    SETBIT(DNAM.value.flags2, fIsPlayerOnly, value);
     }
 
 bool WEAPRecord::IsNPCsUseAmmo()
@@ -562,7 +562,7 @@ bool WEAPRecord::IsNPCsUseAmmo()
 
 void WEAPRecord::IsNPCsUseAmmo(bool value)
     {
-    DNAM.value.flags2 = value ? (DNAM.value.flags2 | fIsNPCsUseAmmo) : (DNAM.value.flags2 & ~fIsNPCsUseAmmo);
+    SETBIT(DNAM.value.flags2, fIsNPCsUseAmmo, value);
     }
 
 bool WEAPRecord::IsNoJamAfterReload()
@@ -572,7 +572,7 @@ bool WEAPRecord::IsNoJamAfterReload()
 
 void WEAPRecord::IsNoJamAfterReload(bool value)
     {
-    DNAM.value.flags2 = value ? (DNAM.value.flags2 | fIsNoJamAfterReload) : (DNAM.value.flags2 & ~fIsNoJamAfterReload);
+    SETBIT(DNAM.value.flags2, fIsNoJamAfterReload, value);
     }
 
 bool WEAPRecord::IsOverrideActionPoints()
@@ -582,7 +582,7 @@ bool WEAPRecord::IsOverrideActionPoints()
 
 void WEAPRecord::IsOverrideActionPoints(bool value)
     {
-    DNAM.value.flags2 = value ? (DNAM.value.flags2 | fIsOverrideActionPoints) : (DNAM.value.flags2 & ~fIsOverrideActionPoints);
+    SETBIT(DNAM.value.flags2, fIsOverrideActionPoints, value);
     }
 
 bool WEAPRecord::IsMinorCrime()
@@ -592,7 +592,7 @@ bool WEAPRecord::IsMinorCrime()
 
 void WEAPRecord::IsMinorCrime(bool value)
     {
-    DNAM.value.flags2 = value ? (DNAM.value.flags2 | fIsMinorCrime) : (DNAM.value.flags2 & ~fIsMinorCrime);
+    SETBIT(DNAM.value.flags2, fIsMinorCrime, value);
     }
 
 bool WEAPRecord::IsRangeFixed()
@@ -602,7 +602,7 @@ bool WEAPRecord::IsRangeFixed()
 
 void WEAPRecord::IsRangeFixed(bool value)
     {
-    DNAM.value.flags2 = value ? (DNAM.value.flags2 | fIsRangeFixed) : (DNAM.value.flags2 & ~fIsRangeFixed);
+    SETBIT(DNAM.value.flags2, fIsRangeFixed, value);
     }
 
 bool WEAPRecord::IsNotUsedInNormalCombat()
@@ -612,7 +612,7 @@ bool WEAPRecord::IsNotUsedInNormalCombat()
 
 void WEAPRecord::IsNotUsedInNormalCombat(bool value)
     {
-    DNAM.value.flags2 = value ? (DNAM.value.flags2 | fIsNotUsedInNormalCombat) : (DNAM.value.flags2 & ~fIsNotUsedInNormalCombat);
+    SETBIT(DNAM.value.flags2, fIsNotUsedInNormalCombat, value);
     }
 
 bool WEAPRecord::IsOverrideDamageToWeaponMult()
@@ -622,7 +622,7 @@ bool WEAPRecord::IsOverrideDamageToWeaponMult()
 
 void WEAPRecord::IsOverrideDamageToWeaponMult(bool value)
     {
-    DNAM.value.flags2 = value ? (DNAM.value.flags2 | fIsOverrideDamageToWeaponMult) : (DNAM.value.flags2 & ~fIsOverrideDamageToWeaponMult);
+    SETBIT(DNAM.value.flags2, fIsOverrideDamageToWeaponMult, value);
     }
 
 bool WEAPRecord::IsDontUse3rdPersonISAnimations()
@@ -632,7 +632,7 @@ bool WEAPRecord::IsDontUse3rdPersonISAnimations()
 
 void WEAPRecord::IsDontUse3rdPersonISAnimations(bool value)
     {
-    DNAM.value.flags2 = value ? (DNAM.value.flags2 | fIsDontUse3rdPersonISAnimations) : (DNAM.value.flags2 & ~fIsDontUse3rdPersonISAnimations);
+    SETBIT(DNAM.value.flags2, fIsDontUse3rdPersonISAnimations, value);
     }
 
 bool WEAPRecord::IsShortBurst()
@@ -642,7 +642,7 @@ bool WEAPRecord::IsShortBurst()
 
 void WEAPRecord::IsShortBurst(bool value)
     {
-    DNAM.value.flags2 = value ? (DNAM.value.flags2 | fIsShortBurst) : (DNAM.value.flags2 & ~fIsShortBurst);
+    SETBIT(DNAM.value.flags2, fIsShortBurst, value);
     }
 
 bool WEAPRecord::IsRumbleAlternate()
@@ -652,7 +652,7 @@ bool WEAPRecord::IsRumbleAlternate()
 
 void WEAPRecord::IsRumbleAlternate(bool value)
     {
-    DNAM.value.flags2 = value ? (DNAM.value.flags2 | fIsRumbleAlternate) : (DNAM.value.flags2 & ~fIsRumbleAlternate);
+    SETBIT(DNAM.value.flags2, fIsRumbleAlternate, value);
     }
 
 bool WEAPRecord::IsLongBurst()
@@ -662,7 +662,7 @@ bool WEAPRecord::IsLongBurst()
 
 void WEAPRecord::IsLongBurst(bool value)
     {
-    DNAM.value.flags2 = value ? (DNAM.value.flags2 | fIsLongBurst) : (DNAM.value.flags2 & ~fIsLongBurst);
+    SETBIT(DNAM.value.flags2, fIsLongBurst, value);
     }
 
 bool WEAPRecord::IsScopeHasNightVision()
@@ -672,7 +672,7 @@ bool WEAPRecord::IsScopeHasNightVision()
 
 void WEAPRecord::IsScopeHasNightVision(bool value)
     {
-    DNAM.value.flags2 = value ? (DNAM.value.flags2 | fIsScopeHasNightVision) : (DNAM.value.flags2 & ~fIsScopeHasNightVision);
+    SETBIT(DNAM.value.flags2, fIsScopeHasNightVision, value);
     }
 
 bool WEAPRecord::IsScopeFromMod()
@@ -682,7 +682,7 @@ bool WEAPRecord::IsScopeFromMod()
 
 void WEAPRecord::IsScopeFromMod(bool value)
     {
-    DNAM.value.flags2 = value ? (DNAM.value.flags2 | fIsScopeFromMod) : (DNAM.value.flags2 & ~fIsScopeFromMod);
+    SETBIT(DNAM.value.flags2, fIsScopeFromMod, value);
     }
 
 bool WEAPRecord::IsAdvFlagMask(UINT32 Mask, bool Exact)
@@ -702,7 +702,7 @@ bool WEAPRecord::IsCritOnDeath()
 
 void WEAPRecord::IsCritOnDeath(bool value)
     {
-    CRDT.value.flags = value ? (CRDT.value.flags | fIsOnDeath) : (CRDT.value.flags & ~fIsOnDeath);
+    SETBIT(CRDT.value.flags, fIsOnDeath, value);
     }
 
 bool WEAPRecord::IsCritFlagMask(UINT8 Mask, bool Exact)

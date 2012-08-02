@@ -137,7 +137,7 @@ bool PMISRecord::IsOppositeParent()
 void PMISRecord::IsOppositeParent(bool value)
     {
     if(!XESP.IsLoaded()) return;
-    XESP->flags = value ? (XESP->flags | fIsOppositeParent) : (XESP->flags & ~fIsOppositeParent);
+    SETBIT(XESP->flags, fIsOppositeParent, value);
     }
 
 bool PMISRecord::IsPopIn()
@@ -148,7 +148,7 @@ bool PMISRecord::IsPopIn()
 void PMISRecord::IsPopIn(bool value)
     {
     if(!XESP.IsLoaded()) return;
-    XESP->flags = value ? (XESP->flags | fIsPopIn) : (XESP->flags & ~fIsPopIn);
+    SETBIT(XESP->flags, fIsPopIn, value);
     }
 
 bool PMISRecord::IsFlagMask(UINT8 Mask, bool Exact)

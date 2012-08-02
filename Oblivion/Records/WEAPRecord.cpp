@@ -127,7 +127,7 @@ bool WEAPRecord::IsNotNormalWeapon()
 
 void WEAPRecord::IsNotNormalWeapon(bool value)
     {
-    DATA.value.flags = value ? (DATA.value.flags | fIsNotNormalWeapon) : (DATA.value.flags & ~fIsNotNormalWeapon);
+    SETBIT(DATA.value.flags, fIsNotNormalWeapon, value);
     }
 
 bool WEAPRecord::IsNotNormal()
@@ -137,7 +137,7 @@ bool WEAPRecord::IsNotNormal()
 
 void WEAPRecord::IsNotNormal(bool value)
     {
-    DATA.value.flags = value ? (DATA.value.flags | fIsNotNormalWeapon) : (DATA.value.flags & ~fIsNotNormalWeapon);
+    SETBIT(DATA.value.flags, fIsNotNormalWeapon, value);
     }
 
 bool WEAPRecord::IsNormalWeapon()

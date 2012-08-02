@@ -297,7 +297,7 @@ bool MGEFRecord::IsHostile()
 void MGEFRecord::IsHostile(bool value)
     {
     if(!OBME.IsLoaded()) return; //Only settable if OBME is enabled
-    DATA.value.flags = value ? (DATA.value.flags | fIsHostile) : (DATA.value.flags & ~fIsHostile);
+    SETBIT(DATA.value.flags, fIsHostile, value);
     }
 
 bool MGEFRecord::IsRecover()
@@ -308,7 +308,7 @@ bool MGEFRecord::IsRecover()
 void MGEFRecord::IsRecover(bool value)
     {
     if(!OBME.IsLoaded()) return; //Only settable if OBME is enabled
-    DATA.value.flags = value ? (DATA.value.flags | fIsRecover) : (DATA.value.flags & ~fIsRecover);
+    SETBIT(DATA.value.flags, fIsRecover, value);
     }
 
 bool MGEFRecord::IsDetrimental()
@@ -319,7 +319,7 @@ bool MGEFRecord::IsDetrimental()
 void MGEFRecord::IsDetrimental(bool value)
     {
     if(!OBME.IsLoaded()) return; //Only settable if OBME is enabled
-    DATA.value.flags = value ? (DATA.value.flags | fIsDetrimental) : (DATA.value.flags & ~fIsDetrimental);
+    SETBIT(DATA.value.flags, fIsDetrimental, value);
     }
 
 bool MGEFRecord::IsMagnitudeIsPercent()
@@ -330,7 +330,7 @@ bool MGEFRecord::IsMagnitudeIsPercent()
 void MGEFRecord::IsMagnitudeIsPercent(bool value)
     {
     if(!OBME.IsLoaded()) return; //Only settable if OBME is enabled
-    DATA.value.flags = value ? (DATA.value.flags | fIsMagnitudeIsPercent) : (DATA.value.flags & ~fIsMagnitudeIsPercent);
+    SETBIT(DATA.value.flags, fIsMagnitudeIsPercent, value);
     }
 
 bool MGEFRecord::IsSelf()
@@ -341,7 +341,7 @@ bool MGEFRecord::IsSelf()
 void MGEFRecord::IsSelf(bool value)
     {
     if(!OBME.IsLoaded()) return; //Only settable if OBME is enabled
-    DATA.value.flags = value ? (DATA.value.flags | fIsSelf) : (DATA.value.flags & ~fIsSelf);
+    SETBIT(DATA.value.flags, fIsSelf, value);
     }
 
 bool MGEFRecord::IsTouch()
@@ -352,7 +352,7 @@ bool MGEFRecord::IsTouch()
 void MGEFRecord::IsTouch(bool value)
     {
     if(!OBME.IsLoaded()) return; //Only settable if OBME is enabled
-    DATA.value.flags = value ? (DATA.value.flags | fIsTouch) : (DATA.value.flags & ~fIsTouch);
+    SETBIT(DATA.value.flags, fIsTouch, value);
     }
 
 bool MGEFRecord::IsTarget()
@@ -363,7 +363,7 @@ bool MGEFRecord::IsTarget()
 void MGEFRecord::IsTarget(bool value)
     {
     if(!OBME.IsLoaded()) return; //Only settable if OBME is enabled
-    DATA.value.flags = value ? (DATA.value.flags | fIsTarget) : (DATA.value.flags & ~fIsTarget);
+    SETBIT(DATA.value.flags, fIsTarget, value);
     }
 
 bool MGEFRecord::IsNoDuration()
@@ -374,7 +374,7 @@ bool MGEFRecord::IsNoDuration()
 void MGEFRecord::IsNoDuration(bool value)
     {
     if(!OBME.IsLoaded()) return; //Only settable if OBME is enabled
-    DATA.value.flags = value ? (DATA.value.flags | fIsNoDuration) : (DATA.value.flags & ~fIsNoDuration);
+    SETBIT(DATA.value.flags, fIsNoDuration, value);
     }
 
 bool MGEFRecord::IsNoMagnitude()
@@ -385,7 +385,7 @@ bool MGEFRecord::IsNoMagnitude()
 void MGEFRecord::IsNoMagnitude(bool value)
     {
     if(!OBME.IsLoaded()) return; //Only settable if OBME is enabled
-    DATA.value.flags = value ? (DATA.value.flags | fIsNoMagnitude) : (DATA.value.flags & ~fIsNoMagnitude);
+    SETBIT(DATA.value.flags, fIsNoMagnitude, value);
     }
 
 bool MGEFRecord::IsNoArea()
@@ -396,7 +396,7 @@ bool MGEFRecord::IsNoArea()
 void MGEFRecord::IsNoArea(bool value)
     {
     if(!OBME.IsLoaded()) return; //Only settable if OBME is enabled
-    DATA.value.flags = value ? (DATA.value.flags | fIsNoArea) : (DATA.value.flags & ~fIsNoArea);
+    SETBIT(DATA.value.flags, fIsNoArea, value);
     }
 
 bool MGEFRecord::IsFXPersist()
@@ -406,7 +406,7 @@ bool MGEFRecord::IsFXPersist()
 
 void MGEFRecord::IsFXPersist(bool value)
     {
-    DATA.value.flags = value ? (DATA.value.flags | fIsFXPersist) : (DATA.value.flags & ~fIsFXPersist);
+    SETBIT(DATA.value.flags, fIsFXPersist, value);
     }
 
 bool MGEFRecord::IsSpellmaking()
@@ -416,7 +416,7 @@ bool MGEFRecord::IsSpellmaking()
 
 void MGEFRecord::IsSpellmaking(bool value)
     {
-    DATA.value.flags = value ? (DATA.value.flags | fIsSpellmaking) : (DATA.value.flags & ~fIsSpellmaking);
+    SETBIT(DATA.value.flags, fIsSpellmaking, value);
     }
 
 bool MGEFRecord::IsEnchanting()
@@ -426,7 +426,7 @@ bool MGEFRecord::IsEnchanting()
 
 void MGEFRecord::IsEnchanting(bool value)
     {
-    DATA.value.flags = value ? (DATA.value.flags | fIsEnchanting) : (DATA.value.flags & ~fIsEnchanting);
+    SETBIT(DATA.value.flags, fIsEnchanting, value);
     }
 
 bool MGEFRecord::IsNoIngredient()
@@ -436,7 +436,7 @@ bool MGEFRecord::IsNoIngredient()
 
 void MGEFRecord::IsNoIngredient(bool value)
     {
-    DATA.value.flags = value ? (DATA.value.flags | fIsNoIngredient) : (DATA.value.flags & ~fIsNoIngredient);
+    SETBIT(DATA.value.flags, fIsNoIngredient, value);
     }
 
 bool MGEFRecord::IsUnknownF()
@@ -447,7 +447,7 @@ bool MGEFRecord::IsUnknownF()
 void MGEFRecord::IsUnknownF(bool value)
     {
     if(!OBME.IsLoaded()) return; //Only settable if OBME is enabled
-    DATA.value.flags = value ? (DATA.value.flags | fIsUnknownF) : (DATA.value.flags & ~fIsUnknownF);
+    SETBIT(DATA.value.flags, fIsUnknownF, value);
     }
 
 bool MGEFRecord::IsNoRecast()
@@ -458,7 +458,7 @@ bool MGEFRecord::IsNoRecast()
 void MGEFRecord::IsNoRecast(bool value)
     {
     if(!OBME.IsLoaded()) return; //Only settable if OBME is enabled
-    DATA.value.flags = value ? (DATA.value.flags | fIsNoRecast) : (DATA.value.flags & ~fIsNoRecast);
+    SETBIT(DATA.value.flags, fIsNoRecast, value);
     }
 
 bool MGEFRecord::IsUseWeapon()
@@ -469,7 +469,7 @@ bool MGEFRecord::IsUseWeapon()
 void MGEFRecord::IsUseWeapon(bool value)
     {
     if(!OBME.IsLoaded()) return; //Only settable if OBME is enabled
-    DATA.value.flags = value ? (DATA.value.flags | fIsUseWeapon) : (DATA.value.flags & ~fIsUseWeapon);
+    SETBIT(DATA.value.flags, fIsUseWeapon, value);
     }
 
 bool MGEFRecord::IsUseArmor()
@@ -480,7 +480,7 @@ bool MGEFRecord::IsUseArmor()
 void MGEFRecord::IsUseArmor(bool value)
     {
     if(!OBME.IsLoaded()) return; //Only settable if OBME is enabled
-    DATA.value.flags = value ? (DATA.value.flags | fIsUseArmor) : (DATA.value.flags & ~fIsUseArmor);
+    SETBIT(DATA.value.flags, fIsUseArmor, value);
     }
 
 bool MGEFRecord::IsUseCreature()
@@ -491,7 +491,7 @@ bool MGEFRecord::IsUseCreature()
 void MGEFRecord::IsUseCreature(bool value)
     {
     if(!OBME.IsLoaded()) return; //Only settable if OBME is enabled
-    DATA.value.flags = value ? (DATA.value.flags | fIsUseCreature) : (DATA.value.flags & ~fIsUseCreature);
+    SETBIT(DATA.value.flags, fIsUseCreature, value);
     }
 
 bool MGEFRecord::IsUseSkill()
@@ -502,7 +502,7 @@ bool MGEFRecord::IsUseSkill()
 void MGEFRecord::IsUseSkill(bool value)
     {
     if(!OBME.IsLoaded()) return; //Only settable if OBME is enabled
-    DATA.value.flags = value ? (DATA.value.flags | fIsUseSkill) : (DATA.value.flags & ~fIsUseSkill);
+    SETBIT(DATA.value.flags, fIsUseSkill, value);
     }
 
 bool MGEFRecord::IsUseAttribute()
@@ -513,7 +513,7 @@ bool MGEFRecord::IsUseAttribute()
 void MGEFRecord::IsUseAttribute(bool value)
     {
     if(!OBME.IsLoaded()) return; //Only settable if OBME is enabled
-    DATA.value.flags = value ? (DATA.value.flags | fIsUseAttr) : (DATA.value.flags & ~fIsUseAttr);
+    SETBIT(DATA.value.flags, fIsUseAttr, value);
     }
 
 bool MGEFRecord::IsUseAttr()
@@ -534,7 +534,7 @@ bool MGEFRecord::IsPCHasEffect()
 void MGEFRecord::IsPCHasEffect(bool value)
     {
     if(!OBME.IsLoaded()) return; //Only settable if OBME is enabled
-    DATA.value.flags = value ? (DATA.value.flags | fIsPCHasEffect) : (DATA.value.flags & ~fIsPCHasEffect);
+    SETBIT(DATA.value.flags, fIsPCHasEffect, value);
     }
 
 bool MGEFRecord::IsDisabled()
@@ -544,7 +544,7 @@ bool MGEFRecord::IsDisabled()
 
 void MGEFRecord::IsDisabled(bool value)
     {
-    DATA.value.flags = value ? (DATA.value.flags | fIsDisabled) : (DATA.value.flags & ~fIsDisabled);
+    SETBIT(DATA.value.flags, fIsDisabled, value);
     }
 
 bool MGEFRecord::IsUnknownO()
@@ -554,7 +554,7 @@ bool MGEFRecord::IsUnknownO()
 
 void MGEFRecord::IsUnknownO(bool value)
     {
-    DATA.value.flags = value ? (DATA.value.flags | fIsUnknownO) : (DATA.value.flags & ~fIsUnknownO);
+    SETBIT(DATA.value.flags, fIsUnknownO, value);
     }
 
 bool MGEFRecord::IsUseActorValue()
@@ -564,7 +564,7 @@ bool MGEFRecord::IsUseActorValue()
 
 void MGEFRecord::IsUseActorValue(bool value)
     {
-    DATA.value.flags = value ? (DATA.value.flags | fIsUseAV) : (DATA.value.flags & ~fIsUseAV);
+    SETBIT(DATA.value.flags, fIsUseAV, value);
     }
 
 bool MGEFRecord::IsUseAV()
@@ -642,7 +642,7 @@ bool MGEFRecord::IsNoHitEffect()
 
 void MGEFRecord::IsNoHitEffect(bool value)
     {
-    DATA.value.flags = value ? (DATA.value.flags | fIsNoHitEffect) : (DATA.value.flags & ~fIsNoHitEffect);
+    SETBIT(DATA.value.flags, fIsNoHitEffect, value);
     }
 
 bool MGEFRecord::IsPersistOnDeath()
@@ -653,7 +653,7 @@ bool MGEFRecord::IsPersistOnDeath()
 void MGEFRecord::IsPersistOnDeath(bool value)
     {
     if(!OBME.IsLoaded()) return; //Only settable if OBME is enabled
-    DATA.value.flags = value ? (DATA.value.flags | fIsPersistOnDeath) : (DATA.value.flags & ~fIsPersistOnDeath);
+    SETBIT(DATA.value.flags, fIsPersistOnDeath, value);
     }
 
 bool MGEFRecord::IsExplodesWithForce()
@@ -664,7 +664,7 @@ bool MGEFRecord::IsExplodesWithForce()
 void MGEFRecord::IsExplodesWithForce(bool value)
     {
     if(!OBME.IsLoaded()) return; //Only settable if OBME is enabled
-    DATA.value.flags = value ? (DATA.value.flags | fIsExplodesWithForce) : (DATA.value.flags & ~fIsExplodesWithForce);
+    SETBIT(DATA.value.flags, fIsExplodesWithForce, value);
     }
 
 bool MGEFRecord::IsMagnitudeIsLevel()
@@ -675,7 +675,7 @@ bool MGEFRecord::IsMagnitudeIsLevel()
 void MGEFRecord::IsMagnitudeIsLevel(bool value)
     {
     if(!OBME.IsLoaded()) return; //Only settable if OBME is enabled
-    DATA.value.flags = value ? (DATA.value.flags | fIsMagnitudeIsLevel) : (DATA.value.flags & ~fIsMagnitudeIsLevel);
+    SETBIT(DATA.value.flags, fIsMagnitudeIsLevel, value);
     }
 
 bool MGEFRecord::IsMagnitudeIsFeet()
@@ -686,7 +686,7 @@ bool MGEFRecord::IsMagnitudeIsFeet()
 void MGEFRecord::IsMagnitudeIsFeet(bool value)
     {
     if(!OBME.IsLoaded()) return; //Only settable if OBME is enabled
-    DATA.value.flags = value ? (DATA.value.flags | fIsMagnitudeIsFeet) : (DATA.value.flags & ~fIsMagnitudeIsFeet);
+    SETBIT(DATA.value.flags, fIsMagnitudeIsFeet, value);
     }
 
 bool MGEFRecord::IsFlagMask(UINT32 Mask, bool Exact)

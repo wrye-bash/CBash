@@ -117,7 +117,7 @@ bool GRASRecord::IsVLighting()
 
 void GRASRecord::IsVLighting(bool value)
     {
-    DATA.value.flags = value ? (DATA.value.flags | fIsVLighting) : (DATA.value.flags & ~fIsVLighting);
+    SETBIT(DATA.value.flags, fIsVLighting, value);
     }
 
 bool GRASRecord::IsUScaling()
@@ -127,7 +127,7 @@ bool GRASRecord::IsUScaling()
 
 void GRASRecord::IsUScaling(bool value)
     {
-    DATA.value.flags = value ? (DATA.value.flags | fIsUScaling) : (DATA.value.flags & ~fIsUScaling);
+    SETBIT(DATA.value.flags, fIsUScaling, value);
     }
 
 bool GRASRecord::IsFitSlope()
@@ -137,7 +137,7 @@ bool GRASRecord::IsFitSlope()
 
 void GRASRecord::IsFitSlope(bool value)
     {
-    DATA.value.flags = value ? (DATA.value.flags | fIsFitSlope) : (DATA.value.flags & ~fIsFitSlope);
+    SETBIT(DATA.value.flags, fIsFitSlope, value);
     }
 
 bool GRASRecord::IsFlagMask(UINT8 Mask, bool Exact)

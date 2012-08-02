@@ -153,7 +153,7 @@ bool EXPLRecord::IsUnknown1()
 
 void EXPLRecord::IsUnknown1(bool value)
     {
-    DATA.value.flags = value ? (DATA.value.flags | fIsUnknown1) : (DATA.value.flags & ~fIsUnknown1);
+    SETBIT(DATA.value.flags, fIsUnknown1, value);
     }
 
 bool EXPLRecord::IsAlwaysUsesWorldOrientation()
@@ -163,7 +163,7 @@ bool EXPLRecord::IsAlwaysUsesWorldOrientation()
 
 void EXPLRecord::IsAlwaysUsesWorldOrientation(bool value)
     {
-    DATA.value.flags = value ? (DATA.value.flags | fIsAlwaysUsesWorldOrientation) : (DATA.value.flags & ~fIsAlwaysUsesWorldOrientation);
+    SETBIT(DATA.value.flags, fIsAlwaysUsesWorldOrientation, value);
     }
 
 bool EXPLRecord::IsAlwaysKnockDown()
@@ -173,7 +173,7 @@ bool EXPLRecord::IsAlwaysKnockDown()
 
 void EXPLRecord::IsAlwaysKnockDown(bool value)
     {
-    DATA.value.flags = value ? (DATA.value.flags | fIsAlwaysKnockDown) : (DATA.value.flags & ~fIsAlwaysKnockDown);
+    SETBIT(DATA.value.flags, fIsAlwaysKnockDown, value);
     }
 
 bool EXPLRecord::IsFormulaKnockDown()
@@ -183,7 +183,7 @@ bool EXPLRecord::IsFormulaKnockDown()
 
 void EXPLRecord::IsFormulaKnockDown(bool value)
     {
-    DATA.value.flags = value ? (DATA.value.flags | fIsFormulaKnockDown) : (DATA.value.flags & ~fIsFormulaKnockDown);
+    SETBIT(DATA.value.flags, fIsFormulaKnockDown, value);
     }
 
 bool EXPLRecord::IsIgnoreLOS()
@@ -193,7 +193,7 @@ bool EXPLRecord::IsIgnoreLOS()
 
 void EXPLRecord::IsIgnoreLOS(bool value)
     {
-    DATA.value.flags = value ? (DATA.value.flags | fIsIgnoreLOS) : (DATA.value.flags & ~fIsIgnoreLOS);
+    SETBIT(DATA.value.flags, fIsIgnoreLOS, value);
     }
 
 bool EXPLRecord::IsPushExplosionSourceRefOnly()
@@ -203,7 +203,7 @@ bool EXPLRecord::IsPushExplosionSourceRefOnly()
 
 void EXPLRecord::IsPushExplosionSourceRefOnly(bool value)
     {
-    DATA.value.flags = value ? (DATA.value.flags | fIsPushExplosionSourceRefOnly) : (DATA.value.flags & ~fIsPushExplosionSourceRefOnly);
+    SETBIT(DATA.value.flags, fIsPushExplosionSourceRefOnly, value);
     }
 
 bool EXPLRecord::IsIgnoreImageSpaceSwap()
@@ -213,7 +213,7 @@ bool EXPLRecord::IsIgnoreImageSpaceSwap()
 
 void EXPLRecord::IsIgnoreImageSpaceSwap(bool value)
     {
-    DATA.value.flags = value ? (DATA.value.flags | fIsIgnoreImageSpaceSwap) : (DATA.value.flags & ~fIsIgnoreImageSpaceSwap);
+    SETBIT(DATA.value.flags, fIsIgnoreImageSpaceSwap, value);
     }
 
 bool EXPLRecord::IsFlagMask(UINT32 Mask, bool Exact)
