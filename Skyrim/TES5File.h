@@ -41,6 +41,7 @@
 #include "../GRUPRecord.h"
 
 #include "Records/AACTRecord.h"
+#include "Records/APPARecord.h"
 #include "Records/ARTORecord.h"
 #include "Records/ASPCRecord.h"
 #include "Records/ASTPRecord.h"
@@ -52,6 +53,7 @@
 #include "Records/MATTRecord.h"
 #include "Records/TXSTRecord.h"
 #include "Records/WRLDRecord.h"
+
 /*
 #include "Records/GMSTRecord.h"
 #include "Records/MICNRecord.h"
@@ -150,6 +152,8 @@
 //#include "Records/SLPDRecord.h"
 */
 
+class StringLookups;
+
 class TES5File : public ModFile
     {
     public:
@@ -165,6 +169,8 @@ class TES5File : public ModFile
         TES5GRUPRecords<Sk::LVSPRecord, REV32(LVSP), 5> LVSP;
         TES5GRUPRecords<Sk::LVLNRecord, REV32(LVLN), 5> LVLN;
         TES5GRUPRecords<Sk::ARTORecord, REV32(ARTO), 5> ARTO;
+        TES5GRUPRecords<Sk::APPARecord, REV32(APPA), 5> APPA;
+
 /*
         TES5GRUPRecords<Sk::GMSTRecord, REV32(GMST), 5, true> GMST;
         TES5GRUPRecords<Sk::MICNRecord, REV32(MICN), 5> MICN;
@@ -264,6 +270,8 @@ class TES5File : public ModFile
         //TES5GRUPRecords<Sk::HUNGRecord, REV32(HUNG), 5> HUNG;
         //TES5GRUPRecords<Sk::SLPDRecord, REV32(SLPD), 5> SLPD;
 */
+
+        StringLookups *LookupStrings;
 
         TES5File(Collection *_Parent, STRING FileName, STRING ModName, const UINT32 _flags);
         ~TES5File();

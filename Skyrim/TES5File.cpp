@@ -37,16 +37,19 @@
 #include "../Common.h"
 #include "../GenericRecord.h"
 #include "TES5File.h"
+#include "SkyrimCommon.h"
 
 TES5File::TES5File(Collection *_Parent, STRING FileName, STRING ModName, const UINT32 _flags):
-    ModFile(_Parent, FileName, ModName, _flags)
+    ModFile(_Parent, FileName, ModName, _flags),
+    LookupStrings(NULL)
     {
     //
     }
 
 TES5File::~TES5File()
     {
-    //
+        if (LookupStrings)
+            delete LookupStrings;
     }
 
 void TES5File::SetFilter(bool inclusive, boost::unordered_set<UINT32> &RecordTypes, boost::unordered_set<FORMID> &WorldSpaces) {
@@ -97,125 +100,125 @@ SINT32 TES5File::LoadTES4()
 SINT32 TES5File::Load(RecordOp &read_parser, RecordOp &indexer, std::vector<FormIDResolver *> &Expanders, std::vector<Record *> &DeletedRecords)
     {
     enum IgTopRecords {
-    eIgGMST = REV32(GMST) | 0x00001000, //Record::fIsIgnored
-    eIgTXST = REV32(TXST) | 0x00001000,
-    eIgGLOB = REV32(GLOB) | 0x00001000,
-    eIgCLAS = REV32(CLAS) | 0x00001000,
-    eIgFACT = REV32(FACT) | 0x00001000,
-    eIgHDPT = REV32(HDPT) | 0x00001000,
-    eIgHAIR = REV32(HAIR) | 0x00001000,
-    eIgEYES = REV32(EYES) | 0x00001000,
-    eIgRACE = REV32(RACE) | 0x00001000,
-    eIgSOUN = REV32(SOUN) | 0x00001000,
-    eIgASPC = REV32(ASPC) | 0x00001000,
-    eIgMGEF = REV32(MGEF) | 0x00001000,
-    eIgSCPT = REV32(SCPT) | 0x00001000,
-    eIgLTEX = REV32(LTEX) | 0x00001000,
-    eIgENCH = REV32(ENCH) | 0x00001000,
-    eIgSPEL = REV32(SPEL) | 0x00001000,
-    eIgACTI = REV32(ACTI) | 0x00001000,
-    eIgTACT = REV32(TACT) | 0x00001000,
-    eIgARMO = REV32(ARMO) | 0x00001000,
-    eIgBOOK = REV32(BOOK) | 0x00001000,
-    eIgCONT = REV32(CONT) | 0x00001000,
-    eIgDOOR = REV32(DOOR) | 0x00001000,
-    eIgINGR = REV32(INGR) | 0x00001000,
-    eIgLIGH = REV32(LIGH) | 0x00001000,
-    eIgMISC = REV32(MISC) | 0x00001000,
-    eIgAPPA = REV32(APPA) | 0x00001000,
-    eIgSTAT = REV32(STAT) | 0x00001000,
-    eIgSCOL = REV32(SCOL) | 0x00001000,
-    eIgMSTT = REV32(MSTT) | 0x00001000,
-    eIgPWAT = REV32(PWAT) | 0x00001000,
-    eIgGRAS = REV32(GRAS) | 0x00001000,
-    eIgTREE = REV32(TREE) | 0x00001000,
-    eIgFLOR = REV32(FLOR) | 0x00001000,
-    eIgFURN = REV32(FURN) | 0x00001000,
-    eIgWEAP = REV32(WEAP) | 0x00001000,
-    eIgAMMO = REV32(AMMO) | 0x00001000,
-    eIgNPC_ = REV32(NPC_) | 0x00001000,
-    eIgLVLN = REV32(LVLN) | 0x00001000,
-    eIgKEYM = REV32(KEYM) | 0x00001000,
-    eIgALCH = REV32(ALCH) | 0x00001000,
-    eIgIDLM = REV32(IDLM) | 0x00001000,
-    eIgCOBJ = REV32(COBJ) | 0x00001000,
-    eIgPROJ = REV32(PROJ) | 0x00001000,
-    eIgSLGM = REV32(SLGM) | 0x00001000,
-    eIgLVLI = REV32(LVLI) | 0x00001000,
-    eIgWTHR = REV32(WTHR) | 0x00001000,
-    eIgCLMT = REV32(CLMT) | 0x00001000,
-    eIgREGN = REV32(REGN) | 0x00001000,
-    eIgNAVI = REV32(NAVI) | 0x00001000,
-    eIgCELL = REV32(CELL) | 0x00001000,
-    eIgWRLD = REV32(WRLD) | 0x00001000,
-    eIgDIAL = REV32(DIAL) | 0x00001000,
-    eIgQUST = REV32(QUST) | 0x00001000,
-    eIgIDLE = REV32(IDLE) | 0x00001000,
-    eIgPACK = REV32(PACK) | 0x00001000,
-    eIgCSTY = REV32(CSTY) | 0x00001000,
-    eIgLSCR = REV32(LSCR) | 0x00001000,
-    eIgLVSP = REV32(LVSP) | 0x00001000,
-    eIgANIO = REV32(ANIO) | 0x00001000,
-    eIgWATR = REV32(WATR) | 0x00001000,
-    eIgEFSH = REV32(EFSH) | 0x00001000,
-    eIgEXPL = REV32(EXPL) | 0x00001000,
-    eIgDEBR = REV32(DEBR) | 0x00001000,
-    eIgIMGS = REV32(IMGS) | 0x00001000,
-    eIgIMAD = REV32(IMAD) | 0x00001000,
-    eIgFLST = REV32(FLST) | 0x00001000,
-    eIgPERK = REV32(PERK) | 0x00001000,
-    eIgBPTD = REV32(BPTD) | 0x00001000,
-    eIgADDN = REV32(ADDN) | 0x00001000,
-    eIgAVIF = REV32(AVIF) | 0x00001000,
-    eIgCAMS = REV32(CAMS) | 0x00001000,
-    eIgCPTH = REV32(CPTH) | 0x00001000,
-    eIgVTYP = REV32(VTYP) | 0x00001000,
-    eIgIPCT = REV32(IPCT) | 0x00001000,
-    eIgIPDS = REV32(IPDS) | 0x00001000,
-    eIgARMA = REV32(ARMA) | 0x00001000,
-    eIgECZN = REV32(ECZN) | 0x00001000,
-    eIgMESG = REV32(MESG) | 0x00001000,
-    eIgRGDL = REV32(RGDL) | 0x00001000,
-    eIgDOBJ = REV32(DOBJ) | 0x00001000,
-    eIgLGTM = REV32(LGTM) | 0x00001000,
-    eIgMUSC = REV32(MUSC) | 0x00001000,
+        eIgGMST = REV32(GMST) | 0x00001000, //Record::fIsIgnored
+        eIgTXST = REV32(TXST) | 0x00001000,
+        eIgGLOB = REV32(GLOB) | 0x00001000,
+        eIgCLAS = REV32(CLAS) | 0x00001000,
+        eIgFACT = REV32(FACT) | 0x00001000,
+        eIgHDPT = REV32(HDPT) | 0x00001000,
+        eIgHAIR = REV32(HAIR) | 0x00001000,
+        eIgEYES = REV32(EYES) | 0x00001000,
+        eIgRACE = REV32(RACE) | 0x00001000,
+        eIgSOUN = REV32(SOUN) | 0x00001000,
+        eIgASPC = REV32(ASPC) | 0x00001000,
+        eIgMGEF = REV32(MGEF) | 0x00001000,
+        eIgSCPT = REV32(SCPT) | 0x00001000,
+        eIgLTEX = REV32(LTEX) | 0x00001000,
+        eIgENCH = REV32(ENCH) | 0x00001000,
+        eIgSPEL = REV32(SPEL) | 0x00001000,
+        eIgACTI = REV32(ACTI) | 0x00001000,
+        eIgTACT = REV32(TACT) | 0x00001000,
+        eIgARMO = REV32(ARMO) | 0x00001000,
+        eIgBOOK = REV32(BOOK) | 0x00001000,
+        eIgCONT = REV32(CONT) | 0x00001000,
+        eIgDOOR = REV32(DOOR) | 0x00001000,
+        eIgINGR = REV32(INGR) | 0x00001000,
+        eIgLIGH = REV32(LIGH) | 0x00001000,
+        eIgMISC = REV32(MISC) | 0x00001000,
+        eIgAPPA = REV32(APPA) | 0x00001000,
+        eIgSTAT = REV32(STAT) | 0x00001000,
+        eIgSCOL = REV32(SCOL) | 0x00001000,
+        eIgMSTT = REV32(MSTT) | 0x00001000,
+        eIgPWAT = REV32(PWAT) | 0x00001000,
+        eIgGRAS = REV32(GRAS) | 0x00001000,
+        eIgTREE = REV32(TREE) | 0x00001000,
+        eIgFLOR = REV32(FLOR) | 0x00001000,
+        eIgFURN = REV32(FURN) | 0x00001000,
+        eIgWEAP = REV32(WEAP) | 0x00001000,
+        eIgAMMO = REV32(AMMO) | 0x00001000,
+        eIgNPC_ = REV32(NPC_) | 0x00001000,
+        eIgLVLN = REV32(LVLN) | 0x00001000,
+        eIgKEYM = REV32(KEYM) | 0x00001000,
+        eIgALCH = REV32(ALCH) | 0x00001000,
+        eIgIDLM = REV32(IDLM) | 0x00001000,
+        eIgCOBJ = REV32(COBJ) | 0x00001000,
+        eIgPROJ = REV32(PROJ) | 0x00001000,
+        eIgSLGM = REV32(SLGM) | 0x00001000,
+        eIgLVLI = REV32(LVLI) | 0x00001000,
+        eIgWTHR = REV32(WTHR) | 0x00001000,
+        eIgCLMT = REV32(CLMT) | 0x00001000,
+        eIgREGN = REV32(REGN) | 0x00001000,
+        eIgNAVI = REV32(NAVI) | 0x00001000,
+        eIgCELL = REV32(CELL) | 0x00001000,
+        eIgWRLD = REV32(WRLD) | 0x00001000,
+        eIgDIAL = REV32(DIAL) | 0x00001000,
+        eIgQUST = REV32(QUST) | 0x00001000,
+        eIgIDLE = REV32(IDLE) | 0x00001000,
+        eIgPACK = REV32(PACK) | 0x00001000,
+        eIgCSTY = REV32(CSTY) | 0x00001000,
+        eIgLSCR = REV32(LSCR) | 0x00001000,
+        eIgLVSP = REV32(LVSP) | 0x00001000,
+        eIgANIO = REV32(ANIO) | 0x00001000,
+        eIgWATR = REV32(WATR) | 0x00001000,
+        eIgEFSH = REV32(EFSH) | 0x00001000,
+        eIgEXPL = REV32(EXPL) | 0x00001000,
+        eIgDEBR = REV32(DEBR) | 0x00001000,
+        eIgIMGS = REV32(IMGS) | 0x00001000,
+        eIgIMAD = REV32(IMAD) | 0x00001000,
+        eIgFLST = REV32(FLST) | 0x00001000,
+        eIgPERK = REV32(PERK) | 0x00001000,
+        eIgBPTD = REV32(BPTD) | 0x00001000,
+        eIgADDN = REV32(ADDN) | 0x00001000,
+        eIgAVIF = REV32(AVIF) | 0x00001000,
+        eIgCAMS = REV32(CAMS) | 0x00001000,
+        eIgCPTH = REV32(CPTH) | 0x00001000,
+        eIgVTYP = REV32(VTYP) | 0x00001000,
+        eIgIPCT = REV32(IPCT) | 0x00001000,
+        eIgIPDS = REV32(IPDS) | 0x00001000,
+        eIgARMA = REV32(ARMA) | 0x00001000,
+        eIgECZN = REV32(ECZN) | 0x00001000,
+        eIgMESG = REV32(MESG) | 0x00001000,
+        eIgRGDL = REV32(RGDL) | 0x00001000,
+        eIgDOBJ = REV32(DOBJ) | 0x00001000,
+        eIgLGTM = REV32(LGTM) | 0x00001000,
+        eIgMUSC = REV32(MUSC) | 0x00001000,
 
-    eIgKYWD = REV32(KYWD) | 0x00001000,
-    eIgLCRT = REV32(LCRT) | 0x00001000,
-    eIgAACT = REV32(AACT) | 0x00001000,
-    eIgSCRL = REV32(CLDC) | 0x00001000,
-    eIgCLDC = REV32(MUSC) | 0x00001000,
-    eIgHAZD = REV32(HAZD) | 0x00001000,
-    eIgSPGD = REV32(SPGD) | 0x00001000,
-    eIgRFCT = REV32(MATT) | 0x00001000,
-    eIgMATT = REV32(MUSC) | 0x00001000,
-    eIgLCTN = REV32(LCTN) | 0x00001000,
-    eIgFSTP = REV32(FSTP) | 0x00001000,
-    eIgFSTS = REV32(FSTS) | 0x00001000,
-    eIgSMBN = REV32(SMBN) | 0x00001000,
-    eIgSMQN = REV32(SMQN) | 0x00001000,
-    eIgSMEN = REV32(SMEN) | 0x00001000,
-    eIgDLBR = REV32(DLBR) | 0x00001000,
-    eIgMUST = REV32(MUST) | 0x00001000,
-    eIgDLVW = REV32(DLVW) | 0x00001000,
-    eIgWOOP = REV32(WOOP) | 0x00001000,
-    eIgSHOU = REV32(SHOU) | 0x00001000,
-    eIgEQUP = REV32(EQUP) | 0x00001000,
-    eIgRELA = REV32(RELA) | 0x00001000,
-    eIgSCEN = REV32(SCEN) | 0x00001000,
-    eIgASTP = REV32(ASTP) | 0x00001000,
-    eIgOTFT = REV32(OTFT) | 0x00001000,
-    eIgARTO = REV32(ARTO) | 0x00001000,
-    eIgMATO = REV32(MATO) | 0x00001000,
-    eIgMOVT = REV32(MOVT) | 0x00001000,
-    eIgSNDR = REV32(SNDR) | 0x00001000,
-    eIgDUAL = REV32(DUAL) | 0x00001000,
-    eIgSNCT = REV32(SNCT) | 0x00001000,
-    eIgSOPM = REV32(SOPM) | 0x00001000,
-    eIgCOLL = REV32(COLL) | 0x00001000,
-    eIgCLFM = REV32(CLFM) | 0x00001000,
-    eIgREVB = REV32(REVB) | 0x00001000,
-        };
+        eIgKYWD = REV32(KYWD) | 0x00001000,
+        eIgLCRT = REV32(LCRT) | 0x00001000,
+        eIgAACT = REV32(AACT) | 0x00001000,
+        eIgSCRL = REV32(CLDC) | 0x00001000,
+        eIgCLDC = REV32(MUSC) | 0x00001000,
+        eIgHAZD = REV32(HAZD) | 0x00001000,
+        eIgSPGD = REV32(SPGD) | 0x00001000,
+        eIgRFCT = REV32(MATT) | 0x00001000,
+        eIgMATT = REV32(MUSC) | 0x00001000,
+        eIgLCTN = REV32(LCTN) | 0x00001000,
+        eIgFSTP = REV32(FSTP) | 0x00001000,
+        eIgFSTS = REV32(FSTS) | 0x00001000,
+        eIgSMBN = REV32(SMBN) | 0x00001000,
+        eIgSMQN = REV32(SMQN) | 0x00001000,
+        eIgSMEN = REV32(SMEN) | 0x00001000,
+        eIgDLBR = REV32(DLBR) | 0x00001000,
+        eIgMUST = REV32(MUST) | 0x00001000,
+        eIgDLVW = REV32(DLVW) | 0x00001000,
+        eIgWOOP = REV32(WOOP) | 0x00001000,
+        eIgSHOU = REV32(SHOU) | 0x00001000,
+        eIgEQUP = REV32(EQUP) | 0x00001000,
+        eIgRELA = REV32(RELA) | 0x00001000,
+        eIgSCEN = REV32(SCEN) | 0x00001000,
+        eIgASTP = REV32(ASTP) | 0x00001000,
+        eIgOTFT = REV32(OTFT) | 0x00001000,
+        eIgARTO = REV32(ARTO) | 0x00001000,
+        eIgMATO = REV32(MATO) | 0x00001000,
+        eIgMOVT = REV32(MOVT) | 0x00001000,
+        eIgSNDR = REV32(SNDR) | 0x00001000,
+        eIgDUAL = REV32(DUAL) | 0x00001000,
+        eIgSNCT = REV32(SNCT) | 0x00001000,
+        eIgSOPM = REV32(SOPM) | 0x00001000,
+        eIgCOLL = REV32(COLL) | 0x00001000,
+        eIgCLFM = REV32(CLFM) | 0x00001000,
+        eIgREVB = REV32(REVB) | 0x00001000,
+    };
 
     if(Flags.IsNoLoad || Flags.IsCreateNew || !file_map.is_open() || Flags.LoadedGRUPs)
         {
@@ -228,6 +231,16 @@ SINT32 TES5File::Load(RecordOp &read_parser, RecordOp &indexer, std::vector<Form
             }
         return 0;
         }
+
+    // Load translation strings
+    if (TES4.IsTurnOffFire())   // IsTurnOffFire == IsLookupStrings
+    {
+        if (LookupStrings == NULL)
+        {
+            LookupStrings = new StringLookups();
+            LookupStrings->Open(FileName);
+        }
+    }
 
     Flags.LoadedGRUPs = true;
     unsigned char *group_buffer_end = NULL;
@@ -306,6 +319,11 @@ SINT32 TES5File::Load(RecordOp &read_parser, RecordOp &indexer, std::vector<Form
           //case eIgASTP:
             case REV32(ASTP): // EDID: FavorTarget (new record-type)
                 ASTP.Read(buffer_start, buffer_position, group_buffer_end, indexer, parser, DeletedRecords, processor, FileName);
+                break;
+
+          //case eIgAPPA:
+            case REV32(APPA): // EDID: Grimoire05Master (Oblivion type)
+                APPA.Read(buffer_start, buffer_position, group_buffer_end, indexer, parser, DeletedRecords, processor, FileName);
                 break;
 
             case eIgGMST:
@@ -460,8 +478,6 @@ SINT32 TES5File::Load(RecordOp &read_parser, RecordOp &indexer, std::vector<Form
       //case eIgMUSC:
         case REV32(MUSC): // EDID: MUSExploreSovngardeChantExterior
 
-      //case eIgAPPA:
-        case REV32(APPA): // EDID: Grimoire05Master (Oblivion type)
         case eIgFLOR:
         case REV32(FLOR): // EDID: DeadFXSalmon02 (Oblivion type)
         case eIgSLGM:
