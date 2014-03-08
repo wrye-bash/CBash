@@ -48,7 +48,7 @@
 #include <new.h>
 //#include "mmgr.h"
 
-#ifdef	COMPILING_STATIC
+#ifdef COMPILING_STATIC
     #define CPPDLLEXTERN 
 #else
     #define CPPDLLEXTERN extern "C" __declspec(dllexport)
@@ -1531,7 +1531,7 @@ CPPDLLEXTERN SINT32 GetNumIdenticalToMasterRecords(ModFile *ModID)
     try
         {
         //ValidatePointer(RecordID1);
-		//ValidatePointer(RecordID2);
+                //ValidatePointer(RecordID2);
 
         ModID->Parent->identical_records.clear();
 
@@ -1561,7 +1561,7 @@ CPPDLLEXTERN SINT32 GetIdenticalToMasterRecords(ModFile *ModID, RECORDIDARRAY Re
     try
         {
         //ValidatePointer(RecordID1);
-		//ValidatePointer(RecordID2);
+                //ValidatePointer(RecordID2);
         typedef boost::unordered_set<Record *>::iterator identical_it;
         UINT32 count = 0;
         for(identical_it item = ModID->Parent->identical_records.begin(); item != ModID->Parent->identical_records.end(); item++)

@@ -1270,13 +1270,13 @@ class GRUPRecords<Ob::WRLDRecord, RecType, AllocUnit, IsKeyedByEditorID>
                             read_parser.Accept((Record *&)last_cell_record);
                             last_cell_record->XCLC.Load(); //in-case no XCLC chunk is specified
 
-			    // "Oblivion.esm"->"TestRender" has no XCLC
+                            // "Oblivion.esm"->"TestRender" has no XCLC
                             posX = 0;
-			    posY = 0;
-			    if (last_cell_record->XCLC.IsLoaded()) {
-			      posX = last_cell_record->XCLC->posX;
-			      posY = last_cell_record->XCLC->posY;
-			    }
+                            posY = 0;
+                            if (last_cell_record->XCLC.IsLoaded()) {
+                                posX = last_cell_record->XCLC->posX;
+                                posY = last_cell_record->XCLC->posY;
+                            }
 
                             if(processor.Flags.IsFixupPlaceables && last_wcel_record != NULL)
                                 {

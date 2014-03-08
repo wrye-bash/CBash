@@ -237,11 +237,11 @@ ModFile * Collection::AddMod(STRING const &_FileName, ModFlags &flags, bool IsPr
         case eIsFalloutNewVegas:
             ModFiles.push_back(new FNVFile(this, FileName, ModName, flags.GetFlags()));
             ModFiles.back()->TES4.whichGame = eIsFalloutNewVegas;
-	    break;
-	case eIsSkyrim:
-	    ModFiles.push_back(new TES5File(this, FileName, ModName, flags.GetFlags()));
-	    ModFiles.back()->TES4.whichGame = eIsSkyrim;
-	    break;
+            break;
+        case eIsSkyrim:
+            ModFiles.push_back(new TES5File(this, FileName, ModName, flags.GetFlags()));
+            ModFiles.back()->TES4.whichGame = eIsSkyrim;
+            break;
         default:
             printer("AddMod: Error - Unable to add mod \"%s\". Invalid collection type.\n", ModName);
             delete []ModName;
@@ -365,13 +365,13 @@ SINT32 Collection::Load(bool (*_ProgressCallback)(const UINT32, const UINT32, co
         UINT32 x = 0;
 
         for(UINT32 p = 0; p < (UINT32)ModFiles.size(); ++p)
-	    {
-	    curModFile = ModFiles[p];
+        {
+            curModFile = ModFiles[p];
 
-	    if(_ProgressCallback && !(*_ProgressCallback)(p, (UINT32)ModFiles.size() - 1, curModFile->FileName))
-		{
-		/* TODO: clean abort */
-		}
+            if(_ProgressCallback && !(*_ProgressCallback)(p, (UINT32)ModFiles.size() - 1, curModFile->FileName))
+            {
+                /* TODO: clean abort */
+            }
 
             RecordReader read_parser(curModFile);
             //Loads GRUP and Record Headers.  Fully loads GMST records.
@@ -383,10 +383,10 @@ SINT32 Collection::Load(bool (*_ProgressCallback)(const UINT32, const UINT32, co
             Expanders.push_back(new FormIDResolver(curModFile->FormIDHandler.ExpandTable, curModFile->FormIDHandler.FileStart, curModFile->FormIDHandler.FileEnd));
             DeletedRecords.push_back(std::make_pair(curModFile, std::vector<Record *>()));
             RecordIndexer &used_indexer = curModFile->Flags.IsExtendedConflicts ? extended_indexer : indexer;
-	    used_indexer.SetModFile(curModFile);
-	    curModFile->SetFilter(filter_inclusive, filter_records, filter_wspaces);
+            used_indexer.SetModFile(curModFile);
+            curModFile->SetFilter(filter_inclusive, filter_records, filter_wspaces);
             curModFile->Load(read_parser, used_indexer, Expanders, DeletedRecords.back().second);
-            }
+        }
         //printer("Loaded\n");
         strAllLoadOrder.clear();
         UndeleteRecords(DeletedRecords);

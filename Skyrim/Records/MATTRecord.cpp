@@ -110,13 +110,13 @@ SINT32 MATTRecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer,
             }
         switch(subType)
             {
-	    case REV32(EDID): // MaterialInsect
+            case REV32(EDID): // MaterialInsect
                 EDID.Read(buffer, subSize, CompressedOnDisk);
                 break;
             case REV32(MNAM): // Insect
                 MNAM.Read(buffer, subSize, CompressedOnDisk);
                 break;
-	    case REV32(CNAM): // 12 bytes, f1 f0 f0 3e - b9 b8 b8 3d - b9 b8 b8 3d, flags?
+            case REV32(CNAM): // 12 bytes, f1 f0 f0 3e - b9 b8 b8 3d - b9 b8 b8 3d, flags?
                 CNAM.Read(buffer, subSize, CompressedOnDisk);
                 break;
             case REV32(BNAM): // 4 bytes, 00 00 80 3e, flags
@@ -127,10 +127,10 @@ SINT32 MATTRecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer,
                 break;
             case REV32(HNAM): // 4 bytes, 86 a2 05 00, formID -> IPDS (PHYBodyMedium), Havok NAMe
                 HNAM.Read(buffer, subSize);
-		break;
-	    case REV32(PNAM): // 4 bytes, 47 2f 01 00, formID -> MATT, Parent NAMe
-		PNAM.Read(buffer, subSize);
-		break;
+                break;
+            case REV32(PNAM): // 4 bytes, 47 2f 01 00, formID -> MATT, Parent NAMe
+                PNAM.Read(buffer, subSize);
+                break;
             default:
                 //printer("FileName = %s\n", FileName);
                 printer("  MATT: %08X - Unknown subType = %04x [%c%c%c%c]\n", formID, subType, (subType >> 0) & 0xFF, (subType >> 8) & 0xFF, (subType >> 16) & 0xFF, (subType >> 24) & 0xFF);
@@ -176,8 +176,8 @@ bool MATTRecord::operator ==(const MATTRecord &other) const
             CNAM == other.CNAM &&
             BNAM == other.BNAM &&
             FNAM == other.FNAM &&
-	    HNAM == other.HNAM &&
-	    PNAM == other.PNAM);
+            HNAM == other.HNAM &&
+            PNAM == other.PNAM);
     }
 
 bool MATTRecord::operator !=(const MATTRecord &other) const

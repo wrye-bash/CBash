@@ -51,14 +51,14 @@ class ARTORecord : public TES5Record // Action record
         };
 
     public:
-		StringRecord EDID; // Editor ID
+        StringRecord EDID; // Editor ID
         ReqSubRecord<GENOBND> OBND; // Bounds
         SemiOptSubRecord<MODEL> MODL; // Model
         ReqSimpleSubRecord<UINT32> DNAM; // Flags
 
-		ARTORecord(unsigned char *_recData=NULL);
-		ARTORecord(ARTORecord *srcRecord);
-		~ARTORecord();
+        ARTORecord(unsigned char *_recData=NULL);
+        ARTORecord(ARTORecord *srcRecord);
+        ~ARTORecord();
 
         bool IsFirstPerson() const;
         void IsFirstPerson(bool value);
@@ -67,21 +67,21 @@ class ARTORecord : public TES5Record // Action record
         bool IsFlagMask(UINT32 Mask, bool Exact=false) const;
         void SetFlagMask(UINT32 Mask);
 
-		UINT32 GetFieldAttribute(DEFAULTED_FIELD_IDENTIFIERS, UINT32 WhichAttribute=0);
-		void * GetField(DEFAULTED_FIELD_IDENTIFIERS, void **FieldValues=NULL);
-		bool   SetField(DEFAULTED_FIELD_IDENTIFIERS, void *FieldValue=NULL, UINT32 ArraySize=0);
-		void   DeleteField(DEFAULTED_FIELD_IDENTIFIERS);
+        UINT32 GetFieldAttribute(DEFAULTED_FIELD_IDENTIFIERS, UINT32 WhichAttribute=0);
+        void * GetField(DEFAULTED_FIELD_IDENTIFIERS, void **FieldValues=NULL);
+        bool   SetField(DEFAULTED_FIELD_IDENTIFIERS, void *FieldValue=NULL, UINT32 ArraySize=0);
+        void   DeleteField(DEFAULTED_FIELD_IDENTIFIERS);
 
-		UINT32 GetType();
-		STRING GetStrType();
+        UINT32 GetType();
+        STRING GetStrType();
 
-		SINT32 ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk=false);
-		SINT32 Unload();
-		SINT32 WriteRecord(FileWriter &writer);
+        SINT32 ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk=false);
+        SINT32 Unload();
+        SINT32 WriteRecord(FileWriter &writer);
 
-		bool operator ==(const ARTORecord &other) const;
-		bool operator !=(const ARTORecord &other) const;
-		bool equals(Record *other);
+        bool operator ==(const ARTORecord &other) const;
+        bool operator !=(const ARTORecord &other) const;
+        bool equals(Record *other);
     };
 
 } // namespace Sk

@@ -58,9 +58,9 @@ class TES4Record : public Record
         whichGameTypes whichGame;
         ReqSubRecord<TES4HEDR> HEDR; //Header
         RawRecord OFST; //Unknown
-	RawRecord DELE; //Unknown
-	RawRecord INTV; //Unknown (Skyrim)
-	RawRecord PURG; //Unknown (Skyrim)
+        RawRecord DELE; //Unknown
+        RawRecord INTV; //Unknown (Skyrim)
+        RawRecord PURG; //Unknown (Skyrim)
         StringRecord CNAM; //Author
         StringRecord SNAM; //Description
         std::vector<STRING> MAST; //Master Files

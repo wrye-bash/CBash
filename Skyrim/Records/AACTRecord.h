@@ -42,28 +42,28 @@ namespace Sk {
 
 class AACTRecord : public TES5Record // Action record
     {
-	public:
-		StringRecord EDID; // Editor ID
+    public:
+        StringRecord EDID; // Editor ID
 
-		AACTRecord(unsigned char *_recData=NULL);
-		AACTRecord(AACTRecord *srcRecord);
-		~AACTRecord();
+        AACTRecord(unsigned char *_recData=NULL);
+        AACTRecord(AACTRecord *srcRecord);
+        ~AACTRecord();
 
-		UINT32 GetFieldAttribute(DEFAULTED_FIELD_IDENTIFIERS, UINT32 WhichAttribute=0);
-		void * GetField(DEFAULTED_FIELD_IDENTIFIERS, void **FieldValues=NULL);
-		bool   SetField(DEFAULTED_FIELD_IDENTIFIERS, void *FieldValue=NULL, UINT32 ArraySize=0);
-		void   DeleteField(DEFAULTED_FIELD_IDENTIFIERS);
+        UINT32 GetFieldAttribute(DEFAULTED_FIELD_IDENTIFIERS, UINT32 WhichAttribute=0);
+        void * GetField(DEFAULTED_FIELD_IDENTIFIERS, void **FieldValues=NULL);
+        bool   SetField(DEFAULTED_FIELD_IDENTIFIERS, void *FieldValue=NULL, UINT32 ArraySize=0);
+        void   DeleteField(DEFAULTED_FIELD_IDENTIFIERS);
 
-		UINT32 GetType();
-		STRING GetStrType();
+        UINT32 GetType();
+        STRING GetStrType();
 
-		SINT32 ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk=false);
-		SINT32 Unload();
-		SINT32 WriteRecord(FileWriter &writer);
+        SINT32 ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk=false);
+        SINT32 Unload();
+        SINT32 WriteRecord(FileWriter &writer);
 
-		bool operator ==(const AACTRecord &other) const;
-		bool operator !=(const AACTRecord &other) const;
-		bool equals(Record *other);
+        bool operator ==(const AACTRecord &other) const;
+        bool operator !=(const AACTRecord &other) const;
+        bool equals(Record *other);
     };
 
 } // namespace Sk

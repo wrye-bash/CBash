@@ -205,7 +205,7 @@ class TES5GRUPRecords<Sk::CELLRecord, RecType, AllocUnit, IsKeyedByEditorID>
                     cell_pool.add_buffer(cell_buffer);
                     }
 
-		/*
+                /*
                 unsigned char *achr_buffer = NULL;
                 if(numACHR)
                     {
@@ -391,7 +391,7 @@ class TES5GRUPRecords<Sk::CELLRecord, RecType, AllocUnit, IsKeyedByEditorID>
 
                 records.clear();
 
-		/*
+                /*
                 for(UINT32 x = 0; x < orphaned_records->ACHR.size(); ++x)
                     {
                     curRecord = orphaned_records->ACHR[x];
@@ -595,7 +595,7 @@ class TES5GRUPRecords<Sk::CELLRecord, RecType, AllocUnit, IsKeyedByEditorID>
                             subBlockSize += curRecord->Write(writer, bMastersChanged, expander, collapser, Expanders);
                             //Place the ACHR, ACRE, REFR, PGRE, PMIS, PBEA, PFLA, PCBE, NAVM records into their proper GRUP
 
-			    /*
+                            /*
                             for(UINT32 y = 0; y < curRecord->ACHR.size(); ++y)
                                 {
                                 if(curRecord->ACHR[y]->IsPersistent())
@@ -887,8 +887,8 @@ class TES5GRUPRecords<Sk::WRLDRecord, RecType, AllocUnit, IsKeyedByEditorID>
             while(buffer_position < group_buffer_end){
                 if((processor.IsSkipAllRecords && processor.IsTrackNewTypes) &&
                     processor.NewTypes.count(REV32(WRLD)) > 0 &&
-		    processor.NewTypes.count(REV32(CELL)) > 0 &&
-		    processor.NewTypes.count(REV32(LAND)) > 0/* &&
+                    processor.NewTypes.count(REV32(CELL)) > 0 &&
+                    processor.NewTypes.count(REV32(LAND)) > 0/* &&
                     processor.NewTypes.count(REV32(ACHR)) > 0 &&
                     processor.NewTypes.count(REV32(ACRE)) > 0 &&
                     processor.NewTypes.count(REV32(REFR)) > 0 &&
@@ -963,8 +963,8 @@ class TES5GRUPRecords<Sk::WRLDRecord, RecType, AllocUnit, IsKeyedByEditorID>
 
                         case REV32(LAND):
                             numLAND++;
-			    break;
-			    /*
+                            break;
+                            /*
                         case REV32(ACHR):
                             numACHR++;
                             break;
@@ -1205,8 +1205,8 @@ class TES5GRUPRecords<Sk::WRLDRecord, RecType, AllocUnit, IsKeyedByEditorID>
                                 last_cell_record->XCLC.Load(); //in-case no XCLC chunk is specified
                                 GridXY_LAND[last_cell_record->XCLC->posX][last_cell_record->XCLC->posY] = (Sk::LANDRecord *)curRecord;
                                 }
-			    break;
-			    /*
+                            break;
+                            /*
                         case REV32(ACHR):
                             curRecord = new(achr_buffer) Sk::ACHRRecord(header.data);
                             achr_buffer += sizeof(Sk::ACHRRecord);
@@ -1786,9 +1786,9 @@ class TES5GRUPRecords<Sk::WRLDRecord, RecType, AllocUnit, IsKeyedByEditorID>
                         if(curCell->LAND != NULL)
                             Temporary.push_back(curCell->LAND);
                         if(CloseMod)
-			    curCell->LAND = NULL;
+                            curCell->LAND = NULL;
 
-			UINT32 ignored_count = 0;
+                        UINT32 ignored_count = 0;
 /*
                         for(UINT32 y = 0; y < curCell->ACHR.size(); ++y)
                             {

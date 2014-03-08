@@ -42,34 +42,34 @@ namespace Sk {
 
 class ASPCRecord : public TES5Record // Acoustic Space Record
     {
-	public:
-		StringRecord EDID; // Editor ID
+    public:
+        StringRecord EDID; // Editor ID
         ReqSubRecord<GENOBND> OBND; // Object Bounds
         OptSimpleSubRecord<FORMID> SNAM; // ambient
         OptSimpleSubRecord<FORMID> RDAT; // region
         OptSimpleSubRecord<FORMID> BNAM; // reverb
 
-		ASPCRecord(unsigned char *_recData=NULL);
-		ASPCRecord(ASPCRecord *srcRecord);
-		~ASPCRecord();
+        ASPCRecord(unsigned char *_recData=NULL);
+        ASPCRecord(ASPCRecord *srcRecord);
+        ~ASPCRecord();
 
         bool VisitFormIDs(FormIDOp &op);
 
-		UINT32 GetFieldAttribute(DEFAULTED_FIELD_IDENTIFIERS, UINT32 WhichAttribute=0);
-		void * GetField(DEFAULTED_FIELD_IDENTIFIERS, void **FieldValues=NULL);
-		bool   SetField(DEFAULTED_FIELD_IDENTIFIERS, void *FieldValue=NULL, UINT32 ArraySize=0);
-		void   DeleteField(DEFAULTED_FIELD_IDENTIFIERS);
+        UINT32 GetFieldAttribute(DEFAULTED_FIELD_IDENTIFIERS, UINT32 WhichAttribute=0);
+        void * GetField(DEFAULTED_FIELD_IDENTIFIERS, void **FieldValues=NULL);
+        bool   SetField(DEFAULTED_FIELD_IDENTIFIERS, void *FieldValue=NULL, UINT32 ArraySize=0);
+        void   DeleteField(DEFAULTED_FIELD_IDENTIFIERS);
 
-		UINT32 GetType();
-		STRING GetStrType();
+        UINT32 GetType();
+        STRING GetStrType();
 
-		SINT32 ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk=false);
-		SINT32 Unload();
-		SINT32 WriteRecord(FileWriter &writer);
+        SINT32 ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk=false);
+        SINT32 Unload();
+        SINT32 WriteRecord(FileWriter &writer);
 
-		bool operator ==(const ASPCRecord &other) const;
-		bool operator !=(const ASPCRecord &other) const;
-		bool equals(Record *other);
+        bool operator ==(const ASPCRecord &other) const;
+        bool operator !=(const ASPCRecord &other) const;
+        bool equals(Record *other);
     };
 
 } // namespace Sk

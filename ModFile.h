@@ -51,9 +51,9 @@ class ModFile
 
         unsigned char *buffer_start, *buffer_position, *buffer_end;
 
-	boost::unordered_set<UINT32> filter_records;
-	boost::unordered_set<FORMID> filter_wspaces;
-	bool filter_inclusive;
+        boost::unordered_set<UINT32> filter_records;
+        boost::unordered_set<FORMID> filter_wspaces;
+        bool filter_inclusive;
 
         FormIDHandlerClass FormIDHandler;
         ModFlags Flags;
@@ -83,7 +83,7 @@ class ModFile
         virtual SINT32   DeleteRecord(Record *&curRecord, RecordOp &deindexer) abstract {};
         virtual SINT32   Save(STRING const &SaveName, std::vector<FormIDResolver *> &Expanders, bool CloseMod, RecordOp &indexer) abstract {};
 
-	virtual void	 SetFilter(bool inclusive, boost::unordered_set<UINT32> &RecordTypes, boost::unordered_set<FORMID> &WorldSpaces) abstract {};
+        virtual void     SetFilter(bool inclusive, boost::unordered_set<UINT32> &RecordTypes, boost::unordered_set<FORMID> &WorldSpaces) abstract {};
 
         virtual void     VisitAllRecords(RecordOp &op) abstract {};
         virtual void     VisitRecords(const UINT32 &RecordType, RecordOp &op) abstract {};

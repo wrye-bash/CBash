@@ -79,7 +79,7 @@ class LTEXRecord : public TES5Record //Landscape Texture
         OptSimpleSubRecord<FORMID> TNAM; //Texture (Skyrim) -> TXST
         ReqSubRecord<LTEXHNAM> HNAM; //Havok Data
         ReqSimpleSubRecord<UINT8> SNAM; //Texture Specular Exponent
-	UnorderedSparseArray<FORMID> GNAM; //Grasses
+        UnorderedSparseArray<FORMID> GNAM; //Grasses
         ReqSimpleSubRecord<FORMID> MNAM; //Material (Skyrim) -> MATT
 
         LTEXRecord(unsigned char *_recData=NULL);

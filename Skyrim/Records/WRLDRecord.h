@@ -60,8 +60,8 @@ class WRLDRecord : public TES5Record //Worldspace
             fIsNoFastTravel = 0x02,
             fIsUnknown2     = 0x04,
             fIsNoLODWater   = 0x10,
-            fIsUnknown3     = 0x20,	// FNV: fIsNoLODNoise
-            fIsUnknown4     = 0x40,	// FNV: fIsNoNPCFallDmg
+            fIsUnknown3     = 0x20,        // FNV: fIsNoLODNoise
+            fIsUnknown4     = 0x40,        // FNV: fIsNoNPCFallDmg
             fIsUnknown5     = 0x80
             };
     public:
@@ -88,11 +88,11 @@ class WRLDRecord : public TES5Record //Worldspace
         StringRecord XNAM; //Water Noise Texture (REQ)
         UnorderedSparseArray<GENIMPS *> IMPS; //Swapped Impact
         OptSubRecord<GENIMPF> IMPF; //Footstep Materials
-	RawRecord OFST; //Unknown
-	RawRecord RNAM; //Unknown (Skyrim)
-	RawRecord NAMA; //Unknown (Skyrim)
-	StringRecord TNAM; //Texture Filename (Skyrim)
-	StringRecord UNAM; //Normal Texture Filename (Skyrim)
+        RawRecord OFST; //Unknown
+        RawRecord RNAM; //Unknown (Skyrim)
+        RawRecord NAMA; //Unknown (Skyrim)
+        StringRecord TNAM; //Texture Filename (Skyrim)
+        StringRecord UNAM; //Normal Texture Filename (Skyrim)
 
         //Record *ROAD;
         Record *CELL;

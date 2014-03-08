@@ -209,7 +209,7 @@ SINT32 TXSTRecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer,
             case REV32(TX05):
                 TX05.Read(buffer, subSize, CompressedOnDisk);
                 break;
-	    /* Skyrim --------------------------------------- */
+            /* Skyrim --------------------------------------- */
             case REV32(TX06):
                 TX06.Read(buffer, subSize, CompressedOnDisk);
                 break;
@@ -282,9 +282,9 @@ bool TXSTRecord::operator ==(const TXSTRecord &other) const
             TX02.equalsi(other.TX02) &&
             TX03.equalsi(other.TX03) &&
             TX04.equalsi(other.TX04) &&
-	    TX05.equalsi(other.TX05) &&
-	    TX06.equalsi(other.TX06) &&
-	    TX07.equalsi(other.TX07)
+            TX05.equalsi(other.TX05) &&
+            TX06.equalsi(other.TX06) &&
+            TX07.equalsi(other.TX07)
             );
     }
 

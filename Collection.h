@@ -52,8 +52,8 @@
 //        SortedRecords();
 //        ~SortedRecords();
 //
-//	    void push_back(Record *&record);
-//	    void erase(UINT32 &index);
+//        void push_back(Record *&record);
+//        void erase(UINT32 &index);
 //    };
 
 //struct IndexedRecords
@@ -91,9 +91,9 @@ class Collection
         boost::unordered_set<Record *> changed_records;
         std::vector<GenericOp *> closing_ops;
 
-	boost::unordered_set<UINT32> filter_records;
-	boost::unordered_set<FORMID> filter_wspaces;
-	bool filter_inclusive;
+        boost::unordered_set<UINT32> filter_records;
+        boost::unordered_set<FORMID> filter_wspaces;
+        bool filter_inclusive;
 
         Collection(STRING const &ModsPath, UINT32 _CollectionType);
         ~Collection();
@@ -102,12 +102,12 @@ class Collection
         ModFile * IsModAdded(STRING const &ModName);
         SINT32 SaveMod(ModFile *&curModFile, SaveFlags &flags, STRING const DestinationName);
 
-	void SetFilterMode(bool inclusive);
-	void AddRecordFilter(UINT32 recordtype);
-	void AddWSpaceFilter(FORMID worldspace);
-	void ResetFilter();
+        void SetFilterMode(bool inclusive);
+        void AddRecordFilter(UINT32 recordtype);
+        void AddWSpaceFilter(FORMID worldspace);
+        void ResetFilter();
 
-	// Callback(position, maximum, modfile-name);
+        // Callback(position, maximum, modfile-name);
         SINT32 Load(bool (*_ProgressCallback)(const UINT32, const UINT32, const STRING) = NULL);
         void   UndeleteRecords(std::vector<std::pair<ModFile *, std::vector<Record *> > > &DeletedRecords);
         SINT32 Unload();

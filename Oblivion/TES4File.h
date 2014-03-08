@@ -167,7 +167,7 @@ class TES4File : public ModFile
         SINT32   DeleteRecord(Record *&curRecord, RecordOp &deindexer);
         SINT32   Save(STRING const &SaveName, std::vector<FormIDResolver *> &Expanders, bool CloseMod, RecordOp &indexer);
 
-        void	 SetFilter(bool inclusive, boost::unordered_set<UINT32> &RecordTypes, boost::unordered_set<FORMID> &WorldSpaces);
+        void     SetFilter(bool inclusive, boost::unordered_set<UINT32> &RecordTypes, boost::unordered_set<FORMID> &WorldSpaces);
 
         void     VisitAllRecords(RecordOp &op);
         void     VisitRecords(const UINT32 &RecordType, RecordOp &op);

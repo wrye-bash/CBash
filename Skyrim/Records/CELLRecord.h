@@ -108,13 +108,13 @@ class CELLRecord : public TES5Record //Cell
 //      OptSubRecord<TES5XOWN> Ownership; //Owner
         OptSimpleSubRecord<FORMID> XCAS; //Acoustic Space
         RawRecord XCMT; //Unused
-	OptSimpleSubRecord<FORMID> XCMO; //Music Type
-	RawRecord TVDT; //Unknown (Skyrim)
-	RawRecord MHDT; //Unknown (Skyrim)
-	OptSimpleSubRecord<FORMID> XLCN; //Unknown (Skyrim) -> LCTN
-	RawRecord XWCN; //Unknown (Skyrim)
-	RawRecord XWCU; //Unknown (Skyrim)
-	
+        OptSimpleSubRecord<FORMID> XCMO; //Music Type
+        RawRecord TVDT; //Unknown (Skyrim)
+        RawRecord MHDT; //Unknown (Skyrim)
+        OptSimpleSubRecord<FORMID> XLCN; //Unknown (Skyrim) -> LCTN
+        RawRecord XWCN; //Unknown (Skyrim)
+        RawRecord XWCU; //Unknown (Skyrim)
+
 /*
         std::vector<Record *> ACHR;
         std::vector<Record *> ACRE;

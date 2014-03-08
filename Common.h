@@ -1558,7 +1558,7 @@ struct ReqSubRecord
     //            !(test == REV32(PKDT) && subSize == 8 && sizeof(T) == 12) &&
     //            !(test == REV32(DATA) && subSize == 184 && sizeof(T) == 196) &&
     //            !(test == REV32(DNAM) && subSize == 184 && sizeof(T) == 196) &&
-				//!(test == REV32(DATA) && (test2 == REV32(EFSH) || test2 == REV32(GRUP)) && sizeof(T) == 308) //multiple possible subSizes
+    //            !(test == REV32(DATA) && (test2 == REV32(EFSH) || test2 == REV32(GRUP)) && sizeof(T) == 308) //multiple possible subSizes
     //            )
     //            {
     //            printer("ReqSubRecord: Info - Unable to fully parse chunk (%c%c%c%c). Size "

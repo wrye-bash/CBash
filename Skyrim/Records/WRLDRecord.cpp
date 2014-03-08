@@ -416,20 +416,20 @@ SINT32 WRLDRecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer,
                 break;
             case REV32(OFST):
                 OFST.Read(buffer, subSize, CompressedOnDisk);
-		break;
-	    /* Skyrim --------------------------------------- */
-	    case REV32(RNAM): // 264 bytes
-		RNAM.Read(buffer, subSize, CompressedOnDisk);
-		break;
-	    case REV32(NAMA): // 4 bytes
-		NAMA.Read(buffer, subSize, CompressedOnDisk);
-		break;
-	    case REV32(TNAM): // 53 bytes, Data\Textures\Landscape\Mountains\MountainSlab02.dds
-		TNAM.Read(buffer, subSize, CompressedOnDisk);
-		break;
-	    case REV32(UNAM): // 53 bytes, Data\Textures\Landscape\Mountains\MountainSlab02_N.dds
-		UNAM.Read(buffer, subSize, CompressedOnDisk);
-		break;
+                break;
+            /* Skyrim --------------------------------------- */
+            case REV32(RNAM): // 264 bytes
+                RNAM.Read(buffer, subSize, CompressedOnDisk);
+                break;
+            case REV32(NAMA): // 4 bytes
+                NAMA.Read(buffer, subSize, CompressedOnDisk);
+                break;
+            case REV32(TNAM): // 53 bytes, Data\Textures\Landscape\Mountains\MountainSlab02.dds
+                TNAM.Read(buffer, subSize, CompressedOnDisk);
+                break;
+            case REV32(UNAM): // 53 bytes, Data\Textures\Landscape\Mountains\MountainSlab02_N.dds
+                UNAM.Read(buffer, subSize, CompressedOnDisk);
+                break;
             default:
                 //printer("FileName = %s\n", FileName);
                 printer("  WRLD: %08X - Unknown subType = %04x [%c%c%c%c]\n", formID, subType, (subType >> 0) & 0xFF, (subType >> 8) & 0xFF, (subType >> 16) & 0xFF, (subType >> 24) & 0xFF);
@@ -535,13 +535,13 @@ bool WRLDRecord::operator ==(const WRLDRecord &other) const
             MICO.equalsi(other.MICO) &&
             NNAM.equalsi(other.NNAM) &&
             XNAM.equalsi(other.XNAM) &&
-	    IMPS == other.IMPS &&
-	    IMPF == other.IMPF &&
-	    OFST == other.OFST &&
-	    RNAM == other.RNAM &&
-	    NAMA == other.NAMA &&
-	    TNAM.equalsi(other.TNAM) &&
-	    UNAM.equalsi(other.UNAM));
+            IMPS == other.IMPS &&
+            IMPF == other.IMPF &&
+            OFST == other.OFST &&
+            RNAM == other.RNAM &&
+            NAMA == other.NAMA &&
+            TNAM.equalsi(other.TNAM) &&
+            UNAM.equalsi(other.UNAM));
     }
 
 bool WRLDRecord::operator !=(const WRLDRecord &other) const

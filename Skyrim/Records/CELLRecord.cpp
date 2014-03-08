@@ -92,7 +92,7 @@ CELLRecord::CELLRecord(CELLRecord *srcRecord):
     FULL = srcRecord->FULL;
     DATA = srcRecord->DATA;
     XCLC = srcRecord->XCLC;
-/*    XCLL = srcRecord->XCLL;*/
+/*  XCLL = srcRecord->XCLL;*/
     IMPS = srcRecord->IMPS;
     IMPF = srcRecord->IMPF;
     LTMP = srcRecord->LTMP;
@@ -105,7 +105,7 @@ CELLRecord::CELLRecord(CELLRecord *srcRecord):
     XEZN = srcRecord->XEZN;
     XCCM = srcRecord->XCCM;
     XCWT = srcRecord->XCWT;
-/*    Ownership = srcRecord->Ownership;*/
+/*  Ownership = srcRecord->Ownership;*/
     XCAS = srcRecord->XCAS;
     XCMT = srcRecord->XCMT;
     XCMO = srcRecord->XCMO;
@@ -145,7 +145,7 @@ CELLRecord::~CELLRecord()
     for(UINT32 x = 0; x < PCBE.size(); ++x)
         delete PCBE[x];
     for(UINT32 x = 0; x < NAVM.size(); ++x)
-	delete NAVM[x];
+        delete NAVM[x];
 
     delete LAND;
     */
@@ -172,7 +172,7 @@ bool CELLRecord::VisitFormIDs(FormIDOp &op)
         op.Accept(XCCM.value);
     if(XCWT.IsLoaded())
         op.Accept(XCWT.value);
-/*    if(Ownership.IsLoaded())
+/*  if(Ownership.IsLoaded())
         op.Accept(Ownership->XOWN.value);*/
     if(XCAS.IsLoaded())
         op.Accept(XCAS.value);
@@ -480,7 +480,7 @@ SINT32 CELLRecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer,
             case REV32(XCLC):
                 XCLC.Read(buffer, subSize);
                 break;
-/*            case REV32(XCLL):
+/*          case REV32(XCLL):
                 XCLL.Read(buffer, subSize);
                 break;*/
             case REV32(IMPS):
@@ -519,7 +519,7 @@ SINT32 CELLRecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer,
             case REV32(XCWT):
                 XCWT.Read(buffer, subSize);
                 break;
-/*            case REV32(XOWN):
+/*          case REV32(XOWN):
                 Ownership.Load();
                 Ownership->XOWN.Read(buffer, subSize);
                 break;
@@ -535,23 +535,23 @@ SINT32 CELLRecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer,
                 break;
             case REV32(XCMO):
                 XCMO.Read(buffer, subSize);
-		break;
-	    /* Skyrim --------------------------------------- */
-	    case REV32(TVDT): // 54445654 bytes
-		TVDT.Read(buffer, subSize, CompressedOnDisk);
-		break;
-	    case REV32(MHDT): // 1028 bytes (seems contant size)
-		MHDT.Read(buffer, subSize, CompressedOnDisk);
-		break;
-	    case REV32(XLCN): // 4 bytes
-		XLCN.Read(buffer, subSize);
-		break;
-	    case REV32(XWCN): // 4 bytes
-		XWCN.Read(buffer, subSize, CompressedOnDisk);
-		break;
-	    case REV32(XWCU): // 64 bytes
-		XWCU.Read(buffer, subSize, CompressedOnDisk);
-		break;
+                break;
+            /* Skyrim --------------------------------------- */
+            case REV32(TVDT): // 54445654 bytes
+                TVDT.Read(buffer, subSize, CompressedOnDisk);
+                break;
+            case REV32(MHDT): // 1028 bytes (seems contant size)
+                MHDT.Read(buffer, subSize, CompressedOnDisk);
+                break;
+            case REV32(XLCN): // 4 bytes
+                XLCN.Read(buffer, subSize);
+                break;
+            case REV32(XWCN): // 4 bytes
+                XWCN.Read(buffer, subSize, CompressedOnDisk);
+                break;
+            case REV32(XWCU): // 64 bytes
+                XWCU.Read(buffer, subSize, CompressedOnDisk);
+                break;
             default:
                 //printer("FileName = %s\n", FileName);
                 printer("  CELL: %08X - Unknown subType = %04x [%c%c%c%c]\n", formID, subType, (subType >> 0) & 0xFF, (subType >> 8) & 0xFF, (subType >> 16) & 0xFF, (subType >> 24) & 0xFF);
@@ -573,7 +573,7 @@ SINT32 CELLRecord::Unload()
     FULL.Unload();
     DATA.Unload();
     XCLC.Unload();
-/*    XCLL.Unload();*/
+/*  XCLL.Unload();*/
     IMPS.Unload();
     IMPF.Unload();
     LTMP.Unload();
@@ -586,7 +586,7 @@ SINT32 CELLRecord::Unload()
     XEZN.Unload();
     XCCM.Unload();
     XCWT.Unload();
-/*    Ownership.Unload();*/
+/*  Ownership.Unload();*/
     XCAS.Unload();
     XCMT.Unload();
     XCMO.Unload();
@@ -604,7 +604,7 @@ SINT32 CELLRecord::WriteRecord(FileWriter &writer)
     WRITE(FULL);
     //DATA.Unload(); //need to keep IsInterior around
     WRITE(XCLC);
-/*    WRITE(XCLL);*/
+/*  WRITE(XCLL);*/
     WRITE(IMPS);
     WRITE(IMPF);
     if(LNAM.value != 0 || LTMP.value != 0)
@@ -623,7 +623,7 @@ SINT32 CELLRecord::WriteRecord(FileWriter &writer)
     WRITE(XEZN);
     WRITE(XCCM);
     WRITE(XCWT);
-/*    Ownership.Write(writer);*/
+/*  Ownership.Write(writer);*/
     WRITE(XCAS);
     WRITE(XCMT);
     WRITE(XCMO);
@@ -639,7 +639,7 @@ bool CELLRecord::operator ==(const CELLRecord &other) const
     {
     return (DATA == other.DATA &&
             XCLC == other.XCLC &&
-/*            XCLL == other.XCLL &&*/
+/*          XCLL == other.XCLL &&*/
             IMPF == other.IMPF &&
             LTMP == other.LTMP &&
             LNAM == other.LNAM &&
@@ -652,17 +652,17 @@ bool CELLRecord::operator ==(const CELLRecord &other) const
             XCMO == other.XCMO &&
             IMPS == other.IMPS &&
             XCLR == other.XCLR &&
-/*            Ownership == other.Ownership &&*/
+/*          Ownership == other.Ownership &&*/
             EDID.equalsi(other.EDID) &&
             FULL.equals(other.FULL) &&
             XNAM.equalsi(other.XNAM) &&
             XCET == other.XCET &&
-	    XCMT == other.XCMT &&
-	    TVDT == other.TVDT &&
-	    MHDT == other.MHDT &&
-	    XLCN == other.XLCN &&
-	    XWCN == other.XWCN &&
-	    XWCU == other.XWCU);
+            XCMT == other.XCMT &&
+            TVDT == other.TVDT &&
+            MHDT == other.MHDT &&
+            XLCN == other.XLCN &&
+            XWCN == other.XWCN &&
+            XWCU == other.XWCU);
     }
 
 bool CELLRecord::operator !=(const CELLRecord &other) const

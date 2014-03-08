@@ -328,11 +328,11 @@ SINT32 LTEXRecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer,
                 break;
             case REV32(GNAM):
                 GNAM.Read(buffer, subSize);
-		break;
-	    /* Skyrim --------------------------------------- */
-	    case REV32(MNAM): // 4 bytes, 47 2f 01 00, formID -> MATT, Material NAMe
-		MNAM.Read(buffer, subSize);
-		break;
+                break;
+            /* Skyrim --------------------------------------- */
+            case REV32(MNAM): // 4 bytes, 47 2f 01 00, formID -> MATT, Material NAMe
+                MNAM.Read(buffer, subSize);
+                break;
             default:
                 //printer("FileName = %s\n", FileName);
                 printer("  LTEX: %08X - Unknown subType = %04x [%c%c%c%c]\n", formID, subType, (subType >> 0) & 0xFF, (subType >> 8) & 0xFF, (subType >> 16) & 0xFF, (subType >> 24) & 0xFF);
@@ -382,8 +382,8 @@ bool LTEXRecord::operator ==(const LTEXRecord &other) const
             TNAM == other.TNAM &&
             HNAM == other.HNAM &&
             SNAM == other.SNAM &&
-	    GNAM == other.GNAM &&
-	    MNAM == other.MNAM);
+            GNAM == other.GNAM &&
+            MNAM == other.MNAM);
     }
 
 bool LTEXRecord::operator !=(const LTEXRecord &other) const

@@ -189,18 +189,18 @@ SINT32 TES4Record::ParseRecord(unsigned char *buffer, unsigned char *end_buffer,
                 break;
             case REV32(DELE):
                 DELE.Read(buffer, subSize, CompressedOnDisk);
-		break;
-	    /* Fall-Out ------------------------------------- */
+                break;
+            /* Fall-Out ------------------------------------- */
             case REV32(ONAM):
                 ONAM.Read(buffer, subSize);
                 break;
             case REV32(SCRN):
                 SCRN.Read(buffer, subSize, CompressedOnDisk);
-		break;
-	    /* Skyrim --------------------------------------- */
-	    case REV32(INTV): // 4 bytes
-		INTV.Read(buffer, subSize, CompressedOnDisk);
-		break;
+                break;
+            /* Skyrim --------------------------------------- */
+            case REV32(INTV): // 4 bytes
+                INTV.Read(buffer, subSize, CompressedOnDisk);
+                break;
             default:
                 //printer("FileName = %s\n", FileName);
                 printer("  TES4: %08X - Unknown subType = %04x [%c%c%c%c]\n", formID, subType, (subType >> 0) & 0xFF, (subType >> 8) & 0xFF, (subType >> 16) & 0xFF, (subType >> 24) & 0xFF);
@@ -234,7 +234,7 @@ SINT32 TES4Record::WriteRecord(FileWriter &writer)
                 {
                 writer.record_write_subrecord(REV32(MAST), MAST[p], (UINT32)strlen(MAST[p]) + 1);
                 writer.record_write_subrecord(REV32(DATA), &DATA[0], sizeof(DATA));
-	      }
+                }
             break;
         case eIsFallout3:
             printer("TES4Record::WriteRecord: Error - Unable to write TES4 record. Fallout 3 support not yet implemented.\n");
@@ -252,21 +252,21 @@ SINT32 TES4Record::WriteRecord(FileWriter &writer)
                 }
             WRITE(ONAM);
             WRITE(SCRN);
-	    break;
-	case eIsSkyrim:
-	    WRITE(HEDR);
-	    WRITE(OFST);
-	    WRITE(DELE);
-	    WRITE(CNAM);
-	    WRITE(SNAM);
-	    for(UINT32 p = 0; p < MAST.size(); p++)
-		{
-		writer.record_write_subrecord(REV32(MAST), MAST[p], (UINT32)strlen(MAST[p]) + 1);
-		writer.record_write_subrecord(REV32(DATA), &DATA[0], sizeof(DATA));
-	      }
-	    WRITE(INTV);
-	    WRITE(PURG);
-	    break;
+            break;
+        case eIsSkyrim:
+            WRITE(HEDR);
+            WRITE(OFST);
+            WRITE(DELE);
+            WRITE(CNAM);
+            WRITE(SNAM);
+            for(UINT32 p = 0; p < MAST.size(); p++)
+                {
+                writer.record_write_subrecord(REV32(MAST), MAST[p], (UINT32)strlen(MAST[p]) + 1);
+                writer.record_write_subrecord(REV32(DATA), &DATA[0], sizeof(DATA));
+                }
+            WRITE(INTV);
+            WRITE(PURG);
+            break;
         }
 
     return -1;
@@ -296,10 +296,10 @@ UINT32 TES4Record::Write(FileWriter &writer, const bool &bMastersChanged, FormID
         writer.file_write(&versionControl2[0], 2);
         }
     else if(whichGame == eIsSkyrim)
-	{
-	writer.file_write(&formVersion, 2);
-	writer.file_write(&versionControl2[0], 2);
-	}
+        {
+        writer.file_write(&formVersion, 2);
+        writer.file_write(&versionControl2[0], 2);
+        }
 
     writer.record_flush();
 
@@ -310,9 +310,9 @@ UINT32 TES4Record::Write(FileWriter &writer, const bool &bMastersChanged, FormID
         Unload();
 
     if(whichGame == eIsFalloutNewVegas)
-	return recSize + 24;
+        return recSize + 24;
     else if(whichGame == eIsSkyrim)
-	return recSize + 24;
+        return recSize + 24;
     else
         return recSize + 20;
     }
@@ -328,9 +328,9 @@ bool TES4Record::operator ==(const TES4Record &other) const
         versionControl2[1] == other.versionControl2[1] &&
         SCRN == other.SCRN &&
         MAST.size() == other.MAST.size() &&
-	ONAM == other.ONAM &&
-	INTV == other.INTV &&
-	PURG == other.PURG)
+        ONAM == other.ONAM &&
+        INTV == other.INTV &&
+        PURG == other.PURG)
         {
         //Record order kinda sorta but doesn't really matter on masters, so equality testing is easy
         //The order determines the mod index of all formIDs in the mod file

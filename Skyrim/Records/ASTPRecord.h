@@ -49,37 +49,37 @@ class ASTPRecord : public TES5Record // Association Type Record
             };
 
     public:
-		StringRecord EDID;                  // Editor ID
+        StringRecord EDID;                  // Editor ID
         StringRecord MPRT;                  // Male Parent
         StringRecord FPRT;                  // Female Parent
         StringRecord MCHT;                  // Male Child
         StringRecord FCHT;                  // Female Child
         ReqSimpleSubRecord<UINT32> DATA;    // flags
 
-		ASTPRecord(unsigned char *_recData=NULL);
-		ASTPRecord(ASTPRecord *srcRecord);
-		~ASTPRecord();
+        ASTPRecord(unsigned char *_recData=NULL);
+        ASTPRecord(ASTPRecord *srcRecord);
+        ~ASTPRecord();
 
         bool IsRelated() const;
         void IsRelated(bool value);
         bool IsFlagMask(UINT32 Mask, bool Exact=false) const;
         void SetFlagMask(UINT32 Mask);
 
-		UINT32 GetFieldAttribute(DEFAULTED_FIELD_IDENTIFIERS, UINT32 WhichAttribute=0);
-		void * GetField(DEFAULTED_FIELD_IDENTIFIERS, void **FieldValues=NULL);
-		bool   SetField(DEFAULTED_FIELD_IDENTIFIERS, void *FieldValue=NULL, UINT32 ArraySize=0);
-		void   DeleteField(DEFAULTED_FIELD_IDENTIFIERS);
+        UINT32 GetFieldAttribute(DEFAULTED_FIELD_IDENTIFIERS, UINT32 WhichAttribute=0);
+        void * GetField(DEFAULTED_FIELD_IDENTIFIERS, void **FieldValues=NULL);
+        bool   SetField(DEFAULTED_FIELD_IDENTIFIERS, void *FieldValue=NULL, UINT32 ArraySize=0);
+        void   DeleteField(DEFAULTED_FIELD_IDENTIFIERS);
 
-		UINT32 GetType();
-		STRING GetStrType();
+        UINT32 GetType();
+        STRING GetStrType();
 
-		SINT32 ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk=false);
-		SINT32 Unload();
-		SINT32 WriteRecord(FileWriter &writer);
+        SINT32 ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk=false);
+        SINT32 Unload();
+        SINT32 WriteRecord(FileWriter &writer);
 
-		bool operator ==(const ASTPRecord &other) const;
-		bool operator !=(const ASTPRecord &other) const;
-		bool equals(Record *other);
+        bool operator ==(const ASTPRecord &other) const;
+        bool operator !=(const ASTPRecord &other) const;
+        bool equals(Record *other);
     };
 
 } // namespace Sk

@@ -392,7 +392,7 @@ UINT32 CELLRecord::GetFieldAttribute(FIELD_IDENTIFIERS, UINT32 WhichAttribute)
                 }
             return UNKNOWN_FIELD;
         case 66: //LAND
-	    return SUBRECORD_FIELD;
+            return SUBRECORD_FIELD;
 #endif
         case 67: //Parent
             return PARENTRECORD_FIELD;

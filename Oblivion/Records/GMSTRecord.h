@@ -53,7 +53,7 @@ class GMSTRecord : public Record //Game Setting
                 {
                 FLOAT32 f;
                 SINT32 i;
-				STRING s;
+                STRING s;
                 };
             char format;
 

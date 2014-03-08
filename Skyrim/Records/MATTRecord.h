@@ -48,9 +48,9 @@ class MATTRecord : public TES5Record //Material Type
         StringRecord MNAM; //Material name (Skyrim)
         RawRecord CNAM; //Unknown (Skyrim)
         RawRecord BNAM; //Unknown (Skyrim)
-	RawRecord FNAM; //Unknown (Skyrim)
-	ReqSimpleSubRecord<FORMID> HNAM; //Havok Name (Skyrim)
-	ReqSimpleSubRecord<FORMID> PNAM; //Material Parent (Skyrim)
+        RawRecord FNAM; //Unknown (Skyrim)
+        ReqSimpleSubRecord<FORMID> HNAM; //Havok Name (Skyrim)
+        ReqSimpleSubRecord<FORMID> PNAM; //Material Parent (Skyrim)
 
         MATTRecord(unsigned char *_recData=NULL);
         MATTRecord(MATTRecord *srcRecord);

@@ -83,9 +83,9 @@ class RecordProcessor
         SINT32 &EmptyGRUPs;
         std::vector<FORMID> &OrphanedRecords;
 
-	boost::unordered_set<UINT32> filter_records;
-	boost::unordered_set<UINT32> filter_wspaces;
-	bool filter_inclusive; FORMID activewspace;
+        boost::unordered_set<UINT32> filter_records;
+        boost::unordered_set<UINT32> filter_wspaces;
+        bool filter_inclusive; FORMID activewspace;
 
         bool IsSkipNewRecords;
         bool IsSkipAllRecords;
@@ -99,41 +99,41 @@ class RecordProcessor
         //template<bool IsKeyedByEditorID, typename U>
         //typename boost::enable_if_c<!IsKeyedByEditorID,bool>::type Accept(U &header)
 
-	void SetFilter(bool inclusive, boost::unordered_set<UINT32> &RecordTypes, boost::unordered_set<FORMID> &WorldSpaces) {
-	  filter_inclusive = inclusive;
-	  filter_records = RecordTypes;
-	  filter_wspaces = WorldSpaces;
-	}
+        void SetFilter(bool inclusive, boost::unordered_set<UINT32> &RecordTypes, boost::unordered_set<FORMID> &WorldSpaces) {
+            filter_inclusive = inclusive;
+            filter_records = RecordTypes;
+            filter_wspaces = WorldSpaces;
+        }
 
         bool Accept(RecordHeader &header)
             {
 
-	    /* this assumes records are read serial (all records belonging
-	     * to a specific worldspace are between this WRLD and the next WRLD)
-	     */
-	    if (header.type == REV32(WRLD))
-		activewspace = header.formID;
+            /* this assumes records are read serial (all records belonging
+             * to a specific worldspace are between this WRLD and the next WRLD)
+             */
+            if (header.type == REV32(WRLD))
+                activewspace = header.formID;
 
-	    /* only allow those in the set */
-	    if (filter_inclusive) {
-		if (filter_records.count(header.type) == 0)
-		    return false;
-		if (header.type != REV32(LTEX))
-	        if (header.type != REV32(TXST))
-		if (header.type != REV32(MATT))
-		if (filter_wspaces.count(activewspace) == 0)
-		    return false;
-	    }
-	    /* only allow those not in the set */
-	    else {
-		if (filter_records.count(header.type) != 0)
-		    return false;
-		if (header.type != REV32(LTEX))
-		if (header.type != REV32(TXST))
-		if (header.type != REV32(MATT))
-		if (filter_wspaces.count(activewspace) != 0)
-		    return false;
-	    }
+            /* only allow those in the set */
+            if (filter_inclusive) {
+                if (filter_records.count(header.type) == 0)
+                    return false;
+                if (header.type != REV32(LTEX))
+                if (header.type != REV32(TXST))
+                if (header.type != REV32(MATT))
+                if (filter_wspaces.count(activewspace) == 0)
+                    return false;
+            }
+            /* only allow those not in the set */
+            else {
+                if (filter_records.count(header.type) != 0)
+                    return false;
+                if (header.type != REV32(LTEX))
+                if (header.type != REV32(TXST))
+                if (header.type != REV32(MATT))
+                if (filter_wspaces.count(activewspace) != 0)
+                    return false;
+            }
 
             expander.Accept(header.formID);
 
@@ -265,8 +265,8 @@ class Record
 
         bool         master_equality(Record *master, RecordOp &read_self, RecordOp &read_master, boost::unordered_set<Record *> &identical_records);
         bool         shallow_equals(Record *other);
-		virtual bool equals(Record *other) abstract {};
-		virtual bool deep_equals(Record *master, RecordOp &read_self, RecordOp &read_master, boost::unordered_set<Record *> &identical_records);
+        virtual bool equals(Record *other) abstract {};
+        virtual bool deep_equals(Record *master, RecordOp &read_self, RecordOp &read_master, boost::unordered_set<Record *> &identical_records);
 
         bool IsDeleted() const;
         void IsDeleted(bool value);
@@ -318,99 +318,99 @@ class Record
 class FNVRecord : public Record
     {
     protected:
-      enum FNVHeaderFlags
-      {
-	fIsESM                              = 0x00000001,
-	fIsTaken                            = 0x00000002, //From OBSE, unconfirmed, requires fIsDeleted also be set
-	fUnknown1                           = 0x00000004,
-	fUnknown2                           = 0x00000008,
-	fUnknown3                           = 0x00000010,
-	fIsDeleted                          = 0x00000020,
-	fIsBorderRegion                     = 0x00000040, //Has Tree LOD / Constant / Hidden From Local Map (FNV)
-	fIsTurnOffFire                      = 0x00000080,
-	fIsInaccessible                     = 0x00000100, // (FNV)
-	fIsCastsShadows                     = 0x00000200, //On Local Map / Motion Blur (FNV)
-	fIsQuestOrPersistent                = 0x00000400,
-	fIsInitiallyDisabled                = 0x00000800,
-	fIsIgnored                          = 0x00001000,
-	fIsNoVoiceFilter                    = 0x00002000, // (FNV)
-	fIsTemporary                        = 0x00004000, //From OBSE, unconfirmed
-	fIsVisibleWhenDistant               = 0x00008000,
-	fIsRandomAnimStartOrHighPriorityLOD = 0x00010000, // (FNV)
-	fIsDangerousOrOffLimits             = 0x00020000, // Radio Station (Talking Activator) (FNV)
-	fIsCompressed                       = 0x00040000,
-	fIsCantWait                         = 0x00080000, // Platform Specific Texture (FNV)
-	fUnknown4                           = 0x00100000,
-	fUnknown5                           = 0x00200000,
-	fUnknown6                           = 0x00400000,
-	fUnknown7                           = 0x00800000,
-	fUnknown8                           = 0x01000000,
-	fIsObstacleOrNoAIAcquire            = 0x02000000, // (FNV)
-	fIsNavMeshFilter                    = 0x04000000, // (FNV)
-	fIsNavMeshBoundBox                  = 0x08000000, // (FNV)
-	fIsNonPipboyOrAutoReflected         = 0x10000000, // (FNV)
-	fIsChildUsableOrAutoRefracted       = 0x20000000, // (FNV)
-	fIsNavMeshGround                    = 0x40000000, // (FNV)
-	fUnknown9                           = 0x80000000
-      };
+        enum FNVHeaderFlags
+            {
+            fIsESM                              = 0x00000001,
+            fIsTaken                            = 0x00000002, //From OBSE, unconfirmed, requires fIsDeleted also be set
+            fUnknown1                           = 0x00000004,
+            fUnknown2                           = 0x00000008,
+            fUnknown3                           = 0x00000010,
+            fIsDeleted                          = 0x00000020,
+            fIsBorderRegion                     = 0x00000040, //Has Tree LOD / Constant / Hidden From Local Map (FNV)
+            fIsTurnOffFire                      = 0x00000080,
+            fIsInaccessible                     = 0x00000100, // (FNV)
+            fIsCastsShadows                     = 0x00000200, //On Local Map / Motion Blur (FNV)
+            fIsQuestOrPersistent                = 0x00000400,
+            fIsInitiallyDisabled                = 0x00000800,
+            fIsIgnored                          = 0x00001000,
+            fIsNoVoiceFilter                    = 0x00002000, // (FNV)
+            fIsTemporary                        = 0x00004000, //From OBSE, unconfirmed
+            fIsVisibleWhenDistant               = 0x00008000,
+            fIsRandomAnimStartOrHighPriorityLOD = 0x00010000, // (FNV)
+            fIsDangerousOrOffLimits             = 0x00020000, // Radio Station (Talking Activator) (FNV)
+            fIsCompressed                       = 0x00040000,
+            fIsCantWait                         = 0x00080000, // Platform Specific Texture (FNV)
+            fUnknown4                           = 0x00100000,
+            fUnknown5                           = 0x00200000,
+            fUnknown6                           = 0x00400000,
+            fUnknown7                           = 0x00800000,
+            fUnknown8                           = 0x01000000,
+            fIsObstacleOrNoAIAcquire            = 0x02000000, // (FNV)
+            fIsNavMeshFilter                    = 0x04000000, // (FNV)
+            fIsNavMeshBoundBox                  = 0x08000000, // (FNV)
+            fIsNonPipboyOrAutoReflected         = 0x10000000, // (FNV)
+            fIsChildUsableOrAutoRefracted       = 0x20000000, // (FNV)
+            fIsNavMeshGround                    = 0x40000000, // (FNV)
+            fUnknown9                           = 0x80000000
+            };
 
     public:
-      UINT16 formVersion; //FNV
-      UINT8  versionControl2[2]; //FNV
+        UINT16 formVersion; //FNV
+        UINT8  versionControl2[2]; //FNV
 
-      FNVRecord(unsigned char *_recData=NULL);
-      virtual ~FNVRecord();
+        FNVRecord(unsigned char *_recData=NULL);
+        virtual ~FNVRecord();
 
-      bool Read();
-      UINT32 Write(FileWriter &writer, const bool &bMastersChanged, FormIDResolver &expander, FormIDResolver &collapser, std::vector<FormIDResolver *> &Expanders);
+        bool Read();
+        UINT32 Write(FileWriter &writer, const bool &bMastersChanged, FormIDResolver &expander, FormIDResolver &collapser, std::vector<FormIDResolver *> &Expanders);
     };
 
 class TES5Record : public Record
     {
     protected:
-      enum TES5HeaderFlags
-      {
-	fIsESM                              = 0x00000001,
-	fUnknown01                          = 0x00000002,
-	fUnknown02                          = 0x00000004,
-	fUnknown03                          = 0x00000008,
-	fUnknown04                          = 0x00000010,
-	fUnknown05                          = 0x00000020,
-	fUnknown06                          = 0x00000040,
-	fUnknown07                          = 0x00000080,
-	fUnknown08                          = 0x00000100,
-	fUnknown09                          = 0x00000200,
-	fUnknown10                          = 0x00000400,
-	fUnknown11                          = 0x00000800,
-	fUnknown12                          = 0x00001000,
-	fUnknown13                          = 0x00002000,
-	fUnknown14                          = 0x00004000,
-	fUnknown15                          = 0x00008000,
-	fUnknown16                          = 0x00010000,
-	fUnknown17                          = 0x00020000,
-	fUnknown18                          = 0x00040000,
-	fUnknown19                          = 0x00080000,
-	fUnknown20                          = 0x00100000,
-	fUnknown21                          = 0x00200000,
-	fUnknown22                          = 0x00400000,
-	fUnknown23                          = 0x00800000,
-	fUnknown24                          = 0x01000000,
-	fUnknown25                          = 0x02000000,
-	fUnknown26                          = 0x04000000,
-	fUnknown27                          = 0x08000000,
-	fUnknown28                          = 0x10000000,
-	fUnknown29                          = 0x20000000,
-	fUnknown30                          = 0x40000000,
-	fUnknown31                          = 0x80000000
-      };
+        enum TES5HeaderFlags
+            {
+            fIsESM                              = 0x00000001,
+            fUnknown01                          = 0x00000002,
+            fUnknown02                          = 0x00000004,
+            fUnknown03                          = 0x00000008,
+            fUnknown04                          = 0x00000010,
+            fUnknown05                          = 0x00000020,
+            fUnknown06                          = 0x00000040,
+            fUnknown07                          = 0x00000080,
+            fUnknown08                          = 0x00000100,
+            fUnknown09                          = 0x00000200,
+            fUnknown10                          = 0x00000400,
+            fUnknown11                          = 0x00000800,
+            fUnknown12                          = 0x00001000,
+            fUnknown13                          = 0x00002000,
+            fUnknown14                          = 0x00004000,
+            fUnknown15                          = 0x00008000,
+            fUnknown16                          = 0x00010000,
+            fUnknown17                          = 0x00020000,
+            fUnknown18                          = 0x00040000,
+            fUnknown19                          = 0x00080000,
+            fUnknown20                          = 0x00100000,
+            fUnknown21                          = 0x00200000,
+            fUnknown22                          = 0x00400000,
+            fUnknown23                          = 0x00800000,
+            fUnknown24                          = 0x01000000,
+            fUnknown25                          = 0x02000000,
+            fUnknown26                          = 0x04000000,
+            fUnknown27                          = 0x08000000,
+            fUnknown28                          = 0x10000000,
+            fUnknown29                          = 0x20000000,
+            fUnknown30                          = 0x40000000,
+            fUnknown31                          = 0x80000000
+            };
 
     public:
-      UINT16 formVersion; //TES5
-      UINT8  versionControl2[2]; //TES5
+        UINT16 formVersion; //TES5
+        UINT8  versionControl2[2]; //TES5
 
-      TES5Record(unsigned char *_recData=NULL);
-      virtual ~TES5Record();
+        TES5Record(unsigned char *_recData=NULL);
+        virtual ~TES5Record();
 
-      bool Read();
-      UINT32 Write(FileWriter &writer, const bool &bMastersChanged, FormIDResolver &expander, FormIDResolver &collapser, std::vector<FormIDResolver *> &Expanders);
+        bool Read();
+        UINT32 Write(FileWriter &writer, const bool &bMastersChanged, FormIDResolver &expander, FormIDResolver &collapser, std::vector<FormIDResolver *> &Expanders);
     };

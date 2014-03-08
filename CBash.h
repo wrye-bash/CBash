@@ -39,8 +39,8 @@
 #include "MacroDefinitions.h"
 #include "Collection.h"
 
-#define	COMPILING_STATIC
-#ifdef	COMPILING_STATIC
+#define COMPILING_STATIC
+#ifdef COMPILING_STATIC
     #define DLLEXTERN 
 #else
 #ifdef COMPILING_CBASH
