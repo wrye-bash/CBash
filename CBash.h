@@ -89,14 +89,14 @@ DLLEXTERN UINT32 GetVersionRevision();
 /**
     @brief Register a callback function for logging messages.
     @details Register a callback function for logging messages.
-    @param _LoggingCallback A pointer to a function that takes a message string argument and returns a signed 32-bit integer.
+    @param _LoggingCallback A pointer to a callback function. If `NULL`, messages are printed to `stdout`. The callback function must take a message string argument, and returns a #SINT32 with value equal to the number of characters in the message, or `-1` if an error occurred.
 */
 DLLEXTERN void RedirectMessages(SINT32 (*_LoggingCallback)(const STRING));
 
 /**
-    @brief Register a callback function for error messages.
-    @details Register a callback function for error messages.
-    @param _RaiseCallback A pointer to a function that takes a message string argument and returns no value.
+    @brief Register a callback function for tracing function calls.
+    @details Register a callback function for tracing function calls. This function is called by many functions immediately before they complete, and is passed the name of the function it is called from. This makes it potentially useful for debugging purposes.
+    @param _RaiseCallback A pointer to a function that takes a string argument and returns nothing. If `NULL`, no function call tracing occurs.
 */
 DLLEXTERN void AllowRaising(void (*_RaiseCallback)(const STRING));
 
@@ -108,35 +108,34 @@ DLLEXTERN void AllowRaising(void (*_RaiseCallback)(const STRING));
 
 /**
     @brief Create a mod plugin collection.
-    @details
-    @param
-    @param
-    @returns
+    @details Create a mod plugin collection. Collections are used to manage groups of mod plugins and their data in CBash.
+    @param ModsPath Specifies the path to the folder containing the mod plugins that are to be added to the collection.
+    @param CollectionType Specifies the type of game the collection is for. Valid game types are given by ::whichGameTypes.
+    @returns A pointer to the newly-created collection object.
 */
 DLLEXTERN Collection * CreateCollection(STRING const ModsPath, const UINT32 CollectionType);
 
 /**
     @brief Delete a mod plugin collection.
-    @details
-    @param CollectionID The pointer to the collection to be deleted.
-    @returns
+    @details Delete a mod plugin collection. Deleting a collection frees all associated memory, invalidating associated pointers.
+    @param CollectionID A pointer to the collection to be deleted.
+    @returns `0` on success, `-1` if an error occurred.
 */
 DLLEXTERN SINT32 DeleteCollection(Collection *CollectionID);
 
 /**
-    @brief
+    @brief 
     @details
-    @param
-    @param
-    @returns
+    @param CollectionID A pointer to the collection to load.
+    @param _ProgressCallback A pointer to a function to use as a progress callback. If `NULL`, no progress is reported. The function arguments are the load order position of the plugin currently being loaded, the maximum load order position, and the plugin filename. The function returns a boolean that is currently ignored, but may in future be used to signal cancellation of loading by the client.
+    @returns `0` on success, `-1` if an error occurred.
 */
-// Callback(position, maximum, modfile-name);
 DLLEXTERN SINT32 LoadCollection(Collection *CollectionID, bool (*_ProgressCallback)(const UINT32, const UINT32, const STRING) = NULL);
 
 /**
     @brief
     @details
-    @param
+    @param CollectionID
     @returns
 */
 DLLEXTERN SINT32 UnloadCollection(Collection *CollectionID);
@@ -144,7 +143,7 @@ DLLEXTERN SINT32 UnloadCollection(Collection *CollectionID);
 /**
     @brief
     @details
-    @param
+    @param CollectionID
     @returns
 */
 DLLEXTERN SINT32 GetCollectionType(Collection *CollectionID);
@@ -172,6 +171,9 @@ DLLEXTERN SINT32 DeleteAllCollections();
 /**
     @brief
     @details
+    @param CollectionID
+    @param ModName
+    @param ModFlagsField
     @returns
 */
 DLLEXTERN ModFile * AddMod(Collection *CollectionID, STRING const ModName, const UINT32 ModFlagsField);
@@ -179,6 +181,7 @@ DLLEXTERN ModFile * AddMod(Collection *CollectionID, STRING const ModName, const
 /**
     @brief
     @details
+    @param ModID
     @returns
 */
 DLLEXTERN SINT32 LoadMod(ModFile *ModID);
@@ -186,6 +189,7 @@ DLLEXTERN SINT32 LoadMod(ModFile *ModID);
 /**
     @brief
     @details
+    @param ModID
     @returns
 */
 DLLEXTERN SINT32 UnloadMod(ModFile *ModID);
@@ -193,6 +197,7 @@ DLLEXTERN SINT32 UnloadMod(ModFile *ModID);
 /**
     @brief
     @details
+    @param ModID
     @returns
 */
 DLLEXTERN SINT32 CleanModMasters(ModFile *ModID);
@@ -200,6 +205,9 @@ DLLEXTERN SINT32 CleanModMasters(ModFile *ModID);
 /**
     @brief
     @details
+    @param ModID
+    @param SaveFlagsField
+    @param DestinationName
     @returns
 */
 DLLEXTERN SINT32 SaveMod(ModFile *ModID, const UINT32 SaveFlagsField, STRING const DestinationName);
@@ -213,6 +221,7 @@ DLLEXTERN SINT32 SaveMod(ModFile *ModID, const UINT32 SaveFlagsField, STRING con
 /**
     @brief
     @details
+    @param CollectionID
     @returns
 */
 DLLEXTERN SINT32 GetAllNumMods(Collection *CollectionID);
@@ -220,6 +229,8 @@ DLLEXTERN SINT32 GetAllNumMods(Collection *CollectionID);
 /**
     @brief
     @details
+    @param CollectionID
+    @param ModIDs
     @returns
 */
 DLLEXTERN SINT32 GetAllModIDs(Collection *CollectionID, MODIDARRAY ModIDs);
@@ -227,6 +238,7 @@ DLLEXTERN SINT32 GetAllModIDs(Collection *CollectionID, MODIDARRAY ModIDs);
 /**
     @brief
     @details
+    @param CollectionID
     @returns
 */
 DLLEXTERN SINT32 GetLoadOrderNumMods(Collection *CollectionID);
@@ -234,6 +246,8 @@ DLLEXTERN SINT32 GetLoadOrderNumMods(Collection *CollectionID);
 /**
     @brief
     @details
+    @param CollectionID
+    @param ModIDs
     @returns
 */
 DLLEXTERN SINT32 GetLoadOrderModIDs(Collection *CollectionID, MODIDARRAY ModIDs);
@@ -241,6 +255,7 @@ DLLEXTERN SINT32 GetLoadOrderModIDs(Collection *CollectionID, MODIDARRAY ModIDs)
 /**
     @brief
     @details
+    @param ModID
     @returns
 */
 DLLEXTERN STRING GetFileNameByID(ModFile *ModID);
@@ -248,6 +263,8 @@ DLLEXTERN STRING GetFileNameByID(ModFile *ModID);
 /**
     @brief
     @details
+    @param CollectionID
+    @param ModIndex
     @returns
 */
 DLLEXTERN STRING GetFileNameByLoadOrder(Collection *CollectionID, const UINT32 ModIndex);
@@ -255,6 +272,7 @@ DLLEXTERN STRING GetFileNameByLoadOrder(Collection *CollectionID, const UINT32 M
 /**
     @brief
     @details
+    @param ModID
     @returns
 */
 DLLEXTERN STRING GetModNameByID(ModFile *ModID);
@@ -262,6 +280,8 @@ DLLEXTERN STRING GetModNameByID(ModFile *ModID);
 /**
     @brief
     @details
+    @param CollectionID
+    @param ModIndex
     @returns
 */
 DLLEXTERN STRING GetModNameByLoadOrder(Collection *CollectionID, const UINT32 ModIndex);
@@ -269,6 +289,8 @@ DLLEXTERN STRING GetModNameByLoadOrder(Collection *CollectionID, const UINT32 Mo
 /**
     @brief
     @details
+    @param CollectionID
+    @param ModName
     @returns
 */
 DLLEXTERN ModFile * GetModIDByName(Collection *CollectionID, STRING const ModName);
@@ -276,6 +298,8 @@ DLLEXTERN ModFile * GetModIDByName(Collection *CollectionID, STRING const ModNam
 /**
     @brief
     @details
+    @param CollectionID
+    @param ModIndex
     @returns
 */
 DLLEXTERN ModFile * GetModIDByLoadOrder(Collection *CollectionID, const UINT32 ModIndex);
@@ -283,6 +307,8 @@ DLLEXTERN ModFile * GetModIDByLoadOrder(Collection *CollectionID, const UINT32 M
 /**
     @brief
     @details
+    @param CollectionID
+    @param ModName
     @returns
 */
 DLLEXTERN SINT32 GetModLoadOrderByName(Collection *CollectionID, STRING const ModName);
@@ -290,6 +316,7 @@ DLLEXTERN SINT32 GetModLoadOrderByName(Collection *CollectionID, STRING const Mo
 /**
     @brief
     @details
+    @param ModID
     @returns
 */
 DLLEXTERN SINT32 GetModLoadOrderByID(ModFile *ModID);
@@ -297,6 +324,7 @@ DLLEXTERN SINT32 GetModLoadOrderByID(ModFile *ModID);
 /**
     @brief
     @details
+    @param RecordID
     @returns
 */
 DLLEXTERN ModFile * GetModIDByRecordID(Record *RecordID);
@@ -304,6 +332,7 @@ DLLEXTERN ModFile * GetModIDByRecordID(Record *RecordID);
 /**
     @brief
     @details
+    @param RecordID
     @returns
 */
 DLLEXTERN Collection * GetCollectionIDByRecordID(Record *RecordID);
@@ -311,6 +340,7 @@ DLLEXTERN Collection * GetCollectionIDByRecordID(Record *RecordID);
 /**
     @brief
     @details
+    @param RecordID
     @returns
 */
 DLLEXTERN Collection * GetCollectionIDByModID(ModFile *ModID);
@@ -318,6 +348,9 @@ DLLEXTERN Collection * GetCollectionIDByModID(ModFile *ModID);
 /**
     @brief
     @details
+    @param CollectionID
+    @param ModID
+    @param ModName
     @returns
 */
 //DLLEXTERN SINT32 GetShortIDIndex(Collection *CollectionID, const SINT32 ModID, STRING const ModName);
@@ -325,6 +358,7 @@ DLLEXTERN Collection * GetCollectionIDByModID(ModFile *ModID);
 /**
     @brief
     @details
+    @param ModID
     @returns
 */
 DLLEXTERN UINT32 IsModEmpty(ModFile *ModID);
@@ -332,6 +366,7 @@ DLLEXTERN UINT32 IsModEmpty(ModFile *ModID);
 /**
     @brief
     @details
+    @param ModID
     @returns
 */
 DLLEXTERN SINT32 GetModNumTypes(ModFile *ModID);
@@ -339,6 +374,8 @@ DLLEXTERN SINT32 GetModNumTypes(ModFile *ModID);
 /**
     @brief
     @details
+    @param ModID
+    @param RecordTypes
     @returns
 */
 DLLEXTERN SINT32 GetModTypes(ModFile *ModID, UINT32ARRAY RecordTypes);
@@ -346,6 +383,7 @@ DLLEXTERN SINT32 GetModTypes(ModFile *ModID, UINT32ARRAY RecordTypes);
 /**
     @brief
     @details
+    @param ModID
     @returns
 */
 DLLEXTERN SINT32 GetModNumEmptyGRUPs(ModFile *ModID);
@@ -353,6 +391,7 @@ DLLEXTERN SINT32 GetModNumEmptyGRUPs(ModFile *ModID);
 /**
     @brief
     @details
+    @param ModID
     @returns
 */
 DLLEXTERN SINT32 GetModNumOrphans(ModFile *ModID);
@@ -360,6 +399,8 @@ DLLEXTERN SINT32 GetModNumOrphans(ModFile *ModID);
 /**
     @brief
     @details
+    @param ModID
+    @param FormIDs
     @returns
 */
 DLLEXTERN SINT32 GetModOrphansFormIDs(ModFile *ModID, FORMIDARRAY FormIDs);
@@ -373,6 +414,9 @@ DLLEXTERN SINT32 GetModOrphansFormIDs(ModFile *ModID, FORMIDARRAY FormIDs);
 /**
     @brief
     @details
+    @param RecordID
+    @param FormID
+    @param IsMGEFCode
     @returns
 */
 DLLEXTERN STRING GetLongIDName(Record *RecordID, const UINT32 FormID, const bool IsMGEFCode);
@@ -380,6 +424,9 @@ DLLEXTERN STRING GetLongIDName(Record *RecordID, const UINT32 FormID, const bool
 /**
     @brief
     @details
+    @param ModID
+    @param ObjectID
+    @param IsMGEFCode
     @returns
 */
 DLLEXTERN UINT32 MakeShortFormID(ModFile *ModID, const UINT32 ObjectID, const bool IsMGEFCode);
@@ -393,6 +440,12 @@ DLLEXTERN UINT32 MakeShortFormID(ModFile *ModID, const UINT32 ObjectID, const bo
 /**
     @brief
     @details
+    @param ModID
+    @param RecordType
+    @param RecordFormID
+    @param RecordEditorID
+    @param ParentID
+    @param CreateFlags
     @returns
 */
 DLLEXTERN Record * CreateRecord(ModFile *ModID, const UINT32 RecordType, const FORMID RecordFormID, STRING const RecordEditorID, Record *ParentID, const UINT32 CreateFlags);
@@ -400,6 +453,12 @@ DLLEXTERN Record * CreateRecord(ModFile *ModID, const UINT32 RecordType, const F
 /**
     @brief
     @details
+    @param RecordID
+    @param DestModID
+    @param DestParentID
+    @param DestRecordFormID
+    @param DestRecordEditorID
+    @param CreateFlags
     @returns
 */
 DLLEXTERN Record * CopyRecord(Record *RecordID, ModFile *DestModID, Record *DestParentID, const FORMID DestRecordFormID, STRING const DestRecordEditorID, const UINT32 CreateFlags);
@@ -407,6 +466,7 @@ DLLEXTERN Record * CopyRecord(Record *RecordID, ModFile *DestModID, Record *Dest
 /**
     @brief
     @details
+    @param RecordID
     @returns
 */
 DLLEXTERN SINT32 UnloadRecord(Record *RecordID);
@@ -414,6 +474,7 @@ DLLEXTERN SINT32 UnloadRecord(Record *RecordID);
 /**
     @brief
     @details
+    @param RecordID
     @returns
 */
 DLLEXTERN SINT32 ResetRecord(Record *RecordID);
@@ -421,6 +482,7 @@ DLLEXTERN SINT32 ResetRecord(Record *RecordID);
 /**
     @brief
     @details
+    @param RecordID
     @returns
 */
 DLLEXTERN SINT32 DeleteRecord(Record *RecordID);
@@ -434,6 +496,9 @@ DLLEXTERN SINT32 DeleteRecord(Record *RecordID);
 /**
     @brief
     @details
+    @param ModID
+    @param RecordFormID
+    @param RecordEditorID
     @returns
 */
 DLLEXTERN Record * GetRecordID(ModFile *ModID, const FORMID RecordFormID, STRING const RecordEditorID);
@@ -441,6 +506,8 @@ DLLEXTERN Record * GetRecordID(ModFile *ModID, const FORMID RecordFormID, STRING
 /**
     @brief
     @details
+    @param ModID
+    @param RecordType
     @returns
 */
 DLLEXTERN SINT32 GetNumRecords(ModFile *ModID, const UINT32 RecordType);
@@ -448,6 +515,9 @@ DLLEXTERN SINT32 GetNumRecords(ModFile *ModID, const UINT32 RecordType);
 /**
     @brief
     @details
+    @param ModID
+    @param RecordType
+    @param RecordIDs
     @returns
 */
 DLLEXTERN SINT32 GetRecordIDs(ModFile *ModID, const UINT32 RecordType, RECORDIDARRAY RecordIDs);
@@ -455,6 +525,8 @@ DLLEXTERN SINT32 GetRecordIDs(ModFile *ModID, const UINT32 RecordType, RECORDIDA
 /**
     @brief
     @details
+    @param RecordID
+    @param GetExtendedConflicts
     @returns
 */
 DLLEXTERN SINT32 IsRecordWinning(Record *RecordID, const bool GetExtendedConflicts);
@@ -462,6 +534,8 @@ DLLEXTERN SINT32 IsRecordWinning(Record *RecordID, const bool GetExtendedConflic
 /**
     @brief
     @details
+    @param RecordID
+    @param GetExtendedConflicts
     @returns
 */
 DLLEXTERN SINT32 GetNumRecordConflicts(Record *RecordID, const bool GetExtendedConflicts);
@@ -469,6 +543,9 @@ DLLEXTERN SINT32 GetNumRecordConflicts(Record *RecordID, const bool GetExtendedC
 /**
     @brief
     @details
+    @param RecordID
+    @param RecordIDs
+    @param GetExtendedConflicts
     @returns
 */
 DLLEXTERN SINT32 GetRecordConflicts(Record *RecordID, RECORDIDARRAY RecordIDs, const bool GetExtendedConflicts);
@@ -476,6 +553,8 @@ DLLEXTERN SINT32 GetRecordConflicts(Record *RecordID, RECORDIDARRAY RecordIDs, c
 /**
     @brief
     @details
+    @param RecordID
+    @param RecordIDs
     @returns
 */
 DLLEXTERN SINT32 GetRecordHistory(Record *RecordID, RECORDIDARRAY RecordIDs);
@@ -483,6 +562,7 @@ DLLEXTERN SINT32 GetRecordHistory(Record *RecordID, RECORDIDARRAY RecordIDs);
 /**
     @brief
     @details
+    @param ModID
     @returns
 */
 DLLEXTERN SINT32 GetNumIdenticalToMasterRecords(ModFile *ModID);
@@ -490,6 +570,8 @@ DLLEXTERN SINT32 GetNumIdenticalToMasterRecords(ModFile *ModID);
 /**
     @brief
     @details
+    @param ModID
+    @param RecordIDs
     @returns
 */
 DLLEXTERN SINT32 GetIdenticalToMasterRecords(ModFile *ModID, RECORDIDARRAY RecordIDs);
@@ -497,6 +579,7 @@ DLLEXTERN SINT32 GetIdenticalToMasterRecords(ModFile *ModID, RECORDIDARRAY Recor
 /**
     @brief
     @details
+    @param RecordID
     @returns
 */
 DLLEXTERN SINT32 IsRecordsFormIDsInvalid(Record *RecordID);
@@ -510,6 +593,12 @@ DLLEXTERN SINT32 IsRecordsFormIDsInvalid(Record *RecordID);
 /**
     @brief
     @details
+    @param ModID
+    @param RecordID
+    @param OldFormIDs
+    @param NewFormIDs
+    @param Changes
+    @param ArraySize
     @returns
 */
 DLLEXTERN SINT32 UpdateReferences(ModFile *ModID, Record *RecordID, FORMIDARRAY OldFormIDs, FORMIDARRAY NewFormIDs, UINT32ARRAY Changes, const UINT32 ArraySize);
@@ -523,6 +612,8 @@ DLLEXTERN SINT32 UpdateReferences(ModFile *ModID, Record *RecordID, FORMIDARRAY 
 /**
     @brief
     @details
+    @param CollectionID
+    @param RecordID
     @returns
 */
 DLLEXTERN SINT32 GetRecordUpdatedReferences(Collection *CollectionID, Record *RecordID);
@@ -536,6 +627,9 @@ DLLEXTERN SINT32 GetRecordUpdatedReferences(Collection *CollectionID, Record *Re
 /**
     @brief
     @details
+    @param RecordID
+    @param FormID
+    @param EditorID
     @returns
 */
 DLLEXTERN SINT32 SetIDFields(Record *RecordID, const FORMID FormID, STRING const EditorID);
@@ -543,6 +637,10 @@ DLLEXTERN SINT32 SetIDFields(Record *RecordID, const FORMID FormID, STRING const
 /**
     @brief
     @details
+    @param RecordID
+    @param FIELD_IDENTIFIERS
+    @param FieldValue
+    @param ArraySize
     @returns
 */
 DLLEXTERN void   SetField(Record *RecordID, FIELD_IDENTIFIERS, void *FieldValue, const UINT32 ArraySize);
@@ -550,6 +648,8 @@ DLLEXTERN void   SetField(Record *RecordID, FIELD_IDENTIFIERS, void *FieldValue,
 /**
     @brief
     @details
+    @param RecordID
+    @param FIELD_IDENTIFIERS
     @returns
 */
 DLLEXTERN void   DeleteField(Record *RecordID, FIELD_IDENTIFIERS);
@@ -563,6 +663,9 @@ DLLEXTERN void   DeleteField(Record *RecordID, FIELD_IDENTIFIERS);
 /**
     @brief
     @details
+    @param RecordID
+    @param FIELD_IDENTIFIERS
+    @param WhichAttribute
     @returns
 */
 DLLEXTERN UINT32 GetFieldAttribute(Record *RecordID, FIELD_IDENTIFIERS, const UINT32 WhichAttribute);
@@ -570,6 +673,9 @@ DLLEXTERN UINT32 GetFieldAttribute(Record *RecordID, FIELD_IDENTIFIERS, const UI
 /**
     @brief
     @details
+    @param RecordID
+    @param FIELD_IDENTIFIERS
+    @param FieldValues
     @returns
 */
 DLLEXTERN void * GetField(Record *RecordID, FIELD_IDENTIFIERS, void **FieldValues);
