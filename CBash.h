@@ -95,7 +95,7 @@ DLLEXTERN void RedirectMessages(SINT32 (*_LoggingCallback)(const STRING));
 
 /**
     @brief Register a callback function for tracing function calls.
-    @details Register a callback function for tracing function calls. This function is called by many functions immediately before they complete, and is passed the name of the function it is called from. This makes it potentially useful for debugging purposes.
+    @details Register a callback function for tracing function calls. This function is called by many functions if they encounter an error, and is passed the name of the function it is called from. This makes it potentially useful for debugging purposes.
     @param _RaiseCallback A pointer to a function that takes a string argument and returns nothing. If `NULL`, no function call tracing occurs.
 */
 DLLEXTERN void AllowRaising(void (*_RaiseCallback)(const STRING));
@@ -107,8 +107,8 @@ DLLEXTERN void AllowRaising(void (*_RaiseCallback)(const STRING));
 ///@{
 
 /**
-    @brief Create a mod plugin collection.
-    @details Create a mod plugin collection. Collections are used to manage groups of mod plugins and their data in CBash.
+    @brief Create a plugin collection.
+    @details Create a plugin collection. Collections are used to manage groups of mod plugins and their data in CBash.
     @param ModsPath Specifies the path to the folder containing the mod plugins that are to be added to the collection.
     @param CollectionType Specifies the type of game the collection is for. Valid game types are given by ::whichGameTypes.
     @returns A pointer to the newly-created collection object.
@@ -116,16 +116,16 @@ DLLEXTERN void AllowRaising(void (*_RaiseCallback)(const STRING));
 DLLEXTERN Collection * CreateCollection(STRING const ModsPath, const UINT32 CollectionType);
 
 /**
-    @brief Delete a mod plugin collection.
-    @details Delete a mod plugin collection. Deleting a collection frees all associated memory, invalidating associated pointers.
+    @brief Delete a plugin collection.
+    @details Delete a plugin collection. Deleting a collection frees all associated memory, invalidating associated pointers.
     @param CollectionID A pointer to the collection to be deleted.
     @returns `0` on success, `-1` if an error occurred.
 */
 DLLEXTERN SINT32 DeleteCollection(Collection *CollectionID);
 
 /**
-    @brief 
-    @details
+    @brief Loads a collection of plugins.
+    @details Loads the records from the plugins in the given collection into memory, where their data can be accessed.
     @param CollectionID A pointer to the collection to load.
     @param _ProgressCallback A pointer to a function to use as a progress callback. If `NULL`, no progress is reported. The function arguments are the load order position of the plugin currently being loaded, the maximum load order position, and the plugin filename. The function returns a boolean that is currently ignored, but may in future be used to signal cancellation of loading by the client.
     @returns `0` on success, `-1` if an error occurred.
@@ -133,32 +133,31 @@ DLLEXTERN SINT32 DeleteCollection(Collection *CollectionID);
 DLLEXTERN SINT32 LoadCollection(Collection *CollectionID, bool (*_ProgressCallback)(const UINT32, const UINT32, const STRING) = NULL);
 
 /**
-    @brief
-    @details
-    @param CollectionID
-    @returns
+    @brief Unloads a collection of plugins.
+    @details Unloads any records from the plugins in the given collection that have previously been loaded into memory, without deleting the collection.
+    @param CollectionID A pointer to the collection to unload.
+    @returns `0` on success, `-1` if an error occurred.
 */
 DLLEXTERN SINT32 UnloadCollection(Collection *CollectionID);
 
 /**
-    @brief
-    @details
-    @param CollectionID
-    @returns
+    @brief Get the game type a collection was created for.
+    @param CollectionID The collection to get the game type for.
+    @returns The collection game type. Valid game types are given by ::whichGameTypes.
 */
 DLLEXTERN SINT32 GetCollectionType(Collection *CollectionID);
 
 /**
-    @brief
-    @details
-    @returns
+    @brief Unload all collections of plugins that have been created by CBash.
+    @details Unloads all loaded collections from memory, without deleting them. Has the same effect as calling UnloadCollection() for each collection that has been created.
+    @returns `0` on success, `-1` if an error occurred.
 */
 DLLEXTERN SINT32 UnloadAllCollections();
 
 /**
-    @brief
-    @details
-    @returns
+    @brief Delete all plugin collections created by CBash.
+    @details Has the same effect as calling UnloadCollection() for each collection that has been created.
+    @returns `0` on success, `-1` if an error occurred.
 */
 DLLEXTERN SINT32 DeleteAllCollections();
 
@@ -169,46 +168,44 @@ DLLEXTERN SINT32 DeleteAllCollections();
 ///@{
 
 /**
-    @brief
-    @details
-    @param CollectionID
-    @param ModName
-    @param ModFlagsField
-    @returns
+    @brief Add a plugin to a collection.
+    @param CollectionID The collection to add the plugin to.
+    @param ModName The filename of the plugin to add.
+    @param ModFlagsField Flags that determine how the plugin is loaded and what can be edited once it has been loaded. These flags are given in ModFlags::modFlags.
+    @returns A pointer to the plugin object added to the collection.
 */
 DLLEXTERN ModFile * AddMod(Collection *CollectionID, STRING const ModName, const UINT32 ModFlagsField);
 
 /**
-    @brief
-    @details
-    @param ModID
-    @returns
+    @brief Load a single plugin.
+    @details Loads the records from the given plugin into memory.
+    @param ModID A pointer to the plugin object to load.
+    @returns `0` on success, `-1` if an error occurred.
 */
 DLLEXTERN SINT32 LoadMod(ModFile *ModID);
 
 /**
-    @brief
-    @details
-    @param ModID
-    @returns
+    @brief Unload a single plugin.
+    @details Unloads the records from the given plugin.
+    @param ModID A pointer to the plugin object to unload.
+    @returns `0` on success, `-1` if an error occurred.
 */
 DLLEXTERN SINT32 UnloadMod(ModFile *ModID);
 
 /**
-    @brief
-    @details
-    @param ModID
-    @returns
+    @brief Remove unreferenced masters from a plugin.
+    @details This function removes any entries in the given plugin's list of masters that aren't referenced in any of the plugin's records. Note that unreferenced masters are sometimes added to plugins to make explicit an otherwise implicit dependency.
+    @param ModID A pointer to the plugin object for which unreferenced masters should be removed.
+    @returns `0` on success, `-1` if an error occurred.
 */
 DLLEXTERN SINT32 CleanModMasters(ModFile *ModID);
 
 /**
-    @brief
-    @details
-    @param ModID
-    @param SaveFlagsField
-    @param DestinationName
-    @returns
+    @brief Save a single plugin's data to a plugin file.
+    @param ModID A pointer to the plugin object to save.
+    @param SaveFlagsField Flags that determine how the plugin is saved. These flags are given in SaveFlags::saveFlags.
+    @param DestinationName The output plugin filename.
+    @returns `0` on success, `-1` if an error occurred.
 */
 DLLEXTERN SINT32 SaveMod(ModFile *ModID, const UINT32 SaveFlagsField, STRING const DestinationName);
 
