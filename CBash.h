@@ -216,189 +216,167 @@ DLLEXTERN SINT32 SaveMod(ModFile *ModID, const UINT32 SaveFlagsField, STRING con
 ///@{
 
 /**
-    @brief
-    @details
-    @param CollectionID
-    @returns
+    @brief Get the number of mods in a collection.
+    @param CollectionID The collection to query.
+    @returns The number of mods in the given collection, or `-1` if an error occurred.
 */
 DLLEXTERN SINT32 GetAllNumMods(Collection *CollectionID);
 
 /**
-    @brief
-    @details
-    @param CollectionID
-    @param ModIDs
-    @returns
+    @brief Get an array of plugin object pointers for the plugins in a collection.
+    @param CollectionID The collection to query.
+    @param ModIDs An array of plugin object pointers. The array passed to the function must be preallocated to the correct size, as given by GetAllNumMods(). The array contents are filled by the function to point to the plugin objects within the collection queried.
+    @returns `0` on success, `-1` if an error occurred.
 */
 DLLEXTERN SINT32 GetAllModIDs(Collection *CollectionID, MODIDARRAY ModIDs);
 
 /**
-    @brief
-    @details
-    @param CollectionID
-    @returns
+    @brief Get the number of mods in a collection's load order.
+    @details Returns the number of plugins that were added to the collection with the ModFlags::modFlags::fIsInLoadOrder flag.
+    @param CollectionID The collection to query.
+    @returns The number of mods in the given collection's load order, or `-1` if an error occurred.
 */
 DLLEXTERN SINT32 GetLoadOrderNumMods(Collection *CollectionID);
 
 /**
-    @brief
-    @details
-    @param CollectionID
-    @param ModIDs
-    @returns
+    @brief Get an array of plugin object pointers for the plugins in a collection's load order.
+    @param CollectionID The collection to query.
+    @param ModIDs An array of plugin object pointers. The array passed to the function must be preallocated to the correct size, as given by GetLoadOrderNumMods(). The array contents are filled by the function to point to the plugin objects within the collection queried.
+    @returns `0` on success, `-1` if an error occurred.
 */
 DLLEXTERN SINT32 GetLoadOrderModIDs(Collection *CollectionID, MODIDARRAY ModIDs);
 
 /**
-    @brief
-    @details
-    @param ModID
-    @returns
+    @brief Get a plugin's filename from its object pointer.
+    @details The filename will include the `.ghost` extension if the plugin is ghosted.
+    @param ModID The object pointer of the plugin to look up.
+    @returns The plugin's filename, or `NULL` if an error occurred.
 */
 DLLEXTERN STRING GetFileNameByID(ModFile *ModID);
 
 /**
-    @brief
-    @details
-    @param CollectionID
-    @param ModIndex
-    @returns
+    @brief Get a plugin's filename from its position in the load order.
+    @details The filename will include the `.ghost` extension if the plugin is ghosted.
+    @param CollectionID The collection to query.
+    @param ModIndex The load order position to look up.
+    @returns The plugin's filename, or `NULL` if an error occurred.
 */
 DLLEXTERN STRING GetFileNameByLoadOrder(Collection *CollectionID, const UINT32 ModIndex);
 
 /**
-    @brief
-    @details
-    @param ModID
-    @returns
+    @brief Get a plugin's unghosted filename from its object pointer.
+    @details Returns the same value as GetFileNameByID() for unghosted plugins, and the filename minus the `.ghost` extension for ghosted plugins.
+    @param ModID The object pointer of the plugin to look up.
+    @returns The plugin's unghosted filename, or `NULL` if an error occurred.
 */
 DLLEXTERN STRING GetModNameByID(ModFile *ModID);
 
 /**
-    @brief
-    @details
-    @param CollectionID
-    @param ModIndex
-    @returns
+    @brief Get a plugin's unghosted filename from its position in the load order.
+    @details Returns the same value as GetFileNameByLoadOrder() for unghosted plugins, and the filename minus the `.ghost` extension for ghosted plugins.
+    @param CollectionID The collection to query.
+    @param ModIndex The load order position to look up, or `NULL` if an error occurred.
+    @returns The plugin's unghosted filename, or `NULL` if an error occurred.
 */
 DLLEXTERN STRING GetModNameByLoadOrder(Collection *CollectionID, const UINT32 ModIndex);
 
 /**
-    @brief
-    @details
-    @param CollectionID
-    @param ModName
-    @returns
+    @brief Get a plugin's object using its filename.
+    @param CollectionID The collection to query.
+    @param ModName The plugin filename.
+    @returns A pointer to the plugin object, or `NULL` if the plugin was not found.
 */
 DLLEXTERN ModFile * GetModIDByName(Collection *CollectionID, STRING const ModName);
 
 /**
-    @brief
-    @details
-    @param CollectionID
-    @param ModIndex
-    @returns
+    @brief Get a plugin's object using its position in the load order.
+    @param CollectionID The collection to query.
+    @param ModIndex The load order position to look up.
+    @returns A pointer to the plugin object, or `NULL` if the plugin was not found.
 */
 DLLEXTERN ModFile * GetModIDByLoadOrder(Collection *CollectionID, const UINT32 ModIndex);
 
 /**
-    @brief
-    @details
-    @param CollectionID
-    @param ModName
-    @returns
+    @brief Get a plugin's load order position using its filename.
+    @param CollectionID The collection to query.
+    @param ModName The plugin filename to look up.
+    @returns The plugin's load order position, or `-1` if an error occurred.
 */
 DLLEXTERN SINT32 GetModLoadOrderByName(Collection *CollectionID, STRING const ModName);
 
 /**
-    @brief
-    @details
-    @param ModID
-    @returns
+    @brief Get a plugin's load order position using its object pointer.
+    @param ModID The plugin's object pointer.
+    @returns The plugin's load order position, or `-1` if an error occurred.
 */
 DLLEXTERN SINT32 GetModLoadOrderByID(ModFile *ModID);
 
 /**
-    @brief
-    @details
-    @param RecordID
-    @returns
+    @brief Get a plugin using a record from it.
+    @param RecordID The record to get the parent plugin of.
+    @returns A plugin pointer, or `NULL` if an error occurred.
 */
 DLLEXTERN ModFile * GetModIDByRecordID(Record *RecordID);
 
 /**
-    @brief
-    @details
-    @param RecordID
-    @returns
+    @brief Get a collection using a record from a plugin in it.
+    @param RecordID The record to get the parent plugin's collection from.
+    @returns A collection pointer, or `NULL` if an error occurred.
 */
 DLLEXTERN Collection * GetCollectionIDByRecordID(Record *RecordID);
 
 /**
-    @brief
-    @details
-    @param RecordID
-    @returns
+    @brief Get a collection using a plugin in it.
+    @param ModID The plugin to get the parent collection of.
+    @returns A collection pointer, or `NULL` if an error occurred.
 */
 DLLEXTERN Collection * GetCollectionIDByModID(ModFile *ModID);
 
 /**
-    @brief
-    @details
-    @param CollectionID
-    @param ModID
-    @param ModName
-    @returns
-*/
-//DLLEXTERN SINT32 GetShortIDIndex(Collection *CollectionID, const SINT32 ModID, STRING const ModName);
-
-/**
-    @brief
-    @details
-    @param ModID
-    @returns
+    @brief Check if a plugin contains any records.
+    @param ModID The plugin to query.
+    @returns `1` if the plugin is empty, `0` otherwise.
 */
 DLLEXTERN UINT32 IsModEmpty(ModFile *ModID);
 
 /**
-    @brief
-    @details
-    @param ModID
-    @returns
+    @brief Get the number of different record types in a plugin.
+    @details This function will fail unless the plugin was added to the collection with the ModFlags::modFlags::fIsTrackNewTypes flag.
+    @param ModID The plugin to query.
+    @returns The number of record types in the plugin, or `-1` if an error occurred.
 */
 DLLEXTERN SINT32 GetModNumTypes(ModFile *ModID);
 
 /**
-    @brief
-    @details
-    @param ModID
-    @param RecordTypes
-    @returns
+    @brief Get an array of different record types in a plugin.
+    @details This function will fail unless the plugin was added to the collection with the ModFlags::modFlags::fIsTrackNewTypes flag.
+    @param ModID The plugin to query.
+    @param RecordTypes A #UINT32 array. The array passed to the function must be preallocated to the correct size, as given by GetModNumTypes(). The array contents are filled by the function. Each #UINT32 contains a four-character record ID in reverse, eg. `TES4` is stored as `4SET`.
+    @returns `0` on success, `-1` if an error occurred.
 */
 DLLEXTERN SINT32 GetModTypes(ModFile *ModID, UINT32ARRAY RecordTypes);
 
 /**
-    @brief
-    @details
-    @param ModID
-    @returns
+    @brief Get the number of empty record groups in a plugin.
+    @param ModID The plugin to query.
+    @returns The number of empty record groups in the plugin, or `-1` if an error occurred.
 */
 DLLEXTERN SINT32 GetModNumEmptyGRUPs(ModFile *ModID);
 
 /**
     @brief
     @details
-    @param ModID
-    @returns
+    @param ModID The plugin to query.
+    @returns The number of orphaned records in the plugin, or `-1` if an error occurred.
 */
 DLLEXTERN SINT32 GetModNumOrphans(ModFile *ModID);
 
 /**
     @brief
     @details
-    @param ModID
-    @param FormIDs
-    @returns
+    @param ModID The plugin to query.
+    @param FormIDs A #FORMID array. The array passed to the function must be preallocated to the correct size, as given by GetModNumOrphans(). The array contents are filled by the function.
+    @returns `0` on success, `-1` if an error occurred.
 */
 DLLEXTERN SINT32 GetModOrphansFormIDs(ModFile *ModID, FORMIDARRAY FormIDs);
 
@@ -409,22 +387,22 @@ DLLEXTERN SINT32 GetModOrphansFormIDs(ModFile *ModID, FORMIDARRAY FormIDs);
 ///@{
 
 /**
-    @brief
-    @details
-    @param RecordID
-    @param FormID
-    @param IsMGEFCode
-    @returns
+    @brief Get the long-format FormID for a record.
+    @details Long-format FormIDs convert the mod index stored in the first byte of a FormID into a plugin filename string, for unambiguous referencing independent of load order.
+    @param RecordID The record to query.
+    @param FormID The FormID to get the plugin filename referenced in its mod index byte.
+    @param IsMGEFCode Whether or not the FormID passed is a MGEF code. MGEF (Magic Effect) records are special cases that are referenced using their EditorIDs rather than their FormIDs, so need special handling.
+    @returns The filename of the plugin referenced by the given FormID, or `NULL` if an error occurred.
 */
 DLLEXTERN STRING GetLongIDName(Record *RecordID, const UINT32 FormID, const bool IsMGEFCode);
 
 /**
-    @brief
-    @details
-    @param ModID
-    @param ObjectID
-    @param IsMGEFCode
-    @returns
+    @brief Get a FormID for an object in a plugin.
+    @details  A FormID is composed of a one-byte mod index, and a 3-byte ObjectID. This function combines the mod index of the given plugin with the given ObjectID to create a FormID.
+    @param ModID The plugin to query.
+    @param ObjectID An ObjectID to create a FormID from. The last 3 bytes of the given ObjectID will be used in the FormID produced.
+    @param IsMGEFCode Whether or not the ObjectID passed is for a MGEF code. MGEF (Magic Effect) records are special cases that are referenced using their EditorIDs rather than their FormIDs, so need special handling.
+    @returns The FormID produced, or `NULL` if an error occurred.
 */
 DLLEXTERN UINT32 MakeShortFormID(ModFile *ModID, const UINT32 ObjectID, const bool IsMGEFCode);
 
