@@ -413,52 +413,49 @@ DLLEXTERN UINT32 MakeShortFormID(ModFile *ModID, const UINT32 ObjectID, const bo
 ///@{
 
 /**
-    @brief
-    @details
-    @param ModID
-    @param RecordType
-    @param RecordFormID
-    @param RecordEditorID
-    @param ParentID
-    @param CreateFlags
-    @returns
+    @brief Create a new record.
+    @param ModID The plugin to create the record in.
+    @param RecordType The record type.
+    @param RecordFormID The record FormID.
+    @param RecordEditorID The record EditorID.
+    @param ParentID The parent record for the record to be created. Some record types, usually worldspace-related, have hierarchies of parent and child records. If no parent is desired, `NULL` can be passed.
+    @param CreateFlags Flags that determine how the record is created. These flags are given in CreationFlags::createFlags.
+    @returns A pointer to the created record, or `NULL` if an error was encountered.
 */
 DLLEXTERN Record * CreateRecord(ModFile *ModID, const UINT32 RecordType, const FORMID RecordFormID, STRING const RecordEditorID, Record *ParentID, const UINT32 CreateFlags);
 
 /**
-    @brief
-    @details
-    @param RecordID
-    @param DestModID
-    @param DestParentID
-    @param DestRecordFormID
-    @param DestRecordEditorID
-    @param CreateFlags
-    @returns
+    @brief Copy a record from one plugin into another.
+    @param RecordID The record to be copied.
+    @param DestModID The plugin to copy the record into.
+    @param DestParentID The parent record for the record copy. Some record types, usually worldspace-related, have hierarchies of parent and child records. If no parent is desired, `NULL` can be passed.
+    @param DestRecordFormID The FormID of the record copy.
+    @param DestRecordEditorID The Editor ID of the record copy.
+    @param CreateFlags Flags that determine how the record copy is created. These flags are given in CreationFlags::createFlags.
+    @returns A pointer to the record copy, or `NULL` if an error was encountered.
 */
 DLLEXTERN Record * CopyRecord(Record *RecordID, ModFile *DestModID, Record *DestParentID, const FORMID DestRecordFormID, STRING const DestRecordEditorID, const UINT32 CreateFlags);
 
 /**
-    @brief
-    @details
-    @param RecordID
-    @returns
+    @brief Unload a record from memory.
+    @details If the record has been changed and the changes are unsaved, it will remain in memory.
+    @param RecordID The record to unload.
+    @returns `1` on success, `0` on failure.
 */
 DLLEXTERN SINT32 UnloadRecord(Record *RecordID);
 
 /**
-    @brief
-    @details
-    @param RecordID
-    @returns
+    @brief Discards changes made to a record since it was last saved.
+    @details If no changes are present, the function return as if it failed.
+    @param RecordID The record to reset.
+    @returns `1` on success, `0` on failure.
 */
 DLLEXTERN SINT32 ResetRecord(Record *RecordID);
 
 /**
-    @brief
-    @details
-    @param RecordID
-    @returns
+    @brief Delete a record.
+    @param RecordID The record to delete.
+    @returns `1` on success, `0` on failure.
 */
 DLLEXTERN SINT32 DeleteRecord(Record *RecordID);
 
