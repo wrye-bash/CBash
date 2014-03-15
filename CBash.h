@@ -466,93 +466,87 @@ DLLEXTERN SINT32 DeleteRecord(Record *RecordID);
 ///@{
 
 /**
-    @brief
-    @details
-    @param ModID
-    @param RecordFormID
-    @param RecordEditorID
-    @returns
+    @brief Get a record from a plugin using its FormID or EditorID.
+    @param ModID The plugin to look in.
+    @param RecordFormID The FormID to look for. If `NULL`, the EditorID value is used.
+    @param RecordEditorID The EditorID to look for, used if the FormID given is `NULL`. If this is also `NULL`, the plugin's TES4 record is returned.
+    @returns The specified record, or `NULL` if an error occurred.
 */
 DLLEXTERN Record * GetRecordID(ModFile *ModID, const FORMID RecordFormID, STRING const RecordEditorID);
 
 /**
-    @brief
-    @details
-    @param ModID
-    @param RecordType
-    @returns
+    @brief Get the number of records of a specified type in a plugin.
+    @param ModID The plugin to query.
+    @param RecordType The record type to look for. This should be its 4-byte name in reverse order, eg. to search for `CELL` records, you would pass a `UINT32 RecordType = 'LLEC';`.
+    @returns The number of records of the specified type, or `-1` if an error occurred.
 */
 DLLEXTERN SINT32 GetNumRecords(ModFile *ModID, const UINT32 RecordType);
 
 /**
-    @brief
-    @details
-    @param ModID
-    @param RecordType
-    @param RecordIDs
-    @returns
+    @brief Get an array of records of a specified type in a plugin.
+    @param ModID The plugin to query.
+    @param RecordType The record type to look for. This should be its 4-byte name in reverse order, eg. to search for `CELL` records, you would pass a `UINT32 RecordType = 'LLEC';`.
+    @param RecordIDs An array of record pointers, pre-allocated to be of the size given by GetNumRecords(). This function populates the array.
+    @returns The number of records retrieved, or `-1` if an error occurred.
 */
 DLLEXTERN SINT32 GetRecordIDs(ModFile *ModID, const UINT32 RecordType, RECORDIDARRAY RecordIDs);
 
 /**
-    @brief
-    @details
-    @param RecordID
-    @param GetExtendedConflicts
-    @returns
+    @brief Check if the given record is winning any conflict with other records.
+    @details A record wins a conflict if it is the last-loaded version of that record in the load order.
+    @param RecordID The record to query.
+    @param GetExtendedConflicts If true, checks for conflicts in plugins loaded with the ModFlags::modFlags::fIsExtendedConflicts flag, otherwise they are ignored.
+    @returns `1` if the record is winning, `0` if it is not, and `-1` if an error occurred.
 */
 DLLEXTERN SINT32 IsRecordWinning(Record *RecordID, const bool GetExtendedConflicts);
 
 /**
-    @brief
-    @details
-    @param RecordID
-    @param GetExtendedConflicts
-    @returns
+    @brief Get the number of conflicting versions of the given record in its parent collection.
+    @param RecordID The record to look for conflicts for.
+    @param GetExtendedConflicts If true, checks for conflicts in plugins loaded with the ModFlags::modFlags::fIsExtendedConflicts flag, otherwise they are ignored.
+    @returns The number of conflicting versions of the record, or `-1` if an error occurred.
 */
 DLLEXTERN SINT32 GetNumRecordConflicts(Record *RecordID, const bool GetExtendedConflicts);
 
 /**
-    @brief
-    @details
-    @param RecordID
-    @param RecordIDs
-    @param GetExtendedConflicts
-    @returns
+    @brief Get an array of the different versions of the given record in its parent collection.
+    @param RecordID The record to look for conflicts for.
+    @param RecordIDs An array of record pointers, pre-allocated to be of the size given by GetNumRecordConflicts(). This function populates the array.
+    @param GetExtendedConflicts If true, checks for conflicts in plugins loaded with the ModFlags::modFlags::fIsExtendedConflicts flag, otherwise they are ignored.
+    @returns The number of records retrieved, or `-1` if an error occurred.
 */
 DLLEXTERN SINT32 GetRecordConflicts(Record *RecordID, RECORDIDARRAY RecordIDs, const bool GetExtendedConflicts);
 
 /**
-    @brief
-    @details
-    @param RecordID
-    @param RecordIDs
-    @returns
+    @brief Get an array of the different versions of the given record in its parent collection.
+    @details Unlike GetRecordConflicts(), this function will fail if the given record's parent plugin was loaded with the ModFlags::modFlags::fIsExtendedConflicts flag set, and doesn't include the record passed in the outputted array.
+    @param RecordID The record to look for conflicts for.
+    @param RecordIDs An array of record pointers, pre-allocated to be of the size given by GetNumRecordConflicts(). This function populates the array.
+    @returns The number of records retrieved, or `-1` if an error occurred.
 */
 DLLEXTERN SINT32 GetRecordHistory(Record *RecordID, RECORDIDARRAY RecordIDs);
 
 /**
-    @brief
-    @details
-    @param ModID
-    @returns
+    @brief Get the number of Identical To Master records in a plugin.
+    @details Identical To Master records are unedited copies of records present in a plugin's masters.
+    @param ModID The plugin to query.
+    @returns The number of Identical To Master records, or `-1` if an error occurred.
 */
 DLLEXTERN SINT32 GetNumIdenticalToMasterRecords(ModFile *ModID);
 
 /**
-    @brief
-    @details
-    @param ModID
-    @param RecordIDs
-    @returns
+    @brief Gets an array of the Identical To Master records in a plugin.
+    @details Identical To Master records are unedited copies of records present in a plugin's masters.
+    @param ModID The plugin to query.
+    @param RecordIDs An array of record pointers, pre-allocated to be of the size given by GetNumIdenticalToMasterRecords(). This function populates the array.
+    @returns The number of records the array is populated with, or `-1` if an error occurred.
 */
 DLLEXTERN SINT32 GetIdenticalToMasterRecords(ModFile *ModID, RECORDIDARRAY RecordIDs);
 
 /**
-    @brief
-    @details
-    @param RecordID
-    @returns
+    @brief Check if a record's FormID or any of the FormIDs referenced by the record are invalid.
+    @param RecordID The record to check.
+    @returns `1` if the record has or references an invalid FormID, `0` if all the FormIDs it contains are valid, or `-1` if an error occurred.
 */
 DLLEXTERN SINT32 IsRecordsFormIDsInvalid(Record *RecordID);
 
