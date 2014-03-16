@@ -86,249 +86,189 @@ bool CAMSRecord::VisitFormIDs(FormIDOp &op)
             op.Accept(MODL->Textures.MODS[x]->texture);
         }
     if(MNAM.IsLoaded())
-        op.Accept(MNAM->value);
+        op.Accept(MNAM.value);
 
     return op.Stop();
     }
 
 bool CAMSRecord::IsPosFollowsLocation()
     {
-    if(!Dummy.IsLoaded()) return false;
-    return (Dummy->flags & fIsPosFollowsLocation) != 0;
+    if (!DATA.IsLoaded()) return false;
+    return (DATA->flags & fIsPosFollowsLocation) != 0;
     }
 
 void CAMSRecord::IsPosFollowsLocation(bool value)
     {
-    if(!Dummy.IsLoaded()) return;
-    Dummy->flags = value ? (Dummy->flags | fIsPosFollowsLocation) : (Dummy->flags & ~fIsPosFollowsLocation);
+    if (!DATA.IsLoaded()) return;
+    SETBIT(DATA->flags, fIsPosFollowsLocation, value);
     }
 
 bool CAMSRecord::IsPosFollowsTarget()
     {
-    if(!Dummy.IsLoaded()) return false;
-    return (Dummy->flags & fIsPosFollowsTarget) != 0;
+    if (!DATA.IsLoaded()) return false;
+    return (DATA->flags & fIsPosFollowsTarget) != 0;
     }
 
 void CAMSRecord::IsPosFollowsTarget(bool value)
     {
-    if(!Dummy.IsLoaded()) return;
-    Dummy->flags = value ? (Dummy->flags | fIsPosFollowsTarget) : (Dummy->flags & ~fIsPosFollowsTarget);
+    if (!DATA.IsLoaded()) return;
+    SETBIT(DATA->flags, fIsPosFollowsTarget, value);
     }
 
 bool CAMSRecord::IsDontFollowBone()
     {
-    if(!Dummy.IsLoaded()) return false;
-    return (Dummy->flags & fIsDontFollowBone) != 0;
+    if (!DATA.IsLoaded()) return false;
+    return (DATA->flags & fIsDontFollowBone) != 0;
     }
 
 void CAMSRecord::IsDontFollowBone(bool value)
     {
-    if(!Dummy.IsLoaded()) return;
-    Dummy->flags = value ? (Dummy->flags | fIsDontFollowBone) : (Dummy->flags & ~fIsDontFollowBone);
+    if (!DATA.IsLoaded()) return;
+    SETBIT(DATA->flags, fIsDontFollowBone, value);
     }
 
 bool CAMSRecord::IsFirstPersonCamera()
     {
-    if(!Dummy.IsLoaded()) return false;
-    return (Dummy->flags & fIsFirstPersonCamera) != 0;
+    if (!DATA.IsLoaded()) return false;
+    return (DATA->flags & fIsFirstPersonCamera) != 0;
     }
 
 void CAMSRecord::IsFirstPersonCamera(bool value)
     {
-    if(!Dummy.IsLoaded()) return;
-    Dummy->flags = value ? (Dummy->flags | fIsFirstPersonCamera) : (Dummy->flags & ~fIsFirstPersonCamera);
+    if (!DATA.IsLoaded()) return;
+    SETBIT(DATA->flags, fIsFirstPersonCamera, value);
     }
 
 bool CAMSRecord::IsNoTracer()
     {
-    if(!Dummy.IsLoaded()) return false;
-    return (Dummy->flags & fIsNoTracer) != 0;
+    if (!DATA.IsLoaded()) return false;
+    return (DATA->flags & fIsNoTracer) != 0;
     }
 
 void CAMSRecord::IsNoTracer(bool value)
     {
-    if(!Dummy.IsLoaded()) return;
-    Dummy->flags = value ? (Dummy->flags | fIsNoTracer) : (Dummy->flags & ~fIsNoTracer);
+    if (!DATA.IsLoaded()) return;
+    SETBIT(DATA->flags, fIsNoTracer, value);
     }
 
 bool CAMSRecord::IsStartAtTimeZero()
     {
-    if(!Dummy.IsLoaded()) return false;
-    return (Dummy->flags & fIsStartAtTimeZero) != 0;
+    if (!DATA.IsLoaded()) return false;
+    return (DATA->flags & fIsStartAtTimeZero) != 0;
     }
 
 void CAMSRecord::IsStartAtTimeZero(bool value)
     {
-    if(!Dummy.IsLoaded()) return;
-    Dummy->flags = value ? (Dummy->flags | fIsStartAtTimeZero) : (Dummy->flags & ~fIsStartAtTimeZero);
+    if (!DATA.IsLoaded()) return;
+    SETBIT(DATA->flags, fIsStartAtTimeZero, value);
     }
 
 bool CAMSRecord::IsFlagMask(UINT32 Mask, bool Exact)
     {
-    if(!Dummy.IsLoaded()) return false;
-    return Exact ? ((Dummy->flags & Mask) == Mask) : ((Dummy->flags & Mask) != 0);
+    if (!DATA.IsLoaded()) return false;
+    return Exact ? ((DATA->flags & Mask) == Mask) : ((DATA->flags & Mask) != 0);
     }
 
 void CAMSRecord::SetFlagMask(UINT32 Mask)
     {
-    Dummy.Load();
-    Dummy->flags = Mask;
+    DATA.Load();
+    DATA->flags = Mask;
     }
 
 bool CAMSRecord::IsActionShoot()
     {
-    if(!Dummy.IsLoaded()) return false;
-    return (Dummy->type == eShoot);
-    }
-
-void CAMSRecord::IsActionShoot(bool value)
-    {
-    if(!Dummy.IsLoaded()) return;
-    Dummy->flags = value ? eShoot : eDummyDefault;
+    if (!DATA.IsLoaded()) return false;
+    return (DATA->action == eShoot);
     }
 
 bool CAMSRecord::IsActionFly()
     {
-    if(!Dummy.IsLoaded()) return false;
-    return (Dummy->type == eFly);
-    }
-
-void CAMSRecord::IsActionFly(bool value)
-    {
-    if(!Dummy.IsLoaded()) return;
-    Dummy->flags = value ? eFly : eDummyDefault;
+    if (!DATA.IsLoaded()) return false;
+    return (DATA->action == eFly);
     }
 
 bool CAMSRecord::IsActionHit()
     {
-    if(!Dummy.IsLoaded()) return false;
-    return (Dummy->type == eHit);
-    }
-
-void CAMSRecord::IsActionHit(bool value)
-    {
-    if(!Dummy.IsLoaded()) return;
-    Dummy->flags = value ? eHit : eDummyDefault;
+    if (!DATA.IsLoaded()) return false;
+    return (DATA->action == eHit);
     }
 
 bool CAMSRecord::IsActionZoom()
     {
-    if(!Dummy.IsLoaded()) return false;
-    return (Dummy->type == eZoom);
-    }
-
-void CAMSRecord::IsActionZoom(bool value)
-    {
-    if(!Dummy.IsLoaded()) return;
-    Dummy->flags = value ? eZoom : eDummyDefault;
+    if (!DATA.IsLoaded()) return false;
+    return (DATA->action == eZoom);
     }
 
 bool CAMSRecord::IsActionType(UINT32 Type)
     {
-    if(!Dummy.IsLoaded()) return false;
-    return Dummy->type == Type;
+    if (!DATA.IsLoaded()) return false;
+    return DATA->action == Type;
     }
 
 void CAMSRecord::SetActionType(UINT32 Type)
     {
-    Dummy.Load();
-    Dummy->flags = Mask;
+    DATA.Load();
+    DATA->action = Type;
     }
 
 bool CAMSRecord::IsLocationAttacker()
     {
-    if(!Dummy.IsLoaded()) return false;
-    return (Dummy->type == eAttacker);
-    }
-
-void CAMSRecord::IsLocationAttacker(bool value)
-    {
-    if(!Dummy.IsLoaded()) return;
-    Dummy->flags = value ? eAttacker : eDummyDefault;
+    if (!DATA.IsLoaded()) return false;
+    return (DATA->location == eAttacker);
     }
 
 bool CAMSRecord::IsLocationProjectile()
     {
-    if(!Dummy.IsLoaded()) return false;
-    return (Dummy->type == eProjectile);
-    }
-
-void CAMSRecord::IsLocationProjectile(bool value)
-    {
-    if(!Dummy.IsLoaded()) return;
-    Dummy->flags = value ? eProjectile : eDummyDefault;
+    if (!DATA.IsLoaded()) return false;
+    return (DATA->location == eProjectile);
     }
 
 bool CAMSRecord::IsLocationTarget()
     {
-    if(!Dummy.IsLoaded()) return false;
-    return (Dummy->type == eTarget);
-    }
-
-void CAMSRecord::IsLocationTarget(bool value)
-    {
-    if(!Dummy.IsLoaded()) return;
-    Dummy->flags = value ? eTarget : eDummyDefault;
+    if (!DATA.IsLoaded()) return false;
+    return (DATA->location == eTarget);
     }
 
 bool CAMSRecord::IsLocationType(UINT32 Type)
     {
-    if(!Dummy.IsLoaded()) return false;
-    return Dummy->type == Type;
+    if (!DATA.IsLoaded()) return false;
+    return DATA->location == Type;
     }
 
 void CAMSRecord::SetLocationType(UINT32 Type)
     {
-    Dummy.Load();
-    Dummy->flags = Mask;
+    DATA.Load();
+    DATA->location = Type;
     }
 
 bool CAMSRecord::IsTargetAttacker()
     {
-    if(!Dummy.IsLoaded()) return false;
-    return (Dummy->type == eAttacker);
-    }
-
-void CAMSRecord::IsTargetAttacker(bool value)
-    {
-    if(!Dummy.IsLoaded()) return;
-    Dummy->flags = value ? eAttacker : eDummyDefault;
+    if (!DATA.IsLoaded()) return false;
+    return (DATA->target == eAttacker);
     }
 
 bool CAMSRecord::IsTargetProjectile()
     {
-    if(!Dummy.IsLoaded()) return false;
-    return (Dummy->type == eProjectile);
-    }
-
-void CAMSRecord::IsTargetProjectile(bool value)
-    {
-    if(!Dummy.IsLoaded()) return;
-    Dummy->flags = value ? eProjectile : eDummyDefault;
+    if (!DATA.IsLoaded()) return false;
+    return (DATA->target == eProjectile);
     }
 
 bool CAMSRecord::IsTargetTarget()
     {
-    if(!Dummy.IsLoaded()) return false;
-    return (Dummy->type == eTarget);
-    }
-
-void CAMSRecord::IsTargetTarget(bool value)
-    {
-    if(!Dummy.IsLoaded()) return;
-    Dummy->flags = value ? eTarget : eDummyDefault;
+    if (!DATA.IsLoaded()) return false;
+    return (DATA->target == eTarget);
     }
 
 bool CAMSRecord::IsTargetType(UINT32 Type)
     {
-    if(!Dummy.IsLoaded()) return false;
-    return Dummy->type == Type;
+    if (!DATA.IsLoaded()) return false;
+    return DATA->target == Type;
     }
 
 void CAMSRecord::SetTargetType(UINT32 Type)
     {
-    Dummy.Load();
-    Dummy->flags = Mask;
+    DATA.Load();
+    DATA->target = Type;
     }
 
 UINT32 CAMSRecord::GetType()
@@ -341,7 +281,7 @@ STRING CAMSRecord::GetStrType()
     return "CAMS";
     }
 
-SINT32 CAMSRecord::ParseRecord(unsigned char *buffer, const UINT32 &recSize)
+SINT32 CAMSRecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk)
     {
     UINT32 subType = 0;
     UINT32 subSize = 0;
@@ -365,11 +305,11 @@ SINT32 CAMSRecord::ParseRecord(unsigned char *buffer, const UINT32 &recSize)
         switch(subType)
             {
             case REV32(EDID):
-                EDID.Read(buffer, subSize);
+                EDID.Read(buffer, subSize, CompressedOnDisk);
                 break;
             case REV32(MODL):
                 MODL.Load();
-                MODL->MODL.Read(buffer, subSize);
+                MODL->MODL.Read(buffer, subSize, CompressedOnDisk);
                 break;
             case REV32(MODB):
                 MODL.Load();
@@ -377,7 +317,7 @@ SINT32 CAMSRecord::ParseRecord(unsigned char *buffer, const UINT32 &recSize)
                 break;
             case REV32(MODT):
                 MODL.Load();
-                MODL->MODT.Read(buffer, subSize);
+                MODL->MODT.Read(buffer, subSize, CompressedOnDisk);
                 break;
             case REV32(MODS):
                 MODL.Load();
@@ -441,7 +381,7 @@ bool CAMSRecord::operator !=(const CAMSRecord &other) const
     return !(*this == other);
     }
 
-bool CAMSRecord::equals(const Record *other) const
+bool CAMSRecord::equals(Record *other)
     {
     return *this == *(CAMSRecord *)other;
     }
