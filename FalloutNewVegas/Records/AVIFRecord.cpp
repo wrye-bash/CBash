@@ -93,7 +93,7 @@ STRING AVIFRecord::GetStrType()
     return "AVIF";
     }
 
-SINT32 AVIFRecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk = false)
+SINT32 AVIFRecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk)
     {
     UINT32 subType = 0;
     UINT32 subSize = 0;
