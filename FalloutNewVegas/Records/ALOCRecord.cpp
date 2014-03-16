@@ -92,19 +92,25 @@ bool ALOCRecord::VisitFormIDs(FormIDOp &op)
         return false;
 
     if(HNAM.IsLoaded())
-        op.Accept(HNAM->value);
+        for (UINT32 ListIndex = 0; ListIndex < HNAM.value.size(); ListIndex++)
+            op.Accept(HNAM.value[ListIndex]);
     if(ZNAM.IsLoaded())
-        op.Accept(ZNAM->value);
-    if(XNAM.IsLoaded())
-        op.Accept(XNAM->value);
-    if(YNAM.IsLoaded())
-        op.Accept(YNAM->value);
-    if(LNAM.IsLoaded())
-        op.Accept(LNAM->value);
-    if(GNAM.IsLoaded())
-        op.Accept(GNAM->value);
-    if(RNAM.IsLoaded())
-        op.Accept(RNAM->value);
+        for (UINT32 ListIndex = 0; ListIndex < ZNAM.value.size(); ListIndex++)
+            op.Accept(ZNAM.value[ListIndex]);
+    if (XNAM.IsLoaded())
+        for (UINT32 ListIndex = 0; ListIndex < XNAM.value.size(); ListIndex++)
+            op.Accept(XNAM.value[ListIndex]);
+    if (YNAM.IsLoaded())
+        for (UINT32 ListIndex = 0; ListIndex < YNAM.value.size(); ListIndex++)
+            op.Accept(YNAM.value[ListIndex]);
+    if (LNAM.IsLoaded())
+        for (UINT32 ListIndex = 0; ListIndex < LNAM.value.size(); ListIndex++)
+            op.Accept(LNAM.value[ListIndex]);
+    if (GNAM.IsLoaded())
+        for (UINT32 ListIndex = 0; ListIndex < GNAM.value.size(); ListIndex++)
+            op.Accept(GNAM.value[ListIndex]);
+    if (RNAM.IsLoaded())
+        op.Accept(RNAM.value);
 
     return op.Stop();
     }
@@ -119,7 +125,7 @@ STRING ALOCRecord::GetStrType()
     return "ALOC";
     }
 
-SINT32 ALOCRecord::ParseRecord(unsigned char *buffer, const UINT32 &recSize)
+SINT32 ALOCRecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk)
     {
     UINT32 subType = 0;
     UINT32 subSize = 0;
@@ -143,19 +149,19 @@ SINT32 ALOCRecord::ParseRecord(unsigned char *buffer, const UINT32 &recSize)
         switch(subType)
             {
             case REV32(EDID):
-                EDID.Read(buffer, subSize);
+                EDID.Read(buffer, subSize, CompressedOnDisk);
                 break;
             case REV32(FULL):
                 FULL.Read(buffer, subSize, CompressedOnDisk);
                 break;
             case REV32(NAM1):
-                NAM1.Read(buffer, subSize);
+                NAM1.Read(buffer, subSize, CompressedOnDisk);
                 break;
             case REV32(NAM2):
-                NAM2.Read(buffer, subSize);
+                NAM2.Read(buffer, subSize, CompressedOnDisk);
                 break;
             case REV32(NAM3):
-                NAM3.Read(buffer, subSize);
+                NAM3.Read(buffer, subSize, CompressedOnDisk);
                 break;
             case REV32(NAM4):
                 NAM4.Read(buffer, subSize);
@@ -191,7 +197,7 @@ SINT32 ALOCRecord::ParseRecord(unsigned char *buffer, const UINT32 &recSize)
                 RNAM.Read(buffer, subSize);
                 break;
             case REV32(FNAM):
-                FNAM.Read(buffer, subSize);
+                FNAM.Read(buffer, subSize, CompressedOnDisk);
                 break;
             default:
                 //printf("FileName = %s\n", FileName);
@@ -278,7 +284,7 @@ bool ALOCRecord::operator !=(const ALOCRecord &other) const
     return !(*this == other);
     }
 
-bool ALOCRecord::equals(const Record *other) const
+bool ALOCRecord::equals(Record *other)
     {
     return *this == *(ALOCRecord *)other;
     }

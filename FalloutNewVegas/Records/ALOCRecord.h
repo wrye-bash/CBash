@@ -51,12 +51,12 @@ class ALOCRecord : public FNVRecord //Media Location Controller
         OptSimpleSubRecord<UINT32> NAM5; //Day Start
         OptSimpleSubRecord<UINT32> NAM6; //Night Start
         OptSimpleFloatSubRecord<flt_0> NAM7; //Retrigger Delay
-        std::vector<FORMID> HNAM; //Neutral Media Sets
-        std::vector<FORMID> ZNAM; //Ally Media Sets
-        std::vector<FORMID> XNAM; //Friend Media Sets
-        std::vector<FORMID> YNAM; //Enemy Media Sets
-        std::vector<FORMID> LNAM; //Location Media Sets
-        std::vector<FORMID> GNAM; //Battle Media Sets
+        UnorderedSparseArray<FORMID> HNAM; // Neutral Media Sets
+        UnorderedSparseArray<FORMID> ZNAM; // Ally Media Sets
+        UnorderedSparseArray<FORMID> XNAM; // Friend Media Sets
+        UnorderedSparseArray<FORMID> YNAM; // Enemy Media Sets
+        UnorderedSparseArray<FORMID> LNAM; // Location Media Sets
+        UnorderedSparseArray<FORMID> GNAM; // Battle Media Sets
         OptSimpleSubRecord<FORMID> RNAM; //Conditional Faction
         RawRecord FNAM; //Unknown
 
@@ -74,12 +74,12 @@ class ALOCRecord : public FNVRecord //Media Location Controller
         UINT32 GetType();
         STRING GetStrType();
 
-        SINT32 ParseRecord(unsigned char *buffer, const UINT32 &recSize, bool CompressedOnDisk);
+        SINT32 ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk);
         SINT32 Unload();
         SINT32 WriteRecord(FileWriter &writer);
 
         bool operator ==(const ALOCRecord &other) const;
         bool operator !=(const ALOCRecord &other) const;
-        bool equals(Record *other, RecordOp &read_self, RecordOp &read_other, EqualityOptions &options);
+        bool equals(Record *other);
     };
 }
