@@ -83,26 +83,17 @@ class AMEFRecord : public FNVRecord //Ammo Effect
         bool   VisitFormIDs(FormIDOp &op);
 
         bool   IsDamage();
-        void   IsDamage(bool value);
         bool   IsDR();
-        void   IsDR(bool value);
         bool   IsDT();
-        void   IsDT(bool value);
         bool   IsSpread();
-        void   IsSpread(bool value);
         bool   IsCondition();
-        void   IsCondition(bool value);
         bool   IsFatigue();
-        void   IsFatigue(bool value);
         bool   IsModType(UINT32 Type);
         void   SetModType(UINT32 Type);
 
         bool   IsAdd();
-        void   IsAdd(bool value);
         bool   IsMultiply();
-        void   IsMultiply(bool value);
         bool   IsSubtract();
-        void   IsSubtract(bool value);
         bool   IsOpType(UINT32 Type);
         void   SetOpType(UINT32 Type);
 
