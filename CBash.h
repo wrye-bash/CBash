@@ -37,6 +37,8 @@
  /**
     @file CBash.h
     @brief This file declares the C API functions.
+
+    @details This documentation was not written by the original developer, and so may be inaccurate. In particular, GetRecordHistory() and IsRecordsFormIDsInvalid() may be documented incorrectly.
 */
 
 #pragma once
@@ -557,15 +559,14 @@ DLLEXTERN SINT32 IsRecordsFormIDsInvalid(Record *RecordID);
 ///@{
 
 /**
-    @brief
-    @details
-    @param ModID
-    @param RecordID
-    @param OldFormIDs
-    @param NewFormIDs
-    @param Changes
-    @param ArraySize
-    @returns
+    @brief Update FormID references in a given plugin or record.
+    @param ModID The plugin to operate on. If `NULL`, RecordID must be non-`NULL`.
+    @param RecordID The record to operate on. If `NULL`, references in all the records in the given plugin will be updated.
+    @param OldFormIDs An input array of the FormIDs to update.
+    @param NewFormIDs An input array of the new FormIDs that correspond to the FormIDs in OldFormIDs.
+    @param Changes An output array of the number of changes made for each FormID that was inputted.
+    @param ArraySize The size of the OldFormIDs, NewFormIDs and Changes arrays.
+    @returns The total number of updated references, or `-1` if an error occurred.
 */
 DLLEXTERN SINT32 UpdateReferences(ModFile *ModID, Record *RecordID, FORMIDARRAY OldFormIDs, FORMIDARRAY NewFormIDs, UINT32ARRAY Changes, const UINT32 ArraySize);
 
@@ -576,11 +577,10 @@ DLLEXTERN SINT32 UpdateReferences(ModFile *ModID, Record *RecordID, FORMIDARRAY 
 ///@{
 
 /**
-    @brief
-    @details
-    @param CollectionID
-    @param RecordID
-    @returns
+    @brief Check if a record has had its references updated.
+    @param CollectionID The collection to query.
+    @param RecordID The record to query. If `NULL`, all record changes in the collection are discarded.
+    @returns `1` if the record has had its references updated, `0` if not, and `-1` if an error occurred.
 */
 DLLEXTERN SINT32 GetRecordUpdatedReferences(Collection *CollectionID, Record *RecordID);
 
@@ -591,12 +591,11 @@ DLLEXTERN SINT32 GetRecordUpdatedReferences(Collection *CollectionID, Record *Re
 ///@{
 
 /**
-    @brief
-    @details
-    @param RecordID
-    @param FormID
-    @param EditorID
-    @returns
+    @brief Set the FormID and EditorID of a record.
+    @param RecordID The record to operate on.
+    @param FormID The FormID to set. If `NULL`, the function will exit with error.
+    @param EditorID The EditorID to set. If the EditorID is already in use by another record in the same plugin, the function will exit with error.
+    @returns `1` if the FormID and/or EditorID was changed, or `-1` if nothing was changed or an error occurred.
 */
 DLLEXTERN SINT32 SetIDFields(Record *RecordID, const FORMID FormID, STRING const EditorID);
 
