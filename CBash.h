@@ -90,14 +90,13 @@ DLLEXTERN UINT32 GetVersionRevision();
 
 /**
     @brief Register a callback function for logging messages.
-    @details Register a callback function for logging messages.
-    @param _LoggingCallback A pointer to a callback function. If `NULL`, messages are printed to `stdout`. The callback function must take a message string argument, and returns a #SINT32 with value equal to the number of characters in the message, or `-1` if an error occurred.
+    @param _LoggingCallback A pointer to a callback function. If `NULL`, messages are printed to `stdout`. The callback function must take a message string argument, and returns the number of characters in the message, or `-1` if an error occurred.
 */
 DLLEXTERN void RedirectMessages(SINT32 (*_LoggingCallback)(const STRING));
 
 /**
     @brief Register a callback function for tracing function calls.
-    @details Register a callback function for tracing function calls. This function is called by many functions if they encounter an error, and is passed the name of the function it is called from. This makes it potentially useful for debugging purposes.
+    @details This function is called by many functions if they encounter an error, and is passed the name of the function it is called from. This makes it potentially useful for debugging purposes.
     @param _RaiseCallback A pointer to a function that takes a string argument and returns nothing. If `NULL`, no function call tracing occurs.
 */
 DLLEXTERN void AllowRaising(void (*_RaiseCallback)(const STRING));
@@ -110,7 +109,7 @@ DLLEXTERN void AllowRaising(void (*_RaiseCallback)(const STRING));
 
 /**
     @brief Create a plugin collection.
-    @details Create a plugin collection. Collections are used to manage groups of mod plugins and their data in CBash.
+    @details Collections are used to manage groups of mod plugins and their data in CBash.
     @param ModsPath Specifies the path to the folder containing the mod plugins that are to be added to the collection.
     @param CollectionType Specifies the type of game the collection is for. Valid game types are given by ::whichGameTypes.
     @returns A pointer to the newly-created collection object.
@@ -119,7 +118,7 @@ DLLEXTERN Collection * CreateCollection(STRING const ModsPath, const UINT32 Coll
 
 /**
     @brief Delete a plugin collection.
-    @details Delete a plugin collection. Deleting a collection frees all associated memory, invalidating associated pointers.
+    @details Deleting a collection frees all associated memory, invalidating associated pointers.
     @param CollectionID A pointer to the collection to be deleted.
     @returns `0` on success, `-1` if an error occurred.
 */
@@ -353,7 +352,7 @@ DLLEXTERN SINT32 GetModNumTypes(ModFile *ModID);
     @brief Get an array of different record types in a plugin.
     @details This function will fail unless the plugin was added to the collection with the ModFlags::modFlags::fIsTrackNewTypes flag.
     @param ModID The plugin to query.
-    @param RecordTypes A #UINT32 array. The array passed to the function must be preallocated to the correct size, as given by GetModNumTypes(). The array contents are filled by the function. Each #UINT32 contains a four-character record ID in reverse, eg. `TES4` is stored as `4SET`.
+    @param RecordTypes An array of record IDs. Each ID is a four-character sequence in in reverse, eg. `TES4` is stored as `4SET`. The array passed to the function must be preallocated to the correct size, as given by GetModNumTypes(). The array contents are filled by the function.
     @returns `0` on success, `-1` if an error occurred.
 */
 DLLEXTERN SINT32 GetModTypes(ModFile *ModID, UINT32ARRAY RecordTypes);
@@ -366,18 +365,18 @@ DLLEXTERN SINT32 GetModTypes(ModFile *ModID, UINT32ARRAY RecordTypes);
 DLLEXTERN SINT32 GetModNumEmptyGRUPs(ModFile *ModID);
 
 /**
-    @brief
-    @details
+    @brief Get the number of orphaned records in a plugin.
+    @details Orphaned records are those which reference a parent record that does not exist.
     @param ModID The plugin to query.
     @returns The number of orphaned records in the plugin, or `-1` if an error occurred.
 */
 DLLEXTERN SINT32 GetModNumOrphans(ModFile *ModID);
 
 /**
-    @brief
-    @details
+    @brief Get an array of orphaned record FormIDs in a plugin.
+    @details Orphaned records are those which reference a parent record that does not exist.
     @param ModID The plugin to query.
-    @param FormIDs A #FORMID array. The array passed to the function must be preallocated to the correct size, as given by GetModNumOrphans(). The array contents are filled by the function.
+    @param FormIDs An outputted array of the FormIDs of the orphaned records in the plugin. The array passed to the function must be preallocated to the correct size, as given by GetModNumOrphans(). The array contents are filled by the function.
     @returns `0` on success, `-1` if an error occurred.
 */
 DLLEXTERN SINT32 GetModOrphansFormIDs(ModFile *ModID, FORMIDARRAY FormIDs);
@@ -479,7 +478,7 @@ DLLEXTERN Record * GetRecordID(ModFile *ModID, const FORMID RecordFormID, STRING
 /**
     @brief Get the number of records of a specified type in a plugin.
     @param ModID The plugin to query.
-    @param RecordType The record type to look for. This should be its 4-byte name in reverse order, eg. to search for `CELL` records, you would pass a `UINT32 RecordType = 'LLEC';`.
+    @param RecordType The record type to look for. This should be its 4-byte name in reverse order, eg. to search for `CELL` records, you would pass `'LLEC'`.
     @returns The number of records of the specified type, or `-1` if an error occurred.
 */
 DLLEXTERN SINT32 GetNumRecords(ModFile *ModID, const UINT32 RecordType);
@@ -600,10 +599,16 @@ DLLEXTERN SINT32 GetRecordUpdatedReferences(Collection *CollectionID, Record *Re
 DLLEXTERN SINT32 SetIDFields(Record *RecordID, const FORMID FormID, STRING const EditorID);
 
 /**
-    @brief
+    @brief Set a field's value.
     @details
-    @param RecordID
-    @param FIELD_IDENTIFIERS
+    @param RecordID The record in which the field is found.
+    @param FieldID The
+    @param ListIndex
+    @param ListFieldID
+    @param ListX2Index
+    @param ListX2FieldID
+    @param ListX3Index
+    @param ListX3FieldID
     @param FieldValue
     @param ArraySize
     @returns
@@ -614,7 +619,13 @@ DLLEXTERN void   SetField(Record *RecordID, FIELD_IDENTIFIERS, void *FieldValue,
     @brief
     @details
     @param RecordID
-    @param FIELD_IDENTIFIERS
+    @param FieldID
+    @param ListIndex
+    @param ListFieldID
+    @param ListX2Index
+    @param ListX2FieldID
+    @param ListX3Index
+    @param ListX3FieldID
     @returns
 */
 DLLEXTERN void   DeleteField(Record *RecordID, FIELD_IDENTIFIERS);
@@ -629,7 +640,13 @@ DLLEXTERN void   DeleteField(Record *RecordID, FIELD_IDENTIFIERS);
     @brief
     @details
     @param RecordID
-    @param FIELD_IDENTIFIERS
+    @param FieldID
+    @param ListIndex
+    @param ListFieldID
+    @param ListX2Index
+    @param ListX2FieldID
+    @param ListX3Index
+    @param ListX3FieldID
     @param WhichAttribute
     @returns
 */
@@ -639,7 +656,13 @@ DLLEXTERN UINT32 GetFieldAttribute(Record *RecordID, FIELD_IDENTIFIERS, const UI
     @brief
     @details
     @param RecordID
-    @param FIELD_IDENTIFIERS
+    @param FieldID
+    @param ListIndex
+    @param ListFieldID
+    @param ListX2Index
+    @param ListX2FieldID
+    @param ListX3Index
+    @param ListX3FieldID
     @param FieldValues
     @returns
 */
