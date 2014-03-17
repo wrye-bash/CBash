@@ -81,74 +81,44 @@ bool LSCTRecord::VisitFormIDs(FormIDOp &op)
 
 bool LSCTRecord::IsNone()
     {
-    if(!Dummy.IsLoaded()) return false;
-    return (Dummy->type == eNone);
-    }
-
-void LSCTRecord::IsNone(bool value)
-    {
-    if(!Dummy.IsLoaded()) return;
-    Dummy->flags = value ? eNone : eDummyDefault;
+    if (!DATA.IsLoaded()) return false;
+    return (DATA->screenType == eNone);
     }
 
 bool LSCTRecord::IsXPProgress()
     {
-    if(!Dummy.IsLoaded()) return false;
-    return (Dummy->type == eXPProgress);
-    }
-
-void LSCTRecord::IsXPProgress(bool value)
-    {
-    if(!Dummy.IsLoaded()) return;
-    Dummy->flags = value ? eXPProgress : eDummyDefault;
+    if (!DATA.IsLoaded()) return false;
+    return (DATA->screenType == eXPProgress);
     }
 
 bool LSCTRecord::IsObjective()
     {
-    if(!Dummy.IsLoaded()) return false;
-    return (Dummy->type == eObjective);
-    }
-
-void LSCTRecord::IsObjective(bool value)
-    {
-    if(!Dummy.IsLoaded()) return;
-    Dummy->flags = value ? eObjective : eDummyDefault;
+    if (!DATA.IsLoaded()) return false;
+    return (DATA->screenType == eObjective);
     }
 
 bool LSCTRecord::IsTip()
     {
-    if(!Dummy.IsLoaded()) return false;
-    return (Dummy->type == eTip);
-    }
-
-void LSCTRecord::IsTip(bool value)
-    {
-    if(!Dummy.IsLoaded()) return;
-    Dummy->flags = value ? eTip : eDummyDefault;
+    if (!DATA.IsLoaded()) return false;
+    return (DATA->screenType == eTip);
     }
 
 bool LSCTRecord::IsStats()
     {
-    if(!Dummy.IsLoaded()) return false;
-    return (Dummy->type == eStats);
-    }
-
-void LSCTRecord::IsStats(bool value)
-    {
-    if(!Dummy.IsLoaded()) return;
-    Dummy->flags = value ? eStats : eDummyDefault;
+    if (!DATA.IsLoaded()) return false;
+    return (DATA->screenType == eStats);
     }
 
 bool LSCTRecord::IsType(UINT32 Type)
     {
-    if(!Dummy.IsLoaded()) return false;
-    return Dummy->type == Type;
+    if (!DATA.IsLoaded()) return false;
+    return DATA->screenType == Type;
     }
 
 void LSCTRecord::SetType(UINT32 Type)
     {
-    Dummy.Load();
-    Dummy->flags = Mask;
+    DATA.Load();
+    DATA->screenType = Type;
     }
 
 UINT32 LSCTRecord::GetType()
@@ -161,7 +131,7 @@ STRING LSCTRecord::GetStrType()
     return "LSCT";
     }
 
-SINT32 LSCTRecord::ParseRecord(unsigned char *buffer, const UINT32 &recSize)
+SINT32 LSCTRecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk)
     {
     UINT32 subType = 0;
     UINT32 subSize = 0;
@@ -185,7 +155,7 @@ SINT32 LSCTRecord::ParseRecord(unsigned char *buffer, const UINT32 &recSize)
         switch(subType)
             {
             case REV32(EDID):
-                EDID.Read(buffer, subSize);
+                EDID.Read(buffer, subSize, CompressedOnDisk);
                 break;
             case REV32(DATA):
                 DATA.Read(buffer, subSize);
@@ -230,7 +200,7 @@ bool LSCTRecord::operator !=(const LSCTRecord &other) const
     return !(*this == other);
     }
 
-bool LSCTRecord::equals(const Record *other) const
+bool LSCTRecord::equals(Record *other)
     {
     return *this == *(LSCTRecord *)other;
     }

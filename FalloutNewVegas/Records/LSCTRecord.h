@@ -84,15 +84,10 @@ class LSCTRecord : public FNVRecord //Load Screen Type
         bool   VisitFormIDs(FormIDOp &op);
 
         bool   IsNone();
-        void   IsNone(bool value);
         bool   IsXPProgress();
-        void   IsXPProgress(bool value);
         bool   IsObjective();
-        void   IsObjective(bool value);
         bool   IsTip();
-        void   IsTip(bool value);
         bool   IsStats();
-        void   IsStats(bool value);
         bool   IsType(UINT32 Type);
         void   SetType(UINT32 Type);
 
