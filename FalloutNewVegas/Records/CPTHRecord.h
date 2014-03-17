@@ -50,7 +50,7 @@ class CPTHRecord : public FNVRecord //Camera Path
             };
     public:
         StringRecord EDID; //Editor ID
-        OrderedSparseArray<FNVCTDA> CTDA; // Conditions
+        UnorderedSparseArray<FNVCTDA> CTDA; // Conditions
         OrderedPackedArray<FORMID> ANAM; //Related Camera Paths
         OptSimpleSubRecord<UINT8> DATA; //Camera Zoom
         UnorderedSparseArray<FORMID> SNAM; //Camera Shots
