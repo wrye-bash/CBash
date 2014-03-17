@@ -45,7 +45,7 @@ class MESGRecord : public FNVRecord //Message
         struct MESGButton
             {
             StringRecord ITXT; //Text
-            std::vector<ReqSubRecord<FNVCTDA> *> CTDA; //Conditions
+            UnorderedSparseArray<FNVCTDA> CTDA; // Conditions
 
             bool operator ==(const MESGButton &other) const;
             bool operator !=(const MESGButton &other) const;
@@ -73,7 +73,7 @@ class MESGRecord : public FNVRecord //Message
         //OptSubRecord<GENNAM> NAM9; //Unused (Empty)
         OptSimpleSubRecord<UINT32> DNAM; //Flags
         OptSimpleSubRecord<UINT32> TNAM; //Display Time
-        std::vector<MESGButton *> Buttons; //Menu Buttons
+        std::vector<MESGButton> Buttons; //Menu Buttons
 
         MESGRecord(unsigned char *_recData=NULL);
         MESGRecord(MESGRecord *srcRecord);
