@@ -84,38 +84,38 @@ bool ECZNRecord::VisitFormIDs(FormIDOp &op)
 
 bool ECZNRecord::IsNeverResets()
     {
-    if(!Dummy.IsLoaded()) return false;
-    return (Dummy->flags & fIsNeverResets) != 0;
+    if (!DATA.IsLoaded()) return false;
+    return (DATA->flags & fIsNeverResets) != 0;
     }
 
 void ECZNRecord::IsNeverResets(bool value)
     {
-    if(!Dummy.IsLoaded()) return;
-    Dummy->flags = value ? (Dummy->flags | fIsNeverResets) : (Dummy->flags & ~fIsNeverResets);
+    if (!DATA.IsLoaded()) return;
+    SETBIT(DATA->flags, fIsNeverResets, value);
     }
 
 bool ECZNRecord::IsMatchPCBelowMinLevel()
     {
-    if(!Dummy.IsLoaded()) return false;
-    return (Dummy->flags & fIsMatchPCBelowMinLevel) != 0;
+    if (!DATA.IsLoaded()) return false;
+    return (DATA->flags & fIsMatchPCBelowMinLevel) != 0;
     }
 
 void ECZNRecord::IsMatchPCBelowMinLevel(bool value)
     {
-    if(!Dummy.IsLoaded()) return;
-    Dummy->flags = value ? (Dummy->flags | fIsMatchPCBelowMinLevel) : (Dummy->flags & ~fIsMatchPCBelowMinLevel);
+    if (!DATA.IsLoaded()) return;
+    SETBIT(DATA->flags, fIsMatchPCBelowMinLevel, value);
     }
 
 bool ECZNRecord::IsFlagMask(UINT8 Mask, bool Exact)
     {
-    if(!Dummy.IsLoaded()) return false;
-    return Exact ? ((Dummy->flags & Mask) == Mask) : ((Dummy->flags & Mask) != 0);
+    if (!DATA.IsLoaded()) return false;
+    return Exact ? ((DATA->flags & Mask) == Mask) : ((DATA->flags & Mask) != 0);
     }
 
 void ECZNRecord::SetFlagMask(UINT8 Mask)
     {
-    Dummy.Load();
-    Dummy->flags = Mask;
+    DATA.Load();
+    DATA->flags = Mask;
     }
 
 UINT32 ECZNRecord::GetType()
@@ -128,7 +128,7 @@ STRING ECZNRecord::GetStrType()
     return "ECZN";
     }
 
-SINT32 ECZNRecord::ParseRecord(unsigned char *buffer, const UINT32 &recSize)
+SINT32 ECZNRecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk)
     {
     UINT32 subType = 0;
     UINT32 subSize = 0;
@@ -152,7 +152,7 @@ SINT32 ECZNRecord::ParseRecord(unsigned char *buffer, const UINT32 &recSize)
         switch(subType)
             {
             case REV32(EDID):
-                EDID.Read(buffer, subSize);
+                EDID.Read(buffer, subSize, CompressedOnDisk);
                 break;
             case REV32(DATA):
                 DATA.Read(buffer, subSize);
@@ -197,7 +197,7 @@ bool ECZNRecord::operator !=(const ECZNRecord &other) const
     return !(*this == other);
     }
 
-bool ECZNRecord::equals(const Record *other) const
+bool ECZNRecord::equals(Record *other)
     {
     return *this == *(ECZNRecord *)other;
     }
