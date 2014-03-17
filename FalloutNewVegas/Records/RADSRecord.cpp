@@ -92,7 +92,7 @@ STRING RADSRecord::GetStrType()
     return "RADS";
     }
 
-SINT32 RADSRecord::ParseRecord(unsigned char *buffer, const UINT32 &recSize)
+SINT32 RADSRecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk)
     {
     UINT32 subType = 0;
     UINT32 subSize = 0;
@@ -116,7 +116,7 @@ SINT32 RADSRecord::ParseRecord(unsigned char *buffer, const UINT32 &recSize)
         switch(subType)
             {
             case REV32(EDID):
-                EDID.Read(buffer, subSize);
+                EDID.Read(buffer, subSize, CompressedOnDisk);
                 break;
             case REV32(DATA):
                 DATA.Read(buffer, subSize);
@@ -161,7 +161,7 @@ bool RADSRecord::operator !=(const RADSRecord &other) const
     return !(*this == other);
     }
 
-bool RADSRecord::equals(const Record *other) const
+bool RADSRecord::equals(Record *other)
     {
     return *this == *(RADSRecord *)other;
     }
