@@ -79,7 +79,8 @@ bool CDCKRecord::VisitFormIDs(FormIDOp &op)
         return false;
 
     if(CARD.IsLoaded())
-        op.Accept(CARD->value);
+        for (UINT32 ListIndex = 0; ListIndex < CARD.value.size(); ListIndex++)
+            op.Accept(CARD.value[ListIndex]);
 
     return op.Stop();
     }
@@ -94,7 +95,7 @@ STRING CDCKRecord::GetStrType()
     return "CDCK";
     }
 
-SINT32 CDCKRecord::ParseRecord(unsigned char *buffer, const UINT32 &recSize)
+SINT32 CDCKRecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk)
     {
     UINT32 subType = 0;
     UINT32 subSize = 0;
@@ -118,7 +119,7 @@ SINT32 CDCKRecord::ParseRecord(unsigned char *buffer, const UINT32 &recSize)
         switch(subType)
             {
             case REV32(EDID):
-                EDID.Read(buffer, subSize);
+                EDID.Read(buffer, subSize, CompressedOnDisk);
                 break;
             case REV32(FULL):
                 FULL.Read(buffer, subSize, CompressedOnDisk);
@@ -175,7 +176,7 @@ bool CDCKRecord::operator !=(const CDCKRecord &other) const
     return !(*this == other);
     }
 
-bool CDCKRecord::equals(const Record *other) const
+bool CDCKRecord::equals(Record *other)
     {
     return *this == *(CDCKRecord *)other;
     }
