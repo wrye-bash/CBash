@@ -104,167 +104,137 @@ bool MSETRecord::VisitFormIDs(FormIDOp &op)
         return false;
 
     if(HNAM.IsLoaded())
-        op.Accept(HNAM->value);
+        op.Accept(HNAM.value);
     if(INAM.IsLoaded())
-        op.Accept(INAM->value);
+        op.Accept(INAM.value);
 
     return op.Stop();
     }
 
 bool MSETRecord::IsDayOuter()
     {
-    if(!Dummy.IsLoaded()) return false;
-    return (Dummy->flags & fIsDayOuter) != 0;
+    if (!ONAM.IsLoaded()) return false;
+    return (PNAM.value & fIsDayOuter) != 0;
     }
 
 void MSETRecord::IsDayOuter(bool value)
     {
-    if(!Dummy.IsLoaded()) return;
-    Dummy->flags = value ? (Dummy->flags | fIsDayOuter) : (Dummy->flags & ~fIsDayOuter);
+    if (!PNAM.IsLoaded()) return;
+    SETBIT(PNAM.value, fIsDayOuter, value);
     }
 
 bool MSETRecord::IsDayMiddle()
     {
-    if(!Dummy.IsLoaded()) return false;
-    return (Dummy->flags & fIsDayMiddle) != 0;
+    if (!PNAM.IsLoaded()) return false;
+    return (PNAM.value & fIsDayMiddle) != 0;
     }
 
 void MSETRecord::IsDayMiddle(bool value)
     {
-    if(!Dummy.IsLoaded()) return;
-    Dummy->flags = value ? (Dummy->flags | fIsDayMiddle) : (Dummy->flags & ~fIsDayMiddle);
+    if (!PNAM.IsLoaded()) return;
+    SETBIT(PNAM.value, fIsDayMiddle, value);
     }
 
 bool MSETRecord::IsDayInner()
     {
-    if(!Dummy.IsLoaded()) return false;
-    return (Dummy->flags & fIsDayInner) != 0;
+    if (!PNAM.IsLoaded()) return false;
+    return (PNAM.value & fIsDayInner) != 0;
     }
 
 void MSETRecord::IsDayInner(bool value)
     {
-    if(!Dummy.IsLoaded()) return;
-    Dummy->flags = value ? (Dummy->flags | fIsDayInner) : (Dummy->flags & ~fIsDayInner);
+    if (!PNAM.IsLoaded()) return;
+    SETBIT(PNAM.value, fIsDayInner, value);
     }
 
 bool MSETRecord::IsNightOuter()
     {
-    if(!Dummy.IsLoaded()) return false;
-    return (Dummy->flags & fIsNightOuter) != 0;
+    if (!PNAM.IsLoaded()) return false;
+    return (PNAM.value & fIsNightOuter) != 0;
     }
 
 void MSETRecord::IsNightOuter(bool value)
     {
-    if(!Dummy.IsLoaded()) return;
-    Dummy->flags = value ? (Dummy->flags | fIsNightOuter) : (Dummy->flags & ~fIsNightOuter);
+    if (!PNAM.IsLoaded()) return;
+    SETBIT(PNAM.value, fIsNightOuter, value);
     }
 
 bool MSETRecord::IsNightMiddle()
     {
-    if(!Dummy.IsLoaded()) return false;
-    return (Dummy->flags & fIsNightMiddle) != 0;
+    if (!PNAM.IsLoaded()) return false;
+    return (PNAM.value & fIsNightMiddle) != 0;
     }
 
 void MSETRecord::IsNightMiddle(bool value)
     {
-    if(!Dummy.IsLoaded()) return;
-    Dummy->flags = value ? (Dummy->flags | fIsNightMiddle) : (Dummy->flags & ~fIsNightMiddle);
+    if (!PNAM.IsLoaded()) return;
+    SETBIT(PNAM.value, fIsNightMiddle, value);
     }
 
 bool MSETRecord::IsNightInner()
     {
-    if(!Dummy.IsLoaded()) return false;
-    return (Dummy->flags & fIsNightInner) != 0;
+    if (!PNAM.IsLoaded()) return false;
+    return (PNAM.value & fIsNightInner) != 0;
     }
 
 void MSETRecord::IsNightInner(bool value)
     {
-    if(!Dummy.IsLoaded()) return;
-    Dummy->flags = value ? (Dummy->flags | fIsNightInner) : (Dummy->flags & ~fIsNightInner);
+    if (!PNAM.IsLoaded()) return;
+    SETBIT(PNAM.value, fIsNightInner, value);
     }
 
 bool MSETRecord::IsFlagMask(UINT8 Mask, bool Exact)
     {
-    if(!Dummy.IsLoaded()) return false;
-    return Exact ? ((Dummy->flags & Mask) == Mask) : ((Dummy->flags & Mask) != 0);
+    if (!PNAM.IsLoaded()) return false;
+    return Exact ? ((PNAM.value & Mask) == Mask) : ((PNAM.value & Mask) != 0);
     }
 
 void MSETRecord::SetFlagMask(UINT8 Mask)
     {
-    Dummy.Load();
-    Dummy->flags = Mask;
+    PNAM.Load();
+    PNAM.value = Mask;
     }
 
 bool MSETRecord::IsNone()
     {
-    if(!Dummy.IsLoaded()) return false;
-    return (Dummy->type == eNone);
-    }
-
-void MSETRecord::IsNone(bool value)
-    {
-    if(!Dummy.IsLoaded()) return;
-    Dummy->flags = value ? eNone : eDummyDefault;
+    if (!NAM1.IsLoaded()) return false;
+    return (NAM1.value == eNone);
     }
 
 bool MSETRecord::IsBattle()
     {
-    if(!Dummy.IsLoaded()) return false;
-    return (Dummy->type == eBattle);
-    }
-
-void MSETRecord::IsBattle(bool value)
-    {
-    if(!Dummy.IsLoaded()) return;
-    Dummy->flags = value ? eBattle : eDummyDefault;
+    if (!NAM1.IsLoaded()) return false;
+    return (NAM1.value == eBattle);
     }
 
 bool MSETRecord::IsLocation()
     {
-    if(!Dummy.IsLoaded()) return false;
-    return (Dummy->type == eLocation);
-    }
-
-void MSETRecord::IsLocation(bool value)
-    {
-    if(!Dummy.IsLoaded()) return;
-    Dummy->flags = value ? eLocation : eDummyDefault;
+    if (!NAM1.IsLoaded()) return false;
+    return (NAM1.value == eLocation);
     }
 
 bool MSETRecord::IsDungeon()
     {
-    if(!Dummy.IsLoaded()) return false;
-    return (Dummy->type == eDungeon);
-    }
-
-void MSETRecord::IsDungeon(bool value)
-    {
-    if(!Dummy.IsLoaded()) return;
-    Dummy->flags = value ? eDungeon : eDummyDefault;
+    if (!NAM1.IsLoaded()) return false;
+    return (NAM1.value == eDungeon);
     }
 
 bool MSETRecord::IsIncidential()
     {
-    if(!Dummy.IsLoaded()) return false;
-    return (Dummy->type == eIncidential);
-    }
-
-void MSETRecord::IsIncidential(bool value)
-    {
-    if(!Dummy.IsLoaded()) return;
-    Dummy->flags = value ? eIncidential : eDummyDefault;
+    if (!NAM1.IsLoaded()) return false;
+    return (NAM1.value == eIncidential);
     }
 
 bool MSETRecord::IsType(UINT32 Type)
     {
-    if(!Dummy.IsLoaded()) return false;
-    return Dummy->type == Type;
+    if (!NAM1.IsLoaded()) return false;
+    return NAM1.value == Type;
     }
 
 void MSETRecord::SetType(UINT32 Type)
     {
-    Dummy.Load();
-    Dummy->flags = Mask;
+    NAM1.Load();
+    NAM1.value = Type;
     }
 
 UINT32 MSETRecord::GetType()
@@ -277,7 +247,7 @@ STRING MSETRecord::GetStrType()
     return "MSET";
     }
 
-SINT32 MSETRecord::ParseRecord(unsigned char *buffer, const UINT32 &recSize)
+SINT32 MSETRecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk)
     {
     UINT32 subType = 0;
     UINT32 subSize = 0;
@@ -301,7 +271,7 @@ SINT32 MSETRecord::ParseRecord(unsigned char *buffer, const UINT32 &recSize)
         switch(subType)
             {
             case REV32(EDID):
-                EDID.Read(buffer, subSize);
+                EDID.Read(buffer, subSize, CompressedOnDisk);
                 break;
             case REV32(FULL):
                 FULL.Read(buffer, subSize, CompressedOnDisk);
@@ -310,22 +280,22 @@ SINT32 MSETRecord::ParseRecord(unsigned char *buffer, const UINT32 &recSize)
                 NAM1.Read(buffer, subSize);
                 break;
             case REV32(NAM2):
-                NAM2.Read(buffer, subSize);
+                NAM2.Read(buffer, subSize, CompressedOnDisk);
                 break;
             case REV32(NAM3):
-                NAM3.Read(buffer, subSize);
+                NAM3.Read(buffer, subSize, CompressedOnDisk);
                 break;
             case REV32(NAM4):
-                NAM4.Read(buffer, subSize);
+                NAM4.Read(buffer, subSize, CompressedOnDisk);
                 break;
             case REV32(NAM5):
-                NAM5.Read(buffer, subSize);
+                NAM5.Read(buffer, subSize, CompressedOnDisk);
                 break;
             case REV32(NAM6):
-                NAM6.Read(buffer, subSize);
+                NAM6.Read(buffer, subSize, CompressedOnDisk);
                 break;
             case REV32(NAM7):
-                NAM7.Read(buffer, subSize);
+                NAM7.Read(buffer, subSize, CompressedOnDisk);
                 break;
             case REV32(NAM8):
                 NAM8.Read(buffer, subSize);
@@ -385,7 +355,7 @@ SINT32 MSETRecord::ParseRecord(unsigned char *buffer, const UINT32 &recSize)
                 INAM.Read(buffer, subSize);
                 break;
             case REV32(DATA):
-                DATA.Read(buffer, subSize);
+                DATA.Read(buffer, subSize, CompressedOnDisk);
                 break;
             default:
                 //printf("FileName = %s\n", FileName);
@@ -508,7 +478,7 @@ bool MSETRecord::operator !=(const MSETRecord &other) const
     return !(*this == other);
     }
 
-bool MSETRecord::equals(const Record *other) const
+bool MSETRecord::equals(Record *other)
     {
     return *this == *(MSETRecord *)other;
     }
