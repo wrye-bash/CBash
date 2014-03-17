@@ -51,12 +51,12 @@ class ALOCRecord : public FNVRecord //Media Location Controller
         OptSimpleSubRecord<UINT32> NAM5; //Day Start
         OptSimpleSubRecord<UINT32> NAM6; //Night Start
         OptSimpleFloatSubRecord<flt_0> NAM7; //Retrigger Delay
-        UnorderedSparseArray<FORMID> HNAM; // Neutral Media Sets
-        UnorderedSparseArray<FORMID> ZNAM; // Ally Media Sets
-        UnorderedSparseArray<FORMID> XNAM; // Friend Media Sets
-        UnorderedSparseArray<FORMID> YNAM; // Enemy Media Sets
-        UnorderedSparseArray<FORMID> LNAM; // Location Media Sets
-        UnorderedSparseArray<FORMID> GNAM; // Battle Media Sets
+        OrderedSparseArray<FORMID> HNAM; // Neutral Media Sets
+        OrderedSparseArray<FORMID> ZNAM; // Ally Media Sets
+        OrderedSparseArray<FORMID> XNAM; // Friend Media Sets
+        OrderedSparseArray<FORMID> YNAM; // Enemy Media Sets
+        OrderedSparseArray<FORMID> LNAM; // Location Media Sets
+        OrderedSparseArray<FORMID> GNAM; // Battle Media Sets
         OptSimpleSubRecord<FORMID> RNAM; //Conditional Faction
         RawRecord FNAM; //Unknown
 

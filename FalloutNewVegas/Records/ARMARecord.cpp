@@ -70,7 +70,7 @@ ARMARecord::ARMARecord(ARMARecord *srcRecord):
         MODL.Load();
         MODL->MODL = srcRecord->MODL->MODL;
         MODL->MODT = srcRecord->MODL->MODT;
-        MODL->MODS = srcRecord->MODL->MODS;
+        MODL->Textures.MODS = srcRecord->MODL->Textures.MODS;
         MODL->MODD = srcRecord->MODL->MODD;
         }
     if(srcRecord->MOD2.IsLoaded())
