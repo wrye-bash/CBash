@@ -50,10 +50,10 @@ class CPTHRecord : public FNVRecord //Camera Path
             };
     public:
         StringRecord EDID; //Editor ID
-        std::vector<ReqSubRecord<FNVCTDA> *> CTDA; //Conditions
-        std::vector<FORMID> ANAM; //Related Camera Paths
+        OrderedSparseArray<FNVCTDA> CTDA; // Conditions
+        OrderedPackedArray<FORMID> ANAM; //Related Camera Paths
         OptSimpleSubRecord<UINT8> DATA; //Camera Zoom
-        std::vector<FORMID> SNAM; //Camera Shots
+        UnorderedSparseArray<FORMID> SNAM; //Camera Shots
 
         CPTHRecord(unsigned char *_recData=NULL);
         CPTHRecord(CPTHRecord *srcRecord);
@@ -62,11 +62,8 @@ class CPTHRecord : public FNVRecord //Camera Path
         bool   VisitFormIDs(FormIDOp &op);
 
         bool   IsDefault();
-        void   IsDefault(bool value);
         bool   IsDisable();
-        void   IsDisable(bool value);
         bool   IsShotList();
-        void   IsShotList(bool value);
         bool   IsType(UINT8 Type);
         void   SetType(UINT8 Type);
 
