@@ -81,62 +81,62 @@ bool IMGSRecord::VisitFormIDs(FormIDOp &op)
 
 bool IMGSRecord::IsSaturation()
     {
-    if(!Dummy.IsLoaded()) return false;
-    return (Dummy->flags & fIsSaturation) != 0;
+    if (!DNAM.IsLoaded()) return false;
+    return (DNAM->flags & fIsSaturation) != 0;
     }
 
 void IMGSRecord::IsSaturation(bool value)
     {
-    if(!Dummy.IsLoaded()) return;
-    Dummy->flags = value ? (Dummy->flags | fIsSaturation) : (Dummy->flags & ~fIsSaturation);
+    if (!DNAM.IsLoaded()) return;
+    SETBIT(DNAM->flags, fIsSaturation, value);
     }
 
 bool IMGSRecord::IsContrast()
     {
-    if(!Dummy.IsLoaded()) return false;
-    return (Dummy->flags & fIsContrast) != 0;
+    if (!DNAM.IsLoaded()) return false;
+    return (DNAM->flags & fIsContrast) != 0;
     }
 
 void IMGSRecord::IsContrast(bool value)
     {
-    if(!Dummy.IsLoaded()) return;
-    Dummy->flags = value ? (Dummy->flags | fIsContrast) : (Dummy->flags & ~fIsContrast);
+    if (!DNAM.IsLoaded()) return;
+    SETBIT(DNAM->flags, fIsContrast, value);
     }
 
 bool IMGSRecord::IsTint()
     {
-    if(!Dummy.IsLoaded()) return false;
-    return (Dummy->flags & fIsTint) != 0;
+    if (!DNAM.IsLoaded()) return false;
+    return (DNAM->flags & fIsTint) != 0;
     }
 
 void IMGSRecord::IsTint(bool value)
     {
-    if(!Dummy.IsLoaded()) return;
-    Dummy->flags = value ? (Dummy->flags | fIsTint) : (Dummy->flags & ~fIsTint);
+    if (!DNAM.IsLoaded()) return;
+    SETBIT(DNAM->flags, fIsTint, value);
     }
 
 bool IMGSRecord::IsBrightness()
     {
-    if(!Dummy.IsLoaded()) return false;
-    return (Dummy->flags & fIsBrightness) != 0;
+    if (!DNAM.IsLoaded()) return false;
+    return (DNAM->flags & fIsBrightness) != 0;
     }
 
 void IMGSRecord::IsBrightness(bool value)
     {
-    if(!Dummy.IsLoaded()) return;
-    Dummy->flags = value ? (Dummy->flags | fIsBrightness) : (Dummy->flags & ~fIsBrightness);
+    if (!DNAM.IsLoaded()) return;
+    SETBIT(DNAM->flags, fIsBrightness, value);
     }
 
 bool IMGSRecord::IsFlagMask(UINT8 Mask, bool Exact)
     {
-    if(!Dummy.IsLoaded()) return false;
-    return Exact ? ((Dummy->flags & Mask) == Mask) : ((Dummy->flags & Mask) != 0);
+    if (!DNAM.IsLoaded()) return false;
+    return Exact ? ((DNAM->flags & Mask) == Mask) : ((DNAM->flags & Mask) != 0);
     }
 
 void IMGSRecord::SetFlagMask(UINT8 Mask)
     {
-    Dummy.Load();
-    Dummy->flags = Mask;
+    DNAM.Load();
+    DNAM->flags = Mask;
     }
 
 UINT32 IMGSRecord::GetType()
@@ -149,7 +149,7 @@ STRING IMGSRecord::GetStrType()
     return "IMGS";
     }
 
-SINT32 IMGSRecord::ParseRecord(unsigned char *buffer, const UINT32 &recSize)
+SINT32 IMGSRecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk)
     {
     UINT32 subType = 0;
     UINT32 subSize = 0;
@@ -173,7 +173,7 @@ SINT32 IMGSRecord::ParseRecord(unsigned char *buffer, const UINT32 &recSize)
         switch(subType)
             {
             case REV32(EDID):
-                EDID.Read(buffer, subSize);
+                EDID.Read(buffer, subSize, CompressedOnDisk);
                 break;
             case REV32(DNAM):
                 DNAM.Read(buffer, subSize);
@@ -218,7 +218,7 @@ bool IMGSRecord::operator !=(const IMGSRecord &other) const
     return !(*this == other);
     }
 
-bool IMGSRecord::equals(const Record *other) const
+bool IMGSRecord::equals(Record *other)
     {
     return *this == *(IMGSRecord *)other;
     }
