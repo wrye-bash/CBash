@@ -89,7 +89,7 @@ STRING LGTMRecord::GetStrType()
     return "LGTM";
     }
 
-SINT32 LGTMRecord::ParseRecord(unsigned char *buffer, const UINT32 &recSize)
+SINT32 LGTMRecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk)
     {
     UINT32 subType = 0;
     UINT32 subSize = 0;
@@ -113,7 +113,7 @@ SINT32 LGTMRecord::ParseRecord(unsigned char *buffer, const UINT32 &recSize)
         switch(subType)
             {
             case REV32(EDID):
-                EDID.Read(buffer, subSize);
+                EDID.Read(buffer, subSize, CompressedOnDisk);
                 break;
             case REV32(DATA):
                 DATA.Read(buffer, subSize);
@@ -158,7 +158,7 @@ bool LGTMRecord::operator !=(const LGTMRecord &other) const
     return !(*this == other);
     }
 
-bool LGTMRecord::equals(const Record *other) const
+bool LGTMRecord::equals(Record *other)
     {
     return *this == *(LGTMRecord *)other;
     }
