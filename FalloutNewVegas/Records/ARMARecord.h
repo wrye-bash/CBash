@@ -96,6 +96,11 @@ class ARMARecord : public FNVRecord //Armor Addon
             eEdible,
             eAlcohol
             };
+
+        enum dnamFlags
+            {
+            fIsModulatesVoice = 0x01,
+            };
     public:
         StringRecord EDID; //Editor ID
         ReqSubRecord<GENOBND> OBND; //Object Bounds
@@ -182,35 +187,20 @@ class ARMARecord : public FNVRecord //Armor Addon
         void   SetExtraFlagMask(UINT8 Mask);
 
         bool   IsNone();
-        void   IsNone(bool value);
         bool   IsBigGuns();
-        void   IsBigGuns(bool value);
         bool   IsEnergyWeapons();
-        void   IsEnergyWeapons(bool value);
         bool   IsSmallGuns();
-        void   IsSmallGuns(bool value);
         bool   IsMeleeWeapons();
-        void   IsMeleeWeapons(bool value);
         bool   IsUnarmedWeapon();
-        void   IsUnarmedWeapon(bool value);
         bool   IsThrownWeapons();
-        void   IsThrownWeapons(bool value);
         bool   IsMine();
-        void   IsMine(bool value);
         bool   IsBodyWear();
-        void   IsBodyWear(bool value);
         bool   IsHeadWear();
-        void   IsHeadWear(bool value);
         bool   IsHandWear();
-        void   IsHandWear(bool value);
         bool   IsChems();
-        void   IsChems(bool value);
         bool   IsStimpack();
-        void   IsStimpack(bool value);
         bool   IsEdible();
-        void   IsEdible(bool value);
         bool   IsAlcohol();
-        void   IsAlcohol(bool value);
         bool   IsEquipmentType(SINT32 Type);
         void   SetEquipmentType(SINT32 Type);
 

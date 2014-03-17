@@ -70,32 +70,32 @@ ARMARecord::ARMARecord(ARMARecord *srcRecord):
         MODL.Load();
         MODL->MODL = srcRecord->MODL->MODL;
         MODL->MODT = srcRecord->MODL->MODT;
-        MODL->Textures.MODS = srcRecord->MODL->Textures.MODS;
+        MODL->Textures = srcRecord->MODL->Textures;
         MODL->MODD = srcRecord->MODL->MODD;
         }
     if(srcRecord->MOD2.IsLoaded())
         {
         MOD2.Load();
-        MOD2->MOD2 = srcRecord->MOD2->MOD2;
-        MOD2->MO2T = srcRecord->MOD2->MO2T;
-        MOD2->MO2S = srcRecord->MOD2->MO2S;
+        MOD2->MODL = srcRecord->MOD2->MODL; // MOD2
+        MOD2->MODT = srcRecord->MOD2->MODT; // MO2T
+        MOD2->Textures = srcRecord->MOD2->Textures; // MO2S
         }
     ICON = srcRecord->ICON;
     MICO = srcRecord->MICO;
     if(srcRecord->MOD3.IsLoaded())
         {
         MOD3.Load();
-        MOD3->MOD3 = srcRecord->MOD3->MOD3;
-        MOD3->MO3T = srcRecord->MOD3->MO3T;
-        MOD3->MO3S = srcRecord->MOD3->MO3S;
-        MOD3->MOSD = srcRecord->MOD3->MOSD;
+        MOD3->MODL = srcRecord->MOD3->MODL; // MOD3
+        MOD3->MODT = srcRecord->MOD3->MODT; // MO3T
+        MOD3->Textures = srcRecord->MOD3->Textures; // MO3S
+        MOD3->MODD = srcRecord->MOD3->MODD; // MOSD
         }
     if(srcRecord->MOD4.IsLoaded())
         {
         MOD4.Load();
-        MOD4->MOD4 = srcRecord->MOD4->MOD4;
-        MOD4->MO4T = srcRecord->MOD4->MO4T;
-        MOD4->MO4S = srcRecord->MOD4->MO4S;
+        MOD4->MODL = srcRecord->MOD4->MODL; // MOD4
+        MOD4->MODT = srcRecord->MOD4->MODT; // MO4T
+        MOD4->Textures = srcRecord->MOD4->Textures; // MO4S
         }
     ICO2 = srcRecord->ICO2;
     MIC2 = srcRecord->MIC2;
@@ -115,595 +115,502 @@ bool ARMARecord::VisitFormIDs(FormIDOp &op)
     if(!IsLoaded())
         return false;
 
-    if(MODL.IsLoaded())
-        {
-        for(UINT32 x = 0; x < MODL->Textures.MODS.size(); x++)
-            op.Accept(MODL->Textures.MODS[x]->texture);
-        }
-    if(MOD2.IsLoaded() && MOD2->MO2S.IsLoaded())
-        op.Accept(MOD2->MO2S->value);
-    if(MOD3.IsLoaded() && MOD3->MO3S.IsLoaded())
-        op.Accept(MOD3->MO3S->value);
-    if(MOD4.IsLoaded() && MOD4->MO4S.IsLoaded())
-        op.Accept(MOD4->MO4S->value);
+    if (MODL.IsLoaded())
+        MODL->Textures.VisitFormIDs(op);
+    if (MOD2.IsLoaded() && MOD2->Textures.IsLoaded())
+        MOD2->Textures.VisitFormIDs(op);
+    if (MOD3.IsLoaded() && MOD3->Textures.IsLoaded())
+        MOD3->Textures.VisitFormIDs(op);
+    if (MOD4.IsLoaded() && MOD4->Textures.IsLoaded())
+        MOD4->Textures.VisitFormIDs(op);
 
     return op.Stop();
     }
 
 bool ARMARecord::IsHead()
     {
-    if(!Dummy.IsLoaded()) return false;
-    return (Dummy->flags & fIsHead) != 0;
+    if (!BMDT.IsLoaded()) return false;
+    return (BMDT->bipedFlags & fIsHead) != 0;
     }
 
 void ARMARecord::IsHead(bool value)
     {
-    if(!Dummy.IsLoaded()) return;
-    Dummy->flags = value ? (Dummy->flags | fIsHead) : (Dummy->flags & ~fIsHead);
+    if (!BMDT.IsLoaded()) return;
+    SETBIT(BMDT->bipedFlags, fIsHair, value);
     }
 
 bool ARMARecord::IsHair()
     {
-    if(!Dummy.IsLoaded()) return false;
-    return (Dummy->flags & fIsHair) != 0;
+    if (!BMDT.IsLoaded()) return false;
+    return (BMDT->bipedFlags & fIsHair) != 0;
     }
 
 void ARMARecord::IsHair(bool value)
     {
-    if(!Dummy.IsLoaded()) return;
-    Dummy->flags = value ? (Dummy->flags | fIsHair) : (Dummy->flags & ~fIsHair);
+    if (!BMDT.IsLoaded()) return;
+    SETBIT(BMDT->bipedFlags, fIsHair, value);
     }
 
 bool ARMARecord::IsUpperBody()
     {
-    if(!Dummy.IsLoaded()) return false;
-    return (Dummy->flags & fIsUpperBody) != 0;
+    if (!BMDT.IsLoaded()) return false;
+    return (BMDT->bipedFlags & fIsUpperBody) != 0;
     }
 
 void ARMARecord::IsUpperBody(bool value)
     {
-    if(!Dummy.IsLoaded()) return;
-    Dummy->flags = value ? (Dummy->flags | fIsUpperBody) : (Dummy->flags & ~fIsUpperBody);
+    if (!BMDT.IsLoaded()) return;
+    SETBIT(BMDT->bipedFlags, fIsUpperBody, value);
     }
 
 bool ARMARecord::IsLeftHand()
     {
-    if(!Dummy.IsLoaded()) return false;
-    return (Dummy->flags & fIsLeftHand) != 0;
+    if (!BMDT.IsLoaded()) return false;
+    return (BMDT->bipedFlags & fIsLeftHand) != 0;
     }
 
 void ARMARecord::IsLeftHand(bool value)
     {
-    if(!Dummy.IsLoaded()) return;
-    Dummy->flags = value ? (Dummy->flags | fIsLeftHand) : (Dummy->flags & ~fIsLeftHand);
+    if (!BMDT.IsLoaded()) return;
+    SETBIT(BMDT->bipedFlags, fIsLeftHand, value);
     }
 
 bool ARMARecord::IsRightHand()
     {
-    if(!Dummy.IsLoaded()) return false;
-    return (Dummy->flags & fIsRightHand) != 0;
+    if (!BMDT.IsLoaded()) return false;
+    return (BMDT->bipedFlags & fIsRightHand) != 0;
     }
 
 void ARMARecord::IsRightHand(bool value)
     {
-    if(!Dummy.IsLoaded()) return;
-    Dummy->flags = value ? (Dummy->flags | fIsRightHand) : (Dummy->flags & ~fIsRightHand);
+    if (!BMDT.IsLoaded()) return;
+    SETBIT(BMDT->bipedFlags, fIsRightHand, value);
     }
 
 bool ARMARecord::IsWeapon()
     {
-    if(!Dummy.IsLoaded()) return false;
-    return (Dummy->flags & fIsWeapon) != 0;
+    if (!BMDT.IsLoaded()) return false;
+    return (BMDT->bipedFlags & fIsWeapon) != 0;
     }
 
 void ARMARecord::IsWeapon(bool value)
     {
-    if(!Dummy.IsLoaded()) return;
-    Dummy->flags = value ? (Dummy->flags | fIsWeapon) : (Dummy->flags & ~fIsWeapon);
+    if (!BMDT.IsLoaded()) return;
+    SETBIT(BMDT->bipedFlags, fIsWeapon, value);
     }
 
 bool ARMARecord::IsPipBoy()
     {
-    if(!Dummy.IsLoaded()) return false;
-    return (Dummy->flags & fIsPipBoy) != 0;
+    if (!BMDT.IsLoaded()) return false;
+    return (BMDT->bipedFlags & fIsPipBoy) != 0;
     }
 
 void ARMARecord::IsPipBoy(bool value)
     {
-    if(!Dummy.IsLoaded()) return;
-    Dummy->flags = value ? (Dummy->flags | fIsPipBoy) : (Dummy->flags & ~fIsPipBoy);
+    if (!BMDT.IsLoaded()) return;
+    SETBIT(BMDT->bipedFlags, fIsPipBoy, value);
     }
 
 bool ARMARecord::IsBackpack()
     {
-    if(!Dummy.IsLoaded()) return false;
-    return (Dummy->flags & fIsBackpack) != 0;
+    if (!BMDT.IsLoaded()) return false;
+    return (BMDT->bipedFlags & fIsBackpack) != 0;
     }
 
 void ARMARecord::IsBackpack(bool value)
     {
-    if(!Dummy.IsLoaded()) return;
-    Dummy->flags = value ? (Dummy->flags | fIsBackpack) : (Dummy->flags & ~fIsBackpack);
+    if (!BMDT.IsLoaded()) return;
+    SETBIT(BMDT->bipedFlags, fIsBackpack, value);
     }
 
 bool ARMARecord::IsNecklace()
     {
-    if(!Dummy.IsLoaded()) return false;
-    return (Dummy->flags & fIsNecklace) != 0;
+    if (!BMDT.IsLoaded()) return false;
+    return (BMDT->bipedFlags & fIsNecklace) != 0;
     }
 
 void ARMARecord::IsNecklace(bool value)
     {
-    if(!Dummy.IsLoaded()) return;
-    Dummy->flags = value ? (Dummy->flags | fIsNecklace) : (Dummy->flags & ~fIsNecklace);
+    if (!BMDT.IsLoaded()) return;
+    SETBIT(BMDT->bipedFlags, fIsNecklace, value);
     }
 
 bool ARMARecord::IsHeadband()
     {
-    if(!Dummy.IsLoaded()) return false;
-    return (Dummy->flags & fIsHeadband) != 0;
+    if (!BMDT.IsLoaded()) return false;
+    return (BMDT->bipedFlags & fIsHeadband) != 0;
     }
 
 void ARMARecord::IsHeadband(bool value)
     {
-    if(!Dummy.IsLoaded()) return;
-    Dummy->flags = value ? (Dummy->flags | fIsHeadband) : (Dummy->flags & ~fIsHeadband);
+    if (!BMDT.IsLoaded()) return;
+    SETBIT(BMDT->bipedFlags, fIsHeadband, value);
     }
 
 bool ARMARecord::IsHat()
     {
-    if(!Dummy.IsLoaded()) return false;
-    return (Dummy->flags & fIsHat) != 0;
+    if (!BMDT.IsLoaded()) return false;
+    return (BMDT->bipedFlags & fIsHat) != 0;
     }
 
 void ARMARecord::IsHat(bool value)
     {
-    if(!Dummy.IsLoaded()) return;
-    Dummy->flags = value ? (Dummy->flags | fIsHat) : (Dummy->flags & ~fIsHat);
+    if (!BMDT.IsLoaded()) return;
+    SETBIT(BMDT->bipedFlags, fIsHat, value);
     }
 
 bool ARMARecord::IsEyeGlasses()
     {
-    if(!Dummy.IsLoaded()) return false;
-    return (Dummy->flags & fIsEyeGlasses) != 0;
+    if (!BMDT.IsLoaded()) return false;
+    return (BMDT->bipedFlags & fIsEyeGlasses) != 0;
     }
 
 void ARMARecord::IsEyeGlasses(bool value)
     {
-    if(!Dummy.IsLoaded()) return;
-    Dummy->flags = value ? (Dummy->flags | fIsEyeGlasses) : (Dummy->flags & ~fIsEyeGlasses);
+    if (!BMDT.IsLoaded()) return;
+    SETBIT(BMDT->bipedFlags, fIsEyeGlasses, value);
     }
 
 bool ARMARecord::IsNoseRing()
     {
-    if(!Dummy.IsLoaded()) return false;
-    return (Dummy->flags & fIsNoseRing) != 0;
+    if (!BMDT.IsLoaded()) return false;
+    return (BMDT->bipedFlags & fIsNoseRing) != 0;
     }
 
 void ARMARecord::IsNoseRing(bool value)
     {
-    if(!Dummy.IsLoaded()) return;
-    Dummy->flags = value ? (Dummy->flags | fIsNoseRing) : (Dummy->flags & ~fIsNoseRing);
+    if (!BMDT.IsLoaded()) return;
+    SETBIT(BMDT->bipedFlags, fIsNoseRing, value);
     }
 
 bool ARMARecord::IsEarrings()
     {
-    if(!Dummy.IsLoaded()) return false;
-    return (Dummy->flags & fIsEarrings) != 0;
+    if (!BMDT.IsLoaded()) return false;
+    return (BMDT->bipedFlags & fIsEarrings) != 0;
     }
 
 void ARMARecord::IsEarrings(bool value)
     {
-    if(!Dummy.IsLoaded()) return;
-    Dummy->flags = value ? (Dummy->flags | fIsEarrings) : (Dummy->flags & ~fIsEarrings);
+    if (!BMDT.IsLoaded()) return;
+    SETBIT(BMDT->bipedFlags, fIsEarrings, value);
     }
 
 bool ARMARecord::IsMask()
     {
-    if(!Dummy.IsLoaded()) return false;
-    return (Dummy->flags & fIsMask) != 0;
+    if (!BMDT.IsLoaded()) return false;
+    return (BMDT->bipedFlags & fIsMask) != 0;
     }
 
 void ARMARecord::IsMask(bool value)
     {
-    if(!Dummy.IsLoaded()) return;
-    Dummy->flags = value ? (Dummy->flags | fIsMask) : (Dummy->flags & ~fIsMask);
+    if (!BMDT.IsLoaded()) return;
+    SETBIT(BMDT->bipedFlags, fIsMask, value);
     }
 
 bool ARMARecord::IsChoker()
     {
-    if(!Dummy.IsLoaded()) return false;
-    return (Dummy->flags & fIsChoker) != 0;
+    if (!BMDT.IsLoaded()) return false;
+    return (BMDT->bipedFlags & fIsChoker) != 0;
     }
 
 void ARMARecord::IsChoker(bool value)
     {
-    if(!Dummy.IsLoaded()) return;
-    Dummy->flags = value ? (Dummy->flags | fIsChoker) : (Dummy->flags & ~fIsChoker);
+    if (!BMDT.IsLoaded()) return;
+    SETBIT(BMDT->bipedFlags, fIsChoker, value);
     }
 
 bool ARMARecord::IsMouthObject()
     {
-    if(!Dummy.IsLoaded()) return false;
-    return (Dummy->flags & fIsMouthObject) != 0;
+    if (!BMDT.IsLoaded()) return false;
+    return (BMDT->bipedFlags & fIsMouthObject) != 0;
     }
 
 void ARMARecord::IsMouthObject(bool value)
     {
-    if(!Dummy.IsLoaded()) return;
-    Dummy->flags = value ? (Dummy->flags | fIsMouthObject) : (Dummy->flags & ~fIsMouthObject);
+    if (!BMDT.IsLoaded()) return;
+    SETBIT(BMDT->bipedFlags, fIsMouthObject, value);
     }
 
 bool ARMARecord::IsBodyAddon1()
     {
-    if(!Dummy.IsLoaded()) return false;
-    return (Dummy->flags & fIsBodyAddon1) != 0;
+    if (!BMDT.IsLoaded()) return false;
+    return (BMDT->bipedFlags & fIsBodyAddon1) != 0;
     }
 
 void ARMARecord::IsBodyAddon1(bool value)
     {
-    if(!Dummy.IsLoaded()) return;
-    Dummy->flags = value ? (Dummy->flags | fIsBodyAddon1) : (Dummy->flags & ~fIsBodyAddon1);
+    if (!BMDT.IsLoaded()) return;
+    SETBIT(BMDT->bipedFlags, fIsBodyAddon1, value);
     }
 
 bool ARMARecord::IsBodyAddon2()
     {
-    if(!Dummy.IsLoaded()) return false;
-    return (Dummy->flags & fIsBodyAddon2) != 0;
+    if (!BMDT.IsLoaded()) return false;
+    return (BMDT->bipedFlags & fIsBodyAddon2) != 0;
     }
 
 void ARMARecord::IsBodyAddon2(bool value)
     {
-    if(!Dummy.IsLoaded()) return;
-    Dummy->flags = value ? (Dummy->flags | fIsBodyAddon2) : (Dummy->flags & ~fIsBodyAddon2);
+    if (!BMDT.IsLoaded()) return;
+    SETBIT(BMDT->bipedFlags, fIsBodyAddon2, value);
     }
 
 bool ARMARecord::IsBodyAddon3()
     {
-    if(!Dummy.IsLoaded()) return false;
-    return (Dummy->flags & fIsBodyAddon3) != 0;
+    if (!BMDT.IsLoaded()) return false;
+    return (BMDT->bipedFlags & fIsBodyAddon3) != 0;
     }
 
 void ARMARecord::IsBodyAddon3(bool value)
     {
-    if(!Dummy.IsLoaded()) return;
-    Dummy->flags = value ? (Dummy->flags | fIsBodyAddon3) : (Dummy->flags & ~fIsBodyAddon3);
+    if (!BMDT.IsLoaded()) return;
+    SETBIT(BMDT->bipedFlags, fIsBodyAddon3, value);
     }
 
 bool ARMARecord::IsFlagMask(UINT32 Mask, bool Exact)
     {
-    if(!Dummy.IsLoaded()) return false;
-    return Exact ? ((Dummy->flags & Mask) == Mask) : ((Dummy->flags & Mask) != 0);
+    if (!BMDT.IsLoaded()) return false;
+    return Exact ? ((BMDT->bipedFlags & Mask) == Mask) : ((BMDT->bipedFlags & Mask) != 0);
     }
 
 void ARMARecord::SetFlagMask(UINT32 Mask)
     {
-    Dummy.Load();
-    Dummy->flags = Mask;
+    BMDT.Load();
+    BMDT->bipedFlags = Mask;
     }
 
 bool ARMARecord::IsUnknown1()
     {
-    if(!Dummy.IsLoaded()) return false;
-    return (Dummy->flags & fIsUnknown1) != 0;
+    if (!BMDT.IsLoaded()) return false;
+    return (BMDT->generalFlags & fIsUnknown1) != 0;
     }
 
 void ARMARecord::IsUnknown1(bool value)
     {
-    if(!Dummy.IsLoaded()) return;
-    Dummy->flags = value ? (Dummy->flags | fIsUnknown1) : (Dummy->flags & ~fIsUnknown1);
+    if (!BMDT.IsLoaded()) return;
+    SETBIT(BMDT->generalFlags, fIsUnknown1, value);
     }
 
 bool ARMARecord::IsUnknown2()
     {
-    if(!Dummy.IsLoaded()) return false;
-    return (Dummy->flags & fIsUnknown2) != 0;
+    if (!BMDT.IsLoaded()) return false;
+    return (BMDT->generalFlags & fIsUnknown2) != 0;
     }
 
 void ARMARecord::IsUnknown2(bool value)
     {
-    if(!Dummy.IsLoaded()) return;
-    Dummy->flags = value ? (Dummy->flags | fIsUnknown2) : (Dummy->flags & ~fIsUnknown2);
+    if (!BMDT.IsLoaded()) return;
+    SETBIT(BMDT->generalFlags, fIsUnknown2, value);
     }
 
 bool ARMARecord::IsHasBackpack()
     {
-    if(!Dummy.IsLoaded()) return false;
-    return (Dummy->flags & fIsHasBackpack) != 0;
+    if(!BMDT.IsLoaded()) return false;
+    return (BMDT->generalFlags & fIsHasBackpack) != 0;
     }
 
 void ARMARecord::IsHasBackpack(bool value)
     {
-    if(!Dummy.IsLoaded()) return;
-    Dummy->flags = value ? (Dummy->flags | fIsHasBackpack) : (Dummy->flags & ~fIsHasBackpack);
+    if(!BMDT.IsLoaded()) return;
+    SETBIT(BMDT->generalFlags, fIsHasBackpack, value);
     }
 
 bool ARMARecord::IsMedium()
     {
-    if(!Dummy.IsLoaded()) return false;
-    return (Dummy->flags & fIsMedium) != 0;
+    if (!BMDT.IsLoaded()) return false;
+    return (BMDT->generalFlags & fIsMedium) != 0;
     }
 
 void ARMARecord::IsMedium(bool value)
     {
-    if(!Dummy.IsLoaded()) return;
-    Dummy->flags = value ? (Dummy->flags | fIsMedium) : (Dummy->flags & ~fIsMedium);
+    if (!BMDT.IsLoaded()) return;
+    SETBIT(BMDT->generalFlags, fIsMedium, value);
     }
 
 bool ARMARecord::IsUnknown3()
     {
-    if(!Dummy.IsLoaded()) return false;
-    return (Dummy->flags & fIsUnknown3) != 0;
+    if (!BMDT.IsLoaded()) return false;
+    return (BMDT->generalFlags & fIsUnknown3) != 0;
     }
 
 void ARMARecord::IsUnknown3(bool value)
     {
-    if(!Dummy.IsLoaded()) return;
-    Dummy->flags = value ? (Dummy->flags | fIsUnknown3) : (Dummy->flags & ~fIsUnknown3);
+    if (!BMDT.IsLoaded()) return;
+    SETBIT(BMDT->generalFlags, fIsUnknown3, value);
     }
 
 bool ARMARecord::IsPowerArmor()
     {
-    if(!Dummy.IsLoaded()) return false;
-    return (Dummy->flags & fIsPowerArmor) != 0;
+    if (!BMDT.IsLoaded()) return false;
+    return (BMDT->generalFlags & fIsPowerArmor) != 0;
     }
 
 void ARMARecord::IsPowerArmor(bool value)
     {
-    if(!Dummy.IsLoaded()) return;
-    Dummy->flags = value ? (Dummy->flags | fIsPowerArmor) : (Dummy->flags & ~fIsPowerArmor);
+    if(!BMDT.IsLoaded()) return;
+    SETBIT(BMDT->generalFlags, fIsPowerArmor, value);
     }
 
 bool ARMARecord::IsNonPlayable()
     {
-    if(!Dummy.IsLoaded()) return false;
-    return (Dummy->flags & fIsNonPlayable) != 0;
+    if (!BMDT.IsLoaded()) return false;
+    return (BMDT->generalFlags & fIsNonPlayable) != 0;
     }
 
 void ARMARecord::IsNonPlayable(bool value)
     {
-    if(!Dummy.IsLoaded()) return;
-    Dummy->flags = value ? (Dummy->flags | fIsNonPlayable) : (Dummy->flags & ~fIsNonPlayable);
+    if (!BMDT.IsLoaded()) return;
+    SETBIT(BMDT->generalFlags, fIsNonPlayable, value);
     }
 
 bool ARMARecord::IsHeavy()
     {
-    if(!Dummy.IsLoaded()) return false;
-    return (Dummy->flags & fIsHeavy) != 0;
+    if (!BMDT.IsLoaded()) return false;
+    return (BMDT->generalFlags & fIsHeavy) != 0;
     }
 
 void ARMARecord::IsHeavy(bool value)
     {
-    if(!Dummy.IsLoaded()) return;
-    Dummy->flags = value ? (Dummy->flags | fIsHeavy) : (Dummy->flags & ~fIsHeavy);
+    if (!BMDT.IsLoaded()) return;
+    SETBIT(BMDT->generalFlags, fIsHeavy, value);
     }
 
 bool ARMARecord::IsExtraFlagMask(UINT8 Mask, bool Exact)
     {
-    if(!Dummy.IsLoaded()) return false;
-    return Exact ? ((Dummy->flags & Mask) == Mask) : ((Dummy->flags & Mask) != 0);
+    if (!BMDT.IsLoaded()) return false;
+    return Exact ? ((BMDT->generalFlags & Mask) == Mask) : ((BMDT->generalFlags & Mask) != 0);
     }
 
 void ARMARecord::SetExtraFlagMask(UINT8 Mask)
     {
-    Dummy.Load();
-    Dummy->flags = Mask;
+    BMDT.Load();
+    BMDT->generalFlags = Mask;
     }
 
 bool ARMARecord::IsNone()
     {
-    if(!Dummy.IsLoaded()) return false;
-    return (Dummy->type == eNone);
-    }
-
-void ARMARecord::IsNone(bool value)
-    {
-    if(!Dummy.IsLoaded()) return;
-    Dummy->flags = value ? eNone : eDummyDefault;
+    if (!ETYP.IsLoaded()) return false;
+    return (ETYP.value == eNone);
     }
 
 bool ARMARecord::IsBigGuns()
     {
-    if(!Dummy.IsLoaded()) return false;
-    return (Dummy->type == eBigGuns);
-    }
-
-void ARMARecord::IsBigGuns(bool value)
-    {
-    if(!Dummy.IsLoaded()) return;
-    Dummy->flags = value ? eBigGuns : eDummyDefault;
+    if (!ETYP.IsLoaded()) return false;
+    return (ETYP.value == eBigGuns);
     }
 
 bool ARMARecord::IsEnergyWeapons()
     {
-    if(!Dummy.IsLoaded()) return false;
-    return (Dummy->type == eEnergyWeapons);
-    }
-
-void ARMARecord::IsEnergyWeapons(bool value)
-    {
-    if(!Dummy.IsLoaded()) return;
-    Dummy->flags = value ? eEnergyWeapons : eDummyDefault;
+    if (!ETYP.IsLoaded()) return false;
+    return (ETYP.value == eEnergyWeapons);
     }
 
 bool ARMARecord::IsSmallGuns()
     {
-    if(!Dummy.IsLoaded()) return false;
-    return (Dummy->type == eSmallGuns);
-    }
-
-void ARMARecord::IsSmallGuns(bool value)
-    {
-    if(!Dummy.IsLoaded()) return;
-    Dummy->flags = value ? eSmallGuns : eDummyDefault;
+    if (!ETYP.IsLoaded()) return false;
+    return (ETYP.value == eSmallGuns);
     }
 
 bool ARMARecord::IsMeleeWeapons()
     {
-    if(!Dummy.IsLoaded()) return false;
-    return (Dummy->type == eMeleeWeapons);
-    }
-
-void ARMARecord::IsMeleeWeapons(bool value)
-    {
-    if(!Dummy.IsLoaded()) return;
-    Dummy->flags = value ? eMeleeWeapons : eDummyDefault;
+    if (!ETYP.IsLoaded()) return false;
+    return (ETYP.value == eMeleeWeapons);
     }
 
 bool ARMARecord::IsUnarmedWeapon()
     {
-    if(!Dummy.IsLoaded()) return false;
-    return (Dummy->type == eUnarmedWeapon);
-    }
-
-void ARMARecord::IsUnarmedWeapon(bool value)
-    {
-    if(!Dummy.IsLoaded()) return;
-    Dummy->flags = value ? eUnarmedWeapon : eDummyDefault;
+    if (!ETYP.IsLoaded()) return false;
+    return (ETYP.value == eUnarmedWeapon);
     }
 
 bool ARMARecord::IsThrownWeapons()
     {
-    if(!Dummy.IsLoaded()) return false;
-    return (Dummy->type == eThrownWeapons);
-    }
-
-void ARMARecord::IsThrownWeapons(bool value)
-    {
-    if(!Dummy.IsLoaded()) return;
-    Dummy->flags = value ? eThrownWeapons : eDummyDefault;
+    if (!ETYP.IsLoaded()) return false;
+    return (ETYP.value == eThrownWeapons);
     }
 
 bool ARMARecord::IsMine()
     {
-    if(!Dummy.IsLoaded()) return false;
-    return (Dummy->type == eMine);
-    }
-
-void ARMARecord::IsMine(bool value)
-    {
-    if(!Dummy.IsLoaded()) return;
-    Dummy->flags = value ? eMine : eDummyDefault;
+    if (!ETYP.IsLoaded()) return false;
+    return (ETYP.value == eMine);
     }
 
 bool ARMARecord::IsBodyWear()
     {
-    if(!Dummy.IsLoaded()) return false;
-    return (Dummy->type == eBodyWear);
-    }
-
-void ARMARecord::IsBodyWear(bool value)
-    {
-    if(!Dummy.IsLoaded()) return;
-    Dummy->flags = value ? eBodyWear : eDummyDefault;
+    if (!ETYP.IsLoaded()) return false;
+    return (ETYP.value == eBodyWear);
     }
 
 bool ARMARecord::IsHeadWear()
     {
-    if(!Dummy.IsLoaded()) return false;
-    return (Dummy->type == eHeadWear);
-    }
-
-void ARMARecord::IsHeadWear(bool value)
-    {
-    if(!Dummy.IsLoaded()) return;
-    Dummy->flags = value ? eHeadWear : eDummyDefault;
+    if (!ETYP.IsLoaded()) return false;
+    return (ETYP.value == eHeadWear);
     }
 
 bool ARMARecord::IsHandWear()
     {
-    if(!Dummy.IsLoaded()) return false;
-    return (Dummy->type == eHandWear);
-    }
-
-void ARMARecord::IsHandWear(bool value)
-    {
-    if(!Dummy.IsLoaded()) return;
-    Dummy->flags = value ? eHandWear : eDummyDefault;
+    if (!ETYP.IsLoaded()) return false;
+    return (ETYP.value == eHandWear);
     }
 
 bool ARMARecord::IsChems()
     {
-    if(!Dummy.IsLoaded()) return false;
-    return (Dummy->type == eChems);
-    }
-
-void ARMARecord::IsChems(bool value)
-    {
-    if(!Dummy.IsLoaded()) return;
-    Dummy->flags = value ? eChems : eDummyDefault;
+    if (!ETYP.IsLoaded()) return false;
+    return (ETYP.value == eChems);
     }
 
 bool ARMARecord::IsStimpack()
     {
-    if(!Dummy.IsLoaded()) return false;
-    return (Dummy->type == eStimpack);
+    if (!ETYP.IsLoaded()) return false;
+    return (ETYP.value == eStimpack);
     }
 
-void ARMARecord::IsStimpack(bool value)
+bool ARMARecord::IsEdible()
     {
-    if(!Dummy.IsLoaded()) return;
-    Dummy->flags = value ? eStimpack : eDummyDefault;
-    }
-
-bool ARMARecord::IsFood()
-    {
-    if(!Dummy.IsLoaded()) return false;
-    return (Dummy->type == eFood);
-    }
-
-void ARMARecord::IsFood(bool value)
-    {
-    if(!Dummy.IsLoaded()) return;
-    Dummy->flags = value ? eFood : eDummyDefault;
+    if (!ETYP.IsLoaded()) return false;
+    return (ETYP.value == eEdible);
     }
 
 bool ARMARecord::IsAlcohol()
     {
-    if(!Dummy.IsLoaded()) return false;
-    return (Dummy->type == eAlcohol);
+    if (!ETYP.IsLoaded()) return false;
+    return (ETYP.value == eAlcohol);
     }
 
-void ARMARecord::IsAlcohol(bool value)
+bool ARMARecord::IsEquipmentType(SINT32 Type)
     {
-    if(!Dummy.IsLoaded()) return;
-    Dummy->flags = value ? eAlcohol : eDummyDefault;
+    if (!ETYP.IsLoaded()) return false;
+    return ETYP.value == Type;
     }
 
-bool ARMARecord::IsEquipmentType(UINT32 Type)
+void ARMARecord::SetEquipmentType(SINT32 Type)
     {
-    if(!Dummy.IsLoaded()) return false;
-    return Dummy->type == Type;
-    }
-
-void ARMARecord::SetEquipmentType(UINT32 Type)
-    {
-    Dummy.Load();
-    Dummy->flags = Mask;
+    ETYP.Load();
+    ETYP.value = Type;
     }
 
 bool ARMARecord::IsModulatesVoice()
     {
-    if(!Dummy.IsLoaded()) return false;
-    return (Dummy->flags & fIsModulatesVoice) != 0;
+    if (!DNAM.IsLoaded()) return false;
+    return (DNAM->flags & fIsModulatesVoice) != 0;
     }
 
 void ARMARecord::IsModulatesVoice(bool value)
     {
-    if(!Dummy.IsLoaded()) return;
-    Dummy->flags = value ? (Dummy->flags | fIsModulatesVoice) : (Dummy->flags & ~fIsModulatesVoice);
+    if (!DNAM.IsLoaded()) return;
+    SETBIT(DNAM->flags, fIsModulatesVoice, value);
     }
 
 bool ARMARecord::IsDNAMFlagMask(UINT16 Mask, bool Exact)
     {
-    if(!Dummy.IsLoaded()) return false;
-    return Exact ? ((Dummy->flags & Mask) == Mask) : ((Dummy->flags & Mask) != 0);
+    if (!DNAM.IsLoaded()) return false;
+    return Exact ? ((DNAM->flags & Mask) == Mask) : ((DNAM->flags & Mask) != 0);
     }
 
 void ARMARecord::SetDNAMFlagMask(UINT16 Mask)
     {
-    Dummy.Load();
-    Dummy->flags = Mask;
+    DNAM.Load();
+    DNAM->flags = Mask;
     }
 
 UINT32 ARMARecord::GetType()
@@ -716,7 +623,7 @@ STRING ARMARecord::GetStrType()
     return "ARMA";
     }
 
-SINT32 ARMARecord::ParseRecord(unsigned char *buffer, const UINT32 &recSize)
+SINT32 ARMARecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk)
     {
     UINT32 subType = 0;
     UINT32 subSize = 0;
@@ -740,7 +647,7 @@ SINT32 ARMARecord::ParseRecord(unsigned char *buffer, const UINT32 &recSize)
         switch(subType)
             {
             case REV32(EDID):
-                EDID.Read(buffer, subSize);
+                EDID.Read(buffer, subSize, CompressedOnDisk);
                 break;
             case REV32(OBND):
                 OBND.Read(buffer, subSize);
@@ -753,15 +660,15 @@ SINT32 ARMARecord::ParseRecord(unsigned char *buffer, const UINT32 &recSize)
                 break;
             case REV32(MODL):
                 MODL.Load();
-                MODL->MODL.Read(buffer, subSize);
+                MODL->MODL.Read(buffer, subSize, CompressedOnDisk);
                 break;
             case REV32(MODT):
                 MODL.Load();
-                MODL->MODT.Read(buffer, subSize);
+                MODL->MODT.Read(buffer, subSize, CompressedOnDisk);
                 break;
             case REV32(MODS):
                 MODL.Load();
-                MODL->MODS.Read(buffer, subSize);
+                MODL->Textures.Read(buffer, subSize);
                 break;
             case REV32(MODD):
                 MODL.Load();
@@ -769,15 +676,15 @@ SINT32 ARMARecord::ParseRecord(unsigned char *buffer, const UINT32 &recSize)
                 break;
             case REV32(MOD2):
                 MOD2.Load();
-                MOD2->MOD2.Read(buffer, subSize);
+                MOD2->MODL.Read(buffer, subSize, CompressedOnDisk);
                 break;
             case REV32(MO2T):
                 MOD2.Load();
-                MOD2->MO2T.Read(buffer, subSize);
+                MOD2->MODT.Read(buffer, subSize, CompressedOnDisk);
                 break;
             case REV32(MO2S):
                 MOD2.Load();
-                MOD2->MO2S.Read(buffer, subSize);
+                MOD2->Textures.Read(buffer, subSize);
                 break;
             case REV32(ICON):
                 ICON.Read(buffer, subSize, CompressedOnDisk);
@@ -787,37 +694,37 @@ SINT32 ARMARecord::ParseRecord(unsigned char *buffer, const UINT32 &recSize)
                 break;
             case REV32(MOD3):
                 MOD3.Load();
-                MOD3->MOD3.Read(buffer, subSize);
+                MOD3->MODL.Read(buffer, subSize, CompressedOnDisk);
                 break;
             case REV32(MO3T):
                 MOD3.Load();
-                MOD3->MO3T.Read(buffer, subSize);
+                MOD3->MODT.Read(buffer, subSize, CompressedOnDisk);
                 break;
             case REV32(MO3S):
                 MOD3.Load();
-                MOD3->MO3S.Read(buffer, subSize);
+                MOD3->Textures.Read(buffer, subSize);
                 break;
             case REV32(MOSD):
                 MOD3.Load();
-                MOD3->MOSD.Read(buffer, subSize);
+                MOD3->MODD.Read(buffer, subSize);
                 break;
             case REV32(MOD4):
                 MOD4.Load();
-                MOD4->MOD4.Read(buffer, subSize);
+                MOD4->MODL.Read(buffer, subSize, CompressedOnDisk);
                 break;
             case REV32(MO4T):
                 MOD4.Load();
-                MOD4->MO4T.Read(buffer, subSize);
+                MOD4->MODT.Read(buffer, subSize, CompressedOnDisk);
                 break;
             case REV32(MO4S):
                 MOD4.Load();
-                MOD4->MO4S.Read(buffer, subSize);
+                MOD4->Textures.Read(buffer, subSize);
                 break;
             case REV32(ICO2):
                 ICO2.Read(buffer, subSize, CompressedOnDisk);
                 break;
             case REV32(MIC2):
-                MIC2.Read(buffer, subSize);
+                MIC2.Read(buffer, subSize, CompressedOnDisk);
                 break;
             case REV32(ETYP):
                 ETYP.Read(buffer, subSize);
@@ -871,31 +778,24 @@ SINT32 ARMARecord::WriteRecord(FileWriter &writer)
 
     if(MODL.IsLoaded())
         {
-        if(MODL->MODL.IsLoaded())
-            SaveHandler.writeSubRecord(REV32(MODL), MODL->MODL.value, MODL->MODL.GetSize());
-
-        if(MODL->MODT.IsLoaded())
-            SaveHandler.writeSubRecord(REV32(MODT), MODL->MODT.value, MODL->MODT.GetSize());
-
-        if(MODL->MODS.IsLoaded())
-            SaveHandler.writeSubRecord(REV32(MODS), MODL->MODS.value, MODL->MODS.GetSize());
-
-        if(MODL->MODD.IsLoaded())
-            SaveHandler.writeSubRecord(REV32(MODD), MODL->MODD.value, MODL->MODD.GetSize());
-
+        if (MODL->MODL.IsLoaded())
+            MODL->MODL.Write(REV32(MODL), writer);
+        if (MODL->MODT.IsLoaded())
+            MODL->MODT.Write(REV32(MODT), writer);
+        if (MODL->Textures.IsLoaded())
+            MODL->Textures.Write(REV32(MOD2), writer);
+        if (MODL->MODD.IsLoaded())
+            MODL->MODD.Write(REV32(MODD), writer);
         }
 
     if(MOD2.IsLoaded())
         {
-        if(MOD2->MOD2.IsLoaded())
-            SaveHandler.writeSubRecord(REV32(MOD2), MOD2->MOD2.value, MOD2->MOD2.GetSize());
-
-        if(MOD2->MO2T.IsLoaded())
-            SaveHandler.writeSubRecord(REV32(MO2T), MOD2->MO2T.value, MOD2->MO2T.GetSize());
-
-        if(MOD2->MO2S.IsLoaded())
-            SaveHandler.writeSubRecord(REV32(MO2S), MOD2->MO2S.value, MOD2->MO2S.GetSize());
-
+        if (MOD2->MODL.IsLoaded())
+            MOD2->MODL.Write(REV32(MOD2), writer);
+        if (MOD2->MODT.IsLoaded())
+            MOD2->MODT.Write(REV32(MO2T), writer);
+        if (MOD2->Textures.IsLoaded())
+            MOD2->Textures.Write(REV32(MO2S), writer);
         }
 
     WRITE(ICON);
@@ -903,31 +803,24 @@ SINT32 ARMARecord::WriteRecord(FileWriter &writer)
 
     if(MOD3.IsLoaded())
         {
-        if(MOD3->MOD3.IsLoaded())
-            SaveHandler.writeSubRecord(REV32(MOD3), MOD3->MOD3.value, MOD3->MOD3.GetSize());
-
-        if(MOD3->MO3T.IsLoaded())
-            SaveHandler.writeSubRecord(REV32(MO3T), MOD3->MO3T.value, MOD3->MO3T.GetSize());
-
-        if(MOD3->MO3S.IsLoaded())
-            SaveHandler.writeSubRecord(REV32(MO3S), MOD3->MO3S.value, MOD3->MO3S.GetSize());
-
-        if(MOD3->MOSD.IsLoaded())
-            SaveHandler.writeSubRecord(REV32(MOSD), MOD3->MOSD.value, MOD3->MOSD.GetSize());
-
+        if (MOD3->MODL.IsLoaded())
+            MOD3->MODL.Write(REV32(MOD3), writer);
+        if (MOD3->MODT.IsLoaded())
+            MOD3->MODT.Write(REV32(MO3T), writer);
+        if (MOD3->Textures.IsLoaded())
+            MOD3->Textures.Write(REV32(MO3S), writer);
+        if (MOD3->MODD.IsLoaded())
+            MOD3->MODD.Write(REV32(MOSD), writer);
         }
 
     if(MOD4.IsLoaded())
         {
-        if(MOD4->MOD4.IsLoaded())
-            SaveHandler.writeSubRecord(REV32(MOD4), MOD4->MOD4.value, MOD4->MOD4.GetSize());
-
-        if(MOD4->MO4T.IsLoaded())
-            SaveHandler.writeSubRecord(REV32(MO4T), MOD4->MO4T.value, MOD4->MO4T.GetSize());
-
-        if(MOD4->MO4S.IsLoaded())
-            SaveHandler.writeSubRecord(REV32(MO4S), MOD4->MO4S.value, MOD4->MO4S.GetSize());
-
+        if (MOD4->MODL.IsLoaded())
+            MOD4->MODL.Write(REV32(MOD4), writer);
+        if (MOD4->MODT.IsLoaded())
+            MOD4->MODT.Write(REV32(MO4T), writer);
+        if (MOD4->Textures.IsLoaded())
+            MOD4->Textures.Write(REV32(MO4S), writer);
         }
 
     WRITE(ICO2);
@@ -963,7 +856,7 @@ bool ARMARecord::operator !=(const ARMARecord &other) const
     return !(*this == other);
     }
 
-bool ARMARecord::equals(const Record *other) const
+bool ARMARecord::equals(Record *other)
     {
     return *this == *(ARMARecord *)other;
     }
