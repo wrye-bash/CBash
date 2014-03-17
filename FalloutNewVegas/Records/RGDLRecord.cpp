@@ -84,215 +84,155 @@ bool RGDLRecord::VisitFormIDs(FormIDOp &op)
         return false;
 
     if(XNAM.IsLoaded())
-        op.Accept(XNAM->value);
+        op.Accept(XNAM.value);
     if(TNAM.IsLoaded())
-        op.Accept(TNAM->value);
+        op.Accept(TNAM.value);
 
     return op.Stop();
     }
 
 bool RGDLRecord::IsDisableOnMove()
     {
-    if(!Dummy.IsLoaded()) return false;
-    return (Dummy->flags & fIsDisableOnMove) != 0;
+    if (!RAPS.IsLoaded()) return false;
+    return (RAPS->flags & fIsDisableOnMove) != 0;
     }
 
 void RGDLRecord::IsDisableOnMove(bool value)
     {
-    if(!Dummy.IsLoaded()) return;
-    Dummy->flags = value ? (Dummy->flags | fIsDisableOnMove) : (Dummy->flags & ~fIsDisableOnMove);
+    if (!RAPS.IsLoaded()) return;
+    SETBIT(RAPS->flags, fIsDisableOnMove, value);
     }
 
 bool RGDLRecord::IsFlagMask(UINT8 Mask, bool Exact)
     {
-    if(!Dummy.IsLoaded()) return false;
-    return Exact ? ((Dummy->flags & Mask) == Mask) : ((Dummy->flags & Mask) != 0);
+    if (!RAPS.IsLoaded()) return false;
+    return Exact ? ((RAPS->flags & Mask) == Mask) : ((RAPS->flags & Mask) != 0);
     }
 
 void RGDLRecord::SetFlagMask(UINT8 Mask)
     {
-    Dummy.Load();
-    Dummy->flags = Mask;
+    RAPS.Load();
+    RAPS->flags = Mask;
     }
 
 bool RGDLRecord::IsNoFeedback()
     {
-    if(!Dummy.IsLoaded()) return false;
-    return (Dummy->type == eNoFeedback);
-    }
-
-void RGDLRecord::IsNoFeedback(bool value)
-    {
-    if(!Dummy.IsLoaded()) return;
-    Dummy->flags = value ? eNoFeedback : eDummyDefault;
+    if (!DATA.IsLoaded()) return false;
+    return (DATA->feedbackType == eNoFeedback);
     }
 
 bool RGDLRecord::IsFeedback()
     {
-    if(!Dummy.IsLoaded()) return false;
-    return (Dummy->type == eFeedback);
-    }
-
-void RGDLRecord::IsFeedback(bool value)
-    {
-    if(!Dummy.IsLoaded()) return;
-    Dummy->flags = value ? eFeedback : eDummyDefault;
+    if (!DATA.IsLoaded()) return false;
+    return (DATA->feedbackType == eFeedback);
     }
 
 bool RGDLRecord::IsFeedbackType(UINT8 Type)
     {
-    if(!Dummy.IsLoaded()) return false;
-    return Dummy->type == Type;
+    if (!DATA.IsLoaded()) return false;
+    return DATA->feedbackType == Type;
     }
 
 void RGDLRecord::SetFeedbackType(UINT8 Type)
     {
-    Dummy.Load();
-    Dummy->flags = Mask;
+    DATA.Load();
+    DATA->feedbackType = Type;
     }
 
 bool RGDLRecord::IsNoFootIK()
     {
-    if(!Dummy.IsLoaded()) return false;
-    return (Dummy->type == eNoFootIK);
-    }
-
-void RGDLRecord::IsNoFootIK(bool value)
-    {
-    if(!Dummy.IsLoaded()) return;
-    Dummy->flags = value ? eNoFootIK : eDummyDefault;
+    if (!DATA.IsLoaded()) return false;
+    return (DATA->footIKType == eNoFootIK);
     }
 
 bool RGDLRecord::IsFootIK()
     {
-    if(!Dummy.IsLoaded()) return false;
-    return (Dummy->type == eFootIK);
-    }
-
-void RGDLRecord::IsFootIK(bool value)
-    {
-    if(!Dummy.IsLoaded()) return;
-    Dummy->flags = value ? eFootIK : eDummyDefault;
+    if (!DATA.IsLoaded()) return false;
+    return (DATA->footIKType == eFootIK);
     }
 
 bool RGDLRecord::IsFootType(UINT8 Type)
     {
-    if(!Dummy.IsLoaded()) return false;
-    return Dummy->type == Type;
+    if (!DATA.IsLoaded()) return false;
+    return DATA->footIKType == Type;
     }
 
 void RGDLRecord::SetFootType(UINT8 Type)
     {
-    Dummy.Load();
-    Dummy->flags = Mask;
+    DATA.Load();
+    DATA->footIKType = Type;
     }
 
 bool RGDLRecord::IsNoLookIK()
     {
-    if(!Dummy.IsLoaded()) return false;
-    return (Dummy->type == eNoLookIK);
-    }
-
-void RGDLRecord::IsNoLookIK(bool value)
-    {
-    if(!Dummy.IsLoaded()) return;
-    Dummy->flags = value ? eNoLookIK : eDummyDefault;
+    if (!DATA.IsLoaded()) return false;
+    return (DATA->lookIKType == eNoLookIK);
     }
 
 bool RGDLRecord::IsLookIK()
     {
-    if(!Dummy.IsLoaded()) return false;
-    return (Dummy->type == eLookIK);
-    }
-
-void RGDLRecord::IsLookIK(bool value)
-    {
-    if(!Dummy.IsLoaded()) return;
-    Dummy->flags = value ? eLookIK : eDummyDefault;
+    if (!DATA.IsLoaded()) return false;
+    return (DATA->lookIKType == eLookIK);
     }
 
 bool RGDLRecord::IsLookType(UINT8 Type)
     {
-    if(!Dummy.IsLoaded()) return false;
-    return Dummy->type == Type;
+    if (!DATA.IsLoaded()) return false;
+    return DATA->lookIKType == Type;
     }
 
 void RGDLRecord::SetLookType(UINT8 Type)
     {
-    Dummy.Load();
-    Dummy->flags = Mask;
+    DATA.Load();
+    DATA->lookIKType = Type;
     }
 
 bool RGDLRecord::IsNoGrabIK()
     {
-    if(!Dummy.IsLoaded()) return false;
-    return (Dummy->type == eNoGrabIK);
-    }
-
-void RGDLRecord::IsNoGrabIK(bool value)
-    {
-    if(!Dummy.IsLoaded()) return;
-    Dummy->flags = value ? eNoGrabIK : eDummyDefault;
+    if (!DATA.IsLoaded()) return false;
+    return (DATA->grabIKType == eNoGrabIK);
     }
 
 bool RGDLRecord::IsGrabIK()
     {
-    if(!Dummy.IsLoaded()) return false;
-    return (Dummy->type == eGrabIK);
-    }
-
-void RGDLRecord::IsGrabIK(bool value)
-    {
-    if(!Dummy.IsLoaded()) return;
-    Dummy->flags = value ? eGrabIK : eDummyDefault;
+    if (!DATA.IsLoaded()) return false;
+    return (DATA->grabIKType == eGrabIK);
     }
 
 bool RGDLRecord::IsGrabType(UINT8 Type)
     {
-    if(!Dummy.IsLoaded()) return false;
-    return Dummy->type == Type;
+    if (!DATA.IsLoaded()) return false;
+    return DATA->grabIKType == Type;
     }
 
 void RGDLRecord::SetGrabType(UINT8 Type)
     {
-    Dummy.Load();
-    Dummy->flags = Mask;
+    DATA.Load();
+    DATA->grabIKType = Type;
     }
 
 bool RGDLRecord::IsNoMatchPose()
     {
-    if(!Dummy.IsLoaded()) return false;
-    return (Dummy->type == eNoMatchPose);
-    }
-
-void RGDLRecord::IsNoMatchPose(bool value)
-    {
-    if(!Dummy.IsLoaded()) return;
-    Dummy->flags = value ? eNoMatchPose : eDummyDefault;
+    if (!DATA.IsLoaded()) return false;
+    return (DATA->matchPoseType == eNoMatchPose);
     }
 
 bool RGDLRecord::IsMatchPose()
     {
-    if(!Dummy.IsLoaded()) return false;
-    return (Dummy->type == eMatchPose);
-    }
-
-void RGDLRecord::IsMatchPose(bool value)
-    {
-    if(!Dummy.IsLoaded()) return;
-    Dummy->flags = value ? eMatchPose : eDummyDefault;
+    if (!DATA.IsLoaded()) return false;
+    return (DATA->matchPoseType == eMatchPose);
     }
 
 bool RGDLRecord::IsMatchType(UINT8 Type)
     {
-    if(!Dummy.IsLoaded()) return false;
-    return Dummy->type == Type;
+    if (!DATA.IsLoaded()) return false;
+    return DATA->matchPoseType == Type;
     }
 
 void RGDLRecord::SetMatchType(UINT8 Type)
     {
-    Dummy.Load();
-    Dummy->flags = Mask;
+    DATA.Load();
+    DATA->matchPoseType = Type;
     }
 
 UINT32 RGDLRecord::GetType()
@@ -305,7 +245,7 @@ STRING RGDLRecord::GetStrType()
     return "RGDL";
     }
 
-SINT32 RGDLRecord::ParseRecord(unsigned char *buffer, const UINT32 &recSize)
+SINT32 RGDLRecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk)
     {
     UINT32 subType = 0;
     UINT32 subSize = 0;
@@ -329,7 +269,7 @@ SINT32 RGDLRecord::ParseRecord(unsigned char *buffer, const UINT32 &recSize)
         switch(subType)
             {
             case REV32(EDID):
-                EDID.Read(buffer, subSize);
+                EDID.Read(buffer, subSize, CompressedOnDisk);
                 break;
             case REV32(NVER):
                 NVER.Read(buffer, subSize);
@@ -353,7 +293,7 @@ SINT32 RGDLRecord::ParseRecord(unsigned char *buffer, const UINT32 &recSize)
                 RAPS.Read(buffer, subSize);
                 break;
             case REV32(ANAM):
-                ANAM.Read(buffer, subSize);
+                ANAM.Read(buffer, subSize, CompressedOnDisk);
                 break;
             default:
                 //printf("FileName = %s\n", FileName);
@@ -416,7 +356,7 @@ bool RGDLRecord::operator !=(const RGDLRecord &other) const
     return !(*this == other);
     }
 
-bool RGDLRecord::equals(const Record *other) const
+bool RGDLRecord::equals(Record *other)
     {
     return *this == *(RGDLRecord *)other;
     }
