@@ -89,73 +89,55 @@ bool IPCTRecord::VisitFormIDs(FormIDOp &op)
             op.Accept(MODL->Textures.MODS[x]->texture);
         }
     if(DNAM.IsLoaded())
-        op.Accept(DNAM->value);
+        op.Accept(DNAM.value);
     if(SNAM.IsLoaded())
-        op.Accept(SNAM->value);
+        op.Accept(SNAM.value);
     if(NAM1.IsLoaded())
-        op.Accept(NAM1->value);
+        op.Accept(NAM1.value);
 
     return op.Stop();
     }
 
 bool IPCTRecord::IsNoDecalData()
     {
-    if(!Dummy.IsLoaded()) return false;
-    return (Dummy->flags & fIsNoDecalData) != 0;
+    if (!DATA.IsLoaded()) return false;
+    return (DATA->flags & fIsNoDecalData) != 0;
     }
 
 void IPCTRecord::IsNoDecalData(bool value)
     {
-    if(!Dummy.IsLoaded()) return;
-    Dummy->flags = value ? (Dummy->flags | fIsNoDecalData) : (Dummy->flags & ~fIsNoDecalData);
+    if (!DATA.IsLoaded()) return;
+    SETBIT(DATA->flags, fIsNoDecalData, value);
     }
 
 bool IPCTRecord::IsFlagMask(UINT32 Mask, bool Exact)
     {
-    if(!Dummy.IsLoaded()) return false;
-    return Exact ? ((Dummy->flags & Mask) == Mask) : ((Dummy->flags & Mask) != 0);
+    if (!DATA.IsLoaded()) return false;
+    return Exact ? ((DATA->flags & Mask) == Mask) : ((DATA->flags & Mask) != 0);
     }
 
 void IPCTRecord::SetFlagMask(UINT32 Mask)
     {
-    Dummy.Load();
-    Dummy->flags = Mask;
+    DATA.Load();
+    DATA->flags = Mask;
     }
 
 bool IPCTRecord::IsLoud()
     {
-    if(!Dummy.IsLoaded()) return false;
-    return (Dummy->type == eLoud);
-    }
-
-void IPCTRecord::IsLoud(bool value)
-    {
-    if(!Dummy.IsLoaded()) return;
-    Dummy->flags = value ? eLoud : eDummyDefault;
+    if (!DATA.IsLoaded()) return false;
+    return (DATA->soundLevel == eLoud);
     }
 
 bool IPCTRecord::IsNormal()
     {
-    if(!Dummy.IsLoaded()) return false;
-    return (Dummy->type == eNormal);
-    }
-
-void IPCTRecord::IsNormal(bool value)
-    {
-    if(!Dummy.IsLoaded()) return;
-    Dummy->flags = value ? eNormal : eDummyDefault;
+    if (!DATA.IsLoaded()) return false;
+    return (DATA->soundLevel == eNormal);
     }
 
 bool IPCTRecord::IsSilent()
     {
-    if(!Dummy.IsLoaded()) return false;
-    return (Dummy->type == eSilent);
-    }
-
-void IPCTRecord::IsSilent(bool value)
-    {
-    if(!Dummy.IsLoaded()) return;
-    Dummy->flags = value ? eSilent : eDummyDefault;
+    if(!DATA.IsLoaded()) return false;
+    return (DATA->soundLevel == eSilent);
     }
 
 bool IPCTRecord::IsObjectParallax()
@@ -165,8 +147,8 @@ bool IPCTRecord::IsObjectParallax()
 
 void IPCTRecord::IsObjectParallax(bool value)
     {
-    if(!DODT.IsLoaded()) return;
-    DODT->flags = value ? (DODT->flags | fIsParallax) : (DODT->flags & ~fIsParallax);
+    if (!DODT.IsLoaded()) return;
+    SETBIT(DODT->flags, fIsParallax, value);
     }
 
 bool IPCTRecord::IsObjectAlphaBlending()
@@ -176,8 +158,8 @@ bool IPCTRecord::IsObjectAlphaBlending()
 
 void IPCTRecord::IsObjectAlphaBlending(bool value)
     {
-    if(!DODT.IsLoaded()) return;
-    DODT->flags = value ? (DODT->flags | fIsAlphaBlending) : (DODT->flags & ~fIsAlphaBlending);
+    if (!DODT.IsLoaded()) return;
+    SETBIT(DODT->flags, fIsAlphaBlending, value);
     }
 
 bool IPCTRecord::IsObjectAlphaTesting()
@@ -187,8 +169,8 @@ bool IPCTRecord::IsObjectAlphaTesting()
 
 void IPCTRecord::IsObjectAlphaTesting(bool value)
     {
-    if(!DODT.IsLoaded()) return;
-    DODT->flags = value ? (DODT->flags | fIsAlphaTesting) : (DODT->flags & ~fIsAlphaTesting);
+    if (!DODT.IsLoaded()) return;
+    SETBIT(DODT->flags, fIsAlphaTesting, value);
     }
 
 bool IPCTRecord::IsObjectFlagMask(UINT8 Mask, bool Exact)
@@ -205,14 +187,14 @@ void IPCTRecord::SetObjectFlagMask(UINT8 Mask)
 
 bool IPCTRecord::IsSoundLevelType(UINT8 Type)
     {
-    if(!Dummy.IsLoaded()) return false;
-    return Dummy->type == Type;
+    if (!DATA.IsLoaded()) return false;
+    return DATA->soundLevel == Type;
     }
 
 void IPCTRecord::SetSoundLevelType(UINT8 Type)
     {
-    Dummy.Load();
-    Dummy->flags = Mask;
+    DATA.Load();
+    DATA->soundLevel = Type;
     }
 
 UINT32 IPCTRecord::GetType()
@@ -225,7 +207,7 @@ STRING IPCTRecord::GetStrType()
     return "IPCT";
     }
 
-SINT32 IPCTRecord::ParseRecord(unsigned char *buffer, const UINT32 &recSize)
+SINT32 IPCTRecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk)
     {
     UINT32 subType = 0;
     UINT32 subSize = 0;
@@ -249,11 +231,11 @@ SINT32 IPCTRecord::ParseRecord(unsigned char *buffer, const UINT32 &recSize)
         switch(subType)
             {
             case REV32(EDID):
-                EDID.Read(buffer, subSize);
+                EDID.Read(buffer, subSize, CompressedOnDisk);
                 break;
             case REV32(MODL):
                 MODL.Load();
-                MODL->MODL.Read(buffer, subSize);
+                MODL->MODL.Read(buffer, subSize, CompressedOnDisk);
                 break;
             case REV32(MODB):
                 MODL.Load();
@@ -261,7 +243,7 @@ SINT32 IPCTRecord::ParseRecord(unsigned char *buffer, const UINT32 &recSize)
                 break;
             case REV32(MODT):
                 MODL.Load();
-                MODL->MODT.Read(buffer, subSize);
+                MODL->MODT.Read(buffer, subSize, CompressedOnDisk);
                 break;
             case REV32(MODS):
                 MODL.Load();
@@ -343,7 +325,7 @@ bool IPCTRecord::operator !=(const IPCTRecord &other) const
     return !(*this == other);
     }
 
-bool IPCTRecord::equals(const Record *other) const
+bool IPCTRecord::equals(Record *other)
     {
     return *this == *(IPCTRecord *)other;
     }
