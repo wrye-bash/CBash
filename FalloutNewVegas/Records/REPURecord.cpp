@@ -92,7 +92,7 @@ STRING REPURecord::GetStrType()
     return "REPU";
     }
 
-SINT32 REPURecord::ParseRecord(unsigned char *buffer, const UINT32 &recSize)
+SINT32 REPURecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk)
     {
     UINT32 subType = 0;
     UINT32 subSize = 0;
@@ -116,7 +116,7 @@ SINT32 REPURecord::ParseRecord(unsigned char *buffer, const UINT32 &recSize)
         switch(subType)
             {
             case REV32(EDID):
-                EDID.Read(buffer, subSize);
+                EDID.Read(buffer, subSize, CompressedOnDisk);
                 break;
             case REV32(FULL):
                 FULL.Read(buffer, subSize, CompressedOnDisk);
@@ -179,7 +179,7 @@ bool REPURecord::operator !=(const REPURecord &other) const
     return !(*this == other);
     }
 
-bool REPURecord::equals(const Record *other) const
+bool REPURecord::equals(Record *other)
     {
     return *this == *(REPURecord *)other;
     }
