@@ -64,10 +64,10 @@ RCPERecord::RCPERecord(RCPERecord *srcRecord):
     EDID = srcRecord->EDID;
     FULL = srcRecord->FULL;
     CTDA = srcRecord->CTDA;
-    DATA = srcRecord->DATA;
-    RCIL = srcRecord->RCIL;
-    RCQY = srcRecord->RCQY;
-    RCOD = srcRecord->RCOD;
+    //DATA = srcRecord->DATA;
+    //RCIL = srcRecord->RCIL;
+    //RCQY = srcRecord->RCQY;
+    //RCOD = srcRecord->RCOD;
     return;
     }
 
@@ -85,10 +85,10 @@ bool RCPERecord::VisitFormIDs(FormIDOp &op)
     //    op.Accept(CTDA->value);
     //if(DATA.IsLoaded()) //FILL IN MANUALLY
     //    op.Accept(DATA->value);
-    if(RCIL.IsLoaded())
-        op.Accept(RCIL->value);
-    if(RCOD.IsLoaded())
-        op.Accept(RCOD->value);
+    //if(RCIL.IsLoaded())
+    //    op.Accept(RCIL->value);
+    //if(RCOD.IsLoaded())
+    //    op.Accept(RCOD->value);
 
     return op.Stop();
     }
@@ -103,7 +103,7 @@ STRING RCPERecord::GetStrType()
     return "RCPE";
     }
 
-SINT32 RCPERecord::ParseRecord(unsigned char *buffer, const UINT32 &recSize)
+SINT32 RCPERecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk)
     {
     UINT32 subType = 0;
     UINT32 subSize = 0;
@@ -127,25 +127,25 @@ SINT32 RCPERecord::ParseRecord(unsigned char *buffer, const UINT32 &recSize)
         switch(subType)
             {
             case REV32(EDID):
-                EDID.Read(buffer, subSize);
+                EDID.Read(buffer, subSize, CompressedOnDisk);
                 break;
             case REV32(FULL):
                 FULL.Read(buffer, subSize, CompressedOnDisk);
                 break;
             case REV32(CTDA):
-                CTDA.Read(buffer, subSize);
+                //CTDA.Read(buffer, subSize);
                 break;
             case REV32(DATA):
-                DATA.Read(buffer, subSize);
+                //DATA.Read(buffer, subSize);
                 break;
             case REV32(RCIL):
-                RCIL.Read(buffer, subSize);
+                //RCIL.Read(buffer, subSize);
                 break;
             case REV32(RCQY):
-                RCQY.Read(buffer, subSize);
+                //RCQY.Read(buffer, subSize);
                 break;
             case REV32(RCOD):
-                RCOD.Read(buffer, subSize);
+                //RCOD.Read(buffer, subSize);
                 break;
             default:
                 //printf("FileName = %s\n", FileName);
@@ -165,11 +165,11 @@ SINT32 RCPERecord::Unload()
     IsLoaded(false);
     EDID.Unload();
     FULL.Unload();
-    CTDA.Unload();
-    DATA.Unload();
-    RCIL.Unload();
-    RCQY.Unload();
-    RCOD.Unload();
+    //CTDA.Unload();
+    //DATA.Unload();
+    //RCIL.Unload();
+    //RCQY.Unload();
+    //RCOD.Unload();
     return 1;
     }
 
@@ -177,11 +177,11 @@ SINT32 RCPERecord::WriteRecord(FileWriter &writer)
     {
     WRITE(EDID);
     WRITE(FULL);
-    WRITE(CTDA);
-    WRITE(DATA);
-    WRITE(RCIL);
-    WRITE(RCQY);
-    WRITE(RCOD);
+    //WRITE(CTDA);
+    //WRITE(DATA);
+    //WRITE(RCIL);
+    //WRITE(RCQY);
+    //WRITE(RCOD);
 
     return -1;
     }
@@ -190,11 +190,13 @@ bool RCPERecord::operator ==(const RCPERecord &other) const
     {
     return (EDID.equalsi(other.EDID) &&
             FULL.equals(other.FULL) &&
-            CTDA == other.CTDA &&
+            CTDA == other.CTDA);
+    /*      &&
             DATA == other.DATA &&
             RCIL == other.RCIL &&
             RCQY == other.RCQY &&
             RCOD == other.RCOD);
+    */
     }
 
 bool RCPERecord::operator !=(const RCPERecord &other) const
@@ -202,7 +204,7 @@ bool RCPERecord::operator !=(const RCPERecord &other) const
     return !(*this == other);
     }
 
-bool RCPERecord::equals(const Record *other) const
+bool RCPERecord::equals(Record *other)
     {
     return *this == *(RCPERecord *)other;
     }
