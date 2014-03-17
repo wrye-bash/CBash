@@ -90,7 +90,7 @@ STRING MUSCRecord::GetStrType()
     return "MUSC";
     }
 
-SINT32 MUSCRecord::ParseRecord(unsigned char *buffer, const UINT32 &recSize)
+SINT32 MUSCRecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk)
     {
     UINT32 subType = 0;
     UINT32 subSize = 0;
@@ -114,10 +114,10 @@ SINT32 MUSCRecord::ParseRecord(unsigned char *buffer, const UINT32 &recSize)
         switch(subType)
             {
             case REV32(EDID):
-                EDID.Read(buffer, subSize);
+                EDID.Read(buffer, subSize, CompressedOnDisk);
                 break;
             case REV32(FNAM):
-                FNAM.Read(buffer, subSize);
+                FNAM.Read(buffer, subSize, CompressedOnDisk);
                 break;
             case REV32(ANAM):
                 ANAM.Read(buffer, subSize);
@@ -165,7 +165,7 @@ bool MUSCRecord::operator !=(const MUSCRecord &other) const
     return !(*this == other);
     }
 
-bool MUSCRecord::equals(const Record *other) const
+bool MUSCRecord::equals(Record *other)
     {
     return *this == *(MUSCRecord *)other;
     }
