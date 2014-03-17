@@ -43,7 +43,7 @@ class DOBJRecord : public FNVRecord //Default Object Manager
     {
     public:
         StringRecord EDID; //Editor ID
-        std::vector<FORMID> DATA; //Default Objects
+        UnorderedPackedArray<FORMID> DATA; // Default Objects
 
         DOBJRecord(unsigned char *_recData=NULL);
         DOBJRecord(DOBJRecord *srcRecord);
