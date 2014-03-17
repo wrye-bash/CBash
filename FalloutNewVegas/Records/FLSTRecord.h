@@ -43,7 +43,7 @@ class FLSTRecord : public FNVRecord //FormID List
     {
     public:
         StringRecord EDID; //Editor ID
-        std::vector<FORMID> LNAM; //FormIDs
+        OrderedSparseArray<FORMID> LNAM; // FormIDs
 
         FLSTRecord(unsigned char *_recData=NULL);
         FLSTRecord(FLSTRecord *srcRecord);

@@ -77,7 +77,8 @@ bool FLSTRecord::VisitFormIDs(FormIDOp &op)
         return false;
 
     if(LNAM.IsLoaded())
-        op.Accept(LNAM->value);
+        for (UINT32 ListIndex = 0; ListIndex < LNAM.value.size(); ListIndex++)
+            op.Accept(LNAM.value[ListIndex]);
 
     return op.Stop();
     }
@@ -92,7 +93,7 @@ STRING FLSTRecord::GetStrType()
     return "FLST";
     }
 
-SINT32 FLSTRecord::ParseRecord(unsigned char *buffer, const UINT32 &recSize)
+SINT32 FLSTRecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk)
     {
     UINT32 subType = 0;
     UINT32 subSize = 0;
@@ -116,7 +117,7 @@ SINT32 FLSTRecord::ParseRecord(unsigned char *buffer, const UINT32 &recSize)
         switch(subType)
             {
             case REV32(EDID):
-                EDID.Read(buffer, subSize);
+                EDID.Read(buffer, subSize, CompressedOnDisk);
                 break;
             case REV32(LNAM):
                 LNAM.Read(buffer, subSize);
@@ -161,7 +162,7 @@ bool FLSTRecord::operator !=(const FLSTRecord &other) const
     return !(*this == other);
     }
 
-bool FLSTRecord::equals(const Record *other) const
+bool FLSTRecord::equals(Record *other)
     {
     return *this == *(FLSTRecord *)other;
     }
