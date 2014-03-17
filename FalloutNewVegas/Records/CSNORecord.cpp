@@ -64,25 +64,28 @@ CSNORecord::CSNORecord(CSNORecord *srcRecord):
     EDID = srcRecord->EDID;
     FULL = srcRecord->FULL;
     DATA = srcRecord->DATA;
-    if(srcRecord->MODL.IsLoaded())
-        {
-        MODL.Load();
-        MODL->MODL = srcRecord->MODL->MODL;
-        }
+    MODL1 = srcRecord->MODL1;
+    MODL5 = srcRecord->MODL5;
+    MODL10 = srcRecord->MODL10;
+    MODL25 = srcRecord->MODL25;
+    MODL100 = srcRecord->MODL100;
+    MODL500 = srcRecord->MODL500;
     MODL = srcRecord->MODL;
     MOD2 = srcRecord->MOD2;
     MOD3 = srcRecord->MOD3;
     MOD4 = srcRecord->MOD4;
-    if(srcRecord->ICON.IsLoaded())
-        {
-        ICON.Load();
-        ICON->ICON = srcRecord->ICON->ICON;
-        }
-    if(srcRecord->ICO2.IsLoaded())
-        {
-        ICO2.Load();
-        ICO2->ICO2 = srcRecord->ICO2->ICO2;
-        }
+    ICON1 = srcRecord->ICON1;
+    ICON2 = srcRecord->ICON2;
+    ICON3 = srcRecord->ICON3;
+    ICON4 = srcRecord->ICON4;
+    ICON5 = srcRecord->ICON5;
+    ICON6 = srcRecord->ICON6;
+    ICONW = srcRecord->ICONW;
+    ICO21 = srcRecord->ICO21;
+    ICO22 = srcRecord->ICO22;
+    ICO23 = srcRecord->ICO23;
+    ICO24 = srcRecord->ICO24;
+
     return;
     }
 
@@ -96,34 +99,37 @@ bool CSNORecord::VisitFormIDs(FormIDOp &op)
     if(!IsLoaded())
         return false;
 
-    //if(DATA.IsLoaded()) //FILL IN MANUALLY
-    //    op.Accept(DATA->value);
+    if (DATA.IsLoaded())
+        {
+        op.Accept(DATA->currency);
+        op.Accept(DATA->winningsQuest);
+        }
 
     return op.Stop();
     }
 
 bool CSNORecord::IsDealerStayOnSoft17()
     {
-    if(!Dummy.IsLoaded()) return false;
-    return (Dummy->flags & fIsDealerStayOnSoft17) != 0;
+    if (!DATA.IsLoaded()) return false;
+    return (DATA->flags & fIsDealerStayOnSoft17) != 0;
     }
 
 void CSNORecord::IsDealerStayOnSoft17(bool value)
     {
-    if(!Dummy.IsLoaded()) return;
-    Dummy->flags = value ? (Dummy->flags | fIsDealerStayOnSoft17) : (Dummy->flags & ~fIsDealerStayOnSoft17);
+    if (!DATA.IsLoaded()) return;
+    SETBIT(DATA->flags, fIsDealerStayOnSoft17, value);
     }
 
 bool CSNORecord::IsFlagMask(UINT32 Mask, bool Exact)
     {
-    if(!Dummy.IsLoaded()) return false;
-    return Exact ? ((Dummy->flags & Mask) == Mask) : ((Dummy->flags & Mask) != 0);
+    if (!DATA.IsLoaded()) return false;
+    return Exact ? ((DATA->flags & Mask) == Mask) : (DATA->flags & Mask) != 0;
     }
 
 void CSNORecord::SetFlagMask(UINT32 Mask)
     {
-    Dummy.Load();
-    Dummy->flags = Mask;
+    DATA.Load();
+    DATA->flags = Mask;
     }
 
 UINT32 CSNORecord::GetType()
@@ -136,7 +142,7 @@ STRING CSNORecord::GetStrType()
     return "CSNO";
     }
 
-SINT32 CSNORecord::ParseRecord(unsigned char *buffer, const UINT32 &recSize)
+SINT32 CSNORecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk)
     {
     UINT32 subType = 0;
     UINT32 subSize = 0;
@@ -160,7 +166,7 @@ SINT32 CSNORecord::ParseRecord(unsigned char *buffer, const UINT32 &recSize)
         switch(subType)
             {
             case REV32(EDID):
-                EDID.Read(buffer, subSize);
+                EDID.Read(buffer, subSize, CompressedOnDisk);
                 break;
             case REV32(FULL):
                 FULL.Read(buffer, subSize, CompressedOnDisk);
@@ -170,28 +176,30 @@ SINT32 CSNORecord::ParseRecord(unsigned char *buffer, const UINT32 &recSize)
                 break;
             case REV32(MODL):
                 MODL.Load();
-                MODL->MODL.Read(buffer, subSize);
+                MODL.Read(buffer, subSize, CompressedOnDisk);
                 break;
-            case REV32(MODL):
-                MODL.Read(buffer, subSize);
-                break;
+            // TODO: handle MODL records better
+            //case REV32(MODL):
+            //    MODL.Read(buffer, subSize);
+            //    break;
             case REV32(MOD2):
-                MOD2.Read(buffer, subSize);
+                MOD2.Read(buffer, subSize, CompressedOnDisk);
                 break;
             case REV32(MOD3):
-                MOD3.Read(buffer, subSize);
+                MOD3.Read(buffer, subSize, CompressedOnDisk);
                 break;
             case REV32(MOD4):
-                MOD4.Read(buffer, subSize);
+                MOD4.Read(buffer, subSize, CompressedOnDisk);
                 break;
             case REV32(ICON):
-                ICON.Load();
-                ICON->ICON.Read(buffer, subSize, CompressedOnDisk);
+                ICON1.Load();
+                ICON1.Read(buffer, subSize, CompressedOnDisk);
                 break;
             case REV32(ICO2):
-                ICO2.Load();
-                ICO2->ICO2.Read(buffer, subSize, CompressedOnDisk);
+                ICON2.Load();
+                ICON2.Read(buffer, subSize, CompressedOnDisk);
                 break;
+            // TODO: The rest of the ICO* subrecords
             default:
                 //printf("FileName = %s\n", FileName);
                 printf("  CSNO: %08X - Unknown subType = %04x\n", formID, subType);
@@ -211,13 +219,27 @@ SINT32 CSNORecord::Unload()
     EDID.Unload();
     FULL.Unload();
     DATA.Unload();
-    MODL.Unload();
+    MODL1.Unload();
+    MODL5.Unload();
+    MODL10.Unload();
+    MODL25.Unload();
+    MODL100.Unload();
+    MODL500.Unload();
     MODL.Unload();
     MOD2.Unload();
     MOD3.Unload();
     MOD4.Unload();
-    ICON.Unload();
-    ICO2.Unload();
+    ICON1.Unload();
+    ICON2.Unload();
+    ICON3.Unload();
+    ICON4.Unload();
+    ICON5.Unload();
+    ICON6.Unload();
+    ICONW.Unload();
+    ICO21.Unload();
+    ICO22.Unload();
+    ICO23.Unload();
+    ICO24.Unload();
     return 1;
     }
 
@@ -227,31 +249,12 @@ SINT32 CSNORecord::WriteRecord(FileWriter &writer)
     WRITE(FULL);
     WRITE(DATA);
 
-    if(MODL.IsLoaded())
-        {
-        if(MODL->MODL.IsLoaded())
-            SaveHandler.writeSubRecord(REV32(MODL), MODL->MODL.value, MODL->MODL.GetSize());
-
-        }
-
     WRITE(MODL);
     WRITE(MOD2);
     WRITE(MOD3);
     WRITE(MOD4);
 
-    if(ICON.IsLoaded())
-        {
-        if(ICON->ICON.IsLoaded())
-            SaveHandler.writeSubRecord(REV32(ICON), ICON->ICON.value, ICON->ICON.GetSize());
-
-        }
-
-    if(ICO2.IsLoaded())
-        {
-        if(ICO2->ICO2.IsLoaded())
-            SaveHandler.writeSubRecord(REV32(ICO2), ICO2->ICO2.value, ICO2->ICO2.GetSize());
-
-        }
+    // TODO: Fix this!  Much more needs writing
 
     return -1;
     }
@@ -261,13 +264,13 @@ bool CSNORecord::operator ==(const CSNORecord &other) const
     return (EDID.equalsi(other.EDID) &&
             FULL.equals(other.FULL) &&
             DATA == other.DATA &&
-            MODL == other.MODL &&
             MODL.equalsi(other.MODL) &&
             MOD2.equalsi(other.MOD2) &&
             MOD3.equalsi(other.MOD3) &&
             MOD4.equalsi(other.MOD4) &&
-            ICON == other.ICON &&
-            ICO2 == other.ICO2);
+            ICON1.equals(other.ICON1) &&
+            ICON2.equals(other.ICON2));
+    // TODO: Rest of subrecords need checks too!
     }
 
 bool CSNORecord::operator !=(const CSNORecord &other) const
@@ -275,7 +278,7 @@ bool CSNORecord::operator !=(const CSNORecord &other) const
     return !(*this == other);
     }
 
-bool CSNORecord::equals(const Record *other) const
+bool CSNORecord::equals(Record *other)
     {
     return *this == *(CSNORecord *)other;
     }
