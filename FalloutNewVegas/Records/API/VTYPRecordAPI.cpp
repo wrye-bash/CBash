@@ -101,7 +101,7 @@ void * VTYPRecord::GetField(FIELD_IDENTIFIERS, void **FieldValues)
             *FieldValues = &versionControl2[0];
             return NULL;
         case 7: //dnam Flags
-            return DNAM.IsLoaded() ? &DNAM->value7 : NULL;
+            return DNAM.IsLoaded() ? &DNAM.value : NULL;
         default:
             return NULL;
         }
@@ -137,7 +137,7 @@ bool VTYPRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             break;
         case 7: //dnam Flags
             DNAM.Load();
-            DNAM->value7 = *(UINT8 *)FieldValue;
+            DNAM.value = *(UINT8 *)FieldValue;
             break;
         default:
             break;
