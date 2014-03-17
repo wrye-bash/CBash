@@ -82,217 +82,145 @@ bool CHALRecord::VisitFormIDs(FormIDOp &op)
         return false;
 
     if(SCRI.IsLoaded())
-        op.Accept(SCRI->value);
+        op.Accept(SCRI.value);
     if(SNAM.IsLoaded())
-        op.Accept(SNAM->value);
+        op.Accept(SNAM.value);
     if(XNAM.IsLoaded())
-        op.Accept(XNAM->value);
+        op.Accept(XNAM.value);
 
     return op.Stop();
     }
 
 bool CHALRecord::IsStartDisabled()
     {
-    if(!Dummy.IsLoaded()) return false;
-    return (Dummy->flags & fIsStartDisabled) != 0;
+    if (!DATA.IsLoaded()) return false;
+    return (DATA->flags & fIsStartDisabled) != 0;
     }
 
 void CHALRecord::IsStartDisabled(bool value)
     {
-    if(!Dummy.IsLoaded()) return;
-    Dummy->flags = value ? (Dummy->flags | fIsStartDisabled) : (Dummy->flags & ~fIsStartDisabled);
+    if (!DATA.IsLoaded()) return;
+    SETBIT(DATA->flags, fIsStartDisabled, value);
     }
 
 bool CHALRecord::IsRecurring()
     {
-    if(!Dummy.IsLoaded()) return false;
-    return (Dummy->flags & fIsRecurring) != 0;
+    if (!DATA.IsLoaded()) return false;
+    return (DATA->flags & fIsRecurring) != 0;
     }
 
 void CHALRecord::IsRecurring(bool value)
     {
-    if(!Dummy.IsLoaded()) return;
-    Dummy->flags = value ? (Dummy->flags | fIsRecurring) : (Dummy->flags & ~fIsRecurring);
+    if (!DATA.IsLoaded()) return;
+    SETBIT(DATA->flags, fIsRecurring, value);
     }
 
 bool CHALRecord::IsShowZeroProgress()
     {
-    if(!Dummy.IsLoaded()) return false;
-    return (Dummy->flags & fIsShowZeroProgress) != 0;
+    if (!DATA.IsLoaded()) return false;
+    return (DATA->flags & fIsShowZeroProgress) != 0;
     }
 
 void CHALRecord::IsShowZeroProgress(bool value)
     {
-    if(!Dummy.IsLoaded()) return;
-    Dummy->flags = value ? (Dummy->flags | fIsShowZeroProgress) : (Dummy->flags & ~fIsShowZeroProgress);
+    if (!DATA.IsLoaded()) return;
+    SETBIT(DATA->flags, fIsShowZeroProgress, value);
     }
 
-bool CHALRecord::Is0FlagMask(UINT8 Mask, bool Exact)
+bool CHALRecord::IsFlagMask(UINT8 Mask, bool Exact)
     {
-    if(!Dummy.IsLoaded()) return false;
-    return Exact ? ((Dummy->flags & Mask) == Mask) : ((Dummy->flags & Mask) != 0);
+    if (!DATA.IsLoaded()) return false;
+    return Exact ? ((DATA->flags & Mask) == Mask) : ((DATA->flags & Mask) != 0);
     }
 
-void CHALRecord::Set0FlagMask(UINT8 Mask)
+void CHALRecord::SetFlagMask(UINT8 Mask)
     {
-    Dummy.Load();
-    Dummy->flags = Mask;
+    DATA.Load();
+    DATA->flags = Mask;
     }
 
 bool CHALRecord::IsKillFromList()
     {
-    if(!Dummy.IsLoaded()) return false;
-    return (Dummy->type == eKillFromList);
-    }
-
-void CHALRecord::IsKillFromList(bool value)
-    {
-    if(!Dummy.IsLoaded()) return;
-    Dummy->flags = value ? eKillFromList : eDummyDefault;
+    if (!DATA.IsLoaded()) return false;
+    return (DATA->challengeType == eKillFromList);
     }
 
 bool CHALRecord::IsKillFormID()
     {
-    if(!Dummy.IsLoaded()) return false;
-    return (Dummy->type == eKillFormID);
-    }
-
-void CHALRecord::IsKillFormID(bool value)
-    {
-    if(!Dummy.IsLoaded()) return;
-    Dummy->flags = value ? eKillFormID : eDummyDefault;
+    if (!DATA.IsLoaded()) return false;
+    return (DATA->challengeType == eKillFormID);
     }
 
 bool CHALRecord::IsKillInCategory()
     {
-    if(!Dummy.IsLoaded()) return false;
-    return (Dummy->type == eKillInCategory);
-    }
-
-void CHALRecord::IsKillInCategory(bool value)
-    {
-    if(!Dummy.IsLoaded()) return;
-    Dummy->flags = value ? eKillInCategory : eDummyDefault;
+    if (!DATA.IsLoaded()) return false;
+    return (DATA->challengeType == eKillInCategory);
     }
 
 bool CHALRecord::IsHitEnemy()
     {
-    if(!Dummy.IsLoaded()) return false;
-    return (Dummy->type == eHitEnemy);
-    }
-
-void CHALRecord::IsHitEnemy(bool value)
-    {
-    if(!Dummy.IsLoaded()) return;
-    Dummy->flags = value ? eHitEnemy : eDummyDefault;
+    if (!DATA.IsLoaded()) return false;
+    return (DATA->challengeType == eHitEnemy);
     }
 
 bool CHALRecord::IsDiscoverMapMarker()
     {
-    if(!Dummy.IsLoaded()) return false;
-    return (Dummy->type == eDiscoverMapMarker);
-    }
-
-void CHALRecord::IsDiscoverMapMarker(bool value)
-    {
-    if(!Dummy.IsLoaded()) return;
-    Dummy->flags = value ? eDiscoverMapMarker : eDummyDefault;
+    if (!DATA.IsLoaded()) return false;
+    return (DATA->challengeType == eDiscoverMapMarker);
     }
 
 bool CHALRecord::IsUseItem()
     {
-    if(!Dummy.IsLoaded()) return false;
-    return (Dummy->type == eUseItem);
-    }
-
-void CHALRecord::IsUseItem(bool value)
-    {
-    if(!Dummy.IsLoaded()) return;
-    Dummy->flags = value ? eUseItem : eDummyDefault;
+    if (!DATA.IsLoaded()) return false;
+    return (DATA->challengeType == eUseItem);
     }
 
 bool CHALRecord::IsGetItem()
     {
-    if(!Dummy.IsLoaded()) return false;
-    return (Dummy->type == eGetItem);
-    }
-
-void CHALRecord::IsGetItem(bool value)
-    {
-    if(!Dummy.IsLoaded()) return;
-    Dummy->flags = value ? eGetItem : eDummyDefault;
+    if (!DATA.IsLoaded()) return false;
+    return (DATA->challengeType == eGetItem);
     }
 
 bool CHALRecord::IsUseSkill()
     {
-    if(!Dummy.IsLoaded()) return false;
-    return (Dummy->type == eUseSkill);
-    }
-
-void CHALRecord::IsUseSkill(bool value)
-    {
-    if(!Dummy.IsLoaded()) return;
-    Dummy->flags = value ? eUseSkill : eDummyDefault;
+    if (!DATA.IsLoaded()) return false;
+    return (DATA->challengeType == eUseSkill);
     }
 
 bool CHALRecord::IsDoDamage()
     {
-    if(!Dummy.IsLoaded()) return false;
-    return (Dummy->type == eDoDamage);
-    }
-
-void CHALRecord::IsDoDamage(bool value)
-    {
-    if(!Dummy.IsLoaded()) return;
-    Dummy->flags = value ? eDoDamage : eDummyDefault;
+    if (!DATA.IsLoaded()) return false;
+    return (DATA->challengeType == eDoDamage);
     }
 
 bool CHALRecord::IsUseItemFromList()
     {
-    if(!Dummy.IsLoaded()) return false;
-    return (Dummy->type == eUseItemFromList);
-    }
-
-void CHALRecord::IsUseItemFromList(bool value)
-    {
-    if(!Dummy.IsLoaded()) return;
-    Dummy->flags = value ? eUseItemFromList : eDummyDefault;
+    if (!DATA.IsLoaded()) return false;
+    return (DATA->challengeType == eUseItemFromList);
     }
 
 bool CHALRecord::IsGetItemFromList()
     {
-    if(!Dummy.IsLoaded()) return false;
-    return (Dummy->type == eGetItemFromList);
-    }
-
-void CHALRecord::IsGetItemFromList(bool value)
-    {
-    if(!Dummy.IsLoaded()) return;
-    Dummy->flags = value ? eGetItemFromList : eDummyDefault;
+    if (!DATA.IsLoaded()) return false;
+    return (DATA->challengeType == eGetItemFromList);
     }
 
 bool CHALRecord::IsMiscStat()
     {
-    if(!Dummy.IsLoaded()) return false;
-    return (Dummy->type == eMiscStat);
+    if (!DATA.IsLoaded()) return false;
+    return (DATA->challengeType == eMiscStat);
     }
 
-void CHALRecord::IsMiscStat(bool value)
+bool CHALRecord::IsType(UINT8 Type)
     {
-    if(!Dummy.IsLoaded()) return;
-    Dummy->flags = value ? eMiscStat : eDummyDefault;
+    if (!DATA.IsLoaded()) return false;
+    return DATA->challengeType == Type;
     }
 
-bool CHALRecord::Is0Type(UINT8 Type)
+void CHALRecord::SetType(UINT8 Type)
     {
-    if(!Dummy.IsLoaded()) return false;
-    return Dummy->type == Type;
-    }
-
-void CHALRecord::Set0Type(UINT8 Type)
-    {
-    Dummy.Load();
-    Dummy->flags = Mask;
+    DATA.Load();
+    DATA->challengeType = Type;
     }
 
 UINT32 CHALRecord::GetType()
@@ -305,7 +233,7 @@ STRING CHALRecord::GetStrType()
     return "CHAL";
     }
 
-SINT32 CHALRecord::ParseRecord(unsigned char *buffer, const UINT32 &recSize)
+SINT32 CHALRecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk)
     {
     UINT32 subType = 0;
     UINT32 subSize = 0;
@@ -329,7 +257,7 @@ SINT32 CHALRecord::ParseRecord(unsigned char *buffer, const UINT32 &recSize)
         switch(subType)
             {
             case REV32(EDID):
-                EDID.Read(buffer, subSize);
+                EDID.Read(buffer, subSize, CompressedOnDisk);
                 break;
             case REV32(FULL):
                 FULL.Read(buffer, subSize, CompressedOnDisk);
@@ -404,7 +332,7 @@ bool CHALRecord::operator !=(const CHALRecord &other) const
     return !(*this == other);
     }
 
-bool CHALRecord::equals(const Record *other) const
+bool CHALRecord::equals(Record *other)
     {
     return *this == *(CHALRecord *)other;
     }
