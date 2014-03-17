@@ -91,9 +91,9 @@ bool CMNYRecord::VisitFormIDs(FormIDOp &op)
             op.Accept(MODL->Textures.MODS[x]->texture);
         }
     if(YNAM.IsLoaded())
-        op.Accept(YNAM->value);
+        op.Accept(YNAM.value);
     if(ZNAM.IsLoaded())
-        op.Accept(ZNAM->value);
+        op.Accept(ZNAM.value);
 
     return op.Stop();
     }
@@ -108,7 +108,7 @@ STRING CMNYRecord::GetStrType()
     return "CMNY";
     }
 
-SINT32 CMNYRecord::ParseRecord(unsigned char *buffer, const UINT32 &recSize)
+SINT32 CMNYRecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk)
     {
     UINT32 subType = 0;
     UINT32 subSize = 0;
@@ -132,7 +132,7 @@ SINT32 CMNYRecord::ParseRecord(unsigned char *buffer, const UINT32 &recSize)
         switch(subType)
             {
             case REV32(EDID):
-                EDID.Read(buffer, subSize);
+                EDID.Read(buffer, subSize, CompressedOnDisk);
                 break;
             case REV32(OBND):
                 OBND.Read(buffer, subSize);
@@ -142,7 +142,7 @@ SINT32 CMNYRecord::ParseRecord(unsigned char *buffer, const UINT32 &recSize)
                 break;
             case REV32(MODL):
                 MODL.Load();
-                MODL->MODL.Read(buffer, subSize);
+                MODL->MODL.Read(buffer, subSize, CompressedOnDisk);
                 break;
             case REV32(MODB):
                 MODL.Load();
@@ -150,7 +150,7 @@ SINT32 CMNYRecord::ParseRecord(unsigned char *buffer, const UINT32 &recSize)
                 break;
             case REV32(MODT):
                 MODL.Load();
-                MODL->MODT.Read(buffer, subSize);
+                MODL->MODT.Read(buffer, subSize, CompressedOnDisk);
                 break;
             case REV32(MODS):
                 MODL.Load();
@@ -238,7 +238,7 @@ bool CMNYRecord::operator !=(const CMNYRecord &other) const
     return !(*this == other);
     }
 
-bool CMNYRecord::equals(const Record *other) const
+bool CMNYRecord::equals(Record *other)
     {
     return *this == *(CMNYRecord *)other;
     }
