@@ -81,38 +81,38 @@ bool VTYPRecord::VisitFormIDs(FormIDOp &op)
 
 bool VTYPRecord::IsAllowDefaultDialog()
     {
-    if(!Dummy.IsLoaded()) return false;
-    return (Dummy->flags & fIsAllowDefaultDialog) != 0;
+    if (!DNAM.IsLoaded()) return false;
+    return (DNAM.value & fIsAllowDefaultDialog) != 0;
     }
 
 void VTYPRecord::IsAllowDefaultDialog(bool value)
     {
-    if(!Dummy.IsLoaded()) return;
-    Dummy->flags = value ? (Dummy->flags | fIsAllowDefaultDialog) : (Dummy->flags & ~fIsAllowDefaultDialog);
+    if (!DNAM.IsLoaded()) return;
+    SETBIT(DNAM.value, fIsAllowDefaultDialog, value);
     }
 
 bool VTYPRecord::IsFemale()
     {
-    if(!Dummy.IsLoaded()) return false;
-    return (Dummy->flags & fIsFemale) != 0;
+    if (!DNAM.IsLoaded()) return false;
+    return (DNAM.value & fIsFemale) != 0;
     }
 
 void VTYPRecord::IsFemale(bool value)
     {
-    if(!Dummy.IsLoaded()) return;
-    Dummy->flags = value ? (Dummy->flags | fIsFemale) : (Dummy->flags & ~fIsFemale);
+    if (!DNAM.IsLoaded()) return;
+    SETBIT(DNAM.value, fIsFemale, value);
     }
 
 bool VTYPRecord::IsFlagMask(UINT8 Mask, bool Exact)
     {
-    if(!Dummy.IsLoaded()) return false;
-    return Exact ? ((Dummy->flags & Mask) == Mask) : ((Dummy->flags & Mask) != 0);
+    if (!DNAM.IsLoaded()) return false;
+    return Exact ? ((DNAM.value & Mask) == Mask) : ((DNAM.value & Mask) != 0);
     }
 
 void VTYPRecord::SetFlagMask(UINT8 Mask)
     {
-    Dummy.Load();
-    Dummy->flags = Mask;
+    DNAM.Load();
+    DNAM.value = Mask;
     }
 
 UINT32 VTYPRecord::GetType()
@@ -125,7 +125,7 @@ STRING VTYPRecord::GetStrType()
     return "VTYP";
     }
 
-SINT32 VTYPRecord::ParseRecord(unsigned char *buffer, const UINT32 &recSize)
+SINT32 VTYPRecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk)
     {
     UINT32 subType = 0;
     UINT32 subSize = 0;
@@ -149,7 +149,7 @@ SINT32 VTYPRecord::ParseRecord(unsigned char *buffer, const UINT32 &recSize)
         switch(subType)
             {
             case REV32(EDID):
-                EDID.Read(buffer, subSize);
+                EDID.Read(buffer, subSize, CompressedOnDisk);
                 break;
             case REV32(DNAM):
                 DNAM.Read(buffer, subSize);
@@ -194,7 +194,7 @@ bool VTYPRecord::operator !=(const VTYPRecord &other) const
     return !(*this == other);
     }
 
-bool VTYPRecord::equals(const Record *other) const
+bool VTYPRecord::equals(Record *other)
     {
     return *this == *(VTYPRecord *)other;
     }
