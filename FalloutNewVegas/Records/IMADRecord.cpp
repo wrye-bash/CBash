@@ -134,9 +134,9 @@ bool IMADRecord::VisitFormIDs(FormIDOp &op)
         return false;
 
     if(RDSD.IsLoaded())
-        op.Accept(RDSD->value);
+        op.Accept(RDSD.value);
     if(RDSI.IsLoaded())
-        op.Accept(RDSI->value);
+        op.Accept(RDSI.value);
 
     return op.Stop();
     }
@@ -151,7 +151,7 @@ STRING IMADRecord::GetStrType()
     return "IMAD";
     }
 
-SINT32 IMADRecord::ParseRecord(unsigned char *buffer, const UINT32 &recSize)
+SINT32 IMADRecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk)
     {
     UINT32 subType = 0;
     UINT32 subSize = 0;
@@ -175,175 +175,175 @@ SINT32 IMADRecord::ParseRecord(unsigned char *buffer, const UINT32 &recSize)
         switch(subType)
             {
             case REV32(EDID):
-                EDID.Read(buffer, subSize);
+                EDID.Read(buffer, subSize, CompressedOnDisk);
                 break;
             case REV32(DNAM):
-                DNAM.Read(buffer, subSize);
+                DNAM.Read(buffer, subSize, CompressedOnDisk);
                 break;
             case REV32(BNAM):
-                BNAM.Read(buffer, subSize);
+                BNAM.Read(buffer, subSize, CompressedOnDisk);
                 break;
             case REV32(VNAM):
-                VNAM.Read(buffer, subSize);
+                VNAM.Read(buffer, subSize, CompressedOnDisk);
                 break;
             case REV32(TNAM):
-                TNAM.Read(buffer, subSize);
+                TNAM.Read(buffer, subSize, CompressedOnDisk);
                 break;
             case REV32(NAM3):
-                NAM3.Read(buffer, subSize);
+                NAM3.Read(buffer, subSize, CompressedOnDisk);
                 break;
             case REV32(RNAM):
-                RNAM.Read(buffer, subSize);
+                RNAM.Read(buffer, subSize, CompressedOnDisk);
                 break;
             case REV32(SNAM):
-                SNAM.Read(buffer, subSize);
+                SNAM.Read(buffer, subSize, CompressedOnDisk);
                 break;
             case REV32(UNAM):
-                UNAM.Read(buffer, subSize);
+                UNAM.Read(buffer, subSize, CompressedOnDisk);
                 break;
             case REV32(NAM1):
-                NAM1.Read(buffer, subSize);
+                NAM1.Read(buffer, subSize, CompressedOnDisk);
                 break;
             case REV32(NAM2):
-                NAM2.Read(buffer, subSize);
+                NAM2.Read(buffer, subSize, CompressedOnDisk);
                 break;
             case REV32(WNAM):
-                WNAM.Read(buffer, subSize);
+                WNAM.Read(buffer, subSize, CompressedOnDisk);
                 break;
             case REV32(XNAM):
-                XNAM.Read(buffer, subSize);
+                XNAM.Read(buffer, subSize, CompressedOnDisk);
                 break;
             case REV32(YNAM):
-                YNAM.Read(buffer, subSize);
+                YNAM.Read(buffer, subSize, CompressedOnDisk);
                 break;
             case REV32(NAM4):
-                NAM4.Read(buffer, subSize);
+                NAM4.Read(buffer, subSize, CompressedOnDisk);
                 break;
             case REV32(_00_):
-                _00_.Read(buffer, subSize);
+                _00_.Read(buffer, subSize, CompressedOnDisk);
                 break;
             case REV32(_40_):
-                _40_.Read(buffer, subSize);
+                _40_.Read(buffer, subSize, CompressedOnDisk);
                 break;
             case REV32(_01_):
-                _01_.Read(buffer, subSize);
+                _01_.Read(buffer, subSize, CompressedOnDisk);
                 break;
             case REV32(_41_):
-                _41_.Read(buffer, subSize);
+                _41_.Read(buffer, subSize, CompressedOnDisk);
                 break;
             case REV32(_02_):
-                _02_.Read(buffer, subSize);
+                _02_.Read(buffer, subSize, CompressedOnDisk);
                 break;
             case REV32(_42_):
-                _42_.Read(buffer, subSize);
+                _42_.Read(buffer, subSize, CompressedOnDisk);
                 break;
             case REV32(_03_):
-                _03_.Read(buffer, subSize);
+                _03_.Read(buffer, subSize, CompressedOnDisk);
                 break;
             case REV32(_43_):
-                _43_.Read(buffer, subSize);
+                _43_.Read(buffer, subSize, CompressedOnDisk);
                 break;
             case REV32(_04_):
-                _04_.Read(buffer, subSize);
+                _04_.Read(buffer, subSize, CompressedOnDisk);
                 break;
             case REV32(_44_):
-                _44_.Read(buffer, subSize);
+                _44_.Read(buffer, subSize, CompressedOnDisk);
                 break;
             case REV32(_05_):
-                _05_.Read(buffer, subSize);
+                _05_.Read(buffer, subSize, CompressedOnDisk);
                 break;
             case REV32(_45_):
-                _45_.Read(buffer, subSize);
+                _45_.Read(buffer, subSize, CompressedOnDisk);
                 break;
             case REV32(_06_):
-                _06_.Read(buffer, subSize);
+                _06_.Read(buffer, subSize, CompressedOnDisk);
                 break;
             case REV32(_46_):
-                _46_.Read(buffer, subSize);
+                _46_.Read(buffer, subSize, CompressedOnDisk);
                 break;
             case REV32(_07_):
-                _07_.Read(buffer, subSize);
+                _07_.Read(buffer, subSize, CompressedOnDisk);
                 break;
             case REV32(_47_):
-                _47_.Read(buffer, subSize);
+                _47_.Read(buffer, subSize, CompressedOnDisk);
                 break;
             case REV32(_08_):
-                _08_.Read(buffer, subSize);
+                _08_.Read(buffer, subSize, CompressedOnDisk);
                 break;
             case REV32(_48_):
-                _48_.Read(buffer, subSize);
+                _48_.Read(buffer, subSize, CompressedOnDisk);
                 break;
             case REV32(_09_):
-                _09_.Read(buffer, subSize);
+                _09_.Read(buffer, subSize, CompressedOnDisk);
                 break;
             case REV32(_49_):
-                _49_.Read(buffer, subSize);
+                _49_.Read(buffer, subSize, CompressedOnDisk);
                 break;
             case REV32(_0A_):
-                _0A_.Read(buffer, subSize);
+                _0A_.Read(buffer, subSize, CompressedOnDisk);
                 break;
             case REV32(_4A_):
-                _4A_.Read(buffer, subSize);
+                _4A_.Read(buffer, subSize, CompressedOnDisk);
                 break;
             case REV32(_0B_):
-                _0B_.Read(buffer, subSize);
+                _0B_.Read(buffer, subSize, CompressedOnDisk);
                 break;
             case REV32(_4B_):
-                _4B_.Read(buffer, subSize);
+                _4B_.Read(buffer, subSize, CompressedOnDisk);
                 break;
             case REV32(_0C_):
-                _0C_.Read(buffer, subSize);
+                _0C_.Read(buffer, subSize, CompressedOnDisk);
                 break;
             case REV32(_4C_):
-                _4C_.Read(buffer, subSize);
+                _4C_.Read(buffer, subSize, CompressedOnDisk);
                 break;
             case REV32(_0D_):
-                _0D_.Read(buffer, subSize);
+                _0D_.Read(buffer, subSize, CompressedOnDisk);
                 break;
             case REV32(_4D_):
-                _4D_.Read(buffer, subSize);
+                _4D_.Read(buffer, subSize, CompressedOnDisk);
                 break;
             case REV32(_0E_):
-                _0E_.Read(buffer, subSize);
+                _0E_.Read(buffer, subSize, CompressedOnDisk);
                 break;
             case REV32(_4E_):
-                _4E_.Read(buffer, subSize);
+                _4E_.Read(buffer, subSize, CompressedOnDisk);
                 break;
             case REV32(_0F_):
-                _0F_.Read(buffer, subSize);
+                _0F_.Read(buffer, subSize, CompressedOnDisk);
                 break;
             case REV32(_4F_):
-                _4F_.Read(buffer, subSize);
+                _4F_.Read(buffer, subSize, CompressedOnDisk);
                 break;
             case REV32(_10_):
-                _10_.Read(buffer, subSize);
+                _10_.Read(buffer, subSize, CompressedOnDisk);
                 break;
             case REV32(_50_):
-                _50_.Read(buffer, subSize);
+                _50_.Read(buffer, subSize, CompressedOnDisk);
                 break;
             case REV32(_11_):
-                _11_.Read(buffer, subSize);
+                _11_.Read(buffer, subSize, CompressedOnDisk);
                 break;
             case REV32(_51_):
-                _51_.Read(buffer, subSize);
+                _51_.Read(buffer, subSize, CompressedOnDisk);
                 break;
             case REV32(_12_):
-                _12_.Read(buffer, subSize);
+                _12_.Read(buffer, subSize, CompressedOnDisk);
                 break;
             case REV32(_52_):
-                _52_.Read(buffer, subSize);
+                _52_.Read(buffer, subSize, CompressedOnDisk);
                 break;
             case REV32(_13_):
-                _13_.Read(buffer, subSize);
+                _13_.Read(buffer, subSize, CompressedOnDisk);
                 break;
             case REV32(_53_):
-                _53_.Read(buffer, subSize);
+                _53_.Read(buffer, subSize, CompressedOnDisk);
                 break;
             case REV32(_14_):
-                _14_.Read(buffer, subSize);
+                _14_.Read(buffer, subSize, CompressedOnDisk);
                 break;
             case REV32(_54_):
-                _54_.Read(buffer, subSize);
+                _54_.Read(buffer, subSize, CompressedOnDisk);
                 break;
             case REV32(RDSD):
                 RDSD.Read(buffer, subSize);
@@ -562,7 +562,7 @@ bool IMADRecord::operator !=(const IMADRecord &other) const
     return !(*this == other);
     }
 
-bool IMADRecord::equals(const Record *other) const
+bool IMADRecord::equals(Record *other)
     {
     return *this == *(IMADRecord *)other;
     }
