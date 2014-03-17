@@ -309,34 +309,25 @@ class PERKRecord : public FNVRecord //Perk
         bool   VisitFormIDs(FormIDOp &op);
 
         bool   IsNotTrait();
-        void   IsNotTrait(bool value);
         bool   IsTrait();
-        void   IsTrait(bool value);
         bool   IsTraitType(UINT8 Type);
         void   SetTraitType(UINT8 Type);
 
         bool   IsNotPlayable();
-        void   IsNotPlayable(bool value);
         bool   IsPlayable();
-        void   IsPlayable(bool value);
         bool   IsPlayableType(UINT8 Type);
         void   SetPlayableType(UINT8 Type);
 
         bool   IsNotHidden();
-        void   IsNotHidden(bool value);
         bool   IsHidden();
-        void   IsHidden(bool value);
         bool   IsHiddenType(UINT8 Type);
         void   SetHiddenType(UINT8 Type);
 
-        bool   IsQuestStage();
-        void   IsQuestStage(bool value);
-        bool   IsAbility();
-        void   IsAbility(bool value);
-        bool   IsEntryPoint();
-        void   IsEntryPoint(bool value);
-        bool   IsType(UINT8 Type);
-        void   SetType(UINT8 Type);
+        //bool   IsQuestStage();
+        //bool   IsAbility();
+        //bool   IsEntryPoint();
+        //bool   IsType(UINT8 Type);
+        //void   SetType(UINT8 Type);
 
         UINT32 GetFieldAttribute(DEFAULTED_FIELD_IDENTIFIERS, UINT32 WhichAttribute=0);
         void * GetField(DEFAULTED_FIELD_IDENTIFIERS, void **FieldValues=NULL);
@@ -346,12 +337,12 @@ class PERKRecord : public FNVRecord //Perk
         UINT32 GetType();
         STRING GetStrType();
 
-        SINT32 ParseRecord(unsigned char *buffer, const UINT32 &recSize, bool CompressedOnDisk);
+        SINT32 ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk=false);
         SINT32 Unload();
         SINT32 WriteRecord(FileWriter &writer);
 
         bool operator ==(const PERKRecord &other) const;
         bool operator !=(const PERKRecord &other) const;
-        bool equals(Record *other, RecordOp &read_self, RecordOp &read_other, EqualityOptions &options);
+        bool equals(Record *other);
     };
 }
