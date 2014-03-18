@@ -90,7 +90,7 @@ UINT32 RCPERecord::GetFieldAttribute(FIELD_IDENTIFIERS, UINT32 WhichAttribute)
                 }
             return UNKNOWN_FIELD;
         case 10: //ctda Conditions
-            return UNPARSED_FIELD;
+            return UNKNOWN_FIELD; // UNPARSED_FIELD;
         case 11: //ctda Conditions
             return UINT32_FIELD;
         case 12: //ctda_p Conditions
@@ -118,9 +118,9 @@ UINT32 RCPERecord::GetFieldAttribute(FIELD_IDENTIFIERS, UINT32 WhichAttribute)
         case 14: //ctda Conditions
             return UINT32_FIELD;
         case 15: //ctda Conditions
-            return UNPARSED_FIELD;
+            return UNKNOWN_FIELD; // UNPARSED_FIELD;
         case 16: //data DATA ,, Struct
-            return UNPARSED_FIELD;
+            return UNKNOWN_FIELD; // UNPARSED_FIELD;
         case 17: //data DATA ,, Struct
             return UINT32_FIELD;
         case 18: //data DATA ,, Struct
@@ -160,38 +160,47 @@ void * RCPERecord::GetField(FIELD_IDENTIFIERS, void **FieldValues)
         case 7: //full
             return FULL.value;
         case 8: //ctda Conditions
-            return CTDAs.IsLoaded() ? &CTDAs->value8 : NULL;
+            return NULL;
+            //return CTDAs.IsLoaded() ? &CTDAs->value8 : NULL;
         case 9: //ctda_p Conditions
-            *FieldValues = CTDAs.IsLoaded() ? &CTDAs->value9[0] : NULL;
+            //*FieldValues = CTDAs.IsLoaded() ? &CTDAs->value9[0] : NULL;
             return NULL;
         case 10: //ctda Conditions
-            return UNPARSEDGET_FIELD10;
+            return NULL; // UNPARSED
         case 11: //ctda Conditions
-            return CTDAs.IsLoaded() ? &CTDAs->value11 : NULL;
+            return NULL;
+            //return CTDAs.IsLoaded() ? &CTDAs->value11 : NULL;
         case 12: //ctda_p Conditions
-            *FieldValues = CTDAs.IsLoaded() ? &CTDAs->value12[0] : NULL;
+            //*FieldValues = CTDAs.IsLoaded() ? &CTDAs->value12[0] : NULL;
             return NULL;
         case 13: //ctda_p Conditions
-            *FieldValues = CTDAs.IsLoaded() ? &CTDAs->value13[0] : NULL;
+            //*FieldValues = CTDAs.IsLoaded() ? &CTDAs->value13[0] : NULL;
             return NULL;
         case 14: //ctda Conditions
-            return CTDAs.IsLoaded() ? &CTDAs->value14 : NULL;
+            return NULL;
+            //return CTDAs.IsLoaded() ? &CTDAs->value14 : NULL;
         case 15: //ctda Conditions
-            return UNPARSEDGET_FIELD15;
+            return NULL; // UNPARSEDGET_FIELD15;
         case 16: //data DATA ,, Struct
-            return UNPARSEDGET_FIELD16;
+            return NULL; // UNPARSEDGET_FIELD16;
         case 17: //data DATA ,, Struct
-            return DATA.IsLoaded() ? &DATA->value17 : NULL;
+            return NULL;
+            //return DATA.IsLoaded() ? &DATA->value17 : NULL;
         case 18: //data DATA ,, Struct
-            return DATA.IsLoaded() ? &DATA->value18 : NULL;
+            return NULL;
+            //return DATA.IsLoaded() ? &DATA->value18 : NULL;
         case 19: //data DATA ,, Struct
-            return DATA.IsLoaded() ? &DATA->value19 : NULL;
+            return NULL;
+            //return DATA.IsLoaded() ? &DATA->value19 : NULL;
         case 20: //rcil Item
-            return RCIL.IsLoaded() ? &RCIL->value20 : NULL;
+            return NULL;
+            //return RCIL.IsLoaded() ? &RCIL->value20 : NULL;
         case 21: //rcqy Quantity
-            return RCQY.IsLoaded() ? &RCQY->value21 : NULL;
+            return NULL;
+            //return RCQY.IsLoaded() ? &RCQY->value21 : NULL;
         case 22: //rcod Item
-            return RCOD.IsLoaded() ? &RCOD->value22 : NULL;
+            return NULL;
+            //return RCOD.IsLoaded() ? &RCOD->value22 : NULL;
         default:
             return NULL;
         }
@@ -229,72 +238,72 @@ bool RCPERecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             FULL.Copy((STRING)FieldValue);
             break;
         case 8: //ctda Conditions
-            CTDAs.Load();
-            CTDAs->value8 = *(UINT8 *)FieldValue;
+            //CTDAs.Load();
+            //CTDAs->value8 = *(UINT8 *)FieldValue;
             break;
         case 9: //ctda_p Conditions
             if(ArraySize != 3)
                 break;
-            CTDAs.Load();
-            CTDAs->value9[0] = ((UINT8ARRAY)FieldValue)[0];
-            CTDAs->value9[1] = ((UINT8ARRAY)FieldValue)[1];
-            CTDAs->value9[2] = ((UINT8ARRAY)FieldValue)[2];
+            //CTDAs.Load();
+            //CTDAs->value9[0] = ((UINT8ARRAY)FieldValue)[0];
+            //CTDAs->value9[1] = ((UINT8ARRAY)FieldValue)[1];
+            //CTDAs->value9[2] = ((UINT8ARRAY)FieldValue)[2];
             break;
         case 10: //ctda Conditions
-            return UNPARSEDGET_FIELD10;
+            //return UNPARSEDGET_FIELD10;
         case 11: //ctda Conditions
-            CTDAs.Load();
-            CTDAs->value11 = *(UINT32 *)FieldValue;
+            //CTDAs.Load();
+            //CTDAs->value11 = *(UINT32 *)FieldValue;
             break;
         case 12: //ctda_p Conditions
             if(ArraySize != 4)
                 break;
-            CTDAs.Load();
-            CTDAs->value12[0] = ((UINT8ARRAY)FieldValue)[0];
-            CTDAs->value12[1] = ((UINT8ARRAY)FieldValue)[1];
-            CTDAs->value12[2] = ((UINT8ARRAY)FieldValue)[2];
-            CTDAs->value12[3] = ((UINT8ARRAY)FieldValue)[3];
+            //CTDAs.Load();
+            //CTDAs->value12[0] = ((UINT8ARRAY)FieldValue)[0];
+            //CTDAs->value12[1] = ((UINT8ARRAY)FieldValue)[1];
+            //CTDAs->value12[2] = ((UINT8ARRAY)FieldValue)[2];
+            //CTDAs->value12[3] = ((UINT8ARRAY)FieldValue)[3];
             break;
         case 13: //ctda_p Conditions
             if(ArraySize != 4)
                 break;
-            CTDAs.Load();
-            CTDAs->value13[0] = ((UINT8ARRAY)FieldValue)[0];
-            CTDAs->value13[1] = ((UINT8ARRAY)FieldValue)[1];
-            CTDAs->value13[2] = ((UINT8ARRAY)FieldValue)[2];
-            CTDAs->value13[3] = ((UINT8ARRAY)FieldValue)[3];
+            //CTDAs.Load();
+            //CTDAs->value13[0] = ((UINT8ARRAY)FieldValue)[0];
+            //CTDAs->value13[1] = ((UINT8ARRAY)FieldValue)[1];
+            //CTDAs->value13[2] = ((UINT8ARRAY)FieldValue)[2];
+            //CTDAs->value13[3] = ((UINT8ARRAY)FieldValue)[3];
             break;
         case 14: //ctda Conditions
-            CTDAs.Load();
-            CTDAs->value14 = *(UINT32 *)FieldValue;
+            //CTDAs.Load();
+            //CTDAs->value14 = *(UINT32 *)FieldValue;
             break;
         case 15: //ctda Conditions
-            return UNPARSEDGET_FIELD15;
+            //return UNPARSEDGET_FIELD15;
         case 16: //data DATA ,, Struct
-            return UNPARSEDGET_FIELD16;
+            //return UNPARSEDGET_FIELD16;
         case 17: //data DATA ,, Struct
-            DATA.Load();
-            DATA->value17 = *(UINT32 *)FieldValue;
+            //DATA.Load();
+            //DATA->value17 = *(UINT32 *)FieldValue;
             break;
         case 18: //data DATA ,, Struct
-            DATA.Load();
-            DATA->value18 = *(FORMID *)FieldValue;
+            //DATA.Load();
+            //DATA->value18 = *(FORMID *)FieldValue;
             return true;
         case 19: //data DATA ,, Struct
-            DATA.Load();
-            DATA->value19 = *(FORMID *)FieldValue;
+            //DATA.Load();
+            //DATA->value19 = *(FORMID *)FieldValue;
             return true;
         case 20: //rcil Item
-            RCIL.Load();
-            RCIL->value20 = *(FORMID *)FieldValue;
+            //RCIL.Load();
+            //RCIL->value20 = *(FORMID *)FieldValue;
             return true;
         case 21: //rcqy Quantity
-            RCQY.Load();
-            RCQY->value21 = *(UINT32 *)FieldValue;
+            //RCQY.Load();
+            //RCQY->value21 = *(UINT32 *)FieldValue;
             break;
         case 22: //rcod Item
-            RCOD.Load();
-            RCOD->value22 = *(FORMID *)FieldValue;
+            //RCOD.Load();
+            //RCOD->value22 = *(FORMID *)FieldValue;
             return true;
         default:
             break;
@@ -326,46 +335,46 @@ void RCPERecord::DeleteField(FIELD_IDENTIFIERS)
             FULL.Unload();
             return;
         case 8: //ctda Conditions
-            CTDAs.Unload();
+            //CTDAs.Unload();
             return;
         case 9: //ctda_p Conditions
-            CTDAs.Unload();
+            //CTDAs.Unload();
             return;
         case 10: //ctda Conditions
-            return UNPARSEDDEL_FIELD10;
+            //return UNPARSEDDEL_FIELD10;
         case 11: //ctda Conditions
-            CTDAs.Unload();
+            //CTDAs.Unload();
             return;
         case 12: //ctda_p Conditions
-            CTDAs.Unload();
+            //CTDAs.Unload();
             return;
         case 13: //ctda_p Conditions
-            CTDAs.Unload();
+            //CTDAs.Unload();
             return;
         case 14: //ctda Conditions
-            CTDAs.Unload();
+            //CTDAs.Unload();
             return;
         case 15: //ctda Conditions
-            return UNPARSEDDEL_FIELD15;
+            //return UNPARSEDDEL_FIELD15;
         case 16: //data DATA ,, Struct
-            return UNPARSEDDEL_FIELD16;
+            //return UNPARSEDDEL_FIELD16;
         case 17: //data DATA ,, Struct
-            DATA.Unload();
+            //DATA.Unload();
             return;
         case 18: //data DATA ,, Struct
-            DATA.Unload();
+            //DATA.Unload();
             return;
         case 19: //data DATA ,, Struct
-            DATA.Unload();
+            //DATA.Unload();
             return;
         case 20: //rcil Item
-            RCIL.Unload();
+            //RCIL.Unload();
             return;
         case 21: //rcqy Quantity
-            RCQY.Unload();
+            //RCQY.Unload();
             return;
         case 22: //rcod Item
-            RCOD.Unload();
+            //RCOD.Unload();
             return;
         default:
             return;
