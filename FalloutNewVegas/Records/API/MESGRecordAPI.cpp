@@ -100,7 +100,7 @@ UINT32 MESGRecord::GetFieldAttribute(FIELD_IDENTIFIERS, UINT32 WhichAttribute)
                 }
             return UNKNOWN_FIELD;
         case 15: //ctda Conditions
-            return UNPARSED_FIELD;
+            return UNKNOWN_FIELD; // UNPARSED_FIELD;
         case 16: //ctda Conditions
             return UINT32_FIELD;
         case 17: //ctda_p Conditions
@@ -128,7 +128,7 @@ UINT32 MESGRecord::GetFieldAttribute(FIELD_IDENTIFIERS, UINT32 WhichAttribute)
         case 19: //ctda Conditions
             return UINT32_FIELD;
         case 20: //ctda Conditions
-            return UNPARSED_FIELD;
+            return UNKNOWN_FIELD; // UNPARSED_FIELD;
         default:
             return UNKNOWN_FIELD;
         }
@@ -158,32 +158,36 @@ void * MESGRecord::GetField(FIELD_IDENTIFIERS, void **FieldValues)
         case 8: //full
             return FULL.value;
         case 9: //inam Icon
-            return INAM.IsLoaded() ? &INAM->value9 : NULL;
+            return INAM.IsLoaded() ? &INAM.value : NULL;
         case 10: //dnam Flags
-            return DNAM.IsLoaded() ? &DNAM->value10 : NULL;
+            return DNAM.IsLoaded() ? &DNAM.value : NULL;
         case 11: //tnam Display Time
-            return TNAM.IsLoaded() ? &TNAM->value11 : NULL;
+            return TNAM.IsLoaded() ? &TNAM.value : NULL;
         case 12: //itxt Button Text
-            return ITXT.value;
+            return NULL;
+            //return ITXT.value;
         case 13: //ctda Conditions
-            return CTDAs.IsLoaded() ? &CTDAs->value13 : NULL;
+            return NULL;
+            //return CTDAs.IsLoaded() ? &CTDAs->value13 : NULL;
         case 14: //ctda_p Conditions
-            *FieldValues = CTDAs.IsLoaded() ? &CTDAs->value14[0] : NULL;
+            //*FieldValues = CTDAs.IsLoaded() ? &CTDAs->value14[0] : NULL;
             return NULL;
         case 15: //ctda Conditions
-            return UNPARSEDGET_FIELD15;
+            return NULL; // UNPARSEDGET_FIELD15;
         case 16: //ctda Conditions
-            return CTDAs.IsLoaded() ? &CTDAs->value16 : NULL;
+            return NULL;
+            //return CTDAs.IsLoaded() ? &CTDAs->value16 : NULL;
         case 17: //ctda_p Conditions
-            *FieldValues = CTDAs.IsLoaded() ? &CTDAs->value17[0] : NULL;
+            //*FieldValues = CTDAs.IsLoaded() ? &CTDAs->value17[0] : NULL;
             return NULL;
         case 18: //ctda_p Conditions
-            *FieldValues = CTDAs.IsLoaded() ? &CTDAs->value18[0] : NULL;
+            //*FieldValues = CTDAs.IsLoaded() ? &CTDAs->value18[0] : NULL;
             return NULL;
         case 19: //ctda Conditions
-            return CTDAs.IsLoaded() ? &CTDAs->value19 : NULL;
+            return NULL;
+            //return CTDAs.IsLoaded() ? &CTDAs->value19 : NULL;
         case 20: //ctda Conditions
-            return UNPARSEDGET_FIELD20;
+            return NULL; // UNPARSEDGET_FIELD20;
         default:
             return NULL;
         }
@@ -225,61 +229,61 @@ bool MESGRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             break;
         case 9: //inam Icon
             INAM.Load();
-            INAM->value9 = *(FORMID *)FieldValue;
+            INAM.value = *(FORMID *)FieldValue;
             return true;
         case 10: //dnam Flags
             DNAM.Load();
-            DNAM->value10 = *(UINT32 *)FieldValue;
+            DNAM.value = *(UINT32 *)FieldValue;
             break;
         case 11: //tnam Display Time
             TNAM.Load();
-            TNAM->value11 = *(UINT32 *)FieldValue;
+            TNAM.value = *(UINT32 *)FieldValue;
             break;
         case 12: //itxt Button Text
-            ITXT.Copy((STRING)FieldValue);
+            //ITXT.Copy((STRING)FieldValue);
             break;
         case 13: //ctda Conditions
-            CTDAs.Load();
-            CTDAs->value13 = *(UINT8 *)FieldValue;
+            //CTDAs.Load();
+            //CTDAs->value13 = *(UINT8 *)FieldValue;
             break;
         case 14: //ctda_p Conditions
             if(ArraySize != 3)
                 break;
-            CTDAs.Load();
-            CTDAs->value14[0] = ((UINT8ARRAY)FieldValue)[0];
-            CTDAs->value14[1] = ((UINT8ARRAY)FieldValue)[1];
-            CTDAs->value14[2] = ((UINT8ARRAY)FieldValue)[2];
+            //CTDAs.Load();
+            //CTDAs->value14[0] = ((UINT8ARRAY)FieldValue)[0];
+            //CTDAs->value14[1] = ((UINT8ARRAY)FieldValue)[1];
+            //CTDAs->value14[2] = ((UINT8ARRAY)FieldValue)[2];
             break;
         case 15: //ctda Conditions
-            return UNPARSEDGET_FIELD15;
+            //return UNPARSEDGET_FIELD15;
         case 16: //ctda Conditions
-            CTDAs.Load();
-            CTDAs->value16 = *(UINT32 *)FieldValue;
+            //CTDAs.Load();
+            //CTDAs->value16 = *(UINT32 *)FieldValue;
             break;
         case 17: //ctda_p Conditions
             if(ArraySize != 4)
                 break;
-            CTDAs.Load();
-            CTDAs->value17[0] = ((UINT8ARRAY)FieldValue)[0];
-            CTDAs->value17[1] = ((UINT8ARRAY)FieldValue)[1];
-            CTDAs->value17[2] = ((UINT8ARRAY)FieldValue)[2];
-            CTDAs->value17[3] = ((UINT8ARRAY)FieldValue)[3];
+            //CTDAs.Load();
+            //CTDAs->value17[0] = ((UINT8ARRAY)FieldValue)[0];
+            //CTDAs->value17[1] = ((UINT8ARRAY)FieldValue)[1];
+            //CTDAs->value17[2] = ((UINT8ARRAY)FieldValue)[2];
+            //CTDAs->value17[3] = ((UINT8ARRAY)FieldValue)[3];
             break;
         case 18: //ctda_p Conditions
             if(ArraySize != 4)
                 break;
-            CTDAs.Load();
-            CTDAs->value18[0] = ((UINT8ARRAY)FieldValue)[0];
-            CTDAs->value18[1] = ((UINT8ARRAY)FieldValue)[1];
-            CTDAs->value18[2] = ((UINT8ARRAY)FieldValue)[2];
-            CTDAs->value18[3] = ((UINT8ARRAY)FieldValue)[3];
+            //CTDAs.Load();
+            //CTDAs->value18[0] = ((UINT8ARRAY)FieldValue)[0];
+            //CTDAs->value18[1] = ((UINT8ARRAY)FieldValue)[1];
+            //CTDAs->value18[2] = ((UINT8ARRAY)FieldValue)[2];
+            //CTDAs->value18[3] = ((UINT8ARRAY)FieldValue)[3];
             break;
         case 19: //ctda Conditions
-            CTDAs.Load();
-            CTDAs->value19 = *(UINT32 *)FieldValue;
+            //CTDAs.Load();
+            //CTDAs->value19 = *(UINT32 *)FieldValue;
             break;
         case 20: //ctda Conditions
-            return UNPARSEDGET_FIELD20;
+            //return UNPARSEDGET_FIELD20;
         default:
             break;
         }
@@ -322,30 +326,30 @@ void MESGRecord::DeleteField(FIELD_IDENTIFIERS)
             TNAM.Unload();
             return;
         case 12: //itxt Button Text
-            ITXT.Unload();
+            //ITXT.Unload();
             return;
         case 13: //ctda Conditions
-            CTDAs.Unload();
+            //CTDAs.Unload();
             return;
         case 14: //ctda_p Conditions
-            CTDAs.Unload();
+            //CTDAs.Unload();
             return;
         case 15: //ctda Conditions
-            return UNPARSEDDEL_FIELD15;
+            //return UNPARSEDDEL_FIELD15;
         case 16: //ctda Conditions
-            CTDAs.Unload();
+            //CTDAs.Unload();
             return;
         case 17: //ctda_p Conditions
-            CTDAs.Unload();
+            //CTDAs.Unload();
             return;
         case 18: //ctda_p Conditions
-            CTDAs.Unload();
+            //CTDAs.Unload();
             return;
         case 19: //ctda Conditions
-            CTDAs.Unload();
+            //CTDAs.Unload();
             return;
         case 20: //ctda Conditions
-            return UNPARSEDDEL_FIELD20;
+            //return UNPARSEDDEL_FIELD20;
         default:
             return;
         }
