@@ -113,7 +113,7 @@ void * REPURecord::GetField(FIELD_IDENTIFIERS, void **FieldValues)
         case 9: //smallIconPath
             return MICO.value;
         case 10: //data Value
-            return DATA.IsLoaded() ? &DATA->value10 : NULL;
+            return DATA.IsLoaded() ? &DATA.value : NULL;
         default:
             return NULL;
         }
@@ -158,7 +158,7 @@ bool REPURecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             break;
         case 10: //data Value
             DATA.Load();
-            DATA->value10 = *(FLOAT32 *)FieldValue;
+            DATA.value = *(FLOAT32 *)FieldValue;
             break;
         default:
             break;
