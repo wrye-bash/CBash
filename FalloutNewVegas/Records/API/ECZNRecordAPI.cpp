@@ -117,15 +117,15 @@ void * ECZNRecord::GetField(FIELD_IDENTIFIERS, void **FieldValues)
             *FieldValues = &versionControl2[0];
             return NULL;
         case 7: //data DATA ,, Struct
-            return DATA.IsLoaded() ? &DATA->value7 : NULL;
+            return DATA.IsLoaded() ? &DATA->owner : NULL;
         case 8: //data DATA ,, Struct
-            return DATA.IsLoaded() ? &DATA->value8 : NULL;
+            return DATA.IsLoaded() ? &DATA->rank : NULL;
         case 9: //data DATA ,, Struct
-            return DATA.IsLoaded() ? &DATA->value9 : NULL;
+            return DATA.IsLoaded() ? &DATA->minLevel : NULL;
         case 10: //data DATA ,, Struct
-            return DATA.IsLoaded() ? &DATA->value10 : NULL;
+            return DATA.IsLoaded() ? &DATA->flags : NULL;
         case 11: //data_p DATA ,, Struct
-            *FieldValues = DATA.IsLoaded() ? &DATA->value11[0] : NULL;
+            *FieldValues = DATA.IsLoaded() ? &DATA->unused1 : NULL;
             return NULL;
         default:
             return NULL;
@@ -162,25 +162,25 @@ bool ECZNRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             break;
         case 7: //data DATA ,, Struct
             DATA.Load();
-            DATA->value7 = *(FORMID *)FieldValue;
+            DATA->owner = *(FORMID *)FieldValue;
             return true;
         case 8: //data DATA ,, Struct
             DATA.Load();
-            DATA->value8 = *(SINT8 *)FieldValue;
+            DATA->rank = *(SINT8 *)FieldValue;
             break;
         case 9: //data DATA ,, Struct
             DATA.Load();
-            DATA->value9 = *(SINT8 *)FieldValue;
+            DATA->minLevel = *(SINT8 *)FieldValue;
             break;
         case 10: //data DATA ,, Struct
             DATA.Load();
-            DATA->value10 = *(UINT8 *)FieldValue;
+            DATA->flags = *(UINT8 *)FieldValue;
             break;
         case 11: //data_p DATA ,, Struct
             if(ArraySize != 1)
                 break;
             DATA.Load();
-            DATA->value11[0] = ((UINT8ARRAY)FieldValue)[0];
+            DATA->unused1 = ((UINT8ARRAY)FieldValue)[0];
             break;
         default:
             break;
