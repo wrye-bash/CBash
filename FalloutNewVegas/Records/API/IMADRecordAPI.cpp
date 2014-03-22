@@ -761,135 +761,135 @@ void * IMADRecord::GetField(FIELD_IDENTIFIERS, void **FieldValues)
             *FieldValues = NAM4.value;
             return NULL;
         case 21: //_00__p Unknown
-            *FieldValues = _00_IAD.value;
+            *FieldValues = _00_.value;
             return NULL;
         case 22: //_40__p Unknown
-            *FieldValues = _40_IAD.value;
+            *FieldValues = _40_.value;
             return NULL;
         case 23: //_01__p Unknown
-            *FieldValues = _01_IAD.value;
+            *FieldValues = _01_.value;
             return NULL;
         case 24: //_41__p Unknown
-            *FieldValues = _41_IAD.value;
+            *FieldValues = _41_.value;
             return NULL;
         case 25: //_02__p Unknown
-            *FieldValues = _02_IAD.value;
+            *FieldValues = _02_.value;
             return NULL;
         case 26: //_42__p Unknown
-            *FieldValues = _42_IAD.value;
+            *FieldValues = _42_.value;
             return NULL;
         case 27: //_03__p Unknown
-            *FieldValues = _03_IAD.value;
+            *FieldValues = _03_.value;
             return NULL;
         case 28: //_43__p Unknown
-            *FieldValues = _43_IAD.value;
+            *FieldValues = _43_.value;
             return NULL;
         case 29: //_04__p Unknown
-            *FieldValues = _04_IAD.value;
+            *FieldValues = _04_.value;
             return NULL;
         case 30: //_44__p Unknown
-            *FieldValues = _44_IAD.value;
+            *FieldValues = _44_.value;
             return NULL;
         case 31: //_05__p Unknown
-            *FieldValues = _05_IAD.value;
+            *FieldValues = _05_.value;
             return NULL;
         case 32: //_45__p Unknown
-            *FieldValues = _45_IAD.value;
+            *FieldValues = _45_.value;
             return NULL;
         case 33: //_06__p Unknown
-            *FieldValues = _06_IAD.value;
+            *FieldValues = _06_.value;
             return NULL;
         case 34: //_46__p Unknown
-            *FieldValues = _46_IAD.value;
+            *FieldValues = _46_.value;
             return NULL;
         case 35: //_07__p Unknown
-            *FieldValues = _07_IAD.value;
+            *FieldValues = _07_.value;
             return NULL;
         case 36: //_47__p Unknown
-            *FieldValues = _47_IAD.value;
+            *FieldValues = _47_.value;
             return NULL;
         case 37: //_08__p Unknown
-            *FieldValues = _08_IAD.value;
+            *FieldValues = _08_.value;
             return NULL;
         case 38: //_48__p Unknown
-            *FieldValues = _48_IAD.value;
+            *FieldValues = _48_.value;
             return NULL;
         case 39: //_09__p Unknown
-            *FieldValues = _09_IAD.value;
+            *FieldValues = _09_.value;
             return NULL;
         case 40: //_49__p Unknown
-            *FieldValues = _49_IAD.value;
+            *FieldValues = _49_.value;
             return NULL;
         case 41: //_0a__p Unknown
-            *FieldValues = _0A_IAD.value;
+            *FieldValues = _0A_.value;
             return NULL;
         case 42: //_4a__p Unknown
-            *FieldValues = _4A_IAD.value;
+            *FieldValues = _4A_.value;
             return NULL;
         case 43: //_0b__p Unknown
-            *FieldValues = _0B_IAD.value;
+            *FieldValues = _0B_.value;
             return NULL;
         case 44: //_4b__p Unknown
-            *FieldValues = _4B_IAD.value;
+            *FieldValues = _4B_.value;
             return NULL;
         case 45: //_0c__p Unknown
-            *FieldValues = _0C_IAD.value;
+            *FieldValues = _0C_.value;
             return NULL;
         case 46: //_4c__p Unknown
-            *FieldValues = _4C_IAD.value;
+            *FieldValues = _4C_.value;
             return NULL;
         case 47: //_0d__p Unknown
-            *FieldValues = _0D_IAD.value;
+            *FieldValues = _0D_.value;
             return NULL;
         case 48: //_4d__p Unknown
-            *FieldValues = _4D_IAD.value;
+            *FieldValues = _4D_.value;
             return NULL;
         case 49: //_0e__p Unknown
-            *FieldValues = _0E_IAD.value;
+            *FieldValues = _0E_.value;
             return NULL;
         case 50: //_4e__p Unknown
-            *FieldValues = _4E_IAD.value;
+            *FieldValues = _4E_.value;
             return NULL;
         case 51: //_0f__p Unknown
-            *FieldValues = _0F_IAD.value;
+            *FieldValues = _0F_.value;
             return NULL;
         case 52: //_4f__p Unknown
-            *FieldValues = _4F_IAD.value;
+            *FieldValues = _4F_.value;
             return NULL;
         case 53: //_10__p Unknown
-            *FieldValues = _10_IAD.value;
+            *FieldValues = _10_.value;
             return NULL;
         case 54: //_50__p Unknown
-            *FieldValues = _50_IAD.value;
+            *FieldValues = _50_.value;
             return NULL;
         case 55: //_11__p Unknown
-            *FieldValues = _11_IAD.value;
+            *FieldValues = _11_.value;
             return NULL;
         case 56: //_51__p Unknown
-            *FieldValues = _51_IAD.value;
+            *FieldValues = _51_.value;
             return NULL;
         case 57: //_12__p Unknown
-            *FieldValues = _12_IAD.value;
+            *FieldValues = _12_.value;
             return NULL;
         case 58: //_52__p Unknown
-            *FieldValues = _52_IAD.value;
+            *FieldValues = _52_.value;
             return NULL;
         case 59: //_13__p Unknown
-            *FieldValues = _13_IAD.value;
+            *FieldValues = _13_.value;
             return NULL;
         case 60: //_53__p Unknown
-            *FieldValues = _53_IAD.value;
+            *FieldValues = _53_.value;
             return NULL;
         case 61: //_14__p Unknown
-            *FieldValues = _14_IAD.value;
+            *FieldValues = _14_.value;
             return NULL;
         case 62: //_54__p Unknown
-            *FieldValues = _54_IAD.value;
+            *FieldValues = _54_.value;
             return NULL;
         case 63: //rdsd Sound - Intro
-            return RDSD.IsLoaded() ? &RDSD->value63 : NULL;
+            return RDSD.IsLoaded() ? &RDSD.value : NULL;
         case 64: //rdsi Sound - Outro
-            return RDSI.IsLoaded() ? &RDSI->value64 : NULL;
+            return RDSI.IsLoaded() ? &RDSI.value : NULL;
         default:
             return NULL;
         }
@@ -966,138 +966,138 @@ bool IMADRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             NAM4.Copy((UINT8ARRAY)FieldValue, ArraySize);
             break;
         case 21: //_00__p Unknown
-            _00_IAD.Copy((UINT8ARRAY)FieldValue, ArraySize);
+            _00_.Copy((UINT8ARRAY)FieldValue, ArraySize);
             break;
         case 22: //_40__p Unknown
-            _40_IAD.Copy((UINT8ARRAY)FieldValue, ArraySize);
+            _40_.Copy((UINT8ARRAY)FieldValue, ArraySize);
             break;
         case 23: //_01__p Unknown
-            _01_IAD.Copy((UINT8ARRAY)FieldValue, ArraySize);
+            _01_.Copy((UINT8ARRAY)FieldValue, ArraySize);
             break;
         case 24: //_41__p Unknown
-            _41_IAD.Copy((UINT8ARRAY)FieldValue, ArraySize);
+            _41_.Copy((UINT8ARRAY)FieldValue, ArraySize);
             break;
         case 25: //_02__p Unknown
-            _02_IAD.Copy((UINT8ARRAY)FieldValue, ArraySize);
+            _02_.Copy((UINT8ARRAY)FieldValue, ArraySize);
             break;
         case 26: //_42__p Unknown
-            _42_IAD.Copy((UINT8ARRAY)FieldValue, ArraySize);
+            _42_.Copy((UINT8ARRAY)FieldValue, ArraySize);
             break;
         case 27: //_03__p Unknown
-            _03_IAD.Copy((UINT8ARRAY)FieldValue, ArraySize);
+            _03_.Copy((UINT8ARRAY)FieldValue, ArraySize);
             break;
         case 28: //_43__p Unknown
-            _43_IAD.Copy((UINT8ARRAY)FieldValue, ArraySize);
+            _43_.Copy((UINT8ARRAY)FieldValue, ArraySize);
             break;
         case 29: //_04__p Unknown
-            _04_IAD.Copy((UINT8ARRAY)FieldValue, ArraySize);
+            _04_.Copy((UINT8ARRAY)FieldValue, ArraySize);
             break;
         case 30: //_44__p Unknown
-            _44_IAD.Copy((UINT8ARRAY)FieldValue, ArraySize);
+            _44_.Copy((UINT8ARRAY)FieldValue, ArraySize);
             break;
         case 31: //_05__p Unknown
-            _05_IAD.Copy((UINT8ARRAY)FieldValue, ArraySize);
+            _05_.Copy((UINT8ARRAY)FieldValue, ArraySize);
             break;
         case 32: //_45__p Unknown
-            _45_IAD.Copy((UINT8ARRAY)FieldValue, ArraySize);
+            _45_.Copy((UINT8ARRAY)FieldValue, ArraySize);
             break;
         case 33: //_06__p Unknown
-            _06_IAD.Copy((UINT8ARRAY)FieldValue, ArraySize);
+            _06_.Copy((UINT8ARRAY)FieldValue, ArraySize);
             break;
         case 34: //_46__p Unknown
-            _46_IAD.Copy((UINT8ARRAY)FieldValue, ArraySize);
+            _46_.Copy((UINT8ARRAY)FieldValue, ArraySize);
             break;
         case 35: //_07__p Unknown
-            _07_IAD.Copy((UINT8ARRAY)FieldValue, ArraySize);
+            _07_.Copy((UINT8ARRAY)FieldValue, ArraySize);
             break;
         case 36: //_47__p Unknown
-            _47_IAD.Copy((UINT8ARRAY)FieldValue, ArraySize);
+            _47_.Copy((UINT8ARRAY)FieldValue, ArraySize);
             break;
         case 37: //_08__p Unknown
-            _08_IAD.Copy((UINT8ARRAY)FieldValue, ArraySize);
+            _08_.Copy((UINT8ARRAY)FieldValue, ArraySize);
             break;
         case 38: //_48__p Unknown
-            _48_IAD.Copy((UINT8ARRAY)FieldValue, ArraySize);
+            _48_.Copy((UINT8ARRAY)FieldValue, ArraySize);
             break;
         case 39: //_09__p Unknown
-            _09_IAD.Copy((UINT8ARRAY)FieldValue, ArraySize);
+            _09_.Copy((UINT8ARRAY)FieldValue, ArraySize);
             break;
         case 40: //_49__p Unknown
-            _49_IAD.Copy((UINT8ARRAY)FieldValue, ArraySize);
+            _49_.Copy((UINT8ARRAY)FieldValue, ArraySize);
             break;
         case 41: //_0a__p Unknown
-            _0A_IAD.Copy((UINT8ARRAY)FieldValue, ArraySize);
+            _0A_.Copy((UINT8ARRAY)FieldValue, ArraySize);
             break;
         case 42: //_4a__p Unknown
-            _4A_IAD.Copy((UINT8ARRAY)FieldValue, ArraySize);
+            _4A_.Copy((UINT8ARRAY)FieldValue, ArraySize);
             break;
         case 43: //_0b__p Unknown
-            _0B_IAD.Copy((UINT8ARRAY)FieldValue, ArraySize);
+            _0B_.Copy((UINT8ARRAY)FieldValue, ArraySize);
             break;
         case 44: //_4b__p Unknown
-            _4B_IAD.Copy((UINT8ARRAY)FieldValue, ArraySize);
+            _4B_.Copy((UINT8ARRAY)FieldValue, ArraySize);
             break;
         case 45: //_0c__p Unknown
-            _0C_IAD.Copy((UINT8ARRAY)FieldValue, ArraySize);
+            _0C_.Copy((UINT8ARRAY)FieldValue, ArraySize);
             break;
         case 46: //_4c__p Unknown
-            _4C_IAD.Copy((UINT8ARRAY)FieldValue, ArraySize);
+            _4C_.Copy((UINT8ARRAY)FieldValue, ArraySize);
             break;
         case 47: //_0d__p Unknown
-            _0D_IAD.Copy((UINT8ARRAY)FieldValue, ArraySize);
+            _0D_.Copy((UINT8ARRAY)FieldValue, ArraySize);
             break;
         case 48: //_4d__p Unknown
-            _4D_IAD.Copy((UINT8ARRAY)FieldValue, ArraySize);
+            _4D_.Copy((UINT8ARRAY)FieldValue, ArraySize);
             break;
         case 49: //_0e__p Unknown
-            _0E_IAD.Copy((UINT8ARRAY)FieldValue, ArraySize);
+            _0E_.Copy((UINT8ARRAY)FieldValue, ArraySize);
             break;
         case 50: //_4e__p Unknown
-            _4E_IAD.Copy((UINT8ARRAY)FieldValue, ArraySize);
+            _4E_.Copy((UINT8ARRAY)FieldValue, ArraySize);
             break;
         case 51: //_0f__p Unknown
-            _0F_IAD.Copy((UINT8ARRAY)FieldValue, ArraySize);
+            _0F_.Copy((UINT8ARRAY)FieldValue, ArraySize);
             break;
         case 52: //_4f__p Unknown
-            _4F_IAD.Copy((UINT8ARRAY)FieldValue, ArraySize);
+            _4F_.Copy((UINT8ARRAY)FieldValue, ArraySize);
             break;
         case 53: //_10__p Unknown
-            _10_IAD.Copy((UINT8ARRAY)FieldValue, ArraySize);
+            _10_.Copy((UINT8ARRAY)FieldValue, ArraySize);
             break;
         case 54: //_50__p Unknown
-            _50_IAD.Copy((UINT8ARRAY)FieldValue, ArraySize);
+            _50_.Copy((UINT8ARRAY)FieldValue, ArraySize);
             break;
         case 55: //_11__p Unknown
-            _11_IAD.Copy((UINT8ARRAY)FieldValue, ArraySize);
+            _11_.Copy((UINT8ARRAY)FieldValue, ArraySize);
             break;
         case 56: //_51__p Unknown
-            _51_IAD.Copy((UINT8ARRAY)FieldValue, ArraySize);
+            _51_.Copy((UINT8ARRAY)FieldValue, ArraySize);
             break;
         case 57: //_12__p Unknown
-            _12_IAD.Copy((UINT8ARRAY)FieldValue, ArraySize);
+            _12_.Copy((UINT8ARRAY)FieldValue, ArraySize);
             break;
         case 58: //_52__p Unknown
-            _52_IAD.Copy((UINT8ARRAY)FieldValue, ArraySize);
+            _52_.Copy((UINT8ARRAY)FieldValue, ArraySize);
             break;
         case 59: //_13__p Unknown
-            _13_IAD.Copy((UINT8ARRAY)FieldValue, ArraySize);
+            _13_.Copy((UINT8ARRAY)FieldValue, ArraySize);
             break;
         case 60: //_53__p Unknown
-            _53_IAD.Copy((UINT8ARRAY)FieldValue, ArraySize);
+            _53_.Copy((UINT8ARRAY)FieldValue, ArraySize);
             break;
         case 61: //_14__p Unknown
-            _14_IAD.Copy((UINT8ARRAY)FieldValue, ArraySize);
+            _14_.Copy((UINT8ARRAY)FieldValue, ArraySize);
             break;
         case 62: //_54__p Unknown
-            _54_IAD.Copy((UINT8ARRAY)FieldValue, ArraySize);
+            _54_.Copy((UINT8ARRAY)FieldValue, ArraySize);
             break;
         case 63: //rdsd Sound - Intro
             RDSD.Load();
-            RDSD->value63 = *(FORMID *)FieldValue;
+            RDSD.value = *(FORMID *)FieldValue;
             return true;
         case 64: //rdsi Sound - Outro
             RDSI.Load();
-            RDSI->value64 = *(FORMID *)FieldValue;
+            RDSI.value = *(FORMID *)FieldValue;
             return true;
         default:
             break;
@@ -1168,130 +1168,130 @@ void IMADRecord::DeleteField(FIELD_IDENTIFIERS)
             NAM4.Unload();
             return;
         case 21: //_00__p Unknown
-            _00_IAD.Unload();
+            _00_.Unload();
             return;
         case 22: //_40__p Unknown
-            _40_IAD.Unload();
+            _40_.Unload();
             return;
         case 23: //_01__p Unknown
-            _01_IAD.Unload();
+            _01_.Unload();
             return;
         case 24: //_41__p Unknown
-            _41_IAD.Unload();
+            _41_.Unload();
             return;
         case 25: //_02__p Unknown
-            _02_IAD.Unload();
+            _02_.Unload();
             return;
         case 26: //_42__p Unknown
-            _42_IAD.Unload();
+            _42_.Unload();
             return;
         case 27: //_03__p Unknown
-            _03_IAD.Unload();
+            _03_.Unload();
             return;
         case 28: //_43__p Unknown
-            _43_IAD.Unload();
+            _43_.Unload();
             return;
         case 29: //_04__p Unknown
-            _04_IAD.Unload();
+            _04_.Unload();
             return;
         case 30: //_44__p Unknown
-            _44_IAD.Unload();
+            _44_.Unload();
             return;
         case 31: //_05__p Unknown
-            _05_IAD.Unload();
+            _05_.Unload();
             return;
         case 32: //_45__p Unknown
-            _45_IAD.Unload();
+            _45_.Unload();
             return;
         case 33: //_06__p Unknown
-            _06_IAD.Unload();
+            _06_.Unload();
             return;
         case 34: //_46__p Unknown
-            _46_IAD.Unload();
+            _46_.Unload();
             return;
         case 35: //_07__p Unknown
-            _07_IAD.Unload();
+            _07_.Unload();
             return;
         case 36: //_47__p Unknown
-            _47_IAD.Unload();
+            _47_.Unload();
             return;
         case 37: //_08__p Unknown
-            _08_IAD.Unload();
+            _08_.Unload();
             return;
         case 38: //_48__p Unknown
-            _48_IAD.Unload();
+            _48_.Unload();
             return;
         case 39: //_09__p Unknown
-            _09_IAD.Unload();
+            _09_.Unload();
             return;
         case 40: //_49__p Unknown
-            _49_IAD.Unload();
+            _49_.Unload();
             return;
         case 41: //_0a__p Unknown
-            _0A_IAD.Unload();
+            _0A_.Unload();
             return;
         case 42: //_4a__p Unknown
-            _4A_IAD.Unload();
+            _4A_.Unload();
             return;
         case 43: //_0b__p Unknown
-            _0B_IAD.Unload();
+            _0B_.Unload();
             return;
         case 44: //_4b__p Unknown
-            _4B_IAD.Unload();
+            _4B_.Unload();
             return;
         case 45: //_0c__p Unknown
-            _0C_IAD.Unload();
+            _0C_.Unload();
             return;
         case 46: //_4c__p Unknown
-            _4C_IAD.Unload();
+            _4C_.Unload();
             return;
         case 47: //_0d__p Unknown
-            _0D_IAD.Unload();
+            _0D_.Unload();
             return;
         case 48: //_4d__p Unknown
-            _4D_IAD.Unload();
+            _4D_.Unload();
             return;
         case 49: //_0e__p Unknown
-            _0E_IAD.Unload();
+            _0E_.Unload();
             return;
         case 50: //_4e__p Unknown
-            _4E_IAD.Unload();
+            _4E_.Unload();
             return;
         case 51: //_0f__p Unknown
-            _0F_IAD.Unload();
+            _0F_.Unload();
             return;
         case 52: //_4f__p Unknown
-            _4F_IAD.Unload();
+            _4F_.Unload();
             return;
         case 53: //_10__p Unknown
-            _10_IAD.Unload();
+            _10_.Unload();
             return;
         case 54: //_50__p Unknown
-            _50_IAD.Unload();
+            _50_.Unload();
             return;
         case 55: //_11__p Unknown
-            _11_IAD.Unload();
+            _11_.Unload();
             return;
         case 56: //_51__p Unknown
-            _51_IAD.Unload();
+            _51_.Unload();
             return;
         case 57: //_12__p Unknown
-            _12_IAD.Unload();
+            _12_.Unload();
             return;
         case 58: //_52__p Unknown
-            _52_IAD.Unload();
+            _52_.Unload();
             return;
         case 59: //_13__p Unknown
-            _13_IAD.Unload();
+            _13_.Unload();
             return;
         case 60: //_53__p Unknown
-            _53_IAD.Unload();
+            _53_.Unload();
             return;
         case 61: //_14__p Unknown
-            _14_IAD.Unload();
+            _14_.Unload();
             return;
         case 62: //_54__p Unknown
-            _54_IAD.Unload();
+            _54_.Unload();
             return;
         case 63: //rdsd Sound - Intro
             RDSD.Unload();
