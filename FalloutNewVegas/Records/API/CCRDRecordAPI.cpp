@@ -108,13 +108,13 @@ UINT32 CCRDRecord::GetFieldAttribute(FIELD_IDENTIFIERS, UINT32 WhichAttribute)
                     case 0: //fieldType
                         return LIST_FIELD;
                     case 1: //fieldSize
-                        return MODL->Textures.size();
+                        return MODL->Textures.MODS.size();
                     default:
                         return UNKNOWN_FIELD;
                     }
                 }
 
-            if(ListIndex >= MODL->Textures.size())
+            if(ListIndex >= MODL->Textures.MODS.size())
                 return UNKNOWN_FIELD;
 
             switch(ListFieldID)
@@ -176,11 +176,11 @@ void * CCRDRecord::GetField(FIELD_IDENTIFIERS, void **FieldValues)
             *FieldValues = &versionControl2[0];
             return NULL;
         case 7: //boundX
-            return OBND.IsLoaded() ? &OBND->x : NULL;
+            return OBND.IsLoaded() ? &OBND->x1 : NULL;
         case 8: //boundY
-            return OBND.IsLoaded() ? &OBND->y : NULL;
+            return OBND.IsLoaded() ? &OBND->y1 : NULL;
         case 9: //boundZ
-            return OBND.IsLoaded() ? &OBND->z : NULL;
+            return OBND.IsLoaded() ? &OBND->z1 : NULL;
         case 10: //full
             return FULL.value;
         case 11: //modPath
@@ -191,33 +191,36 @@ void * CCRDRecord::GetField(FIELD_IDENTIFIERS, void **FieldValues)
             *FieldValues = MODL.IsLoaded() ? MODL->MODT.value : NULL;
             return NULL;
         case 14: //mods Alternate Textures
-            return MODL.IsLoaded() ? MODL->MODS.value : NULL;
+            return NULL;
+            //return MODL.IsLoaded() ? MODL->Textures.MODS.value : NULL;
         case 15: //mods Alternate Textures
-            return MODL.IsLoaded() ? &MODL->MODS->value15 : NULL;
+            return NULL;
+            //return MODL.IsLoaded() ? &MODL->Textures.MODS->value15 : NULL;
         case 16: //mods Alternate Textures
-            return MODL.IsLoaded() ? &MODL->MODS->value16 : NULL;
+            return NULL;
+            //return MODL.IsLoaded() ? &MODL->Textures.MODS->value16 : NULL;
         case 17: //modelFlags
-            return MODL.IsLoaded() ? &MODL->MODD->value17 : NULL;
+            return MODL.IsLoaded() ? &MODL->MODD.value : NULL;
         case 18: //iconPath
             return ICON.value;
         case 19: //smallIconPath
             return MICO.value;
         case 20: //script
-            return SCRI.IsLoaded() ? &SCRI->value20 : NULL;
+            return SCRI.IsLoaded() ? &SCRI.value : NULL;
         case 21: //ynam Sound - Pick Up
-            return YNAM.IsLoaded() ? &YNAM->value21 : NULL;
+            return YNAM.IsLoaded() ? &YNAM.value : NULL;
         case 22: //znam Sound - Drop
-            return ZNAM.IsLoaded() ? &ZNAM->value22 : NULL;
+            return ZNAM.IsLoaded() ? &ZNAM.value : NULL;
         case 23: //tx00 Face
-            return TX00.IsLoaded() ? TX00->TX00.value : NULL;
+            return TX00.IsLoaded() ? TX00.value : NULL;
         case 24: //tx01 Back
-            return TX00.IsLoaded() ? TX00->TX01.value : NULL;
+            return TX01.IsLoaded() ? TX01.value : NULL;
         case 25: //intv Suit
-            return INTV.IsLoaded() ? &INTV->INTV->value25 : NULL;
+            return INTV1.IsLoaded() ? &INTV1.value : NULL;
         case 26: //intv Value
-            return INTV.IsLoaded() ? &INTV->value26 : NULL;
+            return INTV2.IsLoaded() ? &INTV2.value : NULL;
         case 27: //data Value
-            return DATA.IsLoaded() ? &DATA->value27 : NULL;
+            return DATA.IsLoaded() ? &DATA.value : NULL;
         default:
             return NULL;
         }
@@ -253,15 +256,15 @@ bool CCRDRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             break;
         case 7: //boundX
             OBND.Load();
-            OBND->x = *(SINT16 *)FieldValue;
+            OBND->x1 = *(SINT16 *)FieldValue;
             break;
         case 8: //boundY
             OBND.Load();
-            OBND->y = *(SINT16 *)FieldValue;
+            OBND->y1 = *(SINT16 *)FieldValue;
             break;
         case 9: //boundZ
             OBND.Load();
-            OBND->z = *(SINT16 *)FieldValue;
+            OBND->z1 = *(SINT16 *)FieldValue;
             break;
         case 10: //full
             FULL.Copy((STRING)FieldValue);
@@ -280,22 +283,22 @@ bool CCRDRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             break;
         case 14: //mods Alternate Textures
             MODL.Load();
-            MODL->MODS.Copy((STRING)FieldValue);
+            //MODL->Textures.MODS.Copy((STRING)FieldValue);
             break;
         case 15: //mods Alternate Textures
             MODL.Load();
-            MODL->MODS.Load();
-            MODL->MODS->value15 = *(FORMID *)FieldValue;
+            //MODL->Textures.MODS.Load();
+            //MODL->Textures.MODS->value15 = *(FORMID *)FieldValue;
             return true;
         case 16: //mods Alternate Textures
             MODL.Load();
-            MODL->MODS.Load();
-            MODL->MODS->value16 = *(SINT32 *)FieldValue;
+            //MODL->Textures.MODS.Load();
+            //MODL->Textures.MODS->value16 = *(SINT32 *)FieldValue;
             break;
         case 17: //modelFlags
             MODL.Load();
             MODL->MODD.Load();
-            MODL->MODD->value17 = *(UINT8 *)FieldValue;
+            MODL->MODD.value = *(UINT8 *)FieldValue;
             break;
         case 18: //iconPath
             ICON.Copy((STRING)FieldValue);
@@ -305,36 +308,35 @@ bool CCRDRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             break;
         case 20: //script
             SCRI.Load();
-            SCRI->value20 = *(FORMID *)FieldValue;
+            SCRI.value = *(FORMID *)FieldValue;
             return true;
         case 21: //ynam Sound - Pick Up
             YNAM.Load();
-            YNAM->value21 = *(FORMID *)FieldValue;
+            YNAM.value = *(FORMID *)FieldValue;
             return true;
         case 22: //znam Sound - Drop
             ZNAM.Load();
-            ZNAM->value22 = *(FORMID *)FieldValue;
+            ZNAM.value = *(FORMID *)FieldValue;
             return true;
         case 23: //tx00 Face
             TX00.Load();
-            TX00->TX00.Copy((STRING)FieldValue);
+            TX00.Copy((STRING)FieldValue);
             break;
         case 24: //tx01 Back
-            TX00.Load();
-            TX00->TX01.Copy((STRING)FieldValue);
+            TX01.Load();
+            TX01.Copy((STRING)FieldValue);
             break;
         case 25: //intv Suit
-            INTV.Load();
-            INTV->INTV.Load();
-            INTV->INTV->value25 = *(UINT32 *)FieldValue;
+            INTV1.Load();
+            INTV1.value = *(UINT32 *)FieldValue;
             break;
         case 26: //intv Value
-            INTV.Load();
-            INTV->value26 = *(UINT32 *)FieldValue;
+            INTV2.Load();
+            INTV2.value = *(UINT32 *)FieldValue;
             break;
         case 27: //data Value
             DATA.Load();
-            DATA->value27 = *(UINT32 *)FieldValue;
+            DATA.value = *(UINT32 *)FieldValue;
             break;
         default:
             break;
@@ -363,16 +365,16 @@ void CCRDRecord::DeleteField(FIELD_IDENTIFIERS)
             versionControl2[1] = 0;
             return;
         case 7: //boundX
-            if(OBND.IsLoaded())
-                OBND->x = defaultOBND.x;
+            if (OBND.IsLoaded())
+                OBND->x1 = 0; // defaultOBND.x;
             return;
         case 8: //boundY
-            if(OBND.IsLoaded())
-                OBND->y = defaultOBND.y;
+            if (OBND.IsLoaded())
+                OBND->y1 = 0; // defaultOBND.y;
             return;
         case 9: //boundZ
-            if(OBND.IsLoaded())
-                OBND->z = defaultOBND.z;
+            if (OBND.IsLoaded())
+                OBND->z1 = 0; // defaultOBND.z;
             return;
         case 10: //full
             FULL.Unload();
@@ -391,15 +393,15 @@ void CCRDRecord::DeleteField(FIELD_IDENTIFIERS)
             return;
         case 14: //mods Alternate Textures
             if(MODL.IsLoaded())
-                MODL->MODS.Unload();
+                MODL->Textures.Unload();
             return;
         case 15: //mods Alternate Textures
             if(MODL.IsLoaded())
-                MODL->MODS.Unload();
+                MODL->Textures.Unload();
             return;
         case 16: //mods Alternate Textures
             if(MODL.IsLoaded())
-                MODL->MODS.Unload();
+                MODL->Textures.Unload();
             return;
         case 17: //modelFlags
             if(MODL.IsLoaded())
@@ -422,18 +424,18 @@ void CCRDRecord::DeleteField(FIELD_IDENTIFIERS)
             return;
         case 23: //tx00 Face
             if(TX00.IsLoaded())
-                TX00->TX00.Unload();
+                TX00.Unload();
             return;
         case 24: //tx01 Back
             if(TX00.IsLoaded())
-                TX00->TX01.Unload();
+                TX01.Unload();
             return;
         case 25: //intv Suit
-            if(INTV.IsLoaded())
-                INTV->INTV.Unload();
+            if(INTV1.IsLoaded())
+                INTV1.Unload();
             return;
         case 26: //intv Value
-            INTV.Unload();
+            INTV2.Unload();
             return;
         case 27: //data Value
             DATA.Unload();
