@@ -152,30 +152,30 @@ void * CHALRecord::GetField(FIELD_IDENTIFIERS, void **FieldValues)
         case 7: //full
             return FULL.value;
         case 8: //script
-            return SCRI.IsLoaded() ? &SCRI->value8 : NULL;
+            return SCRI.IsLoaded() ? &SCRI.value : NULL;
         case 9: //description
             return DESC.value;
         case 10: //data DATA ,, Struct
-            return DATA.IsLoaded() ? &DATA->value10 : NULL;
+            return DATA.IsLoaded() ? &DATA->challengeType : NULL;
         case 11: //data DATA ,, Struct
-            return DATA.IsLoaded() ? &DATA->value11 : NULL;
+            return DATA.IsLoaded() ? &DATA->threshold : NULL;
         case 12: //data DATA ,, Struct
-            return DATA.IsLoaded() ? &DATA->value12 : NULL;
+            return DATA.IsLoaded() ? &DATA->flags : NULL;
         case 13: //data DATA ,, Struct
-            return DATA.IsLoaded() ? &DATA->value13 : NULL;
+            return DATA.IsLoaded() ? &DATA->interval : NULL;
         case 14: //data_p DATA ,, Struct
-            *FieldValues = DATA.IsLoaded() ? &DATA->value14[0] : NULL;
+            *FieldValues = DATA.IsLoaded() ? &DATA->var1[0] : NULL;
             return NULL;
         case 15: //data_p DATA ,, Struct
-            *FieldValues = DATA.IsLoaded() ? &DATA->value15[0] : NULL;
+            *FieldValues = DATA.IsLoaded() ? &DATA->var2[0] : NULL;
             return NULL;
         case 16: //data_p DATA ,, Struct
-            *FieldValues = DATA.IsLoaded() ? &DATA->value16[0] : NULL;
+            *FieldValues = DATA.IsLoaded() ? &DATA->var3[0] : NULL;
             return NULL;
         case 17: //snam (depends on type)
-            return SNAM.IsLoaded() ? &SNAM->value17 : NULL;
+            return SNAM.IsLoaded() ? &SNAM.value : NULL;
         case 18: //xnam (depends on type)
-            return XNAM.IsLoaded() ? &XNAM->value18 : NULL;
+            return XNAM.IsLoaded() ? &XNAM.value : NULL;
         default:
             return NULL;
         }
@@ -214,57 +214,57 @@ bool CHALRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             break;
         case 8: //script
             SCRI.Load();
-            SCRI->value8 = *(FORMID *)FieldValue;
+            SCRI.value = *(FORMID *)FieldValue;
             return true;
         case 9: //description
             DESC.Copy((STRING)FieldValue);
             break;
         case 10: //data DATA ,, Struct
             DATA.Load();
-            DATA->value10 = *(UINT32 *)FieldValue;
+            DATA->challengeType = *(UINT32 *)FieldValue;
             break;
         case 11: //data DATA ,, Struct
             DATA.Load();
-            DATA->value11 = *(UINT32 *)FieldValue;
+            DATA->threshold = *(UINT32 *)FieldValue;
             break;
         case 12: //data DATA ,, Struct
             DATA.Load();
-            DATA->value12 = *(UINT32 *)FieldValue;
+            DATA->flags = *(UINT32 *)FieldValue;
             break;
         case 13: //data DATA ,, Struct
             DATA.Load();
-            DATA->value13 = *(UINT32 *)FieldValue;
+            DATA->interval = *(UINT32 *)FieldValue;
             break;
         case 14: //data_p DATA ,, Struct
             if(ArraySize != 2)
                 break;
             DATA.Load();
-            DATA->value14[0] = ((UINT8ARRAY)FieldValue)[0];
-            DATA->value14[1] = ((UINT8ARRAY)FieldValue)[1];
+            DATA->var1[0] = ((UINT8ARRAY)FieldValue)[0];
+            DATA->var1[1] = ((UINT8ARRAY)FieldValue)[1];
             break;
         case 15: //data_p DATA ,, Struct
             if(ArraySize != 2)
                 break;
             DATA.Load();
-            DATA->value15[0] = ((UINT8ARRAY)FieldValue)[0];
-            DATA->value15[1] = ((UINT8ARRAY)FieldValue)[1];
+            DATA->var2[0] = ((UINT8ARRAY)FieldValue)[0];
+            DATA->var2[1] = ((UINT8ARRAY)FieldValue)[1];
             break;
         case 16: //data_p DATA ,, Struct
             if(ArraySize != 4)
                 break;
             DATA.Load();
-            DATA->value16[0] = ((UINT8ARRAY)FieldValue)[0];
-            DATA->value16[1] = ((UINT8ARRAY)FieldValue)[1];
-            DATA->value16[2] = ((UINT8ARRAY)FieldValue)[2];
-            DATA->value16[3] = ((UINT8ARRAY)FieldValue)[3];
+            DATA->var3[0] = ((UINT8ARRAY)FieldValue)[0];
+            DATA->var3[1] = ((UINT8ARRAY)FieldValue)[1];
+            DATA->var3[2] = ((UINT8ARRAY)FieldValue)[2];
+            DATA->var3[3] = ((UINT8ARRAY)FieldValue)[3];
             break;
         case 17: //snam (depends on type)
             SNAM.Load();
-            SNAM->value17 = *(FORMID *)FieldValue;
+            SNAM.value = *(FORMID *)FieldValue;
             return true;
         case 18: //xnam (depends on type)
             XNAM.Load();
-            XNAM->value18 = *(FORMID *)FieldValue;
+            XNAM.value = *(FORMID *)FieldValue;
             return true;
         default:
             break;
