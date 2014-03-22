@@ -100,13 +100,13 @@ UINT32 IPCTRecord::GetFieldAttribute(FIELD_IDENTIFIERS, UINT32 WhichAttribute)
                     case 0: //fieldType
                         return LIST_FIELD;
                     case 1: //fieldSize
-                        return MODL->Textures.size();
+                        return MODL->Textures.MODS.size();
                     default:
                         return UNKNOWN_FIELD;
                     }
                 }
 
-            if(ListIndex >= MODL->Textures.size())
+            if(ListIndex >= MODL->Textures.MODS.size())
                 return UNKNOWN_FIELD;
 
             switch(ListFieldID)
@@ -219,25 +219,28 @@ void * IPCTRecord::GetField(FIELD_IDENTIFIERS, void **FieldValues)
             *FieldValues = MODL.IsLoaded() ? MODL->MODT.value : NULL;
             return NULL;
         case 10: //mods Alternate Textures
-            return MODL.IsLoaded() ? MODL->MODS.value : NULL;
+            return NULL;
+            //return MODL.IsLoaded() ? MODL->Textures.MODS.value : NULL;
         case 11: //mods Alternate Textures
-            return MODL.IsLoaded() ? &MODL->MODS->value11 : NULL;
+            return NULL;
+            //return MODL.IsLoaded() ? &MODL->MODS->value11 : NULL;
         case 12: //mods Alternate Textures
-            return MODL.IsLoaded() ? &MODL->MODS->value12 : NULL;
+            return NULL;
+            //return MODL.IsLoaded() ? &MODL->MODS->value12 : NULL;
         case 13: //modelFlags
-            return MODL.IsLoaded() ? &MODL->MODD->value13 : NULL;
+            return MODL.IsLoaded() ? &MODL->MODD.value : NULL;
         case 14: //data DATA ,, Struct
-            return DATA.IsLoaded() ? &DATA->value14 : NULL;
+            return DATA.IsLoaded() ? &DATA->duration : NULL;
         case 15: //data DATA ,, Struct
-            return DATA.IsLoaded() ? &DATA->value15 : NULL;
+            return DATA.IsLoaded() ? &DATA->orientation : NULL;
         case 16: //data DATA ,, Struct
-            return DATA.IsLoaded() ? &DATA->value16 : NULL;
+            return DATA.IsLoaded() ? &DATA->angleThreshold : NULL;
         case 17: //data DATA ,, Struct
-            return DATA.IsLoaded() ? &DATA->value17 : NULL;
+            return DATA.IsLoaded() ? &DATA->placementRadius : NULL;
         case 18: //data DATA ,, Struct
-            return DATA.IsLoaded() ? &DATA->value18 : NULL;
+            return DATA.IsLoaded() ? &DATA->soundLevel : NULL;
         case 19: //data DATA ,, Struct
-            return DATA.IsLoaded() ? &DATA->value19 : NULL;
+            return DATA.IsLoaded() ? &DATA->flags : NULL;
         case 20: //decalMinWidth
             return DODT.IsLoaded() ? &DODT->minWidth : NULL;
         case 21: //decalMaxWidth
@@ -269,11 +272,11 @@ void * IPCTRecord::GetField(FIELD_IDENTIFIERS, void **FieldValues)
             *FieldValues = DODT.IsLoaded() ? &DODT->unused2 : NULL;
             return NULL;
         case 34: //dnam Texture Set
-            return DNAM.IsLoaded() ? &DNAM->value34 : NULL;
+            return DNAM.IsLoaded() ? &DNAM.value : NULL;
         case 35: //snam Sound 1
-            return SNAM.IsLoaded() ? &SNAM->value35 : NULL;
+            return SNAM.IsLoaded() ? &SNAM.value : NULL;
         case 36: //nam1 Sound 2
-            return NAM1.IsLoaded() ? &NAM1->value36 : NULL;
+            return NAM1.IsLoaded() ? &NAM1.value : NULL;
         default:
             return NULL;
         }
@@ -321,46 +324,46 @@ bool IPCTRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             break;
         case 10: //mods Alternate Textures
             MODL.Load();
-            MODL->MODS.Copy((STRING)FieldValue);
+            //MODL->MODS.Copy((STRING)FieldValue);
             break;
         case 11: //mods Alternate Textures
             MODL.Load();
-            MODL->MODS.Load();
-            MODL->MODS->value11 = *(FORMID *)FieldValue;
+            MODL->Textures.Load();
+            //MODL->MODS->value11 = *(FORMID *)FieldValue;
             return true;
         case 12: //mods Alternate Textures
             MODL.Load();
-            MODL->MODS.Load();
-            MODL->MODS->value12 = *(SINT32 *)FieldValue;
+            MODL->Textures.Load();
+            //MODL->MODS->value12 = *(SINT32 *)FieldValue;
             break;
         case 13: //modelFlags
             MODL.Load();
             MODL->MODD.Load();
-            MODL->MODD->value13 = *(UINT8 *)FieldValue;
+            MODL->MODD.value = *(UINT8 *)FieldValue;
             break;
         case 14: //data DATA ,, Struct
             DATA.Load();
-            DATA->value14 = *(FLOAT32 *)FieldValue;
+            DATA->duration = *(FLOAT32 *)FieldValue;
             break;
         case 15: //data DATA ,, Struct
             DATA.Load();
-            DATA->value15 = *(UINT32 *)FieldValue;
+            DATA->orientation = *(UINT32 *)FieldValue;
             break;
         case 16: //data DATA ,, Struct
             DATA.Load();
-            DATA->value16 = *(FLOAT32 *)FieldValue;
+            DATA->angleThreshold = *(FLOAT32 *)FieldValue;
             break;
         case 17: //data DATA ,, Struct
             DATA.Load();
-            DATA->value17 = *(FLOAT32 *)FieldValue;
+            DATA->placementRadius = *(FLOAT32 *)FieldValue;
             break;
         case 18: //data DATA ,, Struct
             DATA.Load();
-            DATA->value18 = *(UINT32 *)FieldValue;
+            DATA->soundLevel = *(UINT32 *)FieldValue;
             break;
         case 19: //data DATA ,, Struct
             DATA.Load();
-            DATA->value19 = *(UINT32 *)FieldValue;
+            DATA->flags = *(UINT32 *)FieldValue;
             break;
         case 20: //decalMinWidth
             DODT.Load();
@@ -425,15 +428,15 @@ bool IPCTRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             break;
         case 34: //dnam Texture Set
             DNAM.Load();
-            DNAM->value34 = *(FORMID *)FieldValue;
+            DNAM.value = *(FORMID *)FieldValue;
             return true;
         case 35: //snam Sound 1
             SNAM.Load();
-            SNAM->value35 = *(FORMID *)FieldValue;
+            SNAM.value = *(FORMID *)FieldValue;
             return true;
         case 36: //nam1 Sound 2
             NAM1.Load();
-            NAM1->value36 = *(FORMID *)FieldValue;
+            NAM1.value = *(FORMID *)FieldValue;
             return true;
         default:
             break;
@@ -474,16 +477,16 @@ void IPCTRecord::DeleteField(FIELD_IDENTIFIERS)
                 MODL->MODT.Unload();
             return;
         case 10: //mods Alternate Textures
-            if(MODL.IsLoaded())
-                MODL->MODS.Unload();
+            if (MODL.IsLoaded())
+                MODL->Textures.Unload();
             return;
         case 11: //mods Alternate Textures
             if(MODL.IsLoaded())
-                MODL->MODS.Unload();
+                MODL->Textures.Unload();
             return;
         case 12: //mods Alternate Textures
             if(MODL.IsLoaded())
-                MODL->MODS.Unload();
+                MODL->Textures.Unload();
             return;
         case 13: //modelFlags
             if(MODL.IsLoaded())
@@ -508,63 +511,63 @@ void IPCTRecord::DeleteField(FIELD_IDENTIFIERS)
             DATA.Unload();
             return;
         case 20: //decalMinWidth
-            if(DODT.IsLoaded())
-                DODT->minWidth = defaultDODT.minWidth;
+            if (DODT.IsLoaded())
+                DODT->minWidth = 0.0; // defaultDODT.minWidth;
             return;
         case 21: //decalMaxWidth
-            if(DODT.IsLoaded())
-                DODT->maxWidth = defaultDODT.maxWidth;
+            if (DODT.IsLoaded())
+                DODT->maxWidth = 0.0; // defaultDODT.maxWidth;
             return;
         case 22: //decalMinHeight
-            if(DODT.IsLoaded())
-                DODT->minHeight = defaultDODT.minHeight;
+            if (DODT.IsLoaded())
+                DODT->minHeight = 0.0; // defaultDODT.minHeight;
             return;
         case 23: //decalMaxHeight
-            if(DODT.IsLoaded())
-                DODT->maxHeight = defaultDODT.maxHeight;
+            if (DODT.IsLoaded())
+                DODT->maxHeight = 0.0; // defaultDODT.maxHeight;
             return;
         case 24: //decalDepth
-            if(DODT.IsLoaded())
-                DODT->depth = defaultDODT.depth;
+            if (DODT.IsLoaded())
+                DODT->depth = 0.0; // defaultDODT.depth;
             return;
         case 25: //decalShininess
-            if(DODT.IsLoaded())
-                DODT->shininess = defaultDODT.shininess;
+            if (DODT.IsLoaded())
+                DODT->shininess = 0.0; // defaultDODT.shininess;
             return;
         case 26: //decalScale
-            if(DODT.IsLoaded())
-                DODT->scale = defaultDODT.scale;
+            if (DODT.IsLoaded())
+                DODT->scale = 0.0; // defaultDODT.scale;
             return;
         case 27: //decalPasses
-            if(DODT.IsLoaded())
-                DODT->passes = defaultDODT.passes;
+            if (DODT.IsLoaded())
+                DODT->passes = 0; // defaultDODT.passes;
             return;
         case 28: //decalFlags
-            if(DODT.IsLoaded())
-                DODT->flags = defaultDODT.flags;
+            if (DODT.IsLoaded())
+                DODT->flags = 0; // defaultDODT.flags;
             return;
         case 29: //decalUnused1
             if(DODT.IsLoaded())
                 {
-                DODT->unused1[0] = defaultDODT.unused1[0];
-                DODT->unused1[1] = defaultDODT.unused1[1];
+                DODT->unused1[0] = 0; // defaultDODT.unused1[0];
+                DODT->unused1[1] = 0; // defaultDODT.unused1[1];
                 }
             return;
         case 30: //decalRed
-            if(DODT.IsLoaded())
-                DODT->red = defaultDODT.red;
+            if (DODT.IsLoaded())
+                DODT->red = 0; // defaultDODT.red;
             return;
         case 31: //decalGreen
-            if(DODT.IsLoaded())
-                DODT->green = defaultDODT.green;
+            if (DODT.IsLoaded())
+                DODT->green = 0; // defaultDODT.green;
             return;
         case 32: //decalBlue
-            if(DODT.IsLoaded())
-                DODT->blue = defaultDODT.blue;
+            if (DODT.IsLoaded())
+                DODT->blue = 0; // defaultDODT.blue;
             return;
         case 33: //decalUnused2
-            if(DODT.IsLoaded())
-                DODT->unused2 = defaultDODT.unused2;
+            if (DODT.IsLoaded())
+                DODT->unused2 = 0; // defaultDODT.unused2;
             return;
         case 34: //dnam Texture Set
             DNAM.Unload();
