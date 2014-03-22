@@ -164,46 +164,46 @@ void * LGTMRecord::GetField(FIELD_IDENTIFIERS, void **FieldValues)
             *FieldValues = &versionControl2[0];
             return NULL;
         case 7: //data DATA ,, Struct
-            return DATA.IsLoaded() ? &DATA->value7 : NULL;
+            return DATA.IsLoaded() ? &DATA->ambient.red : NULL;
         case 8: //data DATA ,, Struct
-            return DATA.IsLoaded() ? &DATA->value8 : NULL;
+            return DATA.IsLoaded() ? &DATA->ambient.green : NULL;
         case 9: //data DATA ,, Struct
-            return DATA.IsLoaded() ? &DATA->value9 : NULL;
+            return DATA.IsLoaded() ? &DATA->ambient.blue : NULL;
         case 10: //data_p DATA ,, Struct
-            *FieldValues = DATA.IsLoaded() ? &DATA->value10[0] : NULL;
+            *FieldValues = DATA.IsLoaded() ? &DATA->ambient.unused1 : NULL;
             return NULL;
         case 11: //data DATA ,, Struct
-            return DATA.IsLoaded() ? &DATA->value11 : NULL;
+            return DATA.IsLoaded() ? &DATA->directional.red : NULL;
         case 12: //data DATA ,, Struct
-            return DATA.IsLoaded() ? &DATA->value12 : NULL;
+            return DATA.IsLoaded() ? &DATA->directional.blue : NULL;
         case 13: //data DATA ,, Struct
-            return DATA.IsLoaded() ? &DATA->value13 : NULL;
+            return DATA.IsLoaded() ? &DATA->directional.green : NULL;
         case 14: //data_p DATA ,, Struct
-            *FieldValues = DATA.IsLoaded() ? &DATA->value14[0] : NULL;
+            *FieldValues = DATA.IsLoaded() ? &DATA->directional.unused1 : NULL;
             return NULL;
         case 15: //data DATA ,, Struct
-            return DATA.IsLoaded() ? &DATA->value15 : NULL;
+            return DATA.IsLoaded() ? &DATA->fog.red : NULL;
         case 16: //data DATA ,, Struct
-            return DATA.IsLoaded() ? &DATA->value16 : NULL;
+            return DATA.IsLoaded() ? &DATA->fog.green : NULL;
         case 17: //data DATA ,, Struct
-            return DATA.IsLoaded() ? &DATA->value17 : NULL;
+            return DATA.IsLoaded() ? &DATA->fog.blue : NULL;
         case 18: //data_p DATA ,, Struct
-            *FieldValues = DATA.IsLoaded() ? &DATA->value18[0] : NULL;
+            *FieldValues = DATA.IsLoaded() ? &DATA->fog.unused1 : NULL;
             return NULL;
         case 19: //data DATA ,, Struct
-            return DATA.IsLoaded() ? &DATA->value19 : NULL;
+            return DATA.IsLoaded() ? &DATA->fogNear : NULL;
         case 20: //data DATA ,, Struct
-            return DATA.IsLoaded() ? &DATA->value20 : NULL;
+            return DATA.IsLoaded() ? &DATA->fogFar : NULL;
         case 21: //data DATA ,, Struct
-            return DATA.IsLoaded() ? &DATA->value21 : NULL;
+            return DATA.IsLoaded() ? &DATA->directionalXY : NULL;
         case 22: //data DATA ,, Struct
-            return DATA.IsLoaded() ? &DATA->value22 : NULL;
+            return DATA.IsLoaded() ? &DATA->directionalZ : NULL;
         case 23: //data DATA ,, Struct
-            return DATA.IsLoaded() ? &DATA->value23 : NULL;
+            return DATA.IsLoaded() ? &DATA->directionalFade : NULL;
         case 24: //data DATA ,, Struct
-            return DATA.IsLoaded() ? &DATA->value24 : NULL;
+            return DATA.IsLoaded() ? &DATA->fogClip : NULL;
         case 25: //data DATA ,, Struct
-            return DATA.IsLoaded() ? &DATA->value25 : NULL;
+            return DATA.IsLoaded() ? &DATA->fogPower : NULL;
         default:
             return NULL;
         }
@@ -239,85 +239,85 @@ bool LGTMRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             break;
         case 7: //data DATA ,, Struct
             DATA.Load();
-            DATA->value7 = *(UINT8 *)FieldValue;
+            DATA->ambient.red = *(UINT8 *)FieldValue;
             break;
         case 8: //data DATA ,, Struct
             DATA.Load();
-            DATA->value8 = *(UINT8 *)FieldValue;
+            DATA->ambient.green = *(UINT8 *)FieldValue;
             break;
         case 9: //data DATA ,, Struct
             DATA.Load();
-            DATA->value9 = *(UINT8 *)FieldValue;
+            DATA->ambient.blue = *(UINT8 *)FieldValue;
             break;
         case 10: //data_p DATA ,, Struct
             if(ArraySize != 1)
                 break;
             DATA.Load();
-            DATA->value10[0] = ((UINT8ARRAY)FieldValue)[0];
+            DATA->ambient.unused1 = ((UINT8ARRAY)FieldValue)[0];
             break;
         case 11: //data DATA ,, Struct
             DATA.Load();
-            DATA->value11 = *(UINT8 *)FieldValue;
+            DATA->directional.red = *(UINT8 *)FieldValue;
             break;
         case 12: //data DATA ,, Struct
             DATA.Load();
-            DATA->value12 = *(UINT8 *)FieldValue;
+            DATA->directional.green = *(UINT8 *)FieldValue;
             break;
         case 13: //data DATA ,, Struct
             DATA.Load();
-            DATA->value13 = *(UINT8 *)FieldValue;
+            DATA->directional.blue = *(UINT8 *)FieldValue;
             break;
         case 14: //data_p DATA ,, Struct
             if(ArraySize != 1)
                 break;
             DATA.Load();
-            DATA->value14[0] = ((UINT8ARRAY)FieldValue)[0];
+            DATA->directional.unused1 = ((UINT8ARRAY)FieldValue)[0];
             break;
         case 15: //data DATA ,, Struct
             DATA.Load();
-            DATA->value15 = *(UINT8 *)FieldValue;
+            DATA->fog.red = *(UINT8 *)FieldValue;
             break;
         case 16: //data DATA ,, Struct
             DATA.Load();
-            DATA->value16 = *(UINT8 *)FieldValue;
+            DATA->fog.green = *(UINT8 *)FieldValue;
             break;
         case 17: //data DATA ,, Struct
             DATA.Load();
-            DATA->value17 = *(UINT8 *)FieldValue;
+            DATA->fog.blue = *(UINT8 *)FieldValue;
             break;
         case 18: //data_p DATA ,, Struct
             if(ArraySize != 1)
                 break;
             DATA.Load();
-            DATA->value18[0] = ((UINT8ARRAY)FieldValue)[0];
+            DATA->fog.unused1 = ((UINT8ARRAY)FieldValue)[0];
             break;
         case 19: //data DATA ,, Struct
             DATA.Load();
-            DATA->value19 = *(FLOAT32 *)FieldValue;
+            DATA->fogNear = *(FLOAT32 *)FieldValue;
             break;
         case 20: //data DATA ,, Struct
             DATA.Load();
-            DATA->value20 = *(FLOAT32 *)FieldValue;
+            DATA->fogFar = *(FLOAT32 *)FieldValue;
             break;
         case 21: //data DATA ,, Struct
             DATA.Load();
-            DATA->value21 = *(SINT32 *)FieldValue;
+            DATA->directionalXY = *(SINT32 *)FieldValue;
             break;
         case 22: //data DATA ,, Struct
             DATA.Load();
-            DATA->value22 = *(SINT32 *)FieldValue;
+            DATA->directionalZ = *(SINT32 *)FieldValue;
             break;
         case 23: //data DATA ,, Struct
             DATA.Load();
-            DATA->value23 = *(FLOAT32 *)FieldValue;
+            DATA->directionalFade = *(FLOAT32 *)FieldValue;
             break;
         case 24: //data DATA ,, Struct
             DATA.Load();
-            DATA->value24 = *(FLOAT32 *)FieldValue;
+            DATA->fogClip = *(FLOAT32 *)FieldValue;
             break;
         case 25: //data DATA ,, Struct
             DATA.Load();
-            DATA->value25 = *(FLOAT32 *)FieldValue;
+            DATA->fogPower = *(FLOAT32 *)FieldValue;
             break;
         default:
             break;
