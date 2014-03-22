@@ -226,7 +226,7 @@ UINT32 BPTDRecord::GetFieldAttribute(FIELD_IDENTIFIERS, UINT32 WhichAttribute)
                         case 0: //fieldType
                             return UINT8_ARRAY_FIELD;
                         case 1: //fieldSize
-                            return NAM5.GetSize();
+                            return Parts.value[0]->NAM5.GetSize();
                         default:
                             return UNKNOWN_FIELD;
                         }
@@ -639,14 +639,14 @@ void BPTDRecord::DeleteField(FIELD_IDENTIFIERS)
                         MODL->Textures.MODS[ListIndex]->name = NULL;
                         return;
                     case 2: //texture
-                        MODL->Textures.MODS[ListIndex]->texture = defaultMODS.texture;
+                        MODL->Textures.MODS[ListIndex]->texture = 0; // defaultMODS.texture;
                         return;
                     case 3: //index
-                        MODL->Textures.MODS[ListIndex]->index = defaultMODS.index;
+                        MODL->Textures.MODS[ListIndex]->index = 0; // defaultMODS.index;
                         return;
                     default:
                         return;
-                    }
+                }
                 }
             return;
         case 11: //modelFlags
@@ -678,89 +678,89 @@ void BPTDRecord::DeleteField(FIELD_IDENTIFIERS)
                     Parts.value[ListIndex]->BPNI.Unload();
                     return;
                 case 5: //damageMult
-                    Parts.value[ListIndex]->BPND.value.damageMult = defaultBPND.damageMult;
+                    Parts.value[ListIndex]->BPND.value.damageMult = 0; // defaultBPND.damageMult;
                     return;
                 case 6: //flags
-                    Parts.value[ListIndex]->SetFlagMask(defaultBPND.flags);
+                    Parts.value[ListIndex]->SetFlagMask(0);  //defaultBPND.flags
                     return;
                 case 7: //partType
-                    Parts.value[ListIndex]->SetType(defaultBPND.partType);
+                    Parts.value[ListIndex]->SetType(0); //defaultBPND.partType
                     return;
                 case 8: //healthPercent
-                    Parts.value[ListIndex]->BPND.value.healthPercent = defaultBPND.healthPercent;
+                    Parts.value[ListIndex]->BPND.value.healthPercent = 0; // defaultBPND.healthPercent;
                     return;
                 case 9: //actorValue
-                    Parts.value[ListIndex]->BPND.value.actorValue = defaultBPND.actorValue;
+                    Parts.value[ListIndex]->BPND.value.actorValue = 0; // defaultBPND.actorValue;
                     return;
                 case 10: //hitChance
-                    Parts.value[ListIndex]->BPND.value.hitChance = defaultBPND.hitChance;
+                    Parts.value[ListIndex]->BPND.value.hitChance = 0; // defaultBPND.hitChance;
                     return;
                 case 11: //explodableExplosionChance
-                    Parts.value[ListIndex]->BPND.value.explodableExplosionChance = defaultBPND.explodableExplosionChance;
+                    Parts.value[ListIndex]->BPND.value.explodableExplosionChance = 0; // defaultBPND.explodableExplosionChance;
                     return;
                 case 12: //explodableDebrisCount
-                    Parts.value[ListIndex]->BPND.value.explodableDebrisCount = defaultBPND.explodableDebrisCount;
+                    Parts.value[ListIndex]->BPND.value.explodableDebrisCount = 0; // defaultBPND.explodableDebrisCount;
                     return;
                 case 13: //explodableDebris
-                    Parts.value[ListIndex]->BPND.value.explodableDebris = defaultBPND.explodableDebris;
+                    Parts.value[ListIndex]->BPND.value.explodableDebris = 0; // defaultBPND.explodableDebris;
                     return;
                 case 14: //explodableExplosion
-                    Parts.value[ListIndex]->BPND.value.explodableExplosion = defaultBPND.explodableExplosion;
+                    Parts.value[ListIndex]->BPND.value.explodableExplosion = 0; // defaultBPND.explodableExplosion;
                     return;
                 case 15: //maxTrackAngle
-                    Parts.value[ListIndex]->BPND.value.maxTrackAngle = defaultBPND.maxTrackAngle;
+                    Parts.value[ListIndex]->BPND.value.maxTrackAngle = 0; //defaultBPND.maxTrackAngle;
                     return;
                 case 16: //explodableDebrisScale
-                    Parts.value[ListIndex]->BPND.value.explodableDebrisScale = defaultBPND.explodableDebrisScale;
+                    Parts.value[ListIndex]->BPND.value.explodableDebrisScale = 0; //defaultBPND.explodableDebrisScale;
                     return;
                 case 17: //severableDebrisCount
-                    Parts.value[ListIndex]->BPND.value.severableDebrisCount = defaultBPND.severableDebrisCount;
+                    Parts.value[ListIndex]->BPND.value.severableDebrisCount = 0; //defaultBPND.severableDebrisCount;
                     return;
                 case 18: //severableDebris
-                    Parts.value[ListIndex]->BPND.value.severableDebris = defaultBPND.severableDebris;
+                    Parts.value[ListIndex]->BPND.value.severableDebris = 0; //defaultBPND.severableDebris;
                     return;
                 case 19: //severableExplosion
-                    Parts.value[ListIndex]->BPND.value.severableExplosion = defaultBPND.severableExplosion;
+                    Parts.value[ListIndex]->BPND.value.severableExplosion = 0; //defaultBPND.severableExplosion;
                     return;
                 case 20: //severableDebrisScale
-                    Parts.value[ListIndex]->BPND.value.severableDebrisScale = defaultBPND.severableDebrisScale;
+                    Parts.value[ListIndex]->BPND.value.severableDebrisScale = 0; //defaultBPND.severableDebrisScale;
                     return;
                 case 21: //transX
-                    Parts.value[ListIndex]->BPND.value.transX = defaultBPND.transX;
+                    Parts.value[ListIndex]->BPND.value.transX = 0; //defaultBPND.transX;
                     return;
                 case 22: //transY
-                    Parts.value[ListIndex]->BPND.value.transY = defaultBPND.transY;
+                    Parts.value[ListIndex]->BPND.value.transY = 0; //defaultBPND.transY;
                     return;
                 case 23: //transZ
-                    Parts.value[ListIndex]->BPND.value.transZ = defaultBPND.transZ;
+                    Parts.value[ListIndex]->BPND.value.transZ = 0; //defaultBPND.transZ;
                     return;
                 case 24: //rotX
-                    Parts.value[ListIndex]->BPND.value.rotX = defaultBPND.rotX;
+                    Parts.value[ListIndex]->BPND.value.rotX = 0; //defaultBPND.rotX;
                     return;
                 case 25: //rotY
-                    Parts.value[ListIndex]->BPND.value.rotY = defaultBPND.rotY;
+                    Parts.value[ListIndex]->BPND.value.rotY = 0; //defaultBPND.rotY;
                     return;
                 case 26: //rotZ
-                    Parts.value[ListIndex]->BPND.value.rotZ = defaultBPND.rotZ;
+                    Parts.value[ListIndex]->BPND.value.rotZ = 0; //defaultBPND.rotZ;
                     return;
                 case 27: //severableImpact
-                    Parts.value[ListIndex]->BPND.value.severableImpact = defaultBPND.severableImpact;
+                    Parts.value[ListIndex]->BPND.value.severableImpact = 0; //defaultBPND.severableImpact;
                     return;
                 case 28: //explodableImpact
-                    Parts.value[ListIndex]->BPND.value.explodableImpact = defaultBPND.explodableImpact;
+                    Parts.value[ListIndex]->BPND.value.explodableImpact = 0; //defaultBPND.explodableImpact;
                     return;
                 case 29: //severableDecalCount
-                    Parts.value[ListIndex]->BPND.value.severableDecalCount = defaultBPND.severableDecalCount;
+                    Parts.value[ListIndex]->BPND.value.severableDecalCount = 0; //defaultBPND.severableDecalCount;
                     return;
                 case 30: //explodableDecalCount
-                    Parts.value[ListIndex]->BPND.value.explodableDecalCount = defaultBPND.explodableDecalCount;
+                    Parts.value[ListIndex]->BPND.value.explodableDecalCount = 0; //defaultBPND.explodableDecalCount;
                     return;
                 case 31: //unused1
-                    Parts.value[ListIndex]->BPND.value.unused1[0] = defaultBPND.unused1[0];
-                    Parts.value[ListIndex]->BPND.value.unused1[1] = defaultBPND.unused1[1];
+                    Parts.value[ListIndex]->BPND.value.unused1[0] = 0; //defaultBPND.unused1[0];
+                    Parts.value[ListIndex]->BPND.value.unused1[1] = 0; //defaultBPND.unused1[1];
                     return;
                 case 32: //limbReplaceScale
-                    Parts.value[ListIndex]->BPND.value.limbReplaceScale = defaultBPND.limbReplaceScale;
+                    Parts.value[ListIndex]->BPND.value.limbReplaceScale = 0; //defaultBPND.limbReplaceScale;
                     return;
                 case 33: //limbReplaceModPath
                     Parts.value[ListIndex]->NAM1.Unload();
