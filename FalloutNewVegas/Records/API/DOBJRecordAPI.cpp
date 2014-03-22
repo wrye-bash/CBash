@@ -75,7 +75,7 @@ UINT32 DOBJRecord::GetFieldAttribute(FIELD_IDENTIFIERS, UINT32 WhichAttribute)
                 }
             return UNKNOWN_FIELD;
         case 7: //data Default Objects
-            return UNPARSED_FIELD;
+            return UNKNOWN_FIELD; // UNPARSED_FIELD;
         default:
             return UNKNOWN_FIELD;
         }
@@ -101,7 +101,7 @@ void * DOBJRecord::GetField(FIELD_IDENTIFIERS, void **FieldValues)
             *FieldValues = &versionControl2[0];
             return NULL;
         case 7: //data Default Objects
-            return UNPARSEDGET_FIELD7;
+            return NULL; // UNPARSEDGET_FIELD7;
         default:
             return NULL;
         }
@@ -136,7 +136,7 @@ bool DOBJRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             versionControl2[1] = ((UINT8ARRAY)FieldValue)[1];
             break;
         case 7: //data Default Objects
-            return UNPARSEDGET_FIELD7;
+            break; // UNPARSEDGET_FIELD7;
         default:
             break;
         }
@@ -164,7 +164,7 @@ void DOBJRecord::DeleteField(FIELD_IDENTIFIERS)
             versionControl2[1] = 0;
             return;
         case 7: //data Default Objects
-            return UNPARSEDDEL_FIELD7;
+            return; // UNPARSEDDEL_FIELD7;
         default:
             return;
         }
