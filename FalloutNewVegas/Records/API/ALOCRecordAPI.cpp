@@ -177,27 +177,27 @@ void * ALOCRecord::GetField(FIELD_IDENTIFIERS, void **FieldValues)
             *FieldValues = NAM3.value;
             return NULL;
         case 11: //nam4 Location Delay
-            return NAM4.IsLoaded() ? &NAM4->value11 : NULL;
+            return NAM4.IsLoaded() ? &NAM4.value : NULL;
         case 12: //nam5 Day Start
-            return NAM5.IsLoaded() ? &NAM5->value12 : NULL;
+            return NAM5.IsLoaded() ? &NAM5.value : NULL;
         case 13: //nam6 Night Start
-            return NAM6.IsLoaded() ? &NAM6->value13 : NULL;
+            return NAM6.IsLoaded() ? &NAM6.value : NULL;
         case 14: //nam7 Retrigger Delay
-            return NAM7.IsLoaded() ? &NAM7->value14 : NULL;
+            return NAM7.IsLoaded() ? &NAM7.value : NULL;
         case 15: //hnam Media Set
-            return HNAM.IsLoaded() ? &HNAM->value15 : NULL;
+            return HNAM.IsLoaded() ? &HNAM.value[0] : NULL;
         case 16: //znam Media Set
-            return ZNAM.IsLoaded() ? &ZNAM->value16 : NULL;
+            return ZNAM.IsLoaded() ? &ZNAM.value[0] : NULL;
         case 17: //xnam Media Set
-            return XNAM.IsLoaded() ? &XNAM->value17 : NULL;
+            return XNAM.IsLoaded() ? &XNAM.value[0] : NULL;
         case 18: //ynam Media Set
-            return YNAM.IsLoaded() ? &YNAM->value18 : NULL;
+            return YNAM.IsLoaded() ? &YNAM.value[0] : NULL;
         case 19: //lnam Media Set
-            return LNAM.IsLoaded() ? &LNAM->value19 : NULL;
+            return LNAM.IsLoaded() ? &LNAM.value[0] : NULL;
         case 20: //gnam Media Set
-            return GNAM.IsLoaded() ? &GNAM->value20 : NULL;
+            return GNAM.IsLoaded() ? &GNAM.value[0] : NULL;
         case 21: //rnam Conditional Faction
-            return RNAM.IsLoaded() ? &RNAM->value21 : NULL;
+            return RNAM.IsLoaded() ? &RNAM.value : NULL;
         case 22: //fnam_p Unknown
             *FieldValues = FNAM.value;
             return NULL;
@@ -248,47 +248,47 @@ bool ALOCRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             break;
         case 11: //nam4 Location Delay
             NAM4.Load();
-            NAM4->value11 = *(FLOAT32 *)FieldValue;
+            NAM4.value = *(FLOAT32 *)FieldValue;
             break;
         case 12: //nam5 Day Start
             NAM5.Load();
-            NAM5->value12 = *(UINT32 *)FieldValue;
+            NAM5.value = *(UINT32 *)FieldValue;
             break;
         case 13: //nam6 Night Start
             NAM6.Load();
-            NAM6->value13 = *(UINT32 *)FieldValue;
+            NAM6.value = *(UINT32 *)FieldValue;
             break;
         case 14: //nam7 Retrigger Delay
             NAM7.Load();
-            NAM7->value14 = *(FLOAT32 *)FieldValue;
+            NAM7.value = *(FLOAT32 *)FieldValue;
             break;
         case 15: //hnam Media Set
-            HNAM.Load();
-            HNAM->value15 = *(FORMID *)FieldValue;
+            //HNAM.Load();
+            HNAM.value[0] = *(FORMID *)FieldValue;
             return true;
         case 16: //znam Media Set
-            ZNAM.Load();
-            ZNAM->value16 = *(FORMID *)FieldValue;
+            //ZNAM.Load();
+            ZNAM.value[0] = *(FORMID *)FieldValue;
             return true;
         case 17: //xnam Media Set
-            XNAM.Load();
-            XNAM->value17 = *(FORMID *)FieldValue;
+            //XNAM.Load();
+            XNAM.value[0] = *(FORMID *)FieldValue;
             return true;
         case 18: //ynam Media Set
-            YNAM.Load();
-            YNAM->value18 = *(FORMID *)FieldValue;
+            //YNAM.Load();
+            YNAM.value[0] = *(FORMID *)FieldValue;
             return true;
         case 19: //lnam Media Set
-            LNAM.Load();
-            LNAM->value19 = *(FORMID *)FieldValue;
+            //LNAM.Load();
+            LNAM.value[0] = *(FORMID *)FieldValue;
             return true;
         case 20: //gnam Media Set
-            GNAM.Load();
-            GNAM->value20 = *(FORMID *)FieldValue;
+            //GNAM.Load();
+            GNAM.value[0] = *(FORMID *)FieldValue;
             return true;
         case 21: //rnam Conditional Faction
             RNAM.Load();
-            RNAM->value21 = *(FORMID *)FieldValue;
+            RNAM.value = *(FORMID *)FieldValue;
             return true;
         case 22: //fnam_p Unknown
             FNAM.Copy((UINT8ARRAY)FieldValue, ArraySize);
