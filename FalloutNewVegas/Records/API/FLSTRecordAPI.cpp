@@ -101,7 +101,8 @@ void * FLSTRecord::GetField(FIELD_IDENTIFIERS, void **FieldValues)
             *FieldValues = &versionControl2[0];
             return NULL;
         case 7: //lnam FormID
-            return LNAM.IsLoaded() ? &LNAM->value7 : NULL;
+            // TODO: Make this work right with the list it is
+            return LNAM.IsLoaded() ? &LNAM.value[0] : NULL;
         default:
             return NULL;
         }
@@ -136,8 +137,8 @@ bool FLSTRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             versionControl2[1] = ((UINT8ARRAY)FieldValue)[1];
             break;
         case 7: //lnam FormID
-            LNAM.Load();
-            LNAM->value7 = *(FORMID *)FieldValue;
+            // TODO: Make this work right as a list
+            LNAM.value[0] = *(FORMID *)FieldValue;
             return true;
         default:
             break;
