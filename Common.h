@@ -1577,7 +1577,11 @@ struct ReqSubRecord
         writer.record_write_subrecord(_Type, &value, sizeof(T));
         }
 
-    T *operator->() const
+    const T *operator->() const
+        {
+        return &value;
+        }
+    T *operator->()
         {
         return &value;
         }
