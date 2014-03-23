@@ -38,6 +38,99 @@
 
 namespace FNV
 {
+PERKRecord::PERKDATA::PERKDATA():
+    trait(eNotTrait), minLevel(0), ranks(0), playable(eNotPlayable), hidden(eNotHidden)
+    {
+    //
+    }
+
+PERKRecord::PERKDATA::~PERKDATA()
+    {
+    //
+    }
+
+bool PERKRecord::PERKDATA::operator ==(const PERKDATA &other) const
+    {
+    return (trait == other.trait &&
+            minLevel == other.minLevel &&
+            ranks == other.ranks &&
+            playable == other.playable &&
+            hidden == other.hidden
+            );
+    }
+
+bool PERKRecord::PERKDATA::operator !=(const PERKDATA &other) const
+    {
+    return !(*this == other);
+    }
+
+PERKRecord::PERKPRKE::PERKPRKE():
+    perkType(eQuestStage),
+    rank(0),
+    priority(0)
+    {
+    //
+    }
+
+PERKRecord::PERKPRKE::~PERKPRKE()
+    {
+    //
+    }
+
+bool PERKRecord::PERKPRKE::operator ==(const PERKPRKE &other) const
+    {
+    return (perkType == other.perkType &&
+            rank == other.rank &&
+            priority == other.priority
+            );
+    }
+
+bool PERKRecord::PERKPRKE::operator !=(const PERKPRKE &other) const
+    {
+    return !(*this == other);
+    }
+
+bool PERKRecord::PERKCondition::operator ==(const PERKCondition &other) const
+    {
+    return (PRKC == other.PRKC &&
+            CTDA == other.CTDA
+            );
+    }
+
+bool PERKRecord::PERKCondition::operator !=(const PERKCondition &other) const
+    {
+    return !(*this == other);
+    }
+
+bool PERKRecord::PERKEffect::operator ==(const PERKEffect &other) const
+    {
+    return (PRKE == other.PRKE &&
+            DATAfid == other.DATAfid &&
+            DATAS8 == other.DATAS8 &&
+            DATAU81 == other.DATAU81 &&
+            DATAU82 == other.DATAU82 &&
+            DATAU83 == other.DATAU83 &&
+            CTDA == other.CTDA &&
+            EPFT == other.EPFT &&
+            EPFDf1 == other.EPFDf1 &&
+            EPFDf2 == other.EPFDf2 &&
+            EPFDav1 == other.EPFDav1 &&
+            EPFDfid1 == other.EPFDfid1 &&
+            EPF2.equals(other.EPF2) &&
+            EPF3 == other.EPF3 &&
+            SCHR == other.SCHR &&
+            SCDA == other.SCDA &&
+            SCTX.equals(other.SCTX) &&
+            VARS == other.VARS &&
+            SCR_ == other.SCR_
+            );
+    }
+
+bool PERKRecord::PERKEffect::operator !=(const PERKEffect &other) const
+    {
+    return !(*this == other);
+    }
+
 bool PERKRecord::PERKEffect::IsRunImmediately()
     {
     if (!EPF3.IsLoaded()) return false;
