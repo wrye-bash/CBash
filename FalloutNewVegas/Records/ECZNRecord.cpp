@@ -38,6 +38,36 @@
 
 namespace FNV
 {
+ECZNRecord::ECZNDATA::ECZNDATA():
+    owner(0),
+    rank(0),
+    minLevel(0),
+    flags(0),
+    unused1(0)
+    {
+    //
+    }
+
+ECZNRecord::ECZNDATA::~ECZNDATA()
+    {
+    //
+    }
+
+bool ECZNRecord::ECZNDATA::operator ==(const ECZNDATA &other) const
+    {
+    return (owner == other.owner &&
+            rank == other.rank &&
+            minLevel == other.minLevel &&
+            flags == other.flags
+            // && unused1 == other.unused1  // unused - so probably should effect the compare?
+            );
+    }
+
+bool ECZNRecord::ECZNDATA::operator !=(const ECZNDATA &other) const
+    {
+    return !(*this == other);
+    }
+
 ECZNRecord::ECZNRecord(unsigned char *_recData):
     FNVRecord(_recData)
     {
