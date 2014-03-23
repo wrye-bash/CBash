@@ -38,6 +38,77 @@
 
 namespace FNV
 {
+IMGSRecord::IMGSDNAM::IMGSDNAM():
+    hdrEyeAdaptSpeed(0.0), hdrBlurRadius(0.0), hdrBlurPasses(0.0),
+    hdrEmissiveMult(0.0), hdrTargetLUM(0.0), hdrUpperLUMClamp(0.0),
+    hdrBrightScale(0.0), hdrBrightClamp(0.0), hdrLUMRampNoTex(0.0),
+    hdrLUMRampMin(0.0), hdrLUMRampMax(0.0), hdrSunlightDimmer(0.0),
+    hdrGrassDimmer(0.0), hdrTreeDimmer(0.0), hdrSkinDimmer(0.0),
+    bloomBlurRadius(0.0), bloomAlphaMultInterior(0.0), bloomAlphaMultExterior(0.0),
+    hitBlurRadius(0.0), hitBlurDampingConstant(0.0), hitDampingConstant(0.0),
+    neRed(0.0), neGreen(0.0), neBlue(0.0), neBrightness(0.0),
+    saturation(0.0), contrastAvgLUMValue(0.0), contrastValue(0.0),
+    brightnessValue(0.0), cineRed(0.0), cineGreen(0.0), cineBlue(0.0),
+    cineValue(0.0),
+    flags(0)
+    {
+    memset(&unused1, 0, sizeof(unused1));
+    memset(&unused2, 0, sizeof(unused2));
+    memset(&unused3, 0, sizeof(unused3));
+    memset(&unused4, 0, sizeof(unused4));
+    memset(&unused5, 0, sizeof(unused5));
+    }
+
+IMGSRecord::IMGSDNAM::~IMGSDNAM()
+    {
+    //
+    }
+
+bool IMGSRecord::IMGSDNAM::operator ==(const IMGSDNAM &other) const
+    {
+    return (AlmostEqual(hdrEyeAdaptSpeed, other.hdrEyeAdaptSpeed, 2) &&
+            AlmostEqual(hdrBlurRadius, other.hdrBlurRadius, 2) &&
+            AlmostEqual(hdrBlurPasses, other.hdrBlurPasses, 2) &&
+            AlmostEqual(hdrEmissiveMult, other.hdrEmissiveMult, 2) &&
+            AlmostEqual(hdrTargetLUM, other.hdrTargetLUM, 2) &&
+            AlmostEqual(hdrUpperLUMClamp, other.hdrUpperLUMClamp, 2) &&
+            AlmostEqual(hdrBrightScale, other.hdrBrightScale, 2) &&
+            AlmostEqual(hdrBrightClamp, other.hdrBrightClamp, 2) &&
+            AlmostEqual(hdrLUMRampNoTex, other.hdrLUMRampNoTex, 2) &&
+            AlmostEqual(hdrLUMRampMin, other.hdrLUMRampMin, 2) &&
+            AlmostEqual(hdrLUMRampMax, other.hdrLUMRampMax, 2) &&
+            AlmostEqual(hdrSunlightDimmer, other.hdrSunlightDimmer, 2) &&
+            AlmostEqual(hdrGrassDimmer, other.hdrGrassDimmer, 2) &&
+            AlmostEqual(hdrTreeDimmer, other.hdrTreeDimmer, 2) &&
+            AlmostEqual(hdrSkinDimmer, other.hdrSkinDimmer, 2) &&
+            AlmostEqual(bloomBlurRadius, other.bloomBlurRadius, 2) &&
+            AlmostEqual(bloomAlphaMultInterior, other.bloomAlphaMultInterior, 2) &&
+            AlmostEqual(bloomAlphaMultExterior, other.bloomAlphaMultExterior, 2) &&
+            AlmostEqual(hitBlurRadius, other.hitBlurRadius, 2) &&
+            AlmostEqual(hitBlurDampingConstant, other.hitBlurDampingConstant, 2) &&
+            AlmostEqual(hitDampingConstant, other.hitDampingConstant, 2) &&
+            AlmostEqual(neRed, other.neRed, 2) &&
+            AlmostEqual(neGreen, other.neGreen, 2) &&
+            AlmostEqual(neBlue, other.neBlue, 2) &&
+            AlmostEqual(neBrightness, other.neBrightness, 2) &&
+            AlmostEqual(saturation, other.saturation, 2) &&
+            AlmostEqual(contrastAvgLUMValue, other.contrastAvgLUMValue, 2) &&
+            AlmostEqual(contrastValue, other.contrastValue, 2) &&
+            AlmostEqual(brightnessValue, other.brightnessValue, 2) &&
+            AlmostEqual(cineRed, other.cineRed, 2) &&
+            AlmostEqual(cineGreen, other.cineGreen, 2) &&
+            AlmostEqual(cineBlue, other.cineBlue, 2) &&
+            AlmostEqual(cineValue, other.cineValue, 2) &&
+            flags == other.flags
+            // unused1, unused2, unused3, unused4, unused5
+            );
+    }
+
+bool IMGSRecord::IMGSDNAM::operator !=(const IMGSDNAM &other) const
+    {
+    return !(*this == other);
+    }
+
 IMGSRecord::IMGSRecord(unsigned char *_recData):
     FNVRecord(_recData)
     {
