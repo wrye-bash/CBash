@@ -38,6 +38,46 @@
 
 namespace FNV
 {
+CAMSRecord::CAMSDATA::CAMSDATA():
+    action(eShoot),
+    location(eAttacker),
+    target(eAttacker),
+    flags(0),
+    playerTimeMult(0.0),
+    targetTimeMult(0.0),
+    globalTimeMult(0.0),
+    maxTime(0.0),
+    minTime(0.0),
+    targetPercentBetweenActors(0.0)
+    {
+    //
+    }
+
+CAMSRecord::CAMSDATA::~CAMSDATA()
+    {
+    //
+    }
+
+bool CAMSRecord::CAMSDATA::operator ==(const CAMSDATA &other) const
+    {
+    return (action == other.action &&
+            location == other.location &&
+            target == other.target &&
+            flags == other.flags &&
+            AlmostEqual(playerTimeMult, other.playerTimeMult, 2) &&
+            AlmostEqual(targetTimeMult, other.targetTimeMult, 2) &&
+            AlmostEqual(globalTimeMult, other.globalTimeMult, 2) &&
+            AlmostEqual(maxTime, other.maxTime, 2) &&
+            AlmostEqual(minTime, other.minTime, 2) &&
+            AlmostEqual(targetPercentBetweenActors, other.targetPercentBetweenActors, 2)
+            );
+    }
+
+bool CAMSRecord::CAMSDATA::operator !=(const CAMSDATA &other) const
+    {
+    return !(*this == other);
+    }
+
 CAMSRecord::CAMSRecord(unsigned char *_recData):
     FNVRecord(_recData)
     {
