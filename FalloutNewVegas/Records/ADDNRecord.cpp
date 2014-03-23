@@ -38,6 +38,31 @@
 
 namespace FNV
 {
+ADDNRecord::ADDNDNAM::ADDNDNAM() :
+    particleCap(0)
+    {
+    unknown[0] = 0;
+    unknown[1] = 0;
+    }
+
+ADDNRecord::ADDNDNAM::~ADDNDNAM()
+    {
+    //
+    }
+
+bool ADDNRecord::ADDNDNAM::operator ==(const ADDNDNAM &other) const
+    {
+    return (particleCap == other.particleCap &&
+            unknown[0] == other.unknown[0] &&
+            unknown[1] == other.unknown[1]
+            );
+    }
+
+bool ADDNRecord::ADDNDNAM::operator !=(const ADDNDNAM &other) const
+    {
+    return !(*this == other);
+    }
+
 ADDNRecord::ADDNRecord(unsigned char *_recData):
     FNVRecord(_recData)
     {
