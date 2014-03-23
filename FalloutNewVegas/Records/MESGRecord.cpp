@@ -38,6 +38,18 @@
 
 namespace FNV
 {
+bool MESGRecord::MESGButton::operator ==(const MESGButton &other) const
+    {
+    return (ITXT.equals(other.ITXT) &&
+            CTDA == other.CTDA
+            );
+    }
+
+bool MESGRecord::MESGButton::operator !=(const MESGButton &other) const
+    {
+    return !(*this == other);
+    }
+
 MESGRecord::MESGRecord(unsigned char *_recData):
     FNVRecord(_recData)
     {
