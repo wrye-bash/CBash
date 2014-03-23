@@ -38,6 +38,111 @@
 
 namespace FNV
 {
+RGDLRecord::RGDLDATA::RGDLDATA():
+    numBones(0),
+    feedbackType(eNoFeedback),
+    footIKType(eNoFootIK), lookIKType(eNoLookIK), grabIKType(eNoGrabIK),
+    matchPoseType(eNoMatchPose), unused2(0)
+    {
+    memset(&unused1, 0, sizeof(unused1));
+    }
+
+RGDLRecord::RGDLDATA::~RGDLDATA()
+    {
+    //
+    }
+
+bool RGDLRecord::RGDLDATA::operator ==(const RGDLDATA &other) const
+    {
+    return (numBones == other.numBones &&
+            // unused1
+            feedbackType == other.feedbackType &&
+            footIKType == other.footIKType &&
+            lookIKType == other.lookIKType &&
+            grabIKType == other.grabIKType &&
+            matchPoseType == other.matchPoseType
+            // unused2
+            );
+    }
+
+bool RGDLRecord::RGDLDATA::operator !=(const RGDLDATA &other) const
+    {
+    return !(*this == other);
+    }
+
+RGDLRecord::RGDLRAFD::RGDLRAFD():
+    blendAmt(0.0), hierachyGain(0.0), posGain(0.0),
+    velGain(0.0), accGain(0.0), snapGain(0.0), velDamping(0.0),
+    snapLinVel(0.0), snapAngVel(0.0), snapLinDist(0.0),
+    snapAngDist(0.0), posLinVel(0.0), posAngVel(0.0),
+    posProjectileVel(0), posMeleeVel(0)
+    {
+    //
+    }
+
+RGDLRecord::RGDLRAFD::~RGDLRAFD()
+    {
+    //
+    }
+
+bool RGDLRecord::RGDLRAFD::operator ==(const RGDLRAFD &other) const
+    {
+    return (AlmostEqual(blendAmt, other.blendAmt, 2) &&
+            AlmostEqual(hierachyGain, other.hierachyGain, 2) &&
+            AlmostEqual(posGain, other.posGain, 2) &&
+            AlmostEqual(velGain, other.velGain, 2) &&
+            AlmostEqual(accGain, other.accGain, 2) &&
+            AlmostEqual(snapGain, other.snapGain, 2) &&
+            AlmostEqual(velDamping, other.velDamping, 2) &&
+            AlmostEqual(snapLinVel, other.snapLinVel, 2) &&
+            AlmostEqual(snapAngVel, other.snapAngVel, 2) &&
+            AlmostEqual(snapLinDist, other.snapLinDist, 2) &&
+            AlmostEqual(snapAngDist, other.snapAngDist, 2) &&
+            AlmostEqual(posLinVel, other.posLinVel, 2) &&
+            AlmostEqual(posAngVel, other.posAngVel, 2) &&
+            posProjectileVel == other.posProjectileVel &&
+            posMeleeVel == other.posMeleeVel
+            );
+    }
+
+bool RGDLRecord::RGDLRAFD::operator !=(const RGDLRAFD &other) const
+    {
+    return !(*this == other);
+    }
+
+RGDLRecord::RGDLRAPS::RGDLRAPS():
+    matchBones1(0), matchBones2(0), matchBones3(0),
+    flags(0), unused(0),
+    motorsStrength(0.0), poseDelay(0.0), errorAllowance(0.0),
+    disableDisplacement(0.0)
+    {
+    //
+    }
+
+RGDLRecord::RGDLRAPS::~RGDLRAPS()
+    {
+    //
+    }
+
+bool RGDLRecord::RGDLRAPS::operator ==(const RGDLRAPS &other) const
+    {
+    return (matchBones1 == other.matchBones1 &&
+            matchBones2 == other.matchBones2 &&
+            matchBones3 == other.matchBones3 &&
+            flags == other.flags &&
+            // unused
+            AlmostEqual(motorsStrength, other.motorsStrength, 2) &&
+            AlmostEqual(poseDelay, other.poseDelay, 2) &&
+            AlmostEqual(errorAllowance, other.errorAllowance, 2) &&
+            AlmostEqual(disableDisplacement, other.disableDisplacement, 2)
+            );
+    }
+
+bool RGDLRecord::RGDLRAPS::operator !=(const RGDLRAPS &other) const
+    {
+    return !(*this == other);
+    }
+
 RGDLRecord::RGDLRecord(unsigned char *_recData):
     FNVRecord(_recData)
     {
