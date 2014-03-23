@@ -38,6 +38,38 @@
 
 namespace FNV
 {
+IPCTRecord::IPCTDATA::IPCTDATA():
+    duration(0.0),
+    orientation(0),
+    angleThreshold(0.0),
+    placementRadius(0.0),
+    soundLevel(eLoud),
+    flags(0)
+    {
+    //
+    }
+
+IPCTRecord::IPCTDATA::~IPCTDATA()
+    {
+    //
+    }
+
+bool IPCTRecord::IPCTDATA::operator ==(const IPCTDATA &other) const
+    {
+    return (AlmostEqual(duration, other.duration, 2) &&
+            orientation == other.orientation &&
+            AlmostEqual(angleThreshold, other.angleThreshold, 2) &&
+            AlmostEqual(placementRadius, other.placementRadius, 2) &&
+            soundLevel == other.soundLevel &&
+            flags == other.flags
+            );
+    }
+
+bool IPCTRecord::IPCTDATA::operator !=(const IPCTDATA &other) const
+    {
+    return !(*this == other);
+    }
+
 IPCTRecord::IPCTRecord(unsigned char *_recData):
     FNVRecord(_recData)
     {
