@@ -38,6 +38,41 @@
 
 namespace FNV
 {
+IPDSRecord::IPDSDATA::IPDSDATA():
+    stone(0), dirt(0), grass(0), glass(0), metal(0), wood(0),
+    organic(0), cloth(0), water(0), hollowMetal(0), organicBug(0),
+    organicGlow(0)
+    {
+    //
+    }
+
+IPDSRecord::IPDSDATA::~IPDSDATA()
+    {
+    //
+    }
+
+bool IPDSRecord::IPDSDATA::operator ==(const IPDSDATA &other) const
+    {
+    return (stone == other.stone &&
+            dirt == other.dirt &&
+            grass == other.grass &&
+            glass == other.glass &&
+            metal == other.metal &&
+            wood == other.wood &&
+            organic == other.organic &&
+            cloth == other.cloth &&
+            water == other.water &&
+            hollowMetal == other.hollowMetal &&
+            organicBug == other.organicBug &&
+            organicGlow == other.organicGlow
+            );
+    }
+
+bool IPDSRecord::IPDSDATA::operator !=(const IPDSDATA &other) const
+    {
+    return !(*this == other);
+    }
+
 IPDSRecord::IPDSRecord(unsigned char *_recData):
     FNVRecord(_recData)
     {
