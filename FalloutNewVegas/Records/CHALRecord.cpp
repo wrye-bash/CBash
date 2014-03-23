@@ -38,6 +38,39 @@
 
 namespace FNV
 {
+CHALRecord::CHALDATA::CHALDATA():
+    challengeType(eKillFromList),
+    threshold(0),
+    flags(0),
+    interval(0)
+    {
+    memset(&var1, 0, sizeof(var1));
+    memset(&var2, 0, sizeof(var2));
+    memset(&var3, 0, sizeof(var3));
+    }
+
+CHALRecord::CHALDATA::~CHALDATA()
+    {
+    //
+    }
+
+bool CHALRecord::CHALDATA::operator ==(const CHALDATA &other) const
+    {
+    return (challengeType == other.challengeType &&
+            threshold == other.threshold &&
+            flags == other.flags &&
+            interval == other.interval &&
+            memcmp(&var1, &other.var1, sizeof(var1)) == 0 &&
+            memcmp(&var2, &other.var2, sizeof(var2)) == 0 &&
+            memcmp(&var3, &other.var3, sizeof(var3)) == 0
+            );
+    }
+
+bool CHALRecord::CHALDATA::operator !=(const CHALDATA &other) const
+    {
+    return !(*this == other);
+    }
+
 CHALRecord::CHALRecord(unsigned char *_recData):
     FNVRecord(_recData)
     {
