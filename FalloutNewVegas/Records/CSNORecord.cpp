@@ -38,6 +38,54 @@
 
 namespace FNV
 {
+CSNORecord::CSNODATA::CSNODATA():
+    shufflePercent(0.0),
+    bjPayoutRatio(0.0),
+    symbol1Stop(0),
+    symbol2Stop(0),
+    symbol3Stop(0),
+    symbol4Stop(0),
+    symbol5Stop(0),
+    symbol6Stop(0),
+    symbolWStop(0),
+    numDecks(0),
+    maxWinnings(0),
+    currency(0),
+    winningsQuest(0),
+    flags(0)
+    {
+    //
+    }
+
+CSNORecord::CSNODATA::~CSNODATA()
+    {
+    //
+    }
+
+bool CSNORecord::CSNODATA::operator ==(const CSNODATA &other) const
+    {
+    return (AlmostEqual(shufflePercent, other.shufflePercent, 2) &&
+            AlmostEqual(bjPayoutRatio, other.bjPayoutRatio, 2) &&
+            symbol1Stop == other.symbol1Stop &&
+            symbol2Stop == other.symbol2Stop &&
+            symbol3Stop == other.symbol3Stop &&
+            symbol4Stop == other.symbol4Stop &&
+            symbol5Stop == other.symbol5Stop &&
+            symbol6Stop == other.symbol6Stop &&
+            symbolWStop == other.symbolWStop &&
+            numDecks == other.numDecks &&
+            maxWinnings == other.maxWinnings &&
+            currency == other.currency &&
+            winningsQuest == other.winningsQuest &&
+            flags == other.flags
+            );
+    }
+
+bool CSNORecord::CSNODATA::operator !=(const CSNODATA &other) const
+    {
+    return !(*this == other);
+    }
+
 CSNORecord::CSNORecord(unsigned char *_recData):
     FNVRecord(_recData)
     {
