@@ -38,6 +38,32 @@
 
 namespace FNV
 {
+AMEFRecord::AMEFDATA::AMEFDATA() :
+    type(eDamage),
+    op(eAdd),
+    value(0.0)
+    {
+    //
+    }
+
+AMEFRecord::AMEFDATA::~AMEFDATA()
+    {
+    //
+    }
+
+bool AMEFRecord::AMEFDATA::operator ==(const AMEFDATA &other) const
+    {
+    return (type == other.type &&
+            op == other.op &&
+            AlmostEqual(value, other.value, 2)
+            );
+    }
+
+bool AMEFRecord::AMEFDATA::operator !=(const AMEFDATA &other) const
+    {
+    return !(*this == other);
+    }
+
 AMEFRecord::AMEFRecord(unsigned char *_recData):
     FNVRecord(_recData)
     {
