@@ -141,11 +141,11 @@ void * ADDNRecord::GetField(FIELD_IDENTIFIERS, void **FieldValues)
             *FieldValues = &versionControl2[0];
             return NULL;
         case 7: //boundX
-            return OBND.IsLoaded() ? &OBND->x : NULL;
+            return OBND.IsLoaded() ? &OBND->x1 : NULL;
         case 8: //boundY
-            return OBND.IsLoaded() ? &OBND->y : NULL;
+            return OBND.IsLoaded() ? &OBND->y1 : NULL;
         case 9: //boundZ
-            return OBND.IsLoaded() ? &OBND->z : NULL;
+            return OBND.IsLoaded() ? &OBND->z1 : NULL;
         case 10: //modPath
             return MODL.IsLoaded() ? MODL->MODL.value : NULL;
         case 11: //modb
@@ -154,21 +154,24 @@ void * ADDNRecord::GetField(FIELD_IDENTIFIERS, void **FieldValues)
             *FieldValues = MODL.IsLoaded() ? MODL->MODT.value : NULL;
             return NULL;
         case 13: //mods Alternate Textures
-            return MODL.IsLoaded() ? MODL->MODS.value : NULL;
+            return NULL;
+            //return MODL.IsLoaded() ? MODL->Textures.MODS.value : NULL;
         case 14: //mods Alternate Textures
-            return MODL.IsLoaded() ? &MODL->MODS->value14 : NULL;
+            return NULL;
+            //return MODL.IsLoaded() ? &MODL->Textures.MODS->value14 : NULL;
         case 15: //mods Alternate Textures
-            return MODL.IsLoaded() ? &MODL->MODS->value15 : NULL;
+            return NULL;
+            //return MODL.IsLoaded() ? &MODL->Textures.MODS->value15 : NULL;
         case 16: //modelFlags
-            return MODL.IsLoaded() ? &MODL->MODD->value16 : NULL;
+            return MODL.IsLoaded() ? &MODL->MODD.value : NULL;
         case 17: //data Node Index
-            return DATA.IsLoaded() ? &DATA->value17 : NULL;
+            return DATA.IsLoaded() ? &DATA.value : NULL;
         case 18: //snam Sound
-            return SNAM.IsLoaded() ? &SNAM->value18 : NULL;
+            return SNAM.IsLoaded() ? &SNAM.value : NULL;
         case 19: //dnam DNAM ,, Struct
-            return DNAM.IsLoaded() ? &DNAM->value19 : NULL;
+            return DNAM.IsLoaded() ? &DNAM->particleCap : NULL;
         case 20: //dnam_p DNAM ,, Struct
-            *FieldValues = DNAM.IsLoaded() ? &DNAM->value20[0] : NULL;
+            *FieldValues = DNAM.IsLoaded() ? &DNAM->unknown[0] : NULL;
             return NULL;
         default:
             return NULL;
@@ -205,15 +208,15 @@ bool ADDNRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             break;
         case 7: //boundX
             OBND.Load();
-            OBND->x = *(SINT16 *)FieldValue;
+            OBND->x1 = *(SINT16 *)FieldValue;
             break;
         case 8: //boundY
             OBND.Load();
-            OBND->y = *(SINT16 *)FieldValue;
+            OBND->y1 = *(SINT16 *)FieldValue;
             break;
         case 9: //boundZ
             OBND.Load();
-            OBND->z = *(SINT16 *)FieldValue;
+            OBND->z1 = *(SINT16 *)FieldValue;
             break;
         case 10: //modPath
             MODL.Load();
@@ -229,41 +232,41 @@ bool ADDNRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             break;
         case 13: //mods Alternate Textures
             MODL.Load();
-            MODL->MODS.Copy((STRING)FieldValue);
+            //MODL->Textures.MODS.Copy((STRING)FieldValue);
             break;
         case 14: //mods Alternate Textures
             MODL.Load();
-            MODL->MODS.Load();
-            MODL->MODS->value14 = *(FORMID *)FieldValue;
+            //MODL->Textures.MODS.Load();
+            //MODL->Textures.MODS->value14 = *(FORMID *)FieldValue;
             return true;
         case 15: //mods Alternate Textures
             MODL.Load();
-            MODL->MODS.Load();
-            MODL->MODS->value15 = *(SINT32 *)FieldValue;
+            //MODL->Textures.MODS.Load();
+            //MODL->Textures.MODS->value15 = *(SINT32 *)FieldValue;
             break;
         case 16: //modelFlags
             MODL.Load();
             MODL->MODD.Load();
-            MODL->MODD->value16 = *(UINT8 *)FieldValue;
+            MODL->MODD.value = *(UINT8 *)FieldValue;
             break;
         case 17: //data Node Index
             DATA.Load();
-            DATA->value17 = *(SINT32 *)FieldValue;
+            DATA.value = *(SINT32 *)FieldValue;
             break;
         case 18: //snam Sound
             SNAM.Load();
-            SNAM->value18 = *(FORMID *)FieldValue;
+            SNAM.value = *(FORMID *)FieldValue;
             return true;
         case 19: //dnam DNAM ,, Struct
             DNAM.Load();
-            DNAM->value19 = *(UINT16 *)FieldValue;
+            DNAM->particleCap = *(UINT16 *)FieldValue;
             break;
         case 20: //dnam_p DNAM ,, Struct
             if(ArraySize != 2)
                 break;
             DNAM.Load();
-            DNAM->value20[0] = ((UINT8ARRAY)FieldValue)[0];
-            DNAM->value20[1] = ((UINT8ARRAY)FieldValue)[1];
+            DNAM->unknown[0] = ((UINT8ARRAY)FieldValue)[0];
+            DNAM->unknown[1] = ((UINT8ARRAY)FieldValue)[1];
             break;
         default:
             break;
@@ -292,16 +295,16 @@ void ADDNRecord::DeleteField(FIELD_IDENTIFIERS)
             versionControl2[1] = 0;
             return;
         case 7: //boundX
-            if(OBND.IsLoaded())
-                OBND->x = defaultOBND.x;
+            if (OBND.IsLoaded())
+                OBND->x1 = 0; // defaultOBND.x;
             return;
         case 8: //boundY
-            if(OBND.IsLoaded())
-                OBND->y = defaultOBND.y;
+            if (OBND.IsLoaded())
+                OBND->y1 = 0; // defaultOBND.y;
             return;
         case 9: //boundZ
-            if(OBND.IsLoaded())
-                OBND->z = defaultOBND.z;
+            if (OBND.IsLoaded())
+                OBND->z1 = 0; // defaultOBND.z;
             return;
         case 10: //modPath
             if(MODL.IsLoaded())
@@ -317,15 +320,15 @@ void ADDNRecord::DeleteField(FIELD_IDENTIFIERS)
             return;
         case 13: //mods Alternate Textures
             if(MODL.IsLoaded())
-                MODL->MODS.Unload();
+                MODL->Textures.Unload();
             return;
         case 14: //mods Alternate Textures
             if(MODL.IsLoaded())
-                MODL->MODS.Unload();
+                MODL->Textures.Unload();
             return;
         case 15: //mods Alternate Textures
             if(MODL.IsLoaded())
-                MODL->MODS.Unload();
+                MODL->Textures.Unload();
             return;
         case 16: //modelFlags
             if(MODL.IsLoaded())

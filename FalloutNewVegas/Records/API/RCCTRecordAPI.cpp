@@ -105,7 +105,7 @@ void * RCCTRecord::GetField(FIELD_IDENTIFIERS, void **FieldValues)
         case 7: //full
             return FULL.value;
         case 8: //flags
-            return DATA.IsLoaded() ? &DATA->value8 : NULL;
+            return DATA.IsLoaded() ? &DATA.value : NULL;
         default:
             return NULL;
         }
@@ -144,7 +144,7 @@ bool RCCTRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             break;
         case 8: //flags
             DATA.Load();
-            DATA->value8 = *(UINT8 *)FieldValue;
+            DATA.value = *(UINT8 *)FieldValue;
             break;
         default:
             break;

@@ -998,6 +998,8 @@ struct FNVAlternateTextures
     void Write(FileWriter &writer);
     void Write(UINT32 _Type, FileWriter &writer);
 
+    void VisitFormIDs(FormIDOp &op);
+
     FNVAlternateTextures& operator = (const FNVAlternateTextures &rhs);
     bool operator ==(const FNVAlternateTextures &other) const;
     bool operator !=(const FNVAlternateTextures &other) const;

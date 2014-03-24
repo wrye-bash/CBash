@@ -38,6 +38,32 @@
 
 namespace FNV
 {
+AMEFRecord::AMEFDATA::AMEFDATA() :
+    type(eDamage),
+    op(eAdd),
+    value(0.0)
+    {
+    //
+    }
+
+AMEFRecord::AMEFDATA::~AMEFDATA()
+    {
+    //
+    }
+
+bool AMEFRecord::AMEFDATA::operator ==(const AMEFDATA &other) const
+    {
+    return (type == other.type &&
+            op == other.op &&
+            AlmostEqual(value, other.value, 2)
+            );
+    }
+
+bool AMEFRecord::AMEFDATA::operator !=(const AMEFDATA &other) const
+    {
+    return !(*this == other);
+    }
+
 AMEFRecord::AMEFRecord(unsigned char *_recData):
     FNVRecord(_recData)
     {
@@ -82,134 +108,80 @@ bool AMEFRecord::VisitFormIDs(FormIDOp &op)
 
 bool AMEFRecord::IsDamage()
     {
-    if(!Dummy.IsLoaded()) return false;
-    return (Dummy->type == eDamage);
-    }
-
-void AMEFRecord::IsDamage(bool value)
-    {
-    if(!Dummy.IsLoaded()) return;
-    Dummy->flags = value ? eDamage : eDummyDefault;
+    if(!DATA.IsLoaded()) return false;
+    return (DATA->type == eDamage);
     }
 
 bool AMEFRecord::IsDR()
     {
-    if(!Dummy.IsLoaded()) return false;
-    return (Dummy->type == eDR);
-    }
-
-void AMEFRecord::IsDR(bool value)
-    {
-    if(!Dummy.IsLoaded()) return;
-    Dummy->flags = value ? eDR : eDummyDefault;
+    if(!DATA.IsLoaded()) return false;
+    return (DATA->type == eDR);
     }
 
 bool AMEFRecord::IsDT()
     {
-    if(!Dummy.IsLoaded()) return false;
-    return (Dummy->type == eDT);
-    }
-
-void AMEFRecord::IsDT(bool value)
-    {
-    if(!Dummy.IsLoaded()) return;
-    Dummy->flags = value ? eDT : eDummyDefault;
+    if (!DATA.IsLoaded()) return false;
+    return (DATA->type == eDT);
     }
 
 bool AMEFRecord::IsSpread()
     {
-    if(!Dummy.IsLoaded()) return false;
-    return (Dummy->type == eSpread);
-    }
-
-void AMEFRecord::IsSpread(bool value)
-    {
-    if(!Dummy.IsLoaded()) return;
-    Dummy->flags = value ? eSpread : eDummyDefault;
+    if (!DATA.IsLoaded()) return false;
+    return (DATA->type == eSpread);
     }
 
 bool AMEFRecord::IsCondition()
     {
-    if(!Dummy.IsLoaded()) return false;
-    return (Dummy->type == eCondition);
-    }
-
-void AMEFRecord::IsCondition(bool value)
-    {
-    if(!Dummy.IsLoaded()) return;
-    Dummy->flags = value ? eCondition : eDummyDefault;
+    if (!DATA.IsLoaded()) return false;
+    return (DATA->type == eCondition);
     }
 
 bool AMEFRecord::IsFatigue()
     {
-    if(!Dummy.IsLoaded()) return false;
-    return (Dummy->type == eFatigue);
-    }
-
-void AMEFRecord::IsFatigue(bool value)
-    {
-    if(!Dummy.IsLoaded()) return;
-    Dummy->flags = value ? eFatigue : eDummyDefault;
+    if (!DATA.IsLoaded()) return false;
+    return (DATA->type == eFatigue);
     }
 
 bool AMEFRecord::IsModType(UINT32 Type)
     {
-    if(!Dummy.IsLoaded()) return false;
-    return Dummy->type == Type;
+    if (!DATA.IsLoaded()) return false;
+    return (DATA->type == Type);
     }
 
 void AMEFRecord::SetModType(UINT32 Type)
     {
-    Dummy.Load();
-    Dummy->flags = Mask;
+    DATA.Load();
+    DATA->type = Type;
     }
 
 bool AMEFRecord::IsAdd()
     {
-    if(!Dummy.IsLoaded()) return false;
-    return (Dummy->type == eAdd);
-    }
-
-void AMEFRecord::IsAdd(bool value)
-    {
-    if(!Dummy.IsLoaded()) return;
-    Dummy->flags = value ? eAdd : eDummyDefault;
+    if (!DATA.IsLoaded()) return false;
+    return (DATA->op == eAdd);
     }
 
 bool AMEFRecord::IsMultiply()
     {
-    if(!Dummy.IsLoaded()) return false;
-    return (Dummy->type == eMultiply);
-    }
-
-void AMEFRecord::IsMultiply(bool value)
-    {
-    if(!Dummy.IsLoaded()) return;
-    Dummy->flags = value ? eMultiply : eDummyDefault;
+    if (!DATA.IsLoaded()) return false;
+    return (DATA->op == eMultiply);
     }
 
 bool AMEFRecord::IsSubtract()
     {
-    if(!Dummy.IsLoaded()) return false;
-    return (Dummy->type == eSubtract);
-    }
-
-void AMEFRecord::IsSubtract(bool value)
-    {
-    if(!Dummy.IsLoaded()) return;
-    Dummy->flags = value ? eSubtract : eDummyDefault;
+    if (!DATA.IsLoaded()) return false;
+    return (DATA->op == eSubtract);
     }
 
 bool AMEFRecord::IsOpType(UINT32 Type)
     {
-    if(!Dummy.IsLoaded()) return false;
-    return Dummy->type == Type;
+    if (!DATA.IsLoaded()) return false;
+    return (DATA->op == Type);
     }
 
 void AMEFRecord::SetOpType(UINT32 Type)
     {
-    Dummy.Load();
-    Dummy->flags = Mask;
+    DATA.Load();
+    DATA->op = Type;
     }
 
 UINT32 AMEFRecord::GetType()
@@ -222,7 +194,7 @@ STRING AMEFRecord::GetStrType()
     return "AMEF";
     }
 
-SINT32 AMEFRecord::ParseRecord(unsigned char *buffer, const UINT32 &recSize)
+SINT32 AMEFRecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk)
     {
     UINT32 subType = 0;
     UINT32 subSize = 0;
@@ -246,7 +218,7 @@ SINT32 AMEFRecord::ParseRecord(unsigned char *buffer, const UINT32 &recSize)
         switch(subType)
             {
             case REV32(EDID):
-                EDID.Read(buffer, subSize);
+                EDID.Read(buffer, subSize, CompressedOnDisk);
                 break;
             case REV32(FULL):
                 FULL.Read(buffer, subSize, CompressedOnDisk);
@@ -297,7 +269,7 @@ bool AMEFRecord::operator !=(const AMEFRecord &other) const
     return !(*this == other);
     }
 
-bool AMEFRecord::equals(const Record *other) const
+bool AMEFRecord::equals(Record *other)
     {
     return *this == *(AMEFRecord *)other;
     }

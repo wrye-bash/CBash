@@ -2578,6 +2578,12 @@ void FNVAlternateTextures::Write(UINT32 _Type, FileWriter &writer)
        }
     }
 
+void FNVAlternateTextures::VisitFormIDs(FormIDOp &op)
+    {
+    for(UINT32 x = 0; x < MODS.size(); x++)
+        op.Accept(MODS[x]->texture);
+    }
+
 FNVAlternateTextures& FNVAlternateTextures::operator = (const FNVAlternateTextures &rhs)
     {
     if(this != &rhs)

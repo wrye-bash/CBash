@@ -38,28 +38,121 @@
 
 namespace FNV
 {
+PERKRecord::PERKDATA::PERKDATA():
+    trait(eNotTrait), minLevel(0), ranks(0), playable(eNotPlayable), hidden(eNotHidden)
+    {
+    //
+    }
+
+PERKRecord::PERKDATA::~PERKDATA()
+    {
+    //
+    }
+
+bool PERKRecord::PERKDATA::operator ==(const PERKDATA &other) const
+    {
+    return (trait == other.trait &&
+            minLevel == other.minLevel &&
+            ranks == other.ranks &&
+            playable == other.playable &&
+            hidden == other.hidden
+            );
+    }
+
+bool PERKRecord::PERKDATA::operator !=(const PERKDATA &other) const
+    {
+    return !(*this == other);
+    }
+
+PERKRecord::PERKPRKE::PERKPRKE():
+    perkType(eQuestStage),
+    rank(0),
+    priority(0)
+    {
+    //
+    }
+
+PERKRecord::PERKPRKE::~PERKPRKE()
+    {
+    //
+    }
+
+bool PERKRecord::PERKPRKE::operator ==(const PERKPRKE &other) const
+    {
+    return (perkType == other.perkType &&
+            rank == other.rank &&
+            priority == other.priority
+            );
+    }
+
+bool PERKRecord::PERKPRKE::operator !=(const PERKPRKE &other) const
+    {
+    return !(*this == other);
+    }
+
+bool PERKRecord::PERKCondition::operator ==(const PERKCondition &other) const
+    {
+    return (PRKC == other.PRKC &&
+            CTDA == other.CTDA
+            );
+    }
+
+bool PERKRecord::PERKCondition::operator !=(const PERKCondition &other) const
+    {
+    return !(*this == other);
+    }
+
+bool PERKRecord::PERKEffect::operator ==(const PERKEffect &other) const
+    {
+    return (PRKE == other.PRKE &&
+            DATAfid == other.DATAfid &&
+            DATAS8 == other.DATAS8 &&
+            DATAU81 == other.DATAU81 &&
+            DATAU82 == other.DATAU82 &&
+            DATAU83 == other.DATAU83 &&
+            CTDA == other.CTDA &&
+            EPFT == other.EPFT &&
+            EPFDf1 == other.EPFDf1 &&
+            EPFDf2 == other.EPFDf2 &&
+            EPFDav1 == other.EPFDav1 &&
+            EPFDfid1 == other.EPFDfid1 &&
+            EPF2.equals(other.EPF2) &&
+            EPF3 == other.EPF3 &&
+            SCHR == other.SCHR &&
+            SCDA == other.SCDA &&
+            SCTX.equals(other.SCTX) &&
+            VARS == other.VARS &&
+            SCR_ == other.SCR_
+            );
+    }
+
+bool PERKRecord::PERKEffect::operator !=(const PERKEffect &other) const
+    {
+    return !(*this == other);
+    }
+
 bool PERKRecord::PERKEffect::IsRunImmediately()
     {
-    if(!Dummy.IsLoaded()) return false;
-    return (Dummy->flags & fIsRunImmediately) != 0;
+    if (!EPF3.IsLoaded()) return false;
+    return (EPF3.value & fIsRunImmediately) != 0;
     }
 
 void PERKRecord::PERKEffect::IsRunImmediately(bool value)
     {
-    if(!Dummy.IsLoaded()) return;
-    Dummy->flags = value ? (Dummy->flags | fIsRunImmediately) : (Dummy->flags & ~fIsRunImmediately);
+    if (!EPF3.IsLoaded()) return;
+    SETBIT(EPF3.value, fIsRunImmediately, value);
     }
 
 bool PERKRecord::PERKEffect::IsFlagMask(UINT16 Mask, bool Exact)
     {
-    if(!Dummy.IsLoaded()) return false;
-    return Exact ? ((Dummy->flags & Mask) == Mask) : ((Dummy->flags & Mask) != 0);
+    if (!EPF3.IsLoaded()) return false;
+    return Exact ? ((EPF3.value & Mask) == Mask) : ((EPF3.value & Mask) != 0);
     }
 
 void PERKRecord::PERKEffect::SetFlagMask(UINT16 Mask)
     {
-    Dummy.Load();
-    Dummy->flags = Mask;
+    EPF3.Load();
+    EPF3.value = Mask;
     }
 
 bool PERKRecord::PERKEffect::IsScriptEnabled()
@@ -113,28 +206,28 @@ PERKRecord::PERKRecord(PERKRecord *srcRecord):
     CTDA = srcRecord->CTDA;
     DATA = srcRecord->DATA;
     PRKE = srcRecord->PRKE;
-    PRKC = srcRecord->PRKC;
+    //PRKC = srcRecord->PRKC;
     CTDA = srcRecord->CTDA;
-    if(srcRecord->EPFT.IsLoaded())
-        {
-        EPFT.Load();
-        EPFT->EPFT = srcRecord->EPFT->EPFT;
-        EPFT->DATA = srcRecord->EPFT->DATA;
-        }
-    EPF2 = srcRecord->EPF2;
-    EPF3 = srcRecord->EPF3;
-    if(srcRecord->SCHR.IsLoaded())
-        {
-        SCHR.Load();
-        SCHR->SCHR = srcRecord->SCHR->SCHR;
-        SCHR->SCDA = srcRecord->SCHR->SCDA;
-        SCHR->SCTX = srcRecord->SCHR->SCTX;
-        SCHR->SLSD = srcRecord->SCHR->SLSD;
-        SCHR->SCVR = srcRecord->SCHR->SCVR;
-        SCHR->SCRO = srcRecord->SCHR->SCRO;
-        SCHR->SCRV = srcRecord->SCHR->SCRV;
-        }
-    PRKF = srcRecord->PRKF;
+    //if(srcRecord->EPFT.IsLoaded())
+    //    {
+    //    EPFT.Load();
+    //    EPFT->EPFT = srcRecord->EPFT->EPFT;
+    //    EPFT->DATA = srcRecord->EPFT->DATA;
+    //    }
+    //EPF2 = srcRecord->EPF2;
+    //EPF3 = srcRecord->EPF3;
+    //if(srcRecord->SCHR.IsLoaded())
+    //    {
+    //    SCHR.Load();
+    //    SCHR->SCHR = srcRecord->SCHR->SCHR;
+    //    SCHR->SCDA = srcRecord->SCHR->SCDA;
+    //    SCHR->SCTX = srcRecord->SCHR->SCTX;
+    //    SCHR->SLSD = srcRecord->SCHR->SLSD;
+    //    SCHR->SCVR = srcRecord->SCHR->SCVR;
+    //    SCHR->SCRO = srcRecord->SCHR->SCRO;
+    //    SCHR->SCRV = srcRecord->SCHR->SCRV;
+    //    }
+    //PRKF = srcRecord->PRKF;
     return;
     }
 
@@ -154,169 +247,117 @@ bool PERKRecord::VisitFormIDs(FormIDOp &op)
     //    op.Accept(PRKE->value);
     //if(CTDA.IsLoaded()) //FILL IN MANUALLY
     //    op.Accept(CTDA->value);
-    if(EPFT.IsLoaded() && EPFT->DATA.IsLoaded())
-        op.Accept(EPFT->DATA->value);
-    if(SCHR.IsLoaded() && SCHR->SCRO.IsLoaded())
-        op.Accept(SCHR->SCRO->value);
+    //if(EPFT.IsLoaded() && EPFT->DATA.IsLoaded())
+    //    op.Accept(EPFT->DATA->value);
+    //if(SCHR.IsLoaded() && SCHR->SCRO.IsLoaded())
+    //    op.Accept(SCHR->SCRO->value);
 
     return op.Stop();
     }
 
 bool PERKRecord::IsNotTrait()
     {
-    if(!Dummy.IsLoaded()) return false;
-    return (Dummy->type == eNotTrait);
-    }
-
-void PERKRecord::IsNotTrait(bool value)
-    {
-    if(!Dummy.IsLoaded()) return;
-    Dummy->flags = value ? eNotTrait : eDummyDefault;
+    if (!DATA.IsLoaded()) return false;
+    return (DATA->trait == eNotTrait);
     }
 
 bool PERKRecord::IsTrait()
     {
-    if(!Dummy.IsLoaded()) return false;
-    return (Dummy->type == eTrait);
-    }
-
-void PERKRecord::IsTrait(bool value)
-    {
-    if(!Dummy.IsLoaded()) return;
-    Dummy->flags = value ? eTrait : eDummyDefault;
+    if (!DATA.IsLoaded()) return false;
+    return (DATA->trait == eTrait);
     }
 
 bool PERKRecord::IsTraitType(UINT8 Type)
     {
-    if(!Dummy.IsLoaded()) return false;
-    return Dummy->type == Type;
+    if (!DATA.IsLoaded()) return false;
+    return DATA->trait == Type;
     }
 
 void PERKRecord::SetTraitType(UINT8 Type)
     {
-    Dummy.Load();
-    Dummy->flags = Mask;
+    DATA.Load();
+    DATA->trait = Type;
     }
 
 bool PERKRecord::IsNotPlayable()
     {
-    if(!Dummy.IsLoaded()) return false;
-    return (Dummy->type == eNotPlayable);
-    }
-
-void PERKRecord::IsNotPlayable(bool value)
-    {
-    if(!Dummy.IsLoaded()) return;
-    Dummy->flags = value ? eNotPlayable : eDummyDefault;
+    if (!DATA.IsLoaded()) return false;
+    return (DATA->playable == eNotPlayable);
     }
 
 bool PERKRecord::IsPlayable()
     {
-    if(!Dummy.IsLoaded()) return false;
-    return (Dummy->type == ePlayable);
-    }
-
-void PERKRecord::IsPlayable(bool value)
-    {
-    if(!Dummy.IsLoaded()) return;
-    Dummy->flags = value ? ePlayable : eDummyDefault;
+    if (!DATA.IsLoaded()) return false;
+    return (DATA->playable == ePlayable);
     }
 
 bool PERKRecord::IsPlayableType(UINT8 Type)
     {
-    if(!Dummy.IsLoaded()) return false;
-    return Dummy->type == Type;
+    if (!DATA.IsLoaded()) return false;
+    return DATA->playable == Type;
     }
 
 void PERKRecord::SetPlayableType(UINT8 Type)
     {
-    Dummy.Load();
-    Dummy->flags = Mask;
+    DATA.Load();
+    DATA->playable = Type;
     }
 
 bool PERKRecord::IsNotHidden()
     {
-    if(!Dummy.IsLoaded()) return false;
-    return (Dummy->type == eNotHidden);
-    }
-
-void PERKRecord::IsNotHidden(bool value)
-    {
-    if(!Dummy.IsLoaded()) return;
-    Dummy->flags = value ? eNotHidden : eDummyDefault;
+    if (!DATA.IsLoaded()) return false;
+    return (DATA->hidden == eNotHidden);
     }
 
 bool PERKRecord::IsHidden()
     {
-    if(!Dummy.IsLoaded()) return false;
-    return (Dummy->type == eHidden);
-    }
-
-void PERKRecord::IsHidden(bool value)
-    {
-    if(!Dummy.IsLoaded()) return;
-    Dummy->flags = value ? eHidden : eDummyDefault;
+    if (!DATA.IsLoaded()) return false;
+    return (DATA->hidden == eHidden);
     }
 
 bool PERKRecord::IsHiddenType(UINT8 Type)
     {
-    if(!Dummy.IsLoaded()) return false;
-    return Dummy->type == Type;
+    if (!DATA.IsLoaded()) return false;
+    return DATA->hidden == Type;
     }
 
 void PERKRecord::SetHiddenType(UINT8 Type)
     {
-    Dummy.Load();
-    Dummy->flags = Mask;
+    DATA.Load();
+    DATA->hidden = Type;
     }
 
+/*
 bool PERKRecord::IsQuestStage()
     {
-    if(!Dummy.IsLoaded()) return false;
-    return (Dummy->type == eQuestStage);
-    }
-
-void PERKRecord::IsQuestStage(bool value)
-    {
-    if(!Dummy.IsLoaded()) return;
-    Dummy->flags = value ? eQuestStage : eDummyDefault;
+    if(!PRKE.IsLoaded()) return false;
+    return (PRKE->perkType == eQuestStage);
     }
 
 bool PERKRecord::IsAbility()
     {
-    if(!Dummy.IsLoaded()) return false;
-    return (Dummy->type == eAbility);
-    }
-
-void PERKRecord::IsAbility(bool value)
-    {
-    if(!Dummy.IsLoaded()) return;
-    Dummy->flags = value ? eAbility : eDummyDefault;
+    if (!PRKE.IsLoaded()) return false;
+    return (PRKE->perkType == eAbility);
     }
 
 bool PERKRecord::IsEntryPoint()
     {
-    if(!Dummy.IsLoaded()) return false;
-    return (Dummy->type == eEntryPoint);
-    }
-
-void PERKRecord::IsEntryPoint(bool value)
-    {
-    if(!Dummy.IsLoaded()) return;
-    Dummy->flags = value ? eEntryPoint : eDummyDefault;
+    if (!PRKE.IsLoaded()) return false;
+    return (PRKE->perkType == eEntryPoint);
     }
 
 bool PERKRecord::IsType(UINT8 Type)
     {
-    if(!Dummy.IsLoaded()) return false;
-    return Dummy->type == Type;
+    if (!PRKE.IsLoaded()) return false;
+    return PRKE->perkType == Type;
     }
 
 void PERKRecord::SetType(UINT8 Type)
     {
-    Dummy.Load();
-    Dummy->flags = Mask;
+    PRKE.Load();
+    PRKE->perkType = Mask;
     }
+*/
 
 UINT32 PERKRecord::GetType()
     {
@@ -328,7 +369,7 @@ STRING PERKRecord::GetStrType()
     return "PERK";
     }
 
-SINT32 PERKRecord::ParseRecord(unsigned char *buffer, const UINT32 &recSize)
+SINT32 PERKRecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk)
     {
     UINT32 subType = 0;
     UINT32 subSize = 0;
@@ -352,7 +393,7 @@ SINT32 PERKRecord::ParseRecord(unsigned char *buffer, const UINT32 &recSize)
         switch(subType)
             {
             case REV32(EDID):
-                EDID.Read(buffer, subSize);
+                EDID.Read(buffer, subSize, CompressedOnDisk);
                 break;
             case REV32(FULL):
                 FULL.Read(buffer, subSize, CompressedOnDisk);
@@ -376,52 +417,52 @@ SINT32 PERKRecord::ParseRecord(unsigned char *buffer, const UINT32 &recSize)
                 PRKE.Read(buffer, subSize);
                 break;
             case REV32(PRKC):
-                PRKC.Read(buffer, subSize);
+                //PRKC.Read(buffer, subSize);
                 break;
-            case REV32(CTDA):
-                CTDA.Read(buffer, subSize);
-                break;
+            //case REV32(CTDA):
+            //    CTDA.Read(buffer, subSize);
+            //    break;
             case REV32(EPFT):
-                EPFT.Load();
-                EPFT->EPFT.Read(buffer, subSize);
+                //EPFT.Load();
+                //EPFT->EPFT.Read(buffer, subSize);
                 break;
-            case REV32(DATA):
-                EPFT.Load();
-                EPFT->DATA.Read(buffer, subSize);
-                break;
+            //case REV32(DATA):
+            //    EPFT.Load();
+            //    EPFT->DATA.Read(buffer, subSize);
+            //    break;
             case REV32(EPF2):
-                EPF2.Read(buffer, subSize);
+            //    EPF2.Read(buffer, subSize);
                 break;
             case REV32(EPF3):
-                EPF3.Read(buffer, subSize);
+            //    EPF3.Read(buffer, subSize);
                 break;
             case REV32(SCHR):
-                SCHR.Load();
-                SCHR->SCHR.Read(buffer, subSize);
+            //    SCHR.Load();
+            //    SCHR->SCHR.Read(buffer, subSize);
                 break;
             case REV32(SCDA):
-                SCHR.Load();
-                SCHR->SCDA.Read(buffer, subSize);
+            //    SCHR.Load();
+            //    SCHR->SCDA.Read(buffer, subSize);
                 break;
             case REV32(SCTX):
-                SCHR.Load();
-                SCHR->SCTX.Read(buffer, subSize);
+            //    SCHR.Load();
+            //    SCHR->SCTX.Read(buffer, subSize);
                 break;
             case REV32(SLSD):
-                SCHR.Load();
-                SCHR->SLSD.Read(buffer, subSize);
+            //    SCHR.Load();
+            //    SCHR->SLSD.Read(buffer, subSize);
                 break;
             case REV32(SCVR):
-                SCHR.Load();
-                SCHR->SCVR.Read(buffer, subSize);
+            //    SCHR.Load();
+            //    SCHR->SCVR.Read(buffer, subSize);
                 break;
             case REV32(SCRO):
-                SCHR.Load();
-                SCHR->SCRO.Read(buffer, subSize);
+            //    SCHR.Load();
+            //    SCHR->SCRO.Read(buffer, subSize);
                 break;
             case REV32(SCRV):
-                SCHR.Load();
-                SCHR->SCRV.Read(buffer, subSize);
+            //    SCHR.Load();
+            //    SCHR->SCRV.Read(buffer, subSize);
                 break;
             case REV32(PRKF):
                 //PRKF.Read(buffer, subSize); //FILL IN MANUALLY
@@ -450,12 +491,12 @@ SINT32 PERKRecord::Unload()
     CTDA.Unload();
     DATA.Unload();
     PRKE.Unload();
-    PRKC.Unload();
+    //PRKC.Unload();
     CTDA.Unload();
-    EPFT.Unload();
-    EPF2.Unload();
-    EPF3.Unload();
-    SCHR.Unload();
+    //EPFT.Unload();
+    //EPF2.Unload();
+    //EPF3.Unload();
+    //SCHR.Unload();
     //PRKF.Unload(); //FILL IN MANUALLY
     return 1;
     }
@@ -470,9 +511,10 @@ SINT32 PERKRecord::WriteRecord(FileWriter &writer)
     WRITE(CTDA);
     WRITE(DATA);
     WRITE(PRKE);
-    WRITE(PRKC);
+    //WRITE(PRKC);
     WRITE(CTDA);
 
+    /*
     if(EPFT.IsLoaded())
         {
         if(EPFT->EPFT.IsLoaded())
@@ -510,6 +552,7 @@ SINT32 PERKRecord::WriteRecord(FileWriter &writer)
             SaveHandler.writeSubRecord(REV32(SCRV), SCHR->SCRV.value, SCHR->SCRV.GetSize());
 
         }
+    */
 
     //if(PRKF.IsLoaded()) //FILL IN MANUALLY
         //SaveHandler.writeSubRecord(REV32(PRKF), PRKF.value, PRKF.GetSize());
@@ -527,13 +570,14 @@ bool PERKRecord::operator ==(const PERKRecord &other) const
             CTDA == other.CTDA &&
             DATA == other.DATA &&
             PRKE == other.PRKE &&
-            PRKC == other.PRKC &&
-            CTDA == other.CTDA &&
-            EPFT == other.EPFT &&
-            EPF2.equalsi(other.EPF2) &&
-            EPF3 == other.EPF3 &&
-            SCHR == other.SCHR &&
-            //Empty);
+            //PRKC == other.PRKC &&
+            CTDA == other.CTDA
+            //EPFT == other.EPFT &&
+            //EPF2.equalsi(other.EPF2) &&
+            //EPF3 == other.EPF3 &&
+            //SCHR == other.SCHR &&
+            //Empty
+            );
     }
 
 bool PERKRecord::operator !=(const PERKRecord &other) const
@@ -541,7 +585,7 @@ bool PERKRecord::operator !=(const PERKRecord &other) const
     return !(*this == other);
     }
 
-bool PERKRecord::equals(const Record *other) const
+bool PERKRecord::equals(Record *other)
     {
     return *this == *(PERKRecord *)other;
     }

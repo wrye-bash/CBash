@@ -123,29 +123,29 @@ void * IPDSRecord::GetField(FIELD_IDENTIFIERS, void **FieldValues)
             *FieldValues = &versionControl2[0];
             return NULL;
         case 7: //data DATA ,, Struct
-            return DATA.IsLoaded() ? &DATA->value7 : NULL;
+            return DATA.IsLoaded() ? &DATA->stone : NULL;
         case 8: //data DATA ,, Struct
-            return DATA.IsLoaded() ? &DATA->value8 : NULL;
+            return DATA.IsLoaded() ? &DATA->dirt : NULL;
         case 9: //data DATA ,, Struct
-            return DATA.IsLoaded() ? &DATA->value9 : NULL;
+            return DATA.IsLoaded() ? &DATA->grass : NULL;
         case 10: //data DATA ,, Struct
-            return DATA.IsLoaded() ? &DATA->value10 : NULL;
+            return DATA.IsLoaded() ? &DATA->glass : NULL;
         case 11: //data DATA ,, Struct
-            return DATA.IsLoaded() ? &DATA->value11 : NULL;
+            return DATA.IsLoaded() ? &DATA->metal : NULL;
         case 12: //data DATA ,, Struct
-            return DATA.IsLoaded() ? &DATA->value12 : NULL;
+            return DATA.IsLoaded() ? &DATA->wood : NULL;
         case 13: //data DATA ,, Struct
-            return DATA.IsLoaded() ? &DATA->value13 : NULL;
+            return DATA.IsLoaded() ? &DATA->organic : NULL;
         case 14: //data DATA ,, Struct
-            return DATA.IsLoaded() ? &DATA->value14 : NULL;
+            return DATA.IsLoaded() ? &DATA->cloth : NULL;
         case 15: //data DATA ,, Struct
-            return DATA.IsLoaded() ? &DATA->value15 : NULL;
+            return DATA.IsLoaded() ? &DATA->water : NULL;
         case 16: //data DATA ,, Struct
-            return DATA.IsLoaded() ? &DATA->value16 : NULL;
+            return DATA.IsLoaded() ? &DATA->hollowMetal : NULL;
         case 17: //data DATA ,, Struct
-            return DATA.IsLoaded() ? &DATA->value17 : NULL;
+            return DATA.IsLoaded() ? &DATA->organicBug : NULL;
         case 18: //data DATA ,, Struct
-            return DATA.IsLoaded() ? &DATA->value18 : NULL;
+            return DATA.IsLoaded() ? &DATA->organicGlow : NULL;
         default:
             return NULL;
         }
@@ -181,51 +181,51 @@ bool IPDSRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             break;
         case 7: //data DATA ,, Struct
             DATA.Load();
-            DATA->value7 = *(FORMID *)FieldValue;
+            DATA->stone = *(FORMID *)FieldValue;
             return true;
         case 8: //data DATA ,, Struct
             DATA.Load();
-            DATA->value8 = *(FORMID *)FieldValue;
+            DATA->dirt = *(FORMID *)FieldValue;
             return true;
         case 9: //data DATA ,, Struct
             DATA.Load();
-            DATA->value9 = *(FORMID *)FieldValue;
+            DATA->grass = *(FORMID *)FieldValue;
             return true;
         case 10: //data DATA ,, Struct
             DATA.Load();
-            DATA->value10 = *(FORMID *)FieldValue;
+            DATA->glass = *(FORMID *)FieldValue;
             return true;
         case 11: //data DATA ,, Struct
             DATA.Load();
-            DATA->value11 = *(FORMID *)FieldValue;
+            DATA->metal = *(FORMID *)FieldValue;
             return true;
         case 12: //data DATA ,, Struct
             DATA.Load();
-            DATA->value12 = *(FORMID *)FieldValue;
+            DATA->wood = *(FORMID *)FieldValue;
             return true;
         case 13: //data DATA ,, Struct
             DATA.Load();
-            DATA->value13 = *(FORMID *)FieldValue;
+            DATA->organic = *(FORMID *)FieldValue;
             return true;
         case 14: //data DATA ,, Struct
             DATA.Load();
-            DATA->value14 = *(FORMID *)FieldValue;
+            DATA->cloth = *(FORMID *)FieldValue;
             return true;
         case 15: //data DATA ,, Struct
             DATA.Load();
-            DATA->value15 = *(FORMID *)FieldValue;
+            DATA->water = *(FORMID *)FieldValue;
             return true;
         case 16: //data DATA ,, Struct
             DATA.Load();
-            DATA->value16 = *(FORMID *)FieldValue;
+            DATA->hollowMetal = *(FORMID *)FieldValue;
             return true;
         case 17: //data DATA ,, Struct
             DATA.Load();
-            DATA->value17 = *(FORMID *)FieldValue;
+            DATA->organicBug = *(FORMID *)FieldValue;
             return true;
         case 18: //data DATA ,, Struct
             DATA.Load();
-            DATA->value18 = *(FORMID *)FieldValue;
+            DATA->organicGlow = *(FORMID *)FieldValue;
             return true;
         default:
             break;

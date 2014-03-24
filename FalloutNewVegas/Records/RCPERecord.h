@@ -55,7 +55,7 @@ class RCPERecord : public FNVRecord //Recipe
         StringRecord EDID; //Editor ID
         StringRecord FULL; //Name
         std::vector<ReqSubRecord<FNVCTDA> *> CTDA; //Conditions
-        OptSubRecord<RCPEDATA> DATA; //Data
+        //OptSubRecord<RCPEDATA> DATA; //Data
         std::vector<RCPEItem *> Ingredients; //Ingredients
         std::vector<RCPEItem *> Outputs; //Outputs
 

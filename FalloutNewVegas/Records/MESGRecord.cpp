@@ -38,6 +38,18 @@
 
 namespace FNV
 {
+bool MESGRecord::MESGButton::operator ==(const MESGButton &other) const
+    {
+    return (ITXT.equals(other.ITXT) &&
+            CTDA == other.CTDA
+            );
+    }
+
+bool MESGRecord::MESGButton::operator !=(const MESGButton &other) const
+    {
+    return !(*this == other);
+    }
+
 MESGRecord::MESGRecord(unsigned char *_recData):
     FNVRecord(_recData)
     {
@@ -65,20 +77,20 @@ MESGRecord::MESGRecord(MESGRecord *srcRecord):
     DESC = srcRecord->DESC;
     FULL = srcRecord->FULL;
     INAM = srcRecord->INAM;
-    NAM0 = srcRecord->NAM0;
-    NAM1 = srcRecord->NAM1;
-    NAM2 = srcRecord->NAM2;
-    NAM3 = srcRecord->NAM3;
-    NAM4 = srcRecord->NAM4;
-    NAM5 = srcRecord->NAM5;
-    NAM6 = srcRecord->NAM6;
-    NAM7 = srcRecord->NAM7;
-    NAM8 = srcRecord->NAM8;
-    NAM9 = srcRecord->NAM9;
+    //NAM0 = srcRecord->NAM0;
+    //NAM1 = srcRecord->NAM1;
+    //NAM2 = srcRecord->NAM2;
+    //NAM3 = srcRecord->NAM3;
+    //NAM4 = srcRecord->NAM4;
+    //NAM5 = srcRecord->NAM5;
+    //NAM6 = srcRecord->NAM6;
+    //NAM7 = srcRecord->NAM7;
+    //NAM8 = srcRecord->NAM8;
+    //NAM9 = srcRecord->NAM9;
     DNAM = srcRecord->DNAM;
     TNAM = srcRecord->TNAM;
-    ITXT = srcRecord->ITXT;
-    CTDA = srcRecord->CTDA;
+    Buttons = srcRecord->Buttons;
+
     return;
     }
 
@@ -93,9 +105,12 @@ bool MESGRecord::VisitFormIDs(FormIDOp &op)
         return false;
 
     if(INAM.IsLoaded())
-        op.Accept(INAM->value);
-    //if(CTDA.IsLoaded()) //FILL IN MANUALLY
-    //    op.Accept(CTDA->value);
+        op.Accept(INAM.value);
+    for(UINT32 ButtonIndex = 0; ButtonIndex < Buttons.size(); ButtonIndex++)
+        {
+        for (UINT32 ConditionIndex = 0; ConditionIndex < Buttons[ButtonIndex].CTDA.value.size(); ConditionIndex++)
+            Buttons[ButtonIndex].CTDA.value[ConditionIndex].VisitFormIDs(op);
+        }
 
     return op.Stop();
     }
@@ -110,7 +125,7 @@ STRING MESGRecord::GetStrType()
     return "MESG";
     }
 
-SINT32 MESGRecord::ParseRecord(unsigned char *buffer, const UINT32 &recSize)
+SINT32 MESGRecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk)
     {
     UINT32 subType = 0;
     UINT32 subSize = 0;
@@ -134,7 +149,7 @@ SINT32 MESGRecord::ParseRecord(unsigned char *buffer, const UINT32 &recSize)
         switch(subType)
             {
             case REV32(EDID):
-                EDID.Read(buffer, subSize);
+                EDID.Read(buffer, subSize, CompressedOnDisk);
                 break;
             case REV32(DESC):
                 DESC.Read(buffer, subSize, CompressedOnDisk);
@@ -182,10 +197,15 @@ SINT32 MESGRecord::ParseRecord(unsigned char *buffer, const UINT32 &recSize)
                 TNAM.Read(buffer, subSize);
                 break;
             case REV32(ITXT):
-                ITXT.Read(buffer, subSize);
+                {
+                MESGButton button;
+                button.ITXT.Read(buffer, subSize, CompressedOnDisk);
+                Buttons.push_back(button);
                 break;
+                }
             case REV32(CTDA):
-                CTDA.Read(buffer, subSize);
+                if (Buttons.size() > 0)
+                    Buttons[Buttons.size() - 1].CTDA.Read(buffer, subSize);
                 break;
             default:
                 //printf("FileName = %s\n", FileName);
@@ -219,8 +239,7 @@ SINT32 MESGRecord::Unload()
     //NAM9.Unload(); //FILL IN MANUALLY
     DNAM.Unload();
     TNAM.Unload();
-    ITXT.Unload();
-    CTDA.Unload();
+    Buttons.clear();
     return 1;
     }
 
@@ -262,8 +281,11 @@ SINT32 MESGRecord::WriteRecord(FileWriter &writer)
         //SaveHandler.writeSubRecord(REV32(NAM9), NAM9.value, NAM9.GetSize());
     WRITE(DNAM);
     WRITE(TNAM);
-    WRITE(ITXT);
-    WRITE(CTDA);
+    for(UINT32 ListIndex = 0; ListIndex < Buttons.size(); ListIndex++)
+    {
+        Buttons[ListIndex].ITXT.Write(REV32(ITXT), writer);
+        Buttons[ListIndex].CTDA.Write(REV32(CTDA), writer);
+    }
 
     return -1;
     }
@@ -286,8 +308,7 @@ bool MESGRecord::operator ==(const MESGRecord &other) const
             //Empty &&
             DNAM == other.DNAM &&
             TNAM == other.TNAM &&
-            ITXT.equalsi(other.ITXT) &&
-            CTDA == other.CTDA);
+            Buttons == other.Buttons);
     }
 
 bool MESGRecord::operator !=(const MESGRecord &other) const
@@ -295,7 +316,7 @@ bool MESGRecord::operator !=(const MESGRecord &other) const
     return !(*this == other);
     }
 
-bool MESGRecord::equals(const Record *other) const
+bool MESGRecord::equals(Record *other)
     {
     return *this == *(MESGRecord *)other;
     }

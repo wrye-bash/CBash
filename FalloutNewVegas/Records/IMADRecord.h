@@ -57,48 +57,48 @@ class IMADRecord : public FNVRecord //Image Space Modifier
         RawRecord XNAM; //Unknown
         RawRecord YNAM; //Unknown
         RawRecord NAM4; //Unknown
-        RawRecord _00_IAD; //Unknown
-        RawRecord _40_IAD; //Unknown
-        RawRecord _01_IAD; //Unknown
-        RawRecord _41_IAD; //Unknown
-        RawRecord _02_IAD; //Unknown
-        RawRecord _42_IAD; //Unknown
-        RawRecord _03_IAD; //Unknown
-        RawRecord _43_IAD; //Unknown
-        RawRecord _04_IAD; //Unknown
-        RawRecord _44_IAD; //Unknown
-        RawRecord _05_IAD; //Unknown
-        RawRecord _45_IAD; //Unknown
-        RawRecord _06_IAD; //Unknown
-        RawRecord _46_IAD; //Unknown
-        RawRecord _07_IAD; //Unknown
-        RawRecord _47_IAD; //Unknown
-        RawRecord _08_IAD; //Unknown
-        RawRecord _48_IAD; //Unknown
-        RawRecord _09_IAD; //Unknown
-        RawRecord _49_IAD; //Unknown
-        RawRecord _0A_IAD; //Unknown
-        RawRecord _4A_IAD; //Unknown
-        RawRecord _0B_IAD; //Unknown
-        RawRecord _4B_IAD; //Unknown
-        RawRecord _0C_IAD; //Unknown
-        RawRecord _4C_IAD; //Unknown
-        RawRecord _0D_IAD; //Unknown
-        RawRecord _4D_IAD; //Unknown
-        RawRecord _0E_IAD; //Unknown
-        RawRecord _4E_IAD; //Unknown
-        RawRecord _0F_IAD; //Unknown
-        RawRecord _4F_IAD; //Unknown
-        RawRecord _10_IAD; //Unknown
-        RawRecord _50_IAD; //Unknown
-        RawRecord _11_IAD; //Unknown
-        RawRecord _51_IAD; //Unknown
-        RawRecord _12_IAD; //Unknown
-        RawRecord _52_IAD; //Unknown
-        RawRecord _13_IAD; //Unknown
-        RawRecord _53_IAD; //Unknown
-        RawRecord _14_IAD; //Unknown
-        RawRecord _54_IAD; //Unknown
+        RawRecord _00_; //Unknown
+        RawRecord _40_; //Unknown
+        RawRecord _01_; //Unknown
+        RawRecord _41_; //Unknown
+        RawRecord _02_; //Unknown
+        RawRecord _42_; //Unknown
+        RawRecord _03_; //Unknown
+        RawRecord _43_; //Unknown
+        RawRecord _04_; //Unknown
+        RawRecord _44_; //Unknown
+        RawRecord _05_; //Unknown
+        RawRecord _45_; //Unknown
+        RawRecord _06_; //Unknown
+        RawRecord _46_; //Unknown
+        RawRecord _07_; //Unknown
+        RawRecord _47_; //Unknown
+        RawRecord _08_; //Unknown
+        RawRecord _48_; //Unknown
+        RawRecord _09_; //Unknown
+        RawRecord _49_; //Unknown
+        RawRecord _0A_; //Unknown
+        RawRecord _4A_; //Unknown
+        RawRecord _0B_; //Unknown
+        RawRecord _4B_; //Unknown
+        RawRecord _0C_; //Unknown
+        RawRecord _4C_; //Unknown
+        RawRecord _0D_; //Unknown
+        RawRecord _4D_; //Unknown
+        RawRecord _0E_; //Unknown
+        RawRecord _4E_; //Unknown
+        RawRecord _0F_; //Unknown
+        RawRecord _4F_; //Unknown
+        RawRecord _10_; //Unknown
+        RawRecord _50_; //Unknown
+        RawRecord _11_; //Unknown
+        RawRecord _51_; //Unknown
+        RawRecord _12_; //Unknown
+        RawRecord _52_; //Unknown
+        RawRecord _13_; //Unknown
+        RawRecord _53_; //Unknown
+        RawRecord _14_; //Unknown
+        RawRecord _54_; //Unknown
         OptSimpleSubRecord<FORMID> RDSD; //Sound - Intro
         OptSimpleSubRecord<FORMID> RDSI; //Sound - Outro
 
@@ -116,12 +116,12 @@ class IMADRecord : public FNVRecord //Image Space Modifier
         UINT32 GetType();
         STRING GetStrType();
 
-        SINT32 ParseRecord(unsigned char *buffer, const UINT32 &recSize, bool CompressedOnDisk);
+        SINT32 ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk=false);
         SINT32 Unload();
         SINT32 WriteRecord(FileWriter &writer);
 
         bool operator ==(const IMADRecord &other) const;
         bool operator !=(const IMADRecord &other) const;
-        bool equals(Record *other, RecordOp &read_self, RecordOp &read_other, EqualityOptions &options);
+        bool equals(Record *other);
     };
 }

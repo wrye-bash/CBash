@@ -109,11 +109,11 @@ void * AMEFRecord::GetField(FIELD_IDENTIFIERS, void **FieldValues)
         case 7: //full
             return FULL.value;
         case 8: //data DATA ,, Struct
-            return DATA.IsLoaded() ? &DATA->value8 : NULL;
+            return DATA.IsLoaded() ? &DATA->type : NULL;
         case 9: //data DATA ,, Struct
-            return DATA.IsLoaded() ? &DATA->value9 : NULL;
+            return DATA.IsLoaded() ? &DATA->op : NULL;
         case 10: //data DATA ,, Struct
-            return DATA.IsLoaded() ? &DATA->value10 : NULL;
+            return DATA.IsLoaded() ? &DATA->value : NULL;
         default:
             return NULL;
         }
@@ -152,15 +152,15 @@ bool AMEFRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             break;
         case 8: //data DATA ,, Struct
             DATA.Load();
-            DATA->value8 = *(UINT32 *)FieldValue;
+            DATA->type = *(UINT32 *)FieldValue;
             break;
         case 9: //data DATA ,, Struct
             DATA.Load();
-            DATA->value9 = *(UINT32 *)FieldValue;
+            DATA->op = *(UINT32 *)FieldValue;
             break;
         case 10: //data DATA ,, Struct
             DATA.Load();
-            DATA->value10 = *(FLOAT32 *)FieldValue;
+            DATA->value = *(FLOAT32 *)FieldValue;
             break;
         default:
             break;

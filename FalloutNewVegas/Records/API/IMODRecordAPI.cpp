@@ -108,13 +108,13 @@ UINT32 IMODRecord::GetFieldAttribute(FIELD_IDENTIFIERS, UINT32 WhichAttribute)
                     case 0: //fieldType
                         return LIST_FIELD;
                     case 1: //fieldSize
-                        return MODL->Textures.size();
+                        return MODL->Textures.MODS.size();
                     default:
                         return UNKNOWN_FIELD;
                     }
                 }
 
-            if(ListIndex >= MODL->Textures.size())
+            if(ListIndex >= MODL->Textures.MODS.size())
                 return UNKNOWN_FIELD;
 
             switch(ListFieldID)
@@ -180,7 +180,8 @@ UINT32 IMODRecord::GetFieldAttribute(FIELD_IDENTIFIERS, UINT32 WhichAttribute)
                 case 0: //fieldType
                     return UINT8_ARRAY_FIELD;
                 case 1: //fieldSize
-                    return DMDT.GetSize();
+                    return 0;
+                    //return DMDT.GetSize();
                 default:
                     return UNKNOWN_FIELD;
                 }
@@ -218,11 +219,11 @@ void * IMODRecord::GetField(FIELD_IDENTIFIERS, void **FieldValues)
             *FieldValues = &versionControl2[0];
             return NULL;
         case 7: //boundX
-            return OBND.IsLoaded() ? &OBND->x : NULL;
+            return OBND.IsLoaded() ? &OBND->x1 : NULL;
         case 8: //boundY
-            return OBND.IsLoaded() ? &OBND->y : NULL;
+            return OBND.IsLoaded() ? &OBND->y1 : NULL;
         case 9: //boundZ
-            return OBND.IsLoaded() ? &OBND->z : NULL;
+            return OBND.IsLoaded() ? &OBND->z1 : NULL;
         case 10: //full
             return FULL.value;
         case 11: //modPath
@@ -233,59 +234,63 @@ void * IMODRecord::GetField(FIELD_IDENTIFIERS, void **FieldValues)
             *FieldValues = MODL.IsLoaded() ? MODL->MODT.value : NULL;
             return NULL;
         case 14: //mods Alternate Textures
-            return MODL.IsLoaded() ? MODL->MODS.value : NULL;
+            return NULL;
+            //return MODL.IsLoaded() ? MODL->MODS.value : NULL;
         case 15: //mods Alternate Textures
-            return MODL.IsLoaded() ? &MODL->MODS->value15 : NULL;
+            return NULL;
+            //return MODL.IsLoaded() ? &MODL->MODS->value15 : NULL;
         case 16: //mods Alternate Textures
-            return MODL.IsLoaded() ? &MODL->MODS->value16 : NULL;
+            return NULL;
+            //return MODL.IsLoaded() ? &MODL->MODS->value16 : NULL;
         case 17: //modelFlags
-            return MODL.IsLoaded() ? &MODL->MODD->value17 : NULL;
+            return MODL.IsLoaded() ? &MODL->MODD.value : NULL;
         case 18: //iconPath
             return ICON.value;
         case 19: //smallIconPath
             return MICO.value;
         case 20: //script
-            return SCRI.IsLoaded() ? &SCRI->value20 : NULL;
+            return SCRI.IsLoaded() ? &SCRI.value : NULL;
         case 21: //description
             return DESC.value;
         case 22: //dest Header
-            return DEST.IsLoaded() ? &DEST->DEST->value22 : NULL;
+            return Destructable.IsLoaded() ? &Destructable->DEST->health : NULL;
         case 23: //dest Header
-            return DEST.IsLoaded() ? &DEST->DEST->value23 : NULL;
+            return Destructable.IsLoaded() ? &Destructable->DEST->count : NULL;
         case 24: //dest Header
-            return DEST.IsLoaded() ? &DEST->DEST->value24 : NULL;
+            return Destructable.IsLoaded() ? &Destructable->DEST->flags : NULL;
         case 25: //dest_p Header
-            *FieldValues = DEST.IsLoaded() ? &DEST->DEST->value25[0] : NULL;
+            *FieldValues = Destructable.IsLoaded() ? &Destructable->DEST->unused1[0] : NULL;
             return NULL;
         case 26: //dstd Destruction Stage Data
-            return DEST.IsLoaded() ? &DEST->DSTD->value26 : NULL;
+            // TODO: These need to be accessed as an array, not just the first DSTD
+            return Destructable.IsLoaded() ? &Destructable->Stages.value[0]->DSTD->health : NULL;
         case 27: //dstd Destruction Stage Data
-            return DEST.IsLoaded() ? &DEST->DSTD->value27 : NULL;
+            return Destructable.IsLoaded() ? &Destructable->Stages.value[0]->DSTD->index : NULL;
         case 28: //dstd Destruction Stage Data
-            return DEST.IsLoaded() ? &DEST->DSTD->value28 : NULL;
+            return Destructable.IsLoaded() ? &Destructable->Stages.value[0]->DSTD->stage : NULL;
         case 29: //dstd Destruction Stage Data
-            return DEST.IsLoaded() ? &DEST->DSTD->value29 : NULL;
+            return Destructable.IsLoaded() ? &Destructable->Stages.value[0]->DSTD->flags : NULL;
         case 30: //dstd Destruction Stage Data
-            return DEST.IsLoaded() ? &DEST->DSTD->value30 : NULL;
+            return Destructable.IsLoaded() ? &Destructable->Stages.value[0]->DSTD->dps : NULL;
         case 31: //dstd Destruction Stage Data
-            return DEST.IsLoaded() ? &DEST->DSTD->value31 : NULL;
+            return Destructable.IsLoaded() ? &Destructable->Stages.value[0]->DSTD->explosion : NULL;
         case 32: //dstd Destruction Stage Data
-            return DEST.IsLoaded() ? &DEST->DSTD->value32 : NULL;
+            return Destructable.IsLoaded() ? &Destructable->Stages.value[0]->DSTD->debris : NULL;
         case 33: //dstd Destruction Stage Data
-            return DEST.IsLoaded() ? &DEST->DSTD->value33 : NULL;
+            return Destructable.IsLoaded() ? &Destructable->Stages.value[0]->DSTD->debrisCount : NULL;
         case 34: //dmdl Model Filename
-            return DEST.IsLoaded() ? DEST->DMDL.value : NULL;
+            return Destructable.IsLoaded() ? Destructable->Stages.value[0]->DMDL.value : NULL;
         case 35: //dmdt_p Texture Files Hashes
-            *FieldValues = (DEST.IsLoaded()) ? DEST->DMDT.value : NULL;
+            *FieldValues = (Destructable.IsLoaded()) ? Destructable->Stages.value[0]->DMDT.value : NULL;
             return NULL;
         case 36: //ynam Sound - Pick Up
-            return YNAM.IsLoaded() ? &YNAM->value36 : NULL;
+            return YNAM.IsLoaded() ? &YNAM.value : NULL;
         case 37: //znam Sound - Drop
-            return ZNAM.IsLoaded() ? &ZNAM->value37 : NULL;
+            return ZNAM.IsLoaded() ? &ZNAM.value : NULL;
         case 38: //data DATA ,, Struct
-            return DATA.IsLoaded() ? &DATA->value38 : NULL;
+            return DATA.IsLoaded() ? &DATA->value : NULL;
         case 39: //data DATA ,, Struct
-            return DATA.IsLoaded() ? &DATA->value39 : NULL;
+            return DATA.IsLoaded() ? &DATA->weight : NULL;
         default:
             return NULL;
         }
@@ -321,15 +326,15 @@ bool IMODRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             break;
         case 7: //boundX
             OBND.Load();
-            OBND->x = *(SINT16 *)FieldValue;
+            OBND->x1 = *(SINT16 *)FieldValue;
             break;
         case 8: //boundY
             OBND.Load();
-            OBND->y = *(SINT16 *)FieldValue;
+            OBND->y1 = *(SINT16 *)FieldValue;
             break;
         case 9: //boundZ
             OBND.Load();
-            OBND->z = *(SINT16 *)FieldValue;
+            OBND->z1 = *(SINT16 *)FieldValue;
             break;
         case 10: //full
             FULL.Copy((STRING)FieldValue);
@@ -348,22 +353,22 @@ bool IMODRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             break;
         case 14: //mods Alternate Textures
             MODL.Load();
-            MODL->MODS.Copy((STRING)FieldValue);
+            //MODL->Textures.MODS.Copy((STRING)FieldValue);
             break;
         case 15: //mods Alternate Textures
             MODL.Load();
-            MODL->MODS.Load();
-            MODL->MODS->value15 = *(FORMID *)FieldValue;
+            MODL->Textures.Load();
+            //MODL->Textres.MODS->value15 = *(FORMID *)FieldValue;
             return true;
         case 16: //mods Alternate Textures
             MODL.Load();
-            MODL->MODS.Load();
-            MODL->MODS->value16 = *(SINT32 *)FieldValue;
+            MODL->Textures.Load();
+            //MODL->Textures.MODS->value16 = *(SINT32 *)FieldValue;
             break;
         case 17: //modelFlags
             MODL.Load();
             MODL->MODD.Load();
-            MODL->MODD->value17 = *(UINT8 *)FieldValue;
+            MODL->MODD.value = *(UINT8 *)FieldValue;
             break;
         case 18: //iconPath
             ICON.Copy((STRING)FieldValue);
@@ -373,97 +378,98 @@ bool IMODRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             break;
         case 20: //script
             SCRI.Load();
-            SCRI->value20 = *(FORMID *)FieldValue;
+            SCRI.value = *(FORMID *)FieldValue;
             return true;
         case 21: //description
             DESC.Copy((STRING)FieldValue);
             break;
         case 22: //dest Header
-            DEST.Load();
-            DEST->DEST.Load();
-            DEST->DEST->value22 = *(SINT32 *)FieldValue;
+            Destructable.Load();
+            Destructable->DEST.Load();
+            Destructable->DEST->health = *(SINT32 *)FieldValue;
             break;
         case 23: //dest Header
-            DEST.Load();
-            DEST->DEST.Load();
-            DEST->DEST->value23 = *(UINT8 *)FieldValue;
+            Destructable.Load();
+            Destructable->DEST.Load();
+            Destructable->DEST->count = *(UINT8 *)FieldValue;
             break;
         case 24: //dest Header
-            DEST.Load();
-            DEST->DEST.Load();
-            DEST->DEST->value24 = *(UINT8 *)FieldValue;
+            Destructable.Load();
+            Destructable->DEST.Load();
+            Destructable->DEST->flags = *(UINT8 *)FieldValue;
             break;
         case 25: //dest_p Header
             if(ArraySize != 2)
                 break;
-            DEST.Load();
-            DEST->DEST.Load();
-            DEST->DEST->value25[0] = ((UINT8ARRAY)FieldValue)[0];
-            DEST->DEST->value25[1] = ((UINT8ARRAY)FieldValue)[1];
+            Destructable.Load();
+            Destructable->DEST.Load();
+            Destructable->DEST->unused1[0] = ((UINT8ARRAY)FieldValue)[0];
+            Destructable->DEST->unused1[1] = ((UINT8ARRAY)FieldValue)[1];
             break;
         case 26: //dstd Destruction Stage Data
-            DEST.Load();
-            DEST->DSTD.Load();
-            DEST->DSTD->value26 = *(UINT8 *)FieldValue;
+            // TODO Make the work on more than just the first destruction Stage item
+            Destructable.Load();
+            Destructable->Stages.value[0]->DSTD.Load();
+            Destructable->Stages.value[0]->DSTD->health = *(UINT8 *)FieldValue;
             break;
         case 27: //dstd Destruction Stage Data
-            DEST.Load();
-            DEST->DSTD.Load();
-            DEST->DSTD->value27 = *(UINT8 *)FieldValue;
+            Destructable.Load();
+            Destructable->Stages.value[0]->DSTD.Load();
+            Destructable->Stages.value[0]->DSTD->index = *(UINT8 *)FieldValue;
             break;
         case 28: //dstd Destruction Stage Data
-            DEST.Load();
-            DEST->DSTD.Load();
-            DEST->DSTD->value28 = *(UINT8 *)FieldValue;
+            Destructable.Load();
+            Destructable->Stages.value[0]->DSTD.Load();
+            Destructable->Stages.value[0]->DSTD->stage = *(UINT8 *)FieldValue;
             break;
         case 29: //dstd Destruction Stage Data
-            DEST.Load();
-            DEST->DSTD.Load();
-            DEST->DSTD->value29 = *(UINT8 *)FieldValue;
+            Destructable.Load();
+            Destructable->Stages.value[0]->DSTD.Load();
+            Destructable->Stages.value[0]->DSTD->flags = *(UINT8 *)FieldValue;
             break;
         case 30: //dstd Destruction Stage Data
-            DEST.Load();
-            DEST->DSTD.Load();
-            DEST->DSTD->value30 = *(SINT32 *)FieldValue;
+            Destructable.Load();
+            Destructable->Stages.value[0]->DSTD.Load();
+            Destructable->Stages.value[0]->DSTD->dps = *(SINT32 *)FieldValue;
             break;
         case 31: //dstd Destruction Stage Data
-            DEST.Load();
-            DEST->DSTD.Load();
-            DEST->DSTD->value31 = *(FORMID *)FieldValue;
+            Destructable.Load();
+            Destructable->Stages.value[0]->DSTD.Load();
+            Destructable->Stages.value[0]->DSTD->explosion = *(FORMID *)FieldValue;
             return true;
         case 32: //dstd Destruction Stage Data
-            DEST.Load();
-            DEST->DSTD.Load();
-            DEST->DSTD->value32 = *(FORMID *)FieldValue;
+            Destructable.Load();
+            Destructable->Stages.value[0]->DSTD.Load();
+            Destructable->Stages.value[0]->DSTD->debris = *(FORMID *)FieldValue;
             return true;
         case 33: //dstd Destruction Stage Data
-            DEST.Load();
-            DEST->DSTD.Load();
-            DEST->DSTD->value33 = *(SINT32 *)FieldValue;
+            Destructable.Load();
+            Destructable->Stages.value[0]->DSTD.Load();
+            Destructable->Stages.value[0]->DSTD->debrisCount = *(SINT32 *)FieldValue;
             break;
         case 34: //dmdl Model Filename
-            DEST.Load();
-            DEST->DMDL.Copy((STRING)FieldValue);
+            Destructable.Load();
+            Destructable->Stages.value[0]->DMDL.Copy((STRING)FieldValue);
             break;
         case 35: //dmdt_p Texture Files Hashes
-            DEST.Load();
-            DEST->DMDT.Copy((UINT8ARRAY)FieldValue, ArraySize);
+            Destructable.Load();
+            Destructable->Stages.value[0]->DMDT.Copy((UINT8ARRAY)FieldValue, ArraySize);
             break;
         case 36: //ynam Sound - Pick Up
             YNAM.Load();
-            YNAM->value36 = *(FORMID *)FieldValue;
+            YNAM.value = *(FORMID *)FieldValue;
             return true;
         case 37: //znam Sound - Drop
             ZNAM.Load();
-            ZNAM->value37 = *(FORMID *)FieldValue;
+            ZNAM.value = *(FORMID *)FieldValue;
             return true;
         case 38: //data DATA ,, Struct
             DATA.Load();
-            DATA->value38 = *(UINT32 *)FieldValue;
+            DATA->value = *(UINT32 *)FieldValue;
             break;
         case 39: //data DATA ,, Struct
             DATA.Load();
-            DATA->value39 = *(FLOAT32 *)FieldValue;
+            DATA->weight = *(FLOAT32 *)FieldValue;
             break;
         default:
             break;
@@ -492,16 +498,16 @@ void IMODRecord::DeleteField(FIELD_IDENTIFIERS)
             versionControl2[1] = 0;
             return;
         case 7: //boundX
-            if(OBND.IsLoaded())
-                OBND->x = defaultOBND.x;
+            if (OBND.IsLoaded())
+                OBND->x1 = 0; // defaultOBND.x;
             return;
         case 8: //boundY
-            if(OBND.IsLoaded())
-                OBND->y = defaultOBND.y;
+            if (OBND.IsLoaded())
+                OBND->y1 = 0; // defaultOBND.y;
             return;
         case 9: //boundZ
-            if(OBND.IsLoaded())
-                OBND->z = defaultOBND.z;
+            if (OBND.IsLoaded())
+                OBND->z1 = 0; // defaultOBND.z;
             return;
         case 10: //full
             FULL.Unload();
@@ -520,15 +526,15 @@ void IMODRecord::DeleteField(FIELD_IDENTIFIERS)
             return;
         case 14: //mods Alternate Textures
             if(MODL.IsLoaded())
-                MODL->MODS.Unload();
+                MODL->Textures.Unload();
             return;
         case 15: //mods Alternate Textures
             if(MODL.IsLoaded())
-                MODL->MODS.Unload();
+                MODL->Textures.Unload();
             return;
         case 16: //mods Alternate Textures
             if(MODL.IsLoaded())
-                MODL->MODS.Unload();
+                MODL->Textures.Unload();
             return;
         case 17: //modelFlags
             if(MODL.IsLoaded())
@@ -547,60 +553,61 @@ void IMODRecord::DeleteField(FIELD_IDENTIFIERS)
             DESC.Unload();
             return;
         case 22: //dest Header
-            if(DEST.IsLoaded())
-                DEST->DEST.Unload();
+            if(Destructable.IsLoaded())
+                Destructable->DEST.Unload();
             return;
         case 23: //dest Header
-            if(DEST.IsLoaded())
-                DEST->DEST.Unload();
+            if(Destructable.IsLoaded())
+                Destructable->DEST.Unload();
             return;
         case 24: //dest Header
-            if(DEST.IsLoaded())
-                DEST->DEST.Unload();
+            if(Destructable.IsLoaded())
+                Destructable->DEST.Unload();
             return;
         case 25: //dest_p Header
-            if(DEST.IsLoaded())
-                DEST->DEST.Unload();
+            if(Destructable.IsLoaded())
+                Destructable->DEST.Unload();
             return;
         case 26: //dstd Destruction Stage Data
-            if(DEST.IsLoaded())
-                DEST->DSTD.Unload();
+            // TODO: Make this work on all stages
+            if(Destructable.IsLoaded())
+                Destructable->Stages.value[0]->DSTD.Unload();
             return;
         case 27: //dstd Destruction Stage Data
-            if(DEST.IsLoaded())
-                DEST->DSTD.Unload();
+            if(Destructable.IsLoaded())
+                Destructable->Stages.value[0]->DSTD.Unload();
             return;
         case 28: //dstd Destruction Stage Data
-            if(DEST.IsLoaded())
-                DEST->DSTD.Unload();
+            if(Destructable.IsLoaded())
+                Destructable->Stages.value[0]->DSTD.Unload();
             return;
         case 29: //dstd Destruction Stage Data
-            if(DEST.IsLoaded())
-                DEST->DSTD.Unload();
+            if(Destructable.IsLoaded())
+                Destructable->Stages.value[0]->DSTD.Unload();
             return;
         case 30: //dstd Destruction Stage Data
-            if(DEST.IsLoaded())
-                DEST->DSTD.Unload();
+            if(Destructable.IsLoaded())
+                Destructable->Stages.value[0]->DSTD.Unload();
             return;
         case 31: //dstd Destruction Stage Data
-            if(DEST.IsLoaded())
-                DEST->DSTD.Unload();
+            if(Destructable.IsLoaded())
+                Destructable->Stages.value[0]->DSTD.Unload();
             return;
         case 32: //dstd Destruction Stage Data
-            if(DEST.IsLoaded())
-                DEST->DSTD.Unload();
+            if(Destructable.IsLoaded())
+                Destructable->Stages.value[0]->DSTD.Unload();
             return;
         case 33: //dstd Destruction Stage Data
-            if(DEST.IsLoaded())
-                DEST->DSTD.Unload();
+            if(Destructable.IsLoaded())
+                Destructable->Stages.value[0]->DSTD.Unload();
             return;
         case 34: //dmdl Model Filename
-            if(DEST.IsLoaded())
-                DEST->DMDL.Unload();
+            if(Destructable.IsLoaded())
+                Destructable->Stages.value[0]->DMDL.Unload();
             return;
         case 35: //dmdt_p Texture Files Hashes
-            if(DEST.IsLoaded())
-                DEST->DMDT.Unload();
+            if(Destructable.IsLoaded())
+                Destructable->Stages.value[0]->DMDT.Unload();
             return;
         case 36: //ynam Sound - Pick Up
             YNAM.Unload();

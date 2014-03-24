@@ -105,7 +105,7 @@ void * MUSCRecord::GetField(FIELD_IDENTIFIERS, void **FieldValues)
         case 7: //fnam Filename
             return FNAM.value;
         case 8: //anam dB (positive = Loop)
-            return ANAM.IsLoaded() ? &ANAM->value8 : NULL;
+            return ANAM.IsLoaded() ? &ANAM.value : NULL;
         default:
             return NULL;
         }
@@ -144,7 +144,7 @@ bool MUSCRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             break;
         case 8: //anam dB (positive = Loop)
             ANAM.Load();
-            ANAM->value8 = *(FLOAT32 *)FieldValue;
+            ANAM.value = *(FLOAT32 *)FieldValue;
             break;
         default:
             break;

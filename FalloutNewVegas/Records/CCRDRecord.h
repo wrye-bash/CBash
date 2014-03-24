@@ -74,17 +74,11 @@ class CCRDRecord : public FNVRecord //Caravan Card
         bool   VisitFormIDs(FormIDOp &op);
 
         bool   IsNone();
-        void   IsNone(bool value);
         bool   IsHearts();
-        void   IsHearts(bool value);
         bool   IsSpades();
-        void   IsSpades(bool value);
         bool   IsDiamonds();
-        void   IsDiamonds(bool value);
         bool   IsClubs();
-        void   IsClubs(bool value);
         bool   IsJoker();
-        void   IsJoker(bool value);
         bool   IsType(UINT32 Type);
         void   SetType(UINT32 Type);
 

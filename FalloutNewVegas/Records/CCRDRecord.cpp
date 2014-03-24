@@ -72,18 +72,16 @@ CCRDRecord::CCRDRecord(CCRDRecord *srcRecord):
     SCRI = srcRecord->SCRI;
     YNAM = srcRecord->YNAM;
     ZNAM = srcRecord->ZNAM;
-    if(srcRecord->TX00.IsLoaded())
+    if (srcRecord->TX00.IsLoaded())
         {
-        TX00.Load();
-        TX00->TX00 = srcRecord->TX00->TX00;
-        TX00->TX01 = srcRecord->TX00->TX01;
+        TX00 = srcRecord->TX00;
+        TX01 = srcRecord->TX01;
         }
-    if(srcRecord->INTV.IsLoaded())
+    if(srcRecord->INTV1.IsLoaded())
         {
-        INTV.Load();
-        INTV->INTV = srcRecord->INTV->INTV;
+        INTV1 = srcRecord->INTV1;
+        INTV2 = srcRecord->INTV2;
         }
-    INTV = srcRecord->INTV;
     DATA = srcRecord->DATA;
     return;
     }
@@ -104,97 +102,60 @@ bool CCRDRecord::VisitFormIDs(FormIDOp &op)
             op.Accept(MODL->Textures.MODS[x]->texture);
         }
     if(SCRI.IsLoaded())
-        op.Accept(SCRI->value);
+        op.Accept(SCRI.value);
     if(YNAM.IsLoaded())
-        op.Accept(YNAM->value);
+        op.Accept(YNAM.value);
     if(ZNAM.IsLoaded())
-        op.Accept(ZNAM->value);
+        op.Accept(ZNAM.value);
 
     return op.Stop();
     }
 
 bool CCRDRecord::IsNone()
     {
-    if(!Dummy.IsLoaded()) return false;
-    return (Dummy->type == eNone);
-    }
-
-void CCRDRecord::IsNone(bool value)
-    {
-    if(!Dummy.IsLoaded()) return;
-    Dummy->flags = value ? eNone : eDummyDefault;
+    if (!INTV1.IsLoaded()) return false;
+    return (INTV1.value == eNone);
     }
 
 bool CCRDRecord::IsHearts()
     {
-    if(!Dummy.IsLoaded()) return false;
-    return (Dummy->type == eHearts);
-    }
-
-void CCRDRecord::IsHearts(bool value)
-    {
-    if(!Dummy.IsLoaded()) return;
-    Dummy->flags = value ? eHearts : eDummyDefault;
+    if (!INTV1.IsLoaded()) return false;
+    return (INTV1.value == eHearts);
     }
 
 bool CCRDRecord::IsSpades()
     {
-    if(!Dummy.IsLoaded()) return false;
-    return (Dummy->type == eSpades);
-    }
-
-void CCRDRecord::IsSpades(bool value)
-    {
-    if(!Dummy.IsLoaded()) return;
-    Dummy->flags = value ? eSpades : eDummyDefault;
+    if (!INTV1.IsLoaded()) return false;
+    return (INTV1.value == eSpades);
     }
 
 bool CCRDRecord::IsDiamonds()
     {
-    if(!Dummy.IsLoaded()) return false;
-    return (Dummy->type == eDiamonds);
-    }
-
-void CCRDRecord::IsDiamonds(bool value)
-    {
-    if(!Dummy.IsLoaded()) return;
-    Dummy->flags = value ? eDiamonds : eDummyDefault;
+    if (!INTV1.IsLoaded()) return false;
+    return (INTV1.value == eDiamonds);
     }
 
 bool CCRDRecord::IsClubs()
     {
-    if(!Dummy.IsLoaded()) return false;
-    return (Dummy->type == eClubs);
-    }
-
-void CCRDRecord::IsClubs(bool value)
-    {
-    if(!Dummy.IsLoaded()) return;
-    Dummy->flags = value ? eClubs : eDummyDefault;
+    if (!INTV1.IsLoaded()) return false;
+    return (INTV1.value == eClubs);
     }
 
 bool CCRDRecord::IsJoker()
     {
-    if(!Dummy.IsLoaded()) return false;
-    return (Dummy->type == eJoker);
-    }
-
-void CCRDRecord::IsJoker(bool value)
-    {
-    if(!Dummy.IsLoaded()) return;
-    Dummy->flags = value ? eJoker : eDummyDefault;
+    if (!INTV1.IsLoaded()) return false;
+    return (INTV1.value == eJoker);
     }
 
 bool CCRDRecord::IsType(UINT32 Type)
     {
-    if(!Dummy.IsLoaded()) return false;
-    return Dummy->type == Type;
+    if (!INTV1.IsLoaded()) return false;
+    return INTV1.value == Type;
     }
 
 void CCRDRecord::SetType(UINT32 Type)
     {
-    Dummy.Load();
-    Dummy->flags = Mask;
+    INTV1.value = Type;
     }
 
 UINT32 CCRDRecord::GetType()
@@ -207,7 +168,7 @@ STRING CCRDRecord::GetStrType()
     return "CCRD";
     }
 
-SINT32 CCRDRecord::ParseRecord(unsigned char *buffer, const UINT32 &recSize)
+SINT32 CCRDRecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk)
     {
     UINT32 subType = 0;
     UINT32 subSize = 0;
@@ -231,7 +192,7 @@ SINT32 CCRDRecord::ParseRecord(unsigned char *buffer, const UINT32 &recSize)
         switch(subType)
             {
             case REV32(EDID):
-                EDID.Read(buffer, subSize);
+                EDID.Read(buffer, subSize, CompressedOnDisk);
                 break;
             case REV32(OBND):
                 OBND.Read(buffer, subSize);
@@ -241,7 +202,7 @@ SINT32 CCRDRecord::ParseRecord(unsigned char *buffer, const UINT32 &recSize)
                 break;
             case REV32(MODL):
                 MODL.Load();
-                MODL->MODL.Read(buffer, subSize);
+                MODL->MODL.Read(buffer, subSize, CompressedOnDisk);
                 break;
             case REV32(MODB):
                 MODL.Load();
@@ -249,7 +210,7 @@ SINT32 CCRDRecord::ParseRecord(unsigned char *buffer, const UINT32 &recSize)
                 break;
             case REV32(MODT):
                 MODL.Load();
-                MODL->MODT.Read(buffer, subSize);
+                MODL->MODT.Read(buffer, subSize, CompressedOnDisk);
                 break;
             case REV32(MODS):
                 MODL.Load();
@@ -276,20 +237,18 @@ SINT32 CCRDRecord::ParseRecord(unsigned char *buffer, const UINT32 &recSize)
                 break;
             case REV32(TX00):
                 TX00.Load();
-                TX00->TX00.Read(buffer, subSize);
+                TX00.Read(buffer, subSize, CompressedOnDisk);
                 break;
             case REV32(TX01):
-                TX00.Load();
-                TX00->TX01.Read(buffer, subSize);
+                TX01.Load();
+                TX01.Read(buffer, subSize, CompressedOnDisk);
                 break;
             case REV32(INTV):
-                INTV.Load();
-                INTV->INTV.Read(buffer, subSize);
-                break;
-            case REV32(INTV):
-                INTV.Read(buffer, subSize);
-                break;
-            case REV32(DATA):
+                if (!INTV1.IsLoaded())
+                    INTV1.Read(buffer, subSize);
+                else
+                    INTV2.Read(buffer, subSize);
+           case REV32(DATA):
                 DATA.Read(buffer, subSize);
                 break;
             default:
@@ -318,8 +277,8 @@ SINT32 CCRDRecord::Unload()
     YNAM.Unload();
     ZNAM.Unload();
     TX00.Unload();
-    INTV.Unload();
-    INTV.Unload();
+    INTV1.Unload();
+    INTV2.Unload();
     DATA.Unload();
     return 1;
     }
@@ -340,22 +299,16 @@ SINT32 CCRDRecord::WriteRecord(FileWriter &writer)
 
     if(TX00.IsLoaded())
         {
-        if(TX00->TX00.IsLoaded())
-            SaveHandler.writeSubRecord(REV32(TX00), TX00->TX00.value, TX00->TX00.GetSize());
-
-        if(TX00->TX01.IsLoaded())
-            SaveHandler.writeSubRecord(REV32(TX01), TX00->TX01.value, TX00->TX01.GetSize());
-
+        WRITE(TX00);
+        WRITE(TX01);
         }
 
-    if(INTV.IsLoaded())
+    if(INTV1.IsLoaded() && INTV2.IsLoaded())
         {
-        if(INTV->INTV.IsLoaded())
-            SaveHandler.writeSubRecord(REV32(INTV), INTV->INTV.value, INTV->INTV.GetSize());
-
+        INTV1.Write(REV32(INTV), writer);
+        INTV2.Write(REV32(INTV), writer);
         }
 
-    WRITE(INTV);
     WRITE(DATA);
 
     return -1;
@@ -372,9 +325,10 @@ bool CCRDRecord::operator ==(const CCRDRecord &other) const
             SCRI == other.SCRI &&
             YNAM == other.YNAM &&
             ZNAM == other.ZNAM &&
-            TX00 == other.TX00 &&
-            INTV == other.INTV &&
-            INTV == other.INTV &&
+            TX00.equalsi(other.TX00) &&
+            TX01.equalsi(other.TX01) &&
+            INTV1 == other.INTV1 &&
+            INTV2 == other.INTV2 &&
             DATA == other.DATA);
     }
 
@@ -383,7 +337,7 @@ bool CCRDRecord::operator !=(const CCRDRecord &other) const
     return !(*this == other);
     }
 
-bool CCRDRecord::equals(const Record *other) const
+bool CCRDRecord::equals(Record *other)
     {
     return *this == *(CCRDRecord *)other;
     }

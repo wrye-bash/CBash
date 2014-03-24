@@ -221,87 +221,87 @@ void * IMGSRecord::GetField(FIELD_IDENTIFIERS, void **FieldValues)
             *FieldValues = &versionControl2[0];
             return NULL;
         case 7: //dnam DNAM ,, Struct
-            return DNAM.IsLoaded() ? &DNAM->value7 : NULL;
+            return DNAM.IsLoaded() ? &DNAM->hdrEyeAdaptSpeed : NULL;
         case 8: //dnam DNAM ,, Struct
-            return DNAM.IsLoaded() ? &DNAM->value8 : NULL;
+            return DNAM.IsLoaded() ? &DNAM->hdrBlurRadius : NULL;
         case 9: //dnam DNAM ,, Struct
-            return DNAM.IsLoaded() ? &DNAM->value9 : NULL;
+            return DNAM.IsLoaded() ? &DNAM->hdrBlurPasses : NULL;
         case 10: //dnam DNAM ,, Struct
-            return DNAM.IsLoaded() ? &DNAM->value10 : NULL;
+            return DNAM.IsLoaded() ? &DNAM->hdrEmissiveMult : NULL;
         case 11: //dnam DNAM ,, Struct
-            return DNAM.IsLoaded() ? &DNAM->value11 : NULL;
+            return DNAM.IsLoaded() ? &DNAM->hdrTargetLUM : NULL;
         case 12: //dnam DNAM ,, Struct
-            return DNAM.IsLoaded() ? &DNAM->value12 : NULL;
+            return DNAM.IsLoaded() ? &DNAM->hdrUpperLUMClamp : NULL;
         case 13: //dnam DNAM ,, Struct
-            return DNAM.IsLoaded() ? &DNAM->value13 : NULL;
+            return DNAM.IsLoaded() ? &DNAM->hdrBrightScale : NULL;
         case 14: //dnam DNAM ,, Struct
-            return DNAM.IsLoaded() ? &DNAM->value14 : NULL;
+            return DNAM.IsLoaded() ? &DNAM->hdrBrightClamp : NULL;
         case 15: //dnam DNAM ,, Struct
-            return DNAM.IsLoaded() ? &DNAM->value15 : NULL;
+            return DNAM.IsLoaded() ? &DNAM->hdrLUMRampNoTex : NULL;
         case 16: //dnam DNAM ,, Struct
-            return DNAM.IsLoaded() ? &DNAM->value16 : NULL;
+            return DNAM.IsLoaded() ? &DNAM->hdrLUMRampMin : NULL;
         case 17: //dnam DNAM ,, Struct
-            return DNAM.IsLoaded() ? &DNAM->value17 : NULL;
+            return DNAM.IsLoaded() ? &DNAM->hdrLUMRampMax : NULL;
         case 18: //dnam DNAM ,, Struct
-            return DNAM.IsLoaded() ? &DNAM->value18 : NULL;
+            return DNAM.IsLoaded() ? &DNAM->hdrSunlightDimmer : NULL;
         case 19: //dnam DNAM ,, Struct
-            return DNAM.IsLoaded() ? &DNAM->value19 : NULL;
+            return DNAM.IsLoaded() ? &DNAM->hdrGrassDimmer : NULL;
         case 20: //dnam DNAM ,, Struct
-            return DNAM.IsLoaded() ? &DNAM->value20 : NULL;
+            return DNAM.IsLoaded() ? &DNAM->hdrTreeDimmer : NULL;
         case 21: //dnam DNAM ,, Struct
-            return DNAM.IsLoaded() ? &DNAM->value21 : NULL;
+            return DNAM.IsLoaded() ? &DNAM->hdrSkinDimmer : NULL;
         case 22: //dnam DNAM ,, Struct
-            return DNAM.IsLoaded() ? &DNAM->value22 : NULL;
+            return DNAM.IsLoaded() ? &DNAM->bloomBlurRadius : NULL;
         case 23: //dnam DNAM ,, Struct
-            return DNAM.IsLoaded() ? &DNAM->value23 : NULL;
+            return DNAM.IsLoaded() ? &DNAM->bloomAlphaMultInterior : NULL;
         case 24: //dnam DNAM ,, Struct
-            return DNAM.IsLoaded() ? &DNAM->value24 : NULL;
+            return DNAM.IsLoaded() ? &DNAM->bloomAlphaMultExterior : NULL;
         case 25: //dnam DNAM ,, Struct
-            return DNAM.IsLoaded() ? &DNAM->value25 : NULL;
+            return DNAM.IsLoaded() ? &DNAM->hitBlurRadius : NULL;
         case 26: //dnam DNAM ,, Struct
-            return DNAM.IsLoaded() ? &DNAM->value26 : NULL;
+            return DNAM.IsLoaded() ? &DNAM->hitBlurDampingConstant : NULL;
         case 27: //dnam DNAM ,, Struct
-            return DNAM.IsLoaded() ? &DNAM->value27 : NULL;
+            return DNAM.IsLoaded() ? &DNAM->hitDampingConstant : NULL;
         case 28: //dnam DNAM ,, Struct
-            return DNAM.IsLoaded() ? &DNAM->value28 : NULL;
+            return DNAM.IsLoaded() ? &DNAM->neRed : NULL;
         case 29: //dnam DNAM ,, Struct
-            return DNAM.IsLoaded() ? &DNAM->value29 : NULL;
+            return DNAM.IsLoaded() ? &DNAM->neGreen : NULL;
         case 30: //dnam DNAM ,, Struct
-            return DNAM.IsLoaded() ? &DNAM->value30 : NULL;
+            return DNAM.IsLoaded() ? &DNAM->neBlue : NULL;
         case 31: //dnam DNAM ,, Struct
-            return DNAM.IsLoaded() ? &DNAM->value31 : NULL;
+            return DNAM.IsLoaded() ? &DNAM->neBrightness : NULL;
         case 32: //dnam DNAM ,, Struct
-            return DNAM.IsLoaded() ? &DNAM->value32 : NULL;
+            return DNAM.IsLoaded() ? &DNAM->saturation : NULL;
         case 33: //dnam DNAM ,, Struct
-            return DNAM.IsLoaded() ? &DNAM->value33 : NULL;
+            return DNAM.IsLoaded() ? &DNAM->contrastAvgLUMValue : NULL;
         case 34: //dnam DNAM ,, Struct
-            return DNAM.IsLoaded() ? &DNAM->value34 : NULL;
+            return DNAM.IsLoaded() ? &DNAM->contrastValue : NULL;
         case 35: //dnam DNAM ,, Struct
-            return DNAM.IsLoaded() ? &DNAM->value35 : NULL;
+            return DNAM.IsLoaded() ? &DNAM->brightnessValue : NULL;
         case 36: //dnam DNAM ,, Struct
-            return DNAM.IsLoaded() ? &DNAM->value36 : NULL;
+            return DNAM.IsLoaded() ? &DNAM->cineRed : NULL;
         case 37: //dnam DNAM ,, Struct
-            return DNAM.IsLoaded() ? &DNAM->value37 : NULL;
+            return DNAM.IsLoaded() ? &DNAM->cineGreen : NULL;
         case 38: //dnam DNAM ,, Struct
-            return DNAM.IsLoaded() ? &DNAM->value38 : NULL;
+            return DNAM.IsLoaded() ? &DNAM->cineBlue : NULL;
         case 39: //dnam DNAM ,, Struct
-            return DNAM.IsLoaded() ? &DNAM->value39 : NULL;
+            return DNAM.IsLoaded() ? &DNAM->cineValue : NULL;
         case 40: //dnam_p DNAM ,, Struct
-            *FieldValues = DNAM.IsLoaded() ? &DNAM->value40[0] : NULL;
+            *FieldValues = DNAM.IsLoaded() ? &DNAM->unused1[0] : NULL;
             return NULL;
         case 41: //dnam_p DNAM ,, Struct
-            *FieldValues = DNAM.IsLoaded() ? &DNAM->value41[0] : NULL;
+            *FieldValues = DNAM.IsLoaded() ? &DNAM->unused2[0] : NULL;
             return NULL;
         case 42: //dnam_p DNAM ,, Struct
-            *FieldValues = DNAM.IsLoaded() ? &DNAM->value42[0] : NULL;
+            *FieldValues = DNAM.IsLoaded() ? &DNAM->unused3[0] : NULL;
             return NULL;
         case 43: //dnam_p DNAM ,, Struct
-            *FieldValues = DNAM.IsLoaded() ? &DNAM->value43[0] : NULL;
+            *FieldValues = DNAM.IsLoaded() ? &DNAM->unused4[0] : NULL;
             return NULL;
         case 44: //dnam DNAM ,, Struct
-            return DNAM.IsLoaded() ? &DNAM->value44 : NULL;
+            return DNAM.IsLoaded() ? &DNAM->flags : NULL;
         case 45: //dnam_p DNAM ,, Struct
-            *FieldValues = DNAM.IsLoaded() ? &DNAM->value45[0] : NULL;
+            *FieldValues = DNAM.IsLoaded() ? &DNAM->unused5[0] : NULL;
             return NULL;
         default:
             return NULL;
@@ -338,183 +338,183 @@ bool IMGSRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             break;
         case 7: //dnam DNAM ,, Struct
             DNAM.Load();
-            DNAM->value7 = *(FLOAT32 *)FieldValue;
+            DNAM->hdrEyeAdaptSpeed = *(FLOAT32 *)FieldValue;
             break;
         case 8: //dnam DNAM ,, Struct
             DNAM.Load();
-            DNAM->value8 = *(FLOAT32 *)FieldValue;
+            DNAM->hdrBlurRadius = *(FLOAT32 *)FieldValue;
             break;
         case 9: //dnam DNAM ,, Struct
             DNAM.Load();
-            DNAM->value9 = *(FLOAT32 *)FieldValue;
+            DNAM->hdrBlurPasses = *(FLOAT32 *)FieldValue;
             break;
         case 10: //dnam DNAM ,, Struct
             DNAM.Load();
-            DNAM->value10 = *(FLOAT32 *)FieldValue;
+            DNAM->hdrEmissiveMult = *(FLOAT32 *)FieldValue;
             break;
         case 11: //dnam DNAM ,, Struct
             DNAM.Load();
-            DNAM->value11 = *(FLOAT32 *)FieldValue;
+            DNAM->hdrTargetLUM = *(FLOAT32 *)FieldValue;
             break;
         case 12: //dnam DNAM ,, Struct
             DNAM.Load();
-            DNAM->value12 = *(FLOAT32 *)FieldValue;
+            DNAM->hdrUpperLUMClamp = *(FLOAT32 *)FieldValue;
             break;
         case 13: //dnam DNAM ,, Struct
             DNAM.Load();
-            DNAM->value13 = *(FLOAT32 *)FieldValue;
+            DNAM->hdrBrightScale = *(FLOAT32 *)FieldValue;
             break;
         case 14: //dnam DNAM ,, Struct
             DNAM.Load();
-            DNAM->value14 = *(FLOAT32 *)FieldValue;
+            DNAM->hdrBrightClamp = *(FLOAT32 *)FieldValue;
             break;
         case 15: //dnam DNAM ,, Struct
             DNAM.Load();
-            DNAM->value15 = *(FLOAT32 *)FieldValue;
+            DNAM->hdrLUMRampNoTex = *(FLOAT32 *)FieldValue;
             break;
         case 16: //dnam DNAM ,, Struct
             DNAM.Load();
-            DNAM->value16 = *(FLOAT32 *)FieldValue;
+            DNAM->hdrLUMRampMin = *(FLOAT32 *)FieldValue;
             break;
         case 17: //dnam DNAM ,, Struct
             DNAM.Load();
-            DNAM->value17 = *(FLOAT32 *)FieldValue;
+            DNAM->hdrLUMRampMax = *(FLOAT32 *)FieldValue;
             break;
         case 18: //dnam DNAM ,, Struct
             DNAM.Load();
-            DNAM->value18 = *(FLOAT32 *)FieldValue;
+            DNAM->hdrSunlightDimmer = *(FLOAT32 *)FieldValue;
             break;
         case 19: //dnam DNAM ,, Struct
             DNAM.Load();
-            DNAM->value19 = *(FLOAT32 *)FieldValue;
+            DNAM->hdrGrassDimmer = *(FLOAT32 *)FieldValue;
             break;
         case 20: //dnam DNAM ,, Struct
             DNAM.Load();
-            DNAM->value20 = *(FLOAT32 *)FieldValue;
+            DNAM->hdrTreeDimmer = *(FLOAT32 *)FieldValue;
             break;
         case 21: //dnam DNAM ,, Struct
             DNAM.Load();
-            DNAM->value21 = *(FLOAT32 *)FieldValue;
+            DNAM->hdrSkinDimmer = *(FLOAT32 *)FieldValue;
             break;
         case 22: //dnam DNAM ,, Struct
             DNAM.Load();
-            DNAM->value22 = *(FLOAT32 *)FieldValue;
+            DNAM->bloomBlurRadius = *(FLOAT32 *)FieldValue;
             break;
         case 23: //dnam DNAM ,, Struct
             DNAM.Load();
-            DNAM->value23 = *(FLOAT32 *)FieldValue;
+            DNAM->bloomAlphaMultInterior = *(FLOAT32 *)FieldValue;
             break;
         case 24: //dnam DNAM ,, Struct
             DNAM.Load();
-            DNAM->value24 = *(FLOAT32 *)FieldValue;
+            DNAM->bloomAlphaMultExterior = *(FLOAT32 *)FieldValue;
             break;
         case 25: //dnam DNAM ,, Struct
             DNAM.Load();
-            DNAM->value25 = *(FLOAT32 *)FieldValue;
+            DNAM->hitBlurRadius = *(FLOAT32 *)FieldValue;
             break;
         case 26: //dnam DNAM ,, Struct
             DNAM.Load();
-            DNAM->value26 = *(FLOAT32 *)FieldValue;
+            DNAM->hitBlurDampingConstant = *(FLOAT32 *)FieldValue;
             break;
         case 27: //dnam DNAM ,, Struct
             DNAM.Load();
-            DNAM->value27 = *(FLOAT32 *)FieldValue;
+            DNAM->hitDampingConstant = *(FLOAT32 *)FieldValue;
             break;
         case 28: //dnam DNAM ,, Struct
             DNAM.Load();
-            DNAM->value28 = *(FLOAT32 *)FieldValue;
+            DNAM->neRed = *(FLOAT32 *)FieldValue;
             break;
         case 29: //dnam DNAM ,, Struct
             DNAM.Load();
-            DNAM->value29 = *(FLOAT32 *)FieldValue;
+            DNAM->neGreen = *(FLOAT32 *)FieldValue;
             break;
         case 30: //dnam DNAM ,, Struct
             DNAM.Load();
-            DNAM->value30 = *(FLOAT32 *)FieldValue;
+            DNAM->neBlue = *(FLOAT32 *)FieldValue;
             break;
         case 31: //dnam DNAM ,, Struct
             DNAM.Load();
-            DNAM->value31 = *(FLOAT32 *)FieldValue;
+            DNAM->neBrightness = *(FLOAT32 *)FieldValue;
             break;
         case 32: //dnam DNAM ,, Struct
             DNAM.Load();
-            DNAM->value32 = *(FLOAT32 *)FieldValue;
+            DNAM->saturation = *(FLOAT32 *)FieldValue;
             break;
         case 33: //dnam DNAM ,, Struct
             DNAM.Load();
-            DNAM->value33 = *(FLOAT32 *)FieldValue;
+            DNAM->contrastAvgLUMValue = *(FLOAT32 *)FieldValue;
             break;
         case 34: //dnam DNAM ,, Struct
             DNAM.Load();
-            DNAM->value34 = *(FLOAT32 *)FieldValue;
+            DNAM->contrastValue = *(FLOAT32 *)FieldValue;
             break;
         case 35: //dnam DNAM ,, Struct
             DNAM.Load();
-            DNAM->value35 = *(FLOAT32 *)FieldValue;
+            DNAM->brightnessValue = *(FLOAT32 *)FieldValue;
             break;
         case 36: //dnam DNAM ,, Struct
             DNAM.Load();
-            DNAM->value36 = *(FLOAT32 *)FieldValue;
+            DNAM->cineRed = *(FLOAT32 *)FieldValue;
             break;
         case 37: //dnam DNAM ,, Struct
             DNAM.Load();
-            DNAM->value37 = *(FLOAT32 *)FieldValue;
+            DNAM->cineGreen = *(FLOAT32 *)FieldValue;
             break;
         case 38: //dnam DNAM ,, Struct
             DNAM.Load();
-            DNAM->value38 = *(FLOAT32 *)FieldValue;
+            DNAM->cineBlue = *(FLOAT32 *)FieldValue;
             break;
         case 39: //dnam DNAM ,, Struct
             DNAM.Load();
-            DNAM->value39 = *(FLOAT32 *)FieldValue;
+            DNAM->cineValue = *(FLOAT32 *)FieldValue;
             break;
         case 40: //dnam_p DNAM ,, Struct
             if(ArraySize != 4)
                 break;
             DNAM.Load();
-            DNAM->value40[0] = ((UINT8ARRAY)FieldValue)[0];
-            DNAM->value40[1] = ((UINT8ARRAY)FieldValue)[1];
-            DNAM->value40[2] = ((UINT8ARRAY)FieldValue)[2];
-            DNAM->value40[3] = ((UINT8ARRAY)FieldValue)[3];
+            DNAM->unused1[0] = ((UINT8ARRAY)FieldValue)[0];
+            DNAM->unused1[1] = ((UINT8ARRAY)FieldValue)[1];
+            DNAM->unused1[2] = ((UINT8ARRAY)FieldValue)[2];
+            DNAM->unused1[3] = ((UINT8ARRAY)FieldValue)[3];
             break;
         case 41: //dnam_p DNAM ,, Struct
             if(ArraySize != 4)
                 break;
             DNAM.Load();
-            DNAM->value41[0] = ((UINT8ARRAY)FieldValue)[0];
-            DNAM->value41[1] = ((UINT8ARRAY)FieldValue)[1];
-            DNAM->value41[2] = ((UINT8ARRAY)FieldValue)[2];
-            DNAM->value41[3] = ((UINT8ARRAY)FieldValue)[3];
+            DNAM->unused2[0] = ((UINT8ARRAY)FieldValue)[0];
+            DNAM->unused2[1] = ((UINT8ARRAY)FieldValue)[1];
+            DNAM->unused2[2] = ((UINT8ARRAY)FieldValue)[2];
+            DNAM->unused2[3] = ((UINT8ARRAY)FieldValue)[3];
             break;
         case 42: //dnam_p DNAM ,, Struct
             if(ArraySize != 4)
                 break;
             DNAM.Load();
-            DNAM->value42[0] = ((UINT8ARRAY)FieldValue)[0];
-            DNAM->value42[1] = ((UINT8ARRAY)FieldValue)[1];
-            DNAM->value42[2] = ((UINT8ARRAY)FieldValue)[2];
-            DNAM->value42[3] = ((UINT8ARRAY)FieldValue)[3];
+            DNAM->unused3[0] = ((UINT8ARRAY)FieldValue)[0];
+            DNAM->unused3[1] = ((UINT8ARRAY)FieldValue)[1];
+            DNAM->unused3[2] = ((UINT8ARRAY)FieldValue)[2];
+            DNAM->unused3[3] = ((UINT8ARRAY)FieldValue)[3];
             break;
         case 43: //dnam_p DNAM ,, Struct
             if(ArraySize != 4)
                 break;
             DNAM.Load();
-            DNAM->value43[0] = ((UINT8ARRAY)FieldValue)[0];
-            DNAM->value43[1] = ((UINT8ARRAY)FieldValue)[1];
-            DNAM->value43[2] = ((UINT8ARRAY)FieldValue)[2];
-            DNAM->value43[3] = ((UINT8ARRAY)FieldValue)[3];
+            DNAM->unused4[0] = ((UINT8ARRAY)FieldValue)[0];
+            DNAM->unused4[1] = ((UINT8ARRAY)FieldValue)[1];
+            DNAM->unused4[2] = ((UINT8ARRAY)FieldValue)[2];
+            DNAM->unused4[3] = ((UINT8ARRAY)FieldValue)[3];
             break;
         case 44: //dnam DNAM ,, Struct
             DNAM.Load();
-            DNAM->value44 = *(UINT8 *)FieldValue;
+            DNAM->flags = *(UINT8 *)FieldValue;
             break;
         case 45: //dnam_p DNAM ,, Struct
             if(ArraySize != 3)
                 break;
             DNAM.Load();
-            DNAM->value45[0] = ((UINT8ARRAY)FieldValue)[0];
-            DNAM->value45[1] = ((UINT8ARRAY)FieldValue)[1];
-            DNAM->value45[2] = ((UINT8ARRAY)FieldValue)[2];
+            DNAM->unused5[0] = ((UINT8ARRAY)FieldValue)[0];
+            DNAM->unused5[1] = ((UINT8ARRAY)FieldValue)[1];
+            DNAM->unused5[2] = ((UINT8ARRAY)FieldValue)[2];
             break;
         default:
             break;

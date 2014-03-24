@@ -93,7 +93,7 @@ STRING AVIFRecord::GetStrType()
     return "AVIF";
     }
 
-SINT32 AVIFRecord::ParseRecord(unsigned char *buffer, const UINT32 &recSize)
+SINT32 AVIFRecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk)
     {
     UINT32 subType = 0;
     UINT32 subSize = 0;
@@ -117,7 +117,7 @@ SINT32 AVIFRecord::ParseRecord(unsigned char *buffer, const UINT32 &recSize)
         switch(subType)
             {
             case REV32(EDID):
-                EDID.Read(buffer, subSize);
+                EDID.Read(buffer, subSize, CompressedOnDisk);
                 break;
             case REV32(FULL):
                 FULL.Read(buffer, subSize, CompressedOnDisk);
@@ -132,7 +132,7 @@ SINT32 AVIFRecord::ParseRecord(unsigned char *buffer, const UINT32 &recSize)
                 MICO.Read(buffer, subSize, CompressedOnDisk);
                 break;
             case REV32(ANAM):
-                ANAM.Read(buffer, subSize);
+                ANAM.Read(buffer, subSize, CompressedOnDisk);
                 break;
             default:
                 //printf("FileName = %s\n", FileName);
@@ -186,7 +186,7 @@ bool AVIFRecord::operator !=(const AVIFRecord &other) const
     return !(*this == other);
     }
 
-bool AVIFRecord::equals(const Record *other) const
+bool AVIFRecord::equals(Record *other)
     {
     return *this == *(AVIFRecord *)other;
     }

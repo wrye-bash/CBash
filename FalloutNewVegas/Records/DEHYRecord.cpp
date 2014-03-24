@@ -76,8 +76,8 @@ bool DEHYRecord::VisitFormIDs(FormIDOp &op)
     if(!IsLoaded())
         return false;
 
-    //if(DATA.IsLoaded()) //FILL IN MANUALLY
-    //    op.Accept(DATA->value);
+    if (DATA.IsLoaded())
+        op.Accept(DATA.value->actorEffect);
 
     return op.Stop();
     }
@@ -92,7 +92,7 @@ STRING DEHYRecord::GetStrType()
     return "DEHY";
     }
 
-SINT32 DEHYRecord::ParseRecord(unsigned char *buffer, const UINT32 &recSize)
+SINT32 DEHYRecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk)
     {
     UINT32 subType = 0;
     UINT32 subSize = 0;
@@ -116,7 +116,7 @@ SINT32 DEHYRecord::ParseRecord(unsigned char *buffer, const UINT32 &recSize)
         switch(subType)
             {
             case REV32(EDID):
-                EDID.Read(buffer, subSize);
+                EDID.Read(buffer, subSize, CompressedOnDisk);
                 break;
             case REV32(DATA):
                 DATA.Read(buffer, subSize);
@@ -161,7 +161,7 @@ bool DEHYRecord::operator !=(const DEHYRecord &other) const
     return !(*this == other);
     }
 
-bool DEHYRecord::equals(const Record *other) const
+bool DEHYRecord::equals(Record *other)
     {
     return *this == *(DEHYRecord *)other;
     }

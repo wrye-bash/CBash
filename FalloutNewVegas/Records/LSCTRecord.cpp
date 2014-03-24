@@ -38,6 +38,54 @@
 
 namespace FNV
 {
+LSCTRecord::LSCTDATA::LSCTDATA():
+    screenType(eNone),
+    x(0), y(0), width(0), height(0),
+    orientation(0.0),
+    font1(0),
+    font1Red(0.0), font1Green(0.0), font1Blue(0.0),
+    alignmentType(0),
+    font2(0),
+    font2Red(0.0), font2Green(0.0), font2Blue(0.0),
+    stats(0)
+    {
+    memset(&unknown1, 0, sizeof(unknown1));
+    memset(&unknown2, 0, sizeof(unknown2));
+    }
+
+LSCTRecord::LSCTDATA::~LSCTDATA()
+    {
+    //
+    }
+
+bool LSCTRecord::LSCTDATA::operator ==(const LSCTDATA &other) const
+    {
+    return (screenType == other.screenType &&
+            x == other.x &&
+            y == other.y &&
+            width == other.width &&
+            height == other.height &&
+            AlmostEqual(orientation, other.orientation, 2) &&
+            font1 == other.font1 &&
+            AlmostEqual(font1Red, other.font1Red, 2) &&
+            AlmostEqual(font1Green, other.font1Green, 2) &&
+            AlmostEqual(font1Blue, other.font1Blue, 2) &&
+            alignmentType == other.alignmentType &&
+            memcmp(&unknown1, &other.unknown1, sizeof(unknown1)) == 0 &&
+            font2 == other.font2 &&
+            AlmostEqual(font2Red, other.font2Red, 2) &&
+            AlmostEqual(font2Green, other.font2Green, 2) &&
+            AlmostEqual(font2Blue, other.font2Blue, 2) &&
+            memcmp(&unknown2, &other.unknown2, sizeof(unknown2)) == 0 &&
+            stats == other.stats
+            );
+    }
+
+bool LSCTRecord::LSCTDATA::operator !=(const LSCTDATA &other) const
+    {
+    return !(*this == other);
+    }
+
 LSCTRecord::LSCTRecord(unsigned char *_recData):
     FNVRecord(_recData)
     {
@@ -81,74 +129,44 @@ bool LSCTRecord::VisitFormIDs(FormIDOp &op)
 
 bool LSCTRecord::IsNone()
     {
-    if(!Dummy.IsLoaded()) return false;
-    return (Dummy->type == eNone);
-    }
-
-void LSCTRecord::IsNone(bool value)
-    {
-    if(!Dummy.IsLoaded()) return;
-    Dummy->flags = value ? eNone : eDummyDefault;
+    if (!DATA.IsLoaded()) return false;
+    return (DATA->screenType == eNone);
     }
 
 bool LSCTRecord::IsXPProgress()
     {
-    if(!Dummy.IsLoaded()) return false;
-    return (Dummy->type == eXPProgress);
-    }
-
-void LSCTRecord::IsXPProgress(bool value)
-    {
-    if(!Dummy.IsLoaded()) return;
-    Dummy->flags = value ? eXPProgress : eDummyDefault;
+    if (!DATA.IsLoaded()) return false;
+    return (DATA->screenType == eXPProgress);
     }
 
 bool LSCTRecord::IsObjective()
     {
-    if(!Dummy.IsLoaded()) return false;
-    return (Dummy->type == eObjective);
-    }
-
-void LSCTRecord::IsObjective(bool value)
-    {
-    if(!Dummy.IsLoaded()) return;
-    Dummy->flags = value ? eObjective : eDummyDefault;
+    if (!DATA.IsLoaded()) return false;
+    return (DATA->screenType == eObjective);
     }
 
 bool LSCTRecord::IsTip()
     {
-    if(!Dummy.IsLoaded()) return false;
-    return (Dummy->type == eTip);
-    }
-
-void LSCTRecord::IsTip(bool value)
-    {
-    if(!Dummy.IsLoaded()) return;
-    Dummy->flags = value ? eTip : eDummyDefault;
+    if (!DATA.IsLoaded()) return false;
+    return (DATA->screenType == eTip);
     }
 
 bool LSCTRecord::IsStats()
     {
-    if(!Dummy.IsLoaded()) return false;
-    return (Dummy->type == eStats);
-    }
-
-void LSCTRecord::IsStats(bool value)
-    {
-    if(!Dummy.IsLoaded()) return;
-    Dummy->flags = value ? eStats : eDummyDefault;
+    if (!DATA.IsLoaded()) return false;
+    return (DATA->screenType == eStats);
     }
 
 bool LSCTRecord::IsType(UINT32 Type)
     {
-    if(!Dummy.IsLoaded()) return false;
-    return Dummy->type == Type;
+    if (!DATA.IsLoaded()) return false;
+    return DATA->screenType == Type;
     }
 
 void LSCTRecord::SetType(UINT32 Type)
     {
-    Dummy.Load();
-    Dummy->flags = Mask;
+    DATA.Load();
+    DATA->screenType = Type;
     }
 
 UINT32 LSCTRecord::GetType()
@@ -161,7 +179,7 @@ STRING LSCTRecord::GetStrType()
     return "LSCT";
     }
 
-SINT32 LSCTRecord::ParseRecord(unsigned char *buffer, const UINT32 &recSize)
+SINT32 LSCTRecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk)
     {
     UINT32 subType = 0;
     UINT32 subSize = 0;
@@ -185,7 +203,7 @@ SINT32 LSCTRecord::ParseRecord(unsigned char *buffer, const UINT32 &recSize)
         switch(subType)
             {
             case REV32(EDID):
-                EDID.Read(buffer, subSize);
+                EDID.Read(buffer, subSize, CompressedOnDisk);
                 break;
             case REV32(DATA):
                 DATA.Read(buffer, subSize);
@@ -230,7 +248,7 @@ bool LSCTRecord::operator !=(const LSCTRecord &other) const
     return !(*this == other);
     }
 
-bool LSCTRecord::equals(const Record *other) const
+bool LSCTRecord::equals(Record *other)
     {
     return *this == *(LSCTRecord *)other;
     }

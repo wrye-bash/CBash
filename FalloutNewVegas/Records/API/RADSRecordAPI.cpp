@@ -103,9 +103,9 @@ void * RADSRecord::GetField(FIELD_IDENTIFIERS, void **FieldValues)
             *FieldValues = &versionControl2[0];
             return NULL;
         case 7: //data DATA ,, Struct
-            return DATA.IsLoaded() ? &DATA->value7 : NULL;
+            return DATA.IsLoaded() ? &DATA->threshold : NULL;
         case 8: //data DATA ,, Struct
-            return DATA.IsLoaded() ? &DATA->value8 : NULL;
+            return DATA.IsLoaded() ? &DATA->actorEffect : NULL;
         default:
             return NULL;
         }
@@ -141,11 +141,11 @@ bool RADSRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             break;
         case 7: //data DATA ,, Struct
             DATA.Load();
-            DATA->value7 = *(UINT32 *)FieldValue;
+            DATA->threshold = *(UINT32 *)FieldValue;
             break;
         case 8: //data DATA ,, Struct
             DATA.Load();
-            DATA->value8 = *(FORMID *)FieldValue;
+            DATA->actorEffect = *(FORMID *)FieldValue;
             return true;
         default:
             break;

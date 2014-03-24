@@ -94,7 +94,7 @@ bool IMODRecord::VisitFormIDs(FormIDOp &op)
             op.Accept(MODL->Textures.MODS[x]->texture);
         }
     if(SCRI.IsLoaded())
-        op.Accept(SCRI->value);
+        op.Accept(SCRI.value);
     if(Destructable.IsLoaded())
         {
         for(UINT32 x = 0; x < Destructable->Stages.value.size(); ++x)
@@ -104,9 +104,9 @@ bool IMODRecord::VisitFormIDs(FormIDOp &op)
             }
         }
     if(YNAM.IsLoaded())
-        op.Accept(YNAM->value);
+        op.Accept(YNAM.value);
     if(ZNAM.IsLoaded())
-        op.Accept(ZNAM->value);
+        op.Accept(ZNAM.value);
 
     return op.Stop();
     }
@@ -121,7 +121,7 @@ STRING IMODRecord::GetStrType()
     return "IMOD";
     }
 
-SINT32 IMODRecord::ParseRecord(unsigned char *buffer, const UINT32 &recSize)
+SINT32 IMODRecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk)
     {
     UINT32 subType = 0;
     UINT32 subSize = 0;
@@ -145,7 +145,7 @@ SINT32 IMODRecord::ParseRecord(unsigned char *buffer, const UINT32 &recSize)
         switch(subType)
             {
             case REV32(EDID):
-                EDID.Read(buffer, subSize);
+                EDID.Read(buffer, subSize, CompressedOnDisk);
                 break;
             case REV32(OBND):
                 OBND.Read(buffer, subSize);
@@ -155,7 +155,7 @@ SINT32 IMODRecord::ParseRecord(unsigned char *buffer, const UINT32 &recSize)
                 break;
             case REV32(MODL):
                 MODL.Load();
-                MODL->MODL.Read(buffer, subSize);
+                MODL->MODL.Read(buffer, subSize, CompressedOnDisk);
                 break;
             case REV32(MODB):
                 MODL.Load();
@@ -163,7 +163,7 @@ SINT32 IMODRecord::ParseRecord(unsigned char *buffer, const UINT32 &recSize)
                 break;
             case REV32(MODT):
                 MODL.Load();
-                MODL->MODT.Read(buffer, subSize);
+                MODL->MODT.Read(buffer, subSize, CompressedOnDisk);
                 break;
             case REV32(MODS):
                 MODL.Load();
@@ -198,13 +198,13 @@ SINT32 IMODRecord::ParseRecord(unsigned char *buffer, const UINT32 &recSize)
                 Destructable.Load();
                 if(Destructable->Stages.value.size() == 0)
                     Destructable->Stages.value.push_back(new DESTSTAGE);
-                Destructable->Stages.value.back()->DMDL.Read(buffer, subSize);
+                Destructable->Stages.value.back()->DMDL.Read(buffer, subSize, CompressedOnDisk);
                 break;
             case REV32(DMDT):
                 Destructable.Load();
                 if(Destructable->Stages.value.size() == 0)
                     Destructable->Stages.value.push_back(new DESTSTAGE);
-                Destructable->Stages.value.back()->DMDT.Read(buffer, subSize);
+                Destructable->Stages.value.back()->DMDT.Read(buffer, subSize, CompressedOnDisk);
                 break;
             case REV32(DSTF):
                 //Marks end of a destruction stage
@@ -292,7 +292,7 @@ bool IMODRecord::operator !=(const IMODRecord &other) const
     return !(*this == other);
     }
 
-bool IMODRecord::equals(const Record *other) const
+bool IMODRecord::equals(Record *other)
     {
     return *this == *(IMODRecord *)other;
     }

@@ -88,7 +88,7 @@ UINT32 CPTHRecord::GetFieldAttribute(FIELD_IDENTIFIERS, UINT32 WhichAttribute)
                 }
             return UNKNOWN_FIELD;
         case 9: //ctda Conditions
-            return UNPARSED_FIELD;
+            return UNKNOWN_FIELD; // UNPARSED_FIELD;
         case 10: //ctda Conditions
             return UINT32_FIELD;
         case 11: //ctda_p Conditions
@@ -116,9 +116,9 @@ UINT32 CPTHRecord::GetFieldAttribute(FIELD_IDENTIFIERS, UINT32 WhichAttribute)
         case 13: //ctda Conditions
             return UINT32_FIELD;
         case 14: //ctda Conditions
-            return UNPARSED_FIELD;
+            return UNKNOWN_FIELD; // UNPARSED_FIELD;
         case 15: //anam Related Camera Paths
-            return UNPARSED_FIELD;
+            return UNKNOWN_FIELD; // UNPARSED_FIELD;
         case 16: //data Camera Zoom
             return UINT8_FIELD;
         case 17: //snam Camera Shot
@@ -148,30 +148,33 @@ void * CPTHRecord::GetField(FIELD_IDENTIFIERS, void **FieldValues)
             *FieldValues = &versionControl2[0];
             return NULL;
         case 7: //ctda Conditions
-            return CTDAs.IsLoaded() ? &CTDAs->value7 : NULL;
+            return NULL;
+            //return CTDA.IsLoaded() ? &CTDA->value7 : NULL;
         case 8: //ctda_p Conditions
-            *FieldValues = CTDAs.IsLoaded() ? &CTDAs->value8[0] : NULL;
+            //*FieldValues = CTDA.IsLoaded() ? &CTDA->value8[0] : NULL;
             return NULL;
         case 9: //ctda Conditions
-            return UNPARSEDGET_FIELD9;
+            return NULL; // UNPARSEDGET_FIELD9;
         case 10: //ctda Conditions
-            return CTDAs.IsLoaded() ? &CTDAs->value10 : NULL;
+            return NULL;
+            //return CTDA.IsLoaded() ? &CTDA->value10 : NULL;
         case 11: //ctda_p Conditions
-            *FieldValues = CTDAs.IsLoaded() ? &CTDAs->value11[0] : NULL;
+            //*FieldValues = CTDA.IsLoaded() ? &CTDA->value11[0] : NULL;
             return NULL;
         case 12: //ctda_p Conditions
-            *FieldValues = CTDAs.IsLoaded() ? &CTDAs->value12[0] : NULL;
+            //*FieldValues = CTDA.IsLoaded() ? &CTDA->value12[0] : NULL;
             return NULL;
         case 13: //ctda Conditions
-            return CTDAs.IsLoaded() ? &CTDAs->value13 : NULL;
+            return NULL;
+            //return CTDA.IsLoaded() ? &CTDA->value13 : NULL;
         case 14: //ctda Conditions
-            return UNPARSEDGET_FIELD14;
+            return NULL; // UNPARSEDGET_FIELD14;
         case 15: //anam Related Camera Paths
-            return UNPARSEDGET_FIELD15;
+            return NULL; // UNPARSEDGET_FIELD15;
         case 16: //data Camera Zoom
-            return DATA.IsLoaded() ? &DATA->value16 : NULL;
+            return DATA.IsLoaded() ? &DATA.value : NULL;
         case 17: //snam Camera Shot
-            return SNAM.IsLoaded() ? &SNAM->value17 : NULL;
+            return SNAM.IsLoaded() ? &SNAM.value[0] : NULL;
         default:
             return NULL;
         }
@@ -206,56 +209,59 @@ bool CPTHRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             versionControl2[1] = ((UINT8ARRAY)FieldValue)[1];
             break;
         case 7: //ctda Conditions
-            CTDAs.Load();
-            CTDAs->value7 = *(UINT8 *)FieldValue;
+            //CTDA.Load();
+            //CTDA->value7 = *(UINT8 *)FieldValue;
             break;
         case 8: //ctda_p Conditions
             if(ArraySize != 3)
                 break;
-            CTDAs.Load();
-            CTDAs->value8[0] = ((UINT8ARRAY)FieldValue)[0];
-            CTDAs->value8[1] = ((UINT8ARRAY)FieldValue)[1];
-            CTDAs->value8[2] = ((UINT8ARRAY)FieldValue)[2];
+            //CTDA.Load();
+            //CTDA->value8[0] = ((UINT8ARRAY)FieldValue)[0];
+            //CTDA->value8[1] = ((UINT8ARRAY)FieldValue)[1];
+            //CTDA->value8[2] = ((UINT8ARRAY)FieldValue)[2];
             break;
         case 9: //ctda Conditions
-            return UNPARSEDGET_FIELD9;
+            //return UNPARSEDGET_FIELD9;
+            break;
         case 10: //ctda Conditions
-            CTDAs.Load();
-            CTDAs->value10 = *(UINT32 *)FieldValue;
+            //CTDA.Load();
+            //CTDA->value10 = *(UINT32 *)FieldValue;
             break;
         case 11: //ctda_p Conditions
             if(ArraySize != 4)
                 break;
-            CTDAs.Load();
-            CTDAs->value11[0] = ((UINT8ARRAY)FieldValue)[0];
-            CTDAs->value11[1] = ((UINT8ARRAY)FieldValue)[1];
-            CTDAs->value11[2] = ((UINT8ARRAY)FieldValue)[2];
-            CTDAs->value11[3] = ((UINT8ARRAY)FieldValue)[3];
+            //CTDA.Load();
+            //CTDA->value11[0] = ((UINT8ARRAY)FieldValue)[0];
+            //CTDA->value11[1] = ((UINT8ARRAY)FieldValue)[1];
+            //CTDA->value11[2] = ((UINT8ARRAY)FieldValue)[2];
+            //CTDA->value11[3] = ((UINT8ARRAY)FieldValue)[3];
             break;
         case 12: //ctda_p Conditions
             if(ArraySize != 4)
                 break;
-            CTDAs.Load();
-            CTDAs->value12[0] = ((UINT8ARRAY)FieldValue)[0];
-            CTDAs->value12[1] = ((UINT8ARRAY)FieldValue)[1];
-            CTDAs->value12[2] = ((UINT8ARRAY)FieldValue)[2];
-            CTDAs->value12[3] = ((UINT8ARRAY)FieldValue)[3];
+            //CTDA.Load();
+            //CTDA->value12[0] = ((UINT8ARRAY)FieldValue)[0];
+            //CTDA->value12[1] = ((UINT8ARRAY)FieldValue)[1];
+            //CTDA->value12[2] = ((UINT8ARRAY)FieldValue)[2];
+            //CTDA->value12[3] = ((UINT8ARRAY)FieldValue)[3];
             break;
         case 13: //ctda Conditions
-            CTDAs.Load();
-            CTDAs->value13 = *(UINT32 *)FieldValue;
+            //CTDA.Load();
+            //CTDA->value13 = *(UINT32 *)FieldValue;
             break;
         case 14: //ctda Conditions
-            return UNPARSEDGET_FIELD14;
+            //return UNPARSEDGET_FIELD14;
+            break;
         case 15: //anam Related Camera Paths
-            return UNPARSEDGET_FIELD15;
+            //return UNPARSEDGET_FIELD15;
+            break;
         case 16: //data Camera Zoom
             DATA.Load();
-            DATA->value16 = *(UINT8 *)FieldValue;
+            DATA.value = *(UINT8 *)FieldValue;
             break;
         case 17: //snam Camera Shot
-            SNAM.Load();
-            SNAM->value17 = *(FORMID *)FieldValue;
+            //SNAM.Load();
+            SNAM.value[0] = *(FORMID *)FieldValue;
             return true;
         default:
             break;
@@ -284,29 +290,29 @@ void CPTHRecord::DeleteField(FIELD_IDENTIFIERS)
             versionControl2[1] = 0;
             return;
         case 7: //ctda Conditions
-            CTDAs.Unload();
+            //CTDA.Unload();
             return;
         case 8: //ctda_p Conditions
-            CTDAs.Unload();
+            //CTDA.Unload();
             return;
         case 9: //ctda Conditions
-            return UNPARSEDDEL_FIELD9;
+            return; // UNPARSEDDEL_FIELD9;
         case 10: //ctda Conditions
-            CTDAs.Unload();
+            //CTDA.Unload();
             return;
         case 11: //ctda_p Conditions
-            CTDAs.Unload();
+            //CTDA.Unload();
             return;
         case 12: //ctda_p Conditions
-            CTDAs.Unload();
+            //CTDA.Unload();
             return;
         case 13: //ctda Conditions
-            CTDAs.Unload();
+            //CTDA.Unload();
             return;
         case 14: //ctda Conditions
-            return UNPARSEDDEL_FIELD14;
+            return; // UNPARSEDDEL_FIELD14;
         case 15: //anam Related Camera Paths
-            return UNPARSEDDEL_FIELD15;
+            return; // UNPARSEDDEL_FIELD15;
         case 16: //data Camera Zoom
             DATA.Unload();
             return;

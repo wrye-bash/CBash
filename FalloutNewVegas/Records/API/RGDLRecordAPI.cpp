@@ -145,7 +145,7 @@ UINT32 RGDLRecord::GetFieldAttribute(FIELD_IDENTIFIERS, UINT32 WhichAttribute)
         case 32: //rafd RAFD ,, Struct
             return SINT32_FIELD;
         case 33: //rafb Feedback Dynamic Bones
-            return UNPARSED_FIELD;
+            return UNKNOWN_FIELD; // UNPARSED_FIELD
         case 34: //raps RAPS ,, Struct
             return UINT16_FIELD;
         case 35: //raps RAPS ,, Struct
@@ -196,76 +196,76 @@ void * RGDLRecord::GetField(FIELD_IDENTIFIERS, void **FieldValues)
             *FieldValues = &versionControl2[0];
             return NULL;
         case 7: //nver Version
-            return NVER.IsLoaded() ? &NVER->value7 : NULL;
+            return NVER.IsLoaded() ? &NVER.value : NULL;
         case 8: //data DATA ,, Struct
-            return DATA.IsLoaded() ? &DATA->value8 : NULL;
+            return DATA.IsLoaded() ? &DATA->numBones : NULL;
         case 9: //data_p DATA ,, Struct
-            *FieldValues = DATA.IsLoaded() ? &DATA->value9[0] : NULL;
+            *FieldValues = DATA.IsLoaded() ? &DATA->unused1[0] : NULL;
             return NULL;
         case 10: //data DATA ,, Struct
-            return DATA.IsLoaded() ? &DATA->value10 : NULL;
+            return DATA.IsLoaded() ? &DATA->feedbackType : NULL;
         case 11: //data DATA ,, Struct
-            return DATA.IsLoaded() ? &DATA->value11 : NULL;
+            return DATA.IsLoaded() ? &DATA->footIKType : NULL;
         case 12: //data DATA ,, Struct
-            return DATA.IsLoaded() ? &DATA->value12 : NULL;
+            return DATA.IsLoaded() ? &DATA->lookIKType : NULL;
         case 13: //data DATA ,, Struct
-            return DATA.IsLoaded() ? &DATA->value13 : NULL;
+            return DATA.IsLoaded() ? &DATA->grabIKType : NULL;
         case 14: //data DATA ,, Struct
-            return DATA.IsLoaded() ? &DATA->value14 : NULL;
+            return DATA.IsLoaded() ? &DATA->matchPoseType : NULL;
         case 15: //data_p DATA ,, Struct
-            *FieldValues = DATA.IsLoaded() ? &DATA->value15[0] : NULL;
+            *FieldValues = DATA.IsLoaded() ? &DATA->unused2 : NULL;
             return NULL;
         case 16: //xnam Actor Base
-            return XNAM.IsLoaded() ? &XNAM->value16 : NULL;
+            return XNAM.IsLoaded() ? &XNAM.value : NULL;
         case 17: //tnam Body Part Data
-            return TNAM.IsLoaded() ? &TNAM->value17 : NULL;
+            return TNAM.IsLoaded() ? &TNAM.value : NULL;
         case 18: //rafd RAFD ,, Struct
-            return RAFD.IsLoaded() ? &RAFD->value18 : NULL;
+            return RAFD.IsLoaded() ? &RAFD->blendAmt : NULL;
         case 19: //rafd RAFD ,, Struct
-            return RAFD.IsLoaded() ? &RAFD->value19 : NULL;
+            return RAFD.IsLoaded() ? &RAFD->hierachyGain : NULL;
         case 20: //rafd RAFD ,, Struct
-            return RAFD.IsLoaded() ? &RAFD->value20 : NULL;
+            return RAFD.IsLoaded() ? &RAFD->posGain : NULL;
         case 21: //rafd RAFD ,, Struct
-            return RAFD.IsLoaded() ? &RAFD->value21 : NULL;
+            return RAFD.IsLoaded() ? &RAFD->velGain : NULL;
         case 22: //rafd RAFD ,, Struct
-            return RAFD.IsLoaded() ? &RAFD->value22 : NULL;
+            return RAFD.IsLoaded() ? &RAFD->accGain : NULL;
         case 23: //rafd RAFD ,, Struct
-            return RAFD.IsLoaded() ? &RAFD->value23 : NULL;
+            return RAFD.IsLoaded() ? &RAFD->snapGain : NULL;
         case 24: //rafd RAFD ,, Struct
-            return RAFD.IsLoaded() ? &RAFD->value24 : NULL;
+            return RAFD.IsLoaded() ? &RAFD->velDamping : NULL;
         case 25: //rafd RAFD ,, Struct
-            return RAFD.IsLoaded() ? &RAFD->value25 : NULL;
+            return RAFD.IsLoaded() ? &RAFD->snapLinVel : NULL;
         case 26: //rafd RAFD ,, Struct
-            return RAFD.IsLoaded() ? &RAFD->value26 : NULL;
+            return RAFD.IsLoaded() ? &RAFD->snapAngVel : NULL;
         case 27: //rafd RAFD ,, Struct
-            return RAFD.IsLoaded() ? &RAFD->value27 : NULL;
+            return RAFD.IsLoaded() ? &RAFD->snapLinDist : NULL;
         case 28: //rafd RAFD ,, Struct
-            return RAFD.IsLoaded() ? &RAFD->value28 : NULL;
+            return RAFD.IsLoaded() ? &RAFD->snapAngDist : NULL;
         case 29: //rafd RAFD ,, Struct
-            return RAFD.IsLoaded() ? &RAFD->value29 : NULL;
+            return RAFD.IsLoaded() ? &RAFD->posLinVel : NULL;
         case 30: //rafd RAFD ,, Struct
-            return RAFD.IsLoaded() ? &RAFD->value30 : NULL;
+            return RAFD.IsLoaded() ? &RAFD->posAngVel : NULL;
         case 31: //rafd RAFD ,, Struct
-            return RAFD.IsLoaded() ? &RAFD->value31 : NULL;
+            return RAFD.IsLoaded() ? &RAFD->posProjectileVel : NULL;
         case 32: //rafd RAFD ,, Struct
-            return RAFD.IsLoaded() ? &RAFD->value32 : NULL;
+            return RAFD.IsLoaded() ? &RAFD->posMeleeVel : NULL;
         case 33: //rafb Feedback Dynamic Bones
-            return UNPARSEDGET_FIELD33;
+            return NULL; // Unparsed
         case 34: //raps RAPS ,, Struct
-            return RAPS.IsLoaded() ? &RAPS->value34 : NULL;
+            return RAPS.IsLoaded() ? &RAPS->matchBones1 : NULL;
         case 35: //raps RAPS ,, Struct
-            return RAPS.IsLoaded() ? &RAPS->value35 : NULL;
+            return RAPS.IsLoaded() ? &RAPS->flags : NULL;
         case 36: //raps_p RAPS ,, Struct
-            *FieldValues = RAPS.IsLoaded() ? &RAPS->value36[0] : NULL;
+            *FieldValues = RAPS.IsLoaded() ? &RAPS->unused : NULL;
             return NULL;
         case 37: //raps RAPS ,, Struct
-            return RAPS.IsLoaded() ? &RAPS->value37 : NULL;
+            return RAPS.IsLoaded() ? &RAPS->motorsStrength : NULL;
         case 38: //raps RAPS ,, Struct
-            return RAPS.IsLoaded() ? &RAPS->value38 : NULL;
+            return RAPS.IsLoaded() ? &RAPS->poseDelay : NULL;
         case 39: //raps RAPS ,, Struct
-            return RAPS.IsLoaded() ? &RAPS->value39 : NULL;
+            return RAPS.IsLoaded() ? &RAPS->errorAllowance : NULL;
         case 40: //raps RAPS ,, Struct
-            return RAPS.IsLoaded() ? &RAPS->value40 : NULL;
+            return RAPS.IsLoaded() ? &RAPS->disableDisplacement : NULL;
         case 41: //anam Death Pose
             return ANAM.value;
         default:
@@ -303,146 +303,146 @@ bool RGDLRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             break;
         case 7: //nver Version
             NVER.Load();
-            NVER->value7 = *(UINT32 *)FieldValue;
+            NVER.value = *(UINT32 *)FieldValue;
             break;
         case 8: //data DATA ,, Struct
             DATA.Load();
-            DATA->value8 = *(UINT32 *)FieldValue;
+            DATA->numBones = *(UINT32 *)FieldValue;
             break;
         case 9: //data_p DATA ,, Struct
             if(ArraySize != 4)
                 break;
             DATA.Load();
-            DATA->value9[0] = ((UINT8ARRAY)FieldValue)[0];
-            DATA->value9[1] = ((UINT8ARRAY)FieldValue)[1];
-            DATA->value9[2] = ((UINT8ARRAY)FieldValue)[2];
-            DATA->value9[3] = ((UINT8ARRAY)FieldValue)[3];
+            DATA->unused1[0] = ((UINT8ARRAY)FieldValue)[0];
+            DATA->unused1[1] = ((UINT8ARRAY)FieldValue)[1];
+            DATA->unused1[2] = ((UINT8ARRAY)FieldValue)[2];
+            DATA->unused1[3] = ((UINT8ARRAY)FieldValue)[3];
             break;
         case 10: //data DATA ,, Struct
             DATA.Load();
-            DATA->value10 = *(UINT8 *)FieldValue;
+            DATA->feedbackType = *(UINT8 *)FieldValue;
             break;
         case 11: //data DATA ,, Struct
             DATA.Load();
-            DATA->value11 = *(UINT8 *)FieldValue;
+            DATA->footIKType = *(UINT8 *)FieldValue;
             break;
         case 12: //data DATA ,, Struct
             DATA.Load();
-            DATA->value12 = *(UINT8 *)FieldValue;
+            DATA->lookIKType = *(UINT8 *)FieldValue;
             break;
         case 13: //data DATA ,, Struct
             DATA.Load();
-            DATA->value13 = *(UINT8 *)FieldValue;
+            DATA->grabIKType = *(UINT8 *)FieldValue;
             break;
         case 14: //data DATA ,, Struct
             DATA.Load();
-            DATA->value14 = *(UINT8 *)FieldValue;
+            DATA->matchPoseType = *(UINT8 *)FieldValue;
             break;
         case 15: //data_p DATA ,, Struct
             if(ArraySize != 1)
                 break;
             DATA.Load();
-            DATA->value15[0] = ((UINT8ARRAY)FieldValue)[0];
+            DATA->unused2 = ((UINT8ARRAY)FieldValue)[0];
             break;
         case 16: //xnam Actor Base
             XNAM.Load();
-            XNAM->value16 = *(FORMID *)FieldValue;
+            XNAM.value = *(FORMID *)FieldValue;
             return true;
         case 17: //tnam Body Part Data
             TNAM.Load();
-            TNAM->value17 = *(FORMID *)FieldValue;
+            TNAM.value = *(FORMID *)FieldValue;
             return true;
         case 18: //rafd RAFD ,, Struct
             RAFD.Load();
-            RAFD->value18 = *(FLOAT32 *)FieldValue;
+            RAFD->blendAmt = *(FLOAT32 *)FieldValue;
             break;
         case 19: //rafd RAFD ,, Struct
             RAFD.Load();
-            RAFD->value19 = *(FLOAT32 *)FieldValue;
+            RAFD->hierachyGain = *(FLOAT32 *)FieldValue;
             break;
         case 20: //rafd RAFD ,, Struct
             RAFD.Load();
-            RAFD->value20 = *(FLOAT32 *)FieldValue;
+            RAFD->posGain = *(FLOAT32 *)FieldValue;
             break;
         case 21: //rafd RAFD ,, Struct
             RAFD.Load();
-            RAFD->value21 = *(FLOAT32 *)FieldValue;
+            RAFD->velGain = *(FLOAT32 *)FieldValue;
             break;
         case 22: //rafd RAFD ,, Struct
             RAFD.Load();
-            RAFD->value22 = *(FLOAT32 *)FieldValue;
+            RAFD->accGain = *(FLOAT32 *)FieldValue;
             break;
         case 23: //rafd RAFD ,, Struct
             RAFD.Load();
-            RAFD->value23 = *(FLOAT32 *)FieldValue;
+            RAFD->snapGain = *(FLOAT32 *)FieldValue;
             break;
         case 24: //rafd RAFD ,, Struct
             RAFD.Load();
-            RAFD->value24 = *(FLOAT32 *)FieldValue;
+            RAFD->velDamping = *(FLOAT32 *)FieldValue;
             break;
         case 25: //rafd RAFD ,, Struct
             RAFD.Load();
-            RAFD->value25 = *(FLOAT32 *)FieldValue;
+            RAFD->snapLinVel = *(FLOAT32 *)FieldValue;
             break;
         case 26: //rafd RAFD ,, Struct
             RAFD.Load();
-            RAFD->value26 = *(FLOAT32 *)FieldValue;
+            RAFD->snapAngVel = *(FLOAT32 *)FieldValue;
             break;
         case 27: //rafd RAFD ,, Struct
             RAFD.Load();
-            RAFD->value27 = *(FLOAT32 *)FieldValue;
+            RAFD->snapLinDist = *(FLOAT32 *)FieldValue;
             break;
         case 28: //rafd RAFD ,, Struct
             RAFD.Load();
-            RAFD->value28 = *(FLOAT32 *)FieldValue;
+            RAFD->snapAngDist = *(FLOAT32 *)FieldValue;
             break;
         case 29: //rafd RAFD ,, Struct
             RAFD.Load();
-            RAFD->value29 = *(FLOAT32 *)FieldValue;
+            RAFD->posLinVel = *(FLOAT32 *)FieldValue;
             break;
         case 30: //rafd RAFD ,, Struct
             RAFD.Load();
-            RAFD->value30 = *(FLOAT32 *)FieldValue;
+            RAFD->posAngVel = *(FLOAT32 *)FieldValue;
             break;
         case 31: //rafd RAFD ,, Struct
             RAFD.Load();
-            RAFD->value31 = *(SINT32 *)FieldValue;
+            RAFD->posProjectileVel = *(SINT32 *)FieldValue;
             break;
         case 32: //rafd RAFD ,, Struct
             RAFD.Load();
-            RAFD->value32 = *(SINT32 *)FieldValue;
+            RAFD->posMeleeVel = *(SINT32 *)FieldValue;
             break;
         case 33: //rafb Feedback Dynamic Bones
-            return UNPARSEDGET_FIELD33;
+            break; //unparsed
         case 34: //raps RAPS ,, Struct
             RAPS.Load();
-            RAPS->value34 = *(UINT16 *)FieldValue;
+            RAPS->matchBones1 = *(UINT16 *)FieldValue;
             break;
         case 35: //raps RAPS ,, Struct
             RAPS.Load();
-            RAPS->value35 = *(UINT8 *)FieldValue;
+            RAPS->flags = *(UINT8 *)FieldValue;
             break;
         case 36: //raps_p RAPS ,, Struct
             if(ArraySize != 1)
                 break;
             RAPS.Load();
-            RAPS->value36[0] = ((UINT8ARRAY)FieldValue)[0];
+            RAPS->unused = ((UINT8ARRAY)FieldValue)[0];
             break;
         case 37: //raps RAPS ,, Struct
             RAPS.Load();
-            RAPS->value37 = *(FLOAT32 *)FieldValue;
+            RAPS->motorsStrength = *(FLOAT32 *)FieldValue;
             break;
         case 38: //raps RAPS ,, Struct
             RAPS.Load();
-            RAPS->value38 = *(FLOAT32 *)FieldValue;
+            RAPS->poseDelay = *(FLOAT32 *)FieldValue;
             break;
         case 39: //raps RAPS ,, Struct
             RAPS.Load();
-            RAPS->value39 = *(FLOAT32 *)FieldValue;
+            RAPS->errorAllowance = *(FLOAT32 *)FieldValue;
             break;
         case 40: //raps RAPS ,, Struct
             RAPS.Load();
-            RAPS->value40 = *(FLOAT32 *)FieldValue;
+            RAPS->disableDisplacement = *(FLOAT32 *)FieldValue;
             break;
         case 41: //anam Death Pose
             ANAM.Copy((STRING)FieldValue);
@@ -552,7 +552,7 @@ void RGDLRecord::DeleteField(FIELD_IDENTIFIERS)
             RAFD.Unload();
             return;
         case 33: //rafb Feedback Dynamic Bones
-            return UNPARSEDDEL_FIELD33;
+            return; // unparsed
         case 34: //raps RAPS ,, Struct
             RAPS.Unload();
             return;

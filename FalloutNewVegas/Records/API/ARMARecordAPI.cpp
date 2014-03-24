@@ -126,7 +126,7 @@ UINT32 ARMARecord::GetFieldAttribute(FIELD_IDENTIFIERS, UINT32 WhichAttribute)
                 case 0: //fieldType
                     return UINT8_ARRAY_FIELD;
                 case 1: //fieldSize
-                    return MO2T.GetSize();
+                    return MOD2->MODT.GetSize();
                 default:
                     return UNKNOWN_FIELD;
                 }
@@ -149,7 +149,7 @@ UINT32 ARMARecord::GetFieldAttribute(FIELD_IDENTIFIERS, UINT32 WhichAttribute)
                 case 0: //fieldType
                     return UINT8_ARRAY_FIELD;
                 case 1: //fieldSize
-                    return MO3T.GetSize();
+                    return MOD3->MODT.GetSize();
                 default:
                     return UNKNOWN_FIELD;
                 }
@@ -170,7 +170,7 @@ UINT32 ARMARecord::GetFieldAttribute(FIELD_IDENTIFIERS, UINT32 WhichAttribute)
                 case 0: //fieldType
                     return UINT8_ARRAY_FIELD;
                 case 1: //fieldSize
-                    return MO4T.GetSize();
+                    return MOD4->MODT.GetSize();
                 default:
                     return UNKNOWN_FIELD;
                 }
@@ -232,19 +232,19 @@ void * ARMARecord::GetField(FIELD_IDENTIFIERS, void **FieldValues)
             *FieldValues = &versionControl2[0];
             return NULL;
         case 7: //boundX
-            return OBND.IsLoaded() ? &OBND->x : NULL;
+            return OBND.IsLoaded() ? &OBND->x1 : NULL;
         case 8: //boundY
-            return OBND.IsLoaded() ? &OBND->y : NULL;
+            return OBND.IsLoaded() ? &OBND->y1 : NULL;
         case 9: //boundZ
-            return OBND.IsLoaded() ? &OBND->z : NULL;
+            return OBND.IsLoaded() ? &OBND->z1 : NULL;
         case 10: //full
             return FULL.value;
         case 11: //bmdt Biped Data
-            return BMDT.IsLoaded() ? &BMDT->value11 : NULL;
+            return BMDT.IsLoaded() ? &BMDT->bipedFlags : NULL;
         case 12: //bmdt Biped Data
-            return BMDT.IsLoaded() ? &BMDT->value12 : NULL;
+            return BMDT.IsLoaded() ? &BMDT->generalFlags : NULL;
         case 13: //bmdt_p Biped Data
-            *FieldValues = BMDT.IsLoaded() ? &BMDT->value13[0] : NULL;
+            *FieldValues = BMDT.IsLoaded() ? &BMDT->unused1[0] : NULL;
             return NULL;
         case 14: //modPath
             return MODL.IsLoaded() ? MODL->MODL.value : NULL;
@@ -252,68 +252,81 @@ void * ARMARecord::GetField(FIELD_IDENTIFIERS, void **FieldValues)
             *FieldValues = MODL.IsLoaded() ? MODL->MODT.value : NULL;
             return NULL;
         case 16: //mods Alternate Texture
-            return MODL.IsLoaded() ? MODL->MODS.value : NULL;
+            return NULL;
+            //return MODL.IsLoaded() ? MODL->Textures.MODS.value : NULL;
         case 17: //mods Alternate Texture
-            return MODL.IsLoaded() ? &MODL->MODS->value17 : NULL;
+            return NULL;
+            //return MODL.IsLoaded() ? &MODL->Textures.MODS->value17 : NULL;
         case 18: //mods Alternate Texture
-            return MODL.IsLoaded() ? &MODL->MODS->value18 : NULL;
+            return NULL;
+            //return MODL.IsLoaded() ? &MODL->Textures.MODS->value18 : NULL;
         case 19: //modelFlags
-            return MODL.IsLoaded() ? &MODL->MODD->value19 : NULL;
+            return MODL.IsLoaded() ? &MODL->MODD.value : NULL;
         case 20: //mod2 Model Filename
-            return MOD2.IsLoaded() ? MOD2->MOD2.value : NULL;
+            return MOD2.IsLoaded() ? MOD2->MODL.value : NULL;
         case 21: //mo2t_p Texture Files Hashes
-            *FieldValues = (MOD2.IsLoaded()) ? MOD2->MO2T.value : NULL;
+            *FieldValues = (MOD2.IsLoaded()) ? MOD2->MODT.value : NULL;
             return NULL;
         case 22: //mo2s Alternate Texture
-            return MOD2.IsLoaded() ? MOD2->MO2S.value : NULL;
+            return NULL;
+            //return MOD2.IsLoaded() ? MOD2->Textures.MODS.value : NULL;
         case 23: //mo2s Alternate Texture
-            return MOD2.IsLoaded() ? &MOD2->MO2S->value23 : NULL;
+            return NULL;
+            //return MOD2.IsLoaded() ? &MOD2->Textures.MODS->value23 : NULL;
         case 24: //mo2s Alternate Texture
-            return MOD2.IsLoaded() ? &MOD2->MO2S->value24 : NULL;
+            return NULL;
+            //return MOD2.IsLoaded() ? &MOD2->Textures.MODS->value24 : NULL;
         case 25: //icon Male icon filename
             return ICON.value;
         case 26: //mico Male mico filename
             return MICO.value;
         case 27: //mod3 Model Filename
-            return MOD3.IsLoaded() ? MOD3->MOD3.value : NULL;
+            return MOD3.IsLoaded() ? MOD3->MODL.value : NULL;
         case 28: //mo3t_p Texture Files Hashes
-            *FieldValues = (MOD3.IsLoaded()) ? MOD3->MO3T.value : NULL;
+            *FieldValues = (MOD3.IsLoaded()) ? MOD3->MODT.value : NULL;
             return NULL;
         case 29: //mo3s Alternate Texture
-            return MOD3.IsLoaded() ? MOD3->MO3S.value : NULL;
+            return NULL;
+            //return MOD3.IsLoaded() ? MOD3->Textures.MODS.value : NULL;
         case 30: //mo3s Alternate Texture
-            return MOD3.IsLoaded() ? &MOD3->MO3S->value30 : NULL;
+            return NULL;
+            //return MOD3.IsLoaded() ? &MOD3->Textures.MODS->value30 : NULL;
         case 31: //mo3s Alternate Texture
-            return MOD3.IsLoaded() ? &MOD3->MO3S->value31 : NULL;
+            return NULL;
+            //return MOD3.IsLoaded() ? &MOD3->Textures.MODS->value31 : NULL;
         case 32: //mosd FaceGen Model Flags
-            return MOD3.IsLoaded() ? &MOD3->MOSD->value32 : NULL;
+            return NULL;
+            //return MOD3.IsLoaded() ? &MOD3->Textures.MODS->value32 : NULL;
         case 33: //mod4 Model Filename
-            return MOD4.IsLoaded() ? MOD4->MOD4.value : NULL;
+            return MOD4.IsLoaded() ? MOD4->MODL.value : NULL;
         case 34: //mo4t_p Texture Files Hashes
-            *FieldValues = (MOD4.IsLoaded()) ? MOD4->MO4T.value : NULL;
+            *FieldValues = (MOD4.IsLoaded()) ? MOD4->MODT.value : NULL;
             return NULL;
         case 35: //mo4s Alternate Texture
-            return MOD4.IsLoaded() ? MOD4->MO4S.value : NULL;
+            return NULL;
+            //return MOD4.IsLoaded() ? MOD4->Textures.MODS.value : NULL;
         case 36: //mo4s Alternate Texture
-            return MOD4.IsLoaded() ? &MOD4->MO4S->value36 : NULL;
+            return NULL;
+            //return MOD4.IsLoaded() ? &MOD4->Textures.MODS->value36 : NULL;
         case 37: //mo4s Alternate Texture
-            return MOD4.IsLoaded() ? &MOD4->MO4S->value37 : NULL;
+            return NULL;
+            //return MOD4.IsLoaded() ? &MOD4->Textures.MODS->value37 : NULL;
         case 38: //ico2 Female icon filename
             return ICO2.value;
         case 39: //mic2 Female mico filename
             return MIC2.value;
         case 40: //etyp Equipment Type
-            return ETYP.IsLoaded() ? &ETYPReq->value40 : NULL;
+            return ETYP.IsLoaded() ? &ETYP.value : NULL;
         case 41: //data DATA ,, Struct
-            return DATA.IsLoaded() ? &DATA->value41 : NULL;
+            return DATA.IsLoaded() ? &DATA->value : NULL;
         case 42: //data DATA ,, Struct
-            return DATA.IsLoaded() ? &DATA->value42 : NULL;
+            return DATA.IsLoaded() ? &DATA->health : NULL;
         case 43: //data DATA ,, Struct
-            return DATA.IsLoaded() ? &DATA->value43 : NULL;
+            return DATA.IsLoaded() ? &DATA->weight : NULL;
         case 44: //dnam DNAM ,, Struct
-            return DNAM.IsLoaded() ? &DNAM->value44 : NULL;
+            return DNAM.IsLoaded() ? &DNAM->AR : NULL;
         case 45: //dnam DNAM ,, Struct
-            return DNAM.IsLoaded() ? &DNAM->value45 : NULL;
+            return DNAM.IsLoaded() ? &DNAM->flags : NULL;
         case 46: //dnam_p DNAM ,, Struct
             *FieldValues = DNAM.value;
             return NULL;
@@ -352,34 +365,34 @@ bool ARMARecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             break;
         case 7: //boundX
             OBND.Load();
-            OBND->x = *(SINT16 *)FieldValue;
+            OBND->x1 = *(SINT16 *)FieldValue;
             break;
         case 8: //boundY
             OBND.Load();
-            OBND->y = *(SINT16 *)FieldValue;
+            OBND->y1 = *(SINT16 *)FieldValue;
             break;
         case 9: //boundZ
             OBND.Load();
-            OBND->z = *(SINT16 *)FieldValue;
+            OBND->z1 = *(SINT16 *)FieldValue;
             break;
         case 10: //full
             FULL.Copy((STRING)FieldValue);
             break;
         case 11: //bmdt Biped Data
             BMDT.Load();
-            BMDT->value11 = *(UINT32 *)FieldValue;
+            BMDT->bipedFlags = *(UINT32 *)FieldValue;
             break;
         case 12: //bmdt Biped Data
             BMDT.Load();
-            BMDT->value12 = *(UINT8 *)FieldValue;
+            BMDT->generalFlags = *(UINT8 *)FieldValue;
             break;
         case 13: //bmdt_p Biped Data
             if(ArraySize != 3)
                 break;
             BMDT.Load();
-            BMDT->value13[0] = ((UINT8ARRAY)FieldValue)[0];
-            BMDT->value13[1] = ((UINT8ARRAY)FieldValue)[1];
-            BMDT->value13[2] = ((UINT8ARRAY)FieldValue)[2];
+            BMDT->unused1[0] = ((UINT8ARRAY)FieldValue)[0];
+            BMDT->unused1[1] = ((UINT8ARRAY)FieldValue)[1];
+            BMDT->unused1[2] = ((UINT8ARRAY)FieldValue)[2];
             break;
         case 14: //modPath
             MODL.Load();
@@ -391,44 +404,44 @@ bool ARMARecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             break;
         case 16: //mods Alternate Texture
             MODL.Load();
-            MODL->MODS.Copy((STRING)FieldValue);
+            //MODL->Textures.MODS.Copy((STRING)FieldValue);
             break;
         case 17: //mods Alternate Texture
             MODL.Load();
-            MODL->MODS.Load();
-            MODL->MODS->value17 = *(FORMID *)FieldValue;
+            //MODL->Textures.MODS.Load();
+            //MODL->Textures.MODS->value17 = *(FORMID *)FieldValue;
             return true;
         case 18: //mods Alternate Texture
             MODL.Load();
-            MODL->MODS.Load();
-            MODL->MODS->value18 = *(SINT32 *)FieldValue;
+            //MODL->Textures.MODS.Load();
+            //MODL->Textures.MODS->value18 = *(SINT32 *)FieldValue;
             break;
         case 19: //modelFlags
             MODL.Load();
             MODL->MODD.Load();
-            MODL->MODD->value19 = *(UINT8 *)FieldValue;
+            MODL->MODD.value = *(UINT8 *)FieldValue;
             break;
         case 20: //mod2 Model Filename
             MOD2.Load();
-            MOD2->MOD2.Copy((STRING)FieldValue);
+            MOD2->MODL.Copy((STRING)FieldValue);
             break;
         case 21: //mo2t_p Texture Files Hashes
             MOD2.Load();
-            MOD2->MO2T.Copy((UINT8ARRAY)FieldValue, ArraySize);
+            MOD2->MODT.Copy((UINT8ARRAY)FieldValue, ArraySize);
             break;
         case 22: //mo2s Alternate Texture
             MOD2.Load();
-            MOD2->MO2S.Copy((STRING)FieldValue);
+            //MOD2->Textures.MODS.Copy((STRING)FieldValue);
             break;
         case 23: //mo2s Alternate Texture
             MOD2.Load();
-            MOD2->MO2S.Load();
-            MOD2->MO2S->value23 = *(FORMID *)FieldValue;
+            //MOD2->Textures.MODS.Load();
+            //MOD2->Textures.MODS->value23 = *(FORMID *)FieldValue;
             return true;
         case 24: //mo2s Alternate Texture
             MOD2.Load();
-            MOD2->MO2S.Load();
-            MOD2->MO2S->value24 = *(SINT32 *)FieldValue;
+            //MOD2->Textures.MODS.Load();
+            //MOD2->Textures.MODS->value24 = *(SINT32 *)FieldValue;
             break;
         case 25: //icon Male icon filename
             ICON.Copy((STRING)FieldValue);
@@ -438,52 +451,52 @@ bool ARMARecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             break;
         case 27: //mod3 Model Filename
             MOD3.Load();
-            MOD3->MOD3.Copy((STRING)FieldValue);
+            MOD3->MODL.Copy((STRING)FieldValue);
             break;
         case 28: //mo3t_p Texture Files Hashes
             MOD3.Load();
-            MOD3->MO3T.Copy((UINT8ARRAY)FieldValue, ArraySize);
+            MOD3->MODT.Copy((UINT8ARRAY)FieldValue, ArraySize);
             break;
         case 29: //mo3s Alternate Texture
             MOD3.Load();
-            MOD3->MO3S.Copy((STRING)FieldValue);
+            //MOD3->Textures.MODS.Copy((STRING)FieldValue);
             break;
         case 30: //mo3s Alternate Texture
             MOD3.Load();
-            MOD3->MO3S.Load();
-            MOD3->MO3S->value30 = *(FORMID *)FieldValue;
+            //MOD3->Textures.MODS.Load();
+            //MOD3->Textures.MODS->value30 = *(FORMID *)FieldValue;
             return true;
         case 31: //mo3s Alternate Texture
             MOD3.Load();
-            MOD3->MO3S.Load();
-            MOD3->MO3S->value31 = *(SINT32 *)FieldValue;
+            //MOD3->Textures.MODS.Load();
+            //MOD3->Textures.MODS->value31 = *(SINT32 *)FieldValue;
             break;
         case 32: //mosd FaceGen Model Flags
             MOD3.Load();
-            MOD3->MOSD.Load();
-            MOD3->MOSD->value32 = *(UINT8 *)FieldValue;
+            MOD3->MODD.Load();
+            MOD3->MODD.value = *(UINT8 *)FieldValue;
             break;
         case 33: //mod4 Model Filename
             MOD4.Load();
-            MOD4->MOD4.Copy((STRING)FieldValue);
+            MOD4->MODL.Copy((STRING)FieldValue);
             break;
         case 34: //mo4t_p Texture Files Hashes
             MOD4.Load();
-            MOD4->MO4T.Copy((UINT8ARRAY)FieldValue, ArraySize);
+            MOD4->MODT.Copy((UINT8ARRAY)FieldValue, ArraySize);
             break;
         case 35: //mo4s Alternate Texture
             MOD4.Load();
-            MOD4->MO4S.Copy((STRING)FieldValue);
+            //MOD4->Textures.MODS.Copy((STRING)FieldValue);
             break;
         case 36: //mo4s Alternate Texture
             MOD4.Load();
-            MOD4->MO4S.Load();
-            MOD4->MO4S->value36 = *(FORMID *)FieldValue;
+            //MOD4->Textures.MODS.Load();
+            //MOD4->Textures.MODS->value36 = *(FORMID *)FieldValue;
             return true;
         case 37: //mo4s Alternate Texture
             MOD4.Load();
-            MOD4->MO4S.Load();
-            MOD4->MO4S->value37 = *(SINT32 *)FieldValue;
+            //MOD4->Textures.MODS.Load();
+            //MOD4->Textures.MODS->value37 = *(SINT32 *)FieldValue;
             break;
         case 38: //ico2 Female icon filename
             ICO2.Copy((STRING)FieldValue);
@@ -493,30 +506,30 @@ bool ARMARecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             break;
         case 40: //etyp Equipment Type
             ETYP.Load();
-            ETYPReq->value40 = *(SINT32 *)FieldValue;
+            ETYP.value = *(SINT32 *)FieldValue;
             break;
         case 41: //data DATA ,, Struct
             DATA.Load();
-            DATA->value41 = *(SINT32 *)FieldValue;
+            DATA->value = *(SINT32 *)FieldValue;
             break;
         case 42: //data DATA ,, Struct
             DATA.Load();
-            DATA->value42 = *(SINT32 *)FieldValue;
+            DATA->health = *(SINT32 *)FieldValue;
             break;
         case 43: //data DATA ,, Struct
             DATA.Load();
-            DATA->value43 = *(FLOAT32 *)FieldValue;
+            DATA->weight = *(FLOAT32 *)FieldValue;
             break;
         case 44: //dnam DNAM ,, Struct
             DNAM.Load();
-            DNAM->value44 = *(SINT16 *)FieldValue;
+            DNAM->AR = *(SINT16 *)FieldValue;
             break;
         case 45: //dnam DNAM ,, Struct
             DNAM.Load();
-            DNAM->value45 = *(UINT16 *)FieldValue;
+            DNAM->flags = *(UINT16 *)FieldValue;
             break;
         case 46: //dnam_p DNAM ,, Struct
-            DNAM.Copy((UINT8ARRAY)FieldValue, ArraySize);
+            //DNAM.Copy((UINT8ARRAY)FieldValue, ArraySize);
             break;
         default:
             break;
@@ -545,16 +558,16 @@ void ARMARecord::DeleteField(FIELD_IDENTIFIERS)
             versionControl2[1] = 0;
             return;
         case 7: //boundX
-            if(OBND.IsLoaded())
-                OBND->x = defaultOBND.x;
+            if (OBND.IsLoaded())
+                OBND->x1 = 0; // defaultOBND.x;
             return;
         case 8: //boundY
-            if(OBND.IsLoaded())
-                OBND->y = defaultOBND.y;
+            if (OBND.IsLoaded())
+                OBND->y1 = 0; // defaultOBND.y;
             return;
         case 9: //boundZ
-            if(OBND.IsLoaded())
-                OBND->z = defaultOBND.z;
+            if (OBND.IsLoaded())
+                OBND->z1 = 0; // defaultOBND.z;
             return;
         case 10: //full
             FULL.Unload();
@@ -578,15 +591,15 @@ void ARMARecord::DeleteField(FIELD_IDENTIFIERS)
             return;
         case 16: //mods Alternate Texture
             if(MODL.IsLoaded())
-                MODL->MODS.Unload();
+                MODL->Textures.Unload();
             return;
         case 17: //mods Alternate Texture
             if(MODL.IsLoaded())
-                MODL->MODS.Unload();
+                MODL->Textures.Unload();
             return;
         case 18: //mods Alternate Texture
             if(MODL.IsLoaded())
-                MODL->MODS.Unload();
+                MODL->Textures.Unload();
             return;
         case 19: //modelFlags
             if(MODL.IsLoaded())
@@ -594,23 +607,23 @@ void ARMARecord::DeleteField(FIELD_IDENTIFIERS)
             return;
         case 20: //mod2 Model Filename
             if(MOD2.IsLoaded())
-                MOD2->MOD2.Unload();
+                MOD2->MODL.Unload();
             return;
         case 21: //mo2t_p Texture Files Hashes
             if(MOD2.IsLoaded())
-                MOD2->MO2T.Unload();
+                MOD2->MODT.Unload();
             return;
         case 22: //mo2s Alternate Texture
             if(MOD2.IsLoaded())
-                MOD2->MO2S.Unload();
+                MOD2->Textures.Unload();
             return;
         case 23: //mo2s Alternate Texture
             if(MOD2.IsLoaded())
-                MOD2->MO2S.Unload();
+                MOD2->Textures.Unload();
             return;
         case 24: //mo2s Alternate Texture
             if(MOD2.IsLoaded())
-                MOD2->MO2S.Unload();
+                MOD2->Textures.Unload();
             return;
         case 25: //icon Male icon filename
             ICON.Unload();
@@ -620,47 +633,47 @@ void ARMARecord::DeleteField(FIELD_IDENTIFIERS)
             return;
         case 27: //mod3 Model Filename
             if(MOD3.IsLoaded())
-                MOD3->MOD3.Unload();
+                MOD3->MODL.Unload();
             return;
         case 28: //mo3t_p Texture Files Hashes
             if(MOD3.IsLoaded())
-                MOD3->MO3T.Unload();
+                MOD3->MODT.Unload();
             return;
         case 29: //mo3s Alternate Texture
             if(MOD3.IsLoaded())
-                MOD3->MO3S.Unload();
+                MOD3->Textures.Unload();
             return;
         case 30: //mo3s Alternate Texture
             if(MOD3.IsLoaded())
-                MOD3->MO3S.Unload();
+                MOD3->Textures.Unload();
             return;
         case 31: //mo3s Alternate Texture
             if(MOD3.IsLoaded())
-                MOD3->MO3S.Unload();
+                MOD3->Textures.Unload();
             return;
         case 32: //mosd FaceGen Model Flags
             if(MOD3.IsLoaded())
-                MOD3->MOSD.Unload();
+                MOD3->MODD.Unload();
             return;
         case 33: //mod4 Model Filename
             if(MOD4.IsLoaded())
-                MOD4->MOD4.Unload();
+                MOD4->MODL.Unload();
             return;
         case 34: //mo4t_p Texture Files Hashes
             if(MOD4.IsLoaded())
-                MOD4->MO4T.Unload();
+                MOD4->MODT.Unload();
             return;
         case 35: //mo4s Alternate Texture
             if(MOD4.IsLoaded())
-                MOD4->MO4S.Unload();
+                MOD4->Textures.Unload();
             return;
         case 36: //mo4s Alternate Texture
             if(MOD4.IsLoaded())
-                MOD4->MO4S.Unload();
+                MOD4->Textures.Unload();
             return;
         case 37: //mo4s Alternate Texture
             if(MOD4.IsLoaded())
-                MOD4->MO4S.Unload();
+                MOD4->Textures.Unload();
             return;
         case 38: //ico2 Female icon filename
             ICO2.Unload();

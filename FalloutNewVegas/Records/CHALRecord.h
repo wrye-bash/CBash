@@ -101,29 +101,17 @@ class CHALRecord : public FNVRecord //Challenge
         void   SetFlagMask(UINT8 Mask);
 
         bool   IsKillFromList();
-        void   IsKillFromList(bool value);
         bool   IsKillFormID();
-        void   IsKillFormID(bool value);
         bool   IsKillInCategory();
-        void   IsKillInCategory(bool value);
         bool   IsHitEnemy();
-        void   IsHitEnemy(bool value);
         bool   IsDiscoverMapMarker();
-        void   IsDiscoverMapMarker(bool value);
         bool   IsUseItem();
-        void   IsUseItem(bool value);
         bool   IsGetItem();
-        void   IsGetItem(bool value);
         bool   IsUseSkill();
-        void   IsUseSkill(bool value);
         bool   IsDoDamage();
-        void   IsDoDamage(bool value);
         bool   IsUseItemFromList();
-        void   IsUseItemFromList(bool value);
         bool   IsGetItemFromList();
-        void   IsGetItemFromList(bool value);
         bool   IsMiscStat();
-        void   IsMiscStat(bool value);
         bool   IsType(UINT8 Type);
         void   SetType(UINT8 Type);
 

@@ -449,7 +449,7 @@ STRING BPTDRecord::GetStrType()
     return "BPTD";
     }
 
-SINT32 BPTDRecord::ParseRecord(unsigned char *buffer, const UINT32 &recSize)
+SINT32 BPTDRecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk)
     {
     UINT32 subType = 0;
     UINT32 subSize = 0;
@@ -473,11 +473,11 @@ SINT32 BPTDRecord::ParseRecord(unsigned char *buffer, const UINT32 &recSize)
         switch(subType)
             {
             case REV32(EDID):
-                EDID.Read(buffer, subSize);
+                EDID.Read(buffer, subSize, CompressedOnDisk);
                 break;
             case REV32(MODL):
                 MODL.Load();
-                MODL->MODL.Read(buffer, subSize);
+                MODL->MODL.Read(buffer, subSize, CompressedOnDisk);
                 break;
             case REV32(MODB):
                 MODL.Load();
@@ -485,7 +485,7 @@ SINT32 BPTDRecord::ParseRecord(unsigned char *buffer, const UINT32 &recSize)
                 break;
             case REV32(MODT):
                 MODL.Load();
-                MODL->MODT.Read(buffer, subSize);
+                MODL->MODT.Read(buffer, subSize, CompressedOnDisk);
                 break;
             case REV32(MODS):
                 MODL.Load();
@@ -497,22 +497,22 @@ SINT32 BPTDRecord::ParseRecord(unsigned char *buffer, const UINT32 &recSize)
                 break;
             case REV32(BPTN):
                 Parts.value.push_back(new BPTDPart);
-                Parts.value.back()->BPTN.Read(buffer, subSize);
+                Parts.value.back()->BPTN.Read(buffer, subSize, CompressedOnDisk);
                 break;
             case REV32(BPNN):
                 if(Parts.value.size() == 0)
                     Parts.value.push_back(new BPTDPart);
-                Parts.value.back()->BPNN.Read(buffer, subSize);
+                Parts.value.back()->BPNN.Read(buffer, subSize, CompressedOnDisk);
                 break;
             case REV32(BPNT):
                 if(Parts.value.size() == 0)
                     Parts.value.push_back(new BPTDPart);
-                Parts.value.back()->BPNT.Read(buffer, subSize);
+                Parts.value.back()->BPNT.Read(buffer, subSize, CompressedOnDisk);
                 break;
             case REV32(BPNI):
                 if(Parts.value.size() == 0)
                     Parts.value.push_back(new BPTDPart);
-                Parts.value.back()->BPNI.Read(buffer, subSize);
+                Parts.value.back()->BPNI.Read(buffer, subSize, CompressedOnDisk);
                 break;
             case REV32(BPND):
                 if(Parts.value.size() == 0)
@@ -522,17 +522,17 @@ SINT32 BPTDRecord::ParseRecord(unsigned char *buffer, const UINT32 &recSize)
             case REV32(NAM1):
                 if(Parts.value.size() == 0)
                     Parts.value.push_back(new BPTDPart);
-                Parts.value.back()->NAM1.Read(buffer, subSize);
+                Parts.value.back()->NAM1.Read(buffer, subSize, CompressedOnDisk);
                 break;
             case REV32(NAM4):
                 if(Parts.value.size() == 0)
                     Parts.value.push_back(new BPTDPart);
-                Parts.value.back()->NAM4.Read(buffer, subSize);
+                Parts.value.back()->NAM4.Read(buffer, subSize, CompressedOnDisk);
                 break;
             case REV32(NAM5):
                 if(Parts.value.size() == 0)
                     Parts.value.push_back(new BPTDPart);
-                Parts.value.back()->NAM5.Read(buffer, subSize);
+                Parts.value.back()->NAM5.Read(buffer, subSize, CompressedOnDisk);
                 break;
             case REV32(RAGA):
                 RAGA.Read(buffer, subSize);
@@ -583,7 +583,7 @@ bool BPTDRecord::operator !=(const BPTDRecord &other) const
     return !(*this == other);
     }
 
-bool BPTDRecord::equals(const Record *other) const
+bool BPTDRecord::equals(Record *other)
     {
     return *this == *(BPTDRecord *)other;
     }

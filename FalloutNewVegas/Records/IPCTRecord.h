@@ -105,11 +105,8 @@ class IPCTRecord : public FNVRecord //Impact
         void   SetObjectFlagMask(UINT8 Mask);
 
         bool   IsLoud();
-        void   IsLoud(bool value);
         bool   IsNormal();
-        void   IsNormal(bool value);
         bool   IsSilent();
-        void   IsSilent(bool value);
         bool   IsSoundLevelType(UINT8 Type);
         void   SetSoundLevelType(UINT8 Type);
 

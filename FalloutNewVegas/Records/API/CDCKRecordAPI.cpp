@@ -107,9 +107,10 @@ void * CDCKRecord::GetField(FIELD_IDENTIFIERS, void **FieldValues)
         case 7: //full
             return FULL.value;
         case 8: //card Card
-            return CARD.IsLoaded() ? &CARD->value8 : NULL;
+            return NULL;
+            //return CARD.IsLoaded() ? &CARD->value8 : NULL;
         case 9: //data Count (broken)
-            return DATA.IsLoaded() ? &DATA->value9 : NULL;
+            return DATA.IsLoaded() ? &DATA.value : NULL;
         default:
             return NULL;
         }
@@ -147,12 +148,12 @@ bool CDCKRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             FULL.Copy((STRING)FieldValue);
             break;
         case 8: //card Card
-            CARD.Load();
-            CARD->value8 = *(FORMID *)FieldValue;
+            //CARD.Load();
+            //CARD->value8 = *(FORMID *)FieldValue;
             return true;
         case 9: //data Count (broken)
             DATA.Load();
-            DATA->value9 = *(UINT32 *)FieldValue;
+            DATA.value = *(UINT32 *)FieldValue;
             break;
         default:
             break;

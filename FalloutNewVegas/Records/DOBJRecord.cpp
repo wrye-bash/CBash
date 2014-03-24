@@ -92,7 +92,7 @@ STRING DOBJRecord::GetStrType()
     return "DOBJ";
     }
 
-SINT32 DOBJRecord::ParseRecord(unsigned char *buffer, const UINT32 &recSize)
+SINT32 DOBJRecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk)
     {
     UINT32 subType = 0;
     UINT32 subSize = 0;
@@ -116,7 +116,7 @@ SINT32 DOBJRecord::ParseRecord(unsigned char *buffer, const UINT32 &recSize)
         switch(subType)
             {
             case REV32(EDID):
-                EDID.Read(buffer, subSize);
+                EDID.Read(buffer, subSize, CompressedOnDisk);
                 break;
             case REV32(DATA):
                 DATA.Read(buffer, subSize);
@@ -161,7 +161,7 @@ bool DOBJRecord::operator !=(const DOBJRecord &other) const
     return !(*this == other);
     }
 
-bool DOBJRecord::equals(const Record *other) const
+bool DOBJRecord::equals(Record *other)
     {
     return *this == *(DOBJRecord *)other;
     }

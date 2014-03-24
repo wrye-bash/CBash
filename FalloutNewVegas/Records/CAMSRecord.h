@@ -63,14 +63,7 @@ class CAMSRecord : public FNVRecord //Camera Shot
             eZoom
             };
 
-        enum locationTypes
-            {
-            eAttacker = 0,
-            eProjectile,
-            eTarget
-            };
-
-        enum targetTypes
+        enum locationOrTargetTypes
             {
             eAttacker = 0,
             eProjectile,
@@ -114,31 +107,21 @@ class CAMSRecord : public FNVRecord //Camera Shot
         void   SetFlagMask(UINT32 Mask);
 
         bool   IsActionShoot();
-        void   IsActionShoot(bool value);
         bool   IsActionFly();
-        void   IsActionFly(bool value);
         bool   IsActionHit();
-        void   IsActionHit(bool value);
         bool   IsActionZoom();
-        void   IsActionZoom(bool value);
         bool   IsActionType(UINT32 Type);
         void   SetActionType(UINT32 Type);
 
         bool   IsLocationAttacker();
-        void   IsLocationAttacker(bool value);
         bool   IsLocationProjectile();
-        void   IsLocationProjectile(bool value);
         bool   IsLocationTarget();
-        void   IsLocationTarget(bool value);
         bool   IsLocationType(UINT32 Type);
         void   SetLocationType(UINT32 Type);
 
         bool   IsTargetAttacker();
-        void   IsTargetAttacker(bool value);
         bool   IsTargetProjectile();
-        void   IsTargetProjectile(bool value);
         bool   IsTargetTarget();
-        void   IsTargetTarget(bool value);
         bool   IsTargetType(UINT32 Type);
         void   SetTargetType(UINT32 Type);
 

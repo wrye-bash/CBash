@@ -63,7 +63,7 @@ class ECZNRecord : public FNVRecord //Encounter Zone
 
     public:
         StringRecord EDID; //Editor ID
-        OptSubRecord<GENDATA> DATA; //DATA ,, Struct
+        OptSubRecord<ECZNDATA> DATA; //DATA ,, Struct
 
         ECZNRecord(unsigned char *_recData=NULL);
         ECZNRecord(ECZNRecord *srcRecord);

@@ -100,13 +100,13 @@ UINT32 CAMSRecord::GetFieldAttribute(FIELD_IDENTIFIERS, UINT32 WhichAttribute)
                     case 0: //fieldType
                         return LIST_FIELD;
                     case 1: //fieldSize
-                        return MODL->Textures.size();
+                        return MODL->Textures.MODS.size();
                     default:
                         return UNKNOWN_FIELD;
                     }
                 }
 
-            if(ListIndex >= MODL->Textures.size())
+            if(ListIndex >= MODL->Textures.MODS.size())
                 return UNKNOWN_FIELD;
 
             switch(ListFieldID)
@@ -177,35 +177,38 @@ void * CAMSRecord::GetField(FIELD_IDENTIFIERS, void **FieldValues)
             *FieldValues = MODL.IsLoaded() ? MODL->MODT.value : NULL;
             return NULL;
         case 10: //mods Alternate Textures
-            return MODL.IsLoaded() ? MODL->MODS.value : NULL;
+            return NULL;
+            //return MODL.IsLoaded() ? MODL->Textures.MODS.value : NULL;
         case 11: //mods Alternate Textures
-            return MODL.IsLoaded() ? &MODL->MODS->value11 : NULL;
+            return NULL;
+            //return MODL.IsLoaded() ? &MODL->Textures.MODS->value11 : NULL;
         case 12: //mods Alternate Textures
-            return MODL.IsLoaded() ? &MODL->MODS->value12 : NULL;
+            return NULL;
+            //return MODL.IsLoaded() ? &MODL->Textures.MODS->value12 : NULL;
         case 13: //modelFlags
-            return MODL.IsLoaded() ? &MODL->MODD->value13 : NULL;
+            return MODL.IsLoaded() ? &MODL->MODD.value : NULL;
         case 14: //data DATA ,, Struct
-            return DATA.IsLoaded() ? &DATA->value14 : NULL;
+            return DATA.IsLoaded() ? &DATA->action : NULL;
         case 15: //data DATA ,, Struct
-            return DATA.IsLoaded() ? &DATA->value15 : NULL;
+            return DATA.IsLoaded() ? &DATA->location : NULL;
         case 16: //data DATA ,, Struct
-            return DATA.IsLoaded() ? &DATA->value16 : NULL;
+            return DATA.IsLoaded() ? &DATA->target : NULL;
         case 17: //data DATA ,, Struct
-            return DATA.IsLoaded() ? &DATA->value17 : NULL;
+            return DATA.IsLoaded() ? &DATA->flags : NULL;
         case 18: //data DATA ,, Struct
-            return DATA.IsLoaded() ? &DATA->value18 : NULL;
+            return DATA.IsLoaded() ? &DATA->playerTimeMult : NULL;
         case 19: //data DATA ,, Struct
-            return DATA.IsLoaded() ? &DATA->value19 : NULL;
+            return DATA.IsLoaded() ? &DATA->targetTimeMult : NULL;
         case 20: //data DATA ,, Struct
-            return DATA.IsLoaded() ? &DATA->value20 : NULL;
+            return DATA.IsLoaded() ? &DATA->globalTimeMult : NULL;
         case 21: //data DATA ,, Struct
-            return DATA.IsLoaded() ? &DATA->value21 : NULL;
+            return DATA.IsLoaded() ? &DATA->maxTime : NULL;
         case 22: //data DATA ,, Struct
-            return DATA.IsLoaded() ? &DATA->value22 : NULL;
+            return DATA.IsLoaded() ? &DATA->minTime : NULL;
         case 23: //data DATA ,, Struct
-            return DATA.IsLoaded() ? &DATA->value23 : NULL;
+            return DATA.IsLoaded() ? &DATA->targetPercentBetweenActors : NULL;
         case 24: //mnam Image Space Modifier
-            return MNAM.IsLoaded() ? &MNAM->value24 : NULL;
+            return MNAM.IsLoaded() ? &MNAM.value : NULL;
         default:
             return NULL;
         }
@@ -253,66 +256,66 @@ bool CAMSRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             break;
         case 10: //mods Alternate Textures
             MODL.Load();
-            MODL->MODS.Copy((STRING)FieldValue);
+            //MODL->Textures.MODS.Copy((STRING)FieldValue);
             break;
         case 11: //mods Alternate Textures
             MODL.Load();
-            MODL->MODS.Load();
-            MODL->MODS->value11 = *(FORMID *)FieldValue;
+            //MODL->Textures.MODS.Load();
+            //MODL->Textures.MODS->value11 = *(FORMID *)FieldValue;
             return true;
         case 12: //mods Alternate Textures
             MODL.Load();
-            MODL->MODS.Load();
-            MODL->MODS->value12 = *(SINT32 *)FieldValue;
+            //MODL->Textures.MODS.Load();
+            //MODL->Textures.MODS->value12 = *(SINT32 *)FieldValue;
             break;
         case 13: //modelFlags
             MODL.Load();
             MODL->MODD.Load();
-            MODL->MODD->value13 = *(UINT8 *)FieldValue;
+            MODL->MODD.value = *(UINT8 *)FieldValue;
             break;
         case 14: //data DATA ,, Struct
             DATA.Load();
-            DATA->value14 = *(UINT32 *)FieldValue;
+            DATA->action = *(UINT32 *)FieldValue;
             break;
         case 15: //data DATA ,, Struct
             DATA.Load();
-            DATA->value15 = *(UINT32 *)FieldValue;
+            DATA->location = *(UINT32 *)FieldValue;
             break;
         case 16: //data DATA ,, Struct
             DATA.Load();
-            DATA->value16 = *(UINT32 *)FieldValue;
+            DATA->target = *(UINT32 *)FieldValue;
             break;
         case 17: //data DATA ,, Struct
             DATA.Load();
-            DATA->value17 = *(UINT32 *)FieldValue;
+            DATA->flags = *(UINT32 *)FieldValue;
             break;
         case 18: //data DATA ,, Struct
             DATA.Load();
-            DATA->value18 = *(FLOAT32 *)FieldValue;
+            DATA->playerTimeMult = *(FLOAT32 *)FieldValue;
             break;
         case 19: //data DATA ,, Struct
             DATA.Load();
-            DATA->value19 = *(FLOAT32 *)FieldValue;
+            DATA->targetTimeMult = *(FLOAT32 *)FieldValue;
             break;
         case 20: //data DATA ,, Struct
             DATA.Load();
-            DATA->value20 = *(FLOAT32 *)FieldValue;
+            DATA->globalTimeMult = *(FLOAT32 *)FieldValue;
             break;
         case 21: //data DATA ,, Struct
             DATA.Load();
-            DATA->value21 = *(FLOAT32 *)FieldValue;
+            DATA->maxTime = *(FLOAT32 *)FieldValue;
             break;
         case 22: //data DATA ,, Struct
             DATA.Load();
-            DATA->value22 = *(FLOAT32 *)FieldValue;
+            DATA->minTime = *(FLOAT32 *)FieldValue;
             break;
         case 23: //data DATA ,, Struct
             DATA.Load();
-            DATA->value23 = *(FLOAT32 *)FieldValue;
+            DATA->targetPercentBetweenActors = *(FLOAT32 *)FieldValue;
             break;
         case 24: //mnam Image Space Modifier
             MNAM.Load();
-            MNAM->value24 = *(FORMID *)FieldValue;
+            MNAM.value = *(FORMID *)FieldValue;
             return true;
         default:
             break;
@@ -354,15 +357,15 @@ void CAMSRecord::DeleteField(FIELD_IDENTIFIERS)
             return;
         case 10: //mods Alternate Textures
             if(MODL.IsLoaded())
-                MODL->MODS.Unload();
+                MODL->Textures.Unload();
             return;
         case 11: //mods Alternate Textures
             if(MODL.IsLoaded())
-                MODL->MODS.Unload();
+                MODL->Textures.Unload();
             return;
         case 12: //mods Alternate Textures
             if(MODL.IsLoaded())
-                MODL->MODS.Unload();
+                MODL->Textures.Unload();
             return;
         case 13: //modelFlags
             if(MODL.IsLoaded())

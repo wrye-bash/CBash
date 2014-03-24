@@ -82,26 +82,26 @@ bool RCCTRecord::VisitFormIDs(FormIDOp &op)
 
 bool RCCTRecord::IsSubcategory()
     {
-    if(!Dummy.IsLoaded()) return false;
-    return (Dummy->flags & fIsSubcategory) != 0;
+    if (!DATA.IsLoaded()) return false;
+    return (DATA.value & fIsSubcategory) != 0;
     }
 
 void RCCTRecord::IsSubcategory(bool value)
     {
-    if(!Dummy.IsLoaded()) return;
-    Dummy->flags = value ? (Dummy->flags | fIsSubcategory) : (Dummy->flags & ~fIsSubcategory);
+    if (!DATA.IsLoaded()) return;
+    SETBIT(DATA.value, fIsSubcategory, value);
     }
 
 bool RCCTRecord::IsFlagMask(UINT8 Mask, bool Exact)
     {
-    if(!Dummy.IsLoaded()) return false;
-    return Exact ? ((Dummy->flags & Mask) == Mask) : ((Dummy->flags & Mask) != 0);
+    if (!DATA.IsLoaded()) return false;
+    return Exact ? ((DATA.value & Mask) == Mask) : ((DATA.value & Mask) != 0);
     }
 
 void RCCTRecord::SetFlagMask(UINT8 Mask)
     {
-    Dummy.Load();
-    Dummy->flags = Mask;
+    DATA.Load();
+    DATA.value = Mask;
     }
 
 UINT32 RCCTRecord::GetType()
@@ -114,7 +114,7 @@ STRING RCCTRecord::GetStrType()
     return "RCCT";
     }
 
-SINT32 RCCTRecord::ParseRecord(unsigned char *buffer, const UINT32 &recSize)
+SINT32 RCCTRecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk)
     {
     UINT32 subType = 0;
     UINT32 subSize = 0;
@@ -138,7 +138,7 @@ SINT32 RCCTRecord::ParseRecord(unsigned char *buffer, const UINT32 &recSize)
         switch(subType)
             {
             case REV32(EDID):
-                EDID.Read(buffer, subSize);
+                EDID.Read(buffer, subSize, CompressedOnDisk);
                 break;
             case REV32(FULL):
                 FULL.Read(buffer, subSize, CompressedOnDisk);
@@ -189,7 +189,7 @@ bool RCCTRecord::operator !=(const RCCTRecord &other) const
     return !(*this == other);
     }
 
-bool RCCTRecord::equals(const Record *other) const
+bool RCCTRecord::equals(Record *other)
     {
     return *this == *(RCCTRecord *)other;
     }

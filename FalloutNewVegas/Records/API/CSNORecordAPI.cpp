@@ -133,23 +133,23 @@ void * CSNORecord::GetField(FIELD_IDENTIFIERS, void **FieldValues)
         case 7: //full
             return FULL.value;
         case 8: //data DATA ,, Struct
-            return DATA.IsLoaded() ? &DATA->value8 : NULL;
+            return DATA.IsLoaded() ? &DATA->shufflePercent : NULL;
         case 9: //data DATA ,, Struct
-            return DATA.IsLoaded() ? &DATA->value9 : NULL;
+            return DATA.IsLoaded() ? &DATA->bjPayoutRatio : NULL;
         case 10: //data DATA ,, Struct
-            return DATA.IsLoaded() ? &DATA->value10 : NULL;
+            return DATA.IsLoaded() ? &DATA->symbol1Stop : NULL;
         case 11: //data DATA ,, Struct
-            return DATA.IsLoaded() ? &DATA->value11 : NULL;
+            return DATA.IsLoaded() ? &DATA->numDecks : NULL;
         case 12: //data DATA ,, Struct
-            return DATA.IsLoaded() ? &DATA->value12 : NULL;
+            return DATA.IsLoaded() ? &DATA->maxWinnings : NULL;
         case 13: //data DATA ,, Struct
-            return DATA.IsLoaded() ? &DATA->value13 : NULL;
+            return DATA.IsLoaded() ? &DATA->currency : NULL;
         case 14: //data DATA ,, Struct
-            return DATA.IsLoaded() ? &DATA->value14 : NULL;
+            return DATA.IsLoaded() ? &DATA->winningsQuest : NULL;
         case 15: //data DATA ,, Struct
-            return DATA.IsLoaded() ? &DATA->value15 : NULL;
+            return DATA.IsLoaded() ? &DATA->flags : NULL;
         case 16: //modl Roulette Chip
-            return MODL.IsLoaded() ? MODL->MODL.value : NULL;
+            return MODLRoulette.IsLoaded() ? MODLRoulette.value : NULL;
         case 17: //modl Slot Machine Model
             return MODL.value;
         case 18: //mod2 Slot Machine Model (again?)
@@ -159,9 +159,9 @@ void * CSNORecord::GetField(FIELD_IDENTIFIERS, void **FieldValues)
         case 20: //mod4 Roulette Table Model
             return MOD4.value;
         case 21: //icon Symbol W
-            return ICON.value;
+            return ICONW.value;
         case 22: //ico2 Deck 4
-            return ICO2.IsLoaded() ? ICO2->ICO2.value : NULL;
+            return ICO24.IsLoaded() ? ICO24.value : NULL;
         default:
             return NULL;
         }
@@ -200,39 +200,39 @@ bool CSNORecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             break;
         case 8: //data DATA ,, Struct
             DATA.Load();
-            DATA->value8 = *(FLOAT32 *)FieldValue;
+            DATA->shufflePercent = *(FLOAT32 *)FieldValue;
             break;
         case 9: //data DATA ,, Struct
             DATA.Load();
-            DATA->value9 = *(FLOAT32 *)FieldValue;
+            DATA->bjPayoutRatio = *(FLOAT32 *)FieldValue;
             break;
         case 10: //data DATA ,, Struct
             DATA.Load();
-            DATA->value10 = *(UINT32 *)FieldValue;
+            DATA->symbol1Stop = *(UINT32 *)FieldValue;
             break;
         case 11: //data DATA ,, Struct
             DATA.Load();
-            DATA->value11 = *(UINT32 *)FieldValue;
+            DATA->numDecks = *(UINT32 *)FieldValue;
             break;
         case 12: //data DATA ,, Struct
             DATA.Load();
-            DATA->value12 = *(UINT32 *)FieldValue;
+            DATA->maxWinnings = *(UINT32 *)FieldValue;
             break;
         case 13: //data DATA ,, Struct
             DATA.Load();
-            DATA->value13 = *(FORMID *)FieldValue;
+            DATA->currency = *(FORMID *)FieldValue;
             return true;
         case 14: //data DATA ,, Struct
             DATA.Load();
-            DATA->value14 = *(FORMID *)FieldValue;
+            DATA->winningsQuest = *(FORMID *)FieldValue;
             return true;
         case 15: //data DATA ,, Struct
             DATA.Load();
-            DATA->value15 = *(UINT32 *)FieldValue;
+            DATA->flags = *(UINT32 *)FieldValue;
             break;
         case 16: //modl Roulette Chip
-            MODL.Load();
-            MODL->MODL.Copy((STRING)FieldValue);
+            MODLRoulette.Load();
+            MODLRoulette.Copy((STRING)FieldValue);
             break;
         case 17: //modl Slot Machine Model
             MODL.Copy((STRING)FieldValue);
@@ -247,11 +247,11 @@ bool CSNORecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             MOD4.Copy((STRING)FieldValue);
             break;
         case 21: //icon Symbol W
-            ICON.Copy((STRING)FieldValue);
+            ICONW.Copy((STRING)FieldValue);
             break;
         case 22: //ico2 Deck 4
-            ICO2.Load();
-            ICO2->ICO2.Copy((STRING)FieldValue);
+            ICO24.Load();
+            ICO24.Copy((STRING)FieldValue);
             break;
         default:
             break;
@@ -307,8 +307,8 @@ void CSNORecord::DeleteField(FIELD_IDENTIFIERS)
             DATA.Unload();
             return;
         case 16: //modl Roulette Chip
-            if(MODL.IsLoaded())
-                MODL->MODL.Unload();
+            if(MODLRoulette.IsLoaded())
+                MODLRoulette.Unload();
             return;
         case 17: //modl Slot Machine Model
             MODL.Unload();
@@ -323,11 +323,11 @@ void CSNORecord::DeleteField(FIELD_IDENTIFIERS)
             MOD4.Unload();
             return;
         case 21: //icon Symbol W
-            ICON.Unload();
+            ICONW.Unload();
             return;
         case 22: //ico2 Deck 4
-            if(ICO2.IsLoaded())
-                ICO2->ICO2.Unload();
+            if(ICO24.IsLoaded())
+                ICO24.Unload();
             return;
         default:
             return;

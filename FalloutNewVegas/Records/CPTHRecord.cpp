@@ -79,62 +79,47 @@ bool CPTHRecord::VisitFormIDs(FormIDOp &op)
     if(!IsLoaded())
         return false;
 
-    //if(CTDA.IsLoaded()) //FILL IN MANUALLY
-    //    op.Accept(CTDA->value);
-    //if(ANAM.IsLoaded()) //FILL IN MANUALLY
-    //    op.Accept(ANAM->value);
+    if(CTDA.IsLoaded())
+        for(UINT32 ListIndex = 0; ListIndex < CTDA.value.size(); ListIndex++)
+            CTDA.value[ListIndex].VisitFormIDs(op);
+    if(ANAM.IsLoaded())
+        for(UINT32 ListIndex = 0; ListIndex < ANAM.value.size(); ListIndex++)
+            op.Accept(ANAM.value[ListIndex]);
     if(SNAM.IsLoaded())
-        op.Accept(SNAM->value);
+        for(UINT32 ListIndex = 0; ListIndex < SNAM.value.size(); ListIndex++)
+            op.Accept(SNAM.value[ListIndex]);
 
     return op.Stop();
     }
 
 bool CPTHRecord::IsDefault()
     {
-    if(!Dummy.IsLoaded()) return false;
-    return (Dummy->type == eDefault);
-    }
-
-void CPTHRecord::IsDefault(bool value)
-    {
-    if(!Dummy.IsLoaded()) return;
-    Dummy->flags = value ? eDefault : eDummyDefault;
+    if (!DATA.IsLoaded()) return false;
+    return (DATA.value == eDefault);
     }
 
 bool CPTHRecord::IsDisable()
     {
-    if(!Dummy.IsLoaded()) return false;
-    return (Dummy->type == eDisable);
-    }
-
-void CPTHRecord::IsDisable(bool value)
-    {
-    if(!Dummy.IsLoaded()) return;
-    Dummy->flags = value ? eDisable : eDummyDefault;
+    if (!DATA.IsLoaded()) return false;
+    return (DATA.value == eDisable);
     }
 
 bool CPTHRecord::IsShotList()
     {
-    if(!Dummy.IsLoaded()) return false;
-    return (Dummy->type == eShotList);
-    }
-
-void CPTHRecord::IsShotList(bool value)
-    {
-    if(!Dummy.IsLoaded()) return;
-    Dummy->flags = value ? eShotList : eDummyDefault;
+    if (!DATA.IsLoaded()) return false;
+    return (DATA.value == eShotList);
     }
 
 bool CPTHRecord::IsType(UINT8 Type)
     {
-    if(!Dummy.IsLoaded()) return false;
-    return Dummy->type == Type;
+    if (!DATA.IsLoaded()) return false;
+    return DATA.value == Type;
     }
 
 void CPTHRecord::SetType(UINT8 Type)
     {
-    Dummy.Load();
-    Dummy->flags = Mask;
+    DATA.Load();
+    DATA.value = Type;
     }
 
 UINT32 CPTHRecord::GetType()
@@ -147,7 +132,7 @@ STRING CPTHRecord::GetStrType()
     return "CPTH";
     }
 
-SINT32 CPTHRecord::ParseRecord(unsigned char *buffer, const UINT32 &recSize)
+SINT32 CPTHRecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk)
     {
     UINT32 subType = 0;
     UINT32 subSize = 0;
@@ -171,7 +156,7 @@ SINT32 CPTHRecord::ParseRecord(unsigned char *buffer, const UINT32 &recSize)
         switch(subType)
             {
             case REV32(EDID):
-                EDID.Read(buffer, subSize);
+                EDID.Read(buffer, subSize, CompressedOnDisk);
                 break;
             case REV32(CTDA):
                 CTDA.Read(buffer, subSize);
@@ -234,7 +219,7 @@ bool CPTHRecord::operator !=(const CPTHRecord &other) const
     return !(*this == other);
     }
 
-bool CPTHRecord::equals(const Record *other) const
+bool CPTHRecord::equals(Record *other)
     {
     return *this == *(CPTHRecord *)other;
     }

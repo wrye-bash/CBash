@@ -38,6 +38,31 @@
 
 namespace FNV
 {
+ADDNRecord::ADDNDNAM::ADDNDNAM() :
+    particleCap(0)
+    {
+    unknown[0] = 0;
+    unknown[1] = 0;
+    }
+
+ADDNRecord::ADDNDNAM::~ADDNDNAM()
+    {
+    //
+    }
+
+bool ADDNRecord::ADDNDNAM::operator ==(const ADDNDNAM &other) const
+    {
+    return (particleCap == other.particleCap &&
+            unknown[0] == other.unknown[0] &&
+            unknown[1] == other.unknown[1]
+            );
+    }
+
+bool ADDNRecord::ADDNDNAM::operator !=(const ADDNDNAM &other) const
+    {
+    return !(*this == other);
+    }
+
 ADDNRecord::ADDNRecord(unsigned char *_recData):
     FNVRecord(_recData)
     {
@@ -88,7 +113,7 @@ bool ADDNRecord::VisitFormIDs(FormIDOp &op)
             op.Accept(MODL->Textures.MODS[x]->texture);
         }
     if(SNAM.IsLoaded())
-        op.Accept(SNAM->value);
+        op.Accept(SNAM.value);
 
     return op.Stop();
     }
@@ -103,7 +128,7 @@ STRING ADDNRecord::GetStrType()
     return "ADDN";
     }
 
-SINT32 ADDNRecord::ParseRecord(unsigned char *buffer, const UINT32 &recSize)
+SINT32 ADDNRecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk)
     {
     UINT32 subType = 0;
     UINT32 subSize = 0;
@@ -127,14 +152,14 @@ SINT32 ADDNRecord::ParseRecord(unsigned char *buffer, const UINT32 &recSize)
         switch(subType)
             {
             case REV32(EDID):
-                EDID.Read(buffer, subSize);
+                EDID.Read(buffer, subSize, CompressedOnDisk);
                 break;
             case REV32(OBND):
                 OBND.Read(buffer, subSize);
                 break;
             case REV32(MODL):
                 MODL.Load();
-                MODL->MODL.Read(buffer, subSize);
+                MODL->MODL.Read(buffer, subSize, CompressedOnDisk);
                 break;
             case REV32(MODB):
                 MODL.Load();
@@ -142,7 +167,7 @@ SINT32 ADDNRecord::ParseRecord(unsigned char *buffer, const UINT32 &recSize)
                 break;
             case REV32(MODT):
                 MODL.Load();
-                MODL->MODT.Read(buffer, subSize);
+                MODL->MODT.Read(buffer, subSize, CompressedOnDisk);
                 break;
             case REV32(MODS):
                 MODL.Load();
@@ -215,7 +240,7 @@ bool ADDNRecord::operator !=(const ADDNRecord &other) const
     return !(*this == other);
     }
 
-bool ADDNRecord::equals(const Record *other) const
+bool ADDNRecord::equals(Record *other)
     {
     return *this == *(ADDNRecord *)other;
     }
