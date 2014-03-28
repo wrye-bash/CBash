@@ -172,7 +172,7 @@ DLLEXTERN SINT32 DeleteAllCollections();
     @brief Add a plugin to a collection.
     @param CollectionID The collection to add the plugin to.
     @param ModName The filename of the plugin to add.
-    @param ModFlagsField Flags that determine how the plugin is loaded and what can be edited once it has been loaded. These flags are given in ModFlags::modFlags.
+    @param ModFlagsField Flags that determine how the plugin is loaded and what can be edited once it has been loaded. These flags are given in ::modFlags.
     @returns A pointer to the plugin object added to the collection.
 */
 DLLEXTERN ModFile * AddMod(Collection *CollectionID, STRING const ModName, const UINT32 ModFlagsField);
@@ -204,7 +204,7 @@ DLLEXTERN SINT32 CleanModMasters(ModFile *ModID);
 /**
     @brief Save a single plugin's data to a plugin file.
     @param ModID A pointer to the plugin object to save.
-    @param SaveFlagsField Flags that determine how the plugin is saved. These flags are given in SaveFlags::saveFlags.
+    @param SaveFlagsField Flags that determine how the plugin is saved. These flags are given in ::saveFlags.
     @param DestinationName The output plugin filename.
     @returns `0` on success, `-1` if an error occurred.
 */
@@ -233,7 +233,7 @@ DLLEXTERN SINT32 GetAllModIDs(Collection *CollectionID, MODIDARRAY ModIDs);
 
 /**
     @brief Get the number of mods in a collection's load order.
-    @details Returns the number of plugins that were added to the collection with the ModFlags::modFlags::fIsInLoadOrder flag.
+    @details Returns the number of plugins that were added to the collection with the ::fIsInLoadOrder flag.
     @param CollectionID The collection to query.
     @returns The number of mods in the given collection's load order, or `-1` if an error occurred.
 */
@@ -342,7 +342,7 @@ DLLEXTERN UINT32 IsModEmpty(ModFile *ModID);
 
 /**
     @brief Get the number of different record types in a plugin.
-    @details This function will fail unless the plugin was added to the collection with the ModFlags::modFlags::fIsTrackNewTypes flag.
+    @details This function will fail unless the plugin was added to the collection with the ::fIsTrackNewTypes flag.
     @param ModID The plugin to query.
     @returns The number of record types in the plugin, or `-1` if an error occurred.
 */
@@ -350,7 +350,7 @@ DLLEXTERN SINT32 GetModNumTypes(ModFile *ModID);
 
 /**
     @brief Get an array of different record types in a plugin.
-    @details This function will fail unless the plugin was added to the collection with the ModFlags::modFlags::fIsTrackNewTypes flag.
+    @details This function will fail unless the plugin was added to the collection with the ::fIsTrackNewTypes flag.
     @param ModID The plugin to query.
     @param RecordTypes An array of record IDs. Each ID is a four-character sequence in in reverse, eg. `TES4` is stored as `4SET`. The array passed to the function must be preallocated to the correct size, as given by GetModNumTypes(). The array contents are filled by the function.
     @returns `0` on success, `-1` if an error occurred.
@@ -420,7 +420,7 @@ DLLEXTERN UINT32 MakeShortFormID(ModFile *ModID, const UINT32 ObjectID, const bo
     @param RecordFormID The record FormID.
     @param RecordEditorID The record EditorID.
     @param ParentID The parent record for the record to be created. Some record types, usually worldspace-related, have hierarchies of parent and child records. If no parent is desired, `NULL` can be passed.
-    @param CreateFlags Flags that determine how the record is created. These flags are given in CreationFlags::createFlags.
+    @param CreateFlags Flags that determine how the record is created. These flags are given in ::createFlags.
     @returns A pointer to the created record, or `NULL` if an error was encountered.
 */
 DLLEXTERN Record * CreateRecord(ModFile *ModID, const UINT32 RecordType, const FORMID RecordFormID, STRING const RecordEditorID, Record *ParentID, const UINT32 CreateFlags);
@@ -432,7 +432,7 @@ DLLEXTERN Record * CreateRecord(ModFile *ModID, const UINT32 RecordType, const F
     @param DestParentID The parent record for the record copy. Some record types, usually worldspace-related, have hierarchies of parent and child records. If no parent is desired, `NULL` can be passed.
     @param DestRecordFormID The FormID of the record copy.
     @param DestRecordEditorID The Editor ID of the record copy.
-    @param CreateFlags Flags that determine how the record copy is created. These flags are given in CreationFlags::createFlags.
+    @param CreateFlags Flags that determine how the record copy is created. These flags are given in ::createFlags.
     @returns A pointer to the record copy, or `NULL` if an error was encountered.
 */
 DLLEXTERN Record * CopyRecord(Record *RecordID, ModFile *DestModID, Record *DestParentID, const FORMID DestRecordFormID, STRING const DestRecordEditorID, const UINT32 CreateFlags);
@@ -496,7 +496,7 @@ DLLEXTERN SINT32 GetRecordIDs(ModFile *ModID, const UINT32 RecordType, RECORDIDA
     @brief Check if the given record is winning any conflict with other records.
     @details A record wins a conflict if it is the last-loaded version of that record in the load order.
     @param RecordID The record to query.
-    @param GetExtendedConflicts If true, checks for conflicts in plugins loaded with the ModFlags::modFlags::fIsExtendedConflicts flag, otherwise they are ignored.
+    @param GetExtendedConflicts If true, checks for conflicts in plugins loaded with the ::fIsExtendedConflicts flag, otherwise they are ignored.
     @returns `1` if the record is winning, `0` if it is not, and `-1` if an error occurred.
 */
 DLLEXTERN SINT32 IsRecordWinning(Record *RecordID, const bool GetExtendedConflicts);
@@ -504,7 +504,7 @@ DLLEXTERN SINT32 IsRecordWinning(Record *RecordID, const bool GetExtendedConflic
 /**
     @brief Get the number of conflicting versions of the given record in its parent collection.
     @param RecordID The record to look for conflicts for.
-    @param GetExtendedConflicts If true, checks for conflicts in plugins loaded with the ModFlags::modFlags::fIsExtendedConflicts flag, otherwise they are ignored.
+    @param GetExtendedConflicts If true, checks for conflicts in plugins loaded with the ::fIsExtendedConflicts flag, otherwise they are ignored.
     @returns The number of conflicting versions of the record, or `-1` if an error occurred.
 */
 DLLEXTERN SINT32 GetNumRecordConflicts(Record *RecordID, const bool GetExtendedConflicts);
@@ -513,14 +513,14 @@ DLLEXTERN SINT32 GetNumRecordConflicts(Record *RecordID, const bool GetExtendedC
     @brief Get an array of the different versions of the given record in its parent collection.
     @param RecordID The record to look for conflicts for.
     @param RecordIDs An array of record pointers, pre-allocated to be of the size given by GetNumRecordConflicts(). This function populates the array.
-    @param GetExtendedConflicts If true, checks for conflicts in plugins loaded with the ModFlags::modFlags::fIsExtendedConflicts flag, otherwise they are ignored.
+    @param GetExtendedConflicts If true, checks for conflicts in plugins loaded with the ::fIsExtendedConflicts flag, otherwise they are ignored.
     @returns The number of records retrieved, or `-1` if an error occurred.
 */
 DLLEXTERN SINT32 GetRecordConflicts(Record *RecordID, RECORDIDARRAY RecordIDs, const bool GetExtendedConflicts);
 
 /**
     @brief Get an array of the different versions of the given record in its parent collection.
-    @details Unlike GetRecordConflicts(), this function will fail if the given record's parent plugin was loaded with the ModFlags::modFlags::fIsExtendedConflicts flag set, and doesn't include the record passed in the outputted array.
+    @details Unlike GetRecordConflicts(), this function will fail if the given record's parent plugin was loaded with the ::fIsExtendedConflicts flag set, and doesn't include the record passed in the outputted array.
     @param RecordID The record to look for conflicts for.
     @param RecordIDs An array of record pointers, pre-allocated to be of the size given by GetNumRecordConflicts(). This function populates the array.
     @returns The number of records retrieved, or `-1` if an error occurred.
@@ -602,15 +602,15 @@ DLLEXTERN SINT32 SetIDFields(Record *RecordID, const FORMID FormID, STRING const
     @brief Set a field's value.
     @details
     @param RecordID The record in which the field is found.
-    @param FieldID The
+    @param FieldID
     @param ListIndex
     @param ListFieldID
     @param ListX2Index
     @param ListX2FieldID
     @param ListX3Index
     @param ListX3FieldID
-    @param FieldValue
-    @param ArraySize
+    @param FieldValue The value to set.
+    @param ArraySize The byte size of the value to set.
     @returns
 */
 DLLEXTERN void   SetField(Record *RecordID, FIELD_IDENTIFIERS, void *FieldValue, const UINT32 ArraySize);
@@ -618,7 +618,7 @@ DLLEXTERN void   SetField(Record *RecordID, FIELD_IDENTIFIERS, void *FieldValue,
 /**
     @brief
     @details
-    @param RecordID
+    @param RecordID The record in which the field is found.
     @param FieldID
     @param ListIndex
     @param ListFieldID
@@ -639,7 +639,7 @@ DLLEXTERN void   DeleteField(Record *RecordID, FIELD_IDENTIFIERS);
 /**
     @brief
     @details
-    @param RecordID
+    @param RecordID The record in which the field is found.
     @param FieldID
     @param ListIndex
     @param ListFieldID
@@ -655,7 +655,7 @@ DLLEXTERN UINT32 GetFieldAttribute(Record *RecordID, FIELD_IDENTIFIERS, const UI
 /**
     @brief
     @details
-    @param RecordID
+    @param RecordID The record in which the field is found.
     @param FieldID
     @param ListIndex
     @param ListFieldID
