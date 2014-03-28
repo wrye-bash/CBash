@@ -110,7 +110,7 @@ class REGNRecord : public Record //Region
         struct REGNRDGS //Grass
             {
             FORMID  grass;
-            UINT8   unk1[4];
+            UINT8   unused1[4];
 
             REGNRDGS();
             ~REGNRDGS();
