@@ -482,8 +482,8 @@ class FormIDHandlerClass
     @brief Flags that specify how a record is to be created.
 */
 enum createFlags {
-    fSetAsOverride     = 0x00000001,
-    fCopyWinningParent = 0x00000002
+    fSetAsOverride     = 0x00000001,  ///< Create the record as an override of the source record.
+    fCopyWinningParent = 0x00000002   ///< Populate the record using data from the winning parent.
     };
 
 class CreationFlags
@@ -510,12 +510,12 @@ class CreationFlags
              Only the following combinations are tested via Bash:
              - Normal:  (::fIsMinLoad or ::fIsFullLoad) + ::fIsInLoadOrder + ::fIsSaveable + ::fIsAddMasters + ::fIsLoadMasters
              - Dummy:    ::fIsAddMasters
-             - Merged:  (::fIsMinLoad or ::fIsFullLoad) + ::fIsSkipNewRecords + ::fIgnoreAbsentMasters
+             - Merged:  (::fIsMinLoad or ::fIsFullLoad) + ::fIsSkipNewRecords + ::fIsIgnoreInactiveMasters
              - Scanned: (::fIsMinLoad or ::fIsFullLoad) + ::fIsSkipNewRecords + ::fIsExtendedConflicts
 */
 enum modFlags {
-    fIsMinLoad               = 0x00000001,
-    fIsFullLoad              = 0x00000002,
+    fIsMinLoad               = 0x00000001,  ///< Causes only the TES4 header record to be loaded.
+    fIsFullLoad              = 0x00000002,  ///< Causes all records to be loaded (unless overriden by another flag).
     /**
         @brief Causes any new record to be ignored when the mod is loaded.
         @details This may leave broken records behind (such as a quest override
@@ -568,14 +568,14 @@ enum modFlags {
                  you don't have to check the world cell as well.
     */
     fIsFixupPlaceables       = 0x00000400,
-    fIsCreateNew             = 0x00000800,
+    fIsCreateNew             = 0x00000800,  ///< Creates a new mod instead of loading an existing one.
     /**
         @brief Causes any records that override masters not in the load order to be dropped.
         @details If it is true, it forces IsAddMasters to be false.  Allows
                  mods not in load order to copy records.
     */
     fIsIgnoreInactiveMasters = 0x00001000,
-    fIsSkipAllRecords        = 0x00002000,
+    fIsSkipAllRecords        = 0x00002000,  ///< Causes all records in groups to be skipped once one of each type is read.
     };
 
 class ModFlags
@@ -611,8 +611,13 @@ class ModFlags
     @brief Flags that specify how a plugin is to be saved.
 */
 enum saveFlags {
+    /**
+        @brief Cleans the mod's masters.
+        @details Removed any unreferenced masters. Requires the mod to have
+                 been loaded with the ::fIsInLoadOrder flag.
+    */
     fIsCleanMasters    = 0x00000001,
-    fIsCloseCollection = 0x00000002
+    fIsCloseCollection = 0x00000002  ///< Delete the parent collection after the mod is saved.
     };
 
 class SaveFlags
