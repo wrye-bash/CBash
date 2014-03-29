@@ -488,8 +488,8 @@ void * REGNRecord::GetField(FIELD_IDENTIFIERS, void **FieldValues)
                         {
                         case 1: //grass
                             return &Entries.value[ListIndex]->RDGS.value[ListX2Index].grass;
-                        case 2: //unk1
-                            *FieldValues = &Entries.value[ListIndex]->RDGS.value[ListX2Index].unk1[0];
+                        case 2: //unused1
+                            *FieldValues = &Entries.value[ListIndex]->RDGS.value[ListX2Index].unused1[0];
                             return NULL;
                         default:
                             return NULL;
@@ -752,13 +752,13 @@ bool REGNRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
                         case 1: //grass
                             Entries.value[ListIndex]->RDGS.value[ListX2Index].grass = *(FORMID *)FieldValue;
                             return true;
-                        case 2: //unk1
+                        case 2: //unused1
                             if(ArraySize != 4)
                                 break;
-                            Entries.value[ListIndex]->RDGS.value[ListX2Index].unk1[0] = ((UINT8ARRAY)FieldValue)[0];
-                            Entries.value[ListIndex]->RDGS.value[ListX2Index].unk1[1] = ((UINT8ARRAY)FieldValue)[1];
-                            Entries.value[ListIndex]->RDGS.value[ListX2Index].unk1[2] = ((UINT8ARRAY)FieldValue)[2];
-                            Entries.value[ListIndex]->RDGS.value[ListX2Index].unk1[3] = ((UINT8ARRAY)FieldValue)[3];
+                            Entries.value[ListIndex]->RDGS.value[ListX2Index].unused1[0] = ((UINT8ARRAY)FieldValue)[0];
+                            Entries.value[ListIndex]->RDGS.value[ListX2Index].unused1[1] = ((UINT8ARRAY)FieldValue)[1];
+                            Entries.value[ListIndex]->RDGS.value[ListX2Index].unused1[2] = ((UINT8ARRAY)FieldValue)[2];
+                            Entries.value[ListIndex]->RDGS.value[ListX2Index].unused1[3] = ((UINT8ARRAY)FieldValue)[3];
                             break;
                         default:
                             break;
@@ -1036,11 +1036,11 @@ void REGNRecord::DeleteField(FIELD_IDENTIFIERS)
                         case 1: //grass
                             Entries.value[ListIndex]->RDGS.value[ListX2Index].grass = defaultRDGS.grass;
                             return;
-                        case 2: //unk1
-                            Entries.value[ListIndex]->RDGS.value[ListX2Index].unk1[0] = defaultRDGS.unk1[0];
-                            Entries.value[ListIndex]->RDGS.value[ListX2Index].unk1[1] = defaultRDGS.unk1[1];
-                            Entries.value[ListIndex]->RDGS.value[ListX2Index].unk1[2] = defaultRDGS.unk1[2];
-                            Entries.value[ListIndex]->RDGS.value[ListX2Index].unk1[3] = defaultRDGS.unk1[3];
+                        case 2: //unused1
+                            Entries.value[ListIndex]->RDGS.value[ListX2Index].unused1[0] = defaultRDGS.unused1[0];
+                            Entries.value[ListIndex]->RDGS.value[ListX2Index].unused1[1] = defaultRDGS.unused1[1];
+                            Entries.value[ListIndex]->RDGS.value[ListX2Index].unused1[2] = defaultRDGS.unused1[2];
+                            Entries.value[ListIndex]->RDGS.value[ListX2Index].unused1[3] = defaultRDGS.unused1[3];
                             return;
                         default:
                             return;

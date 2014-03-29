@@ -179,7 +179,7 @@ bool REGNRecord::REGNRDSD::operator !=(const REGNRDSD &other) const
 REGNRecord::REGNRDGS::REGNRDGS():
     grass(0)
     {
-    memset(&unk1[0], 0x00, sizeof(unk1));
+    memset(&unused1[0], 0x00, sizeof(unused1));
     }
 
 REGNRecord::REGNRDGS::~REGNRDGS()

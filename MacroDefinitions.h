@@ -391,5 +391,11 @@
         __pragma(warning(disable:4804)) \
         var = (var & ~mask) | (-set & mask) \
         __pragma(warning(pop))
-    #undef _mypush
 #endif
+
+// Quick macro to debug struct sizes at compile time
+#define SIZE_CHECK_MSG(type, size, msg) \
+    BOOST_STATIC_ASSERT_MSG(sizeof(type) == size, msg)
+
+#define SIZE_CHECK(type, size) \
+    SIZE_CHECK_MSG(type, size, #type " must be " #size " bytes")
