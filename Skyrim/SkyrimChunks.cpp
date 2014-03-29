@@ -64,4 +64,29 @@ bool MODEL::operator !=(const MODEL &other) const
         return !(*this == other);
     }
 
+GENCNAM::GENCNAM() :
+    red(0), green(0), blue(0), unk1(0)
+    {
+        //
+    }
+
+GENCNAM::~GENCNAM()
+    {
+        //
+    }
+
+bool GENCNAM::operator ==(const GENCNAM &other) const
+    {
+        return (red == other.red &&
+                blue == other.blue &&
+                green == other.green &&
+                unk1 == other.unk1
+                );
+    }
+
+bool GENCNAM::operator !=(const GENCNAM &other) const
+    {
+        return !(*this == other);
+    }
+
 } // namespace Sk

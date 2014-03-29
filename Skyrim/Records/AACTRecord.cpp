@@ -63,6 +63,7 @@ AACTRecord::AACTRecord(AACTRecord *srcRecord)
             return;
 
         EDID = srcRecord->EDID;
+        CNAM = srcRecord->CNAM;
         return;
     }
 
@@ -108,6 +109,9 @@ SINT32 AACTRecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer,
                 case REV32(EDID):
                     EDID.Read(buffer, subSize, CompressedOnDisk);
                     break;
+                case REV32(CNAM):
+                    CNAM.Read(buffer, subSize);
+                    break;
                 default:
                     //printer("Filename = %s\n", FileName);
                     printer("  AACT: %08X - Unknown subType = %04x\n", formID, subType);
@@ -126,18 +130,22 @@ SINT32 AACTRecord::Unload()
         IsLoaded(false);
         IsChanged(false);
         EDID.Unload();
+        CNAM.Unload();
         return 1;
     }
 
 SINT32 AACTRecord::WriteRecord(FileWriter &writer)
     {
         WRITE(EDID);
+        WRITE(CNAM);
         return -1;
     }
 
 bool AACTRecord::operator ==(const AACTRecord &other) const
     {
-        return EDID.equalsi(other.EDID);
+        return (EDID.equalsi(other.EDID) &&
+                CNAM == other.CNAM
+                );
     }
 
 bool AACTRecord::operator !=(const AACTRecord &other) const

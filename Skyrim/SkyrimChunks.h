@@ -54,4 +54,16 @@ struct MODEL
         bool operator !=(const MODEL &other) const;
     };
 
+struct GENCNAM  // Color
+    {
+        UINT8 red, green, blue, unk1; // unk in xEdit, unused on UESPWiki
+
+        GENCNAM();
+        ~GENCNAM();
+
+        bool operator == (const GENCNAM &other) const;
+        bool operator != (const GENCNAM &other) const;
+    };
+SIZE_CHECK(GENCNAM, 4);
+
 } // namespace Sk
