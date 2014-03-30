@@ -48,7 +48,7 @@
 #include <new.h>
 //#include "mmgr.h"
 
-#ifdef COMPILING_STATIC
+#ifdef CBASH_STATIC
     #define CPPDLLEXTERN 
 #else
     #define CPPDLLEXTERN extern "C" __declspec(dllexport)
