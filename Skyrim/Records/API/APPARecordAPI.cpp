@@ -92,8 +92,10 @@ UINT32 APPARecord::GetFieldAttribute(FIELD_IDENTIFIERS, UINT32 WhichAttribute)
             return UINT32_FIELD;
         case 15: //desc
             return STRING_FIELD;
-        case 16: //data_p
-            UINT8_ARRAY_FIELD;
+        case 16: //data.value
+            return UINT32_FIELD;
+        case 17: //data.weight
+            return FLOAT32_FIELD;
         default:
             return UNKNOWN_FIELD;
         }
@@ -136,8 +138,10 @@ void * APPARecord::GetField(FIELD_IDENTIFIERS, void **FieldValues)
             return &QUAL.value;
         case 15: //desc
             return DESC.value;
-        case 16: //data_p
-            return DATA.value;
+        case 16: //data.value
+            return &DATA.value.value;
+        case 17: //data.weight
+            return &DATA.value.weight;
         default:
             return NULL;
         }
@@ -198,8 +202,13 @@ bool APPARecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
         case 15: //desc
             DESC.Copy((STRING)FieldValue);
             break;
-        case 16: //data
-            DATA.Copy((UINT8 *)FieldValue, ArraySize);
+        case 16: //data.value
+            DATA.Load();
+            DATA.value.value = *(UINT32 *)FieldValue;
+            break;
+        case 17: //data.weight
+            DATA.Load();
+            DATA.value.weight = *(FLOAT32 *)FieldValue;
             break;
         default:
             break;

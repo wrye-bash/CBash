@@ -40,6 +40,30 @@
 
 namespace Sk {
 
+APPARecord::APPADATA::APPADATA() :
+    value(0),
+    weight(0.0)
+    {
+        //
+    }
+
+APPARecord::APPADATA::~APPADATA()
+    {
+    //
+    }
+
+bool APPARecord::APPADATA::operator == (const APPADATA &other) const
+    {
+    return (value == other.value &&
+            AlmostEqual(weight, other.weight, 2)
+            );
+    }
+
+bool APPARecord::APPADATA::operator != (const APPADATA &other) const
+    {
+    return !(*this == other);
+    }
+
 APPARecord::APPARecord(unsigned char *_recData)
     : TES5Record(_recData)
     {
@@ -64,8 +88,15 @@ APPARecord::APPARecord(APPARecord *srcRecord)
             return;
 
         EDID = srcRecord->EDID;
+        VMAD = srcRecord->VMAD;
         OBND = srcRecord->OBND;
         FULL = srcRecord->FULL;
+        MODL = srcRecord->MODL;
+        ICON = srcRecord->ICON;
+        MICO = srcRecord->MICO;
+        DEST = srcRecord->DEST;
+        YNAM = srcRecord->YNAM;
+        ZNAM = srcRecord->ZNAM;
         QUAL = srcRecord->QUAL;
         DESC = srcRecord->DESC;
         DATA = srcRecord->DATA;
@@ -76,6 +107,21 @@ APPARecord::~APPARecord()
     {
         //
     }
+
+bool APPARecord::VisitFormIDs(FormIDOp &op)
+{
+    if (!IsLoaded())
+        return false;
+
+    if (VMAD.IsLoaded())
+        VMAD.VisitFormIDs(op);
+    if (YNAM.IsLoaded())
+        op.Accept(YNAM.value);
+    if (ZNAM.IsLoaded())
+        op.Accept(ZNAM.value);
+
+    return op.Stop();
+}
 
 UINT32 APPARecord::GetType()
     {
@@ -115,11 +161,32 @@ SINT32 APPARecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer,
                 case REV32(EDID):
                     EDID.Read(buffer, subSize, CompressedOnDisk);
                     break;
+                case REV32(VMAD):
+                    VMAD.Read(buffer, subSize, GetType(), CompressedOnDisk);
+                    break;
                 case REV32(OBND):
                     OBND.Read(buffer, subSize);
                     break;
                 case REV32(FULL):
                     FULL.Read(buffer, subSize, CompressedOnDisk, LookupStrings);
+                    break;
+                case REV32(MODL):
+                    MODL.Read(buffer, subSize);
+                    break;
+                case REV32(ICON):
+                    ICON.Read(buffer, subSize, CompressedOnDisk);
+                    break;
+                case REV32(MICO):
+                    MICO.Read(buffer, subSize, CompressedOnDisk);
+                    break;
+                case REV32(DEST):
+                    DEST.Read(buffer, subSize);
+                    break;
+                case REV32(YNAM):
+                    YNAM.Read(buffer, subSize);
+                    break;
+                case REV32(ZNAM):
+                    ZNAM.Read(buffer, subSize);
                     break;
                 case REV32(QUAL):
                     QUAL.Read(buffer, subSize);
@@ -128,7 +195,7 @@ SINT32 APPARecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer,
                     DESC.Read(buffer, subSize, CompressedOnDisk, LookupStrings);
                     break;
                 case REV32(DATA):
-                    DATA.Read(buffer, subSize, CompressedOnDisk);
+                    DATA.Read(buffer, subSize);
                     break;
                 default:
                     //printer("Filename = %s\n", FileName);
@@ -148,8 +215,15 @@ SINT32 APPARecord::Unload()
         IsLoaded(false);
         IsChanged(false);
         EDID.Unload();
+        VMAD.Unload();
         OBND.Unload();
         FULL.Unload();
+        MODL.Unload();
+        ICON.Unload();
+        MICO.Unload();
+        DEST.Unload();
+        YNAM.Unload();
+        ZNAM.Unload();
         QUAL.Unload();
         DESC.Unload();
         DATA.Unload();
@@ -159,8 +233,15 @@ SINT32 APPARecord::Unload()
 SINT32 APPARecord::WriteRecord(FileWriter &writer)
     {
         WRITE(EDID);
+        WRITE(VMAD);
         WRITE(OBND);
         WRITE(FULL);
+        WRITE(MODL);
+        WRITE(ICON);
+        WRITE(MICO);
+        WRITE(DEST);
+        WRITE(YNAM);
+        WRITE(ZNAM);
         WRITE(QUAL);
         WRITE(DESC);
         WRITE(DATA);
@@ -170,8 +251,15 @@ SINT32 APPARecord::WriteRecord(FileWriter &writer)
 bool APPARecord::operator ==(const APPARecord &other) const
     {
         return (EDID.equalsi(other.EDID) &&
+                VMAD == other.VMAD &&
                 OBND == other.OBND &&
                 FULL.equals(other.FULL) &&
+                MODL == other.MODL &&
+                ICON.equalsi(other.ICON) &&
+                MICO.equalsi(other.MICO) &&
+                DEST == other.DEST &&
+                YNAM == other.YNAM &&
+                ZNAM == other.ZNAM &&
                 QUAL == other.QUAL &&
                 DESC.equals(other.DESC) &&
                 DATA == other.DATA);
