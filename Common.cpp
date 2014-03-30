@@ -1135,6 +1135,16 @@ void NonNullStringRecord::Write(UINT32 _Type, FileWriter &writer)
         writer.record_write_subrecord(_Type, _value, DiskSize ? DiskSize : (UINT32)strlen(_value));
     }
 
+void NonNullStringRecord::Write16(FileWriter &writer) const
+    {
+    if (_value != NULL)
+    {
+        UINT16 size = DiskSize ? (UINT16)DiskSize : (UINT16)strlen(_value);
+        writer.record_write(&size, sizeof(size));
+        writer.record_write(_value, size);
+    }
+    }
+
 void NonNullStringRecord::ReqWrite(UINT32 _Type, FileWriter &writer)
     {
     if(_value != NULL)

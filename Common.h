@@ -713,6 +713,7 @@ class NonNullStringRecord
 
         bool Read(unsigned char *&buffer, const UINT32 &subSize, const bool &CompressedOnDisk);
         void Write(UINT32 _Type, FileWriter &writer);
+        void Write16(FileWriter &writer) const;
         void ReqWrite(UINT32 _Type, FileWriter &writer);
 
         void Copy(STRING FieldValue);

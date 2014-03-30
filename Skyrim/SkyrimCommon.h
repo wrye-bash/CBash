@@ -38,7 +38,9 @@
 // SkyrimCommon.h
 
 #include "../Common.h"
+#include "VMAD/VMAD.h"
 #include <map>
+
 
 class StringLookups
     {
