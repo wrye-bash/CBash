@@ -74,21 +74,17 @@ UINT32 LTEXRecord::GetFieldAttribute(FIELD_IDENTIFIERS, UINT32 WhichAttribute)
                     return UNKNOWN_FIELD;
                 }
             return UNKNOWN_FIELD;
-        case 7: //iconPath
-            return ISTRING_FIELD;
-        case 8: //smallIconPath
-            return ISTRING_FIELD;
-        case 9: //texture
+        case 7: //texture
             return FORMID_FIELD;
-        case 10: //types
-            return UINT8_TYPE_FIELD;
-        case 11: //friction
+        case 8: //material
+            return FORMID_FIELD;
+        case 9: //friction
             return UINT8_FIELD;
-        case 12: //restitution
+        case 10: //restitution
             return UINT8_FIELD;
-        case 13: //specularExponent
+        case 11: //specularExponent
             return UINT8_FIELD;
-        case 14: //grasses
+        case 12: //grasses
             switch(WhichAttribute)
                 {
                 case 0: //fieldType
@@ -122,21 +118,17 @@ void * LTEXRecord::GetField(FIELD_IDENTIFIERS, void **FieldValues)
         case 6: //versionControl2
             *FieldValues = &versionControl2[0];
             return NULL;
-        case 7: //iconPath
-            return ICON.value;
-        case 8: //smallIconPath
-            return MICO.value;
-        case 9: //texture
+        case 7: //texture
             return TNAM.IsLoaded() ? &TNAM.value : NULL;
-        case 10: //types
-            return &HNAM.value.types;
-        case 11: //friction
+        case 8: //material
+            return &MNAM.value;
+        case 9: //friction
             return &HNAM.value.friction;
-        case 12: //restitution
+        case 10: //restitution
             return &HNAM.value.restitution;
-        case 13: //specularExponent
+        case 11: //specularExponent
             return &SNAM.value;
-        case 14: //grasses
+        case 12: //grasses
             *FieldValues = GNAM.value.size() ? &GNAM.value[0] : NULL;
             return NULL;
         default:
@@ -172,28 +164,22 @@ bool LTEXRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             versionControl2[0] = ((UINT8ARRAY)FieldValue)[0];
             versionControl2[1] = ((UINT8ARRAY)FieldValue)[1];
             break;
-        case 7: //iconPath
-            ICON.Copy((STRING)FieldValue);
-            break;
-        case 8: //smallIconPath
-            MICO.Copy((STRING)FieldValue);
-            break;
-        case 9: //texture
+        case 7: //texture
             TNAM.value = *(FORMID *)FieldValue;
             return true;
-        case 10: //types
-            HNAM.value.types = *(UINT8 *)FieldValue;
-            break;
-        case 11: //friction
+        case 8: //material
+            MNAM.value = *(FORMID *)FieldValue;
+            return true;
+        case 9: //friction
             HNAM.value.friction = *(UINT8 *)FieldValue;
             break;
-        case 12: //restitution
+        case 10: //restitution
             HNAM.value.restitution = *(UINT8 *)FieldValue;
             break;
-        case 13: //specularExponent
+        case 11: //specularExponent
             SNAM.value = *(UINT8 *)FieldValue;
             break;
-        case 14: //grasses
+        case 12: //grasses
             GNAM.value.resize(ArraySize);
             for(UINT32 x = 0; x < ArraySize; x++)
                 GNAM.value[x] = ((FORMIDARRAY)FieldValue)[x];
@@ -225,28 +211,21 @@ void LTEXRecord::DeleteField(FIELD_IDENTIFIERS)
             versionControl2[0] = 0;
             versionControl2[1] = 0;
             return;
-        case 7: //iconPath
-            ICON.Unload();
-            return;
-        case 8: //smallIconPath
-            MICO.Unload();
-            return;
-        case 9: //texture
+        case 7: //texture
             TNAM.Unload();
             return;
-        case 10: //types
-            HNAM.value.types = defaultHNAM.types;
-            return;
-        case 11: //friction
+        case 8: //material
+            MNAM.Unload();
+        case 9: //friction
             HNAM.value.friction = defaultHNAM.friction;
             return;
-        case 12: //restitution
+        case 10: //restitution
             HNAM.value.restitution = defaultHNAM.restitution;
             return;
-        case 13: //specularExponent
+        case 11: //specularExponent
             SNAM.Unload();
             return;
-        case 14: //grasses
+        case 12: //grasses
             GNAM.Unload();
             return;
         default:

@@ -40,7 +40,6 @@ namespace Sk
 {
 
 LTEXRecord::LTEXHNAM::LTEXHNAM():
-    types(0),
     friction(0),
     restitution(0)
     {
@@ -54,8 +53,7 @@ LTEXRecord::LTEXHNAM::~LTEXHNAM()
 
 bool LTEXRecord::LTEXHNAM::operator ==(const LTEXHNAM &other) const
     {
-    return (types == other.types &&
-            friction == other.friction &&
+    return (friction == other.friction &&
             restitution == other.restitution);
     }
 bool LTEXRecord::LTEXHNAM::operator !=(const LTEXHNAM &other) const
@@ -87,13 +85,11 @@ LTEXRecord::LTEXRecord(LTEXRecord *srcRecord):
         return;
 
     EDID = srcRecord->EDID;
-    ICON = srcRecord->ICON;
-    MICO = srcRecord->MICO;
     TNAM = srcRecord->TNAM;
+    MNAM = srcRecord->MNAM;
     HNAM = srcRecord->HNAM;
     SNAM = srcRecord->SNAM;
     GNAM = srcRecord->GNAM;
-    MNAM = srcRecord->MNAM;
     return;
     }
 
@@ -109,170 +105,11 @@ bool LTEXRecord::VisitFormIDs(FormIDOp &op)
 
     if(TNAM.IsLoaded())
         op.Accept(TNAM.value);
+    op.Accept(MNAM.value);
     for(UINT32 x = 0; x < GNAM.value.size(); ++x)
         op.Accept(GNAM.value[x]);
 
     return op.Stop();
-    }
-
-bool LTEXRecord::IsStone()
-    {
-    return (HNAM.value.types == eStone);
-    }
-
-void LTEXRecord::IsStone(bool value)
-    {
-    HNAM.value.types = value ? eStone : eCloth;
-    }
-
-bool LTEXRecord::IsCloth()
-    {
-    return (HNAM.value.types == eCloth);
-    }
-
-void LTEXRecord::IsCloth(bool value)
-    {
-    HNAM.value.types = value ? eCloth : eStone;
-    }
-
-bool LTEXRecord::IsDirt()
-    {
-    return (HNAM.value.types == eDirt);
-    }
-
-void LTEXRecord::IsDirt(bool value)
-    {
-    HNAM.value.types = value ? eDirt : eStone;
-    }
-
-bool LTEXRecord::IsGlass()
-    {
-    return (HNAM.value.types == eGlass);
-    }
-
-void LTEXRecord::IsGlass(bool value)
-    {
-    HNAM.value.types = value ? eGlass : eStone;
-    }
-
-bool LTEXRecord::IsGrass()
-    {
-    return (HNAM.value.types == eGrass);
-    }
-
-void LTEXRecord::IsGrass(bool value)
-    {
-    HNAM.value.types = value ? eGrass : eStone;
-    }
-
-bool LTEXRecord::IsMetal()
-    {
-    return (HNAM.value.types == eMetal);
-    }
-
-void LTEXRecord::IsMetal(bool value)
-    {
-    HNAM.value.types = value ? eMetal : eStone;
-    }
-
-bool LTEXRecord::IsOrganic()
-    {
-    return (HNAM.value.types == eOrganic);
-    }
-
-void LTEXRecord::IsOrganic(bool value)
-    {
-    HNAM.value.types = value ? eOrganic : eStone;
-    }
-
-bool LTEXRecord::IsSkin()
-    {
-    return (HNAM.value.types == eSkin);
-    }
-
-void LTEXRecord::IsSkin(bool value)
-    {
-    HNAM.value.types = value ? eSkin : eStone;
-    }
-
-bool LTEXRecord::IsWater()
-    {
-    return (HNAM.value.types == eWater);
-    }
-
-void LTEXRecord::IsWater(bool value)
-    {
-    HNAM.value.types = value ? eWater : eStone;
-    }
-
-bool LTEXRecord::IsWood()
-    {
-    return (HNAM.value.types == eWood);
-    }
-
-void LTEXRecord::IsWood(bool value)
-    {
-    HNAM.value.types = value ? eWood : eStone;
-    }
-
-bool LTEXRecord::IsHeavyStone()
-    {
-    return (HNAM.value.types == eHeavyStone);
-    }
-
-void LTEXRecord::IsHeavyStone(bool value)
-    {
-    HNAM.value.types = value ? eHeavyStone : eStone;
-    }
-
-bool LTEXRecord::IsHeavyMetal()
-    {
-    return (HNAM.value.types == eHeavyMetal);
-    }
-
-void LTEXRecord::IsHeavyMetal(bool value)
-    {
-    HNAM.value.types = value ? eHeavyMetal : eStone;
-    }
-
-bool LTEXRecord::IsHeavyWood()
-    {
-    return (HNAM.value.types == eHeavyWood);
-    }
-
-void LTEXRecord::IsHeavyWood(bool value)
-    {
-    HNAM.value.types = value ? eHeavyWood : eStone;
-    }
-
-bool LTEXRecord::IsChain()
-    {
-    return (HNAM.value.types == eChain);
-    }
-
-void LTEXRecord::IsChain(bool value)
-    {
-    HNAM.value.types = value ? eChain : eStone;
-    }
-
-bool LTEXRecord::IsSnow()
-    {
-    return (HNAM.value.types == eSnow);
-    }
-
-void LTEXRecord::IsSnow(bool value)
-    {
-    HNAM.value.types = value ? eSnow : eStone;
-    }
-
-bool LTEXRecord::IsType(UINT8 Type)
-    {
-    return HNAM.value.types == Type;
-    }
-
-void LTEXRecord::SetType(UINT8 Type)
-    {
-    HNAM.value.types = Type;
     }
 
 UINT32 LTEXRecord::GetType()
@@ -311,27 +148,20 @@ SINT32 LTEXRecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer,
             case REV32(EDID):
                 EDID.Read(buffer, subSize, CompressedOnDisk);
                 break;
-            case REV32(ICON):
-                ICON.Read(buffer, subSize, CompressedOnDisk);
-                break;
-            case REV32(MICO):
-                MICO.Read(buffer, subSize, CompressedOnDisk);
-                break;
             case REV32(TNAM):
                 TNAM.Read(buffer, subSize);
                 break;
-            case REV32(HNAM): // 2 bytes, 02 00, flags
+            case REV32(MNAM):
+                MNAM.Read(buffer, subSize);
+                break;
+            case REV32(HNAM):
                 HNAM.Read(buffer, subSize);
                 break;
-            case REV32(SNAM): // 1 byte, 1e, flags
+            case REV32(SNAM):
                 SNAM.Read(buffer, subSize);
                 break;
             case REV32(GNAM):
                 GNAM.Read(buffer, subSize);
-                break;
-            /* Skyrim --------------------------------------- */
-            case REV32(MNAM): // 4 bytes, 47 2f 01 00, formID -> MATT, Material NAMe
-                MNAM.Read(buffer, subSize);
                 break;
             default:
                 //printer("FileName = %s\n", FileName);
@@ -351,39 +181,34 @@ SINT32 LTEXRecord::Unload()
     IsChanged(false);
     IsLoaded(false);
     EDID.Unload();
-    ICON.Unload();
-    MICO.Unload();
     TNAM.Unload();
+    MNAM.Unload();
     HNAM.Unload();
     SNAM.Unload();
     GNAM.Unload();
-    MNAM.Unload();
     return 1;
     }
 
 SINT32 LTEXRecord::WriteRecord(FileWriter &writer)
     {
     WRITE(EDID);
-    WRITE(ICON);
-    WRITE(MICO);
     WRITE(TNAM);
+    WRITE(MNAM);
     WRITE(HNAM);
     WRITE(SNAM);
     WRITE(GNAM);
-    WRITE(MNAM);
     return -1;
     }
 
 bool LTEXRecord::operator ==(const LTEXRecord &other) const
     {
     return (EDID.equalsi(other.EDID) &&
-            ICON.equalsi(other.ICON) &&
-            MICO.equalsi(other.MICO) &&
+            MNAM == other.MNAM &&
             TNAM == other.TNAM &&
             HNAM == other.HNAM &&
             SNAM == other.SNAM &&
-            GNAM == other.GNAM &&
-            MNAM == other.MNAM);
+            GNAM == other.GNAM
+            );
     }
 
 bool LTEXRecord::operator !=(const LTEXRecord &other) const
@@ -392,7 +217,15 @@ bool LTEXRecord::operator !=(const LTEXRecord &other) const
     }
 
 bool LTEXRecord::equals(Record *other)
+{
+    try
     {
-    return *this == *(LTEXRecord *)other;
+        return *this == *reinterpret_cast<LTEXRecord *>(other);
+    }
+    catch (...)
+    {
+        return false;
     }
 }
+
+} // namespace Sk
