@@ -90,7 +90,9 @@ UINT32 LVLNRecord::GetFieldAttribute(FIELD_IDENTIFIERS, UINT32 WhichAttribute)
             return UINT8_FIELD;
         case 14: //flags
             return UINT8_FLAG_FIELD;
-        case 15: //entries
+        case 15: //global
+            return FORMID_FIELD;
+        case 16: //entries
             if(ListFieldID == 0) //entries
                 {
                 switch(WhichAttribute)
@@ -141,7 +143,7 @@ UINT32 LVLNRecord::GetFieldAttribute(FIELD_IDENTIFIERS, UINT32 WhichAttribute)
                 case 6: //owner
                     return FORMID_FIELD;
                 case 7: //globalOrRank
-                    switch(WhichAttribute)
+                    switch (WhichAttribute)
                         {
                         case 0: //fieldType
                             return UNKNOWN_OR_FORMID_OR_UINT32_FIELD;
@@ -150,16 +152,15 @@ UINT32 LVLNRecord::GetFieldAttribute(FIELD_IDENTIFIERS, UINT32 WhichAttribute)
                         default:
                             return UNKNOWN_FIELD;
                         }
-                    return UNKNOWN_FIELD;
                 case 8: //condition
                     return FLOAT32_FIELD;
                 default:
                     return UNKNOWN_FIELD;
                 }
             return UNKNOWN_FIELD;
-        case 16: //modPath
+        case 17: //modPath
             return ISTRING_FIELD;
-        case 17: //modt_p
+        case 18: //modt_p
             switch(WhichAttribute)
             {
             case 0: //fieldType
@@ -169,6 +170,9 @@ UINT32 LVLNRecord::GetFieldAttribute(FIELD_IDENTIFIERS, UINT32 WhichAttribute)
             default:
                 return UNKNOWN_FIELD;
             }
+            return UNKNOWN_FIELD;
+        case 19: //mods
+            // TODO: do this
             return UNKNOWN_FIELD;
         default:
             return UNKNOWN_FIELD;
@@ -210,7 +214,9 @@ void * LVLNRecord::GetField(FIELD_IDENTIFIERS, void **FieldValues)
             return &LVLD.value;
         case 14: //flags
             return &LVLF.value;
-        case 15: //entries
+        case 15: //global
+            return LVLG.IsLoaded() ? &LVLG.value : NULL;
+        case 16: //entries
             if(ListIndex >= Entries.value.size())
                 return NULL;
 
@@ -238,10 +244,13 @@ void * LVLNRecord::GetField(FIELD_IDENTIFIERS, void **FieldValues)
                     return NULL;
                 }
             return NULL;
-        case 16: //modPath
+        case 17: //modPath
             return MODL.IsLoaded() ? MODL->MODL.value : NULL;
-        case 17: //modt_p
+        case 18: //modt_p
             return MODL.IsLoaded() ? MODL->MODT.value : NULL;
+        case 19: //mods
+            // TODO: do this
+            return NULL;
         default:
             return NULL;
         }
@@ -299,7 +308,10 @@ bool LVLNRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
         case 14: //flags
             SetFlagMask(*(UINT8 *)FieldValue);
             break;
-        case 15: //entries
+        case 15: //global
+            LVLG.value = *(FORMID *)FieldValue);
+            break;
+        case 16: //entries
             if(ListFieldID == 0) //entriesSize
                 {
                 Entries.resize(ArraySize);
@@ -348,13 +360,16 @@ bool LVLNRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
                     break;
                 }
             break;
-        case 16: //modPath
+        case 17: //modPath
             MODL.Load();
             MODL->MODL.Copy((STRING)FieldValue);
             break;
-        case 17: //modt_p
+        case 18: //modt_p
             MODL.Load();
             MODL->MODT.Copy((UINT8ARRAY)FieldValue, ArraySize);
+            break;
+        case 19: //mods
+            // TODO: do this
             break;
         default:
             break;
@@ -409,7 +424,10 @@ void LVLNRecord::DeleteField(FIELD_IDENTIFIERS)
         case 14: //flags
             LVLF.Unload();
             return;
-        case 15: //entries
+        case 15: //global
+            LVLG.Unload();
+            return;
+        case 16: //entries
             if(ListFieldID == 0) //entriesSize
                 {
                 Entries.Unload();
@@ -454,13 +472,16 @@ void LVLNRecord::DeleteField(FIELD_IDENTIFIERS)
                     return;
                 }
             return;
-        case 16: //modPath
+        case 17: //modPath
             if (MODL.IsLoaded())
                 MODL->MODL.Unload();
             return;
-        case 17: //modt_p
+        case 18: //modt_p
             if (MODL.IsLoaded())
                 MODL->MODT.Unload();
+            return;
+        case 19: //mods
+            // TODO: do this
             return;
         default:
             return;
