@@ -181,12 +181,12 @@ SINT32 LVLIRecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer,
                     LVLG.Read(buffer, subSize);
                     break;
                 case REV32(LVLO):
-                    Entries.value.push_back(new FNVLVLO);
+                    Entries.value.push_back(new SKLVLOCOED);
                     Entries.value.back()->LVLO.Read(buffer, subSize);
                     break;
                 case REV32(COED):
                     if(Entries.value.size() == 0)
-                        Entries.value.push_back(new FNVLVLO);
+                        Entries.value.push_back(new SKLVLOCOED);
                     Entries.value.back()->COED.Read(buffer, subSize);
                     break;
                 case REV32(LLCT):

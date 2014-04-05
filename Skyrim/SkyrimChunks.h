@@ -40,6 +40,41 @@
 
 namespace Sk {
 
+// LVLO subrecord for leveled lists.  Different than previous games
+// in that 'level' is a UINT16 now instead of a SINT16
+struct SKLVLO
+    {
+        UINT16  level;
+        UINT8   unused1[2];
+        FORMID  listId;
+        SINT16  count;
+        UINT8   unused2[2];
+
+        SKLVLO();
+        ~SKLVLO();
+
+        void Write(FileWriter &writer);
+
+        bool operator ==(const SKLVLO &other) const;
+        bool operator !=(const SKLVLO &other) const;
+    };
+SIZE_CHECK(SKLVLO, 12);
+
+// LVLO/COED pair for LVLI records
+struct SKLVLOCOED
+    {
+        ReqSubRecord<SKLVLO> LVLO;
+        OptSubRecord<GENCOED> COED;
+
+        bool IsGlobal() const;
+        bool IsRank() const;
+
+        void Write(FileWriter &writer);
+
+        bool operator ==(const SKLVLOCOED &other) const;
+        bool operator !=(const SKLVLOCOED &other) const;
+    };
+
 struct MODEL
     {
         StringRecord MODL;  // Model Filename

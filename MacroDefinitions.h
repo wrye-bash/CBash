@@ -397,5 +397,8 @@
 #define SIZE_CHECK_MSG(type, size, msg) \
     BOOST_STATIC_ASSERT_MSG(sizeof(type) == size, msg)
 
+// Macro to ensure a structure has a specific size when compiled.
+// This ensured that doing a memcpy from a file on disk will correctly
+// fill in the fields.
 #define SIZE_CHECK(type, size) \
     SIZE_CHECK_MSG(type, size, #type " must be " #size " bytes")

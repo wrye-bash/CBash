@@ -1342,17 +1342,21 @@ struct GENCOED // Extra Data
     GENCOED();
     ~GENCOED();
 
+    bool IsGlobal() const; // Hack
+    bool IsRank() const; // Hack
+
     bool operator ==(const GENCOED &other) const;
     bool operator !=(const GENCOED &other) const;
     };
+SIZE_CHECK(GENCOED, 12);
 
 struct FNVCNTO
     {
     ReqSubRecord<GENCNTO> CNTO;
     OptSubRecord<GENCOED> COED;
 
-    bool IsGlobal(); //Hack
-    bool IsRank();   //Hack
+    bool IsGlobal() const; //Hack
+    bool IsRank() const;   //Hack
 
     void Write(FileWriter &writer);
 
@@ -1715,8 +1719,8 @@ struct FNVLVLO
     ReqSubRecord<LVLLVLO> LVLO;
     OptSubRecord<GENCOED> COED;
 
-    bool IsGlobal(); //Hack
-    bool IsRank();   //Hack
+    bool IsGlobal() const; //Hack
+    bool IsRank() const;   //Hack
 
     void Write(FileWriter &writer);
 

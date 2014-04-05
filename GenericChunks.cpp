@@ -3477,19 +3477,7 @@ GENCOED::~GENCOED()
     //
     }
 
-bool GENCOED::operator ==(const GENCOED &other) const
-    {
-    return (owner == other.owner &&
-            globalOrRank == other.globalOrRank &&
-            AlmostEqual(condition,other.condition,2));
-    }
-
-bool GENCOED::operator !=(const GENCOED &other) const
-    {
-    return !(*this == other);
-    }
-
-bool FNVCNTO::IsGlobal()
+bool GENCOED::IsGlobal() const
     {
     //Not properly implemented, requires being able to tell if COED->owner is a npc record
     //...the current model doesn't allow a record to lookup another record...
@@ -3505,12 +3493,10 @@ bool FNVCNTO::IsGlobal()
     //GameHour (0x38), GameDaysPassed (0x39), TimeScale (0x3A),
     //PlayCredits (0x63)
     //It seems unlikely that these specific globals would be used in this context
-    if(COED.IsLoaded())
-        return COED->globalOrRank > END_HARDCODED_IDS;
-    return false;
+    return globalOrRank > END_HARDCODED_IDS;
     }
 
-bool FNVCNTO::IsRank()
+bool GENCOED::IsRank() const
     {
     //Not properly implemented, requires being able to tell if COED->owner is a faction record
     //...the current model doesn't allow a record to lookup another record...
@@ -3526,10 +3512,30 @@ bool FNVCNTO::IsRank()
     //GameHour (0x38), GameDaysPassed (0x39), TimeScale (0x3A),
     //PlayCredits (0x63)
     //It seems unlikely that these specific globals would be used in this context
-    if(COED.IsLoaded())
-        return COED->globalOrRank < END_HARDCODED_IDS;
-    return false;
+    return globalOrRank < END_HARDCODED_IDS;
     }
+
+bool GENCOED::operator ==(const GENCOED &other) const
+    {
+    return (owner == other.owner &&
+            globalOrRank == other.globalOrRank &&
+            AlmostEqual(condition,other.condition,2));
+    }
+
+bool GENCOED::operator !=(const GENCOED &other) const
+    {
+    return !(*this == other);
+    }
+
+bool FNVCNTO::IsGlobal() const
+    {
+    return COED.IsLoaded() ? COED->IsGlobal() : false;
+    }
+
+bool FNVCNTO::IsRank() const
+    {
+    return COED.IsLoaded() ? COED->IsRank() : false;
+   }
 
 void FNVCNTO::Write(FileWriter &writer)
     {
@@ -4172,46 +4178,14 @@ bool FNVACBS::operator !=(const FNVACBS &other) const
     return !(*this == other);
     }
 
-bool FNVLVLO::IsGlobal()
+bool FNVLVLO::IsGlobal() const
     {
-    //Not properly implemented, requires being able to tell if COED->owner is a npc record
-    //...the current model doesn't allow a record to lookup another record...
-    //As well, the geck wiki states that the global variable isn't even used by FO3/FNV
-
-    //So the current hack is to see if the globalOrRank is likely to be a rank or global
-    //It seems highly unlikely that any faction will have anywhere close to END_HARDCODED_IDS ranks (0x800)
-    //So CBash assumes that if globalOrRank is > END_HARDCODED_IDS, then it must be a global
-    //So false positives shouldn't be a problem
-    //False negatives could occur though...
-    //There aren't many records < END_HARDCODED_IDS, but 7 of them are globals
-    //GameYear (0x35), GameMonth (0x36), GameDay (0x37),
-    //GameHour (0x38), GameDaysPassed (0x39), TimeScale (0x3A),
-    //PlayCredits (0x63)
-    //It seems unlikely that these specific globals would be used in this context
-    if(COED.IsLoaded())
-        return COED->globalOrRank > END_HARDCODED_IDS;
-    return false;
+    return COED.IsLoaded() ? COED->IsGlobal() : false;
     }
 
-bool FNVLVLO::IsRank()
+bool FNVLVLO::IsRank() const
     {
-    //Not properly implemented, requires being able to tell if COED->owner is a faction record
-    //...the current model doesn't allow a record to lookup another record...
-    //As well, the geck wiki states that the global variable isn't even used by FO3/FNV
-
-    //So the current hack is to see if the globalOrRank is likely to be a rank or global
-    //It seems highly unlikely that any faction will have anywhere close to END_HARDCODED_IDS ranks (0x800)
-    //So CBash assumes that if globalOrRank is < END_HARDCODED_IDS, then it must be a rank
-    //So false negatives shouldn't be a problem
-    //False positives could occur though...
-    //There aren't many records < END_HARDCODED_IDS, but 7 of them are globals
-    //GameYear (0x35), GameMonth (0x36), GameDay (0x37),
-    //GameHour (0x38), GameDaysPassed (0x39), TimeScale (0x3A),
-    //PlayCredits (0x63)
-    //It seems unlikely that these specific globals would be used in this context
-    if(COED.IsLoaded())
-        return COED->globalOrRank < END_HARDCODED_IDS;
-    return false;
+    return COED.IsLoaded() ? COED->IsRank() : false;
     }
 
 void FNVLVLO::Write(FileWriter &writer)

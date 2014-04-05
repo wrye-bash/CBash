@@ -37,10 +37,11 @@
 #pragma once
 #include "..\..\Common.h"
 #include "..\..\GenericRecord.h"
+#include "..\SkyrimChunks.h"
 
 namespace Sk
 {
-class LVSPRecord : public TES5Record //Leveled Item
+class LVSPRecord : public TES5Record //Leveled Spell
     {
     private:
         enum flagsFlags
@@ -56,8 +57,8 @@ class LVSPRecord : public TES5Record //Leveled Item
         ReqSubRecord<GENOBND> OBND; //Object bounds
         ReqSimpleSubRecord<UINT8> LVLD; //Chance none
         ReqSimpleSubRecord<UINT8> LVLF; //Flags
-        // ReqSimpleSubRecord<UINT8> LLCT; //Count
-        UnorderedSparseArray<FNVLVLO *> Entries; //Leveled List Entries
+        // ReqSimpleSubRecord<UINT8> LLCT; //Count - handled seperately
+        UnorderedSparseArray<SKLVLO *> Entries; //Leveled List Entries
 
         LVSPRecord(unsigned char *_recData=NULL);
         LVSPRecord(LVSPRecord *srcRecord);

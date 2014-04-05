@@ -81,11 +81,8 @@ bool LVSPRecord::VisitFormIDs(FormIDOp &op)
             return false;
 
         for(UINT32 x = 0; x < Entries.value.size(); x++)
-            {
-            op.Accept(Entries.value[x]->LVLO.value.listId);
-            if(Entries.value[x]->IsGlobal())
-                op.Accept(Entries.value[x]->COED->globalOrRank);
-            }
+            op.Accept(Entries.value[x]->listId);
+
         return op.Stop();
     }
 
@@ -175,13 +172,7 @@ SINT32 LVSPRecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer,
                     LVLF.Read(buffer, subSize);
                     break;
                 case REV32(LVLO):
-                    Entries.value.push_back(new FNVLVLO);
-                    Entries.value.back()->LVLO.Read(buffer, subSize);
-                    break;
-                case REV32(COED):
-                    if(Entries.value.size() == 0)
-                        Entries.value.push_back(new FNVLVLO);
-                    Entries.value.back()->COED.Read(buffer, subSize);
+                    Entries.Read(buffer, subSize);
                     break;
                 case REV32(LLCT):
                     // Skip

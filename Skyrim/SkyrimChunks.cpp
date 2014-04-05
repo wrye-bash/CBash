@@ -37,6 +37,66 @@
 
 namespace Sk {
 
+SKLVLO::SKLVLO():
+    level(0),
+    listId(0),
+    count(1)
+    {
+        memset(&unused1[0], 0x00, sizeof(unused1));
+        memset(&unused2[0], 0x00, sizeof(unused2));
+    }
+
+SKLVLO::~SKLVLO()
+    {
+        //
+    }
+
+void SKLVLO::Write(FileWriter &writer)
+    {
+        writer.record_write_subrecord(REV32(LVLO), this, sizeof(SKLVLO));
+    }
+
+bool SKLVLO::operator == (const SKLVLO &other) const
+    {
+        return (level == other.level &&
+                listId == other.listId &&
+                count == other.count
+                );
+    }
+
+bool SKLVLO::operator != (const SKLVLO &other) const
+    {
+        return !(*this == other);
+    }
+
+bool SKLVLOCOED::IsGlobal() const
+    {
+        return COED.IsLoaded() ? COED->IsGlobal() : false;
+    }
+
+bool SKLVLOCOED::IsRank() const
+    {
+        return COED.IsLoaded() ? COED->IsRank() : false;
+    }
+
+void SKLVLOCOED::Write(FileWriter &writer)
+    {
+        WRITE(LVLO);
+        WRITE(COED);
+    }
+
+bool SKLVLOCOED::operator == (const SKLVLOCOED &other) const
+    {
+        return (LVLO == other.LVLO &&
+                COED == other.COED
+                );
+    }
+
+bool SKLVLOCOED::operator != (const SKLVLOCOED &other) const
+    {
+        return !(*this == other);
+    }
+
 MODEL::MODEL()
     {
         //

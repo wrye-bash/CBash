@@ -86,11 +86,7 @@ bool LVLNRecord::VisitFormIDs(FormIDOp &op)
             op.Accept(LVLG.value);
 
         for(UINT32 x = 0; x < Entries.value.size(); x++)
-            {
-            op.Accept(Entries.value[x]->LVLO.value.listId);
-            if(Entries.value[x]->IsGlobal())
-                op.Accept(Entries.value[x]->COED->globalOrRank);
-            }
+            op.Accept(Entries.value[x]->listId);
 
         if (MODL.IsLoaded())
             if (MODL->Textures.IsLoaded())
@@ -188,13 +184,7 @@ SINT32 LVLNRecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer,
                     LVLG.Read(buffer, subSize);
                     break;
                 case REV32(LVLO):
-                    Entries.value.push_back(new FNVLVLO);
-                    Entries.value.back()->LVLO.Read(buffer, subSize);
-                    break;
-                case REV32(COED):
-                    if(Entries.value.size() == 0)
-                        Entries.value.push_back(new FNVLVLO);
-                    Entries.value.back()->COED.Read(buffer, subSize);
+                    Entries.Read(buffer, subSize);
                     break;
                 case REV32(LLCT):
                     // Skip
