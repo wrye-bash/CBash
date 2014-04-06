@@ -96,7 +96,7 @@ class LStringRecord
         void Load();
         void Unload();
 
-        bool Read(unsigned char *&buffer, const UINT32 &subSize, const bool &CompressedOnDisk, StringLookups *LookupStrings=NULL);
+        bool Read(unsigned char *&buffer, const UINT32 &subSize, const bool &CompressedOnDisk, StringLookups *LookupStrings);
         void Write(UINT32 _Type, FileWriter &writer);
         void ReqWrite(UINT32 _Type, FileWriter &writer);
 
