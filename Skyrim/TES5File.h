@@ -63,7 +63,7 @@
 // #include "Records/CLFMRecord.h"
 // #include "Records/CLMTRecord.h"
 // #include "Records/COBJRecord.h"
-// #include "Records/COLLRecord.h"
+#include "Records/COLLRecord.h"
 // #include "Records/CONTRecord.h"
 // #include "Records/CPTHRecord.h"
 // #include "Records/CSTYRecord.h"
@@ -194,7 +194,7 @@ class TES5File : public ModFile
         // GRUP(CLFM);
         // GRUP(CLMT);
         // GRUP(COBJ);
-        // GRUP(COLL);
+        GRUP(COLL);
         // GRUP(CONT);
         // GRUP(CPTH);
         // GRUP(CSTY);
