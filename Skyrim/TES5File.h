@@ -137,7 +137,7 @@
 // #include "Records/SCOLRecord.h" // Empty GRUP
 // #include "Records/SCPTRecord.h"
 // #include "Records/SCRLRecord.h"
-// #include "Records/SHOURecord.h"
+#include "Records/SHOURecord.h"
 // #include "Records/SLGMRecord.h"
 // #include "Records/SMBNRecord.h"
 // #include "Records/SMENRecord.h"
@@ -266,7 +266,7 @@ class TES5File : public ModFile
         // GRUP(SCOL); // Empty GRUP
         // GRUP(SCPT);
         // GRUP(SCRL);
-        // GRUP(SHOU);
+        GRUP(SHOU);
         // GRUP(SLGM);
         // GRUP(SMBN);
         // GRUP(SMEN);

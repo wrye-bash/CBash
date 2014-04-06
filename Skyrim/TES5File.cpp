@@ -721,8 +721,7 @@ SINT32 TES5File::Load(RecordOp &read_parser, RecordOp &indexer, std::vector<Form
             break;
         case eIgSHOU:
         case REV32(SHOU):
-            buffer_position = group_buffer_end;
-            //SHOU.Read(buffer_start, buffer_position, group_buffer_end, indexer, parser, DeletedRecords, processor, FileName);
+            SHOU.Read(buffer_start, buffer_position, group_buffer_end, indexer, parser, DeletedRecords, processor, FileName);
             break;
         case eIgSLGM:
         case REV32(SLGM):
@@ -1071,8 +1070,10 @@ UINT32 TES5File::GetNumRecords(const UINT32 &RecordType)
         return (UINT32)SCEN.pool.used_object_capacity();
     case REV32(SCRL):
         return (UINT32)SCRL.pool.used_object_capacity();
+    */
     case REV32(SHOU):
         return (UINT32)SHOU.pool.used_object_capacity();
+    /*
     case REV32(SLGM):
         return (UINT32)SLGM.pool.used_object_capacity();
     case REV32(SMBN):
@@ -2157,10 +2158,12 @@ SINT32 TES5File::DeleteRecord(Record *&curRecord, RecordOp &deindexer)
         deindexer.Accept(curRecord);
         SCRL.pool.destroy(curRecord);
         return 1;
+    */
     case REV32(SHOU):
         deindexer.Accept(curRecord);
         SHOU.pool.destroy(curRecord);
         return 1;
+    /*
     case REV32(SLGM):
         deindexer.Accept(curRecord);
         SLGM.pool.destroy(curRecord);
@@ -2464,7 +2467,7 @@ SINT32 TES5File::Save(STRING const &SaveName, std::vector<FormIDResolver *> &Exp
     // formCount += MUST.Write(writer, Expanders, expander, collapser, bMastersChanged, CloseMod);
     // formCount += DLVW.Write(writer, Expanders, expander, collapser, bMastersChanged, CloseMod);
     formCount += WOOP.Write(writer, Expanders, expander, collapser, bMastersChanged, CloseMod);
-    // formCount += SHOU.Write(writer, Expanders, expander, collapser, bMastersChanged, CloseMod);
+    formCount += SHOU.Write(writer, Expanders, expander, collapser, bMastersChanged, CloseMod);
     formCount += EQUP.Write(writer, Expanders, expander, collapser, bMastersChanged, CloseMod);
     // formCount += RELA.Write(writer, Expanders, expander, collapser, bMastersChanged, CloseMod);
     // formCount += SCEN.Write(writer, Expanders, expander, collapser, bMastersChanged, CloseMod);
@@ -2611,7 +2614,7 @@ void TES5File::VisitAllRecords(RecordOp &op)
     // RFCT.pool.VisitRecords(op);
     // SCEN.pool.VisitRecords(op);
     // SCRL.pool.VisitRecords(op);
-    // SHOU.pool.VisitRecords(op);
+    SHOU.pool.VisitRecords(op);
     // SLGM.pool.VisitRecords(op);
     // SMBN.pool.VisitRecords(op);
     // SMEN.pool.VisitRecords(op);
@@ -2953,7 +2956,7 @@ void TES5File::VisitRecords(const UINT32 &RecordType, RecordOp &op)
         // SCRL.pool.VisitRecords(op);
         break;
     case REV32(SHOU):
-        // SHOU.pool.VisitRecords(op);
+        SHOU.pool.VisitRecords(op);
         break;
     case REV32(SLGM):
         // SLGM.pool.VisitRecords(op);
