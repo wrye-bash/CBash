@@ -808,8 +808,7 @@ SINT32 TES5File::Load(RecordOp &read_parser, RecordOp &indexer, std::vector<Form
             break;
       //case eIgVTYP:           // Same as REV32(VTYP)
         case REV32(VTYP):
-            buffer_position = group_buffer_end;
-            //VTYP.Read(buffer_start, buffer_position, group_buffer_end, indexer, parser, DeletedRecords, processor, FileName);
+            VTYP.Read(buffer_start, buffer_position, group_buffer_end, indexer, parser, DeletedRecords, processor, FileName);
             break;
         case eIgWATR:
         case REV32(WATR):
@@ -1112,9 +1111,9 @@ UINT32 TES5File::GetNumRecords(const UINT32 &RecordType)
     */
     case REV32(TXST):
             return (UINT32)TXST.pool.used_object_capacity();
-    /*
     case REV32(VTYP):
         return (UINT32)VTYP.pool.used_object_capacity();
+    /*
     case REV32(WATR):
         return (UINT32)WATR.pool.used_object_capacity();
     case REV32(WEAP):
@@ -1479,8 +1478,10 @@ Record * TES5File::CreateRecord(const UINT32 &RecordType, STRING const &RecordEd
         //return CAMS.pool.construct(SourceRecord, this, true);
     case REV32(CPTH):
         //return CPTH.pool.construct(SourceRecord, this, true);
+    */
     case REV32(VTYP):
-        //return VTYP.pool.construct(SourceRecord, this, true);
+        return VTYP.pool.construct(SourceRecord, this, true);
+    /*
     case REV32(IPCT):
         //return IPCT.pool.construct(SourceRecord, this, true);
     case REV32(IPDS):
@@ -2218,11 +2219,11 @@ SINT32 TES5File::DeleteRecord(Record *&curRecord, RecordOp &deindexer)
             deindexer.Accept(curRecord);
             TXST.pool.destroy(curRecord);
             return 1;
-    /*
     case REV32(VTYP):
         deindexer.Accept(curRecord);
         VTYP.pool.destroy(curRecord);
         return 1;
+    /*
     case REV32(WATR):
         deindexer.Accept(curRecord);
         WATR.pool.destroy(curRecord);
@@ -2443,7 +2444,7 @@ SINT32 TES5File::Save(STRING const &SaveName, std::vector<FormIDResolver *> &Exp
     // formCount += AVIF.Write(writer, Expanders, expander, collapser, bMastersChanged, CloseMod);
     // formCount += CAMS.Write(writer, Expanders, expander, collapser, bMastersChanged, CloseMod);
     // formCount += CPTH.Write(writer, Expanders, expander, collapser, bMastersChanged, CloseMod);
-    // formCount += VTYP.Write(writer, Expanders, expander, collapser, bMastersChanged, CloseMod);
+    formCount += VTYP.Write(writer, Expanders, expander, collapser, bMastersChanged, CloseMod);
     formCount += MATT.Write(writer, Expanders, expander, collapser, bMastersChanged, CloseMod);
     // formCount += IPCT.Write(writer, Expanders, expander, collapser, bMastersChanged, CloseMod);
     // formCount += IPDS.Write(writer, Expanders, expander, collapser, bMastersChanged, CloseMod);
@@ -2626,7 +2627,7 @@ void TES5File::VisitAllRecords(RecordOp &op)
     // TACT.pool.VisitRecords(op);
     // TREE.pool.VisitRecords(op);
     TXST.pool.VisitRecords(op);
-    // VTYP.pool.VisitRecords(op);
+    VTYP.pool.VisitRecords(op);
     // WATR.pool.VisitRecords(op);
     // WEAP.pool.VisitRecords(op);
     WOOP.pool.VisitRecords(op);
@@ -2998,7 +2999,7 @@ void TES5File::VisitRecords(const UINT32 &RecordType, RecordOp &op)
         TXST.pool.VisitRecords(op);
         break;
     case REV32(VTYP):
-        // VTYP.pool.VisitRecords(op);
+        VTYP.pool.VisitRecords(op);
         break;
     case REV32(WATR):
         // WATR.pool.VisitRecords(op);

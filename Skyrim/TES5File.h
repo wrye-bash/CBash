@@ -152,7 +152,7 @@
 // #include "Records/TACTRecord.h"
 // #include "Records/TREERecord.h"
 #include "Records/TXSTRecord.h"
-// #include "Records/VTYPRecord.h"
+#include "Records/VTYPRecord.h"
 // #include "Records/WATRRecord.h"
 // #include "Records/WEAPRecord.h"
 #include "Records/WOOPRecord.h"
@@ -283,7 +283,7 @@ class TES5File : public ModFile
         // GRUP(TACT);
         // GRUP(TREE);
         GRUP(TXST);
-        // GRUP(VTYP);
+        GRUP(VTYP);
         // GRUP(WATR);
         // GRUP(WEAP);
         GRUP(WOOP);
