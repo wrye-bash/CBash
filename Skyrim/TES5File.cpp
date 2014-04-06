@@ -275,8 +275,7 @@ SINT32 TES5File::Load(RecordOp &read_parser, RecordOp &indexer, std::vector<Form
             break;
         case eIgADDN:
         case REV32(ADDN):
-            buffer_position = group_buffer_end;
-            //ADDN.Read(buffer_start, buffer_position, group_buffer_end, indexer, parser, DeletedRecords, processor, FileName);
+            ADDN.Read(buffer_start, buffer_position, group_buffer_end, indexer, parser, DeletedRecords, processor, FileName);
             break;
         case eIgALCH:
         case REV32(ALCH):
@@ -877,8 +876,10 @@ UINT32 TES5File::GetNumRecords(const UINT32 &RecordType)
         return (UINT32)CELL.achr_pool.used_object_capacity();
     case REV32(ACTI):
         return (UINT32)ACTI.pool.used_object_capacity();
+    */
     case REV32(ADDN):
         return (UINT32)ADDN.pool.used_object_capacity();
+    /*
     case REV32(ALCH):
         return (UINT32)ALCH.pool.used_object_capacity();
     case REV32(AMMO):
@@ -1468,8 +1469,10 @@ Record * TES5File::CreateRecord(const UINT32 &RecordType, STRING const &RecordEd
         //return PERK.pool.construct(SourceRecord, this, true);
     case REV32(BPTD):
         //return BPTD.pool.construct(SourceRecord, this, true);
+    */
     case REV32(ADDN):
-        //return ADDN.pool.construct(SourceRecord, this, true);
+        return ADDN.pool.construct(SourceRecord, this, true);
+    /*
     case REV32(AVIF):
         //return AVIF.pool.construct(SourceRecord, this, true);
     case REV32(RADS):
@@ -1579,10 +1582,12 @@ SINT32 TES5File::DeleteRecord(Record *&curRecord, RecordOp &deindexer)
         deindexer.Accept(curRecord);
         ACTI.pool.destroy(curRecord);
         return 1;
+    */
     case REV32(ADDN):
         deindexer.Accept(curRecord);
         ADDN.pool.destroy(curRecord);
         return 1;
+    /*
     case REV32(ALCH):
         deindexer.Accept(curRecord);
         ALCH.pool.destroy(curRecord);
@@ -2440,7 +2445,7 @@ SINT32 TES5File::Save(STRING const &SaveName, std::vector<FormIDResolver *> &Exp
     // formCount += FLST.Write(writer, Expanders, expander, collapser, bMastersChanged, CloseMod);
     // formCount += PERK.Write(writer, Expanders, expander, collapser, bMastersChanged, CloseMod);
     // formCount += BPTD.Write(writer, Expanders, expander, collapser, bMastersChanged, CloseMod);
-    // formCount += ADDN.Write(writer, Expanders, expander, collapser, bMastersChanged, CloseMod);
+    formCount += ADDN.Write(writer, Expanders, expander, collapser, bMastersChanged, CloseMod);
     // formCount += AVIF.Write(writer, Expanders, expander, collapser, bMastersChanged, CloseMod);
     // formCount += CAMS.Write(writer, Expanders, expander, collapser, bMastersChanged, CloseMod);
     // formCount += CPTH.Write(writer, Expanders, expander, collapser, bMastersChanged, CloseMod);
@@ -2508,7 +2513,7 @@ void TES5File::VisitAllRecords(RecordOp &op)
     AACT.pool.VisitRecords(op);
     // ACHR - in CELL
     // ACTI.pool.VisitRecords(op);
-    // ADDN.pool.VisitRecords(op);
+    ADDN.pool.VisitRecords(op);
     // ALCH.pool.VisitRecords(op);
     // AMMO.pool.VisitRecords(op);
     // ANIO.pool.VisitRecords(op);
@@ -2669,7 +2674,7 @@ void TES5File::VisitRecords(const UINT32 &RecordType, RecordOp &op)
         // ACTI.pool.VisitRecords(op);
         break;
     case REV32(ADDN):
-        // ADDN.pool.VisitRecords(op);
+        ADDN.pool.VisitRecords(op);
         break;
     case REV32(ALCH):
         // ALCH.pool.VisitRecords(op);
