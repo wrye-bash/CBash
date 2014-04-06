@@ -68,20 +68,9 @@ LTEXRecord::LTEXRecord(unsigned char *_recData):
     }
 
 LTEXRecord::LTEXRecord(LTEXRecord *srcRecord):
-    TES5Record()
+    TES5Record((TES5Record *)srcRecord)
     {
-    if(srcRecord == NULL)
-        return;
-
-    flags = srcRecord->flags;
-    formID = srcRecord->formID;
-    flagsUnk = srcRecord->flagsUnk;
-    formVersion = srcRecord->formVersion;
-    versionControl2[0] = srcRecord->versionControl2[0];
-    versionControl2[1] = srcRecord->versionControl2[1];
-
-    recData = srcRecord->recData;
-    if(!srcRecord->IsChanged())
+    if(srcRecord == NULL || !srcRecord->IsChanged())
         return;
 
     EDID = srcRecord->EDID;
@@ -90,7 +79,6 @@ LTEXRecord::LTEXRecord(LTEXRecord *srcRecord):
     HNAM = srcRecord->HNAM;
     SNAM = srcRecord->SNAM;
     GNAM = srcRecord->GNAM;
-    return;
     }
 
 LTEXRecord::~LTEXRecord()

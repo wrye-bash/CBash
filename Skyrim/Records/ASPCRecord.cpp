@@ -46,20 +46,9 @@ ASPCRecord::ASPCRecord(unsigned char *_recData)
     }
 
 ASPCRecord::ASPCRecord(ASPCRecord *srcRecord)
-    : TES5Record()
+    : TES5Record((TES5Record *)srcRecord)
     {
-        if (srcRecord==NULL)
-            return;
-
-        flags = srcRecord->flags;
-        formID = srcRecord->formID;
-        flagsUnk = srcRecord->flagsUnk;
-        formVersion = srcRecord->formVersion;
-        versionControl2[0] = srcRecord->versionControl2[0];
-        versionControl2[1] = srcRecord->versionControl2[1];
-
-        recData = srcRecord->recData;
-        if(!srcRecord->IsChanged())
+        if (srcRecord == NULL || !srcRecord->IsChanged())
             return;
 
         EDID = srcRecord->EDID;
@@ -67,7 +56,6 @@ ASPCRecord::ASPCRecord(ASPCRecord *srcRecord)
         SNAM = srcRecord->SNAM;
         RDAT = srcRecord->RDAT;
         BNAM = srcRecord->BNAM;
-        return;
     }
 
 ASPCRecord::~ASPCRecord()

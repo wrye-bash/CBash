@@ -71,21 +71,10 @@ CELLRecord::CELLRecord(unsigned char *_recData):
     }
 
 CELLRecord::CELLRecord(CELLRecord *srcRecord):
-    TES5Record(),
+    TES5Record((TES5Record *)srcRecord),
     LAND(NULL)
     {
-    if(srcRecord == NULL)
-        return;
-
-    flags = srcRecord->flags;
-    formID = srcRecord->formID;
-    flagsUnk = srcRecord->flagsUnk;
-    formVersion = srcRecord->formVersion;
-    versionControl2[0] = srcRecord->versionControl2[0];
-    versionControl2[1] = srcRecord->versionControl2[1];
-
-    recData = srcRecord->recData;
-    if(!srcRecord->IsChanged())
+    if(srcRecord == NULL || !srcRecord->IsChanged())
         return;
 
     EDID = srcRecord->EDID;
@@ -114,7 +103,6 @@ CELLRecord::CELLRecord(CELLRecord *srcRecord):
     XLCN = srcRecord->XLCN;
     XWCN = srcRecord->XWCN;
     XWCU = srcRecord->XWCU;
-    return;
     }
 
 CELLRecord::~CELLRecord()

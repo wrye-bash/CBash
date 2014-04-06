@@ -409,6 +409,7 @@ class TES5Record : public Record
         UINT8  versionControl2[2]; //TES5
 
         TES5Record(unsigned char *_recData=NULL);
+        TES5Record(TES5Record *srcRecord);
         virtual ~TES5Record();
 
         bool Read();

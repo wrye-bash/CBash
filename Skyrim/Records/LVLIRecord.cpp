@@ -46,20 +46,9 @@ LVLIRecord::LVLIRecord(unsigned char *_recData):
     }
 
 LVLIRecord::LVLIRecord(LVLIRecord *srcRecord):
-    TES5Record()
+    TES5Record((TES5Record *)srcRecord)
     {
-        if(srcRecord == NULL)
-            return;
-
-        flags = srcRecord->flags;
-        formID = srcRecord->formID;
-        flagsUnk = srcRecord->flagsUnk;
-        formVersion = srcRecord->formVersion;
-        versionControl2[0] = srcRecord->versionControl2[0];
-        versionControl2[1] = srcRecord->versionControl2[1];
-
-        recData = srcRecord->recData;
-        if(!srcRecord->IsChanged())
+        if(srcRecord == NULL || !srcRecord->IsChanged())
             return;
 
         EDID = srcRecord->EDID;
@@ -68,7 +57,6 @@ LVLIRecord::LVLIRecord(LVLIRecord *srcRecord):
         LVLF = srcRecord->LVLF;
         LVLG = srcRecord->LVLG;
         Entries = srcRecord->Entries;
-        return;
     }
 
 LVLIRecord::~LVLIRecord()

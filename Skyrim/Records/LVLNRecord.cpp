@@ -46,20 +46,9 @@ LVLNRecord::LVLNRecord(unsigned char *_recData):
     }
 
 LVLNRecord::LVLNRecord(LVLNRecord *srcRecord):
-    TES5Record()
+    TES5Record((TES5Record *)srcRecord)
     {
-        if(srcRecord == NULL)
-            return;
-
-        flags = srcRecord->flags;
-        formID = srcRecord->formID;
-        flagsUnk = srcRecord->flagsUnk;
-        formVersion = srcRecord->formVersion;
-        versionControl2[0] = srcRecord->versionControl2[0];
-        versionControl2[1] = srcRecord->versionControl2[1];
-
-        recData = srcRecord->recData;
-        if(!srcRecord->IsChanged())
+        if(srcRecord == NULL || !srcRecord->IsChanged())
             return;
 
         EDID = srcRecord->EDID;
@@ -69,7 +58,6 @@ LVLNRecord::LVLNRecord(LVLNRecord *srcRecord):
         LVLG = srcRecord->LVLG;
         Entries = srcRecord->Entries;
         MODL = srcRecord->MODL;
-        return;
     }
 
 LVLNRecord::~LVLNRecord()
