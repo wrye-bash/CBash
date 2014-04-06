@@ -40,236 +40,255 @@
 #include "../GenericRecord.h"
 #include "../GRUPRecord.h"
 
+// Only need to include Top Types
 #include "Records/AACTRecord.h"
+// #include "Records/ACTIRecord.h"
+// #include "Records/ADDNRecord.h"
+// #include "Records/ALCHRecord.h"
+// #include "Records/AMMORecord.h"
+// #include "Records/ANIORecord.h"
 #include "Records/APPARecord.h"
+// #include "Records/ARMARecord.h"
+// #include "Records/ARMORecord.h"
 #include "Records/ARTORecord.h"
 #include "Records/ASPCRecord.h"
 #include "Records/ASTPRecord.h"
+// #include "Records/AVIFRecord.h"
+// #include "Records/BOOKRecord.h"
+// #include "Records/BPTDRecord.h"
+// #include "Records/CAMSRecord.h"
 #include "Records/CELLRecord.h"
+// #include "Records/CLASRecord.h"
+// #include "Records/CLDCRecord.h" // Empty GRUP
+// #include "Records/CLFMRecord.h"
+// #include "Records/CLMTRecord.h"
+// #include "Records/COBJRecord.h"
+// #include "Records/COLLRecord.h"
+// #include "Records/CONTRecord.h"
+// #include "Records/CPTHRecord.h"
+// #include "Records/CSTYRecord.h"
+// #include "Records/DEBRRecord.h"
+// #include "Records/DIALRecord.h"
+// #include "Records/DLBRRecord.h"
+// #include "Records/DLVWRecord.h"
+// #include "Records/DOBJRecord.h"
+// #include "Records/DOORRecord.h"
+// #include "Records/DUALRecord.h"
+// #include "Records/ECZNRecord.h"
+// #include "Records/EFSHRecord.h"
+// #include "Records/ENCHRecord.h"
+// #include "Records/EQUPRecord.h"
+// #include "Records/EXPLRecord.h"
+// #include "Records/EYESRecord.h"
+// #include "Records/FACTRecord.h"
+// #include "Records/FLORRecord.h"
+// #include "Records/FLSTRecord.h"
+// #include "Records/FSTPRecord.h"
+// #include "Records/FSTSRecord.h"
+// #include "Records/FURNRecord.h"
+// #include "Records/GLOBRecord.h"
+// #include "Records/GMSTRecord.h"
+// #include "Records/GRASRecord.h"
+// #include "Records/HAIRRecord.h" // Empty GRUP
+// #include "Records/HAZDRecord.h"
+// #include "Records/HDPTRecord.h"
+// #include "Records/IDLERecord.h"
+// #include "Records/IDLMRecord.h"
+// #include "Records/IMADRecord.h"
+// #include "Records/IMGSRecord.h"
+// #include "Records/INGRRecord.h"
+// #include "Records/IPCTRecord.h"
+// #include "Records/IPDSRecord.h"
+// #include "Records/KEYMRecord.h"
+// #include "Records/KYWDRecord.h"
+// #include "Records/LCRTRecord.h"
+// #include "Records/LCTNRecord.h"
+// #include "Records/LGTMRecord.h"
+// #include "Records/LIGHRecord.h"
+// #include "Records/LSCRRecord.h"
 #include "Records/LTEXRecord.h"
 #include "Records/LVLIRecord.h"
 #include "Records/LVLNRecord.h"
 #include "Records/LVSPRecord.h"
+// #include "Records/MATORecord.h"
 #include "Records/MATTRecord.h"
+// #include "Records/MESGRecord.h"
+// #include "Records/MGEFRecord.h"
+// #include "Records/MISCRecord.h"
+// #include "Records/MOVTRecord.h"
+// #include "Records/MSTTRecord.h"
+// #include "Records/MUSCRecord.h"
+// #include "Records/MUSTRecord.h"
+// #include "Records/NAVIRecord.h"
+// #include "Records/NPC_Record.h"
+// #include "Records/OTFTRecord.h"
+// #include "Records/PACKRecord.h"
+// #include "Records/PERKRecord.h"
+// #include "Records/PROJRecord.h"
+// #include "Records/PWATRecord.h" // Empty GRUP
+// #include "Records/QUSTRecord.h"
+// #include "Records/RACERecord.h"
+// #include "Records/REGNRecord.h"
+// #include "Records/RELARecord.h"
+// #include "Records/REVBRecord.h"
+// #include "Records/RFCTRecord.h"
+// #include "Records/RGDLRecord.h" // Empty GRUP
+// #include "Records/SCENRecord.h"
+// #include "Records/SCOLRecord.h" // Empty GRUP
+// #include "Records/SCPTRecord.h"
+// #include "Records/SCRLRecord.h"
+// #include "Records/SHOURecord.h"
+// #include "Records/SLGMRecord.h"
+// #include "Records/SMBNRecord.h"
+// #include "Records/SMENRecord.h"
+// #include "Records/SMQNRecord.h"
+// #include "Records/SNCTRecord.h"
+// #include "Records/SNDRRecord.h"
+// #include "Records/SOPMRecord.h"
+// #include "Records/SOUNRecord.h"
+// #include "Records/SPELRecord.h"
+// #include "Records/SPGDRecord.h"
+// #include "Records/STATRecord.h"
+// #include "Records/TACTRecord.h"
+// #include "Records/TREERecord.h"
 #include "Records/TXSTRecord.h"
+// #include "Records/VTYPRecord.h"
+// #include "Records/WATRRecord.h"
+// #include "Records/WEAPRecord.h"
+#include "Records/WOOPRecord.h"
 #include "Records/WRLDRecord.h"
+// #include "Records/WTHRRecord.h"
 
-/*
-#include "Records/GMSTRecord.h"
-#include "Records/MICNRecord.h"
-#include "Records/GLOBRecord.h"
-#include "Records/CLASRecord.h"
-#include "Records/FACTRecord.h"
-#include "Records/HDPTRecord.h"
-#include "Records/HAIRRecord.h"
-#include "Records/EYESRecord.h"
-#include "Records/RACERecord.h"
-#include "Records/SOUNRecord.h"
-#include "Records/ASPCRecord.h"
-#include "Records/MGEFRecord.h"
-#include "Records/SCPTRecord.h"
-#include "Records/ENCHRecord.h"
-#include "Records/SPELRecord.h"
-#include "Records/ACTIRecord.h"
-#include "Records/TACTRecord.h"
-#include "Records/TERMRecord.h"
-#include "Records/ARMORecord.h"
-#include "Records/BOOKRecord.h"
-#include "Records/CONTRecord.h"
-#include "Records/DOORRecord.h"
-#include "Records/INGRRecord.h"
-#include "Records/LIGHRecord.h"
-#include "Records/MISCRecord.h"
-#include "Records/STATRecord.h"
-#include "Records/SCOLRecord.h"
-#include "Records/MSTTRecord.h"
-#include "Records/PWATRecord.h"
-#include "Records/GRASRecord.h"
-#include "Records/TREERecord.h"
-#include "Records/FURNRecord.h"
-#include "Records/WEAPRecord.h"
-#include "Records/AMMORecord.h"
-#include "Records/NPC_Record.h"
-#include "Records/CREARecord.h"
-#include "Records/LVLCRecord.h"
-#include "Records/KEYMRecord.h"
-#include "Records/ALCHRecord.h"
-#include "Records/IDLMRecord.h"
-#include "Records/NOTERecord.h"
-#include "Records/COBJRecord.h"
-#include "Records/PROJRecord.h"
-#include "Records/WTHRRecord.h"
-#include "Records/CLMTRecord.h"
-#include "Records/REGNRecord.h"
-#include "Records/NAVIRecord.h"
-#include "Records/DIALRecord.h"
-#include "Records/QUSTRecord.h"
-#include "Records/IDLERecord.h"
-#include "Records/PACKRecord.h"
-#include "Records/CSTYRecord.h"
-#include "Records/LSCRRecord.h"
-#include "Records/ANIORecord.h"
-#include "Records/WATRRecord.h"
-#include "Records/EFSHRecord.h"
-#include "Records/EXPLRecord.h"
-#include "Records/DEBRRecord.h"
-////#include "Records/IMGSRecord.h"
-////#include "Records/IMADRecord.h"
-////#include "Records/FLSTRecord.h"
-////#include "Records/PERKRecord.h"
-////#include "Records/BPTDRecord.h"
-//#include "Records/ADDNRecord.h"
-//#include "Records/AVIFRecord.h"
-//#include "Records/RADSRecord.h"
-//#include "Records/CAMSRecord.h"
-//#include "Records/CPTHRecord.h"
-//#include "Records/VTYPRecord.h"
-//#include "Records/IPCTRecord.h"
-//#include "Records/IPDSRecord.h"
-//#include "Records/ARMARecord.h"
-//#include "Records/ECZNRecord.h"
-//#include "Records/MESGRecord.h"
-//#include "Records/RGDLRecord.h"
-//#include "Records/DOBJRecord.h"
-//#include "Records/LGTMRecord.h"
-//#include "Records/MUSCRecord.h"
-//#include "Records/IMODRecord.h"
-//#include "Records/REPURecord.h"
-//#include "Records/RCPERecord.h"
-//#include "Records/RCCTRecord.h"
-//#include "Records/CHIPRecord.h"
-//#include "Records/CSNORecord.h"
-//#include "Records/LSCTRecord.h"
-//#include "Records/MSETRecord.h"
-//#include "Records/ALOCRecord.h"
-//#include "Records/CHALRecord.h"
-//#include "Records/AMEFRecord.h"
-//#include "Records/CCRDRecord.h"
-//#include "Records/CMNYRecord.h"
-//#include "Records/CDCKRecord.h"
-//#include "Records/DEHYRecord.h"
-//#include "Records/HUNGRecord.h"
-//#include "Records/SLPDRecord.h"
-*/
 
 class StringLookups;
+
+// Helper macros
+#define GRUP(Type) \
+    TES5GRUPRecords<Sk::Type##Record, REV32(Type), 5> Type
+#define GRUP_EDID(Type) \
+    TES5GRUPRecords<Sk::Type##Record, REV32(Type), 5, true> Type
+
 
 class TES5File : public ModFile
     {
     public:
-        TES5GRUPRecords<Sk::LTEXRecord, REV32(LTEX), 5> LTEX;
-        TES5GRUPRecords<Sk::TXSTRecord, REV32(TXST), 5> TXST;
-        TES5GRUPRecords<Sk::MATTRecord, REV32(TXST), 5> MATT;
-        TES5GRUPRecords<Sk::WRLDRecord, REV32(WRLD), 5> WRLD;
-        TES5GRUPRecords<Sk::CELLRecord, REV32(CELL), 5> CELL;
-        TES5GRUPRecords<Sk::AACTRecord, REV32(AACT), 5> AACT;
-        TES5GRUPRecords<Sk::ASTPRecord, REV32(ASTP), 5> ASTP;
-        TES5GRUPRecords<Sk::ASPCRecord, REV32(ASPC), 5> ASPC;
-        TES5GRUPRecords<Sk::LVLIRecord, REV32(LVLI), 5> LVLI;
-        TES5GRUPRecords<Sk::LVSPRecord, REV32(LVSP), 5> LVSP;
-        TES5GRUPRecords<Sk::LVLNRecord, REV32(LVLN), 5> LVLN;
-        TES5GRUPRecords<Sk::ARTORecord, REV32(ARTO), 5> ARTO;
-        TES5GRUPRecords<Sk::APPARecord, REV32(APPA), 5> APPA;
-
-/*
-        TES5GRUPRecords<Sk::GMSTRecord, REV32(GMST), 5, true> GMST;
-        TES5GRUPRecords<Sk::MICNRecord, REV32(MICN), 5> MICN;
-        TES5GRUPRecords<Sk::GLOBRecord, REV32(GLOB), 5> GLOB;
-        TES5GRUPRecords<Sk::CLASRecord, REV32(CLAS), 5> CLAS;
-        TES5GRUPRecords<Sk::FACTRecord, REV32(FACT), 5> FACT;
-        TES5GRUPRecords<Sk::HDPTRecord, REV32(HDPT), 5> HDPT;
-        TES5GRUPRecords<Sk::HAIRRecord, REV32(HAIR), 5> HAIR;
-        TES5GRUPRecords<Sk::EYESRecord, REV32(EYES), 5> EYES;
-        TES5GRUPRecords<Sk::RACERecord, REV32(RACE), 5> RACE;
-        TES5GRUPRecords<Sk::SOUNRecord, REV32(SOUN), 5> SOUN;
-        TES5GRUPRecords<Sk::ASPCRecord, REV32(ASPC), 5> ASPC;
-        TES5GRUPRecords<Sk::MGEFRecord, REV32(MGEF), 5> MGEF;
-        TES5GRUPRecords<Sk::SCPTRecord, REV32(SCPT), 5> SCPT;
-        TES5GRUPRecords<Sk::ENCHRecord, REV32(ENCH), 5> ENCH;
-        TES5GRUPRecords<Sk::SPELRecord, REV32(SPEL), 5> SPEL;
-        TES5GRUPRecords<Sk::ACTIRecord, REV32(ACTI), 5> ACTI;
-        TES5GRUPRecords<Sk::TACTRecord, REV32(TACT), 5> TACT;
-        TES5GRUPRecords<Sk::TERMRecord, REV32(TERM), 5> TERM;
-        TES5GRUPRecords<Sk::ARMORecord, REV32(ARMO), 5> ARMO;
-        TES5GRUPRecords<Sk::BOOKRecord, REV32(BOOK), 5> BOOK;
-        TES5GRUPRecords<Sk::CONTRecord, REV32(CONT), 5> CONT;
-        TES5GRUPRecords<Sk::DOORRecord, REV32(DOOR), 5> DOOR;
-        TES5GRUPRecords<Sk::INGRRecord, REV32(INGR), 5> INGR;
-        TES5GRUPRecords<Sk::LIGHRecord, REV32(LIGH), 5> LIGH;
-        TES5GRUPRecords<Sk::MISCRecord, REV32(MISC), 5> MISC;
-        TES5GRUPRecords<Sk::STATRecord, REV32(STAT), 5> STAT;
-        TES5GRUPRecords<Sk::SCOLRecord, REV32(SCOL), 5> SCOL;
-        TES5GRUPRecords<Sk::MSTTRecord, REV32(MSTT), 5> MSTT;
-        TES5GRUPRecords<Sk::PWATRecord, REV32(PWAT), 5> PWAT;
-        TES5GRUPRecords<Sk::GRASRecord, REV32(GRAS), 5> GRAS;
-        TES5GRUPRecords<Sk::TREERecord, REV32(TREE), 5> TREE;
-        TES5GRUPRecords<Sk::FURNRecord, REV32(FURN), 5> FURN;
-        TES5GRUPRecords<Sk::WEAPRecord, REV32(WEAP), 5> WEAP;
-        TES5GRUPRecords<Sk::AMMORecord, REV32(AMMO), 5> AMMO;
-        TES5GRUPRecords<Sk::NPC_Record, REV32(NPC_), 5> NPC_;
-        TES5GRUPRecords<Sk::CREARecord, REV32(CREA), 5> CREA;
-        TES5GRUPRecords<Sk::LVLCRecord, REV32(LVLC), 5> LVLC;
-        TES5GRUPRecords<Sk::LVLNRecord, REV32(LVLN), 5> LVLN;
-        TES5GRUPRecords<Sk::KEYMRecord, REV32(KEYM), 5> KEYM;
-        TES5GRUPRecords<Sk::ALCHRecord, REV32(ALCH), 5> ALCH;
-        TES5GRUPRecords<Sk::IDLMRecord, REV32(IDLM), 5> IDLM;
-        TES5GRUPRecords<Sk::NOTERecord, REV32(NOTE), 5> NOTE;
-        TES5GRUPRecords<Sk::COBJRecord, REV32(COBJ), 5> COBJ;
-        TES5GRUPRecords<Sk::PROJRecord, REV32(PROJ), 5> PROJ;
-        TES5GRUPRecords<Sk::LVLIRecord, REV32(LVLI), 5> LVLI;
-        TES5GRUPRecords<Sk::WTHRRecord, REV32(WTHR), 5> WTHR;
-        TES5GRUPRecords<Sk::CLMTRecord, REV32(CLMT), 5> CLMT;
-        TES5GRUPRecords<Sk::REGNRecord, REV32(REGN), 5> REGN;
-        TES5GRUPRecords<Sk::NAVIRecord, REV32(NAVI), 5> NAVI;
-        TES5GRUPRecords<Sk::DIALRecord, REV32(DIAL), 5> DIAL;
-        TES5GRUPRecords<Sk::QUSTRecord, REV32(QUST), 5> QUST;
-        TES5GRUPRecords<Sk::IDLERecord, REV32(IDLE), 5> IDLE;
-        TES5GRUPRecords<Sk::PACKRecord, REV32(PACK), 5> PACK;
-        TES5GRUPRecords<Sk::CSTYRecord, REV32(CSTY), 5> CSTY;
-        TES5GRUPRecords<Sk::LSCRRecord, REV32(LSCR), 5> LSCR;
-        TES5GRUPRecords<Sk::ANIORecord, REV32(ANIO), 5> ANIO;
-        TES5GRUPRecords<Sk::WATRRecord, REV32(WATR), 5> WATR;
-        TES5GRUPRecords<Sk::EFSHRecord, REV32(EFSH), 5> EFSH;
-        TES5GRUPRecords<Sk::EXPLRecord, REV32(EXPL), 5> EXPL;
-        TES5GRUPRecords<Sk::DEBRRecord, REV32(DEBR), 5> DEBR;
-        ////TES5GRUPRecords<Sk::IMGSRecord, REV32(IMGS), 5> IMGS;
-        ////TES5GRUPRecords<Sk::IMADRecord, REV32(IMAD), 5> IMAD;
-        ////TES5GRUPRecords<Sk::FLSTRecord, REV32(FLST), 5> FLST;
-        ////TES5GRUPRecords<Sk::PERKRecord, REV32(PERK), 5> PERK;
-        ////TES5GRUPRecords<Sk::BPTDRecord, REV32(BPTD), 5> BPTD;
-        //TES5GRUPRecords<Sk::ADDNRecord, REV32(ADDN), 5> ADDN;
-        //TES5GRUPRecords<Sk::AVIFRecord, REV32(AVIF), 5> AVIF;
-        //TES5GRUPRecords<Sk::RADSRecord, REV32(RADS), 5> RADS;
-        //TES5GRUPRecords<Sk::CAMSRecord, REV32(CAMS), 5> CAMS;
-        //TES5GRUPRecords<Sk::CPTHRecord, REV32(CPTH), 5> CPTH;
-        //TES5GRUPRecords<Sk::VTYPRecord, REV32(VTYP), 5> VTYP;
-        //TES5GRUPRecords<Sk::IPCTRecord, REV32(IPCT), 5> IPCT;
-        //TES5GRUPRecords<Sk::IPDSRecord, REV32(IPDS), 5> IPDS;
-        //TES5GRUPRecords<Sk::ARMARecord, REV32(ARMA), 5> ARMA;
-        //TES5GRUPRecords<Sk::ECZNRecord, REV32(ECZN), 5> ECZN;
-        //TES5GRUPRecords<Sk::MESGRecord, REV32(MESG), 5> MESG;
-        //TES5GRUPRecords<Sk::RGDLRecord, REV32(RGDL), 5> RGDL;
-        //TES5GRUPRecords<Sk::DOBJRecord, REV32(DOBJ), 5> DOBJ;
-        //TES5GRUPRecords<Sk::LGTMRecord, REV32(LGTM), 5> LGTM;
-        //TES5GRUPRecords<Sk::MUSCRecord, REV32(MUSC), 5> MUSC;
-        //TES5GRUPRecords<Sk::IMODRecord, REV32(IMOD), 5> IMOD;
-        //TES5GRUPRecords<Sk::REPURecord, REV32(REPU), 5> REPU;
-        //TES5GRUPRecords<Sk::RCPERecord, REV32(RCPE), 5> RCPE;
-        //TES5GRUPRecords<Sk::RCCTRecord, REV32(RCCT), 5> RCCT;
-        //TES5GRUPRecords<Sk::CHIPRecord, REV32(CHIP), 5> CHIP;
-        //TES5GRUPRecords<Sk::CSNORecord, REV32(CSNO), 5> CSNO;
-        //TES5GRUPRecords<Sk::LSCTRecord, REV32(LSCT), 5> LSCT;
-        //TES5GRUPRecords<Sk::MSETRecord, REV32(MSET), 5> MSET;
-        //TES5GRUPRecords<Sk::ALOCRecord, REV32(ALOC), 5> ALOC;
-        //TES5GRUPRecords<Sk::CHALRecord, REV32(CHAL), 5> CHAL;
-        //TES5GRUPRecords<Sk::AMEFRecord, REV32(AMEF), 5> AMEF;
-        //TES5GRUPRecords<Sk::CCRDRecord, REV32(CCRD), 5> CCRD;
-        //TES5GRUPRecords<Sk::CMNYRecord, REV32(CMNY), 5> CMNY;
-        //TES5GRUPRecords<Sk::CDCKRecord, REV32(CDCK), 5> CDCK;
-        //TES5GRUPRecords<Sk::DEHYRecord, REV32(DEHY), 5> DEHY;
-        //TES5GRUPRecords<Sk::HUNGRecord, REV32(HUNG), 5> HUNG;
-        //TES5GRUPRecords<Sk::SLPDRecord, REV32(SLPD), 5> SLPD;
-*/
+        GRUP(AACT);
+        // GRUP(ACTI);
+        // GRUP(ADDN);
+        // GRUP(ALCH);
+        // GRUP(AMMO);
+        // GRUP(ANIO);
+        GRUP(APPA);
+        // GRUP(ARMA);
+        // GRUP(ARMO);
+        GRUP(ARTO);
+        GRUP(ASPC);
+        GRUP(ASTP);
+        // GRUP(AVIF);
+        // GRUP(BOOK);
+        // GRUP(BPTD);
+        // GRUP(CAMS);
+        GRUP(CELL);
+        // GRUP(CLAS);
+        // GRUP(CLDC); // Empty GRUP
+        // GRUP(CLFM);
+        // GRUP(CLMT);
+        // GRUP(COBJ);
+        // GRUP(COLL);
+        // GRUP(CONT);
+        // GRUP(CPTH);
+        // GRUP(CSTY);
+        // GRUP(DEBR);
+        // GRUP(DIAL);
+        // GRUP(DLBR);
+        // GRUP(DLVW);
+        // GRUP(DOBJ);
+        // GRUP(DOOR);
+        // GRUP(DUAL);
+        // GRUP(ECZN);
+        // GRUP(EFSH);
+        // GRUP(ENCH);
+        // GRUP(EQUP);
+        // GRUP(EXPL);
+        // GRUP(EYES);
+        // GRUP(FACT);
+        // GRUP(FLOR);
+        // GRUP(FLST);
+        // GRUP(FSTP);
+        // GRUP(FSTS);
+        // GRUP(FURN);
+        // GRUP(GLOB);
+        // GRUP_EDID(GMST);
+        // GRUP(GRAS);
+        // GRUP(HAIR); // Empty GRUP
+        // GRUP(HAZD);
+        // GRUP(HDPT);
+        // GRUP(IDLE);
+        // GRUP(IDLM);
+        // GRUP(IMAD);
+        // GRUP(IMGS);
+        // GRUP(INGR);
+        // GRUP(IPCT);
+        // GRUP(IPDS);
+        // GRUP(KEYM);
+        // GRUP(KYWD);
+        // GRUP(LCRT);
+        // GRUP(LCTN);
+        // GRUP(LGTM);
+        // GRUP(LIGH);
+        // GRUP(LSCR);
+        GRUP(LTEX);
+        GRUP(LVLI);
+        GRUP(LVLN);
+        GRUP(LVSP);
+        // GRUP(MATO);
+        GRUP(MATT);
+        // GRUP(MESG);
+        // GRUP(MGEF);
+        // GRUP(MISC);
+        // GRUP(MOVT);
+        // GRUP(MSTT);
+        // GRUP(MUSC);
+        // GRUP(MUST);
+        // GRUP(NAVI);
+        // GRUP(NPC_);
+        // GRUP(OTFT);
+        // GRUP(PACK);
+        // GRUP(PERK);
+        // GRUP(PROJ);
+        // GRUP(PWAT); // Empty GRUP
+        // GRUP(QUST);
+        // GRUP(RACE);
+        // GRUP(REGN);
+        // GRUP(RELA);
+        // GRUP(REVB);
+        // GRUP(RFCT);
+        // GRUP(RGDL); // Empty GRUP
+        // GRUP(SCEN);
+        // GRUP(SCOL); // Empty GRUP
+        // GRUP(SCPT);
+        // GRUP(SCRL);
+        // GRUP(SHOU);
+        // GRUP(SLGM);
+        // GRUP(SMBN);
+        // GRUP(SMEN);
+        // GRUP(SMQN);
+        // GRUP(SNCT);
+        // GRUP(SNDR);
+        // GRUP(SOPM);
+        // GRUP(SOUN);
+        // GRUP(SPEL);
+        // GRUP(SPGD);
+        // GRUP(STAT);
+        // GRUP(TACT);
+        // GRUP(TREE);
+        GRUP(TXST);
+        // GRUP(VTYP);
+        // GRUP(WATR);
+        // GRUP(WEAP);
+        GRUP(WOOP);
+        GRUP(WRLD);
+        // GRUP(WTHR);
 
         StringLookups *LookupStrings;
 
@@ -290,3 +309,7 @@ class TES5File : public ModFile
         void     VisitAllRecords(RecordOp &op);
         void     VisitRecords(const UINT32 &RecordType, RecordOp &op);
     };
+
+// Clean up
+#undef GRUP
+#undef GRUP_EDID
