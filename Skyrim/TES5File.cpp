@@ -551,8 +551,7 @@ SINT32 TES5File::Load(RecordOp &read_parser, RecordOp &indexer, std::vector<Form
             break;
       //case eIgKYWD:           // Same as REV32(KYWD)
         case REV32(KYWD):
-            buffer_position = group_buffer_end;
-            //KYWD.Read(buffer_start, buffer_position, group_buffer_end, indexer, parser, DeletedRecords, processor, FileName);
+            KYWD.Read(buffer_start, buffer_position, group_buffer_end, indexer, parser, DeletedRecords, processor, FileName);
             break;
         case eIgLCRT:
         case REV32(LCRT):
@@ -999,9 +998,9 @@ UINT32 TES5File::GetNumRecords(const UINT32 &RecordType)
         return (UINT32)IPDS.pool.used_object_capacity();
     case REV32(KEYM):
         return (UINT32)KEYM.pool.used_object_capacity();
+    */
     case REV32(KYWD):
         return (UINT32)KYWD.pool.used_object_capacity();
-    */
     case REV32(LAND):
         return (UINT32)WRLD.land_pool.used_object_capacity();
     /*
@@ -1940,11 +1939,11 @@ SINT32 TES5File::DeleteRecord(Record *&curRecord, RecordOp &deindexer)
         deindexer.Accept(curRecord);
         KEYM.pool.destroy(curRecord);
         return 1;
+    */
     case REV32(KYWD):
         deindexer.Accept(curRecord);
         KYWD.pool.destroy(curRecord);
         return 1;
-    */
     case REV32(LAND):
     {
         Sk::CELLRecord *cell_record = (Sk::CELLRecord *)curRecord->GetParentRecord();
@@ -2374,7 +2373,7 @@ SINT32 TES5File::Save(STRING const &SaveName, std::vector<FormIDResolver *> &Exp
 
     //ADD DEFINITIONS HERE, but Write in the same Top GRUP order as Skyrim.esm
     // formCount += GMST.Write(writer, Expanders, expander, collapser, bMastersChanged, CloseMod);
-    // formCount += KYWD.Write(writer, Expanders, expander, collapser, bMastersChanged, CloseMod);
+    formCount += KYWD.Write(writer, Expanders, expander, collapser, bMastersChanged, CloseMod);
     // formCount += LCRT.Write(writer, Expanders, expander, collapser, bMastersChanged, CloseMod);
     formCount += AACT.Write(writer, Expanders, expander, collapser, bMastersChanged, CloseMod);
     formCount += TXST.Write(writer, Expanders, expander, collapser, bMastersChanged, CloseMod);
@@ -2583,7 +2582,7 @@ void TES5File::VisitAllRecords(RecordOp &op)
     // IPCT.pool.VisitRecords(op);
     // IPDS.pool.VisitRecords(op);
     // KEYM.pool.VisitRecords(op);
-    // KYWD.pool.VisitRecords(op);
+    KYWD.pool.VisitRecords(op);
     // LAND - in WRLD
     // LCRT.pool.VisitRecords(op);
     // LCTN.pool.VisitRecords(op);
@@ -2849,7 +2848,7 @@ void TES5File::VisitRecords(const UINT32 &RecordType, RecordOp &op)
         // KEYM.pool.VisitRecords(op);
         break;
     case REV32(KYWD):
-        // KYWD.pool.VisitRecords(op);
+        KYWD.pool.VisitRecords(op);
         break;
     case REV32(LAND):
         WRLD.land_pool.VisitRecords(op);

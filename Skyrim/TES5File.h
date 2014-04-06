@@ -100,7 +100,7 @@
 // #include "Records/IPCTRecord.h"
 // #include "Records/IPDSRecord.h"
 // #include "Records/KEYMRecord.h"
-// #include "Records/KYWDRecord.h"
+#include "Records/KYWDRecord.h"
 // #include "Records/LCRTRecord.h"
 // #include "Records/LCTNRecord.h"
 // #include "Records/LGTMRecord.h"
@@ -231,7 +231,7 @@ class TES5File : public ModFile
         // GRUP(IPCT);
         // GRUP(IPDS);
         // GRUP(KEYM);
-        // GRUP(KYWD);
+        GRUP(KYWD);
         // GRUP(LCRT);
         // GRUP(LCTN);
         // GRUP(LGTM);
