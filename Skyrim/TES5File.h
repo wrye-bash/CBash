@@ -46,7 +46,7 @@
 #include "Records/ADDNRecord.h"
 // #include "Records/ALCHRecord.h"
 // #include "Records/AMMORecord.h"
-// #include "Records/ANIORecord.h"
+#include "Records/ANIORecord.h"
 #include "Records/APPARecord.h"
 // #include "Records/ARMARecord.h"
 // #include "Records/ARMORecord.h"
@@ -177,7 +177,7 @@ class TES5File : public ModFile
         GRUP(ADDN);
         // GRUP(ALCH);
         // GRUP(AMMO);
-        // GRUP(ANIO);
+        GRUP(ANIO);
         GRUP(APPA);
         // GRUP(ARMA);
         // GRUP(ARMO);

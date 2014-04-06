@@ -289,8 +289,7 @@ SINT32 TES5File::Load(RecordOp &read_parser, RecordOp &indexer, std::vector<Form
             break;
         case eIgANIO:
         case REV32(ANIO):
-            buffer_position = group_buffer_end;
-            //ANIO.Read(buffer_start, buffer_position, group_buffer_end, indexer, parser, DeletedRecords, processor, FileName);
+            ANIO.Read(buffer_start, buffer_position, group_buffer_end, indexer, parser, DeletedRecords, processor, FileName);
             break;
       //case eIgAPPA:           // Same as REV32(APPA)
         case REV32(APPA):
@@ -884,9 +883,9 @@ UINT32 TES5File::GetNumRecords(const UINT32 &RecordType)
         return (UINT32)ALCH.pool.used_object_capacity();
     case REV32(AMMO):
         return (UINT32)AMMO.pool.used_object_capacity();
+    */
     case REV32(ANIO):
         return (UINT32)ANIO.pool.used_object_capacity();
-    */
     case REV32(APPA):
         return (UINT32)APPA.pool.used_object_capacity();
     /*
@@ -909,7 +908,7 @@ UINT32 TES5File::GetNumRecords(const UINT32 &RecordType)
     case REV32(BPTD):
         return (UINT32)BPTD.pool.used_object_capacity();
     case REV32(CAMS):
-        return (CAMS)ANIO.pool.used_object_capacity();
+        return (UINT32)CAMS.pool.used_object_capacity();
     */
     case REV32(CELL):  // Top CELLs
         return (UINT32)CELL.cell_pool.used_object_capacity();
@@ -1449,8 +1448,10 @@ Record * TES5File::CreateRecord(const UINT32 &RecordType, STRING const &RecordEd
         return CSTY.pool.construct(SourceRecord, this, true);
     case REV32(LSCR):
         return LSCR.pool.construct(SourceRecord, this, true);
+    */
     case REV32(ANIO):
         return ANIO.pool.construct(SourceRecord, this, true);
+    /*
     case REV32(WATR):
         return WATR.pool.construct(SourceRecord, this, true);
     case REV32(EFSH):
@@ -1596,11 +1597,11 @@ SINT32 TES5File::DeleteRecord(Record *&curRecord, RecordOp &deindexer)
         deindexer.Accept(curRecord);
         AMMO.pool.destroy(curRecord);
         return 1;
+    */
     case REV32(ANIO):
         deindexer.Accept(curRecord);
         ANIO.pool.destroy(curRecord);
         return 1;
-    */
     case REV32(APPA):
         deindexer.Accept(curRecord);
         APPA.pool.destroy(curRecord);
@@ -2435,7 +2436,7 @@ SINT32 TES5File::Save(STRING const &SaveName, std::vector<FormIDResolver *> &Exp
     // formCount += CSTY.Write(writer, Expanders, expander, collapser, bMastersChanged, CloseMod);
     // formCount += LSCR.Write(writer, Expanders, expander, collapser, bMastersChanged, CloseMod);
     formCount += LVSP.Write(writer, Expanders, expander, collapser, bMastersChanged, CloseMod);
-    // formCount += ANIO.Write(writer, Expanders, expander, collapser, bMastersChanged, CloseMod);
+    formCount += ANIO.Write(writer, Expanders, expander, collapser, bMastersChanged, CloseMod);
     // formCount += WATR.Write(writer, Expanders, expander, collapser, bMastersChanged, CloseMod);
     // formCount += EFSH.Write(writer, Expanders, expander, collapser, bMastersChanged, CloseMod);
     // formCount += EXPL.Write(writer, Expanders, expander, collapser, bMastersChanged, CloseMod);
@@ -2516,7 +2517,7 @@ void TES5File::VisitAllRecords(RecordOp &op)
     ADDN.pool.VisitRecords(op);
     // ALCH.pool.VisitRecords(op);
     // AMMO.pool.VisitRecords(op);
-    // ANIO.pool.VisitRecords(op);
+    ANIO.pool.VisitRecords(op);
     APPA.pool.VisitRecords(op);
     // ARMA.pool.VisitRecords(op);
     // ARMO.pool.VisitRecords(op);
@@ -2683,7 +2684,7 @@ void TES5File::VisitRecords(const UINT32 &RecordType, RecordOp &op)
         // AMMO.pool.VisitRecords(op);
         break;
     case REV32(ANIO):
-        // ANIO.pool.VisitRecords(op);
+        ANIO.pool.VisitRecords(op);
         break;
     case REV32(APPA):
         APPA.pool.VisitRecords(op);
