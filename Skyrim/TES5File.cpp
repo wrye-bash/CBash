@@ -261,8 +261,7 @@ SINT32 TES5File::Load(RecordOp &read_parser, RecordOp &indexer, std::vector<Form
             break;
         case eIgACTI:
         case REV32(ACTI):
-            buffer_position = group_buffer_end;
-            //ACTI.Read(buffer_start, buffer_position, group_buffer_end, indexer, parser, DeletedRecords, processor, FileName);
+            ACTI.Read(buffer_start, buffer_position, group_buffer_end, indexer, parser, DeletedRecords, processor, FileName);
             break;
         case eIgADDN:
         case REV32(ADDN):
@@ -861,9 +860,9 @@ UINT32 TES5File::GetNumRecords(const UINT32 &RecordType)
     /*
     case REV32(ACHR):
         return (UINT32)CELL.achr_pool.used_object_capacity();
+    */
     case REV32(ACTI):
         return (UINT32)ACTI.pool.used_object_capacity();
-    */
     case REV32(ADDN):
         return (UINT32)ADDN.pool.used_object_capacity();
     /*
@@ -1274,8 +1273,10 @@ Record * TES5File::CreateRecord(const UINT32 &RecordType, STRING const &RecordEd
         return ENCH.pool.construct(SourceRecord, this, true);
     case REV32(SPEL):
         return SPEL.pool.construct(SourceRecord, this, true);
+    */
     case REV32(ACTI):
         return ACTI.pool.construct(SourceRecord, this, true);
+    /*
     case REV32(TACT):
         return TACT.pool.construct(SourceRecord, this, true);
     case REV32(TERM):
@@ -1571,11 +1572,11 @@ SINT32 TES5File::DeleteRecord(Record *&curRecord, RecordOp &deindexer)
         CELL.achr_pool.destroy(curRecord);
     }
         return 1;
+    */
     case REV32(ACTI):
         deindexer.Accept(curRecord);
         ACTI.pool.destroy(curRecord);
         return 1;
-    */
     case REV32(ADDN):
         deindexer.Accept(curRecord);
         ADDN.pool.destroy(curRecord);
@@ -2386,7 +2387,7 @@ SINT32 TES5File::Save(STRING const &SaveName, std::vector<FormIDResolver *> &Exp
     // formCount += ENCH.Write(writer, Expanders, expander, collapser, bMastersChanged, CloseMod);
     // formCount += SPEL.Write(writer, Expanders, expander, collapser, bMastersChanged, CloseMod);
     // formCount += SCRL.Write(writer, Expanders, expander, collapser, bMastersChanged, CloseMod);
-    // formCount += ACTI.Write(writer, Expanders, expander, collapser, bMastersChanged, CloseMod);
+    formCount += ACTI.Write(writer, Expanders, expander, collapser, bMastersChanged, CloseMod);
     // formCount += TACT.Write(writer, Expanders, expander, collapser, bMastersChanged, CloseMod);
     // formCount += ARMO.Write(writer, Expanders, expander, collapser, bMastersChanged, CloseMod);
     // formCount += BOOK.Write(writer, Expanders, expander, collapser, bMastersChanged, CloseMod);
@@ -2509,7 +2510,7 @@ void TES5File::VisitAllRecords(RecordOp &op)
     //Child records need to be visited prior to the parent in order for identical to master cleaning to work nicely
     AACT.pool.VisitRecords(op);
     // ACHR - in CELL
-    // ACTI.pool.VisitRecords(op);
+    ACTI.pool.VisitRecords(op);
     ADDN.pool.VisitRecords(op);
     // ALCH.pool.VisitRecords(op);
     // AMMO.pool.VisitRecords(op);
@@ -2668,7 +2669,7 @@ void TES5File::VisitRecords(const UINT32 &RecordType, RecordOp &op)
         // CELL.achr_pool.VisitRecords(op);
         break;
     case REV32(ACTI):
-        // ACTI.pool.VisitRecords(op);
+        ACTI.pool.VisitRecords(op);
         break;
     case REV32(ADDN):
         ADDN.pool.VisitRecords(op);

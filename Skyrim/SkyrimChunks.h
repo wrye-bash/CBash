@@ -101,4 +101,39 @@ struct GENCNAM  // Color
     };
 SIZE_CHECK(GENCNAM, 4);
 
+struct SKDESTSTAGE
+{
+    ReqSubRecord<DESTDSTD> DSTD;
+    StringRecord DMDL;
+    RawRecord DMDT;
+    FNVAlternateTextures DMDS;
+
+    void Write(FileWriter &writer);
+    void VisitFormIDs(FormIDOp &op);
+
+    bool operator == (const SKDESTSTAGE &other) const;
+    bool operator != (const SKDESTSTAGE &other) const;
+};
+struct sortSKDESTStages
+{
+    bool operator()(const SKDESTSTAGE *lhs, const SKDESTSTAGE *rhs) const;
+};
+
+struct SKDESTRUCT //Destructable
+{
+    ReqSubRecord<GENDEST> DEST; //Destructable Header
+    OrderedSparseArray<SKDESTSTAGE *, sortSKDESTStages> Stages; //Destructable Stages
+
+    enum flagsFlags
+    {
+        fIsVATSTargetable = 0x01
+    };
+
+    void Write(FileWriter &writer);
+    void VisitFormIDs(FormIDOp &op);
+
+    bool operator == (const SKDESTRUCT &other) const;
+    bool operator != (const SKDESTRUCT &other) const;
+};
+
 } // namespace Sk

@@ -149,4 +149,66 @@ bool GENCNAM::operator !=(const GENCNAM &other) const
         return !(*this == other);
     }
 
+void SKDESTSTAGE::Write(FileWriter &writer)
+{
+    WRITE(DSTD);
+    if (DMDL.IsLoaded())
+    {
+        WRITE(DMDL);
+        WRITE(DMDT);
+        WRITE(DMDS);
+    }
+    WRITEEMPTY(DSTF);
+}
+
+void SKDESTSTAGE::VisitFormIDs(FormIDOp &op)
+{
+    op.Accept(DSTD->explosion);
+    op.Accept(DSTD->debris);
+    DMDS.VisitFormIDs(op);
+}
+
+bool SKDESTSTAGE::operator == (const SKDESTSTAGE &other) const
+{
+    return (DSTD == other.DSTD &&
+            DMDL.equalsi(other.DMDL) &&
+            DMDT == other.DMDT &&
+            DMDS == other.DMDS
+            );
+}
+
+bool SKDESTSTAGE::operator != (const SKDESTSTAGE &other) const
+{
+    return !(*this == other);
+}
+
+bool sortSKDESTStages::operator()(const SKDESTSTAGE *lhs, const SKDESTSTAGE *rhs) const
+{
+    return lhs->DSTD.value.index < rhs->DSTD.value.index;
+}
+
+void SKDESTRUCT::Write(FileWriter &writer)
+{
+    WRITE(DEST);
+    Stages.Write(writer);
+}
+
+void SKDESTRUCT::VisitFormIDs(FormIDOp &op)
+{
+    for (UINT32 x = 0; x < Stages.value.size(); ++x)
+        Stages.value[x]->VisitFormIDs(op);
+}
+
+bool SKDESTRUCT::operator == (const SKDESTRUCT &other) const
+{
+    return (DEST == other.DEST &&
+            Stages == other.Stages
+            );
+}
+
+bool SKDESTRUCT::operator != (const SKDESTRUCT &other) const
+{
+    return !(*this == other);
+}
+
 } // namespace Sk

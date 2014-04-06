@@ -42,7 +42,7 @@
 
 // Only need to include Top Types
 #include "Records/AACTRecord.h"
-// #include "Records/ACTIRecord.h"
+#include "Records/ACTIRecord.h"
 #include "Records/ADDNRecord.h"
 // #include "Records/ALCHRecord.h"
 // #include "Records/AMMORecord.h"
@@ -171,7 +171,7 @@ class TES5File : public ModFile
     {
     public:
         GRUP(AACT);
-        // GRUP(ACTI);
+        GRUP(ACTI);
         GRUP(ADDN);
         // GRUP(ALCH);
         // GRUP(AMMO);
