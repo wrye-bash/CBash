@@ -2569,7 +2569,6 @@ void TES5File::VisitRecords(const UINT32 &RecordType, RecordOp &op)
     case REV32(LAND):
         WRLD.land_pool.VisitRecords(op);
         break;
-        break;
     case REV32(LCRT):
         // LCRT.pool.VisitRecords(op);
         break;
