@@ -35,7 +35,7 @@
  *
  * ***** END LICENSE BLOCK ***** */
 #include "..\..\Common.h"
-#include "..\TES5File.h"
+#include "..\..\ModFile.h"
 #include "APPARecord.h"
 
 namespace Sk {
@@ -125,7 +125,7 @@ SINT32 APPARecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer,
     {
         UINT32 subType = 0;
         UINT32 subSize = 0;
-        StringLookups *LookupStrings = dynamic_cast<TES5File *>(GetParentMod())->LookupStrings;
+        StringLookups *LookupStrings = GetParentMod()->TES4.LookupStrings;
         while(buffer < end_buffer)
         {
             subType = *(UINT32 *)buffer;

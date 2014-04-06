@@ -160,8 +160,6 @@
 // #include "Records/WTHRRecord.h"
 
 
-class StringLookups;
-
 // Helper macros
 #define GRUP(Type) \
     TES5GRUPRecords<Sk::Type##Record, REV32(Type), 5> Type
@@ -289,8 +287,6 @@ class TES5File : public ModFile
         GRUP(WOOP);
         GRUP(WRLD);
         // GRUP(WTHR);
-
-        StringLookups *LookupStrings;
 
         TES5File(Collection *_Parent, STRING FileName, STRING ModName, const UINT32 _flags);
         ~TES5File();

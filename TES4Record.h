@@ -39,6 +39,8 @@
 
 //This record is a hybrid of all possible versions (TES4, FO3, FNV, TES5)
 
+class StringLookups;
+
 class TES4Record : public Record
     {
     private:
@@ -55,22 +57,26 @@ class TES4Record : public Record
             };
 
     public:
+        // Common
         whichGameTypes whichGame;
         ReqSubRecord<TES4HEDR> HEDR; //Header
         RawRecord OFST; //Unknown
         RawRecord DELE; //Unknown
-        RawRecord INTV; //Unknown (Skyrim)
-        RawRecord PURG; //Unknown (Skyrim)
         StringRecord CNAM; //Author
         StringRecord SNAM; //Description
         std::vector<STRING> MAST; //Master Files
 
-        //FNV Specific
-        UnorderedPackedArray<FORMID> ONAM; //Overridden Forms
+        // Fallout: New Vegas & Skyrim
+        UnorderedPackedArray<FORMID> ONAM; //OverridednForms
         RawRecord SCRN; //Screenshot
-        //Part of FNVRecord
-        UINT16 formVersion; //FNV
-        UINT8  versionControl2[2]; //FNV
+        // Part of record header:
+        UINT16 formVersion;
+        UINT8  versionControl2[2];
+
+        // Skyrim
+        RawRecord INTV; //Unknown
+        RawRecord INCC; //Unknown
+        StringLookups *LookupStrings;
 
         TES4Record(unsigned char *_recData=NULL);
         TES4Record(TES4Record *srcRecord);
@@ -78,8 +84,12 @@ class TES4Record : public Record
 
         bool   VisitFormIDs(FormIDOp &op);
 
-        bool IsESM();
+        bool IsESM() const;
         void IsESM(bool value);
+        bool IsLookupStrings() const;
+        void IsLookupStrings(bool value);
+
+        void LoadStringLookups(STRING FileName);
 
         UINT32 GetFieldAttribute(DEFAULTED_FIELD_IDENTIFIERS, UINT32 WhichAttribute=0);
         void * GetField(DEFAULTED_FIELD_IDENTIFIERS, void **FieldValues=NULL);

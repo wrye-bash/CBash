@@ -308,7 +308,7 @@ class Record
         bool IsHeaderUnknownFlagMask(UINT32 Mask, bool Exact=false);
         void SetHeaderUnknownFlagMask(UINT32 Mask);
 
-        bool IsLoaded();
+        bool IsLoaded() const;
         void IsLoaded(bool value);
 
         bool IsChanged();

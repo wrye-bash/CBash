@@ -582,7 +582,7 @@ void Record::SetHeaderUnknownFlagMask(UINT32 Mask)
     flagsUnk = Mask;
     }
 
-bool Record::IsLoaded()
+bool Record::IsLoaded() const
     {
     return (CBash_Flags & _fIsLoaded) != 0;
     }

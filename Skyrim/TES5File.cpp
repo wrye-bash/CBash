@@ -40,16 +40,14 @@
 #include "SkyrimCommon.h"
 
 TES5File::TES5File(Collection *_Parent, STRING FileName, STRING ModName, const UINT32 _flags):
-    ModFile(_Parent, FileName, ModName, _flags),
-    LookupStrings(NULL)
+    ModFile(_Parent, FileName, ModName, _flags)
     {
     //
     }
 
 TES5File::~TES5File()
     {
-        if (LookupStrings)
-            delete LookupStrings;
+    //
     }
 
 void TES5File::SetFilter(bool inclusive, boost::unordered_set<UINT32> &RecordTypes, boost::unordered_set<FORMID> &WorldSpaces) {
@@ -232,14 +230,7 @@ SINT32 TES5File::Load(RecordOp &read_parser, RecordOp &indexer, std::vector<Form
         }
 
     // Load translation strings
-    if (TES4.IsTurnOffFire())   // IsTurnOffFire == IsLookupStrings
-    {
-        if (LookupStrings == NULL)
-        {
-            LookupStrings = new StringLookups();
-            LookupStrings->Open(FileName);
-        }
-    }
+    TES4.LoadStringLookups(FileName);
 
     Flags.LoadedGRUPs = true;
     unsigned char *group_buffer_end = NULL;
