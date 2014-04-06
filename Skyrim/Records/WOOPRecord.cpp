@@ -100,10 +100,10 @@ SINT32 WOOPRecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer,
                     EDID.Read(buffer, subSize, CompressedOnDisk);
                     break;
                 case REV32(FULL):
-                    FULL.Read(buffer, subSize, CompressedOnDisk);
+                    FULL.Read(buffer, subSize, CompressedOnDisk, LookupStrings);
                     break;
                 case REV32(TNAM):
-                    TNAM.Read(buffer, subSize, CompressedOnDisk);
+                    TNAM.Read(buffer, subSize, CompressedOnDisk, LookupStrings);
                     break;
                 default:
                     //printer("Filename = %s\n", FileName);
