@@ -182,7 +182,6 @@ SINT32 TES5File::Load(RecordOp &read_parser, RecordOp &indexer, std::vector<Form
         eIgDOBJ = REV32(DOBJ) | 0x00001000,
         eIgLGTM = REV32(LGTM) | 0x00001000,
         eIgMUSC = REV32(MUSC) | 0x00001000,
-
         eIgKYWD = REV32(KYWD) | 0x00001000,
         eIgLCRT = REV32(LCRT) | 0x00001000,
         eIgAACT = REV32(AACT) | 0x00001000,
@@ -265,326 +264,598 @@ SINT32 TES5File::Load(RecordOp &read_parser, RecordOp &indexer, std::vector<Form
         //printer("%c%c%c%c\n", ((char *)&GRUPLabel)[0], ((char *)&GRUPLabel)[1], ((char *)&GRUPLabel)[2], ((char *)&GRUPLabel)[3]);
         switch(GRUPLabel)
         {
-          //case eIgLTEX:       // Same as REV32(LTEX)
-            case REV32(LTEX):
-                LTEX.Read(buffer_start, buffer_position, group_buffer_end, indexer, parser, DeletedRecords, processor, FileName);
-                break;
-
-          //case eIgTXST:       // Same as REV32(TXST)
-            case REV32(TXST):   // EDID: VaerminaRobes
-                TXST.Read(buffer_start, buffer_position, group_buffer_end, indexer, parser, DeletedRecords, processor, FileName);
-                break;
-
-            case eIgMATT:
-            case REV32(MATT):   // EDID: MaterialInsect (new record-type)
-                MATT.Read(buffer_start, buffer_position, group_buffer_end, indexer, parser, DeletedRecords, processor, FileName);
-                break;
-
-            case eIgCELL:
-            case REV32(CELL):
-                CELL.Read(buffer_start, buffer_position, group_buffer_end, indexer, parser, DeletedRecords, processor, FileName);
-                break;
-
-          //case eIgWRLD:       // Same as REV32(WRLD)
-            case REV32(WRLD):   // EDID: Tamriel
-                WRLD.Read(buffer_start, buffer_position, group_buffer_end, indexer, parser, DeletedRecords, processor, FileName, read_parser, CELL);
-                break;
-
-            case eIgAACT:
-            case REV32(AACT):   // EDID: ActionRagdollInstant (new record-type)
-                AACT.Read(buffer_start, buffer_position, group_buffer_end, indexer, parser, DeletedRecords, processor, FileName);
-                break;
-
-          //case eIgASPC:       // Same as REV32(ASPC)
-            case REV32(ASPC):   // EDID: ExtMQFlashbackInteriorAcousticSpace
-                ASPC.Read(buffer_start, buffer_position, group_buffer_end, indexer, parser, DeletedRecords, processor, FileName);
-                break;
-
-          //case eIgLVLN:       // Same as REV32(LVLN)
-            case REV32(LVLN):   // EDID: LCharDwarvenCenturion
-                LVLN.Read(buffer_start, buffer_position, group_buffer_end, indexer, parser, DeletedRecords, processor, FileName);
-                break;
-
-          //case eIgLVLI:       // Same as REV32(LVLI)
-            case REV32(LVLI):   // EDID: SublistEnchArmorShield06Dragonscale05
-                LVLI.Read(buffer_start, buffer_position, group_buffer_end, indexer, parser, DeletedRecords, processor, FileName);
-                break;
-
-          //case eIgLVSP:       // Same as REV32(LVSP)
-            case REV32(LVSP):   // EDID: LSpellDragonFrostBreath (Oblivion type)
-                LVSP.Read(buffer_start, buffer_position, group_buffer_end, indexer, parser, DeletedRecords, processor, FileName);
-                break;
-
-          //case eIgARTO:
-            case REV32(ARTO):   // EDID: FXDragonsBaneSwordStreakObject (new record-type)
-                ARTO.Read(buffer_start, buffer_position, group_buffer_end, indexer, parser, DeletedRecords, processor, FileName);
-                break;
-
-          //case eIgASTP:
-            case REV32(ASTP):   // EDID: FavorTarget (new record-type)
-                ASTP.Read(buffer_start, buffer_position, group_buffer_end, indexer, parser, DeletedRecords, processor, FileName);
-                break;
-
-          //case eIgAPPA:
-            case REV32(APPA):   // EDID: Grimoire05Master (Oblivion type)
-                APPA.Read(buffer_start, buffer_position, group_buffer_end, indexer, parser, DeletedRecords, processor, FileName);
-                break;
-
-            case eIgWOOP:       // EDID: DragonFakeWord (new record-type)
-            case REV32(WOOP):
-                WOOP.Read(buffer_start, buffer_position, group_buffer_end, indexer, parser, DeletedRecords, processor, FileName);
-                break;
-
-            case eIgGMST:
-            case REV32(GMST):
-            case eIgGLOB:
-            case REV32(GLOB): // EDID: DecapitationChance
-            case eIgCLAS:
-            case REV32(CLAS): // EDID: EncClassDremoraMelee
-            case eIgFACT:
-            case REV32(FACT): // EDID: WinterholdJailFaction
-            case eIgHDPT:
-            case REV32(HDPT): // EDID: HairFemaleImperial1
-            case eIgHAIR:
-            case REV32(HAIR): // EDID: ...
-          //case eIgEYES:
-            case REV32(EYES): // EDID: EyeKhajiitMale
-            case eIgRACE:
-            case REV32(RACE): // EDID: FoxRace
-            case eIgSOUN:
-            case REV32(SOUN): // EDID: OBJWindmillSolitudeLP
-            case eIgMGEF:
-            case REV32(MGEF): // EDID: BanishDmgHealthFFTargetActor
-            case eIgSCPT:
-            case REV32(SCPT): // EDID: ...
-            case eIgENCH:
-            case REV32(ENCH): // EDID: MGArchMageRobeHoodedEnchant
-          //case eIgSPEL: //Same as normal
-            case REV32(SPEL): // EDID: AbMG08AncanoMagicka
-            case eIgACTI:
-            case REV32(ACTI): // EDID: defaultBlankTrigger
-            case eIgTACT:
-            case REV32(TACT): // EDID: MGAugurTalkingActivator
-          //case eIgARMO: //Same as normal
-            case REV32(ARMO): // EDID: DremoraBoots
-            case eIgBOOK:
-            case REV32(BOOK): // EDID: SpellTomeConjureDremoraLord
-            case eIgCONT:
-            case REV32(CONT): // EDID: MerchantWhiterunEorlundChest
-            case eIgDOOR:
-            case REV32(DOOR): // EDID: dunTwilightSepulcherDoor
-            case eIgINGR:
-            case REV32(INGR): // EDID: CritterPondFish01Ingredient
-            case eIgLIGH:
-            case REV32(LIGH): // EDID: MagicVoiceDismay03
-            case eIgMISC:
-            case REV32(MISC): // EDID: MGRArniel04SoulGem
-          //case eIgSTAT: //Same as normal
-            case REV32(STAT): // EDID: LoadScreenMRaltar01
-            case eIgSCOL:
-            case REV32(SCOL): // EDID: ...
-          //case eIgMSTT: //Same as normal
-            case REV32(MSTT): // EDID: GallusFXBody01
-          //case eIgPWAT: //Same as normal
-            case REV32(PWAT): // EDID: ...
-          //case eIgGRAS: //Same as normal
-            case REV32(GRAS): // EDID: FieldGrass02
-          //case eIgTREE: //Same as normal
-            case REV32(TREE): // EDID: TreeReachTree01Winterhold
-          //case eIgFURN: //Same as normal
-            case REV32(FURN): // EDID: InvisibleChairMarkerFChild
-            case eIgWEAP:
-            case REV32(WEAP): // EDID: DA14DremoraGreatswordFire03
-            case eIgAMMO:
-            case REV32(AMMO): // EDID: DwarvenSphereBolt02
-          //case eIgNPC_: //Same as normal
-            case REV32(NPC_): // EDID: ...
-            case eIgKEYM:
-            case REV32(KEYM): // EDID: RiftenConfiscatedGoodsChestKey
-            case eIgALCH:
-            case REV32(ALCH): // EDID: FoodGourd
-            case eIgIDLM:
-            case REV32(IDLM): // EDID: TG00IdleSellMarker
-            case eIgCOBJ:
-            case REV32(COBJ): // EDID: TemperWeaponSkyforgeSteelWarAxe
-          //case eIgPROJ: //Same as normal
-            case REV32(PROJ): // EDID: VoiceDismayProjectile03
-          //case eIgWTHR: //Same as normal
-            case REV32(WTHR): // EDID: SovngardeDark
-            case eIgCLMT:
-            case REV32(CLMT): // EDID: KarthspireClimate
-            case eIgREGN:
-            case REV32(REGN): // EDID: SovngardeIntWeather
-            case eIgNAVI:
-            case REV32(NAVI): // EDID: ...
-            case eIgDIAL:
-            case REV32(DIAL): // EDID: ...
-          //case eIgQUST: //Same as normal
-            case REV32(QUST): // EDID: CreatureDialogueWerewolf
-            case eIgIDLE:
-            case REV32(IDLE): // EDID: ForceEquipWeaponsNotOut
-            case eIgPACK:
-            case REV32(PACK): // EDID: ThievesGuildSapphireSandboxMultiPackage0x0
-          //case eIgCSTY: //Same as normal
-            case REV32(CSTY): // EDID: DefaultCombatstyle
-          //case eIgLSCR: //Same as normal
-            case REV32(LSCR): // EDID: ChargenLoadScreen
-            case eIgANIO:
-            case REV32(ANIO): // EDID: AnimObjectIronSword
-            case eIgWATR:
-            case REV32(WATR): // EDID: DefaultWaterKatariahWorld
-            case eIgEFSH:
-            case REV32(EFSH): // EDID: InvisFXShaderNightingale
-          //case eIgEXPL: //Same as normal
-            case REV32(EXPL): // EDID: PowerSerpentStoneExplosion
-            case eIgDEBR:
-            case REV32(DEBR): // EDID: IceFormDebris14
-            case eIgIMGS:
-            case REV32(IMGS): // EDID: ISSovngardeDark
-            case eIgIMAD:
-            case REV32(IMAD): // EDID: ChargenImod
-            case eIgFLST:
-            case REV32(FLST): // EDID: CWMission07StewardVoiceTypes
-            case eIgPERK:
-            case REV32(PERK): // EDID: TGWellFitted
-          //case eIgBPTD:
-            case REV32(BPTD): // EDID: ChickenBodyPartData
-            case eIgADDN:
-            case REV32(ADDN): // EDID: MPSFrostMistSpiral
-          //case eIgAVIF:
-            case REV32(AVIF): // EDID: AVDragonSouls
-            case eIgCAMS:
-            case REV32(CAMS): // EDID: DS04aDragonKillCamA01L
-          //case eIgCPTH:
-            case REV32(CPTH): // EDID: DragonKillCam02Lmid
-          //case eIgVTYP:
-            case REV32(VTYP): // EDID: CrFoxVoice
-          //case eIgIPCT:
-            case REV32(IPCT): // EDID: MAGPowerSerpentStoneImpactImpact
-          //case eIgIPDS:
-            case REV32(IPDS): // EDID: MAGPowerSerpentStoneImpactImpactSet
-          //case eIgARMA:
-            case REV32(ARMA): // EDID: BoneCrownKhajiitAA
-            case eIgECZN:
-            case REV32(ECZN): // EDID: TowerOfMzarkZone
-            case eIgMESG:
-            case REV32(MESG): // EDID: HelpSprintLong
-            case eIgRGDL:
-            case REV32(RGDL): // EDID: ...
-            case eIgDOBJ:
-            case REV32(DOBJ): // EDID: ...
-            case eIgLGTM:
-            case REV32(LGTM): // EDID: GreenCaveCloseDark
-          //case eIgMUSC:
-            case REV32(MUSC): // EDID: MUSExploreSovngardeChantExterior
-
-            case eIgFLOR:
-            case REV32(FLOR): // EDID: DeadFXSalmon02 (Oblivion type)
-            case eIgSLGM:
-            case REV32(SLGM): // EDID: FFRiften14SoulGem (Oblivion type)
-
-          //case eIgKYWD:
-            case REV32(KYWD): // EDID: PowerAttackBash (new record-type)
-            case eIgLCRT:
-            case REV32(LCRT): // EDID: MapMarkerRefType (new record-type)
-            case eIgSCRL:
-            case REV32(SCRL): // EDID: MGR21ScrollMagicka (new record-type)
-          //case eIgCLDC:
-            case REV32(CLDC): // EDID: ... (new record-type)
-            case eIgHAZD:
-            case REV32(HAZD): // EDID: TrapFirePlateFXHaz06 (new record-type)
-          //case eIgSPGD:
-            case REV32(SPGD): // EDID: SovngardeStardust (new record-type)
-            case eIgRFCT:
-            case REV32(RFCT): // EDID: MGTeleportOutEffectNoRefraction (new record-type)
-            case eIgLCTN:
-            case REV32(LCTN): // EDID: RiftenMercerHouseInteriorLocation (new record-type)
-          //case eIgFSTP:
-            case REV32(FSTP): // EDID: NPCDragonFlightRoarPaarthurnaxFootstep (new record-type)
-          //case eIgFSTS:
-            case REV32(FSTS): // EDID: NPCDragonPaarthurnaxFootWalkFootstepSet (new record-type)
-            case eIgSMBN:
-            case REV32(SMBN): // EDID: SkyHavenTempleScenesNode (new record-type)
-            case eIgSMQN:
-            case REV32(SMQN): // EDID: SovngardeSparringNode (new record-type)
-            case eIgSMEN:
-            case REV32(SMEN): // EDID: ... (new record-type)
-            case eIgDLBR:
-            case REV32(DLBR): // EDID: WIAddItem03SayBranch (new record-type)
-          //case eIgMUST:
-            case REV32(MUST): // EDID: MUSCombatBoss03CG (new record-type)
-            case eIgDLVW:
-            case REV32(DLVW): // EDID: WIAddItem03VIew (new record-type)
-            case eIgSHOU:
-            case REV32(SHOU): // EDID: L_DragonFrostIceStormShout (new record-type)
-          //case eIgEQUP:
-            case REV32(EQUP): // EDID: ... (new record-type)
-            case eIgRELA:
-            case REV32(RELA): // EDID: IngeAtAfAlan (new record-type)
-            case eIgSCEN:
-            case REV32(SCEN): // EDID: MQSovngardeConv2SceneStarter (new record-type)
-          //case eIgOTFT:
-            case REV32(OTFT): // EDID: MQ101MagePrisonerOutfit (new record-type)
-            case eIgMATO:
-            case REV32(MATO): // EDID: SnowMaterialWinterhold (new record-type)
-            case eIgMOVT:
-            case REV32(MOVT): // EDID: Falmer_1HM_Run (new record-type)
-            case eIgSNDR:
-            case REV32(SNDR): // EDID: VOCShoutFXThrowVoice (new record-type)
-          //case eIgDUAL:
-            case REV32(DUAL): // EDID: doomSerpentDualCastData (new record-type)
-            case eIgSNCT:
-            case REV32(SNCT): // EDID: AudioCategoryFSTnpc (new record-type)
-            case eIgSOPM:
-            case REV32(SOPM): // EDID: SOMDialogue3D4000BARDS (new record-type)
-            case eIgCOLL:
-            case REV32(COLL): // EDID: L_TRAP_TRIGGER (new record-type)
-            case eIgCLFM:
-            case REV32(CLFM): // EDID: WoodElfSkinFemale05 (new record-type)
-            case eIgREVB:
-            case REV32(REVB): // EDID: IntRoomStoneLargeExtraReverb (new record-type)
-
-                if(GRUPLabel == 0 && GRUPSize == 0)
-                    {
-                    printer("TES5File::Read: Warning - Unknown record group (%c%c%c%c) encountered in mod \"%s\". Bad file structure, zeros found past end of groups.\n", ((STRING)&GRUPLabel)[0], ((STRING)&GRUPLabel)[1], ((STRING)&GRUPLabel)[2], ((STRING)&GRUPLabel)[3], ModName);
-                    return 1;
-                    }
-                    //else
-                    //    printer("TES5File::Read: Error - Unknown record group (%c%c%c%c) encountered in mod \"%s\". ", ((STRING)&GRUPLabel)[0], ((STRING)&GRUPLabel)[1], ((STRING)&GRUPLabel)[2], ((STRING)&GRUPLabel)[3], ModName);
-
-                if(GRUPSize == 0)
-                    {
-                    printer("Unable to continue loading.\n");
-                    return 1;
-                    }
-                else
-                    {
-                    //printer("Attempting to skip and continue loading.\n");
-                    buffer_position = group_buffer_end;
-                    }
-                break;
-            default:
-                if(GRUPLabel == 0 && GRUPSize == 0)
-                    {
-                    printer("TES5File::Read: Warning - Unknown record group (%c%c%c%c) encountered in mod \"%s\". Bad file structure, zeros found past end of groups.\n", ((STRING)&GRUPLabel)[0], ((STRING)&GRUPLabel)[1], ((STRING)&GRUPLabel)[2], ((STRING)&GRUPLabel)[3], ModName);
-                    return 1;
-                    }
-                    //else
-                    //    printer("TES5File::Read: Error - Unknown record group (%c%c%c%c) encountered in mod \"%s\". ", ((STRING)&GRUPLabel)[0], ((STRING)&GRUPLabel)[1], ((STRING)&GRUPLabel)[2], ((STRING)&GRUPLabel)[3], ModName);
-
-                if(GRUPSize == 0)
-                    {
-                    printer("Unable to continue loading.\n");
-                    return 1;
-                    }
-                else
-                    {
-                    //printer("Attempting to skip and continue loading.\n");
-                    buffer_position = group_buffer_end;
-                    }
-                break;
+        case eIgAACT:
+        case REV32(AACT):
+            AACT.Read(buffer_start, buffer_position, group_buffer_end, indexer, parser, DeletedRecords, processor, FileName);
+            break;
+        case eIgACTI:
+        case REV32(ACTI):
+            buffer_position = group_buffer_end;
+            //ACTI.Read(buffer_start, buffer_position, group_buffer_end, indexer, parser, DeletedRecords, processor, FileName);
+            break;
+        case eIgADDN:
+        case REV32(ADDN):
+            buffer_position = group_buffer_end;
+            //ADDN.Read(buffer_start, buffer_position, group_buffer_end, indexer, parser, DeletedRecords, processor, FileName);
+            break;
+        case eIgALCH:
+        case REV32(ALCH):
+            buffer_position = group_buffer_end;
+            //ALCH.Read(buffer_start, buffer_position, group_buffer_end, indexer, parser, DeletedRecords, processor, FileName);
+            break;
+        case eIgAMMO:
+        case REV32(AMMO):
+            buffer_position = group_buffer_end;
+            //AMMO.Read(buffer_start, buffer_position, group_buffer_end, indexer, parser, DeletedRecords, processor, FileName);
+            break;
+        case eIgANIO:
+        case REV32(ANIO):
+            buffer_position = group_buffer_end;
+            //ANIO.Read(buffer_start, buffer_position, group_buffer_end, indexer, parser, DeletedRecords, processor, FileName);
+            break;
+      //case eIgAPPA:           // Same as REV32(APPA)
+        case REV32(APPA):
+            APPA.Read(buffer_start, buffer_position, group_buffer_end, indexer, parser, DeletedRecords, processor, FileName);
+            break;
+      //case eIgARMA:           // Same as REV32(ARMA)
+        case REV32(ARMA):
+            buffer_position = group_buffer_end;
+            //ARMA.Read(buffer_start, buffer_position, group_buffer_end, indexer, parser, DeletedRecords, processor, FileName);
+            break;
+      //case eIgARMO:           // Same as REV32(ARMO)
+        case REV32(ARMO):
+            buffer_position = group_buffer_end;
+            //ARMO.Read(buffer_start, buffer_position, group_buffer_end, indexer, parser, DeletedRecords, processor, FileName);
+            break;
+      //case eIgARTO:           // Same as REV32(ARTO)
+        case REV32(ARTO):
+            ARTO.Read(buffer_start, buffer_position, group_buffer_end, indexer, parser, DeletedRecords, processor, FileName);
+            break;
+      //case eIgASPC:           // Same as REV32(ASPC)
+        case REV32(ASPC):
+            ASPC.Read(buffer_start, buffer_position, group_buffer_end, indexer, parser, DeletedRecords, processor, FileName);
+            break;
+      //case eIgASTP:           // Same as REV32(ASTP)
+        case REV32(ASTP):
+            ASTP.Read(buffer_start, buffer_position, group_buffer_end, indexer, parser, DeletedRecords, processor, FileName);
+            break;
+      //case eIgAVIF:           // Same as REV32(AVIF)
+        case REV32(AVIF):
+            buffer_position = group_buffer_end;
+            //AVIF.Read(buffer_start, buffer_position, group_buffer_end, indexer, parser, DeletedRecords, processor, FileName);
+            break;
+        case eIgBOOK:
+        case REV32(BOOK):
+            buffer_position = group_buffer_end;
+            //BOOK.Read(buffer_start, buffer_position, group_buffer_end, indexer, parser, DeletedRecords, processor, FileName);
+            break;
+      //case eIgBPTD:           // Same as REV32(BPTD)
+        case REV32(BPTD):
+            buffer_position = group_buffer_end;
+            //BPTD.Read(buffer_start, buffer_position, group_buffer_end, indexer, parser, DeletedRecords, processor, FileName);
+            break;
+        case eIgCAMS:
+        case REV32(CAMS):
+            buffer_position = group_buffer_end;
+            //CAMS.Read(buffer_start, buffer_position, group_buffer_end, indexer, parser, DeletedRecords, processor, FileName);
+            break;
+        case eIgCELL:
+        case REV32(CELL):
+            CELL.Read(buffer_start, buffer_position, group_buffer_end, indexer, parser, DeletedRecords, processor, FileName);
+            break;
+        case eIgCLAS:
+        case REV32(CLAS):
+            buffer_position = group_buffer_end;
+            //CLAS.Read(buffer_start, buffer_position, group_buffer_end, indexer, parser, DeletedRecords, processor, FileName);
+            break;
+        case eIgCLDC:
+        case REV32(CLDC):
+            // Empty GRUP
+            buffer_position = group_buffer_end;
+            break;
+        case eIgCLFM:
+        case REV32(CLFM):
+            buffer_position = group_buffer_end;
+            //CLFM.Read(buffer_start, buffer_position, group_buffer_end, indexer, parser, DeletedRecords, processor, FileName);
+            break;
+        case eIgCLMT:
+        case REV32(CLMT):
+            buffer_position = group_buffer_end;
+            //CLMT.Read(buffer_start, buffer_position, group_buffer_end, indexer, parser, DeletedRecords, processor, FileName);
+            break;
+        case eIgCOBJ:
+        case REV32(COBJ):
+            buffer_position = group_buffer_end;
+            //COBJ.Read(buffer_start, buffer_position, group_buffer_end, indexer, parser, DeletedRecords, processor, FileName);
+            break;
+        case eIgCOLL:
+        case REV32(COLL):
+            buffer_position = group_buffer_end;
+            //COLL.Read(buffer_start, buffer_position, group_buffer_end, indexer, parser, DeletedRecords, processor, FileName);
+            break;
+        case eIgCONT:
+        case REV32(CONT):
+            buffer_position = group_buffer_end;
+            //CONT.Read(buffer_start, buffer_position, group_buffer_end, indexer, parser, DeletedRecords, processor, FileName);
+            break;
+      //case eIgCPTH:           // Same as REV32(CPTH)
+        case REV32(CPTH):
+            buffer_position = group_buffer_end;
+            //CPTH.Read(buffer_start, buffer_position, group_buffer_end, indexer, parser, DeletedRecords, processor, FileName);
+            break;
+      //case eIgCSTY:           // Same as REV32(CSTY)
+        case REV32(CSTY):
+            buffer_position = group_buffer_end;
+            //CSTY.Read(buffer_start, buffer_position, group_buffer_end, indexer, parser, DeletedRecords, processor, FileName);
+            break;
+        case eIgDEBR:
+        case REV32(DEBR):
+            buffer_position = group_buffer_end;
+            //DEBR.Read(buffer_start, buffer_position, group_buffer_end, indexer, parser, DeletedRecords, processor, FileName);
+            break;
+        case eIgDIAL:
+        case REV32(DIAL):
+            buffer_position = group_buffer_end;
+            //DIAL.Read(buffer_start, buffer_position, group_buffer_end, indexer, parser, DeletedRecords, processor, FileName);
+            break;
+        case eIgDLBR:
+        case REV32(DLBR):
+            buffer_position = group_buffer_end;
+            //DLBR.Read(buffer_start, buffer_position, group_buffer_end, indexer, parser, DeletedRecords, processor, FileName);
+            break;
+        case eIgDLVW:
+        case REV32(DLVW):
+            buffer_position = group_buffer_end;
+            //DLVW.Read(buffer_start, buffer_position, group_buffer_end, indexer, parser, DeletedRecords, processor, FileName);
+            break;
+        case eIgDOBJ:
+        case REV32(DOBJ):
+            buffer_position = group_buffer_end;
+            //DOBJ.Read(buffer_start, buffer_position, group_buffer_end, indexer, parser, DeletedRecords, processor, FileName);
+            break;
+        case eIgDOOR:
+        case REV32(DOOR):
+            buffer_position = group_buffer_end;
+            //DOOR.Read(buffer_start, buffer_position, group_buffer_end, indexer, parser, DeletedRecords, processor, FileName);
+            break;
+      //case eIgDUAL:           // Same as REV32(DUAL)
+        case REV32(DUAL):
+            buffer_position = group_buffer_end;
+            //DUAL.Read(buffer_start, buffer_position, group_buffer_end, indexer, parser, DeletedRecords, processor, FileName);
+            break;
+        case eIgECZN:
+        case REV32(ECZN):
+            buffer_position = group_buffer_end;
+            //ECZN.Read(buffer_start, buffer_position, group_buffer_end, indexer, parser, DeletedRecords, processor, FileName);
+            break;
+        case eIgEFSH:
+        case REV32(EFSH):
+            buffer_position = group_buffer_end;
+            //EFSH.Read(buffer_start, buffer_position, group_buffer_end, indexer, parser, DeletedRecords, processor, FileName);
+            break;
+        case eIgENCH:
+        case REV32(ENCH):
+            buffer_position = group_buffer_end;
+            //ENCH.Read(buffer_start, buffer_position, group_buffer_end, indexer, parser, DeletedRecords, processor, FileName);
+            break;
+      //case eIgEQUP:           // Same as REV32(EQUP)
+        case REV32(EQUP):
+            EQUP.Read(buffer_start, buffer_position, group_buffer_end, indexer, parser, DeletedRecords, processor, FileName);
+            break;
+      //case eIgEXPL:           // Same as REV32(EXPL)
+        case REV32(EXPL):
+            buffer_position = group_buffer_end;
+            //EXPL.Read(buffer_start, buffer_position, group_buffer_end, indexer, parser, DeletedRecords, processor, FileName);
+            break;
+      //case eIgEYES:           // Same as REV32(EYES)
+        case REV32(EYES):
+            buffer_position = group_buffer_end;
+            //EYES.Read(buffer_start, buffer_position, group_buffer_end, indexer, parser, DeletedRecords, processor, FileName);
+            break;
+        case eIgFACT:
+        case REV32(FACT):
+            buffer_position = group_buffer_end;
+            //FACT.Read(buffer_start, buffer_position, group_buffer_end, indexer, parser, DeletedRecords, processor, FileName);
+            break;
+        case eIgFLOR:
+        case REV32(FLOR):
+            buffer_position = group_buffer_end;
+            //FLOR.Read(buffer_start, buffer_position, group_buffer_end, indexer, parser, DeletedRecords, processor, FileName);
+            break;
+        case eIgFLST:
+        case REV32(FLST):
+            buffer_position = group_buffer_end;
+            //FLST.Read(buffer_start, buffer_position, group_buffer_end, indexer, parser, DeletedRecords, processor, FileName);
+            break;
+      //case eIgFSTP:           // Same as REV32(FSTP)
+        case REV32(FSTP):
+            buffer_position = group_buffer_end;
+            //FSTP.Read(buffer_start, buffer_position, group_buffer_end, indexer, parser, DeletedRecords, processor, FileName);
+            break;
+      //case eIgFSTS:           // Same as REV32(FSTS)
+        case REV32(FSTS):
+            buffer_position = group_buffer_end;
+            //FSTS.Read(buffer_start, buffer_position, group_buffer_end, indexer, parser, DeletedRecords, processor, FileName);
+            break;
+      //case eIgFURN:           // Same as REV32(FURN)
+        case REV32(FURN):
+            buffer_position = group_buffer_end;
+            //FURN.Read(buffer_start, buffer_position, group_buffer_end, indexer, parser, DeletedRecords, processor, FileName);
+            break;
+        case eIgGLOB:
+        case REV32(GLOB):
+            buffer_position = group_buffer_end;
+            //GLOB.Read(buffer_start, buffer_position, group_buffer_end, indexer, parser, DeletedRecords, processor, FileName);
+            break;
+        case eIgGMST:
+        case REV32(GMST):
+            buffer_position = group_buffer_end;
+            //GMST.Read(buffer_start, buffer_position, group_buffer_end, indexer, parser, DeletedRecords, processor, FileName);
+            break;
+      //case eIgGRAS:           // Same as REV32(GRAS)
+        case REV32(GRAS):
+            buffer_position = group_buffer_end;
+            //GRAS.Read(buffer_start, buffer_position, group_buffer_end, indexer, parser, DeletedRecords, processor, FileName);
+            break;
+        case eIgHAIR:
+        case REV32(HAIR):
+            // Empty GRUP
+            buffer_position = group_buffer_end;
+            break;
+        case eIgHAZD:
+        case REV32(HAZD):
+            buffer_position = group_buffer_end;
+            //HAZD.Read(buffer_start, buffer_position, group_buffer_end, indexer, parser, DeletedRecords, processor, FileName);
+            break;
+        case eIgHDPT:
+        case REV32(HDPT):
+            buffer_position = group_buffer_end;
+            //HDPT.Read(buffer_start, buffer_position, group_buffer_end, indexer, parser, DeletedRecords, processor, FileName);
+            break;
+        case eIgIDLE:
+        case REV32(IDLE):
+            buffer_position = group_buffer_end;
+            //IDLE.Read(buffer_start, buffer_position, group_buffer_end, indexer, parser, DeletedRecords, processor, FileName);
+            break;
+        case eIgIDLM:
+        case REV32(IDLM):
+            buffer_position = group_buffer_end;
+            //IDLM.Read(buffer_start, buffer_position, group_buffer_end, indexer, parser, DeletedRecords, processor, FileName);
+            break;
+        case eIgIMAD:
+        case REV32(IMAD):
+            buffer_position = group_buffer_end;
+            //IMAD.Read(buffer_start, buffer_position, group_buffer_end, indexer, parser, DeletedRecords, processor, FileName);
+            break;
+        case eIgIMGS:
+        case REV32(IMGS):
+            buffer_position = group_buffer_end;
+            //IMGS.Read(buffer_start, buffer_position, group_buffer_end, indexer, parser, DeletedRecords, processor, FileName);
+            break;
+        case eIgINGR:
+        case REV32(INGR):
+            buffer_position = group_buffer_end;
+            //INGR.Read(buffer_start, buffer_position, group_buffer_end, indexer, parser, DeletedRecords, processor, FileName);
+            break;
+      //case eIgIPCT:           // Same as REV32(IPCT)
+        case REV32(IPCT):
+            buffer_position = group_buffer_end;
+            //IPCT.Read(buffer_start, buffer_position, group_buffer_end, indexer, parser, DeletedRecords, processor, FileName);
+            break;
+      //case eIgIPDS:           // Same as REV32(IPDS)
+        case REV32(IPDS):
+            buffer_position = group_buffer_end;
+            //IPDS.Read(buffer_start, buffer_position, group_buffer_end, indexer, parser, DeletedRecords, processor, FileName);
+            break;
+        case eIgKEYM:
+        case REV32(KEYM):
+            buffer_position = group_buffer_end;
+            //KEYM.Read(buffer_start, buffer_position, group_buffer_end, indexer, parser, DeletedRecords, processor, FileName);
+            break;
+      //case eIgKYWD:           // Same as REV32(KYWD)
+        case REV32(KYWD):
+            buffer_position = group_buffer_end;
+            //KYWD.Read(buffer_start, buffer_position, group_buffer_end, indexer, parser, DeletedRecords, processor, FileName);
+            break;
+        case eIgLCRT:
+        case REV32(LCRT):
+            buffer_position = group_buffer_end;
+            //LCRT.Read(buffer_start, buffer_position, group_buffer_end, indexer, parser, DeletedRecords, processor, FileName);
+            break;
+        case eIgLCTN:
+        case REV32(LCTN):
+            buffer_position = group_buffer_end;
+            //LCTN.Read(buffer_start, buffer_position, group_buffer_end, indexer, parser, DeletedRecords, processor, FileName);
+            break;
+        case eIgLGTM:
+        case REV32(LGTM):
+            buffer_position = group_buffer_end;
+            //LGTM.Read(buffer_start, buffer_position, group_buffer_end, indexer, parser, DeletedRecords, processor, FileName);
+            break;
+        case eIgLIGH:
+        case REV32(LIGH):
+            buffer_position = group_buffer_end;
+            //LIGH.Read(buffer_start, buffer_position, group_buffer_end, indexer, parser, DeletedRecords, processor, FileName);
+            break;
+      //case eIgLSCR:           // Same as REV32(LSCR)
+        case REV32(LSCR):
+            buffer_position = group_buffer_end;
+            //LSCR.Read(buffer_start, buffer_position, group_buffer_end, indexer, parser, DeletedRecords, processor, FileName);
+            break;
+      //case eIgLTEX:           // Same as REV32(LTEX)
+        case REV32(LTEX):
+            LTEX.Read(buffer_start, buffer_position, group_buffer_end, indexer, parser, DeletedRecords, processor, FileName);
+            break;
+      //case eIgLVLI:           // Same as REV32(LVLI)
+        case REV32(LVLI):
+            LVLI.Read(buffer_start, buffer_position, group_buffer_end, indexer, parser, DeletedRecords, processor, FileName);
+            break;
+      //case eIgLVLN:           // Same as REV32(LVLN)
+        case REV32(LVLN):
+            LVLN.Read(buffer_start, buffer_position, group_buffer_end, indexer, parser, DeletedRecords, processor, FileName);
+            break;
+      //case eIgLVSP:           // Same as REV32(LVSP)
+        case REV32(LVSP):
+            LVSP.Read(buffer_start, buffer_position, group_buffer_end, indexer, parser, DeletedRecords, processor, FileName);
+            break;
+        case eIgMATO:
+        case REV32(MATO):
+            buffer_position = group_buffer_end;
+            //MATO.Read(buffer_start, buffer_position, group_buffer_end, indexer, parser, DeletedRecords, processor, FileName);
+            break;
+        case eIgMATT:
+        case REV32(MATT):   // EDID: MaterialInsect (new record-type)
+            MATT.Read(buffer_start, buffer_position, group_buffer_end, indexer, parser, DeletedRecords, processor, FileName);
+            break;
+        case eIgMESG:
+        case REV32(MESG):
+            buffer_position = group_buffer_end;
+            //MESG.Read(buffer_start, buffer_position, group_buffer_end, indexer, parser, DeletedRecords, processor, FileName);
+            break;
+        case eIgMGEF:
+        case REV32(MGEF):
+            buffer_position = group_buffer_end;
+            //MGEF.Read(buffer_start, buffer_position, group_buffer_end, indexer, parser, DeletedRecords, processor, FileName);
+            break;
+        case eIgMISC:
+        case REV32(MISC):
+            buffer_position = group_buffer_end;
+            //MISC.Read(buffer_start, buffer_position, group_buffer_end, indexer, parser, DeletedRecords, processor, FileName);
+            break;
+        case eIgMOVT:
+        case REV32(MOVT):
+            buffer_position = group_buffer_end;
+            //MOVT.Read(buffer_start, buffer_position, group_buffer_end, indexer, parser, DeletedRecords, processor, FileName);
+            break;
+      //case eIgMSTT:           // Same as REV32(MSTT)
+        case REV32(MSTT):
+            buffer_position = group_buffer_end;
+            //MSTT.Read(buffer_start, buffer_position, group_buffer_end, indexer, parser, DeletedRecords, processor, FileName);
+            break;
+      //case eIgMUSC:           // Same as REV32(MUSC)
+        case REV32(MUSC):
+            buffer_position = group_buffer_end;
+            //MUSC.Read(buffer_start, buffer_position, group_buffer_end, indexer, parser, DeletedRecords, processor, FileName);
+            break;
+      //case eIgMUST:           // Same as REV32(MUST)
+        case REV32(MUST):
+            buffer_position = group_buffer_end;
+            //MUST.Read(buffer_start, buffer_position, group_buffer_end, indexer, parser, DeletedRecords, processor, FileName);
+            break;
+        case eIgNAVI:
+        case REV32(NAVI):
+            buffer_position = group_buffer_end;
+            //NAVI.Read(buffer_start, buffer_position, group_buffer_end, indexer, parser, DeletedRecords, processor, FileName);
+            break;
+      //case eIgNPC_:           // Same as REV32(NPC_)
+        case REV32(NPC_):
+            buffer_position = group_buffer_end;
+            //NPC.Read(buffer_start, buffer_position, group_buffer_end, indexer, parser, DeletedRecords, processor, FileName);
+            break;
+      //case eIgOTFT:           // Same as REV32(OTFT)
+        case REV32(OTFT):
+            buffer_position = group_buffer_end;
+            //OTFT.Read(buffer_start, buffer_position, group_buffer_end, indexer, parser, DeletedRecords, processor, FileName);
+            break;
+        case eIgPACK:
+        case REV32(PACK):
+            buffer_position = group_buffer_end;
+            //PACK.Read(buffer_start, buffer_position, group_buffer_end, indexer, parser, DeletedRecords, processor, FileName);
+            break;
+        case eIgPERK:
+        case REV32(PERK):
+            buffer_position = group_buffer_end;
+            //PERK.Read(buffer_start, buffer_position, group_buffer_end, indexer, parser, DeletedRecords, processor, FileName);
+            break;
+      //case eIgPROJ:           // Same as REV32(PROJ)
+        case REV32(PROJ):
+            buffer_position = group_buffer_end;
+            //PROJ.Read(buffer_start, buffer_position, group_buffer_end, indexer, parser, DeletedRecords, processor, FileName);
+            break;
+      //case eIgPWAT:           // Same as REV32(PWAT)
+        case REV32(PWAT):
+            // Empyt GRUP
+            buffer_position = group_buffer_end;
+            break;
+      //case eIgQUST:           // Same as REV32(QUST)
+        case REV32(QUST):
+            buffer_position = group_buffer_end;
+            //QUST.Read(buffer_start, buffer_position, group_buffer_end, indexer, parser, DeletedRecords, processor, FileName);
+            break;
+        case eIgRACE:
+        case REV32(RACE):
+            buffer_position = group_buffer_end;
+            //RACE.Read(buffer_start, buffer_position, group_buffer_end, indexer, parser, DeletedRecords, processor, FileName);
+            break;
+        case eIgREGN:
+        case REV32(REGN):
+            buffer_position = group_buffer_end;
+            //REGN.Read(buffer_start, buffer_position, group_buffer_end, indexer, parser, DeletedRecords, processor, FileName);
+            break;
+        case eIgRELA:
+        case REV32(RELA):
+            buffer_position = group_buffer_end;
+            //RELA.Read(buffer_start, buffer_position, group_buffer_end, indexer, parser, DeletedRecords, processor, FileName);
+            break;
+        case eIgREVB:
+        case REV32(REVB):
+            buffer_position = group_buffer_end;
+            //REVG.Read(buffer_start, buffer_position, group_buffer_end, indexer, parser, DeletedRecords, processor, FileName);
+            break;
+        case eIgRFCT:
+        case REV32(RFCT):
+            buffer_position = group_buffer_end;
+            //RFCT.Read(buffer_start, buffer_position, group_buffer_end, indexer, parser, DeletedRecords, processor, FileName);
+            break;
+        case eIgRGDL:
+        case REV32(RGDL):
+            // Empty GRUP
+            buffer_position = group_buffer_end;
+            break;
+        case eIgSCEN:
+        case REV32(SCEN):
+            buffer_position = group_buffer_end;
+            //SCNE.Read(buffer_start, buffer_position, group_buffer_end, indexer, parser, DeletedRecords, processor, FileName);
+            break;
+        case eIgSCOL:
+        case REV32(SCOL):
+            // Empty GRUP
+            buffer_position = group_buffer_end;
+            break;
+        case eIgSCPT:
+        case REV32(SCPT):
+            buffer_position = group_buffer_end;
+            //SCPT.Read(buffer_start, buffer_position, group_buffer_end, indexer, parser, DeletedRecords, processor, FileName);
+            break;
+        case eIgSCRL:
+        case REV32(SCRL):
+            buffer_position = group_buffer_end;
+            //SCRL.Read(buffer_start, buffer_position, group_buffer_end, indexer, parser, DeletedRecords, processor, FileName);
+            break;
+        case eIgSHOU:
+        case REV32(SHOU):
+            buffer_position = group_buffer_end;
+            //SHOU.Read(buffer_start, buffer_position, group_buffer_end, indexer, parser, DeletedRecords, processor, FileName);
+            break;
+        case eIgSLGM:
+        case REV32(SLGM):
+            buffer_position = group_buffer_end;
+            //SLGM.Read(buffer_start, buffer_position, group_buffer_end, indexer, parser, DeletedRecords, processor, FileName);
+            break;
+        case eIgSMBN:
+        case REV32(SMBN):
+            buffer_position = group_buffer_end;
+            //SMBN.Read(buffer_start, buffer_position, group_buffer_end, indexer, parser, DeletedRecords, processor, FileName);
+            break;
+        case eIgSMEN:
+        case REV32(SMEN):
+            buffer_position = group_buffer_end;
+            //SMEN.Read(buffer_start, buffer_position, group_buffer_end, indexer, parser, DeletedRecords, processor, FileName);
+            break;
+        case eIgSMQN:
+        case REV32(SMQN):
+            buffer_position = group_buffer_end;
+            //SMQN.Read(buffer_start, buffer_position, group_buffer_end, indexer, parser, DeletedRecords, processor, FileName);
+            break;
+        case eIgSNCT:
+        case REV32(SNCT):
+            buffer_position = group_buffer_end;
+            //SNCT.Read(buffer_start, buffer_position, group_buffer_end, indexer, parser, DeletedRecords, processor, FileName);
+            break;
+        case eIgSNDR:
+        case REV32(SNDR):
+            buffer_position = group_buffer_end;
+            //SNDR.Read(buffer_start, buffer_position, group_buffer_end, indexer, parser, DeletedRecords, processor, FileName);
+            break;
+        case eIgSOPM:
+        case REV32(SOPM):
+            buffer_position = group_buffer_end;
+            //SOPM.Read(buffer_start, buffer_position, group_buffer_end, indexer, parser, DeletedRecords, processor, FileName);
+            break;
+        case eIgSOUN:
+        case REV32(SOUN):
+            buffer_position = group_buffer_end;
+            //SOUN.Read(buffer_start, buffer_position, group_buffer_end, indexer, parser, DeletedRecords, processor, FileName);
+            break;
+      //case eIgSPEL:           // Same as REV32(SPEL)
+        case REV32(SPEL):
+            buffer_position = group_buffer_end;
+            //SPEL.Read(buffer_start, buffer_position, group_buffer_end, indexer, parser, DeletedRecords, processor, FileName);
+            break;
+      //case eIgSPGD:           // Same as REV32(SPGD)
+        case REV32(SPGD):
+            buffer_position = group_buffer_end;
+            //SPGD.Read(buffer_start, buffer_position, group_buffer_end, indexer, parser, DeletedRecords, processor, FileName);
+            break;
+      //case eIgSTAT:           // Same as REV32(STAT)
+        case REV32(STAT):
+            buffer_position = group_buffer_end;
+            //STAT.Read(buffer_start, buffer_position, group_buffer_end, indexer, parser, DeletedRecords, processor, FileName);
+            break;
+        case eIgTACT:
+        case REV32(TACT):
+            buffer_position = group_buffer_end;
+            //TACT.Read(buffer_start, buffer_position, group_buffer_end, indexer, parser, DeletedRecords, processor, FileName);
+            break;
+      //case eIgTREE:           // Same as REV32(TREE)
+        case REV32(TREE):
+            buffer_position = group_buffer_end;
+            //TREE.Read(buffer_start, buffer_position, group_buffer_end, indexer, parser, DeletedRecords, processor, FileName);
+            break;
+      //case eIgTXST:           // Same as REV32(TXST)
+        case REV32(TXST):
+            TXST.Read(buffer_start, buffer_position, group_buffer_end, indexer, parser, DeletedRecords, processor, FileName);
+            break;
+      //case eIgVTYP:           // Same as REV32(VTYP)
+        case REV32(VTYP):
+            buffer_position = group_buffer_end;
+            //VTYP.Read(buffer_start, buffer_position, group_buffer_end, indexer, parser, DeletedRecords, processor, FileName);
+            break;
+        case eIgWATR:
+        case REV32(WATR):
+            buffer_position = group_buffer_end;
+            //WATR.Read(buffer_start, buffer_position, group_buffer_end, indexer, parser, DeletedRecords, processor, FileName);
+            break;
+        case eIgWEAP:
+        case REV32(WEAP):
+            buffer_position = group_buffer_end;
+            //WEAP.Read(buffer_start, buffer_position, group_buffer_end, indexer, parser, DeletedRecords, processor, FileName);
+            break;
+        case eIgWOOP:
+        case REV32(WOOP):
+            WOOP.Read(buffer_start, buffer_position, group_buffer_end, indexer, parser, DeletedRecords, processor, FileName);
+            break;
+      //case eIgWRLD:           // Same as REV32(WRLD)
+        case REV32(WRLD):
+            WRLD.Read(buffer_start, buffer_position, group_buffer_end, indexer, parser, DeletedRecords, processor, FileName, read_parser, CELL);
+            break;
+      //case eIgWTHR:           // Same as REV32(WTHR)
+        case REV32(WTHR):
+            buffer_position = group_buffer_end;
+            //WTHR.Read(buffer_start, buffer_position, group_buffer_end, indexer, parser, DeletedRecords, processor, FileName);
+            break;
+        default:
+            if(GRUPLabel == 0 && GRUPSize == 0)
+            {
+                printer("TES5File::Read: Warning - Unknown record group (%c%c%c%c) encountered in mod \"%s\". Bad file structure, zeros found past end of groups.\n", ((STRING)&GRUPLabel)[0], ((STRING)&GRUPLabel)[1], ((STRING)&GRUPLabel)[2], ((STRING)&GRUPLabel)[3], ModName);
+                return 1;
             }
-        };
+            //else
+            //    printer("TES5File::Read: Error - Unknown record group (%c%c%c%c) encountered in mod \"%s\". ", ((STRING)&GRUPLabel)[0], ((STRING)&GRUPLabel)[1], ((STRING)&GRUPLabel)[2], ((STRING)&GRUPLabel)[3], ModName);
+
+            if(GRUPSize == 0)
+            {
+                printer("Unable to continue loading.\n");
+                return 1;
+            }
+            else
+            {
+                //printer("Attempting to skip and continue loading.\n");
+                buffer_position = group_buffer_end;
+            }
+            break;
+        }; // end swtich
+    }; // end whle
 
     FormIDHandler.IsEmpty = UsedFormIDs.empty();
     //Testing snippet
@@ -680,8 +951,10 @@ UINT32 TES5File::GetNumRecords(const UINT32 &RecordType)
         return (UINT32)EFSH.pool.used_object_capacity();
     case REV32(ENCH):
         return (UINT32)ENCH.pool.used_object_capacity();
+    */
     case REV32(EQUP):
         return (UINT32)EQUP.pool.used_object_capacity();
+    /*
     case REV32(EXPL):
         return (UINT32)EXPL.pool.used_object_capacity();
     case REV32(EYES):
@@ -1548,10 +1821,12 @@ SINT32 TES5File::DeleteRecord(Record *&curRecord, RecordOp &deindexer)
         deindexer.Accept(curRecord);
         ENCH.pool.destroy(curRecord);
         return 1;
+    */
     case REV32(EQUP):
         deindexer.Accept(curRecord);
         EQUP.pool.destroy(curRecord);
         return 1;
+    /*
     case REV32(EXPL):
         deindexer.Accept(curRecord);
         EXPL.pool.destroy(curRecord);
@@ -2190,7 +2465,7 @@ SINT32 TES5File::Save(STRING const &SaveName, std::vector<FormIDResolver *> &Exp
     // formCount += DLVW.Write(writer, Expanders, expander, collapser, bMastersChanged, CloseMod);
     formCount += WOOP.Write(writer, Expanders, expander, collapser, bMastersChanged, CloseMod);
     // formCount += SHOU.Write(writer, Expanders, expander, collapser, bMastersChanged, CloseMod);
-    // formCount += EQUP.Write(writer, Expanders, expander, collapser, bMastersChanged, CloseMod);
+    formCount += EQUP.Write(writer, Expanders, expander, collapser, bMastersChanged, CloseMod);
     // formCount += RELA.Write(writer, Expanders, expander, collapser, bMastersChanged, CloseMod);
     // formCount += SCEN.Write(writer, Expanders, expander, collapser, bMastersChanged, CloseMod);
     formCount += ASTP.Write(writer, Expanders, expander, collapser, bMastersChanged, CloseMod);
@@ -2276,7 +2551,7 @@ void TES5File::VisitAllRecords(RecordOp &op)
     // ECZN.pool.VisitRecords(op);
     // EFSH.pool.VisitRecords(op);
     // ENCH.pool.VisitRecords(op);
-    // EQUP.pool.VisitRecords(op);
+    EQUP.pool.VisitRecords(op);
     // EXPL.pool.VisitRecords(op);
     // EYES.pool.VisitRecords(op);
     // FACT.pool.VisitRecords(op);
@@ -2498,7 +2773,7 @@ void TES5File::VisitRecords(const UINT32 &RecordType, RecordOp &op)
         // ENCH.pool.VisitRecords(op);
         break;
     case REV32(EQUP):
-        // EQUP.pool.VisitRecords(op);
+        EQUP.pool.VisitRecords(op);
         break;
     case REV32(EXPL):
         // EXPL.pool.VisitRecords(op);

@@ -77,7 +77,7 @@
 // #include "Records/ECZNRecord.h"
 // #include "Records/EFSHRecord.h"
 // #include "Records/ENCHRecord.h"
-// #include "Records/EQUPRecord.h"
+#include "Records/EQUPRecord.h"
 // #include "Records/EXPLRecord.h"
 // #include "Records/EYESRecord.h"
 // #include "Records/FACTRecord.h"
@@ -208,7 +208,7 @@ class TES5File : public ModFile
         // GRUP(ECZN);
         // GRUP(EFSH);
         // GRUP(ENCH);
-        // GRUP(EQUP);
+        GRUP(EQUP);
         // GRUP(EXPL);
         // GRUP(EYES);
         // GRUP(FACT);
