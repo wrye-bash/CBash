@@ -58,7 +58,7 @@ class LVSPRecord : public TES5Record //Leveled Spell
         ReqSimpleSubRecord<UINT8> LVLD; //Chance none
         ReqSimpleSubRecord<UINT8> LVLF; //Flags
         // ReqSimpleSubRecord<UINT8> LLCT; //Count - handled seperately
-        UnorderedSparseArray<SKLVLO *> Entries; //Leveled List Entries
+        ReqCounted<UnorderedSparseArray<SKLVLO *>, UINT8, REV32(LLCT)> Entries; //Leveled List Entries
 
         LVSPRecord(unsigned char *_recData=NULL);
         LVSPRecord(LVSPRecord *srcRecord);

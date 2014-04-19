@@ -213,9 +213,6 @@ SINT32 LVLIRecord::WriteRecord(FileWriter &writer)
         WRITE(OBND);
         WRITE(LVLD);
         WRITE(LVLF);
-        //  Write LLCT
-        UINT8 count = Entries.value.size();
-        writer.record_write_subrecord(REV32(LLCT),&count,sizeof(count));
         Entries.Write(writer);
         WRITE(LVLG);
         return -1;

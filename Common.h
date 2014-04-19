@@ -2700,3 +2700,49 @@ struct UnorderedSparseArray<T *>
         return !(*this == other);
         }
     };
+
+template <typename T, typename countType, int countRecord>
+class ReqCounted : public T
+{
+public:
+    void Write(FileWriter &writer)
+    {
+        countType count = value.size();
+        writer.record_write_subrecord(countRecord, &count, sizeof(count));
+        for (UINT32 p = 0; p < value.size(); p++)
+            value[p]->Write(writer);
+    }
+
+    void Write(UINT32 _Type, FileWriter &writer)
+    {
+        countType count = value.size();
+        writer.record_write_subrecord(countRecord, &count, sizeof(count));
+        T::Write(_Type, writer);
+    }
+};
+
+template <typename T, typename countType, int countRecord>
+class OptCounted : public T
+{
+public:
+    void Write(FileWriter &writer)
+    {
+        countType count = value.size();
+        if (count)
+        {
+            writer.record_write_subrecord(countRecord, &count, sizeof(count));
+            for (UINT32 p = 0; p < value.size(); p++)
+                value[p]->Write(writer);
+        }
+    }
+
+    void Write(UINT32 _Type, FileWriter &writer)
+    {
+        countType count = value.size();
+        if (count)
+        {
+            writer.record_write_subrecord(countRecord, &count, sizeof(count));
+            T::Write(_Type, writer);
+        }
+    }
+};

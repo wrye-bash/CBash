@@ -211,10 +211,6 @@ SINT32 COLLRecord::WriteRecord(FileWriter &writer)
     WRITE(FNAM);
     WRITE(GNAM);
     WRITE(MNAM);
-    // Write INTV
-    UINT32 size = CNAM.value.size();
-    if (size)
-        writer.record_write_subrecord(REV32(INTV), &size, sizeof(UINT32));
     WRITE(CNAM);
     return -1;
 }

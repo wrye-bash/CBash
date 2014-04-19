@@ -51,7 +51,7 @@ public:
     OptSubRecord<FNVWORLDMODEL> MODL; // Model
     OptSubRecord<SKDESTRUCT> Destructable; // Destruction Data
     // KSIZ - ignored
-    OrderedPackedArray<FORMID> KWDA; // Keywords
+    OptCounted<OrderedPackedArray<FORMID>, UINT32, REV32(KSIZ)> KWDA; // Keywords
     OptSubRecord<GENCNAM> PNAM; // Color
     OptSimpleSubRecord<FORMID> SNAM; // Sound - Looping
     OptSimpleSubRecord<FORMID> VNAM; // Sound - Acttivation

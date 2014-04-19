@@ -257,13 +257,7 @@ SINT32 ACTIRecord::WriteRecord(FileWriter &writer)
     WRITE(FULL);
     MODL.Write(writer);
     Destructable.Write(writer);
-    // KSIZ+KWDA
-    UINT32 size = KWDA.value.size();
-    if (size)
-    {
-        writer.record_write_subrecord(REV32(KSIZ), &size, sizeof(UINT32));
-        WRITE(KWDA);
-    }
+    WRITE(KWDA);
     WRITE(PNAM);
     WRITE(SNAM);
     WRITE(VNAM);

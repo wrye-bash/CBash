@@ -59,7 +59,7 @@ class LVLNRecord : public TES5Record //Leveled Item
         ReqSimpleSubRecord<UINT8> LVLF; //Flags
         OptSimpleSubRecord<FORMID> LVLG; // Global
         // ReqSimpleSubRecord<UINT8> LLCT; //Count - ignored on read, properly written
-        UnorderedSparseArray<SKLVLO *> Entries; //Leveled List Entries
+        ReqCounted<UnorderedSparseArray<SKLVLO *>, UINT8, REV32(LLCT)> Entries; //Leveled List Entries
         OptSubRecord<FNVWORLDMODEL> MODL; //Model
 
         LVLNRecord(unsigned char *_recData=NULL);

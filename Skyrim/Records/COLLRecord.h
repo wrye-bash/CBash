@@ -52,7 +52,8 @@ class COLLRecord : public TES5Record // Collision Layer
         ReqSimpleSubRecord<UINT32, 0> GNAM; // Flags
         StringRecord MNAM; // Name
         // INTV - handled seperately
-        OrderedPackedArray<FORMID> CNAM; // colliedsWith
+        OptCounted<OrderedPackedArray<FORMID>, UINT32, REV32(INTV)> CNAM; // collidesWidth
+        //OrderedPackedArray<FORMID> CNAM; // colliedsWith
 
         enum flagFlags
         {
