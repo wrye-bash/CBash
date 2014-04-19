@@ -121,7 +121,7 @@
 // #include "Records/MUSTRecord.h"
 // #include "Records/NAVIRecord.h"
 // #include "Records/NPC_Record.h"
-// #include "Records/OTFTRecord.h"
+#include "Records/OTFTRecord.h"
 // #include "Records/PACKRecord.h"
 // #include "Records/PERKRecord.h"
 // #include "Records/PROJRecord.h"
@@ -250,7 +250,7 @@ class TES5File : public ModFile
         // GRUP(MUST);
         // GRUP(NAVI);
         // GRUP(NPC_);
-        // GRUP(OTFT);
+        GRUP(OTFT);
         // GRUP(PACK);
         // GRUP(PERK);
         // GRUP(PROJ);

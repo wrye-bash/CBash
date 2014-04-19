@@ -640,8 +640,7 @@ SINT32 TES5File::Load(RecordOp &read_parser, RecordOp &indexer, std::vector<Form
             break;
       //case eIgOTFT:           // Same as REV32(OTFT)
         case REV32(OTFT):
-            buffer_position = group_buffer_end;
-            //OTFT.Read(buffer_start, buffer_position, group_buffer_end, indexer, parser, DeletedRecords, processor, FileName);
+            OTFT.Read(buffer_start, buffer_position, group_buffer_end, indexer, parser, DeletedRecords, processor, FileName);
             break;
         case eIgPACK:
         case REV32(PACK):
@@ -1039,8 +1038,10 @@ UINT32 TES5File::GetNumRecords(const UINT32 &RecordType)
         return (UINT32)CELL.navm_pool.used_object_capacity();
     case REV32(NPC_):
         return (UINT32)NPC_.pool.used_object_capacity();
+    */
     case REV32(OTFT):
         return (UINT32)OTFT.pool.used_object_capacity();
+    /*
     case REV32(PACK):
         return (UINT32)PACK.pool.used_object_capacity();
     case REV32(PERK):
@@ -2059,19 +2060,21 @@ SINT32 TES5File::DeleteRecord(Record *&curRecord, RecordOp &deindexer)
         return 1;
     case REV32(NPC_):
         deindexer.Accept(curRecord);
-        NAVI.pool.destroy(curRecord);
+        NPC_.pool.destroy(curRecord);
         return 1;
+    */
     case REV32(OTFT):
         deindexer.Accept(curRecord);
-        NAVI.pool.destroy(curRecord);
+        OTFT.pool.destroy(curRecord);
         return 1;
+    /*
     case REV32(PACK):
         deindexer.Accept(curRecord);
-        NAVI.pool.destroy(curRecord);
+        PACK.pool.destroy(curRecord);
         return 1;
     case REV32(PERK):
         deindexer.Accept(curRecord);
-        NAVI.pool.destroy(curRecord);
+        PERK.pool.destroy(curRecord);
         return 1;
     case REV32(PGRE):
     {
@@ -2473,7 +2476,7 @@ SINT32 TES5File::Save(STRING const &SaveName, std::vector<FormIDResolver *> &Exp
     // formCount += RELA.Write(writer, Expanders, expander, collapser, bMastersChanged, CloseMod);
     // formCount += SCEN.Write(writer, Expanders, expander, collapser, bMastersChanged, CloseMod);
     formCount += ASTP.Write(writer, Expanders, expander, collapser, bMastersChanged, CloseMod);
-    // formCount += OTFT.Write(writer, Expanders, expander, collapser, bMastersChanged, CloseMod);
+    formCount += OTFT.Write(writer, Expanders, expander, collapser, bMastersChanged, CloseMod);
     formCount += ARTO.Write(writer, Expanders, expander, collapser, bMastersChanged, CloseMod);
     // formCount += MATO.Write(writer, Expanders, expander, collapser, bMastersChanged, CloseMod);
     // formCount += MOVT.Write(writer, Expanders, expander, collapser, bMastersChanged, CloseMod);
@@ -2600,7 +2603,7 @@ void TES5File::VisitAllRecords(RecordOp &op)
     // NAVI.pool.VisitRecords(op);
     // NAVM - in CELL
     // NPC_.pool.VisitRecords(op);
-    // OTFT.pool.VisitRecords(op);
+    OTFT.pool.VisitRecords(op);
     // PACK.pool.VisitRecords(op);
     // PERK.pool.VisitRecords(op);
     // PGRE - in CELL
@@ -2912,7 +2915,7 @@ void TES5File::VisitRecords(const UINT32 &RecordType, RecordOp &op)
         // NPC_.pool.VisitRecords(op);
         break;
     case REV32(OTFT):
-        // OTFT.pool.VisitRecords(op);
+        OTFT.pool.VisitRecords(op);
         break;
     case REV32(PACK):
         // PACK.pool.VisitRecords(op);
