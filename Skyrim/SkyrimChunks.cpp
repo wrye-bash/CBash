@@ -211,4 +211,411 @@ bool SKDESTRUCT::operator != (const SKDESTRUCT &other) const
     return !(*this == other);
 }
 
+SKCTDA::SKCTDA() :
+    operType(0),
+    compValue(0),
+    ifunc(5), // 5 type makes sure conditions don't try to resolve param1/param2
+    param1(0),
+    param2(0),
+    runOnType(0),
+    reference(0),
+    param3(0)
+{
+    memset(&unused1, 0, sizeof(unused1));
+    memset(&unused2, 0, sizeof(unused2));
+}
+
+SKCTDA::~SKCTDA()
+{
+    //
+}
+
+bool SKCTDA::VisitFormIDs(FormIDOp &op)
+{
+    Function_Arguments_Iterator curCTDAFunction = SKFunction_Arguments.find(ifunc);
+
+    if (IsUseGlobal())
+        op.Accept(compValue);
+
+    if (curCTDAFunction != Function_Arguments.end())
+    {
+        const FunctionArguments &CTDAFunction = curCTDAFunction->second;
+        if (CTDAFunction.first == eFORMID)
+            op.Accept(param1);
+        if (CTDAFunction.second == eFORMID)
+            op.Accept(param2);
+    }
+    else
+        printer("Warning: CTDA uses an unkown function (%d)!\n", ifunc);
+
+    if (IsResultOnReference())
+        op.Accept(reference);
+
+    return op.Stop();
+}
+
+void SKCTDA::Write(FileWriter &writer)
+{
+    Function_Arguments_Iterator curCTDAFunction = SKFunction_Arguments.find(ifunc);
+    if (curCTDAFunction != SKFunction_Arguments.end())
+    {
+        const FunctionArguments &CTDAFunction = curCTDAFunction->second;
+        if (CTDAFunction.first == eNONE)
+            param1 = 0;
+        if (CTDAFunction.second == eNONE)
+            param2 = 0;
+    }
+    else
+        printer("Warning: CTDA uses an unknown function (%d)!\n", ifunc);
+
+    writer.record_write_subrecord(REV32(CTDA), this, sizeof(SKCTDA));
+}
+
+bool SKCTDA::operator == (const SKCTDA &other) const
+{
+    return (operType == other.operType &&
+            (IsUseGlobal() ? compValue == other.compValue : AlmostEqual(*(FLOAT32 *)&compValue, *(FLOAT32 *)&other.compValue, 2)) &&
+            ifunc == other.ifunc &&
+            param1 == other.param1 &&
+            param2 == other.param2 &&
+            runOnType == other.runOnType &&
+            reference == other.reference &&
+            param3 == other.param3
+            );
+}
+
+bool SKCTDA::operator != (const SKCTDA &other) const
+{
+    return !(*this == other);
+}
+
+bool SKCTDA::IsEqual() const
+{
+    return (operType & eOperTypeMask) == eEqual;
+}
+
+void SKCTDA::IsEqual(bool value)
+{
+    if (value)
+        operType = (operType & fOperFlagMask) | eEqual;
+    else
+        operType = (operType & fOperFlagMask) | eNotEqual;
+}
+
+bool SKCTDA::IsNotEqual() const
+{
+    return (operType & eOperTypeMask) == eNotEqual;
+}
+
+void SKCTDA::IsNotEqual(bool value)
+{
+    if (value)
+        operType = (operType & fOperFlagMask) | eNotEqual;
+    else
+        operType = (operType & fOperFlagMask) | eEqual;
+}
+
+bool SKCTDA::IsGreater() const
+{
+    return  (operType & eOperTypeMask) == eGreater;
+}
+
+void SKCTDA::IsGreater(bool value)
+{
+    if (value)
+        operType = (operType & fOperFlagMask) | eGreater;
+    else
+        operType = (operType & fOperFlagMask) | eLessOrEqual;
+}
+
+bool SKCTDA::IsGreaterOrEqual() const
+{
+    return (operType & eOperTypeMask) == eGreaterOrEqual;
+}
+
+void SKCTDA::IsGreaterOrEqual(bool value)
+{
+    if (value)
+        operType = (operType & fOperFlagMask) | eGreaterOrEqual;
+    else
+        operType = (operType & fOperFlagMask) | eLess;
+}
+
+bool SKCTDA::IsLess() const
+{
+    return (operType & eOperTypeMask) == eLess;
+}
+
+void SKCTDA::IsLess(bool value)
+{
+    if (value)
+        operType = (operType & fOperFlagMask) | eLess;
+    else
+        operType = (operType & fOperFlagMask) | eGreaterOrEqual;
+}
+
+bool SKCTDA::IsLessOrEqual() const
+{
+    return (operType & eOperTypeMask) == eLessOrEqual;
+}
+
+void SKCTDA::IsLessOrEqual(bool value)
+{
+    if (value)
+        operType = (operType & fOperFlagMask) | eLessOrEqual;
+    else
+        operType = (operType & fOperFlagMask) | eGreater;
+}
+
+bool SKCTDA::IsType(UINT8 Type) const
+{
+    return (operType & eOperTypeMask) == (Type & eOperTypeMask);
+}
+
+void SKCTDA::SetType(UINT8 Type)
+{
+    operType = (operType & fOperFlagMask) | (Type & eOperTypeMask);
+}
+
+bool SKCTDA::IsNone() const
+{
+    return (operType & fOperFlagMask) == fIsNone;
+}
+
+void SKCTDA::IsNone(bool value)
+{
+    if (value)
+        operType &= eOperTypeMask;
+}
+
+bool SKCTDA::IsOr() const
+{
+    return (operType & fIsOr) != 0;
+}
+
+void SKCTDA::IsOr(bool value)
+{
+    SETBIT(operType, fIsOr, value);
+}
+
+bool SKCTDA::IsUseAliases() const
+{
+    return (operType & fIsUseAliases) != 0;
+}
+
+void SKCTDA::IsUseAliases(bool value)
+{
+    SETBIT(operType, fIsUseAliases, value);
+}
+
+bool SKCTDA::IsUseGlobal() const
+{
+    return (operType & fIsUseGlobal) != 0;
+}
+
+void SKCTDA::IsUseGlobal(bool value)
+{
+    SETBIT(operType, fIsUseGlobal, value);
+}
+
+bool SKCTDA::IsUsePackData() const
+{
+    return (operType & fIsUsePackData) != 0;
+}
+
+void SKCTDA::IsUsePackData(bool value)
+{
+    SETBIT(operType, fIsUsePackData, value);
+}
+
+bool SKCTDA::IsSwapSubject() const
+{
+    return (operType & fIsSwapSubject) != 0;
+}
+
+void SKCTDA::IsSwapSubject(bool value)
+{
+    SETBIT(operType, fIsSwapSubject, value);
+}
+
+bool SKCTDA::IsFlagMask(UINT8 Mask, bool Exact) const
+{
+    return Exact ? (operType & fOperFlagMask & Mask) == (Mask & fOperFlagMask)
+                 : (operType & fOperFlagMask & Mask) != 0;
+}
+
+void SKCTDA::SetFlagMask(UINT8 Mask)
+{
+    operType = (operType & eOperTypeMask) | (Mask & fOperFlagMask);
+}
+
+bool SKCTDA::IsResultOnSubject() const
+{
+    return runOnType == eSubject;
+}
+
+void SKCTDA::IsResultOnSubject(bool value)
+{
+    runOnType = value ? eSubject : eTarget;
+}
+
+bool SKCTDA::IsResultOnTarget() const
+{
+    return runOnType == eTarget;
+}
+
+void SKCTDA::IsResultOnTarget(bool value)
+{
+    runOnType = value ? eTarget : eSubject;
+}
+
+bool SKCTDA::IsResultOnReference() const
+{
+    return runOnType == eReference;
+}
+
+void SKCTDA::IsResultOnReference(bool value)
+{
+    runOnType = value ? eReference : eSubject;
+}
+
+bool SKCTDA::IsResultOnCombatTarget() const
+{
+    return runOnType == eCombatTarget;
+}
+
+void SKCTDA::IsResultOnCombatTarget(bool value)
+{
+    runOnType = value ? eCombatTarget : eSubject;
+}
+
+bool SKCTDA::IsResultOnLinkedReference() const
+{
+    return runOnType == eLinkedReference;
+}
+
+void SKCTDA::IsResultOnLinkedReference(bool value)
+{
+    runOnType = value ? eLinkedReference : eSubject;
+}
+
+bool SKCTDA::IsResultOnQuestAlias() const
+{
+    return runOnType == eQuestAlias;
+}
+
+void SKCTDA::IsResultOnQuestAlias(bool value)
+{
+    runOnType = value ? eQuestAlias : eSubject;
+}
+
+bool SKCTDA::IsResultOnPackageData() const
+{
+    return runOnType == ePackageData;
+}
+
+void SKCTDA::IsResultOnPackageData(bool value)
+{
+    runOnType = value ? ePackageData : eSubject;
+}
+
+bool SKCTDA::IsResultOnEventData() const
+{
+    return runOnType == eEventData;
+}
+
+void SKCTDA::IsResultOnEventData(bool value)
+{
+    runOnType = value ? ePackageData : eSubject;
+}
+
+bool SKCTDA::IsResultOnType(UINT32 Type) const
+{
+    return runOnType == Type;
+}
+
+void SKCTDA::SetResultOnType(UINT32 Type)
+{
+    runOnType = Type;
+}
+
+bool SKCondition::VisitFormIDs(FormIDOp &op)
+{
+    return CTDA.value.VisitFormIDs(op);
+}
+
+void SKCondition::Write(FileWriter &writer)
+{
+    WRITE(CTDA);
+    WRITE(CIS1);
+    WRITE(CIS2);
+}
+
+bool SKCondition::operator == (const SKCondition &other) const
+{
+    return (CTDA == other.CTDA &&
+            CIS1.equals(other.CIS1) &&
+            CIS2.equals(other.CIS2)
+            );
+}
+
+bool SKCondition::operator != (const SKCondition &other) const
+{
+    return !(*this == other);
+}
+
+SKEFIT::SKEFIT() :
+    magnitude(0.0),
+    area(0),
+    duration(0)
+{
+    //
+}
+
+SKEFIT::~SKEFIT()
+{
+    //
+}
+
+bool SKEFIT::operator == (const SKEFIT &other) const
+{
+    return (AlmostEqual(magnitude, other.magnitude, 2) &&
+            area == other.area &&
+            duration == other.duration
+            );
+}
+
+bool SKEFIT::operator != (const SKEFIT &other) const
+{
+    return !(*this == other);
+}
+
+bool SKEffect::VisitFormIDs(FormIDOp &op)
+{
+    op.Accept(EFID.value);
+    for (UINT32 i = 0; i < CTDA.value.size(); ++i)
+        CTDA.value[i]->VisitFormIDs(op);
+    return op.Stop();
+}
+
+void SKEffect::Write(FileWriter &writer)
+{
+    WRITE(EFID);
+    WRITE(EFIT);
+    CTDA.Write(writer, true);
+}
+
+bool SKEffect::operator == (const SKEffect &other) const
+{
+    return (EFID == other.EFID &&
+            EFIT == other.EFIT &&
+            CTDA == other.CTDA
+            );
+}
+
+bool SKEffect::operator != (const SKEffect &other) const
+{
+    return !(*this == other);
+}
+
 } // namespace Sk

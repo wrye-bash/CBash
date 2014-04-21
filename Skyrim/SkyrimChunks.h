@@ -136,4 +136,151 @@ struct SKDESTRUCT //Destructable
     bool operator != (const SKDESTRUCT &other) const;
 };
 
+struct SKCTDA //Condition
+{
+    UINT8   operType, unused1[3]; //Type, Unused
+    FORMID_OR_FLOAT32 compValue; //Float or Global (if fIsUseGlobal is true)
+    UINT16  ifunc; // function index
+    UINT8   unused2[2]; // padding
+    FORMID_OR_UINT32 param1, param2;
+    //Below are not always present on chunk...
+    UINT32  runOnType; //Run On
+    FORMID_OR_UINT32 reference; //Reference (if runOn == 2) or Unused
+    SINT32  param3;
+
+    enum operTypeType
+    {
+        eEqual = 0<<5,
+        eNotEqual = 1<<5,
+        eGreater = 2<<5,
+        eGreaterOrEqual = 3<<5,
+        eLess = 4<<5,
+        eLessOrEqual = 5<<5,
+        eOperTypeMask = 0xE0 // First 3 bits
+    };
+
+    enum operTypeFlag
+    {
+        fIsNone = 0x00,
+        fIsOr = 0x01,
+        fIsUseAliases = 0x02,
+        fIsUseGlobal = 0x04,
+        fIsUsePackData = 0x08,
+        fIsSwapSubject = 0x10,
+        fOperFlagMask = 0x1F // Last 5 bits
+    };
+
+    enum operRunOnType
+    {
+        eSubject = 0,
+        eTarget,
+        eReference,
+        eCombatTarget,
+        eLinkedReference,
+        eQuestAlias,
+        ePackageData,
+        eEventData
+    };
+
+    SKCTDA();
+    ~SKCTDA();
+
+    bool VisitFormIDs(FormIDOp &op);
+    void Write(FileWriter &writer);
+
+    bool operator ==(const SKCTDA &other) const;
+    bool operator !=(const SKCTDA &other) const;
+
+    bool IsEqual() const;
+    void IsEqual(bool value);
+    bool IsNotEqual() const;
+    void IsNotEqual(bool value);
+    bool IsGreater() const;
+    void IsGreater(bool value);
+    bool IsGreaterOrEqual() const;
+    void IsGreaterOrEqual(bool value);
+    bool IsLess() const;
+    void IsLess(bool value);
+    bool IsLessOrEqual() const;
+    void IsLessOrEqual(bool value);
+    bool IsType(UINT8 Type) const;
+    void SetType(UINT8 Type);
+
+    bool IsNone() const;
+    void IsNone(bool value);
+    bool IsOr() const;
+    void IsOr(bool value);
+    bool IsUseAliases() const;
+    void IsUseAliases(bool value);
+    bool IsUseGlobal() const;
+    void IsUseGlobal(bool value);
+    bool IsUsePackData() const;
+    void IsUsePackData(bool value);
+    bool IsSwapSubject() const;
+    void IsSwapSubject(bool value);
+    bool IsFlagMask(UINT8 Mask, bool Exact = false) const;
+    void SetFlagMask(UINT8 Mask);
+
+    bool IsResultOnSubject() const;
+    void IsResultOnSubject(bool value);
+    bool IsResultOnTarget() const;
+    void IsResultOnTarget(bool value);
+    bool IsResultOnReference() const;
+    void IsResultOnReference(bool value);
+    bool IsResultOnCombatTarget() const;
+    void IsResultOnCombatTarget(bool value);
+    bool IsResultOnLinkedReference() const;
+    void IsResultOnLinkedReference(bool value);
+    bool IsResultOnQuestAlias() const;
+    void IsResultOnQuestAlias(bool value);
+    bool IsResultOnPackageData() const;
+    void IsResultOnPackageData(bool value);
+    bool IsResultOnEventData() const;
+    void IsResultOnEventData(bool value);
+    bool IsResultOnType(UINT32 Type) const;
+    void SetResultOnType(UINT32 Type);
+};
+SIZE_CHECK(SKCTDA, 32);
+
+struct SKCondition
+{
+    ReqSubRecord<SKCTDA> CTDA; // Condition
+    StringRecord CIS1; // Parameter 1
+    StringRecord CIS2; // Parameter 2
+
+    bool VisitFormIDs(FormIDOp &op);
+    void Write(FileWriter &writer);
+
+    bool operator ==(const SKCondition &other) const;
+    bool operator !=(const SKCondition &other) const;
+};
+
+
+struct SKEFIT
+{
+    FLOAT32 magnitude;
+    UINT32  area, duration;
+
+    SKEFIT();
+    ~SKEFIT();
+
+    bool operator ==(const SKEFIT &other) const;
+    bool operator !=(const SKEFIT &other) const;
+};
+SIZE_CHECK(SKEFIT, 12);
+
+struct SKEffect
+{
+    ReqSimpleSubRecord<FORMID> EFID; //Effect ID
+    ReqSubRecord<SKEFIT> EFIT; //Effect Data
+    OrderedSparseArray<SKCondition *> CTDA; //Conditions
+
+    bool VisitFormIDs(FormIDOp &op);
+    void Write(FileWriter &writer);
+
+    bool operator ==(const SKEffect &other) const;
+    bool operator !=(const SKEffect &other) const;
+};
+
+
 } // namespace Sk

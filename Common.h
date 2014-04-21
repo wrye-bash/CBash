@@ -165,7 +165,8 @@ enum varType {
     eNONE,
     eUINT32,
     eFORMID,
-    eVATSPARAM
+    eVATSPARAM,
+    eEVENTDATA,
     };
 
 class Ex_NULL : public std::exception
@@ -237,6 +238,8 @@ extern const std::map<UINT32, STRING> HardCodedFormID_EditorID;
 
 extern const std::map<UINT32, FunctionArguments> FNVFunction_Arguments;
 extern const UINT32 VATSFunction_Argument[];
+
+extern const std::map<UINT32, FunctionArguments> SKFunction_Arguments;
 
 extern const float flt_max;
 extern const float flt_min;

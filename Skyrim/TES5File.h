@@ -44,7 +44,7 @@
 #include "Records/AACTRecord.h"
 #include "Records/ACTIRecord.h"
 #include "Records/ADDNRecord.h"
-// #include "Records/ALCHRecord.h"
+#include "Records/ALCHRecord.h"
 // #include "Records/AMMORecord.h"
 #include "Records/ANIORecord.h"
 #include "Records/APPARecord.h"
@@ -173,7 +173,7 @@ class TES5File : public ModFile
         GRUP(AACT);
         GRUP(ACTI);
         GRUP(ADDN);
-        // GRUP(ALCH);
+        GRUP(ALCH);
         // GRUP(AMMO);
         GRUP(ANIO);
         GRUP(APPA);
