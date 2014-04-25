@@ -37,6 +37,7 @@
 #pragma once
 #include "..\..\Common.h"
 #include "..\..\GenericRecord.h"
+#include "..\SkyrimChunks.h"
 
 namespace Sk {
 
@@ -44,6 +45,7 @@ class AACTRecord : public TES5Record // Action record
     {
     public:
         StringRecord EDID; // Editor ID
+        ReqSubRecord<GENCNAM> CNAM; // Color
 
         AACTRecord(unsigned char *_recData=NULL);
         AACTRecord(AACTRecord *srcRecord);

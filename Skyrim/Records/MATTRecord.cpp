@@ -39,6 +39,61 @@
 
 namespace Sk
 {
+
+MATTRecord::MATTCNAM::MATTCNAM() :
+    red(0.0), green(0.0), blue(0.0)
+{
+    //
+}
+
+MATTRecord::MATTCNAM::~MATTCNAM()
+{
+
+}
+
+bool MATTRecord::MATTCNAM::operator == (const MATTCNAM &other) const
+{
+    return (AlmostEqual(red, other.red, 2) &&
+            AlmostEqual(green, other.green, 2) &&
+            AlmostEqual(blue, other.blue, 2)
+            );
+}
+
+bool MATTRecord::MATTCNAM::operator != (const MATTCNAM &other) const
+{
+    return !(*this == other);
+}
+
+bool MATTRecord::IsStairMaterial() const
+{
+    return (FNAM.value & fIsStairMaterial) != 0;
+}
+
+void MATTRecord::IsStairMaterial(bool value)
+{
+    SETBIT(FNAM.value, fIsStairMaterial, value);
+}
+
+bool MATTRecord::IsArrowsStick() const
+{
+    return (FNAM.value & fIsArrowsStick) != 0;
+}
+
+void MATTRecord::IsArrowsStick(bool value)
+{
+    SETBIT(FNAM.value, fIsArrowsStick, value);
+}
+
+bool MATTRecord::IsFlagMask(UINT32 Mask, bool Exact)
+{
+    return Exact ? (FNAM.value & Mask) == Mask : (FNAM.value & Mask) != 0;
+}
+
+void MATTRecord::SetFlagMask(UINT32 Mask)
+{
+    FNAM.value = Mask;
+}
+
 MATTRecord::MATTRecord(unsigned char *_recData):
     TES5Record(_recData)
     {
@@ -46,30 +101,18 @@ MATTRecord::MATTRecord(unsigned char *_recData):
     }
 
 MATTRecord::MATTRecord(MATTRecord *srcRecord):
-    TES5Record()
+    TES5Record((TES5Record *)srcRecord)
     {
-    if(srcRecord == NULL)
-        return;
-
-    flags = srcRecord->flags;
-    formID = srcRecord->formID;
-    flagsUnk = srcRecord->flagsUnk;
-    formVersion = srcRecord->formVersion;
-    versionControl2[0] = srcRecord->versionControl2[0];
-    versionControl2[1] = srcRecord->versionControl2[1];
-
-    recData = srcRecord->recData;
-    if(!srcRecord->IsChanged())
+    if(srcRecord == NULL || !srcRecord->IsChanged())
         return;
 
     EDID = srcRecord->EDID;
+    PNAM = srcRecord->PNAM;
     MNAM = srcRecord->MNAM;
     CNAM = srcRecord->CNAM;
     BNAM = srcRecord->BNAM;
     FNAM = srcRecord->FNAM;
     HNAM = srcRecord->HNAM;
-    PNAM = srcRecord->PNAM;
-    return;
     }
 
 MATTRecord::~MATTRecord()
@@ -113,23 +156,23 @@ SINT32 MATTRecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer,
             case REV32(EDID): // MaterialInsect
                 EDID.Read(buffer, subSize, CompressedOnDisk);
                 break;
-            case REV32(MNAM): // Insect
+            case REV32(PNAM): // Material Parent
+                PNAM.Read(buffer, subSize);
+                break;
+            case REV32(MNAM): // Material Name
                 MNAM.Read(buffer, subSize, CompressedOnDisk);
                 break;
-            case REV32(CNAM): // 12 bytes, f1 f0 f0 3e - b9 b8 b8 3d - b9 b8 b8 3d, flags?
-                CNAM.Read(buffer, subSize, CompressedOnDisk);
+            case REV32(CNAM): // Havok Display Color
+                CNAM.Read(buffer, subSize);
                 break;
-            case REV32(BNAM): // 4 bytes, 00 00 80 3e, flags
-                BNAM.Read(buffer, subSize, CompressedOnDisk);
+            case REV32(BNAM): // Bouyancy
+                BNAM.Read(buffer, subSize);
                 break;
-            case REV32(FNAM): // 4 bytes, 02 00 00 00, flags
-                FNAM.Read(buffer, subSize, CompressedOnDisk);
+            case REV32(FNAM): // Flags
+                FNAM.Read(buffer, subSize);
                 break;
-            case REV32(HNAM): // 4 bytes, 86 a2 05 00, formID -> IPDS (PHYBodyMedium), Havok NAMe
+            case REV32(HNAM): // Havok Impact Data Set
                 HNAM.Read(buffer, subSize);
-                break;
-            case REV32(PNAM): // 4 bytes, 47 2f 01 00, formID -> MATT, Parent NAMe
-                PNAM.Read(buffer, subSize);
                 break;
             default:
                 //printer("FileName = %s\n", FileName);
@@ -149,35 +192,36 @@ SINT32 MATTRecord::Unload()
     IsChanged(false);
     IsLoaded(false);
     EDID.Unload();
+    PNAM.Unload();
     MNAM.Unload();
     CNAM.Unload();
     BNAM.Unload();
     FNAM.Unload();
     HNAM.Unload();
-    PNAM.Unload();
     return 1;
     }
 
 SINT32 MATTRecord::WriteRecord(FileWriter &writer)
     {
     WRITE(EDID);
+    WRITE(PNAM);
     WRITE(MNAM);
     WRITE(CNAM);
     WRITE(BNAM);
     WRITE(FNAM);
     WRITE(HNAM);
-    WRITE(PNAM);
     return -1;
     }
 
 bool MATTRecord::operator ==(const MATTRecord &other) const
     {
     return (MNAM.equalsi(other.MNAM) &&
+            PNAM == other.PNAM &&
             CNAM == other.CNAM &&
             BNAM == other.BNAM &&
             FNAM == other.FNAM &&
-            HNAM == other.HNAM &&
-            PNAM == other.PNAM);
+            HNAM == other.HNAM
+            );
     }
 
 bool MATTRecord::operator !=(const MATTRecord &other) const
@@ -186,7 +230,15 @@ bool MATTRecord::operator !=(const MATTRecord &other) const
     }
 
 bool MATTRecord::equals(Record *other)
+{
+    try
     {
-    return *this == *(MATTRecord *)other;
+        return *this == *reinterpret_cast<MATTRecord *>(other);
+    }
+    catch (...)
+    {
+        return false;
     }
 }
+
+} // namespace Sk

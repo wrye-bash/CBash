@@ -74,6 +74,14 @@ UINT32 AACTRecord::GetFieldAttribute(FIELD_IDENTIFIERS, UINT32 WhichAttribute)
                     return UNKNOWN_FIELD;
                 }
             return UNKNOWN_FIELD;
+        case 7: // CNAM.red
+            return UINT8_FIELD;
+        case 8: // CNAM.green
+            return UINT8_FIELD;
+        case 9: // CNAM.blue
+            return UINT8_FIELD;
+        case 10: // CNAM.unk1
+            return UINT8_FIELD;
         default:
             return UNKNOWN_FIELD;
         }
@@ -98,6 +106,14 @@ void * AACTRecord::GetField(FIELD_IDENTIFIERS, void **FieldValues)
         case 6: //versionControl2
             *FieldValues = &versionControl2[0];
             return NULL;
+        case 7: // CNAM.red
+            return &CNAM->red;
+        case 8: // CNAM.green
+            return &CNAM->green;
+        case 9: // CNAM.blue
+            return &CNAM->blue;
+        case 10: // CNAM.unk1
+            return &CNAM->unk1;
         default:
             return NULL;
         }
@@ -131,6 +147,18 @@ bool AACTRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             versionControl2[0] = ((UINT8ARRAY)FieldValue)[0];
             versionControl2[1] = ((UINT8ARRAY)FieldValue)[1];
             break;
+        case 7: // CNAM.red
+            CNAM->red = *(UINT8 *)FieldValue;
+            break;
+        case 8: // CNAM.green
+            CNAM->green = *(UINT8 *)FieldValue;
+            break;
+        case 9: // CNAM.green
+            CNAM->blue = *(UINT8 *)FieldValue;
+            break;
+        case 10: // CNAM.unk1
+            CNAM->unk1 = *(UINT8 *)FieldValue;
+            break;
         default:
             break;
         }
@@ -156,6 +184,12 @@ void AACTRecord::DeleteField(FIELD_IDENTIFIERS)
         case 6: //versionControl2
             versionControl2[0] = 0;
             versionControl2[1] = 0;
+            return;
+        case 7:  // CNAM.red
+        case 8:  // CNAM.green
+        case 9:  // CNAM.blue
+        case 10: // CNAM.unk1
+            CNAM.Unload();
             return;
         default:
             return;

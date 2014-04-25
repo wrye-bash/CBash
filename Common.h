@@ -165,7 +165,8 @@ enum varType {
     eNONE,
     eUINT32,
     eFORMID,
-    eVATSPARAM
+    eVATSPARAM,
+    eEVENTDATA,
     };
 
 class Ex_NULL : public std::exception
@@ -237,6 +238,8 @@ extern const std::map<UINT32, STRING> HardCodedFormID_EditorID;
 
 extern const std::map<UINT32, FunctionArguments> FNVFunction_Arguments;
 extern const UINT32 VATSFunction_Argument[];
+
+extern const std::map<UINT32, FunctionArguments> SKFunction_Arguments;
 
 extern const float flt_max;
 extern const float flt_min;
@@ -713,6 +716,7 @@ class NonNullStringRecord
 
         bool Read(unsigned char *&buffer, const UINT32 &subSize, const bool &CompressedOnDisk);
         void Write(UINT32 _Type, FileWriter &writer);
+        void Write16(FileWriter &writer) const;
         void ReqWrite(UINT32 _Type, FileWriter &writer);
 
         void Copy(STRING FieldValue);
@@ -2699,3 +2703,49 @@ struct UnorderedSparseArray<T *>
         return !(*this == other);
         }
     };
+
+template <typename T, typename countType, int countRecord>
+class ReqCounted : public T
+{
+public:
+    void Write(FileWriter &writer)
+    {
+        countType count = value.size();
+        writer.record_write_subrecord(countRecord, &count, sizeof(count));
+        for (UINT32 p = 0; p < value.size(); p++)
+            value[p]->Write(writer);
+    }
+
+    void Write(UINT32 _Type, FileWriter &writer)
+    {
+        countType count = value.size();
+        writer.record_write_subrecord(countRecord, &count, sizeof(count));
+        T::Write(_Type, writer);
+    }
+};
+
+template <typename T, typename countType, int countRecord>
+class OptCounted : public T
+{
+public:
+    void Write(FileWriter &writer)
+    {
+        countType count = value.size();
+        if (count)
+        {
+            writer.record_write_subrecord(countRecord, &count, sizeof(count));
+            for (UINT32 p = 0; p < value.size(); p++)
+                value[p]->Write(writer);
+        }
+    }
+
+    void Write(UINT32 _Type, FileWriter &writer)
+    {
+        countType count = value.size();
+        if (count)
+        {
+            writer.record_write_subrecord(countRecord, &count, sizeof(count));
+            T::Write(_Type, writer);
+        }
+    }
+};

@@ -44,7 +44,7 @@ class LTEXRecord : public TES5Record //Landscape Texture
     private:
         struct LTEXHNAM
             {
-            UINT8   types, friction, restitution;
+            UINT8   friction, restitution;
 
             LTEXHNAM();
             ~LTEXHNAM();
@@ -52,75 +52,21 @@ class LTEXRecord : public TES5Record //Landscape Texture
             bool operator ==(const LTEXHNAM &other) const;
             bool operator !=(const LTEXHNAM &other) const;
             };
-
-        enum typesTypes
-            {
-            eStone = 0,
-            eCloth,
-            eDirt,
-            eGlass,
-            eGrass,
-            eMetal,
-            eOrganic,
-            eSkin,
-            eWater,
-            eWood,
-            eHeavyStone,
-            eHeavyMetal,
-            eHeavyWood,
-            eChain,
-            eSnow,
-            };
+        SIZE_CHECK(LTEXHNAM, 2);
 
     public:
         StringRecord EDID; //Editor ID
-        StringRecord ICON; //Large Icon Filename
-        StringRecord MICO; //Small Icon Filename
-        OptSimpleSubRecord<FORMID> TNAM; //Texture (Skyrim) -> TXST
+        OptSimpleSubRecord<FORMID> TNAM; // Texture Set
+        ReqSimpleSubRecord<FORMID> MNAM; // Material Type
         ReqSubRecord<LTEXHNAM> HNAM; //Havok Data
         ReqSimpleSubRecord<UINT8> SNAM; //Texture Specular Exponent
         UnorderedSparseArray<FORMID> GNAM; //Grasses
-        ReqSimpleSubRecord<FORMID> MNAM; //Material (Skyrim) -> MATT
 
         LTEXRecord(unsigned char *_recData=NULL);
         LTEXRecord(LTEXRecord *srcRecord);
         ~LTEXRecord();
 
         bool   VisitFormIDs(FormIDOp &op);
-
-        bool   IsStone();
-        void   IsStone(bool value);
-        bool   IsCloth();
-        void   IsCloth(bool value);
-        bool   IsDirt();
-        void   IsDirt(bool value);
-        bool   IsGlass();
-        void   IsGlass(bool value);
-        bool   IsGrass();
-        void   IsGrass(bool value);
-        bool   IsMetal();
-        void   IsMetal(bool value);
-        bool   IsOrganic();
-        void   IsOrganic(bool value);
-        bool   IsSkin();
-        void   IsSkin(bool value);
-        bool   IsWater();
-        void   IsWater(bool value);
-        bool   IsWood();
-        void   IsWood(bool value);
-        bool   IsHeavyStone();
-        void   IsHeavyStone(bool value);
-        bool   IsHeavyMetal();
-        void   IsHeavyMetal(bool value);
-        bool   IsHeavyWood();
-        void   IsHeavyWood(bool value);
-        bool   IsChain();
-        void   IsChain(bool value);
-        bool   IsSnow();
-        void   IsSnow(bool value);
-
-        bool   IsType(UINT8 Type);
-        void   SetType(UINT8 Type);
 
         UINT32 GetFieldAttribute(DEFAULTED_FIELD_IDENTIFIERS, UINT32 WhichAttribute=0);
         void * GetField(DEFAULTED_FIELD_IDENTIFIERS, void **FieldValues=NULL);

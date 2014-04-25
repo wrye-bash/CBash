@@ -37,6 +37,7 @@
 #pragma once
 #include "..\..\Common.h"
 #include "..\..\GenericRecord.h"
+#include "..\SkyrimChunks.h"
 
 namespace Sk
 {
@@ -57,7 +58,7 @@ class LVLIRecord : public TES5Record //Leveled Item
         ReqSimpleSubRecord<UINT8> LVLD; //Chance none
         ReqSimpleSubRecord<UINT8> LVLF; //Flags
         // ReqSimpleSubRecord<UINT8> LLCT; //Count
-        UnorderedSparseArray<FNVLVLO *> Entries; //Leveled List Entries
+        ReqCounted<UnorderedSparseArray<SKLVLOCOED *>, UINT8, REV32(LLCT)> Entries; //Leveled List Entries (LVLO + COED)
         OptSimpleSubRecord<FORMID> LVLG; // List owner
 
         LVLIRecord(unsigned char *_recData=NULL);

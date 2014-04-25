@@ -46,21 +46,10 @@ WRLDRecord::WRLDRecord(unsigned char *_recData):
     }
 
 WRLDRecord::WRLDRecord(WRLDRecord *srcRecord):
-    TES5Record(),
+    TES5Record((TES5Record *)srcRecord),
     CELL(NULL)
     {
-    if(srcRecord == NULL)
-        return;
-
-    flags = srcRecord->flags;
-    formID = srcRecord->formID;
-    flagsUnk = srcRecord->flagsUnk;
-    formVersion = srcRecord->formVersion;
-    versionControl2[0] = srcRecord->versionControl2[0];
-    versionControl2[1] = srcRecord->versionControl2[1];
-
-    recData = srcRecord->recData;
-    if(!srcRecord->IsChanged())
+    if(srcRecord == NULL || !srcRecord->IsChanged())
         return;
 
     EDID = srcRecord->EDID;
@@ -91,7 +80,6 @@ WRLDRecord::WRLDRecord(WRLDRecord *srcRecord):
     NAMA = srcRecord->NAMA;
     TNAM = srcRecord->TNAM;
     UNAM = srcRecord->UNAM;
-    return;
     }
 
 WRLDRecord::~WRLDRecord()

@@ -46,20 +46,9 @@ LVSPRecord::LVSPRecord(unsigned char *_recData):
     }
 
 LVSPRecord::LVSPRecord(LVSPRecord *srcRecord):
-    TES5Record()
+    TES5Record((TES5Record *)srcRecord)
     {
-        if(srcRecord == NULL)
-            return;
-
-        flags = srcRecord->flags;
-        formID = srcRecord->formID;
-        flagsUnk = srcRecord->flagsUnk;
-        formVersion = srcRecord->formVersion;
-        versionControl2[0] = srcRecord->versionControl2[0];
-        versionControl2[1] = srcRecord->versionControl2[1];
-
-        recData = srcRecord->recData;
-        if(!srcRecord->IsChanged())
+        if(srcRecord == NULL || !srcRecord->IsChanged())
             return;
 
         EDID = srcRecord->EDID;
@@ -67,7 +56,6 @@ LVSPRecord::LVSPRecord(LVSPRecord *srcRecord):
         LVLD = srcRecord->LVLD;
         LVLF = srcRecord->LVLF;
         Entries = srcRecord->Entries;
-        return;
     }
 
 LVSPRecord::~LVSPRecord()
@@ -81,11 +69,8 @@ bool LVSPRecord::VisitFormIDs(FormIDOp &op)
             return false;
 
         for(UINT32 x = 0; x < Entries.value.size(); x++)
-            {
-            op.Accept(Entries.value[x]->LVLO.value.listId);
-            if(Entries.value[x]->IsGlobal())
-                op.Accept(Entries.value[x]->COED->globalOrRank);
-            }
+            op.Accept(Entries.value[x]->listId);
+
         return op.Stop();
     }
 
@@ -175,13 +160,7 @@ SINT32 LVSPRecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer,
                     LVLF.Read(buffer, subSize);
                     break;
                 case REV32(LVLO):
-                    Entries.value.push_back(new FNVLVLO);
-                    Entries.value.back()->LVLO.Read(buffer, subSize);
-                    break;
-                case REV32(COED):
-                    if(Entries.value.size() == 0)
-                        Entries.value.push_back(new FNVLVLO);
-                    Entries.value.back()->COED.Read(buffer, subSize);
+                    Entries.Read(buffer, subSize);
                     break;
                 case REV32(LLCT):
                     // Skip
@@ -218,9 +197,6 @@ SINT32 LVSPRecord::WriteRecord(FileWriter &writer)
         WRITE(OBND);
         WRITE(LVLD);
         WRITE(LVLF);
-        //  Write LLCT
-        UINT8 count = Entries.value.size();
-        writer.record_write_subrecord(REV32(LLCT),&count,sizeof(count));
         Entries.Write(writer);
         return -1;
     }

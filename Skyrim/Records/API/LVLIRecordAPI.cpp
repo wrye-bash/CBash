@@ -113,7 +113,7 @@ UINT32 LVLIRecord::GetFieldAttribute(FIELD_IDENTIFIERS, UINT32 WhichAttribute)
             switch(ListFieldID)
                 {
                 case 1: //level
-                    return SINT16_FIELD;
+                    return UINT16_FIELD;
                 case 2: //unused1
                     switch(WhichAttribute)
                         {
@@ -302,7 +302,7 @@ bool LVLIRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             switch(ListFieldID)
                 {
                 case 1: //level
-                    Entries.value[ListIndex]->LVLO.value.level = *(SINT16 *)FieldValue;
+                    Entries.value[ListIndex]->LVLO.value.level = *(UINT16 *)FieldValue;
                     break;
                 case 2: //unused1
                     if(ArraySize != 2)

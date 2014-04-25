@@ -42,15 +42,39 @@ namespace Sk
 {
 class MATTRecord : public TES5Record //Material Type
     {
+    struct MATTCNAM // Havok display color
+    {
+        FLOAT32 red, green, blue;
+
+        MATTCNAM();
+        ~MATTCNAM();
+
+        bool operator == (const MATTCNAM &other) const;
+        bool operator != (const MATTCNAM &other) const;
+    };
+    SIZE_CHECK(MATTCNAM, 12);
 
     public:
-        StringRecord EDID; //Editor ID
-        StringRecord MNAM; //Material name (Skyrim)
-        RawRecord CNAM; //Unknown (Skyrim)
-        RawRecord BNAM; //Unknown (Skyrim)
-        RawRecord FNAM; //Unknown (Skyrim)
-        ReqSimpleSubRecord<FORMID> HNAM; //Havok Name (Skyrim)
-        ReqSimpleSubRecord<FORMID> PNAM; //Material Parent (Skyrim)
+        StringRecord EDID; // Editor ID
+        ReqSimpleSubRecord<FORMID> PNAM; // Material Parent
+        StringRecord MNAM; // Material Name
+        ReqSubRecord<MATTCNAM> CNAM; // Havok Display Color
+        ReqSimpleFloatSubRecord<flt_0> BNAM; // Bouyancy
+        ReqSimpleSubRecord<UINT32> FNAM; // Flags
+        ReqSimpleSubRecord<FORMID> HNAM; //Havok Impact Data Set (IPDS)
+
+        enum flagFlags
+        {
+            fIsStairMaterial = 0x01,
+            fIsArrowsStick = 0x02
+        };
+
+        bool IsStairMaterial() const;
+        void IsStairMaterial(bool value);
+        bool IsArrowsStick() const;
+        void IsArrowsStick(bool value);
+        bool IsFlagMask(UINT32 Mask, bool Exact=false);
+        void SetFlagMask(UINT32 Mask);
 
         MATTRecord(unsigned char *_recData=NULL);
         MATTRecord(MATTRecord *srcRecord);

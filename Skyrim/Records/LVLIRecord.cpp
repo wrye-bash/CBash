@@ -46,20 +46,9 @@ LVLIRecord::LVLIRecord(unsigned char *_recData):
     }
 
 LVLIRecord::LVLIRecord(LVLIRecord *srcRecord):
-    TES5Record()
+    TES5Record((TES5Record *)srcRecord)
     {
-        if(srcRecord == NULL)
-            return;
-
-        flags = srcRecord->flags;
-        formID = srcRecord->formID;
-        flagsUnk = srcRecord->flagsUnk;
-        formVersion = srcRecord->formVersion;
-        versionControl2[0] = srcRecord->versionControl2[0];
-        versionControl2[1] = srcRecord->versionControl2[1];
-
-        recData = srcRecord->recData;
-        if(!srcRecord->IsChanged())
+        if(srcRecord == NULL || !srcRecord->IsChanged())
             return;
 
         EDID = srcRecord->EDID;
@@ -68,7 +57,6 @@ LVLIRecord::LVLIRecord(LVLIRecord *srcRecord):
         LVLF = srcRecord->LVLF;
         LVLG = srcRecord->LVLG;
         Entries = srcRecord->Entries;
-        return;
     }
 
 LVLIRecord::~LVLIRecord()
@@ -181,12 +169,12 @@ SINT32 LVLIRecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer,
                     LVLG.Read(buffer, subSize);
                     break;
                 case REV32(LVLO):
-                    Entries.value.push_back(new FNVLVLO);
+                    Entries.value.push_back(new SKLVLOCOED);
                     Entries.value.back()->LVLO.Read(buffer, subSize);
                     break;
                 case REV32(COED):
                     if(Entries.value.size() == 0)
-                        Entries.value.push_back(new FNVLVLO);
+                        Entries.value.push_back(new SKLVLOCOED);
                     Entries.value.back()->COED.Read(buffer, subSize);
                     break;
                 case REV32(LLCT):
@@ -225,9 +213,6 @@ SINT32 LVLIRecord::WriteRecord(FileWriter &writer)
         WRITE(OBND);
         WRITE(LVLD);
         WRITE(LVLF);
-        //  Write LLCT
-        UINT8 count = Entries.value.size();
-        writer.record_write_subrecord(REV32(LLCT),&count,sizeof(count));
         Entries.Write(writer);
         WRITE(LVLG);
         return -1;

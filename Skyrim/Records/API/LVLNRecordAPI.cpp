@@ -90,7 +90,9 @@ UINT32 LVLNRecord::GetFieldAttribute(FIELD_IDENTIFIERS, UINT32 WhichAttribute)
             return UINT8_FIELD;
         case 14: //flags
             return UINT8_FLAG_FIELD;
-        case 15: //entries
+        case 15: //global
+            return FORMID_FIELD;
+        case 16: //entries
             if(ListFieldID == 0) //entries
                 {
                 switch(WhichAttribute)
@@ -111,7 +113,7 @@ UINT32 LVLNRecord::GetFieldAttribute(FIELD_IDENTIFIERS, UINT32 WhichAttribute)
             switch(ListFieldID)
                 {
                 case 1: //level
-                    return SINT16_FIELD;
+                    return UINT16_FIELD;
                 case 2: //unused1
                     switch(WhichAttribute)
                         {
@@ -138,28 +140,13 @@ UINT32 LVLNRecord::GetFieldAttribute(FIELD_IDENTIFIERS, UINT32 WhichAttribute)
                             return UNKNOWN_FIELD;
                         }
                     return UNKNOWN_FIELD;
-                case 6: //owner
-                    return FORMID_FIELD;
-                case 7: //globalOrRank
-                    switch(WhichAttribute)
-                        {
-                        case 0: //fieldType
-                            return UNKNOWN_OR_FORMID_OR_UINT32_FIELD;
-                        case 2: //WhichType
-                            return Entries.value[ListIndex]->IsGlobal() ? FORMID_FIELD : UINT32_FIELD;
-                        default:
-                            return UNKNOWN_FIELD;
-                        }
-                    return UNKNOWN_FIELD;
-                case 8: //condition
-                    return FLOAT32_FIELD;
                 default:
                     return UNKNOWN_FIELD;
                 }
             return UNKNOWN_FIELD;
-        case 16: //modPath
+        case 17: //modPath
             return ISTRING_FIELD;
-        case 17: //modt_p
+        case 18: //modt_p
             switch(WhichAttribute)
             {
             case 0: //fieldType
@@ -169,6 +156,9 @@ UINT32 LVLNRecord::GetFieldAttribute(FIELD_IDENTIFIERS, UINT32 WhichAttribute)
             default:
                 return UNKNOWN_FIELD;
             }
+            return UNKNOWN_FIELD;
+        case 19: //mods
+            // TODO: do this
             return UNKNOWN_FIELD;
         default:
             return UNKNOWN_FIELD;
@@ -210,38 +200,37 @@ void * LVLNRecord::GetField(FIELD_IDENTIFIERS, void **FieldValues)
             return &LVLD.value;
         case 14: //flags
             return &LVLF.value;
-        case 15: //entries
+        case 15: //global
+            return LVLG.IsLoaded() ? &LVLG.value : NULL;
+        case 16: //entries
             if(ListIndex >= Entries.value.size())
                 return NULL;
 
             switch(ListFieldID)
                 {
                 case 1: //level
-                    return &Entries.value[ListIndex]->LVLO.value.level;
+                    return &Entries.value[ListIndex]->level;
                 case 2: //unused1
-                    *FieldValues = &Entries.value[ListIndex]->LVLO.value.unused1[0];
+                    *FieldValues = &Entries.value[ListIndex]->unused1[0];
                     return NULL;
                 case 3: //listId
-                    return &Entries.value[ListIndex]->LVLO.value.listId;
+                    return &Entries.value[ListIndex]->listId;
                 case 4: //count
-                    return &Entries.value[ListIndex]->LVLO.value.count;
+                    return &Entries.value[ListIndex]->count;
                 case 5: //unused2
-                    *FieldValues = &Entries.value[ListIndex]->LVLO.value.unused2[0];
+                    *FieldValues = &Entries.value[ListIndex]->unused2[0];
                     return NULL;
-                case 6: //owner
-                    return Entries.value[ListIndex]->COED.IsLoaded() ? &Entries.value[ListIndex]->COED->owner : NULL;
-                case 7: //globalOrRank
-                    return Entries.value[ListIndex]->COED.IsLoaded() ? &Entries.value[ListIndex]->COED->globalOrRank : NULL;
-                case 8: //condition
-                    return Entries.value[ListIndex]->COED.IsLoaded() ? &Entries.value[ListIndex]->COED->condition : NULL;
                 default:
                     return NULL;
                 }
             return NULL;
-        case 16: //modPath
+        case 17: //modPath
             return MODL.IsLoaded() ? MODL->MODL.value : NULL;
-        case 17: //modt_p
+        case 18: //modt_p
             return MODL.IsLoaded() ? MODL->MODT.value : NULL;
+        case 19: //mods
+            // TODO: do this
+            return NULL;
         default:
             return NULL;
         }
@@ -299,7 +288,10 @@ bool LVLNRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
         case 14: //flags
             SetFlagMask(*(UINT8 *)FieldValue);
             break;
-        case 15: //entries
+        case 15: //global
+            LVLG.value = *(FORMID *)FieldValue;
+            break;
+        case 16: //entries
             if(ListFieldID == 0) //entriesSize
                 {
                 Entries.resize(ArraySize);
@@ -312,49 +304,40 @@ bool LVLNRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             switch(ListFieldID)
                 {
                 case 1: //level
-                    Entries.value[ListIndex]->LVLO.value.level = *(SINT16 *)FieldValue;
+                    Entries.value[ListIndex]->level = *(UINT16 *)FieldValue;
                     break;
                 case 2: //unused1
                     if(ArraySize != 2)
                         break;
-                    Entries.value[ListIndex]->LVLO.value.unused1[0] = ((UINT8ARRAY)FieldValue)[0];
-                    Entries.value[ListIndex]->LVLO.value.unused1[1] = ((UINT8ARRAY)FieldValue)[1];
+                    Entries.value[ListIndex]->unused1[0] = ((UINT8ARRAY)FieldValue)[0];
+                    Entries.value[ListIndex]->unused1[1] = ((UINT8ARRAY)FieldValue)[1];
                     break;
                 case 3: //listId
-                    Entries.value[ListIndex]->LVLO.value.listId = *(FORMID *)FieldValue;
+                    Entries.value[ListIndex]->listId = *(FORMID *)FieldValue;
                     return true;
                 case 4: //count
-                    Entries.value[ListIndex]->LVLO.value.count = *(SINT16 *)FieldValue;
+                    Entries.value[ListIndex]->count = *(SINT16 *)FieldValue;
                     break;
                 case 5: //unused2
                     if(ArraySize != 2)
                         break;
-                    Entries.value[ListIndex]->LVLO.value.unused2[0] = ((UINT8ARRAY)FieldValue)[0];
-                    Entries.value[ListIndex]->LVLO.value.unused2[1] = ((UINT8ARRAY)FieldValue)[1];
-                    break;
-                case 6: //owner
-                    Entries.value[ListIndex]->COED.Load();
-                    Entries.value[ListIndex]->COED->owner = *(FORMID *)FieldValue;
-                    return true;
-                case 7: //globalOrRank
-                    Entries.value[ListIndex]->COED.Load();
-                    Entries.value[ListIndex]->COED->globalOrRank = *(FORMID_OR_UINT32 *)FieldValue;
-                    return true;
-                case 8: //condition
-                    Entries.value[ListIndex]->COED.Load();
-                    Entries.value[ListIndex]->COED->condition = *(FLOAT32 *)FieldValue;
+                    Entries.value[ListIndex]->unused2[0] = ((UINT8ARRAY)FieldValue)[0];
+                    Entries.value[ListIndex]->unused2[1] = ((UINT8ARRAY)FieldValue)[1];
                     break;
                 default:
                     break;
                 }
             break;
-        case 16: //modPath
+        case 17: //modPath
             MODL.Load();
             MODL->MODL.Copy((STRING)FieldValue);
             break;
-        case 17: //modt_p
+        case 18: //modt_p
             MODL.Load();
             MODL->MODT.Copy((UINT8ARRAY)FieldValue, ArraySize);
+            break;
+        case 19: //mods
+            // TODO: do this
             break;
         default:
             break;
@@ -409,7 +392,10 @@ void LVLNRecord::DeleteField(FIELD_IDENTIFIERS)
         case 14: //flags
             LVLF.Unload();
             return;
-        case 15: //entries
+        case 15: //global
+            LVLG.Unload();
+            return;
+        case 16: //entries
             if(ListFieldID == 0) //entriesSize
                 {
                 Entries.Unload();
@@ -422,45 +408,36 @@ void LVLNRecord::DeleteField(FIELD_IDENTIFIERS)
             switch(ListFieldID)
                 {
                 case 1: //level
-                    Entries.value[ListIndex]->LVLO.value.level = defaultLVLO.level;
+                    Entries.value[ListIndex]->level = defaultLVLO.level;
                     return;
                 case 2: //unused1
-                    Entries.value[ListIndex]->LVLO.value.unused1[0] = defaultLVLO.unused1[0];
-                    Entries.value[ListIndex]->LVLO.value.unused1[1] = defaultLVLO.unused1[1];
+                    Entries.value[ListIndex]->unused1[0] = defaultLVLO.unused1[0];
+                    Entries.value[ListIndex]->unused1[1] = defaultLVLO.unused1[1];
                     return;
                 case 3: //listId
-                    Entries.value[ListIndex]->LVLO.value.listId = defaultLVLO.listId;
+                    Entries.value[ListIndex]->listId = defaultLVLO.listId;
                     return;
                 case 4: //count
-                    Entries.value[ListIndex]->LVLO.value.count = defaultLVLO.count;
+                    Entries.value[ListIndex]->count = defaultLVLO.count;
                     return;
                 case 5: //unused2
-                    Entries.value[ListIndex]->LVLO.value.unused2[0] = defaultLVLO.unused2[0];
-                    Entries.value[ListIndex]->LVLO.value.unused2[1] = defaultLVLO.unused2[1];
-                    return;
-                case 6: //owner
-                    if(Entries.value[ListIndex]->COED.IsLoaded())
-                        Entries.value[ListIndex]->COED->owner = defaultCOED.owner;
-                    return;
-                case 7: //globalOrRank
-                    if(Entries.value[ListIndex]->COED.IsLoaded())
-                        Entries.value[ListIndex]->COED->globalOrRank = defaultCOED.globalOrRank;
-                    return;
-                case 8: //condition
-                    if(Entries.value[ListIndex]->COED.IsLoaded())
-                        Entries.value[ListIndex]->COED->condition = defaultCOED.condition;
+                    Entries.value[ListIndex]->unused2[0] = defaultLVLO.unused2[0];
+                    Entries.value[ListIndex]->unused2[1] = defaultLVLO.unused2[1];
                     return;
                 default:
                     return;
                 }
             return;
-        case 16: //modPath
+        case 17: //modPath
             if (MODL.IsLoaded())
                 MODL->MODL.Unload();
             return;
-        case 17: //modt_p
+        case 18: //modt_p
             if (MODL.IsLoaded())
                 MODL->MODT.Unload();
+            return;
+        case 19: //mods
+            // TODO: do this
             return;
         default:
             return;

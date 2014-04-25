@@ -46,29 +46,18 @@ LVLNRecord::LVLNRecord(unsigned char *_recData):
     }
 
 LVLNRecord::LVLNRecord(LVLNRecord *srcRecord):
-    TES5Record()
+    TES5Record((TES5Record *)srcRecord)
     {
-        if(srcRecord == NULL)
-            return;
-
-        flags = srcRecord->flags;
-        formID = srcRecord->formID;
-        flagsUnk = srcRecord->flagsUnk;
-        formVersion = srcRecord->formVersion;
-        versionControl2[0] = srcRecord->versionControl2[0];
-        versionControl2[1] = srcRecord->versionControl2[1];
-
-        recData = srcRecord->recData;
-        if(!srcRecord->IsChanged())
+        if(srcRecord == NULL || !srcRecord->IsChanged())
             return;
 
         EDID = srcRecord->EDID;
         OBND = srcRecord->OBND;
         LVLD = srcRecord->LVLD;
         LVLF = srcRecord->LVLF;
+        LVLG = srcRecord->LVLG;
         Entries = srcRecord->Entries;
         MODL = srcRecord->MODL;
-        return;
     }
 
 LVLNRecord::~LVLNRecord()
@@ -81,12 +70,16 @@ bool LVLNRecord::VisitFormIDs(FormIDOp &op)
         if(!IsLoaded())
             return false;
 
+        if (LVLG.IsLoaded())
+            op.Accept(LVLG.value);
+
         for(UINT32 x = 0; x < Entries.value.size(); x++)
-            {
-            op.Accept(Entries.value[x]->LVLO.value.listId);
-            if(Entries.value[x]->IsGlobal())
-                op.Accept(Entries.value[x]->COED->globalOrRank);
-            }
+            op.Accept(Entries.value[x]->listId);
+
+        if (MODL.IsLoaded())
+            if (MODL->Textures.IsLoaded())
+                MODL->Textures.VisitFormIDs(op);
+
         return op.Stop();
     }
 
@@ -175,14 +168,11 @@ SINT32 LVLNRecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer,
                 case REV32(LVLF):
                     LVLF.Read(buffer, subSize);
                     break;
-                case REV32(LVLO):
-                    Entries.value.push_back(new FNVLVLO);
-                    Entries.value.back()->LVLO.Read(buffer, subSize);
+                case REV32(LVLG):
+                    LVLG.Read(buffer, subSize);
                     break;
-                case REV32(COED):
-                    if(Entries.value.size() == 0)
-                        Entries.value.push_back(new FNVLVLO);
-                    Entries.value.back()->COED.Read(buffer, subSize);
+                case REV32(LVLO):
+                    Entries.Read(buffer, subSize);
                     break;
                 case REV32(LLCT):
                     // Skip
@@ -195,6 +185,10 @@ SINT32 LVLNRecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer,
                 case REV32(MODT):
                     MODL.Load();
                     MODL->MODT.Read(buffer, subSize, CompressedOnDisk);
+                    break;
+                case REV32(MODS):
+                    MODL.Load();
+                    MODL->Textures.Read(buffer, subSize);
                     break;
                 default:
                     //printer("FileName = %s\n", FileName);
@@ -217,6 +211,7 @@ SINT32 LVLNRecord::Unload()
         OBND.Unload();
         LVLD.Unload();
         LVLF.Unload();
+        LVLG.Unload();
         Entries.Unload();
         MODL.Unload();
         return 1;
@@ -228,9 +223,7 @@ SINT32 LVLNRecord::WriteRecord(FileWriter &writer)
         WRITE(OBND);
         WRITE(LVLD);
         WRITE(LVLF);
-        //  Write LLCT
-        UINT8 count = Entries.value.size();
-        writer.record_write_subrecord(REV32(LLCT),&count,sizeof(count));
+        WRITE(LVLG);
         Entries.Write(writer);
         WRITE(MODL);
         return -1;
@@ -242,6 +235,7 @@ bool LVLNRecord::operator ==(const LVLNRecord &other) const
                 OBND == other.OBND &&
                 LVLD == other.LVLD &&
                 LVLF == other.LVLF &&
+                LVLG == other.LVLG &&
                 Entries == other.Entries &&
                 MODL == other.MODL);
     }
@@ -252,8 +246,15 @@ bool LVLNRecord::operator !=(const LVLNRecord &other) const
     }
 
 bool LVLNRecord::equals(Record *other)
+{
+    try
     {
-        return *this == *(LVLNRecord *)other;
+        return *this == *reinterpret_cast<LVLNRecord *>(other);
     }
+    catch (...)
+    {
+        return false;
+    }
+}
 
 } // namespace Sk

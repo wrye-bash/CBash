@@ -39,22 +39,208 @@
 
 namespace Sk
 {
+
 UINT32 MATTRecord::GetFieldAttribute(FIELD_IDENTIFIERS, UINT32 WhichAttribute)
+{
+    switch (FieldID)
     {
-    return UNKNOWN_FIELD;
+    case 0: //recType
+        return GetType();
+    case 1: //flags1
+        return UINT32_FLAG_FIELD;
+    case 2: //fid
+        return FORMID_FIELD;
+    case 3: //versionControl1
+        switch (WhichAttribute)
+        {
+        case 0: //fieldType
+            return UINT8_ARRAY_FIELD;
+        case 1: //fieldSize
+            return 4;
+        default:
+            return UNKNOWN_FIELD;
+        }
+        return UNKNOWN_FIELD;
+    case 4: //eid
+        return ISTRING_FIELD;
+    case 5: //formVersion
+        return UINT16_FIELD;
+    case 6: //versionControl2
+        switch (WhichAttribute)
+        {
+        case 0: //fieldType
+            return UINT8_ARRAY_FIELD;
+        case 1: //fieldSize
+            return 2;
+        default:
+            return UNKNOWN_FIELD;
+        }
+        return UNKNOWN_FIELD;
+    case 7: //materialParent
+        return FORMID_FIELD;
+    case 8: //materialName
+        return STRING_FIELD;
+    case 9: //havokRed
+        return FLOAT32_FIELD;
+    case 10: //havokGreen
+        return FLOAT32_FIELD;
+    case 11: //havokBlue
+        return FLOAT32_FIELD;
+    case 12: //bouyancy
+        return FLOAT32_FIELD;
+    case 13: //flags
+        return UINT32_FLAG_FIELD;
+    case 14: //havokIPDS
+        return FORMID_FIELD;
+    default:
+        return UNKNOWN_FIELD;
     }
+    return UNKNOWN_FIELD;
+}
 
 void * MATTRecord::GetField(FIELD_IDENTIFIERS, void **FieldValues)
+{
+    switch (FieldID)
     {
-    return NULL;
+    case 1: //flags1
+        return &flags;
+    case 2: //fid
+        return &formID;
+    case 3: //versionControl1
+        *FieldValues = &flagsUnk;
+        return NULL;
+    case 4: //eid
+        return EDID.value;
+    case 5: //formVersion
+        return &formVersion;
+    case 6: //versionControl2
+        *FieldValues = &versionControl2[0];
+        return NULL;
+    case 7: //materialParent
+        return &PNAM.value;
+    case 8: //materialName
+        return MNAM.value;
+    case 9: //havokRed
+        return &CNAM.value.red;
+    case 10: //havokGreen
+        return &CNAM.value.green;
+    case 11: //havokBlue
+        return &CNAM.value.blue;
+    case 12: //bouyancy
+        return &BNAM.value;
+    case 13: //flags
+        return &FNAM.value;
+    case 14: //havokIPDS
+        return &HNAM.value;
+    default:
+        return NULL;
     }
+    return NULL;
+}
 
 bool MATTRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
+{
+    switch (FieldID)
     {
+    case 1: //flags1
+        SetHeaderFlagMask(*(UINT32 *)FieldValue);
+        break;
+    case 3: //versionControl1
+        if (ArraySize != 4)
+            break;
+        ((UINT8ARRAY)&flagsUnk)[0] = ((UINT8ARRAY)FieldValue)[0];
+        ((UINT8ARRAY)&flagsUnk)[1] = ((UINT8ARRAY)FieldValue)[1];
+        ((UINT8ARRAY)&flagsUnk)[2] = ((UINT8ARRAY)FieldValue)[2];
+        ((UINT8ARRAY)&flagsUnk)[3] = ((UINT8ARRAY)FieldValue)[3];
+        break;
+    case 4: //eid
+        EDID.Copy((STRING)FieldValue);
+        break;
+    case 5: //formVersion
+        formVersion = *(UINT16 *)FieldValue;
+        break;
+    case 6: //versionControl2
+        if (ArraySize != 2)
+            break;
+        versionControl2[0] = ((UINT8ARRAY)FieldValue)[0];
+        versionControl2[1] = ((UINT8ARRAY)FieldValue)[1];
+        break;
+    case 7: //materialParent
+        PNAM.value = *(FORMID *)FieldValue;
+        return true;
+    case 8: //materialName
+        MNAM.Copy((STRING)FieldValue);
+        break;
+    case 9: //havokRed
+        CNAM.value.red = *(FLOAT32 *)FieldValue;
+        break;
+    case 10: //havokGreen
+        CNAM.value.green = *(FLOAT32 *)FieldValue;
+        break;
+    case 11: //havokBlue
+        CNAM.value.blue = *(FLOAT32 *)FieldValue;
+        break;
+    case 12: //bouyancy
+        BNAM.value = *(FLOAT32 *)FieldValue;
+        break;
+    case 13: //flags
+        SetFlagMask(*(UINT32 *)FieldValue);
+        break;
+    case 14: //havokIPDS
+        HNAM.value = *(FORMID *)FieldValue;
+        return true;
+    default:
+        break;
+    }
     return false;
-  }
+}
 
 void MATTRecord::DeleteField(FIELD_IDENTIFIERS)
+{
+    MATTCNAM defaultCNAM;
+
+    switch (FieldID)
     {
+    case 1: //flags1
+        SetHeaderFlagMask(0);
+        return;
+    case 3: //versionControl1
+        flagsUnk = 0;
+        return;
+    case 4: //eid
+        EDID.Unload();
+        return;
+    case 5: //formVersion
+        formVersion = 0;
+        return;
+    case 6: //versionControl2
+        versionControl2[0] = 0;
+        versionControl2[1] = 0;
+        return;
+    case 7: //materialParent
+        PNAM.Unload();
+        return;
+    case 8: //materialName
+        MNAM.Unload();
+        return;
+    case 9: //havokRed
+        CNAM.value.red = defaultCNAM.red;
+        return;
+    case 10: //havokGreen
+        CNAM.value.green = defaultCNAM.green;
+        return;
+    case 11: //havokBlue
+        CNAM.value.blue = defaultCNAM.blue;
+        return;
+    case 12: //flags
+        SetFlagMask(0);
+        return;
+    case 13: //havokIPDS
+        HNAM.Unload();
+        return;
+    default:
+        return;
     }
 }
+
+} // namespace Sk

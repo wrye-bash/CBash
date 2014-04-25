@@ -1135,6 +1135,16 @@ void NonNullStringRecord::Write(UINT32 _Type, FileWriter &writer)
         writer.record_write_subrecord(_Type, _value, DiskSize ? DiskSize : (UINT32)strlen(_value));
     }
 
+void NonNullStringRecord::Write16(FileWriter &writer) const
+    {
+    if (_value != NULL)
+    {
+        UINT16 size = DiskSize ? (UINT16)DiskSize : (UINT16)strlen(_value);
+        writer.record_write(&size, sizeof(size));
+        writer.record_write(_value, size);
+    }
+    }
+
 void NonNullStringRecord::ReqWrite(UINT32 _Type, FileWriter &writer)
     {
     if(_value != NULL)
@@ -1796,6 +1806,405 @@ Function_ArgumentsType FNVFunction_ArgumentsInit[] =
     Function_ArgumentsType(619,std::make_pair(eNONE,eNONE))       //IsAlwaysHardcore
     };
 
+Function_ArgumentsType SKFunction_ArgumentsInit[] =
+{
+    Function_ArgumentsType(0, std::make_pair(eNONE, eNONE)),         //GetWantBlocking
+    Function_ArgumentsType(1, std::make_pair(eFORMID, eNONE)),       //GetDistance
+    Function_ArgumentsType(5, std::make_pair(eNONE, eNONE)),         //GetLocked
+    Function_ArgumentsType(6, std::make_pair(eUINT32, eNONE)),       //GetPos
+    Function_ArgumentsType(8, std::make_pair(eUINT32, eNONE)),       //GetAngle
+    Function_ArgumentsType(10, std::make_pair(eUINT32, eNONE)),      //GetStartingPos
+    Function_ArgumentsType(11, std::make_pair(eUINT32, eNONE)),      //GetStartingAngle
+    Function_ArgumentsType(12, std::make_pair(eNONE, eNONE)),        //GetSecondsPassed
+    Function_ArgumentsType(14, std::make_pair(eUINT32, eNONE)),      //GetActorValue
+    Function_ArgumentsType(18, std::make_pair(eNONE, eNONE)),        //GetCurrentTime
+    Function_ArgumentsType(24, std::make_pair(eNONE, eNONE)),        //GetScale
+    Function_ArgumentsType(25, std::make_pair(eNONE, eNONE)),        //IsMoving
+    Function_ArgumentsType(26, std::make_pair(eNONE, eNONE)),        //IsTurning
+    Function_ArgumentsType(27, std::make_pair(eFORMID, eNONE)),      //GetLineOfSight
+    Function_ArgumentsType(32, std::make_pair(eFORMID, eNONE)),      //GetInSameCell
+    Function_ArgumentsType(35, std::make_pair(eNONE, eNONE)),        //GetDisabled
+    Function_ArgumentsType(36, std::make_pair(eUINT32, eNONE)),      //MenuMode
+    Function_ArgumentsType(39, std::make_pair(eNONE, eNONE)),        //GetDisease
+    Function_ArgumentsType(41, std::make_pair(eNONE, eNONE)),        //GetClothingValue
+    Function_ArgumentsType(42, std::make_pair(eFORMID, eNONE)),      //SameFction
+    Function_ArgumentsType(43, std::make_pair(eFORMID, eNONE)),      //SameRace
+    Function_ArgumentsType(44, std::make_pair(eFORMID, eNONE)),      //SameSex
+    Function_ArgumentsType(45, std::make_pair(eFORMID, eNONE)),      //GetDetected
+    Function_ArgumentsType(46, std::make_pair(eNONE, eNONE)),        //GetDead
+    Function_ArgumentsType(47, std::make_pair(eFORMID, eNONE)),      //GetItemCount
+    Function_ArgumentsType(48, std::make_pair(eNONE, eNONE)),        //GetGold
+    Function_ArgumentsType(49, std::make_pair(eNONE, eNONE)),        //GetSleeping
+    Function_ArgumentsType(50, std::make_pair(eNONE, eNONE)),        //GetTalkedToPC
+    Function_ArgumentsType(53, std::make_pair(eFORMID, eUINT32)),    //GetScriptVariable
+    Function_ArgumentsType(56, std::make_pair(eFORMID, eNONE)),      //GetQuestRunning
+    Function_ArgumentsType(58, std::make_pair(eFORMID, eNONE)),      //GetStage
+    Function_ArgumentsType(59, std::make_pair(eFORMID, eUINT32)),    //GetStageDone
+    Function_ArgumentsType(60, std::make_pair(eFORMID, eFORMID)),    //GetFactionRankDifference
+    Function_ArgumentsType(61, std::make_pair(eNONE, eNONE)),        //GetAlarmed
+    Function_ArgumentsType(62, std::make_pair(eNONE, eNONE)),        //IsRaining
+    Function_ArgumentsType(63, std::make_pair(eNONE, eNONE)),        //GetAttacked
+    Function_ArgumentsType(64, std::make_pair(eNONE, eNONE)),        //GetIsCreature
+    Function_ArgumentsType(65, std::make_pair(eNONE, eNONE)),        //GetLockLevel
+    Function_ArgumentsType(66, std::make_pair(eFORMID, eNONE)),      //GetShouldAttack
+    Function_ArgumentsType(67, std::make_pair(eFORMID, eNONE)),      //GetInCell
+    Function_ArgumentsType(68, std::make_pair(eFORMID, eNONE)),      //GetIsClass
+    Function_ArgumentsType(69, std::make_pair(eFORMID, eNONE)),      //GetIsRace
+    Function_ArgumentsType(70, std::make_pair(eFORMID, eNONE)),      //GetIsSex
+    Function_ArgumentsType(71, std::make_pair(eFORMID, eNONE)),      //GetInFaction
+    Function_ArgumentsType(72, std::make_pair(eFORMID, eNONE)),      //GetIsID
+    Function_ArgumentsType(73, std::make_pair(eFORMID, eNONE)),      //GetFactionRank
+    Function_ArgumentsType(74, std::make_pair(eFORMID, eNONE)),      //GetGlobalValue
+    Function_ArgumentsType(75, std::make_pair(eNONE, eNONE)),        //IsSnowing
+    Function_ArgumentsType(77, std::make_pair(eNONE, eNONE)),        //GetRandomPercent
+    Function_ArgumentsType(79, std::make_pair(eFORMID, eUINT32)),    //GetQuestVvariable
+    Function_ArgumentsType(80, std::make_pair(eNONE, eNONE)),        //GetLevel
+    Function_ArgumentsType(81, std::make_pair(eNONE, eNONE)),        //IsRotating
+    Function_ArgumentsType(84, std::make_pair(eFORMID, eNONE)),      //GetDeadCount
+    Function_ArgumentsType(91, std::make_pair(eNONE, eNONE)),        //GetIsAlerted
+    Function_ArgumentsType(98, std::make_pair(eNONE, eNONE)),        //GetPlayerControlsDisabled
+    Function_ArgumentsType(99, std::make_pair(eFORMID, eNONE)),      //GetHeadingAngle
+    Function_ArgumentsType(101, std::make_pair(eNONE, eNONE)),       //IsWeaponMagicOut
+    Function_ArgumentsType(102, std::make_pair(eNONE, eNONE)),       //IsTorchOut
+    Function_ArgumentsType(103, std::make_pair(eNONE, eNONE)),       //IsShieldOut
+    Function_ArgumentsType(106, std::make_pair(eNONE, eNONE)),       //IsFacingUp
+    Function_ArgumentsType(107, std::make_pair(eNONE, eNONE)),       //GetKnockedState
+    Function_ArgumentsType(108, std::make_pair(eNONE, eNONE)),       //GetWeaponAnimType
+    Function_ArgumentsType(109, std::make_pair(eUINT32, eNONE)),     //IsWeaponSkillType
+    Function_ArgumentsType(110, std::make_pair(eNONE, eNONE)),       //GetCurrentAIPackage
+    Function_ArgumentsType(111, std::make_pair(eNONE, eNONE)),       //IsWaiting
+    Function_ArgumentsType(112, std::make_pair(eNONE, eNONE)),       //IsIdlePlaying
+    Function_ArgumentsType(116, std::make_pair(eNONE, eNONE)),       //IsIntimidatedbyPlayer
+    Function_ArgumentsType(117, std::make_pair(eFORMID, eNONE)),     //IsPlayerInRegion
+    Function_ArgumentsType(118, std::make_pair(eNONE, eNONE)),       //GetActorAggroRadiusViolated
+    Function_ArgumentsType(122, std::make_pair(eFORMID, eUINT32)),   //GetCrime
+    Function_ArgumentsType(123, std::make_pair(eNONE, eNONE)),       //IsGreetingPlayer
+    Function_ArgumentsType(125, std::make_pair(eNONE, eNONE)),       //IsGuard
+    Function_ArgumentsType(127, std::make_pair(eNONE, eNONE)),       //HasBeenEaten
+    Function_ArgumentsType(128, std::make_pair(eNONE, eNONE)),       //GetStaminaPercentage
+    Function_ArgumentsType(129, std::make_pair(eFORMID, eNONE)),     //GetPCIsClass
+    Function_ArgumentsType(130, std::make_pair(eFORMID, eNONE)),     //GetPCIsRace
+    Function_ArgumentsType(131, std::make_pair(eFORMID, eNONE)),     //GetPCIsSex
+    Function_ArgumentsType(132, std::make_pair(eFORMID, eNONE)),     //GetPCInFaction
+    Function_ArgumentsType(133, std::make_pair(eNONE, eNONE)),       //SameFactionAsPC
+    Function_ArgumentsType(134, std::make_pair(eNONE, eNONE)),       //SameRaceAsPC
+    Function_ArgumentsType(135, std::make_pair(eNONE, eNONE)),       //SameSexAsPC
+    Function_ArgumentsType(136, std::make_pair(eFORMID, eNONE)),     //GetIsReference
+    Function_ArgumentsType(141, std::make_pair(eNONE, eNONE)),       //IsTalking
+    Function_ArgumentsType(142, std::make_pair(eNONE, eNONE)),       //GetWalkSpeed
+    Function_ArgumentsType(143, std::make_pair(eNONE, eNONE)),       //GetCurrentAIProcedure
+    Function_ArgumentsType(144, std::make_pair(eNONE, eNONE)),       //GetTrespassWarningLevel
+    Function_ArgumentsType(145, std::make_pair(eNONE, eNONE)),       //IsTresPassing
+    Function_ArgumentsType(146, std::make_pair(eNONE, eNONE)),       //IsInMyOwnedCell
+    Function_ArgumentsType(147, std::make_pair(eNONE, eNONE)),       //GetWindSpeed
+    Function_ArgumentsType(148, std::make_pair(eNONE, eNONE)),       //GetCurrentWeatherPercent
+    Function_ArgumentsType(149, std::make_pair(eFORMID, eNONE)),     //GetIsCurrentWeather
+    Function_ArgumentsType(150, std::make_pair(eNONE, eNONE)),       //IsContinuingPackagePCNear
+    Function_ArgumentsType(152, std::make_pair(eFORMID, eNONE)),     //GetIsCrimeFaction
+    Function_ArgumentsType(153, std::make_pair(eNONE, eNONE)),       //CanHaveFlames
+    Function_ArgumentsType(154, std::make_pair(eNONE, eNONE)),       //HasFlames
+    Function_ArgumentsType(157, std::make_pair(eNONE, eNONE)),       //GetOpenState
+    Function_ArgumentsType(159, std::make_pair(eNONE, eNONE)),       //GetSitting
+    Function_ArgumentsType(161, std::make_pair(eFORMID, eNONE)),     //GetIsCurrentPackage
+    Function_ArgumentsType(162, std::make_pair(eFORMID, eNONE)),     //IsCurrentFurnitureRef
+    Function_ArgumentsType(163, std::make_pair(eFORMID, eNONE)),     //IsCurrentFurnitureObj
+    Function_ArgumentsType(170, std::make_pair(eNONE, eNONE)),       //GetDayOfWeek
+    Function_ArgumentsType(172, std::make_pair(eFORMID, eNONE)),     //GetTalkedToPCParam
+    Function_ArgumentsType(175, std::make_pair(eNONE, eNONE)),       //IsPCSleeping
+    Function_ArgumentsType(176, std::make_pair(eNONE, eNONE)),       //IsPCAMurderer
+    Function_ArgumentsType(180, std::make_pair(eFORMID, eFORMID)),   //HasSameEditorLocAsRef
+    Function_ArgumentsType(181, std::make_pair(eFORMID, eFORMID)),   //HasSameEditorLocAsRefAlias
+    Function_ArgumentsType(182, std::make_pair(eFORMID, eNONE)),     //GetEquiped
+    Function_ArgumentsType(185, std::make_pair(eNONE, eNONE)),       //IsSwimming
+    Function_ArgumentsType(190, std::make_pair(eNONE, eNONE)),       //GetAmountSoldStolen
+    Function_ArgumentsType(192, std::make_pair(eNONE, eNONE)),       //GetIgnoreCrime
+    Function_ArgumentsType(193, std::make_pair(eFORMID, eNONE)),     //GetPCExpelled
+    Function_ArgumentsType(195, std::make_pair(eFORMID, eNONE)),     //GetPCFactionMurder
+    Function_ArgumentsType(197, std::make_pair(eFORMID, eNONE)),     //GetPCEnemyofFaction
+    Function_ArgumentsType(199, std::make_pair(eFORMID, eNONE)),     //GetPCFactionAttack
+    Function_ArgumentsType(203, std::make_pair(eNONE, eNONE)),       //GetDestroyed
+    Function_ArgumentsType(214, std::make_pair(eFORMID, eNONE)),     //HasMagicEffect
+    Function_ArgumentsType(215, std::make_pair(eNONE, eNONE)),       //GetDefaultOpen
+    Function_ArgumentsType(219, std::make_pair(eNONE, eNONE)),       //GetAnimAction
+    Function_ArgumentsType(223, std::make_pair(eFORMID, eNONE)),     //IsSpellTarget
+    Function_ArgumentsType(224, std::make_pair(eNONE, eNONE)),       //GetVATSMode
+    Function_ArgumentsType(225, std::make_pair(eNONE, eNONE)),       //GetPersuationNumber
+    Function_ArgumentsType(226, std::make_pair(eNONE, eNONE)),       //GetVampireFeed
+    Function_ArgumentsType(227, std::make_pair(eNONE, eNONE)),       //GetCannibal
+    Function_ArgumentsType(228, std::make_pair(eFORMID, eNONE)),     //GetIsClassDefault
+    Function_ArgumentsType(229, std::make_pair(eNONE, eNONE)),       //GetClassDefaultMatch
+    Function_ArgumentsType(230, std::make_pair(eFORMID, eFORMID)),   //GetInCellParam
+    Function_ArgumentsType(235, std::make_pair(eNONE, eNONE)),       //GetVatsTargetHeight
+    Function_ArgumentsType(237, std::make_pair(eNONE, eNONE)),       //GetIsGhost
+    Function_ArgumentsType(242, std::make_pair(eNONE, eNONE)),       //GetUnconscious
+    Function_ArgumentsType(244, std::make_pair(eNONE, eNONE)),       //GetRestrained
+    Function_ArgumentsType(246, std::make_pair(eFORMID, eNONE)),     //GetIsUsedItem
+    Function_ArgumentsType(247, std::make_pair(eFORMID, eNONE)),     //GetIsUsedItemType
+    Function_ArgumentsType(248, std::make_pair(eFORMID, eNONE)),     //IsScenePlaying
+    Function_ArgumentsType(249, std::make_pair(eNONE, eNONE)),       //IsInDialogWithPlayer
+    Function_ArgumentsType(250, std::make_pair(eFORMID, eNONE)),     //GetLocationCleared
+    Function_ArgumentsType(254, std::make_pair(eNONE, eNONE)),       //GetIsPlayableRace
+    Function_ArgumentsType(255, std::make_pair(eNONE, eNONE)),       //GetOffersServicesNow
+    Function_ArgumentsType(258, std::make_pair(eFORMID, eFORMID)),   //HasAssociationType
+    Function_ArgumentsType(259, std::make_pair(eFORMID, eNONE)),     //HasFamilyRelationship
+    Function_ArgumentsType(261, std::make_pair(eFORMID, eNONE)),     //HasParentRelationship
+    Function_ArgumentsType(262, std::make_pair(eFORMID, eNONE)),     //IsWarningAbout
+    Function_ArgumentsType(263, std::make_pair(eNONE, eNONE)),       //IsWeaponOut
+    Function_ArgumentsType(264, std::make_pair(eFORMID, eNONE)),     //HasSpell
+    Function_ArgumentsType(265, std::make_pair(eNONE, eNONE)),       //IsTimePassing
+    Function_ArgumentsType(266, std::make_pair(eNONE, eNONE)),       //IsPleasant
+    Function_ArgumentsType(267, std::make_pair(eNONE, eNONE)),       //IsCloudy
+    Function_ArgumentsType(274, std::make_pair(eNONE, eNONE)),       //IsSmallBump
+    Function_ArgumentsType(277, std::make_pair(eUINT32, eNONE)),     //GetBaseActorValue
+    Function_ArgumentsType(278, std::make_pair(eFORMID, eNONE)),     //IsOwner
+    Function_ArgumentsType(280, std::make_pair(eFORMID, eFORMID)),   //IsCellOwner
+    Function_ArgumentsType(282, std::make_pair(eNONE, eNONE)),       //IsHorseStolen
+    Function_ArgumentsType(285, std::make_pair(eNONE, eNONE)),       //IsLeftUp
+    Function_ArgumentsType(286, std::make_pair(eNONE, eNONE)),       //IsSneaking
+    Function_ArgumentsType(287, std::make_pair(eNONE, eNONE)),       //IsRunning
+    Function_ArgumentsType(288, std::make_pair(eNONE, eNONE)),       //GetFriendHit
+    Function_ArgumentsType(289, std::make_pair(eUINT32, eNONE)),     //IsInCombat
+    Function_ArgumentsType(300, std::make_pair(eNONE, eNONE)),       //IsInInterior
+    Function_ArgumentsType(304, std::make_pair(eNONE, eNONE)),       //IsWaterObject
+    Function_ArgumentsType(305, std::make_pair(eNONE, eNONE)),       //GetPlayerAction
+    Function_ArgumentsType(306, std::make_pair(eNONE, eNONE)),       //IsActorUsingATorch
+    Function_ArgumentsType(309, std::make_pair(eNONE, eNONE)),       //IsXBox
+    Function_ArgumentsType(310, std::make_pair(eFORMID, eNONE)),     //GetInWorldspace
+    Function_ArgumentsType(312, std::make_pair(eUINT32, eNONE)),     //GetPCMiscStat
+    Function_ArgumentsType(313, std::make_pair(eNONE, eNONE)),       //GetPairedAnimation
+    Function_ArgumentsType(314, std::make_pair(eNONE, eNONE)),       //IsActorAVictim
+    Function_ArgumentsType(315, std::make_pair(eNONE, eNONE)),       //GetTotalPersuationNumber
+    Function_ArgumentsType(318, std::make_pair(eNONE, eNONE)),       //GetIdleDoneOnce
+    Function_ArgumentsType(320, std::make_pair(eNONE, eNONE)),       //GetNoRumors
+    Function_ArgumentsType(323, std::make_pair(eNONE, eNONE)),       //GetCombatState
+    Function_ArgumentsType(325, std::make_pair(eFORMID, eNONE)),     //GetWithinPackageLocation
+    Function_ArgumentsType(327, std::make_pair(eNONE, eNONE)),       //IsRidingHorse
+    Function_ArgumentsType(329, std::make_pair(eNONE, eNONE)),       //IsFleeing
+    Function_ArgumentsType(332, std::make_pair(eNONE, eNONE)),       //IsInDangerousWater
+    Function_ArgumentsType(338, std::make_pair(eNONE, eNONE)),       //GetIgnoreFriendlyHits
+    Function_ArgumentsType(339, std::make_pair(eNONE, eNONE)),       //IsPlayersLastRiddenHorse
+    Function_ArgumentsType(353, std::make_pair(eNONE, eNONE)),       //IsActor
+    Function_ArgumentsType(354, std::make_pair(eNONE, eNONE)),       //IsEssential
+    Function_ArgumentsType(358, std::make_pair(eNONE, eNONE)),       //IsPlayerMovingIntoNewSpace
+    Function_ArgumentsType(359, std::make_pair(eFORMID, eNONE)),     //GetInCurrentLoc
+    Function_ArgumentsType(360, std::make_pair(eFORMID, eNONE)),     //GetInCurrentLocAlias
+    Function_ArgumentsType(361, std::make_pair(eNONE, eNONE)),       //GetTimeDead
+    Function_ArgumentsType(362, std::make_pair(eFORMID, eNONE)),     //HasLinkedRef
+    Function_ArgumentsType(365, std::make_pair(eNONE, eNONE)),       //IsChild
+    Function_ArgumentsType(366, std::make_pair(eFORMID, eNONE)),     //GetStolenItemValueNoCrime
+    Function_ArgumentsType(367, std::make_pair(eNONE, eNONE)),       //GetLastPlayerAction
+    Function_ArgumentsType(368, std::make_pair(eUINT32, eNONE)),     //IsPlayerActionActive
+    Function_ArgumentsType(370, std::make_pair(eFORMID, eNONE)),     //IsTalkingActivatorActor
+    Function_ArgumentsType(372, std::make_pair(eFORMID, eNONE)),     //IsInList
+    Function_ArgumentsType(373, std::make_pair(eFORMID, eNONE)),     //GetStolenItemValue
+    Function_ArgumentsType(375, std::make_pair(eFORMID, eNONE)),     //GetCrimeGoldViolent
+    Function_ArgumentsType(376, std::make_pair(eFORMID, eNONE)),     //GetCrimeGoldNonviolent
+    Function_ArgumentsType(378, std::make_pair(eFORMID, eNONE)),     //HasShout
+    Function_ArgumentsType(381, std::make_pair(eFORMID, eNONE)),     //GetHasNote
+    Function_ArgumentsType(390, std::make_pair(eNONE, eNONE)),       //GetHitLocation
+    Function_ArgumentsType(391, std::make_pair(eNONE, eNONE)),       //IsPC1stPerson
+    Function_ArgumentsType(396, std::make_pair(eNONE, eNONE)),       //GetCauseofDeath
+    Function_ArgumentsType(397, std::make_pair(eUINT32, eNONE)),     //IsLimbGone
+    Function_ArgumentsType(398, std::make_pair(eFORMID, eNONE)),     //IsWeaponInList
+    Function_ArgumentsType(402, std::make_pair(eNONE, eNONE)),       //IsBribedbyPlayer
+    Function_ArgumentsType(403, std::make_pair(eFORMID, eNONE)),     //GetRelationshipRank
+    Function_ArgumentsType(407, std::make_pair(eUINT32, eUINT32)),   //GetVATSValue
+    Function_ArgumentsType(408, std::make_pair(eFORMID, eNONE)),     //IsKiller
+    Function_ArgumentsType(409, std::make_pair(eFORMID, eNONE)),     //IsKillerObject
+    Function_ArgumentsType(410, std::make_pair(eFORMID, eFORMID)),   //GetFactionCombatReaction
+    Function_ArgumentsType(414, std::make_pair(eFORMID, eNONE)),     //Exists
+    Function_ArgumentsType(415, std::make_pair(eNONE, eNONE)),       //GetGroupMemberCount
+    Function_ArgumentsType(416, std::make_pair(eNONE, eNONE)),       //GetGroupTargetCount
+    Function_ArgumentsType(426, std::make_pair(eFORMID, eNONE)),     //GetIsVoiceType
+    Function_ArgumentsType(427, std::make_pair(eNONE, eNONE)),       //GetPlantedExplosive
+    Function_ArgumentsType(429, std::make_pair(eNONE, eNONE)),       //IsScenePackageRunning
+    Function_ArgumentsType(430, std::make_pair(eNONE, eNONE)),       //GetHealthPercentage
+    Function_ArgumentsType(432, std::make_pair(eFORMID, eNONE)),     //GetIsObjectType
+    Function_ArgumentsType(434, std::make_pair(eNONE, eNONE)),       //GetDialogEmotion
+    Function_ArgumentsType(435, std::make_pair(eNONE, eNONE)),       //GetDialogEmotionValue
+    Function_ArgumentsType(437, std::make_pair(eUINT32, eNONE)),     //GetIsCreatureType
+    Function_ArgumentsType(444, std::make_pair(eFORMID, eNONE)),     //GetInCurrentLocFormList
+    Function_ArgumentsType(445, std::make_pair(eFORMID, eNONE)),     //GetInZone
+    Function_ArgumentsType(446, std::make_pair(eUINT32, eNONE)),     //GetVelocity
+    Function_ArgumentsType(447, std::make_pair(eUINT32, eNONE)),     //GetGraphVariableFloat
+    Function_ArgumentsType(448, std::make_pair(eFORMID, eNONE)),     //HasPerk
+    Function_ArgumentsType(449, std::make_pair(eFORMID, eNONE)),     //GetFactionRelation
+    Function_ArgumentsType(450, std::make_pair(eFORMID, eNONE)),     //IsLastIdlePlayed
+    Function_ArgumentsType(453, std::make_pair(eNONE, eNONE)),       //GetPlayerTeammate
+    Function_ArgumentsType(458, std::make_pair(eNONE, eNONE)),       //GetActorCrimePlayerEnemy
+    Function_ArgumentsType(459, std::make_pair(eFORMID, eNONE)),     //GetCrimeGold
+    Function_ArgumentsType(462, std::make_pair(eNONE, eNONE)),       //GetPlayerGrabbedRef
+    Function_ArgumentsType(463, std::make_pair(eFORMID, eNONE)),     //IsPlayerGrabbedRef
+    Function_ArgumentsType(465, std::make_pair(eFORMID, eNONE)),     //GetKeywordItemCount
+    Function_ArgumentsType(470, std::make_pair(eNONE, eNONE)),       //GetDestructionStage
+    Function_ArgumentsType(473, std::make_pair(eFORMID, eNONE)),     //GetIsAlignment
+    Function_ArgumentsType(476, std::make_pair(eNONE, eNONE)),       //IsProtected
+    Function_ArgumentsType(477, std::make_pair(eFORMID, eNONE)),     //GetThreatRatio
+    Function_ArgumentsType(479, std::make_pair(eFORMID, eNONE)),     //GetIsUsedItemEquipType
+    Function_ArgumentsType(480, std::make_pair(eNONE, eNONE)),       //GetPlayerName
+    Function_ArgumentsType(487, std::make_pair(eNONE, eNONE)),       //IsCarryable
+    Function_ArgumentsType(488, std::make_pair(eNONE, eNONE)),       //GetConcussed
+    Function_ArgumentsType(491, std::make_pair(eNONE, eNONE)),       //GetMapMarkerVisible
+    Function_ArgumentsType(494, std::make_pair(eUINT32, eNONE)),     //GetPermanentActorValue
+    Function_ArgumentsType(495, std::make_pair(eNONE, eNONE)),       //GetKillingBlowLimb
+    Function_ArgumentsType(497, std::make_pair(eFORMID, eNONE)),     //CanPayCrimeGold
+    Function_ArgumentsType(499, std::make_pair(eNONE, eNONE)),       //GetDaysInJail
+    Function_ArgumentsType(500, std::make_pair(eNONE, eNONE)),       //EPAlchemyGetMakingPoison
+    Function_ArgumentsType(501, std::make_pair(eFORMID, eNONE)),     //EPAlchemyEffectHasKeyword
+    Function_ArgumentsType(503, std::make_pair(eNONE, eNONE)),       //GetAllowWorldInteractions
+    Function_ArgumentsType(508, std::make_pair(eNONE, eNONE)),       //GetLastHitCritical
+    Function_ArgumentsType(513, std::make_pair(eFORMID, eNONE)),     //IsCombatTarget
+    Function_ArgumentsType(515, std::make_pair(eFORMID, eNONE)),     //GetVATSRightAreaFree
+    Function_ArgumentsType(516, std::make_pair(eFORMID, eNONE)),     //GetVATSLeftAreaFree
+    Function_ArgumentsType(517, std::make_pair(eFORMID, eNONE)),     //GetVATSBackAreaFree
+    Function_ArgumentsType(518, std::make_pair(eFORMID, eNONE)),     //GetVATSFrontAreaFree
+    Function_ArgumentsType(519, std::make_pair(eNONE, eNONE)),       //GetIsLockBroken
+    Function_ArgumentsType(520, std::make_pair(eNONE, eNONE)),       //IsPS3
+    Function_ArgumentsType(521, std::make_pair(eNONE, eNONE)),       //IsWin32
+    Function_ArgumentsType(522, std::make_pair(eFORMID, eNONE)),     //GetVATSRightTargetVisible
+    Function_ArgumentsType(523, std::make_pair(eFORMID, eNONE)),     //GetVATSLeftTargetVisible
+    Function_ArgumentsType(524, std::make_pair(eFORMID, eNONE)),     //GetVATSBackTargetVisible
+    Function_ArgumentsType(525, std::make_pair(eFORMID, eNONE)),     //GetVATSFrontTargetVisible
+    Function_ArgumentsType(528, std::make_pair(eFORMID, eNONE)),     //IsInCriticalStage
+    Function_ArgumentsType(530, std::make_pair(eNONE, eNONE)),       //GetXPForNextLevel
+    Function_ArgumentsType(533, std::make_pair(eFORMID, eNONE)),     //GetInfamy
+    Function_ArgumentsType(534, std::make_pair(eFORMID, eNONE)),     //GetInfamyViolent
+    Function_ArgumentsType(535, std::make_pair(eFORMID, eNONE)),     //GetInfamyNonViolent
+    Function_ArgumentsType(543, std::make_pair(eFORMID, eNONE)),     //GetQuestCompleted
+    Function_ArgumentsType(547, std::make_pair(eNONE, eNONE)),       //IsGoreDisabled
+    Function_ArgumentsType(550, std::make_pair(eFORMID, eUINT32)),   //IsSceneActionComplete
+    Function_ArgumentsType(552, std::make_pair(eFORMID, eNONE)),     //GetSpellUsageNum
+    Function_ArgumentsType(554, std::make_pair(eNONE, eNONE)),       //GetActorsInHigh
+    Function_ArgumentsType(555, std::make_pair(eNONE, eNONE)),       //HasLoaded3D
+    Function_ArgumentsType(560, std::make_pair(eFORMID, eNONE)),     //HasKeyword
+    Function_ArgumentsType(561, std::make_pair(eFORMID, eNONE)),     //HasRefType
+    Function_ArgumentsType(562, std::make_pair(eFORMID, eNONE)),     //LocationHasKeyword
+    Function_ArgumentsType(563, std::make_pair(eFORMID, eNONE)),     //LocationHasRefType
+    Function_ArgumentsType(565, std::make_pair(eFORMID, eNONE)),     //GetIsEditorLocation
+    Function_ArgumentsType(566, std::make_pair(eFORMID, eNONE)),     //GetIsAliasRef
+    Function_ArgumentsType(567, std::make_pair(eFORMID, eNONE)),     //GetIsEditorLocAlias
+    Function_ArgumentsType(568, std::make_pair(eNONE, eNONE)),       //IsSprinting
+    Function_ArgumentsType(569, std::make_pair(eNONE, eNONE)),       //IsBlocking
+    Function_ArgumentsType(570, std::make_pair(eFORMID, eNONE)),     //HasEquippedSpell
+    Function_ArgumentsType(571, std::make_pair(eFORMID, eNONE)),     //GetCurrentCastingType
+    Function_ArgumentsType(572, std::make_pair(eFORMID, eNONE)),     //GetCurrentDeliveryType
+    Function_ArgumentsType(574, std::make_pair(eNONE, eNONE)),       //GetAttackState
+    Function_ArgumentsType(576, std::make_pair(eEVENTDATA, eFORMID)),//GetEventData
+    Function_ArgumentsType(577, std::make_pair(eFORMID, eFORMID)),   //IsCloserToAThanB
+    Function_ArgumentsType(579, std::make_pair(eFORMID, eNONE)),     //GetEquippedShout
+    Function_ArgumentsType(580, std::make_pair(eNONE, eNONE)),       //IsBleedingOut
+    Function_ArgumentsType(584, std::make_pair(eFORMID, eUINT32)),   //GetRelativeAngle
+    Function_ArgumentsType(589, std::make_pair(eNONE, eNONE)),       //GetMovementDirection
+    Function_ArgumentsType(590, std::make_pair(eNONE, eNONE)),       //IsInScene
+    Function_ArgumentsType(591, std::make_pair(eFORMID, eFORMID)),   //GetRefTypeDeadCount
+    Function_ArgumentsType(592, std::make_pair(eFORMID, eFORMID)),   //GetRefTypeAliveCount
+    Function_ArgumentsType(594, std::make_pair(eNONE, eNONE)),       //GetIsFlying
+    Function_ArgumentsType(595, std::make_pair(eFORMID, eFORMID)),   //IsCurrentSpell
+    Function_ArgumentsType(596, std::make_pair(eFORMID, eFORMID)),   //SpellHasKeyword
+    Function_ArgumentsType(597, std::make_pair(eFORMID, eNONE)),     //GetEquippedItemType
+    Function_ArgumentsType(598, std::make_pair(eFORMID, eNONE)),     //GetLocationAliasCleared
+    Function_ArgumentsType(600, std::make_pair(eFORMID, eFORMID)),   //GetLocAliasRefTypeDeadCount
+    Function_ArgumentsType(601, std::make_pair(eFORMID, eFORMID)),   //GetLocAliasRefTypeAliveCount
+    Function_ArgumentsType(602, std::make_pair(eFORMID, eNONE)),     //IsWardState
+    Function_ArgumentsType(603, std::make_pair(eFORMID, eFORMID)),   //IsInSameCurrentLocAsRef
+    Function_ArgumentsType(604, std::make_pair(eFORMID, eFORMID)),   //IsInSameCurrentLocAsRefAlias
+    Function_ArgumentsType(605, std::make_pair(eFORMID, eFORMID)),   //LocAliasIsLocation
+    Function_ArgumentsType(606, std::make_pair(eFORMID, eFORMID)),   //GetKeywordDataForLocation
+    Function_ArgumentsType(608, std::make_pair(eFORMID, eFORMID)),   //GetKeywordDataForAlias
+    Function_ArgumentsType(610, std::make_pair(eFORMID, eFORMID)),   //LocAliasHasKeyword
+    Function_ArgumentsType(611, std::make_pair(eUINT32, eNONE)),     //IsNullPackageData
+    Function_ArgumentsType(612, std::make_pair(eUINT32, eNONE)),     //GetNumericPackageData
+    Function_ArgumentsType(613, std::make_pair(eFORMID, eNONE)),     //IsFurnitureAnimType
+    Function_ArgumentsType(614, std::make_pair(eFORMID, eNONE)),     //IsFurnitureEntryType
+    Function_ArgumentsType(615, std::make_pair(eNONE, eNONE)),       //GetHighestRelationshipRank
+    Function_ArgumentsType(616, std::make_pair(eNONE, eNONE)),       //GetLowestRelationshipRank
+    Function_ArgumentsType(617, std::make_pair(eFORMID, eNONE)),     //HasAssociationTypeAny
+    Function_ArgumentsType(618, std::make_pair(eNONE, eNONE)),       //HasFamilyRelationshipAny
+    Function_ArgumentsType(619, std::make_pair(eUINT32, eNONE)),     //GetPathingTargetOffset
+    Function_ArgumentsType(620, std::make_pair(eUINT32, eNONE)),     //GetPathingTargetAngleOffset
+    Function_ArgumentsType(621, std::make_pair(eNONE, eNONE)),       //GetPathingTargetSpeed
+    Function_ArgumentsType(622, std::make_pair(eUINT32, eNONE)),     //GetPathingTargetSpeedAngle
+    Function_ArgumentsType(623, std::make_pair(eNONE, eNONE)),       //GetMovementSpeed
+    Function_ArgumentsType(624, std::make_pair(eFORMID, eNONE)),     //GetInContainer
+    Function_ArgumentsType(625, std::make_pair(eFORMID, eNONE)),     //IsLocationLoaded
+    Function_ArgumentsType(626, std::make_pair(eFORMID, eNONE)),     //IsLocAliasLoaded
+    Function_ArgumentsType(627, std::make_pair(eNONE, eNONE)),       //IsDualCasting
+    Function_ArgumentsType(629, std::make_pair(eFORMID, eUINT32)),   //GetVMQuestVariable
+    Function_ArgumentsType(630, std::make_pair(eFORMID, eUINT32)),   //GetVMScriptVariable
+    Function_ArgumentsType(631, std::make_pair(eNONE, eNONE)),       //IsEnteringInteractionQuick
+    Function_ArgumentsType(632, std::make_pair(eNONE, eNONE)),       //IsCasting
+    Function_ArgumentsType(633, std::make_pair(eNONE, eNONE)),       //GetFlyingState
+    Function_ArgumentsType(635, std::make_pair(eNONE, eNONE)),       //IsInFavorState
+    Function_ArgumentsType(636, std::make_pair(eNONE, eNONE)),       //HasTwoHandedWeaponEquipped
+    Function_ArgumentsType(637, std::make_pair(eNONE, eNONE)),       //IsExitingInstant
+    Function_ArgumentsType(638, std::make_pair(eNONE, eNONE)),       //IsInFriendStatewithPlayer
+    Function_ArgumentsType(639, std::make_pair(eFORMID, eUINT32)),   //GetWithinDistance
+    Function_ArgumentsType(640, std::make_pair(eUINT32, eNONE)),     //GetActorValuePercent
+    Function_ArgumentsType(641, std::make_pair(eNONE, eNONE)),       //IsUnique
+    Function_ArgumentsType(642, std::make_pair(eNONE, eNONE)),       //GetLastBumpDirection
+    Function_ArgumentsType(644, std::make_pair(eFORMID, eNONE)),     //IsInFurnitureState
+    Function_ArgumentsType(645, std::make_pair(eNONE, eNONE)),       //GetIsInjured
+    Function_ArgumentsType(646, std::make_pair(eNONE, eNONE)),       //GetIsCrashLandRequest
+    Function_ArgumentsType(647, std::make_pair(eNONE, eNONE)),       //GetIsHastyLandRequest
+    Function_ArgumentsType(650, std::make_pair(eFORMID, eFORMID)),   //IsLinkedTo
+    Function_ArgumentsType(651, std::make_pair(eFORMID, eNONE)),     //GetKeywordDataForCurrentLocation
+    Function_ArgumentsType(652, std::make_pair(eFORMID, eNONE)),     //GetInSharedCrimeFaction
+    Function_ArgumentsType(654, std::make_pair(eNONE, eNONE)),       //GetBribeSuccess
+    Function_ArgumentsType(655, std::make_pair(eNONE, eNONE)),       //GetIntimidateSuccess
+    Function_ArgumentsType(656, std::make_pair(eNONE, eNONE)),       //GetArrestedState
+    Function_ArgumentsType(657, std::make_pair(eNONE, eNONE)),       //GetArrestingActor
+    Function_ArgumentsType(659, std::make_pair(eNONE, eNONE)),       //EPTemperingItemIsEnchanted
+    Function_ArgumentsType(660, std::make_pair(eFORMID, eNONE)),     //EPTemperingItemHasKeyword
+    Function_ArgumentsType(664, std::make_pair(eFORMID, eNONE)),     //GetReplacedItemType
+    Function_ArgumentsType(672, std::make_pair(eNONE, eNONE)),       //IsAttacking
+    Function_ArgumentsType(673, std::make_pair(eNONE, eNONE)),       //IsPowerAttacking
+    Function_ArgumentsType(674, std::make_pair(eNONE, eNONE)),       //IsLastHostileActor
+    Function_ArgumentsType(675, std::make_pair(eUINT32, eNONE)),     //GetGraphVariableInt
+    Function_ArgumentsType(676, std::make_pair(eNONE, eNONE)),       //GetCurrentShoutVariation
+    Function_ArgumentsType(678, std::make_pair(eFORMID, eNONE)),     //ShouldAttackKill
+    Function_ArgumentsType(680, std::make_pair(eNONE, eNONE)),       //GetActivationHeight
+    Function_ArgumentsType(681, std::make_pair(eUINT32, eNONE)),     //EPModSkillUsage_IsAdvancedSkill
+    Function_ArgumentsType(682, std::make_pair(eFORMID, eNONE)),     //WornHasKeyword
+    Function_ArgumentsType(683, std::make_pair(eNONE, eNONE)),       //GetPathingCurrentSpeed
+    Function_ArgumentsType(684, std::make_pair(eUINT32, eNONE)),     //GetPathingCurrentSpeedAngle
+    Function_ArgumentsType(691, std::make_pair(eFORMID, eNONE)),     //EPModSkillUsage_AdvancedObjectHasKeyword
+    Function_ArgumentsType(692, std::make_pair(eFORMID, eNONE)),     //EPModSkillUsage_IsAdvancedAction
+    Function_ArgumentsType(693, std::make_pair(eFORMID, eNONE)),     //EPMagic_SpellHasKeyword
+    Function_ArgumentsType(694, std::make_pair(eNONE, eNONE)),       //GetNoBleedoutRecovery
+    Function_ArgumentsType(696, std::make_pair(eUINT32, eNONE)),     //EPMagic_SpellHasSkill
+    Function_ArgumentsType(697, std::make_pair(eFORMID, eNONE)),     //IsAttackType
+    Function_ArgumentsType(698, std::make_pair(eNONE, eNONE)),       //IsAllowedToFly
+    Function_ArgumentsType(699, std::make_pair(eFORMID, eNONE)),     //HasMagicEffectKeyword
+    Function_ArgumentsType(700, std::make_pair(eNONE, eNONE)),       //IsCommandedActor
+    Function_ArgumentsType(701, std::make_pair(eNONE, eNONE)),       //IsStaggered
+    Function_ArgumentsType(702, std::make_pair(eNONE, eNONE)),       //IsRecoiling
+    Function_ArgumentsType(703, std::make_pair(eNONE, eNONE)),       //IsExitingInteractionQuick
+    Function_ArgumentsType(704, std::make_pair(eNONE, eNONE)),       //IsPathing
+    Function_ArgumentsType(705, std::make_pair(eFORMID, eNONE)),     //GetShouldHelp
+    Function_ArgumentsType(706, std::make_pair(eFORMID, eNONE)),     //HasBoundWeaponEquipped
+    Function_ArgumentsType(707, std::make_pair(eFORMID, eNONE)),     //GetCombatTargetHasKeyword
+    Function_ArgumentsType(709, std::make_pair(eNONE, eNONE)),       //GetCombatGroupMemberCount
+    Function_ArgumentsType(710, std::make_pair(eNONE, eNONE)),       //IsIgnoringCombat
+    Function_ArgumentsType(711, std::make_pair(eNONE, eNONE)),       //GetLightLevel
+    Function_ArgumentsType(713, std::make_pair(eFORMID, eNONE)),     //SpellHasCastingPerk
+    Function_ArgumentsType(714, std::make_pair(eNONE, eNONE)),       //IsBeingRidden
+    Function_ArgumentsType(715, std::make_pair(eNONE, eNONE)),       //IsUndead
+    Function_ArgumentsType(716, std::make_pair(eNONE, eNONE)),       //GetRealHoursPassed
+    Function_ArgumentsType(718, std::make_pair(eNONE, eNONE)),       //IsUnlockedDoor
+    Function_ArgumentsType(719, std::make_pair(eFORMID, eNONE)),     //IsHostileToActor
+    Function_ArgumentsType(720, std::make_pair(eNONE, eNONE)),       //GetTargetHeight
+    Function_ArgumentsType(721, std::make_pair(eNONE, eNONE)),       //IsPoison
+    Function_ArgumentsType(722, std::make_pair(eFORMID, eNONE)),     //WornApparelHasKeywordCount
+    Function_ArgumentsType(723, std::make_pair(eNONE, eNONE)),       //GetItemHealthPercent
+    Function_ArgumentsType(724, std::make_pair(eNONE, eNONE)),       //EffectWasDualCast
+    Function_ArgumentsType(725, std::make_pair(eNONE, eNONE)),       //GetKnockStateEnum
+    Function_ArgumentsType(726, std::make_pair(eNONE, eNONE)),       //DoesNotExist
+    Function_ArgumentsType(730, std::make_pair(eNONE, eNONE)),       //IsOnFlyingMount
+    Function_ArgumentsType(731, std::make_pair(eNONE, eNONE)),       //CanFlyHere
+    Function_ArgumentsType(732, std::make_pair(eNONE, eNONE)),       //IsFlyingMountPatrolQueued
+    Function_ArgumentsType(733, std::make_pair(eNONE, eNONE)),       //IsFlyingMountFastTravelling
+};
+
 Function_ArgumentsType Function_ArgumentsInit[] =
     {
     Function_ArgumentsType(1,std::make_pair(eFORMID,eNONE)),     //GetDistance
@@ -1971,175 +2380,442 @@ Function_ArgumentsType Function_ArgumentsInit[] =
 
 Function_NameType Function_NameInit[] =
     {
-    Function_NameType(153,(STRING)"CanHaveFlames"),
-    Function_NameType(127,(STRING)"CanPayCrimeGold"),
-    Function_NameType(14,(STRING)"GetActorValue"),
-    Function_NameType(61,(STRING)"GetAlarmed"),
-    Function_NameType(190,(STRING)"GetAmountSoldStolen"),
-    Function_NameType(8,(STRING)"GetAngle"),
-    Function_NameType(81,(STRING)"GetArmorRating"),
-    Function_NameType(274,(STRING)"GetArmorRatingUpperBody"),
-    Function_NameType(63,(STRING)"GetAttacked"),
-    Function_NameType(264,(STRING)"GetBarterGold"),
-    Function_NameType(277,(STRING)"GetBaseActorValue"),
-    Function_NameType(229,(STRING)"GetClassDefaultMatch"),
-    Function_NameType(41,(STRING)"GetClothingValue"),
-    Function_NameType(122,(STRING)"GetCrime"),
-    Function_NameType(116,(STRING)"GetCrimeGold"),
-    Function_NameType(110,(STRING)"GetCurrentAIPackage"),
-    Function_NameType(143,(STRING)"GetCurrentAIProcedure"),
-    Function_NameType(18,(STRING)"GetCurrentTime"),
-    Function_NameType(148,(STRING)"GetCurrentWeatherPercent"),
-    Function_NameType(170,(STRING)"GetDayOfWeek"),
-    Function_NameType(46,(STRING)"GetDead"),
-    Function_NameType(84,(STRING)"GetDeadCount"),
-    Function_NameType(203,(STRING)"GetDestroyed"),
-    Function_NameType(45,(STRING)"GetDetected"),
-    Function_NameType(180,(STRING)"GetDetectionLevel"),
-    Function_NameType(35,(STRING)"GetDisabled"),
-    Function_NameType(39,(STRING)"GetDisease"),
-    Function_NameType(76,(STRING)"GetDisposition"),
-    Function_NameType(1,(STRING)"GetDistance"),
-    Function_NameType(215,(STRING)"GetDoorDefaultOpen"),
-    Function_NameType(182,(STRING)"GetEquipped"),
-    Function_NameType(73,(STRING)"GetFactionRank"),
-    Function_NameType(60,(STRING)"GetFactionRankDifference"),
-    Function_NameType(128,(STRING)"GetFatiguePercentage"),
-    Function_NameType(288,(STRING)"GetFriendHit"),
-    Function_NameType(160,(STRING)"GetFurnitureMarkerID"),
-    Function_NameType(74,(STRING)"GetGlobalValue"),
-    Function_NameType(48,(STRING)"GetGold"),
-    Function_NameType(99,(STRING)"GetHeadingAngle"),
-    Function_NameType(318,(STRING)"GetIdleDoneOnce"),
-    Function_NameType(338,(STRING)"GetIgnoreFriendlyHits"),
-    Function_NameType(67,(STRING)"GetInCell"),
-    Function_NameType(230,(STRING)"GetInCellParam"),
-    Function_NameType(71,(STRING)"GetInFaction"),
-    Function_NameType(32,(STRING)"GetInSameCell"),
-    Function_NameType(305,(STRING)"GetInvestmentGold"),
-    Function_NameType(310,(STRING)"GetInWorldspace"),
-    Function_NameType(91,(STRING)"GetIsAlerted"),
-    Function_NameType(68,(STRING)"GetIsClass"),
-    Function_NameType(228,(STRING)"GetIsClassDefault"),
-    Function_NameType(64,(STRING)"GetIsCreature"),
-    Function_NameType(161,(STRING)"GetIsCurrentPackage"),
-    Function_NameType(149,(STRING)"GetIsCurrentWeather"),
-    Function_NameType(237,(STRING)"GetIsGhost"),
-    Function_NameType(72,(STRING)"GetIsID"),
-    Function_NameType(254,(STRING)"GetIsPlayableRace"),
-    Function_NameType(224,(STRING)"GetIsPlayerBirthsign"),
-    Function_NameType(69,(STRING)"GetIsRace"),
-    Function_NameType(136,(STRING)"GetIsReference"),
-    Function_NameType(70,(STRING)"GetIsSex"),
-    Function_NameType(246,(STRING)"GetIsUsedItem"),
-    Function_NameType(247,(STRING)"GetIsUsedItemType"),
-    Function_NameType(47,(STRING)"GetItemCount"),
-    Function_NameType(107,(STRING)"GetKnockedState"),
-    Function_NameType(80,(STRING)"GetLevel"),
-    Function_NameType(27,(STRING)"GetLineOfSight"),
-    Function_NameType(5,(STRING)"GetLocked"),
-    Function_NameType(65,(STRING)"GetLockLevel"),
-    Function_NameType(320,(STRING)"GetNoRumors"),
-    Function_NameType(255,(STRING)"GetOffersServicesNow"),
-    Function_NameType(157,(STRING)"GetOpenState"),
-    Function_NameType(193,(STRING)"GetPCExpelled"),
-    Function_NameType(199,(STRING)"GetPCFactionAttack"),
-    Function_NameType(195,(STRING)"GetPCFactionMurder"),
-    Function_NameType(197,(STRING)"GetPCFactionSteal"),
-    Function_NameType(201,(STRING)"GetPCFactionSubmitAuthority"),
-    Function_NameType(249,(STRING)"GetPCFame"),
-    Function_NameType(132,(STRING)"GetPCInFaction"),
-    Function_NameType(251,(STRING)"GetPCInfamy"),
-    Function_NameType(129,(STRING)"GetPCIsClass"),
-    Function_NameType(130,(STRING)"GetPCIsRace"),
-    Function_NameType(131,(STRING)"GetPCIsSex"),
-    Function_NameType(312,(STRING)"GetPCMiscStat"),
-    Function_NameType(225,(STRING)"GetPersuasionNumber"),
-    Function_NameType(98,(STRING)"GetPlayerControlsDisabled"),
-    Function_NameType(365,(STRING)"GetPlayerInSEWorld"),
-    Function_NameType(362,(STRING)"GetPlayerHasLastRiddenHorse"),
-    Function_NameType(6,(STRING)"GetPos"),
-    Function_NameType(56,(STRING)"GetQuestRunning"),
-    Function_NameType(79,(STRING)"GetQuestVariable"),
-    Function_NameType(77,(STRING)"GetRandomPercent"),
-    Function_NameType(244,(STRING)"GetRestrained"),
-    Function_NameType(24,(STRING)"GetScale"),
-    Function_NameType(53,(STRING)"GetScriptVariable"),
-    Function_NameType(12,(STRING)"GetSecondsPassed"),
-    Function_NameType(66,(STRING)"GetShouldAttack"),
-    Function_NameType(159,(STRING)"GetSitting"),
-    Function_NameType(49,(STRING)"GetSleeping"),
-    Function_NameType(58,(STRING)"GetStage"),
-    Function_NameType(59,(STRING)"GetStageDone"),
-    Function_NameType(11,(STRING)"GetStartingAngle"),
-    Function_NameType(10,(STRING)"GetStartingPos"),
-    Function_NameType(50,(STRING)"GetTalkedToPC"),
-    Function_NameType(172,(STRING)"GetTalkedToPCParam"),
-    Function_NameType(361,(STRING)"GetTimeDead"),
-    Function_NameType(315,(STRING)"GetTotalPersuasionNumber"),
-    Function_NameType(144,(STRING)"GetTrespassWarningLevel"),
-    Function_NameType(242,(STRING)"GetUnconscious"),
-    Function_NameType(259,(STRING)"GetUsedItemActivate"),
-    Function_NameType(258,(STRING)"GetUsedItemLevel"),
-    Function_NameType(40,(STRING)"GetVampire"),
-    Function_NameType(142,(STRING)"GetWalkSpeed"),
-    Function_NameType(108,(STRING)"GetWeaponAnimType"),
-    Function_NameType(109,(STRING)"GetWeaponSkillType"),
-    Function_NameType(147,(STRING)"GetWindSpeed"),
-    Function_NameType(154,(STRING)"HasFlames"),
-    Function_NameType(214,(STRING)"HasMagicEffect"),
-    Function_NameType(227,(STRING)"HasVampireFed"),
-    Function_NameType(353,(STRING)"IsActor"),
-    Function_NameType(314,(STRING)"IsActorAVictim"),
-    Function_NameType(313,(STRING)"IsActorEvil"),
-    Function_NameType(306,(STRING)"IsActorUsingATorch"),
-    Function_NameType(280,(STRING)"IsCellOwner"),
-    Function_NameType(267,(STRING)"IsCloudy"),
-    Function_NameType(150,(STRING)"IsContinuingPackagePCNear"),
-    Function_NameType(163,(STRING)"IsCurrentFurnitureObj"),
-    Function_NameType(162,(STRING)"IsCurrentFurnitureRef"),
-    Function_NameType(354,(STRING)"IsEssential"),
-    Function_NameType(106,(STRING)"IsFacingUp"),
-    Function_NameType(125,(STRING)"IsGuard"),
-    Function_NameType(282,(STRING)"IsHorseStolen"),
-    Function_NameType(112,(STRING)"IsIdlePlaying"),
-    Function_NameType(289,(STRING)"IsInCombat"),
-    Function_NameType(332,(STRING)"IsInDangerousWater"),
-    Function_NameType(300,(STRING)"IsInInterior"),
-    Function_NameType(146,(STRING)"IsInMyOwnedCell"),
-    Function_NameType(285,(STRING)"IsLeftUp"),
-    Function_NameType(278,(STRING)"IsOwner"),
-    Function_NameType(176,(STRING)"IsPCAMurderer"),
-    Function_NameType(175,(STRING)"IsPCSleeping"),
-    Function_NameType(171,(STRING)"IsPlayerInJail"),
-    Function_NameType(358,(STRING)"IsPlayerMovingIntoNewSpace"),
-    Function_NameType(339,(STRING)"IsPlayersLastRiddenHorse"),
-    Function_NameType(266,(STRING)"IsPleasant"),
-    Function_NameType(62,(STRING)"IsRaining"),
-    Function_NameType(327,(STRING)"IsRidingHorse"),
-    Function_NameType(287,(STRING)"IsRunning"),
-    Function_NameType(103,(STRING)"IsShieldOut"),
-    Function_NameType(286,(STRING)"IsSneaking"),
-    Function_NameType(75,(STRING)"IsSnowing"),
-    Function_NameType(223,(STRING)"IsSpellTarget"),
-    Function_NameType(185,(STRING)"IsSwimming"),
-    Function_NameType(141,(STRING)"IsTalking"),
-    Function_NameType(265,(STRING)"IsTimePassing"),
-    Function_NameType(102,(STRING)"IsTorchOut"),
-    Function_NameType(145,(STRING)"IsTrespassing"),
-    Function_NameType(329,(STRING)"IsTurnArrest"),
-    Function_NameType(111,(STRING)"IsWaiting"),
-    Function_NameType(101,(STRING)"IsWeaponOut"),
-    Function_NameType(309,(STRING)"IsXBox"),
-    Function_NameType(104,(STRING)"IsYielding"),
-    Function_NameType(36,(STRING)"MenuMode"),
-    Function_NameType(42,(STRING)"SameFaction"),
-    Function_NameType(133,(STRING)"SameFactionAsPC"),
-    Function_NameType(43,(STRING)"SameRace"),
-    Function_NameType(134,(STRING)"SameRaceAsPC"),
-    Function_NameType(44,(STRING)"SameSex"),
-    Function_NameType(135,(STRING)"SameSexAsPC"),
-    Function_NameType(323,(STRING)"WhichServiceMenu")
+    Function_NameType(731, (STRING)"CanFlyHere"),
+    Function_NameType(153, (STRING)"CanHaveFlames"),
+    Function_NameType(127, (STRING)"CanPayCrimeGold"),
+    Function_NameType(497, (STRING)"CanPayCrimeGold"),
+    Function_NameType(607, (STRING)"ChallengeLocked"),
+    Function_NameType(726, (STRING)"DoesNotExist"),
+    Function_NameType(501, (STRING)"EPAlchemyEffectHasKeyword"),
+    Function_NameType(500, (STRING)"EPAlchemyGetMakingPoison"),
+    Function_NameType(693, (STRING)"EPMagic_SpellHasKeyword"),
+    Function_NameType(696, (STRING)"EPMagic_SpellHasSkill"),
+    Function_NameType(691, (STRING)"EPModSkillUsage_AdvancedObjectHasKeyword"),
+    Function_NameType(692, (STRING)"EPModSkillUsage_IsAdvancedAction"),
+    Function_NameType(681, (STRING)"EPModSkillUsage_IsAdvancedSkill"),
+    Function_NameType(660, (STRING)"EPTemperingItemHasKeyword"),
+    Function_NameType(659, (STRING)"EPTemperingItemIsEnchanted"),
+    Function_NameType(724, (STRING)"EffectWasDualCast"),
+    Function_NameType(414, (STRING)"Exists"),
+    Function_NameType(680, (STRING)"GetActivationHeight"),
+    Function_NameType(118, (STRING)"GetActorAggroRadiusViolated"),
+    Function_NameType(458, (STRING)"GetActorCrimePlayerEnemy"),
+    Function_NameType(460, (STRING)"GetActorFactionPlayerEnemy"),
+    Function_NameType(14, (STRING)"GetActorValue"),
+    Function_NameType(640, (STRING)"GetActorValuePercent"),
+    Function_NameType(554, (STRING)"GetActorsInHigh"),
+    Function_NameType(557, (STRING)"GetActorsInHigh"),
+    Function_NameType(61, (STRING)"GetAlarmed"),
+    Function_NameType(503, (STRING)"GetAllowWorldInteractions"),
+    Function_NameType(190, (STRING)"GetAmountSoldStolen"),
+    Function_NameType(8, (STRING)"GetAngle"),
+    Function_NameType(219, (STRING)"GetAnimAction"),
+    Function_NameType(81, (STRING)"GetArmorRating"),
+    Function_NameType(274, (STRING)"GetArmorRatingUpperBody"),
+    Function_NameType(656, (STRING)"GetArrestedState"),
+    Function_NameType(657, (STRING)"GetArrestingActor"),
+    Function_NameType(574, (STRING)"GetAttackState"),
+    Function_NameType(63, (STRING)"GetAttacked"),
+    Function_NameType(264, (STRING)"GetBarterGold"),
+    Function_NameType(277, (STRING)"GetBaseActorValue"),
+    Function_NameType(654, (STRING)"GetBribeSuccess"),
+    Function_NameType(396, (STRING)"GetCauseofDeath"),
+    Function_NameType(229, (STRING)"GetClassDefaultMatch"),
+    Function_NameType(41, (STRING)"GetClothingValue"),
+    Function_NameType(709, (STRING)"GetCombatGroupMemberCount"),
+    Function_NameType(707, (STRING)"GetCombatTargetHasKeyword"),
+    Function_NameType(488, (STRING)"GetConcussed"),
+    Function_NameType(489, (STRING)"GetConcussed"),
+    Function_NameType(122, (STRING)"GetCrime"),
+    Function_NameType(116, (STRING)"GetCrimeGold"),
+    Function_NameType(459, (STRING)"GetCrimeGold"),
+    Function_NameType(376, (STRING)"GetCrimeGoldNonviolent"),
+    Function_NameType(375, (STRING)"GetCrimeGoldViolent"),
+    Function_NameType(110, (STRING)"GetCurrentAIPackage"),
+    Function_NameType(143, (STRING)"GetCurrentAIProcedure"),
+    Function_NameType(571, (STRING)"GetCurrentCastingType"),
+    Function_NameType(572, (STRING)"GetCurrentDeliveryType"),
+    Function_NameType(676, (STRING)"GetCurrentShoutVariation"),
+    Function_NameType(18, (STRING)"GetCurrentTime"),
+    Function_NameType(148, (STRING)"GetCurrentWeatherPercent"),
+    Function_NameType(170, (STRING)"GetDayOfWeek"),
+    Function_NameType(499, (STRING)"GetDaysInJail"),
+    Function_NameType(46, (STRING)"GetDead"),
+    Function_NameType(84, (STRING)"GetDeadCount"),
+    Function_NameType(203, (STRING)"GetDestroyed"),
+    Function_NameType(470, (STRING)"GetDestructionStage"),
+    Function_NameType(471, (STRING)"GetDestructionStage"),
+    Function_NameType(45, (STRING)"GetDetected"),
+    Function_NameType(180, (STRING)"GetDetectionLevel"),
+    Function_NameType(434, (STRING)"GetDialogEmotion"),
+    Function_NameType(435, (STRING)"GetDialogEmotionValue"),
+    Function_NameType(436, (STRING)"GetDialogueEmotionValue"),
+    Function_NameType(35, (STRING)"GetDisabled"),
+    Function_NameType(39, (STRING)"GetDisease"),
+    Function_NameType(76, (STRING)"GetDisposition"),
+    Function_NameType(1, (STRING)"GetDistance"),
+    Function_NameType(215, (STRING)"GetDoorDefaultOpen"),
+    Function_NameType(182, (STRING)"GetEquipped"),
+    Function_NameType(597, (STRING)"GetEquippedItemType"),
+    Function_NameType(579, (STRING)"GetEquippedShout"),
+    Function_NameType(576, (STRING)"GetEventData"),
+    Function_NameType(410, (STRING)"GetFactionCombatReaction"),
+    Function_NameType(411, (STRING)"GetFactionCombatReaction"),
+    Function_NameType(73, (STRING)"GetFactionRank"),
+    Function_NameType(60, (STRING)"GetFactionRankDifference"),
+    Function_NameType(449, (STRING)"GetFactionRelation"),
+    Function_NameType(128, (STRING)"GetFatiguePercentage"),
+    Function_NameType(633, (STRING)"GetFlyingState"),
+    Function_NameType(288, (STRING)"GetFriendHit"),
+    Function_NameType(160, (STRING)"GetFurnitureMarkerID"),
+    Function_NameType(74, (STRING)"GetGlobalValue"),
+    Function_NameType(48, (STRING)"GetGold"),
+    Function_NameType(447, (STRING)"GetGraphVariableFloat"),
+    Function_NameType(675, (STRING)"GetGraphVariableInt"),
+    Function_NameType(415, (STRING)"GetGroupMemberCount"),
+    Function_NameType(416, (STRING)"GetGroupTargetCount"),
+    Function_NameType(417, (STRING)"GetGroupTargetCount"),
+    Function_NameType(381, (STRING)"GetHasNote"),
+    Function_NameType(382, (STRING)"GetHasNote"),
+    Function_NameType(99, (STRING)"GetHeadingAngle"),
+    Function_NameType(430, (STRING)"GetHealthPercentage"),
+    Function_NameType(431, (STRING)"GetHealthPercentage"),
+    Function_NameType(615, (STRING)"GetHighestRelationshipRank"),
+    Function_NameType(390, (STRING)"GetHitLocation"),
+    Function_NameType(318, (STRING)"GetIdleDoneOnce"),
+    Function_NameType(192, (STRING)"GetIgnoreCrime"),
+    Function_NameType(338, (STRING)"GetIgnoreFriendlyHits"),
+    Function_NameType(67, (STRING)"GetInCell"),
+    Function_NameType(230, (STRING)"GetInCellParam"),
+    Function_NameType(624, (STRING)"GetInContainer"),
+    Function_NameType(359, (STRING)"GetInCurrentLoc"),
+    Function_NameType(360, (STRING)"GetInCurrentLocAlias"),
+    Function_NameType(444, (STRING)"GetInCurrentLocFormList"),
+    Function_NameType(71, (STRING)"GetInFaction"),
+    Function_NameType(32, (STRING)"GetInSameCell"),
+    Function_NameType(652, (STRING)"GetInSharedCrimeFaction"),
+    Function_NameType(310, (STRING)"GetInWorldspace"),
+    Function_NameType(445, (STRING)"GetInZone"),
+    Function_NameType(533, (STRING)"GetInfamy"),
+    Function_NameType(535, (STRING)"GetInfamyNonViolent"),
+    Function_NameType(534, (STRING)"GetInfamyViolent"),
+    Function_NameType(655, (STRING)"GetIntimidateSuccess"),
+    Function_NameType(305, (STRING)"GetInvestmentGold"),
+    Function_NameType(91, (STRING)"GetIsAlerted"),
+    Function_NameType(566, (STRING)"GetIsAliasRef"),
+    Function_NameType(473, (STRING)"GetIsAlignment"),
+    Function_NameType(474, (STRING)"GetIsAlignment"),
+    Function_NameType(68, (STRING)"GetIsClass"),
+    Function_NameType(228, (STRING)"GetIsClassDefault"),
+    Function_NameType(646, (STRING)"GetIsCrashLandRequest"),
+    Function_NameType(64, (STRING)"GetIsCreature"),
+    Function_NameType(437, (STRING)"GetIsCreatureType"),
+    Function_NameType(438, (STRING)"GetIsCreatureType"),
+    Function_NameType(152, (STRING)"GetIsCrimeFaction"),
+    Function_NameType(161, (STRING)"GetIsCurrentPackage"),
+    Function_NameType(149, (STRING)"GetIsCurrentWeather"),
+    Function_NameType(567, (STRING)"GetIsEditorLocAlias"),
+    Function_NameType(565, (STRING)"GetIsEditorLocation"),
+    Function_NameType(594, (STRING)"GetIsFlying"),
+    Function_NameType(237, (STRING)"GetIsGhost"),
+    Function_NameType(647, (STRING)"GetIsHastyLandRequest"),
+    Function_NameType(72, (STRING)"GetIsID"),
+    Function_NameType(645, (STRING)"GetIsInjured"),
+    Function_NameType(519, (STRING)"GetIsLockBroken"),
+    Function_NameType(432, (STRING)"GetIsObjectType"),
+    Function_NameType(433, (STRING)"GetIsObjectType"),
+    Function_NameType(254, (STRING)"GetIsPlayableRace"),
+    Function_NameType(224, (STRING)"GetIsPlayerBirthsign"),
+    Function_NameType(69, (STRING)"GetIsRace"),
+    Function_NameType(136, (STRING)"GetIsReference"),
+    Function_NameType(70, (STRING)"GetIsSex"),
+    Function_NameType(246, (STRING)"GetIsUsedItem"),
+    Function_NameType(479, (STRING)"GetIsUsedItemEquipType"),
+    Function_NameType(247, (STRING)"GetIsUsedItemType"),
+    Function_NameType(426, (STRING)"GetIsVoiceType"),
+    Function_NameType(47, (STRING)"GetItemCount"),
+    Function_NameType(723, (STRING)"GetItemHealthPercent"),
+    Function_NameType(608, (STRING)"GetKeywordDataForAlias"),
+    Function_NameType(651, (STRING)"GetKeywordDataForCurrentLocation"),
+    Function_NameType(606, (STRING)"GetKeywordDataForLocation"),
+    Function_NameType(465, (STRING)"GetKeywordItemCount"),
+    Function_NameType(495, (STRING)"GetKillingBlowLimb"),
+    Function_NameType(496, (STRING)"GetKillingBlowLimb"),
+    Function_NameType(725, (STRING)"GetKnockStateEnum"),
+    Function_NameType(107, (STRING)"GetKnockedState"),
+    Function_NameType(642, (STRING)"GetLastBumpDirection"),
+    Function_NameType(508, (STRING)"GetLastHitCritical"),
+    Function_NameType(510, (STRING)"GetLastHitCritical"),
+    Function_NameType(367, (STRING)"GetLastPlayerAction"),
+    Function_NameType(80, (STRING)"GetLevel"),
+    Function_NameType(711, (STRING)"GetLightLevel"),
+    Function_NameType(27, (STRING)"GetLineOfSight"),
+    Function_NameType(601, (STRING)"GetLocAliasRefTypeAliveCount"),
+    Function_NameType(600, (STRING)"GetLocAliasRefTypeDeadCount"),
+    Function_NameType(598, (STRING)"GetLocationAliasCleared"),
+    Function_NameType(250, (STRING)"GetLocationCleared"),
+    Function_NameType(65, (STRING)"GetLockLevel"),
+    Function_NameType(5, (STRING)"GetLocked"),
+    Function_NameType(616, (STRING)"GetLowestRelationshipRank"),
+    Function_NameType(491, (STRING)"GetMapMarkerVisible"),
+    Function_NameType(492, (STRING)"GetMapMarkerVisible"),
+    Function_NameType(589, (STRING)"GetMovementDirection"),
+    Function_NameType(623, (STRING)"GetMovementSpeed"),
+    Function_NameType(694, (STRING)"GetNoBleedoutRecovery"),
+    Function_NameType(320, (STRING)"GetNoRumors"),
+    Function_NameType(612, (STRING)"GetNumericPackageData"),
+    Function_NameType(420, (STRING)"GetObjectiveCompleted"),
+    Function_NameType(421, (STRING)"GetObjectiveDisplayed"),
+    Function_NameType(255, (STRING)"GetOffersServicesNow"),
+    Function_NameType(157, (STRING)"GetOpenState"),
+    Function_NameType(193, (STRING)"GetPCExpelled"),
+    Function_NameType(199, (STRING)"GetPCFactionAttack"),
+    Function_NameType(195, (STRING)"GetPCFactionMurder"),
+    Function_NameType(197, (STRING)"GetPCFactionSteal"),
+    Function_NameType(201, (STRING)"GetPCFactionSubmitAuthority"),
+    Function_NameType(249, (STRING)"GetPCFame"),
+    Function_NameType(132, (STRING)"GetPCInFaction"),
+    Function_NameType(251, (STRING)"GetPCInfamy"),
+    Function_NameType(129, (STRING)"GetPCIsClass"),
+    Function_NameType(130, (STRING)"GetPCIsRace"),
+    Function_NameType(131, (STRING)"GetPCIsSex"),
+    Function_NameType(312, (STRING)"GetPCMiscStat"),
+    Function_NameType(683, (STRING)"GetPathingCurrentSpeed"),
+    Function_NameType(684, (STRING)"GetPathingCurrentSpeedAngle"),
+    Function_NameType(620, (STRING)"GetPathingTargetAngleOffset"),
+    Function_NameType(619, (STRING)"GetPathingTargetOffset"),
+    Function_NameType(621, (STRING)"GetPathingTargetSpeed"),
+    Function_NameType(622, (STRING)"GetPathingTargetSpeedAngle"),
+    Function_NameType(494, (STRING)"GetPermanentActorValue"),
+    Function_NameType(225, (STRING)"GetPersuasionNumber"),
+    Function_NameType(427, (STRING)"GetPlantedExplosive"),
+    Function_NameType(428, (STRING)"GetPlantedExplosive"),
+    Function_NameType(98, (STRING)"GetPlayerControlsDisabled"),
+    Function_NameType(462, (STRING)"GetPlayerGrabbedRef"),
+    Function_NameType(362, (STRING)"GetPlayerHasLastRiddenHorse"),
+    Function_NameType(365, (STRING)"GetPlayerInSEWorld"),
+    Function_NameType(480, (STRING)"GetPlayerName"),
+    Function_NameType(453, (STRING)"GetPlayerTeammate"),
+    Function_NameType(454, (STRING)"GetPlayerTeammate"),
+    Function_NameType(455, (STRING)"GetPlayerTeammateCount"),
+    Function_NameType(6, (STRING)"GetPos"),
+    Function_NameType(543, (STRING)"GetQuestCompleted"),
+    Function_NameType(546, (STRING)"GetQuestCompleted"),
+    Function_NameType(56, (STRING)"GetQuestRunning"),
+    Function_NameType(79, (STRING)"GetQuestVariable"),
+    Function_NameType(77, (STRING)"GetRandomPercent"),
+    Function_NameType(716, (STRING)"GetRealHoursPassed"),
+    Function_NameType(592, (STRING)"GetRefTypeAliveCount"),
+    Function_NameType(591, (STRING)"GetRefTypeDeadCount"),
+    Function_NameType(403, (STRING)"GetRelationshipRank"),
+    Function_NameType(584, (STRING)"GetRelativeAngle"),
+    Function_NameType(664, (STRING)"GetReplacedItemType"),
+    Function_NameType(573, (STRING)"GetReputation"),
+    Function_NameType(575, (STRING)"GetReputationThreshold"),
+    Function_NameType(244, (STRING)"GetRestrained"),
+    Function_NameType(24, (STRING)"GetScale"),
+    Function_NameType(53, (STRING)"GetScriptVariable"),
+    Function_NameType(12, (STRING)"GetSecondsPassed"),
+    Function_NameType(66, (STRING)"GetShouldAttack"),
+    Function_NameType(705, (STRING)"GetShouldHelp"),
+    Function_NameType(159, (STRING)"GetSitting"),
+    Function_NameType(49, (STRING)"GetSleeping"),
+    Function_NameType(552, (STRING)"GetSpellUsageNum"),
+    Function_NameType(58, (STRING)"GetStage"),
+    Function_NameType(59, (STRING)"GetStageDone"),
+    Function_NameType(11, (STRING)"GetStartingAngle"),
+    Function_NameType(10, (STRING)"GetStartingPos"),
+    Function_NameType(373, (STRING)"GetStolenItemValue"),
+    Function_NameType(366, (STRING)"GetStolenItemValueNoCrime"),
+    Function_NameType(50, (STRING)"GetTalkedToPC"),
+    Function_NameType(172, (STRING)"GetTalkedToPCParam"),
+    Function_NameType(720, (STRING)"GetTargetHeight"),
+    Function_NameType(477, (STRING)"GetThreatRatio"),
+    Function_NameType(478, (STRING)"GetThreatRatio"),
+    Function_NameType(361, (STRING)"GetTimeDead"),
+    Function_NameType(315, (STRING)"GetTotalPersuasionNumber"),
+    Function_NameType(144, (STRING)"GetTrespassWarningLevel"),
+    Function_NameType(242, (STRING)"GetUnconscious"),
+    Function_NameType(259, (STRING)"GetUsedItemActivate"),
+    Function_NameType(258, (STRING)"GetUsedItemLevel"),
+    Function_NameType(517, (STRING)"GetVATSBackAreaFree"),
+    Function_NameType(524, (STRING)"GetVATSBackTargetVisible"),
+    Function_NameType(527, (STRING)"GetVATSBackTargetVisible"),
+    Function_NameType(518, (STRING)"GetVATSFrontAreaFree"),
+    Function_NameType(525, (STRING)"GetVATSFrontTargetVisible"),
+    Function_NameType(516, (STRING)"GetVATSLeftAreaFree"),
+    Function_NameType(523, (STRING)"GetVATSLeftTargetVisible"),
+    Function_NameType(526, (STRING)"GetVATSLeftTargetVisible"),
+    Function_NameType(515, (STRING)"GetVATSRightAreaFree"),
+    Function_NameType(522, (STRING)"GetVATSRightTargetVisible"),
+    Function_NameType(407, (STRING)"GetVATSValue"),
+    Function_NameType(629, (STRING)"GetVMQuestVariable"),
+    Function_NameType(630, (STRING)"GetVMScriptVariable"),
+    Function_NameType(40, (STRING)"GetVampire"),
+    Function_NameType(226, (STRING)"GetVampireFeed"),
+    Function_NameType(235, (STRING)"GetVatsTargetHeight"),
+    Function_NameType(446, (STRING)"GetVelocity"),
+    Function_NameType(142, (STRING)"GetWalkSpeed"),
+    Function_NameType(0, (STRING)"GetWantBlocking"),
+    Function_NameType(108, (STRING)"GetWeaponAnimType"),
+    Function_NameType(109, (STRING)"GetWeaponSkillType"),
+    Function_NameType(147, (STRING)"GetWindSpeed"),
+    Function_NameType(639, (STRING)"GetWithinDistance"),
+    Function_NameType(325, (STRING)"GetWithinPackageLocation"),
+    Function_NameType(530, (STRING)"GetXPForNextLevel"),
+    Function_NameType(617, (STRING)"HasAssociationTypeAny"),
+    Function_NameType(706, (STRING)"HasBoundWeaponEquipped"),
+    Function_NameType(570, (STRING)"HasEquippedSpell"),
+    Function_NameType(618, (STRING)"HasFamilyRelationshipAny"),
+    Function_NameType(154, (STRING)"HasFlames"),
+    Function_NameType(560, (STRING)"HasKeyword"),
+    Function_NameType(555, (STRING)"HasLoaded3D"),
+    Function_NameType(558, (STRING)"HasLoaded3D"),
+    Function_NameType(214, (STRING)"HasMagicEffect"),
+    Function_NameType(699, (STRING)"HasMagicEffectKeyword"),
+    Function_NameType(261, (STRING)"HasParentRelationship"),
+    Function_NameType(448, (STRING)"HasPerk"),
+    Function_NameType(561, (STRING)"HasRefType"),
+    Function_NameType(181, (STRING)"HasSameEditorLocAsRefAlias"),
+    Function_NameType(378, (STRING)"HasShout"),
+    Function_NameType(636, (STRING)"HasTwoHandedWeaponEquipped"),
+    Function_NameType(227, (STRING)"HasVampireFed"),
+    Function_NameType(353, (STRING)"IsActor"),
+    Function_NameType(314, (STRING)"IsActorAVictim"),
+    Function_NameType(313, (STRING)"IsActorEvil"),
+    Function_NameType(306, (STRING)"IsActorUsingATorch"),
+    Function_NameType(698, (STRING)"IsAllowedToFly"),
+    Function_NameType(697, (STRING)"IsAttackType"),
+    Function_NameType(672, (STRING)"IsAttacking"),
+    Function_NameType(714, (STRING)"IsBeingRidden"),
+    Function_NameType(580, (STRING)"IsBleedingOut"),
+    Function_NameType(569, (STRING)"IsBlocking"),
+    Function_NameType(402, (STRING)"IsBribedbyPlayer"),
+    Function_NameType(487, (STRING)"IsCarryable"),
+    Function_NameType(632, (STRING)"IsCasting"),
+    Function_NameType(280, (STRING)"IsCellOwner"),
+    Function_NameType(577, (STRING)"IsCloserToAThanB"),
+    Function_NameType(267, (STRING)"IsCloudy"),
+    Function_NameType(513, (STRING)"IsCombatTarget"),
+    Function_NameType(700, (STRING)"IsCommandedActor"),
+    Function_NameType(150, (STRING)"IsContinuingPackagePCNear"),
+    Function_NameType(163, (STRING)"IsCurrentFurnitureObj"),
+    Function_NameType(162, (STRING)"IsCurrentFurnitureRef"),
+    Function_NameType(595, (STRING)"IsCurrentSpell"),
+    Function_NameType(627, (STRING)"IsDualCasting"),
+    Function_NameType(631, (STRING)"IsEnteringInteractionQuick"),
+    Function_NameType(354, (STRING)"IsEssential"),
+    Function_NameType(637, (STRING)"IsExitingInstant"),
+    Function_NameType(703, (STRING)"IsExitingInteractionQuick"),
+    Function_NameType(106, (STRING)"IsFacingUp"),
+    Function_NameType(733, (STRING)"IsFlyingMountFastTravelling"),
+    Function_NameType(732, (STRING)"IsFlyingMountPatrolQueued"),
+    Function_NameType(613, (STRING)"IsFurnitureAnimType"),
+    Function_NameType(614, (STRING)"IsFurnitureEntryType"),
+    Function_NameType(547, (STRING)"IsGoreDisabled"),
+    Function_NameType(123, (STRING)"IsGreetingPlayer"),
+    Function_NameType(125, (STRING)"IsGuard"),
+    Function_NameType(586, (STRING)"IsHardcore"),
+    Function_NameType(282, (STRING)"IsHorseStolen"),
+    Function_NameType(719, (STRING)"IsHostileToActor"),
+    Function_NameType(112, (STRING)"IsIdlePlaying"),
+    Function_NameType(710, (STRING)"IsIgnoringCombat"),
+    Function_NameType(289, (STRING)"IsInCombat"),
+    Function_NameType(528, (STRING)"IsInCriticalStage"),
+    Function_NameType(531, (STRING)"IsInCriticalStage"),
+    Function_NameType(332, (STRING)"IsInDangerousWater"),
+    Function_NameType(635, (STRING)"IsInFavorState"),
+    Function_NameType(638, (STRING)"IsInFriendStatewithPlayer"),
+    Function_NameType(644, (STRING)"IsInFurnitureState"),
+    Function_NameType(300, (STRING)"IsInInterior"),
+    Function_NameType(372, (STRING)"IsInList"),
+    Function_NameType(146, (STRING)"IsInMyOwnedCell"),
+    Function_NameType(603, (STRING)"IsInSameCurrentLocAsRef"),
+    Function_NameType(604, (STRING)"IsInSameCurrentLocAsRefAlias"),
+    Function_NameType(590, (STRING)"IsInScene"),
+    Function_NameType(408, (STRING)"IsKiller"),
+    Function_NameType(409, (STRING)"IsKillerObject"),
+    Function_NameType(674, (STRING)"IsLastHostileActor"),
+    Function_NameType(450, (STRING)"IsLastIdlePlayed"),
+    Function_NameType(451, (STRING)"IsLastIdlePlayed"),
+    Function_NameType(285, (STRING)"IsLeftUp"),
+    Function_NameType(397, (STRING)"IsLimbGone"),
+    Function_NameType(650, (STRING)"IsLinkedTo"),
+    Function_NameType(626, (STRING)"IsLocAliasLoaded"),
+    Function_NameType(625, (STRING)"IsLocationLoaded"),
+    Function_NameType(25, (STRING)"IsMoving"),
+    Function_NameType(611, (STRING)"IsNullPackageData"),
+    Function_NameType(730, (STRING)"IsOnFlyingMount"),
+    Function_NameType(278, (STRING)"IsOwner"),
+    Function_NameType(391, (STRING)"IsPC1stPerson"),
+    Function_NameType(392, (STRING)"IsPC1stPerson"),
+    Function_NameType(176, (STRING)"IsPCAMurderer"),
+    Function_NameType(175, (STRING)"IsPCSleeping"),
+    Function_NameType(520, (STRING)"IsPS3"),
+    Function_NameType(704, (STRING)"IsPathing"),
+    Function_NameType(368, (STRING)"IsPlayerActionActive"),
+    Function_NameType(463, (STRING)"IsPlayerGrabbedRef"),
+    Function_NameType(464, (STRING)"IsPlayerGrabbedRef"),
+    Function_NameType(171, (STRING)"IsPlayerInJail"),
+    Function_NameType(117, (STRING)"IsPlayerInRegion"),
+    Function_NameType(358, (STRING)"IsPlayerMovingIntoNewSpace"),
+    Function_NameType(339, (STRING)"IsPlayersLastRiddenHorse"),
+    Function_NameType(266, (STRING)"IsPleasant"),
+    Function_NameType(721, (STRING)"IsPoison"),
+    Function_NameType(673, (STRING)"IsPowerAttacking"),
+    Function_NameType(476, (STRING)"IsProtected"),
+    Function_NameType(62, (STRING)"IsRaining"),
+    Function_NameType(702, (STRING)"IsRecoiling"),
+    Function_NameType(327, (STRING)"IsRidingHorse"),
+    Function_NameType(287, (STRING)"IsRunning"),
+    Function_NameType(550, (STRING)"IsSceneActionComplete"),
+    Function_NameType(429, (STRING)"IsScenePackageRunning"),
+    Function_NameType(248, (STRING)"IsScenePlaying"),
+    Function_NameType(103, (STRING)"IsShieldOut"),
+    Function_NameType(286, (STRING)"IsSneaking"),
+    Function_NameType(75, (STRING)"IsSnowing"),
+    Function_NameType(223, (STRING)"IsSpellTarget"),
+    Function_NameType(568, (STRING)"IsSprinting"),
+    Function_NameType(701, (STRING)"IsStaggered"),
+    Function_NameType(185, (STRING)"IsSwimming"),
+    Function_NameType(141, (STRING)"IsTalking"),
+    Function_NameType(370, (STRING)"IsTalkingActivatorActor"),
+    Function_NameType(265, (STRING)"IsTimePassing"),
+    Function_NameType(102, (STRING)"IsTorchOut"),
+    Function_NameType(145, (STRING)"IsTrespassing"),
+    Function_NameType(329, (STRING)"IsTurnArrest"),
+    Function_NameType(26, (STRING)"IsTurning"),
+    Function_NameType(715, (STRING)"IsUndead"),
+    Function_NameType(641, (STRING)"IsUnique"),
+    Function_NameType(718, (STRING)"IsUnlockedDoor"),
+    Function_NameType(111, (STRING)"IsWaiting"),
+    Function_NameType(602, (STRING)"IsWardState"),
+    Function_NameType(262, (STRING)"IsWarningAbout"),
+    Function_NameType(304, (STRING)"IsWaterObject"),
+    Function_NameType(398, (STRING)"IsWeaponInList"),
+    Function_NameType(399, (STRING)"IsWeaponInList"),
+    Function_NameType(101, (STRING)"IsWeaponOut"),
+    Function_NameType(263, (STRING)"IsWeaponOut"),
+    Function_NameType(521, (STRING)"IsWin32"),
+    Function_NameType(309, (STRING)"IsXBox"),
+    Function_NameType(104, (STRING)"IsYielding"),
+    Function_NameType(610, (STRING)"LocAliasHasKeyword"),
+    Function_NameType(605, (STRING)"LocAliasIsLocation"),
+    Function_NameType(562, (STRING)"LocationHasKeyword"),
+    Function_NameType(563, (STRING)"LocationHasRefType"),
+    Function_NameType(36, (STRING)"MenuMode"),
+    Function_NameType(42, (STRING)"SameFaction"),
+    Function_NameType(133, (STRING)"SameFactionAsPC"),
+    Function_NameType(43, (STRING)"SameRace"),
+    Function_NameType(134, (STRING)"SameRaceAsPC"),
+    Function_NameType(44, (STRING)"SameSex"),
+    Function_NameType(135, (STRING)"SameSexAsPC"),
+    Function_NameType(678, (STRING)"ShouldAttackKill"),
+    Function_NameType(713, (STRING)"SpellHasCastingPerk"),
+    Function_NameType(596, (STRING)"SpellHasKeyword"),
+    Function_NameType(323, (STRING)"WhichServiceMenu"),
+    Function_NameType(722, (STRING)"WornApparelHasKeywordCount"),
+    Function_NameType(682, (STRING)"WornHasKeyword"),
     };
 
 Function_NameType Comparison_NameInit[] =
@@ -2572,6 +3248,7 @@ const std::map<UINT32, STRING> HardCodedFormID_EditorID(HardCodedFormID_EditorID
 
 const std::map<UINT32, STRING> EntryPoint_Name(EntryPoint_NameInit, EntryPoint_NameInit + sizeof(EntryPoint_NameInit) / sizeof(EntryPoint_NameInit[0]));
 const std::map<UINT32, FunctionArguments> FNVFunction_Arguments(FNVFunction_ArgumentsInit, FNVFunction_ArgumentsInit + sizeof(FNVFunction_ArgumentsInit) / sizeof(FNVFunction_ArgumentsInit[0]));
+const std::map<UINT32, FunctionArguments> SKFunction_Arguments(SKFunction_ArgumentsInit, SKFunction_ArgumentsInit + sizeof(SKFunction_ArgumentsInit) / sizeof(SKFunction_ArgumentsInit[0]));
 
 const float flt_max = FLT_MAX;
 const float flt_min = FLT_MIN;

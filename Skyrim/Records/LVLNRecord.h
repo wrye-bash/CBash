@@ -57,9 +57,10 @@ class LVLNRecord : public TES5Record //Leveled Item
         ReqSubRecord<GENOBND> OBND; //Object bounds
         ReqSimpleSubRecord<UINT8> LVLD; //Chance none
         ReqSimpleSubRecord<UINT8> LVLF; //Flags
-        // ReqSimpleSubRecord<UINT8> LLCT; //Count
-        UnorderedSparseArray<FNVLVLO *> Entries; //Leveled List Entries
-        OptSubRecord<MODEL> MODL; //Model
+        OptSimpleSubRecord<FORMID> LVLG; // Global
+        // ReqSimpleSubRecord<UINT8> LLCT; //Count - ignored on read, properly written
+        ReqCounted<UnorderedSparseArray<SKLVLO *>, UINT8, REV32(LLCT)> Entries; //Leveled List Entries
+        OptSubRecord<FNVWORLDMODEL> MODL; //Model
 
         LVLNRecord(unsigned char *_recData=NULL);
         LVLNRecord(LVLNRecord *srcRecord);

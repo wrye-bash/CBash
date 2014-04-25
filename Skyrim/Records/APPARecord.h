@@ -44,16 +44,38 @@ namespace Sk {
 class APPARecord : public TES5Record // Apparatus record
     {
     public:
+        struct APPADATA
+        {
+            UINT32 value;
+            FLOAT32 weight;
+
+            APPADATA();
+            ~APPADATA();
+
+            bool operator == (const APPADATA &other) const;
+            bool operator != (const APPADATA &other) const;
+        };
+        SIZE_CHECK(APPADATA, 8);
+
         StringRecord EDID; // Editor ID
+        VMADRecord VMAD; // VM data
         ReqSubRecord<GENOBND> OBND; // Object Bounds
         LStringRecord FULL; // Full Name
+        OptSubRecord<GENMODEL> MODL; // Model
+        StringRecord ICON; // Inventory image filename
+        StringRecord MICO; // Message image filename
+        OptSubRecord<GENDESTRUCT> DEST; // Destruction data
+        OptSimpleSubRecord<FORMID> YNAM; // Sound - pick up
+        OptSimpleSubRecord<FORMID> ZNAM; // Sound - drop
         ReqSimpleSubRecord<UINT32> QUAL; // Quality
         LStringRecord DESC; // Description
-        RawRecord DATA; // unk
+        ReqSubRecord<APPADATA> DATA; // data
 
         APPARecord(unsigned char *_recData=NULL);
         APPARecord(APPARecord *srcRecord);
         ~APPARecord();
+
+        bool VisitFormIDs(FormIDOp &op);
 
         UINT32 GetFieldAttribute(DEFAULTED_FIELD_IDENTIFIERS, UINT32 WhichAttribute=0);
         void * GetField(DEFAULTED_FIELD_IDENTIFIERS, void **FieldValues=NULL);

@@ -582,7 +582,7 @@ void Record::SetHeaderUnknownFlagMask(UINT32 Mask)
     flagsUnk = Mask;
     }
 
-bool Record::IsLoaded()
+bool Record::IsLoaded() const
     {
     return (CBash_Flags & _fIsLoaded) != 0;
     }
@@ -744,6 +744,21 @@ TES5Record::TES5Record(unsigned char *_recData):
     formVersion(0)
     {
     memset(&versionControl2[0], 0x00, 2);
+    }
+
+TES5Record::TES5Record(TES5Record *srcRecord)
+    {
+    if (srcRecord == NULL)
+        return;
+
+    flags = srcRecord->flags;
+    formID = srcRecord->formID;
+    flagsUnk = srcRecord->flagsUnk;
+    formVersion = srcRecord->formVersion;
+    versionControl2[0] = srcRecord->versionControl2[0];
+    versionControl2[1] = srcRecord->versionControl2[1];
+
+    recData = srcRecord->recData;
     }
 
 TES5Record::~TES5Record()

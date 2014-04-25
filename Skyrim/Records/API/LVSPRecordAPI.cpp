@@ -111,7 +111,7 @@ UINT32 LVSPRecord::GetFieldAttribute(FIELD_IDENTIFIERS, UINT32 WhichAttribute)
             switch(ListFieldID)
                 {
                 case 1: //level
-                    return SINT16_FIELD;
+                    return UINT16_FIELD;
                 case 2: //unused1
                     switch(WhichAttribute)
                         {
@@ -138,21 +138,6 @@ UINT32 LVSPRecord::GetFieldAttribute(FIELD_IDENTIFIERS, UINT32 WhichAttribute)
                             return UNKNOWN_FIELD;
                         }
                     return UNKNOWN_FIELD;
-                case 6: //owner
-                    return FORMID_FIELD;
-                case 7: //globalOrRank
-                    switch(WhichAttribute)
-                        {
-                        case 0: //fieldType
-                            return UNKNOWN_OR_FORMID_OR_UINT32_FIELD;
-                        case 2: //WhichType
-                            return Entries.value[ListIndex]->IsGlobal() ? FORMID_FIELD : UINT32_FIELD;
-                        default:
-                            return UNKNOWN_FIELD;
-                        }
-                    return UNKNOWN_FIELD;
-                case 8: //condition
-                    return FLOAT32_FIELD;
                 default:
                     return UNKNOWN_FIELD;
                 }
@@ -204,23 +189,17 @@ void * LVSPRecord::GetField(FIELD_IDENTIFIERS, void **FieldValues)
             switch(ListFieldID)
                 {
                 case 1: //level
-                    return &Entries.value[ListIndex]->LVLO.value.level;
+                    return &Entries.value[ListIndex]->level;
                 case 2: //unused1
-                    *FieldValues = &Entries.value[ListIndex]->LVLO.value.unused1[0];
+                    *FieldValues = &Entries.value[ListIndex]->unused1[0];
                     return NULL;
                 case 3: //listId
-                    return &Entries.value[ListIndex]->LVLO.value.listId;
+                    return &Entries.value[ListIndex]->listId;
                 case 4: //count
-                    return &Entries.value[ListIndex]->LVLO.value.count;
+                    return &Entries.value[ListIndex]->count;
                 case 5: //unused2
-                    *FieldValues = &Entries.value[ListIndex]->LVLO.value.unused2[0];
+                    *FieldValues = &Entries.value[ListIndex]->unused2[0];
                     return NULL;
-                case 6: //owner
-                    return Entries.value[ListIndex]->COED.IsLoaded() ? &Entries.value[ListIndex]->COED->owner : NULL;
-                case 7: //globalOrRank
-                    return Entries.value[ListIndex]->COED.IsLoaded() ? &Entries.value[ListIndex]->COED->globalOrRank : NULL;
-                case 8: //condition
-                    return Entries.value[ListIndex]->COED.IsLoaded() ? &Entries.value[ListIndex]->COED->condition : NULL;
                 default:
                     return NULL;
                 }
@@ -295,37 +274,25 @@ bool LVSPRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             switch(ListFieldID)
                 {
                 case 1: //level
-                    Entries.value[ListIndex]->LVLO.value.level = *(SINT16 *)FieldValue;
+                    Entries.value[ListIndex]->level = *(UINT16 *)FieldValue;
                     break;
                 case 2: //unused1
                     if(ArraySize != 2)
                         break;
-                    Entries.value[ListIndex]->LVLO.value.unused1[0] = ((UINT8ARRAY)FieldValue)[0];
-                    Entries.value[ListIndex]->LVLO.value.unused1[1] = ((UINT8ARRAY)FieldValue)[1];
+                    Entries.value[ListIndex]->unused1[0] = ((UINT8ARRAY)FieldValue)[0];
+                    Entries.value[ListIndex]->unused1[1] = ((UINT8ARRAY)FieldValue)[1];
                     break;
                 case 3: //listId
-                    Entries.value[ListIndex]->LVLO.value.listId = *(FORMID *)FieldValue;
+                    Entries.value[ListIndex]->listId = *(FORMID *)FieldValue;
                     return true;
                 case 4: //count
-                    Entries.value[ListIndex]->LVLO.value.count = *(SINT16 *)FieldValue;
+                    Entries.value[ListIndex]->count = *(SINT16 *)FieldValue;
                     break;
                 case 5: //unused2
                     if(ArraySize != 2)
                         break;
-                    Entries.value[ListIndex]->LVLO.value.unused2[0] = ((UINT8ARRAY)FieldValue)[0];
-                    Entries.value[ListIndex]->LVLO.value.unused2[1] = ((UINT8ARRAY)FieldValue)[1];
-                    break;
-                case 6: //owner
-                    Entries.value[ListIndex]->COED.Load();
-                    Entries.value[ListIndex]->COED->owner = *(FORMID *)FieldValue;
-                    return true;
-                case 7: //globalOrRank
-                    Entries.value[ListIndex]->COED.Load();
-                    Entries.value[ListIndex]->COED->globalOrRank = *(FORMID_OR_UINT32 *)FieldValue;
-                    return true;
-                case 8: //condition
-                    Entries.value[ListIndex]->COED.Load();
-                    Entries.value[ListIndex]->COED->condition = *(FLOAT32 *)FieldValue;
+                    Entries.value[ListIndex]->unused2[0] = ((UINT8ARRAY)FieldValue)[0];
+                    Entries.value[ListIndex]->unused2[1] = ((UINT8ARRAY)FieldValue)[1];
                     break;
                 default:
                     break;
@@ -397,33 +364,22 @@ void LVSPRecord::DeleteField(FIELD_IDENTIFIERS)
             switch(ListFieldID)
                 {
                 case 1: //level
-                    Entries.value[ListIndex]->LVLO.value.level = defaultLVLO.level;
+                    Entries.value[ListIndex]->level = defaultLVLO.level;
                     return;
                 case 2: //unused1
-                    Entries.value[ListIndex]->LVLO.value.unused1[0] = defaultLVLO.unused1[0];
-                    Entries.value[ListIndex]->LVLO.value.unused1[1] = defaultLVLO.unused1[1];
+                    Entries.value[ListIndex]->unused1[0] = defaultLVLO.unused1[0];
+                    Entries.value[ListIndex]->unused1[1] = defaultLVLO.unused1[1];
                     return;
                 case 3: //listId
-                    Entries.value[ListIndex]->LVLO.value.listId = defaultLVLO.listId;
+                    Entries.value[ListIndex]->listId = defaultLVLO.listId;
                     return;
                 case 4: //count
-                    Entries.value[ListIndex]->LVLO.value.count = defaultLVLO.count;
+                    Entries.value[ListIndex]->count = defaultLVLO.count;
                     return;
                 case 5: //unused2
-                    Entries.value[ListIndex]->LVLO.value.unused2[0] = defaultLVLO.unused2[0];
-                    Entries.value[ListIndex]->LVLO.value.unused2[1] = defaultLVLO.unused2[1];
+                    Entries.value[ListIndex]->unused2[0] = defaultLVLO.unused2[0];
+                    Entries.value[ListIndex]->unused2[1] = defaultLVLO.unused2[1];
                     return;
-                case 6: //owner
-                    if(Entries.value[ListIndex]->COED.IsLoaded())
-                        Entries.value[ListIndex]->COED->owner = defaultCOED.owner;
-                    return;
-                case 7: //globalOrRank
-                    if(Entries.value[ListIndex]->COED.IsLoaded())
-                        Entries.value[ListIndex]->COED->globalOrRank = defaultCOED.globalOrRank;
-                    return;
-                case 8: //condition
-                    if(Entries.value[ListIndex]->COED.IsLoaded())
-                        Entries.value[ListIndex]->COED->condition = defaultCOED.condition;
                     return;
                 default:
                     return;

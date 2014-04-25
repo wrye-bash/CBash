@@ -230,24 +230,13 @@ LANDRecord::LANDRecord(unsigned char *_recData):
     }
 
 LANDRecord::LANDRecord(LANDRecord *srcRecord):
-    TES5Record(),
+    TES5Record((TES5Record *)srcRecord),
     WestLand(NULL),
     EastLand(NULL),
     NorthLand(NULL),
     SouthLand(NULL)
     {
-    if(srcRecord == NULL)
-        return;
-
-    flags = srcRecord->flags;
-    formID = srcRecord->formID;
-    flagsUnk = srcRecord->flagsUnk;
-    formVersion = srcRecord->formVersion;
-    versionControl2[0] = srcRecord->versionControl2[0];
-    versionControl2[1] = srcRecord->versionControl2[1];
-
-    recData = srcRecord->recData;
-    if(!srcRecord->IsChanged())
+    if(srcRecord == NULL || !srcRecord->IsChanged())
         return;
 
     DATA = srcRecord->DATA;
@@ -257,7 +246,6 @@ LANDRecord::LANDRecord(LANDRecord *srcRecord):
     BTXT = srcRecord->BTXT;
     Layers = srcRecord->Layers;
     VTEX = srcRecord->VTEX;
-    return;
     }
 
 LANDRecord::~LANDRecord()
