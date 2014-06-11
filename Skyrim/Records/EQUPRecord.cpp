@@ -65,7 +65,7 @@ bool EQUPRecord::IsUseAllParents() const
         return DATA.value == 0x01;
     }
 
-bool EQUPRecord::IsUseAllParents(bool value)
+void EQUPRecord::IsUseAllParents(bool value)
     {
         DATA.value = value ? 0x01 : 0x00;
     }

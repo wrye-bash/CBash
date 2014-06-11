@@ -52,7 +52,7 @@ class EQUPRecord : public TES5Record // Word of Power Record
         ~EQUPRecord();
 
         bool IsUseAllParents() const;
-        bool IsUseAllParents(bool value);
+        void IsUseAllParents(bool value);
 
         UINT32 GetFieldAttribute(DEFAULTED_FIELD_IDENTIFIERS, UINT32 WhichAttribute=0);
         void * GetField(DEFAULTED_FIELD_IDENTIFIERS, void **FieldValues=NULL);
