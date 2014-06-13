@@ -107,6 +107,8 @@
     #if !defined(CBASH_NO_BOOST_ZLIB)
         #define BOOST_LIB_NAME "boost_zlib"
         #include <boost/config/auto_link.hpp>
+    #else
+        // Cleanup
         #undef CBASH_NO_BOOST_ZLIB
     #endif
 #elif defined CBASH_DLL
