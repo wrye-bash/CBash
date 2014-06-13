@@ -44,24 +44,8 @@
 #pragma once
 // CBash.h
 //#define _UNICODE
+#include "CBashConfig.h"
 #include "MacroDefinitions.h"
-
-
-#ifdef CBASH_STATIC
-    // Define CBASH_STATIC to either build or link to CBash as a static
-    // library
-    #define DLLEXTERN
-    #include "Collection.h"
-#elif defined COMPILING_CBASH
-    #define DLLEXTERN extern "C" __declspec(dllexport)
-    #include "Collection.h"
-#else
-    // API user, just define Collection *, ModFile *, and Record * as void *
-    #define DLLEXTERN extern "C" __declspec(dllimport)
-    #define Collection void
-    #define ModFile void
-    #define Record void
-#endif
 
 
 //Exported Functions

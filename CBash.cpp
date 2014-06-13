@@ -40,19 +40,17 @@
 //    //#define BOOST_PYTHON_STATIC_LIB
 //    //#include <boost/python.hpp>
 //#endif
+
+// COMPILING_CBASH needs to be defined before the first time CBashConfig.h is
+// included.  CBashConfig.h is included from CBash.h, so defining it here works.
 #define COMPILING_CBASH
-#include "Version.h"
 #include "CBash.h"
+#include "Version.h"
 #include <vector>
 #include <stdarg.h>
 #include <new.h>
 //#include "mmgr.h"
 
-#ifdef CBASH_STATIC
-    #define CPPDLLEXTERN 
-#else
-    #define CPPDLLEXTERN extern "C" __declspec(dllexport)
-#endif
 
 static std::vector<Collection *> Collections;
 #ifdef CBASH_CALLTIMING
