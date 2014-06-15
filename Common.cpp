@@ -35,7 +35,7 @@
  * ***** END LICENSE BLOCK ***** */
 // Common.cpp
 #include "Common.h"
-#include "zlib/zlib.h"
+#include "zlib.h"
 #include <sys/utime.h>
 
 int (*printer)(const char * _Format, ...) = &printf;
