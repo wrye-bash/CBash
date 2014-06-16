@@ -36,7 +36,7 @@
 #include "Common.h"
 #include "TES4Record.h"
 #include "Skyrim\SkyrimCommon.h" // StringLookups
-#include "zlib/zlib.h"
+#include "zlib.h"
 
 TES4Record::TES4HEDR::TES4HEDR(FLOAT32 _version, UINT32 _numRecords, UINT32 _nextObject):
     version(_version),

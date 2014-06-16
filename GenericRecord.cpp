@@ -36,7 +36,7 @@
 
 #include "Common.h"
 #include "GenericRecord.h"
-#include "zlib/zlib.h"
+#include "zlib.h"
 
 RecordOp::RecordOp():
     count(0),
