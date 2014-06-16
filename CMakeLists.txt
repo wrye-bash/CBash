@@ -19,20 +19,20 @@ set (Boost_USE_STATIC_LIBS ON)
 set (Boost_USE_MULTITHREADED ON)
 set (Boost_USE_STATIC_RUNTIME PROJECT_STATIC_RUNTIME)
 
-file (GLOB_RECURSE CBASH_FONV "${CMAKE_SOURCE_DIR}/FalloutNewVegas/*.cpp")
-file (GLOB_RECURSE CBASH_OBLIVION "${CMAKE_SOURCE_DIR}/Oblivion/*.cpp")
-file (GLOB_RECURSE CBASH_SKYRIM "${CMAKE_SOURCE_DIR}/Skyrim/*.cpp")
+file (GLOB_RECURSE CBASH_FONV "${CMAKE_SOURCE_DIR}/src/FalloutNewVegas/*.cpp")
+file (GLOB_RECURSE CBASH_OBLIVION "${CMAKE_SOURCE_DIR}/src/Oblivion/*.cpp")
+file (GLOB_RECURSE CBASH_SKYRIM "${CMAKE_SOURCE_DIR}/src/Skyrim/*.cpp")
 
-set (CBASH_SRC  "${CMAKE_SOURCE_DIR}/CBash.cpp"
-                "${CMAKE_SOURCE_DIR}/Collection.cpp"
-                "${CMAKE_SOURCE_DIR}/Common.cpp"
-                "${CMAKE_SOURCE_DIR}/GenericChunks.cpp"
-                "${CMAKE_SOURCE_DIR}/GenericRecord.cpp"
-                "${CMAKE_SOURCE_DIR}/ModFile.cpp"
-                "${CMAKE_SOURCE_DIR}/TES4Record.cpp"
-                "${CMAKE_SOURCE_DIR}/TES4RecordAPI.cpp"
-                "${CMAKE_SOURCE_DIR}/Visitors.cpp"
-                "${CMAKE_SOURCE_DIR}/CBash.rc"
+set (CBASH_SRC  "${CMAKE_SOURCE_DIR}/src/CBash.cpp"
+                "${CMAKE_SOURCE_DIR}/src/Collection.cpp"
+                "${CMAKE_SOURCE_DIR}/src/Common.cpp"
+                "${CMAKE_SOURCE_DIR}/src/GenericChunks.cpp"
+                "${CMAKE_SOURCE_DIR}/src/GenericRecord.cpp"
+                "${CMAKE_SOURCE_DIR}/src/ModFile.cpp"
+                "${CMAKE_SOURCE_DIR}/src/TES4Record.cpp"
+                "${CMAKE_SOURCE_DIR}/src/TES4RecordAPI.cpp"
+                "${CMAKE_SOURCE_DIR}/src/Visitors.cpp"
+                "${CMAKE_SOURCE_DIR}/src/CBash.rc"
                 ${CBASH_FONV}
                 ${CBASH_OBLIVION}
                 ${CBASH_SKYRIM}
@@ -50,13 +50,9 @@ ELSE ()
 ENDIF ()
 
 # Include source and library directories.
-include_directories ("${CMAKE_SOURCE_DIR}/FalloutNewVegas"
-                     "${CMAKE_SOURCE_DIR}/Oblivion"
-                     "${CMAKE_SOURCE_DIR}/Skyrim"
+include_directories ("${CMAKE_SOURCE_DIR}/include/cbash"
                      ${Boost_INCLUDE_DIRS}
                      ${ZLIB_INCLUDE_DIR})
-
-link_directories ()
 
 
 ##############################
