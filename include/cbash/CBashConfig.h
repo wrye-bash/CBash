@@ -95,14 +95,15 @@
 
 
 // Setup some defines/includes for use in CBash.h/.cpp
+extern "C" class Collection;
+extern "C" class ModFile;
+extern "C" class Record;
 #ifdef CBASH_STATIC
     #define DLLEXTERN
     #define CPPDLLEXTERN
-    #include "Collection.h"
 #elif defined COMPILING_CBASH
     #define DLLEXTERN DLLEXPORT
     #define CPPDLLEXTERN DLLEXPORT
-    #include "Collection.h"
     // Also, link against the Boost zlib library
     #if !defined(CBASH_NO_BOOST_ZLIB)
         #define BOOST_LIB_NAME "boost_zlib"
@@ -114,7 +115,4 @@
 #elif defined CBASH_DLL
     // Not compiling, just an API user of the DLL
     #define DLLEXTERN DLLIMPORT
-    #define Collection void
-    #define ModFile void
-    #define Record void
 #endif
