@@ -5,7 +5,7 @@ These instructions are for building CBash on Windows by manually creating a Micr
 An example of the end result can be found [here](https://drive.google.com/file/d/0B1ddaVyxNcp-ZmpyUENiRFkyUEE/edit?usp=sharing "Google Drive"), though these files are out-of-date compared to the current code, so it's best to create your own solution.
 
 1. Create a new Win32 Application project.  In the creation wizard be sure to select DLL, and tick the Empty Project option.
-2. Now add all the CBash source files to the project.  Personally I make the source layout look mostly identical to the actual file layout on disk.  So I have a `Skyrim`, `Fallout New Vegas`, and `Oblivion` sub-filters for each of the `Source Files` and `Header Files`.  Then under those a sub-filter called `Records`, and under that one called `API`.  Just throw every `*.h` and `*.cpp` file into their appropriate filters in the solution explorer.  Finally add `CBash.rc` into the `Resource Files` section.
+2. Now add all the CBash source files to the project.  Personally I make the source layout look mostly identical to the actual file layout on disk.  So I have a `Skyrim`, `Fallout New Vegas`, and `Oblivion` sub-filters for each of the `Source Files` and `Header Files`.  Then under those a sub-filter called `Records`, and under that one called `API`.  Just throw every `*.h` and `*.cpp` file into their appropriate filters in the solution explorer. Make sure to include the header files in the `include/cbash` folder too. Finally add `CBash.rc` into the `Resource Files` section.
 
   Alternatively, you can try running [this](https://github.com/lojack5/utilities/blob/master/project_update.py) Python script, which should correctly add all required files to the project.  **Note:** That script is written only for Visual Studio 2013, I don't know how or if it will work for other versions.
 3. Change Project settings for `All Configurations`.  The next few steps will all be changing settings under the following section:
@@ -14,7 +14,7 @@ An example of the end result can be found [here](https://drive.google.com/file/d
   * All changes will be made under the `Configuration Properties` sub tree on the left.
 4. Additional Directories:
   * Go to `VC++ Directories`.
-  * Edit `Include Directories` so that it includes the path to Boost as well as zlib.
+  * Edit `Include Directories` so that it includes the path to Boost, zlib and the `include/cbash` directory.
   * Edit `Library Directories` so that it includes the path to Boost.
   * If you built the zlib binaries and are going to use those instead of Boost's, add that of course.
 4. Output Files:
