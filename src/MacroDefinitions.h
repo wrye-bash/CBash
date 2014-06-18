@@ -266,6 +266,14 @@
     #define SINT32ARRAY signed long *
 #endif
 
+#ifndef UINT32ARRAY
+    #define UINT32ARRAY unsigned long *
+#endif
+
+#ifndef FORMIDARRAY
+    #define FORMIDARRAY unsigned long *
+#endif
+
 #ifndef FLOAT32
     #define FLOAT32 float
 #endif
@@ -304,6 +312,14 @@
 
 #ifndef MGEFCODEARRAY
     #define MGEFCODEARRAY unsigned long *
+#endif
+
+#ifndef MODIDARRAY
+    #define MODIDARRAY ModFile **
+#endif
+
+#ifndef RECORDIDARRAY
+    #define RECORDIDARRAY Record **
 #endif
 
 #ifndef DEFAULTED_FIELD_IDENTIFIERS

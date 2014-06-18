@@ -219,7 +219,7 @@ DLLEXTERN SINT32 GetAllNumMods(Collection *CollectionID);
     @param ModIDs An array of plugin object pointers. The array passed to the function must be preallocated to the correct size, as given by GetAllNumMods(). The array contents are filled by the function to point to the plugin objects within the collection queried.
     @returns `0` on success, `-1` if an error occurred.
 */
-DLLEXTERN SINT32 GetAllModIDs(Collection *CollectionID, MODIDARRAY ModIDs);
+DLLEXTERN SINT32 GetAllModIDs(Collection *CollectionID, ModFile ** ModIDs);
 
 /**
     @brief Get the number of mods in a collection's load order.
@@ -235,7 +235,7 @@ DLLEXTERN SINT32 GetLoadOrderNumMods(Collection *CollectionID);
     @param ModIDs An array of plugin object pointers. The array passed to the function must be preallocated to the correct size, as given by GetLoadOrderNumMods(). The array contents are filled by the function to point to the plugin objects within the collection queried.
     @returns `0` on success, `-1` if an error occurred.
 */
-DLLEXTERN SINT32 GetLoadOrderModIDs(Collection *CollectionID, MODIDARRAY ModIDs);
+DLLEXTERN SINT32 GetLoadOrderModIDs(Collection *CollectionID, ModFile ** ModIDs);
 
 /**
     @brief Get a plugin's filename from its object pointer.
@@ -345,7 +345,7 @@ DLLEXTERN SINT32 GetModNumTypes(ModFile *ModID);
     @param RecordTypes An array of record IDs. Each ID is a four-character sequence in in reverse, eg. `TES4` is stored as `4SET`. The array passed to the function must be preallocated to the correct size, as given by GetModNumTypes(). The array contents are filled by the function.
     @returns `0` on success, `-1` if an error occurred.
 */
-DLLEXTERN SINT32 GetModTypes(ModFile *ModID, UINT32ARRAY RecordTypes);
+DLLEXTERN SINT32 GetModTypes(ModFile *ModID, UINT32 * RecordTypes);
 
 /**
     @brief Get the number of empty record groups in a plugin.
@@ -369,7 +369,7 @@ DLLEXTERN SINT32 GetModNumOrphans(ModFile *ModID);
     @param FormIDs An outputted array of the FormIDs of the orphaned records in the plugin. The array passed to the function must be preallocated to the correct size, as given by GetModNumOrphans(). The array contents are filled by the function.
     @returns `0` on success, `-1` if an error occurred.
 */
-DLLEXTERN SINT32 GetModOrphansFormIDs(ModFile *ModID, FORMIDARRAY FormIDs);
+DLLEXTERN SINT32 GetModOrphansFormIDs(ModFile *ModID, FORMID * FormIDs);
 
 ///@}
 /**************************//**
@@ -480,7 +480,7 @@ DLLEXTERN SINT32 GetNumRecords(ModFile *ModID, const UINT32 RecordType);
     @param RecordIDs An array of record pointers, pre-allocated to be of the size given by GetNumRecords(). This function populates the array.
     @returns The number of records retrieved, or `-1` if an error occurred.
 */
-DLLEXTERN SINT32 GetRecordIDs(ModFile *ModID, const UINT32 RecordType, RECORDIDARRAY RecordIDs);
+DLLEXTERN SINT32 GetRecordIDs(ModFile *ModID, const UINT32 RecordType, Record ** RecordIDs);
 
 /**
     @brief Check if the given record is winning any conflict with other records.
@@ -506,7 +506,7 @@ DLLEXTERN SINT32 GetNumRecordConflicts(Record *RecordID, const bool GetExtendedC
     @param GetExtendedConflicts If true, checks for conflicts in plugins loaded with the ::fIsExtendedConflicts flag, otherwise they are ignored.
     @returns The number of records retrieved, or `-1` if an error occurred.
 */
-DLLEXTERN SINT32 GetRecordConflicts(Record *RecordID, RECORDIDARRAY RecordIDs, const bool GetExtendedConflicts);
+DLLEXTERN SINT32 GetRecordConflicts(Record *RecordID, Record ** RecordIDs, const bool GetExtendedConflicts);
 
 /**
     @brief Get an array of the different versions of the given record in its parent collection.
@@ -515,7 +515,7 @@ DLLEXTERN SINT32 GetRecordConflicts(Record *RecordID, RECORDIDARRAY RecordIDs, c
     @param RecordIDs An array of record pointers, pre-allocated to be of the size given by GetNumRecordConflicts(). This function populates the array.
     @returns The number of records retrieved, or `-1` if an error occurred.
 */
-DLLEXTERN SINT32 GetRecordHistory(Record *RecordID, RECORDIDARRAY RecordIDs);
+DLLEXTERN SINT32 GetRecordHistory(Record *RecordID, Record ** RecordIDs);
 
 /**
     @brief Get the number of Identical To Master records in a plugin.
@@ -532,7 +532,7 @@ DLLEXTERN SINT32 GetNumIdenticalToMasterRecords(ModFile *ModID);
     @param RecordIDs An array of record pointers, pre-allocated to be of the size given by GetNumIdenticalToMasterRecords(). This function populates the array.
     @returns The number of records the array is populated with, or `-1` if an error occurred.
 */
-DLLEXTERN SINT32 GetIdenticalToMasterRecords(ModFile *ModID, RECORDIDARRAY RecordIDs);
+DLLEXTERN SINT32 GetIdenticalToMasterRecords(ModFile *ModID, Record ** RecordIDs);
 
 /**
     @brief Check if a record's FormID or any of the FormIDs referenced by the record are invalid.
@@ -557,7 +557,7 @@ DLLEXTERN SINT32 IsRecordsFormIDsInvalid(Record *RecordID);
     @param ArraySize The size of the OldFormIDs, NewFormIDs and Changes arrays.
     @returns The total number of updated references, or `-1` if an error occurred.
 */
-DLLEXTERN SINT32 UpdateReferences(ModFile *ModID, Record *RecordID, FORMIDARRAY OldFormIDs, FORMIDARRAY NewFormIDs, UINT32ARRAY Changes, const UINT32 ArraySize);
+DLLEXTERN SINT32 UpdateReferences(ModFile *ModID, Record *RecordID, FORMID * OldFormIDs, FORMID * NewFormIDs, UINT32 * Changes, const UINT32 ArraySize);
 
 ///@}
 /**************************//**

@@ -43,13 +43,17 @@
     @details This documentation was not written by the original developer, and so may be inaccurate.
 */
 
-#ifndef NULL
-    #ifdef __cplusplus
-        #define NULL    0
-    #else
-        #define NULL    ((void *)0)
-    #endif
+#include <stddef.h>
+#include <stdint.h>
+
+#ifdef __cplusplus
+extern "C"
+{
 #endif
+
+class Collection;
+class ModFile;
+class Record;
 
 #ifndef UINT32
     #define UINT32 unsigned long
@@ -65,22 +69,6 @@
 
 #ifndef FORMID
     #define FORMID unsigned long
-#endif
-
-#ifndef UINT32ARRAY
-    #define UINT32ARRAY unsigned long *
-#endif
-
-#ifndef FORMIDARRAY
-    #define FORMIDARRAY unsigned long *
-#endif
-
-#ifndef MODIDARRAY
-    #define MODIDARRAY ModFile **
-#endif
-
-#ifndef RECORDIDARRAY
-    #define RECORDIDARRAY Record **
 #endif
 
 #ifndef FIELD_IDENTIFIERS
@@ -195,3 +183,7 @@ typedef enum {
     fSetAsOverride     = 0x00000001,  ///< Create the record as an override of the source record.
     fCopyWinningParent = 0x00000002   ///< Populate the record using data from the winning parent.
 } createFlags;
+
+#ifdef __cplusplus
+}
+#endif

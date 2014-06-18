@@ -95,9 +95,6 @@
 
 
 // Setup some defines/includes for use in CBash.h/.cpp
-extern "C" class Collection;
-extern "C" class ModFile;
-extern "C" class Record;
 #ifdef CBASH_STATIC
     #define DLLEXTERN
     #define CPPDLLEXTERN
