@@ -45,7 +45,7 @@
 // CBash.h
 //#define _UNICODE
 #include "CBashConfig.h"
-#include "MacroDefinitions.h"
+#include "Types.h"
 
 
 //Exported Functions
