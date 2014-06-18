@@ -35,6 +35,7 @@
  * ***** END LICENSE BLOCK ***** */
 #pragma once
 //don't touch
+
 #ifdef _M_X64
     //#pragma message("Compiling with x64 compatibility")
     #define CBASH_X64_COMPATIBILITY
@@ -197,14 +198,6 @@
     extern unsigned long debug_temp4;
 #endif
 
-#ifndef NULL
-    #ifdef __cplusplus
-        #define NULL    0
-    #else
-        #define NULL    ((void *)0)
-    #endif
-#endif
-
 #ifndef FLT_MAX
     #define FLT_MAX         3.402823466e+38F        /* max value */
 #endif
@@ -257,10 +250,6 @@
     #define UINT16 unsigned short
 #endif
 
-#ifndef UINT32
-    #define UINT32 unsigned long
-#endif
-
 #ifndef SINT8
     #define SINT8 signed char
 #endif
@@ -273,14 +262,6 @@
     #define SINT16ARRAY signed short *
 #endif
 
-#ifndef SINT32
-    #define SINT32 signed long
-#endif
-
-#ifndef UINT32ARRAY
-    #define UINT32ARRAY unsigned long *
-#endif
-
 #ifndef SINT32ARRAY
     #define SINT32ARRAY signed long *
 #endif
@@ -289,24 +270,8 @@
     #define FLOAT32 float
 #endif
 
-#ifndef STRING
-    #define STRING char *
-#endif
-
 #ifndef STRINGARRAY
     #define STRINGARRAY char **
-#endif
-
-#ifndef MODIDARRAY
-    #define MODIDARRAY ModFile **
-#endif
-
-#ifndef RECORDIDARRAY
-    #define RECORDIDARRAY Record **
-#endif
-
-#ifndef FORMID
-    #define FORMID unsigned long
 #endif
 
 #ifndef MGEFCODE
@@ -337,20 +302,12 @@
     #define FORMID_OR_ACTORVALUE_OR_UINT32 unsigned long
 #endif
 
-#ifndef FORMIDARRAY
-    #define FORMIDARRAY unsigned long *
-#endif
-
 #ifndef MGEFCODEARRAY
     #define MGEFCODEARRAY unsigned long *
 #endif
 
 #ifndef DEFAULTED_FIELD_IDENTIFIERS
     #define DEFAULTED_FIELD_IDENTIFIERS const UINT32 FieldID=0, const UINT32 ListIndex=0, const UINT32 ListFieldID=0, const UINT32 ListX2Index=0, const UINT32 ListX2FieldID=0, const UINT32 ListX3Index=0, const UINT32 ListX3FieldID=0
-#endif
-
-#ifndef FIELD_IDENTIFIERS
-    #define FIELD_IDENTIFIERS const UINT32 FieldID, const UINT32 ListIndex, const UINT32 ListFieldID, const UINT32 ListX2Index, const UINT32 ListX2FieldID, const UINT32 ListX3Index, const UINT32 ListX3FieldID
 #endif
 
 #define WHERESTR            "[%s, line %d]: "
