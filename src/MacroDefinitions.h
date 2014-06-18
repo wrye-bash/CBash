@@ -243,7 +243,7 @@
 #endif
 
 #ifndef UINT8ARRAY
-    #define UINT8ARRAY unsigned char *
+    #define UINT8ARRAY UINT8 *
 #endif
 
 #ifndef UINT16
@@ -259,19 +259,19 @@
 #endif
 
 #ifndef SINT16ARRAY
-    #define SINT16ARRAY signed short *
+    #define SINT16ARRAY SINT16 *
 #endif
 
 #ifndef SINT32ARRAY
-    #define SINT32ARRAY signed long *
+    #define SINT32ARRAY SINT32 *
 #endif
 
 #ifndef UINT32ARRAY
-    #define UINT32ARRAY unsigned long *
+    #define UINT32ARRAY UINT32 *
 #endif
 
 #ifndef FORMIDARRAY
-    #define FORMIDARRAY unsigned long *
+    #define FORMIDARRAY FORMID *
 #endif
 
 #ifndef FLOAT32
@@ -279,39 +279,39 @@
 #endif
 
 #ifndef STRINGARRAY
-    #define STRINGARRAY char **
+    #define STRINGARRAY STRING*
 #endif
 
 #ifndef MGEFCODE
-    #define MGEFCODE unsigned long
+    #define MGEFCODE UINT32
 #endif
 
 #ifndef FORMID_OR_UINT32
-    #define FORMID_OR_UINT32 unsigned long
+    #define FORMID_OR_UINT32 UINT32
 #endif
 
 #ifndef FORMID_OR_FLOAT32
-    #define FORMID_OR_FLOAT32 unsigned long
+    #define FORMID_OR_FLOAT32 UINT32
 #endif
 
 #ifndef MGEFCODE_OR_UINT32
-    #define MGEFCODE_OR_UINT32 unsigned long
+    #define MGEFCODE_OR_UINT32 UINT32
 #endif
 
 #ifndef FORMID_OR_MGEFCODE_OR_ACTORVALUE_OR_UINT32
-    #define FORMID_OR_MGEFCODE_OR_ACTORVALUE_OR_UINT32 unsigned long
+    #define FORMID_OR_MGEFCODE_OR_ACTORVALUE_OR_UINT32 UINT32
 #endif
 
 #ifndef ACTORVALUE
-    #define ACTORVALUE unsigned long
+    #define ACTORVALUE UINT32
 #endif
 
 #ifndef FORMID_OR_ACTORVALUE_OR_UINT32
-    #define FORMID_OR_ACTORVALUE_OR_UINT32 unsigned long
+    #define FORMID_OR_ACTORVALUE_OR_UINT32 UINT32
 #endif
 
 #ifndef MGEFCODEARRAY
-    #define MGEFCODEARRAY unsigned long *
+    #define MGEFCODEARRAY UINT32 *
 #endif
 
 #ifndef MODIDARRAY
