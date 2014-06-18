@@ -38,7 +38,7 @@
 
 namespace FNV
 {
-UINT32 CHALRecord::GetFieldAttribute(FIELD_IDENTIFIERS, UINT32 WhichAttribute)
+uint32_t CHALRecord::GetFieldAttribute(FIELD_IDENTIFIERS, uint32_t WhichAttribute)
     {
     switch(FieldID)
         {
@@ -182,12 +182,12 @@ void * CHALRecord::GetField(FIELD_IDENTIFIERS, void **FieldValues)
     return NULL;
     }
 
-bool CHALRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
+bool CHALRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, uint32_t ArraySize)
     {
     switch(FieldID)
         {
         case 1: //flags1
-            SetHeaderFlagMask(*(UINT32 *)FieldValue);
+            SetHeaderFlagMask(*(uint32_t *)FieldValue);
             break;
         case 3: //versionControl1
             if(ArraySize != 4)
@@ -198,10 +198,10 @@ bool CHALRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             ((UINT8ARRAY)&flagsUnk)[3] = ((UINT8ARRAY)FieldValue)[3];
             break;
         case 4: //eid
-            EDID.Copy((STRING)FieldValue);
+            EDID.Copy((char *)FieldValue);
             break;
         case 5: //formVersion
-            formVersion = *(UINT16 *)FieldValue;
+            formVersion = *(uint16_t *)FieldValue;
             break;
         case 6: //versionControl2
             if(ArraySize != 2)
@@ -210,30 +210,30 @@ bool CHALRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             versionControl2[1] = ((UINT8ARRAY)FieldValue)[1];
             break;
         case 7: //full
-            FULL.Copy((STRING)FieldValue);
+            FULL.Copy((char *)FieldValue);
             break;
         case 8: //script
             SCRI.Load();
             SCRI.value = *(FORMID *)FieldValue;
             return true;
         case 9: //description
-            DESC.Copy((STRING)FieldValue);
+            DESC.Copy((char *)FieldValue);
             break;
         case 10: //data DATA ,, Struct
             DATA.Load();
-            DATA->challengeType = *(UINT32 *)FieldValue;
+            DATA->challengeType = *(uint32_t *)FieldValue;
             break;
         case 11: //data DATA ,, Struct
             DATA.Load();
-            DATA->threshold = *(UINT32 *)FieldValue;
+            DATA->threshold = *(uint32_t *)FieldValue;
             break;
         case 12: //data DATA ,, Struct
             DATA.Load();
-            DATA->flags = *(UINT32 *)FieldValue;
+            DATA->flags = *(uint32_t *)FieldValue;
             break;
         case 13: //data DATA ,, Struct
             DATA.Load();
-            DATA->interval = *(UINT32 *)FieldValue;
+            DATA->interval = *(uint32_t *)FieldValue;
             break;
         case 14: //data_p DATA ,, Struct
             if(ArraySize != 2)

@@ -45,28 +45,28 @@ class IMGSRecord : public FNVRecord //Image Space
         struct IMGSDNAM
             {
             //HDR
-            FLOAT32 hdrEyeAdaptSpeed, hdrBlurRadius, hdrBlurPasses,
+            float hdrEyeAdaptSpeed, hdrBlurRadius, hdrBlurPasses,
                     hdrEmissiveMult, hdrTargetLUM, hdrUpperLUMClamp,
                     hdrBrightScale, hdrBrightClamp, hdrLUMRampNoTex,
                     hdrLUMRampMin, hdrLUMRampMax, hdrSunlightDimmer,
                     hdrGrassDimmer, hdrTreeDimmer, hdrSkinDimmer;
 
             //Bloom
-            FLOAT32 bloomBlurRadius, bloomAlphaMultInterior, bloomAlphaMultExterior;
+            float bloomBlurRadius, bloomAlphaMultInterior, bloomAlphaMultExterior;
 
             //Get Hit
-            FLOAT32 hitBlurRadius, hitBlurDampingConstant, hitDampingConstant;
+            float hitBlurRadius, hitBlurDampingConstant, hitDampingConstant;
 
             //Night Eye
-            FLOAT32 neRed, neGreen, neBlue, neBrightness;
+            float neRed, neGreen, neBlue, neBrightness;
 
             //Cinematic
-            FLOAT32 saturation, contrastAvgLUMValue, contrastValue,
+            float saturation, contrastAvgLUMValue, contrastValue,
                     brightnessValue, cineRed, cineGreen, cineBlue,
                     cineValue;
 
-            UINT8   unused1[4], unused2[4], unused3[4], unused4[4];
-            UINT8   flags, unused5[3];
+            uint8_t   unused1[4], unused2[4], unused3[4], unused4[4];
+            uint8_t   flags, unused5[3];
 
             IMGSDNAM();
             ~IMGSDNAM();
@@ -101,20 +101,20 @@ class IMGSRecord : public FNVRecord //Image Space
         void   IsTint(bool value);
         bool   IsBrightness();
         void   IsBrightness(bool value);
-        bool   IsFlagMask(UINT8 Mask, bool Exact=false);
-        void   SetFlagMask(UINT8 Mask);
+        bool   IsFlagMask(uint8_t Mask, bool Exact=false);
+        void   SetFlagMask(uint8_t Mask);
 
-        UINT32 GetFieldAttribute(DEFAULTED_FIELD_IDENTIFIERS, UINT32 WhichAttribute=0);
+        uint32_t GetFieldAttribute(DEFAULTED_FIELD_IDENTIFIERS, uint32_t WhichAttribute=0);
         void * GetField(DEFAULTED_FIELD_IDENTIFIERS, void **FieldValues=NULL);
-        bool   SetField(DEFAULTED_FIELD_IDENTIFIERS, void *FieldValue=NULL, UINT32 ArraySize=0);
+        bool   SetField(DEFAULTED_FIELD_IDENTIFIERS, void *FieldValue=NULL, uint32_t ArraySize=0);
         void   DeleteField(DEFAULTED_FIELD_IDENTIFIERS);
 
-        UINT32 GetType();
-        STRING GetStrType();
+        uint32_t GetType();
+        char * GetStrType();
 
-        SINT32 ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk=false);
-        SINT32 Unload();
-        SINT32 WriteRecord(FileWriter &writer);
+        int32_t ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk=false);
+        int32_t Unload();
+        int32_t WriteRecord(FileWriter &writer);
 
         bool operator ==(const IMGSRecord &other) const;
         bool operator !=(const IMGSRecord &other) const;

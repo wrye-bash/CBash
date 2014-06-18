@@ -38,7 +38,7 @@
 
 namespace FNV
 {
-UINT32 MSETRecord::GetFieldAttribute(FIELD_IDENTIFIERS, UINT32 WhichAttribute)
+uint32_t MSETRecord::GetFieldAttribute(FIELD_IDENTIFIERS, uint32_t WhichAttribute)
     {
     switch(FieldID)
         {
@@ -225,12 +225,12 @@ void * MSETRecord::GetField(FIELD_IDENTIFIERS, void **FieldValues)
     return NULL;
     }
 
-bool MSETRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
+bool MSETRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, uint32_t ArraySize)
     {
     switch(FieldID)
         {
         case 1: //flags1
-            SetHeaderFlagMask(*(UINT32 *)FieldValue);
+            SetHeaderFlagMask(*(uint32_t *)FieldValue);
             break;
         case 3: //versionControl1
             if(ArraySize != 4)
@@ -241,10 +241,10 @@ bool MSETRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             ((UINT8ARRAY)&flagsUnk)[3] = ((UINT8ARRAY)FieldValue)[3];
             break;
         case 4: //eid
-            EDID.Copy((STRING)FieldValue);
+            EDID.Copy((char *)FieldValue);
             break;
         case 5: //formVersion
-            formVersion = *(UINT16 *)FieldValue;
+            formVersion = *(uint16_t *)FieldValue;
             break;
         case 6: //versionControl2
             if(ArraySize != 2)
@@ -253,97 +253,97 @@ bool MSETRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             versionControl2[1] = ((UINT8ARRAY)FieldValue)[1];
             break;
         case 7: //full
-            FULL.Copy((STRING)FieldValue);
+            FULL.Copy((char *)FieldValue);
             break;
         case 8: //nam1 Type
             NAM1.Load();
-            NAM1.value = *(UINT32 *)FieldValue;
+            NAM1.value = *(uint32_t *)FieldValue;
             break;
         case 9: //nam2 Loop (B) / Battle (D) / Day Outer (L)
-            NAM2.Copy((STRING)FieldValue);
+            NAM2.Copy((char *)FieldValue);
             break;
         case 10: //nam3 Explore (D) / Day Middle (L)
-            NAM3.Copy((STRING)FieldValue);
+            NAM3.Copy((char *)FieldValue);
             break;
         case 11: //nam4 Suspense (D) / Day Inner (L)
-            NAM4.Copy((STRING)FieldValue);
+            NAM4.Copy((char *)FieldValue);
             break;
         case 12: //nam5 Night Outer (L)
-            NAM5.Copy((STRING)FieldValue);
+            NAM5.Copy((char *)FieldValue);
             break;
         case 13: //nam6 Night Middle (L)
-            NAM6.Copy((STRING)FieldValue);
+            NAM6.Copy((char *)FieldValue);
             break;
         case 14: //nam7 Night Inner (L)
-            NAM7.Copy((STRING)FieldValue);
+            NAM7.Copy((char *)FieldValue);
             break;
         case 15: //nam8 Loop dB (B) / Battle dB (D) / Day Outer dB (L)
             NAM8.Load();
-            NAM8.value = *(FLOAT32 *)FieldValue;
+            NAM8.value = *(float *)FieldValue;
             break;
         case 16: //nam9 Explore dB (D) / Day Middle dB (L)
             NAM9.Load();
-            NAM9.value = *(FLOAT32 *)FieldValue;
+            NAM9.value = *(float *)FieldValue;
             break;
         case 17: //nam0 Suspense dB (D) / Day Inner dB (L)
             NAM0.Load();
-            NAM0.value = *(FLOAT32 *)FieldValue;
+            NAM0.value = *(float *)FieldValue;
             break;
         case 18: //anam Night Outer dB (L)
             ANAM.Load();
-            ANAM.value = *(FLOAT32 *)FieldValue;
+            ANAM.value = *(float *)FieldValue;
             break;
         case 19: //bnam Night Middle dB (L)
             BNAM.Load();
-            BNAM.value = *(FLOAT32 *)FieldValue;
+            BNAM.value = *(float *)FieldValue;
             break;
         case 20: //cnam Night Inner dB (L)
             CNAM.Load();
-            CNAM.value = *(FLOAT32 *)FieldValue;
+            CNAM.value = *(float *)FieldValue;
             break;
         case 21: //jnam Day Outer Boundary % (L)
             JNAM.Load();
-            JNAM.value = *(FLOAT32 *)FieldValue;
+            JNAM.value = *(float *)FieldValue;
             break;
         case 22: //knam Day Middle Boundary % (L)
             KNAM.Load();
-            KNAM.value = *(FLOAT32 *)FieldValue;
+            KNAM.value = *(float *)FieldValue;
             break;
         case 23: //lnam Day Inner Boundary % (L)
             LNAM.Load();
-            LNAM.value = *(FLOAT32 *)FieldValue;
+            LNAM.value = *(float *)FieldValue;
             break;
         case 24: //mnam Night Outer Boundary % (L)
             MNAM.Load();
-            MNAM.value = *(FLOAT32 *)FieldValue;
+            MNAM.value = *(float *)FieldValue;
             break;
         case 25: //nnam Night Middle Boundary % (L)
             NNAM.Load();
-            NNAM.value = *(FLOAT32 *)FieldValue;
+            NNAM.value = *(float *)FieldValue;
             break;
         case 26: //onam Night Inner Boundary % (L)
             ONAM.Load();
-            ONAM.value = *(FLOAT32 *)FieldValue;
+            ONAM.value = *(float *)FieldValue;
             break;
         case 27: //pnam Enable Flags
             PNAM.Load();
-            PNAM.value = *(UINT8 *)FieldValue;
+            PNAM.value = *(uint8_t *)FieldValue;
             break;
         case 28: //dnam Wait Time (B) / Minimum Time On (D,L) / Daytime Min (I)
             DNAM.Load();
-            DNAM.value = *(FLOAT32 *)FieldValue;
+            DNAM.value = *(float *)FieldValue;
             break;
         case 29: //enam Loop Fade Out (B) / Looping/Random Crossfade Overlap (D,L) / Nighttime Min (I)
             ENAM.Load();
-            ENAM.value = *(FLOAT32 *)FieldValue;
+            ENAM.value = *(float *)FieldValue;
             break;
         case 30: //fnam Recovery Time (B) / Layer Crossfade Time (D,L) / Daytime Max (I)
             FNAM.Load();
-            FNAM.value = *(FLOAT32 *)FieldValue;
+            FNAM.value = *(float *)FieldValue;
             break;
         case 31: //gnam Nighttime Max (I)
             GNAM.Load();
-            GNAM.value = *(FLOAT32 *)FieldValue;
+            GNAM.value = *(float *)FieldValue;
             break;
         case 32: //hnam Intro (B,D) / Daytime (I)
             HNAM.Load();

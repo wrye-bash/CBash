@@ -69,7 +69,7 @@ bool LVLIRecord::VisitFormIDs(FormIDOp &op)
         if(!IsLoaded())
             return false;
 
-        for(UINT32 x = 0; x < Entries.value.size(); x++)
+        for(uint32_t x = 0; x < Entries.value.size(); x++)
             {
             op.Accept(Entries.value[x]->LVLO.value.listId);
             if(Entries.value[x]->IsGlobal())
@@ -110,44 +110,44 @@ void LVLIRecord::IsUseAllSpells(bool value)
         SETBIT(LVLF.value, fUseAllSpells, value);
     }
 
-bool LVLIRecord::IsFlagMask(UINT8 Mask, bool Exact)
+bool LVLIRecord::IsFlagMask(uint8_t Mask, bool Exact)
     {
         return Exact ? ((LVLF.value & Mask) == Mask) : ((LVLF.value & Mask) != 0);
     }
 
-void LVLIRecord::SetFlagMask(UINT8 Mask)
+void LVLIRecord::SetFlagMask(uint8_t Mask)
     {
         LVLF.value = Mask;
     }
 
-UINT32 LVLIRecord::GetType()
+uint32_t LVLIRecord::GetType()
     {
         return REV32(LVLI);
     }
 
-STRING LVLIRecord::GetStrType()
+char * LVLIRecord::GetStrType()
     {
         return "LVLI";
     }
 
-SINT32 LVLIRecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk)
+int32_t LVLIRecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk)
     {
-        UINT32 subType = 0;
-        UINT32 subSize = 0;
+        uint32_t subType = 0;
+        uint32_t subSize = 0;
         while(buffer < end_buffer){
-            subType = *(UINT32 *)buffer;
+            subType = *(uint32_t *)buffer;
             buffer += 4;
             switch(subType)
                 {
                 case REV32(XXXX):
                     buffer += 2;
-                    subSize = *(UINT32 *)buffer;
+                    subSize = *(uint32_t *)buffer;
                     buffer += 4;
-                    subType = *(UINT32 *)buffer;
+                    subType = *(uint32_t *)buffer;
                     buffer += 6;
                     break;
                 default:
-                    subSize = *(UINT16 *)buffer;
+                    subSize = *(uint16_t *)buffer;
                     buffer += 2;
                     break;
                 }
@@ -194,7 +194,7 @@ SINT32 LVLIRecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer,
         return 0;
     }
 
-SINT32 LVLIRecord::Unload()
+int32_t LVLIRecord::Unload()
     {
         IsChanged(false);
         IsLoaded(false);
@@ -207,7 +207,7 @@ SINT32 LVLIRecord::Unload()
         return 1;
     }
 
-SINT32 LVLIRecord::WriteRecord(FileWriter &writer)
+int32_t LVLIRecord::WriteRecord(FileWriter &writer)
     {
         WRITE(EDID);
         WRITE(OBND);

@@ -54,7 +54,7 @@ NAVIRecord::NAVINVMI::~NAVINVMI()
     delete []unknown2;
     }
 
-bool NAVIRecord::NAVINVMI::Read(unsigned char *&buffer, const UINT32 &subSize)
+bool NAVIRecord::NAVINVMI::Read(unsigned char *&buffer, const uint32_t &subSize)
     {
     #ifdef CBASH_CHUNK_LCHECK
         if(subSize < 16)
@@ -75,9 +75,9 @@ bool NAVIRecord::NAVINVMI::Read(unsigned char *&buffer, const UINT32 &subSize)
     buffer += 4;
     location = *(FORMID *)buffer;
     buffer += 4;
-    xGrid = *(SINT16 *)buffer;
+    xGrid = *(int16_t *)buffer;
     buffer += 2;
-    yGrid = *(SINT16 *)buffer;
+    yGrid = *(int16_t *)buffer;
     buffer += 2;
     if(subSize - 16 < subSize)  //Handle case if subSize wraps around
         {
@@ -155,7 +155,7 @@ NAVIRecord::NAVINVCI::~NAVINVCI()
     //
     }
 
-bool NAVIRecord::NAVINVCI::Read(unsigned char *&buffer, const UINT32 &subSize)
+bool NAVIRecord::NAVINVCI::Read(unsigned char *&buffer, const uint32_t &subSize)
     {
     if(unknown1 != 0 || unknown2.size() != 0 || unknown3.size() != 0 || doors.size() != 0)
         {
@@ -192,7 +192,7 @@ bool NAVIRecord::NAVINVCI::Read(unsigned char *&buffer, const UINT32 &subSize)
         return false;
         }
     #endif
-    UINT32 sizeElements = *(FORMID *)buffer * sizeof(FORMID);
+    uint32_t sizeElements = *(FORMID *)buffer * sizeof(FORMID);
     unknown2.resize(*(FORMID *)buffer);
     buffer += 4;
     #ifdef CBASH_CHUNK_LCHECK
@@ -287,21 +287,21 @@ void NAVIRecord::NAVINVCI::Write(FileWriter &writer)
     {
     if(unknown1 != 0 || unknown2.size() != 0 || unknown3.size() != 0 || doors.size() != 0)
         {
-        UINT32 cSize = 16; //unknown1, and sizes for unknown2, unknown3, and doors
-        cSize += (UINT32)unknown2.size() * sizeof(FORMID);
-        cSize += (UINT32)unknown3.size() * sizeof(FORMID);
-        cSize += (UINT32)doors.size() * sizeof(FORMID);
+        uint32_t cSize = 16; //unknown1, and sizes for unknown2, unknown3, and doors
+        cSize += (uint32_t)unknown2.size() * sizeof(FORMID);
+        cSize += (uint32_t)unknown3.size() * sizeof(FORMID);
+        cSize += (uint32_t)doors.size() * sizeof(FORMID);
         writer.record_write_subheader(REV32(NVCI), cSize);
         writer.record_write(&unknown1, sizeof(FORMID));
-        cSize = (UINT32)unknown2.size();
+        cSize = (uint32_t)unknown2.size();
         writer.record_write(&cSize, 4);
         if(cSize)
             writer.record_write(&unknown2[0], cSize * sizeof(FORMID));
-        cSize = (UINT32)unknown3.size();
+        cSize = (uint32_t)unknown3.size();
         writer.record_write(&cSize, 4);
         if(cSize)
             writer.record_write(&unknown3[0], cSize * sizeof(FORMID));
-        cSize = (UINT32)doors.size();
+        cSize = (uint32_t)doors.size();
         writer.record_write(&cSize, 4);
         if(cSize)
             writer.record_write(&doors[0], cSize * sizeof(FORMID));
@@ -317,17 +317,17 @@ bool NAVIRecord::NAVINVCI::operator ==(const NAVINVCI &other) const
         {
         //Not sure if record order matters, so equality testing is a guess
         //Fix-up later
-        for(UINT32 x = 0; x < unknown2.size(); ++x)
+        for(uint32_t x = 0; x < unknown2.size(); ++x)
             if(unknown2[x] != other.unknown2[x])
                 return false;
         //Not sure if record order matters, so equality testing is a guess
         //Fix-up later
-        for(UINT32 x = 0; x < unknown3.size(); ++x)
+        for(uint32_t x = 0; x < unknown3.size(); ++x)
             if(unknown3[x] != other.unknown3[x])
                 return false;
         //Not sure if record order matters, so equality testing is a guess
         //Fix-up later
-        for(UINT32 x = 0; x < doors.size(); ++x)
+        for(uint32_t x = 0; x < doors.size(); ++x)
             if(doors[x] != other.doors[x])
                 return false;
         return true;
@@ -380,53 +380,53 @@ bool NAVIRecord::VisitFormIDs(FormIDOp &op)
     if(!IsLoaded())
         return false;
 
-    for(UINT32 x = 0; x < NVMI.value.size(); ++x)
+    for(uint32_t x = 0; x < NVMI.value.size(); ++x)
         {
         op.Accept(NVMI.value[x]->mesh);
         op.Accept(NVMI.value[x]->location);
         }
-    for(UINT32 x = 0; x < NVCI.value.size(); ++x)
+    for(uint32_t x = 0; x < NVCI.value.size(); ++x)
         {
         op.Accept(NVCI.value[x]->unknown1);
-        for(UINT32 p = 0; p < NVCI.value[x]->unknown2.size(); ++p)
+        for(uint32_t p = 0; p < NVCI.value[x]->unknown2.size(); ++p)
             op.Accept(NVCI.value[x]->unknown2[p]);
-        for(UINT32 p = 0; p < NVCI.value[x]->unknown3.size(); ++p)
+        for(uint32_t p = 0; p < NVCI.value[x]->unknown3.size(); ++p)
             op.Accept(NVCI.value[x]->unknown3[p]);
-        for(UINT32 p = 0; p < NVCI.value[x]->doors.size(); ++p)
+        for(uint32_t p = 0; p < NVCI.value[x]->doors.size(); ++p)
             op.Accept(NVCI.value[x]->doors[p]);
         }
 
     return op.Stop();
     }
 
-UINT32 NAVIRecord::GetType()
+uint32_t NAVIRecord::GetType()
     {
     return REV32(NAVI);
     }
 
-STRING NAVIRecord::GetStrType()
+char * NAVIRecord::GetStrType()
     {
     return "NAVI";
     }
 
-SINT32 NAVIRecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk)
+int32_t NAVIRecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk)
     {
-    UINT32 subType = 0;
-    UINT32 subSize = 0;
+    uint32_t subType = 0;
+    uint32_t subSize = 0;
     while(buffer < end_buffer){
-        subType = *(UINT32 *)buffer;
+        subType = *(uint32_t *)buffer;
         buffer += 4;
         switch(subType)
             {
             case REV32(XXXX):
                 buffer += 2;
-                subSize = *(UINT32 *)buffer;
+                subSize = *(uint32_t *)buffer;
                 buffer += 4;
-                subType = *(UINT32 *)buffer;
+                subType = *(uint32_t *)buffer;
                 buffer += 6;
                 break;
             default:
-                subSize = *(UINT16 *)buffer;
+                subSize = *(uint16_t *)buffer;
                 buffer += 2;
                 break;
             }
@@ -459,7 +459,7 @@ SINT32 NAVIRecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer,
     return 0;
     }
 
-SINT32 NAVIRecord::Unload()
+int32_t NAVIRecord::Unload()
     {
     IsChanged(false);
     IsLoaded(false);
@@ -470,7 +470,7 @@ SINT32 NAVIRecord::Unload()
     return 1;
     }
 
-SINT32 NAVIRecord::WriteRecord(FileWriter &writer)
+int32_t NAVIRecord::WriteRecord(FileWriter &writer)
     {
     WRITE(EDID);
     WRITE(NVER);

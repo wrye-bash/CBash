@@ -70,8 +70,8 @@ class CLOTRecord : public Record //Clothing
         StringRecord FULL; //Name
         OptSimpleSubRecord<FORMID> SCRI; //Script
         OptSimpleSubRecord<FORMID> ENAM; //Enchantment
-        OptSimpleSubRecord<UINT16> ANAM; //Enchantment Points
-        ReqSimpleSubRecord<UINT32> BMDT; //Biped Flags
+        OptSimpleSubRecord<uint16_t> ANAM; //Enchantment Points
+        ReqSimpleSubRecord<uint32_t> BMDT; //Biped Flags
         OptSubRecord<GENMODEL> MODL; //Male biped model
         OptSubRecord<GENMODEL> MOD2; //Male world model
         StringRecord ICON; //Male icon filename
@@ -124,20 +124,20 @@ class CLOTRecord : public Record //Clothing
         void   IsHideAmulets(bool value);
         bool   IsNonPlayable();
         void   IsNonPlayable(bool value);
-        bool   IsFlagMask(UINT32 Mask, bool Exact=false);
-        void   SetFlagMask(UINT32 Mask);
+        bool   IsFlagMask(uint32_t Mask, bool Exact=false);
+        void   SetFlagMask(uint32_t Mask);
 
-        UINT32 GetFieldAttribute(DEFAULTED_FIELD_IDENTIFIERS, UINT32 WhichAttribute=0);
+        uint32_t GetFieldAttribute(DEFAULTED_FIELD_IDENTIFIERS, uint32_t WhichAttribute=0);
         void * GetField(DEFAULTED_FIELD_IDENTIFIERS, void **FieldValues=NULL);
-        bool   SetField(DEFAULTED_FIELD_IDENTIFIERS, void *FieldValue=NULL, UINT32 ArraySize=0);
+        bool   SetField(DEFAULTED_FIELD_IDENTIFIERS, void *FieldValue=NULL, uint32_t ArraySize=0);
         void   DeleteField(DEFAULTED_FIELD_IDENTIFIERS);
 
-        UINT32 GetType();
-        STRING GetStrType();
+        uint32_t GetType();
+        char * GetStrType();
 
-        SINT32 ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk=false);
-        SINT32 Unload();
-        SINT32 WriteRecord(FileWriter &writer);
+        int32_t ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk=false);
+        int32_t Unload();
+        int32_t WriteRecord(FileWriter &writer);
 
         bool operator ==(const CLOTRecord &other) const;
         bool operator !=(const CLOTRecord &other) const;

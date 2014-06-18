@@ -38,7 +38,7 @@
 
 namespace Ob
 {
-UINT32 SCPTRecord::GetFieldAttribute(FIELD_IDENTIFIERS, UINT32 WhichAttribute)
+uint32_t SCPTRecord::GetFieldAttribute(FIELD_IDENTIFIERS, uint32_t WhichAttribute)
     {
     switch(FieldID)
         {
@@ -92,7 +92,7 @@ UINT32 SCPTRecord::GetFieldAttribute(FIELD_IDENTIFIERS, UINT32 WhichAttribute)
                     case 0: //fieldType
                         return LIST_FIELD;
                     case 1: //fieldSize
-                        return (UINT32)VARS.value.size();
+                        return (uint32_t)VARS.value.size();
                     default:
                         return UNKNOWN_FIELD;
                     }
@@ -141,7 +141,7 @@ UINT32 SCPTRecord::GetFieldAttribute(FIELD_IDENTIFIERS, UINT32 WhichAttribute)
                     case 0: //fieldType
                         return FORMID_OR_UINT32_ARRAY_FIELD;
                     case 1: //fieldSize
-                        return (UINT32)SCR_.value.size();
+                        return (uint32_t)SCR_.value.size();
                     default:
                         return UNKNOWN_FIELD;
                     }
@@ -222,7 +222,7 @@ void * SCPTRecord::GetField(FIELD_IDENTIFIERS, void **FieldValues)
                 }
             return NULL;
         case 13: //references
-            for(UINT32 x = 0; x < SCR_.value.size(); ++x)
+            for(uint32_t x = 0; x < SCR_.value.size(); ++x)
                 ((FORMIDARRAY)FieldValues)[x] = SCR_.value[x]->reference;
             return NULL;
         default:
@@ -231,18 +231,18 @@ void * SCPTRecord::GetField(FIELD_IDENTIFIERS, void **FieldValues)
     return NULL;
     }
 
-bool SCPTRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
+bool SCPTRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, uint32_t ArraySize)
     {
     switch(FieldID)
         {
         case 1: //flags1
-            SetHeaderFlagMask(*(UINT32 *)FieldValue);
+            SetHeaderFlagMask(*(uint32_t *)FieldValue);
             break;
         case 3: //flags2
-            SetHeaderUnknownFlagMask(*(UINT32 *)FieldValue);
+            SetHeaderUnknownFlagMask(*(uint32_t *)FieldValue);
             break;
         case 4: //eid
-            EDID.Copy((STRING)FieldValue);
+            EDID.Copy((char *)FieldValue);
             break;
         case 5: //unused1
             if(ArraySize != 4)
@@ -253,23 +253,23 @@ bool SCPTRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             SCHR.value.unused1[3] = ((UINT8ARRAY)FieldValue)[3];
             break;
         case 6: //numRefs
-            SCHR.value.numRefs = *(UINT32 *)FieldValue;
+            SCHR.value.numRefs = *(uint32_t *)FieldValue;
             break;
         case 7: //compiledSize
-            SCHR.value.compiledSize = *(UINT32 *)FieldValue;
+            SCHR.value.compiledSize = *(uint32_t *)FieldValue;
             break;
         case 8: //lastIndex
-            SCHR.value.lastIndex = *(UINT32 *)FieldValue;
+            SCHR.value.lastIndex = *(uint32_t *)FieldValue;
             break;
         case 9: //scriptType
-            SetType(*(UINT32 *)FieldValue);
+            SetType(*(uint32_t *)FieldValue);
             break;
         case 10: //compiled_p
             SCDA.Copy((UINT8ARRAY)FieldValue, ArraySize);
             SCHR.value.compiledSize = ArraySize;
             break;
         case 11: //scriptText
-            SCTX.Copy((STRING)FieldValue);
+            SCTX.Copy((char *)FieldValue);
             break;
         case 12: //vars
             if(ListFieldID == 0) //varsSize
@@ -283,7 +283,7 @@ bool SCPTRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             switch(ListFieldID)
                 {
                 case 1: //index
-                    VARS.value[ListIndex]->SLSD.value.index = *(UINT32 *)FieldValue;
+                    VARS.value[ListIndex]->SLSD.value.index = *(uint32_t *)FieldValue;
                     break;
                 case 2: //unused1
                     if(ArraySize != 12)
@@ -302,7 +302,7 @@ bool SCPTRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
                     VARS.value[ListIndex]->SLSD.value.unused1[11] = ((UINT8ARRAY)FieldValue)[11];
                     break;
                 case 3: //flags
-                    VARS.value[ListIndex]->SetFlagMask(*(UINT8 *)FieldValue);
+                    VARS.value[ListIndex]->SetFlagMask(*(uint8_t *)FieldValue);
                     break;
                 case 4: //unused2
                     if(ArraySize != 7)
@@ -316,7 +316,7 @@ bool SCPTRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
                     VARS.value[ListIndex]->SLSD.value.unused2[6] = ((UINT8ARRAY)FieldValue)[6];
                     break;
                 case 5: //name
-                    VARS.value[ListIndex]->SCVR.Copy((STRING)FieldValue);
+                    VARS.value[ListIndex]->SCVR.Copy((char *)FieldValue);
                     break;
                 default:
                     break;
@@ -336,7 +336,7 @@ bool SCPTRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
                 {
                 case 1: //reference
                     //Borrowing ArraySize to flag if the new value is a formID
-                    SCR_.value[ListIndex]->reference = *(UINT32 *)FieldValue;
+                    SCR_.value[ListIndex]->reference = *(uint32_t *)FieldValue;
                     SCR_.value[ListIndex]->isSCRO = ArraySize ? true : false;
                     return ArraySize != 0;
                 default:

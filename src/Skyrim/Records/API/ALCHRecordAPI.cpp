@@ -37,7 +37,7 @@
 
 namespace Sk {
 
-UINT32 ALCHRecord::GetFieldAttribute(FIELD_IDENTIFIERS, UINT32 WhichAttribute)
+uint32_t ALCHRecord::GetFieldAttribute(FIELD_IDENTIFIERS, uint32_t WhichAttribute)
 {
     switch (FieldID)
     {
@@ -124,7 +124,7 @@ UINT32 ALCHRecord::GetFieldAttribute(FIELD_IDENTIFIERS, UINT32 WhichAttribute)
             case 0: //fieldType
                 return LIST_FIELD;
             case 1: //fieldSize
-                return (UINT32)MODL->Textures.MODS.size();
+                return (uint32_t)MODL->Textures.MODS.size();
             default:
                 return UNKNOWN_FIELD;
             }
@@ -173,7 +173,7 @@ UINT32 ALCHRecord::GetFieldAttribute(FIELD_IDENTIFIERS, UINT32 WhichAttribute)
             case 0: //fieldType
                 return LIST_FIELD;
             case 1: //fieldSize
-                return (UINT32)Destructable->Stages.value.size();
+                return (uint32_t)Destructable->Stages.value.size();
             default:
                 return UNKNOWN_FIELD;
             }
@@ -223,7 +223,7 @@ UINT32 ALCHRecord::GetFieldAttribute(FIELD_IDENTIFIERS, UINT32 WhichAttribute)
                 case 0: //fieldType
                     return LIST_FIELD;
                 case 1: //fieldSize
-                    return (UINT32)Destructable->Stages.value[ListIndex]->DMDS.MODS.size();
+                    return (uint32_t)Destructable->Stages.value[ListIndex]->DMDS.MODS.size();
                 default:
                     return UNKNOWN_FIELD;
                 }
@@ -279,7 +279,7 @@ UINT32 ALCHRecord::GetFieldAttribute(FIELD_IDENTIFIERS, UINT32 WhichAttribute)
             case 0: //fieldType
                 return LIST_FIELD;
             case 1: //fieldSize
-                return (UINT32)Effects.value.size();
+                return (uint32_t)Effects.value.size();
             default:
                 return UNKNOWN_FIELD;
             }
@@ -307,7 +307,7 @@ UINT32 ALCHRecord::GetFieldAttribute(FIELD_IDENTIFIERS, UINT32 WhichAttribute)
                 case 0: //fieldType
                     return LIST_FIELD;
                 case 1: //fieldSize
-                    return (UINT32)Effects.value[ListIndex]->CTDA.value.size();
+                    return (uint32_t)Effects.value[ListIndex]->CTDA.value.size();
                 default:
                     return UNKNOWN_FIELD;
                 }
@@ -645,12 +645,12 @@ void * ALCHRecord::GetField(FIELD_IDENTIFIERS, void **FieldValues)
     return NULL;
 }
 
-bool ALCHRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
+bool ALCHRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, uint32_t ArraySize)
     {
     switch(FieldID)
         {
         case 1: //flags1
-            SetHeaderFlagMask(*(UINT32 *)FieldValue);
+            SetHeaderFlagMask(*(uint32_t *)FieldValue);
             break;
         case 3: //versionControl1
             if(ArraySize != 4)
@@ -661,10 +661,10 @@ bool ALCHRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             ((UINT8ARRAY)&flagsUnk)[3] = ((UINT8ARRAY)FieldValue)[3];
             break;
         case 4: //eid
-            EDID.Copy((STRING)FieldValue);
+            EDID.Copy((char *)FieldValue);
             break;
         case 5: //formVersion
-            formVersion = *(UINT16 *)FieldValue;
+            formVersion = *(uint16_t *)FieldValue;
             break;
         case 6: //versionControl2
             if(ArraySize != 2)
@@ -673,37 +673,37 @@ bool ALCHRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             versionControl2[1] = ((UINT8ARRAY)FieldValue)[1];
             break;
         case 7: //boundX1
-            OBND->x1 = *(SINT16 *)FieldValue;
+            OBND->x1 = *(int16_t *)FieldValue;
             break;
         case 8: //boundY1
-            OBND->y1 = *(SINT16 *)FieldValue;
+            OBND->y1 = *(int16_t *)FieldValue;
             break;
         case 9: //boundZ1
-            OBND->z1 = *(SINT16 *)FieldValue;
+            OBND->z1 = *(int16_t *)FieldValue;
             break;
         case 10: //boundX2
-            OBND->x2 = *(SINT16 *)FieldValue;
+            OBND->x2 = *(int16_t *)FieldValue;
             break;
         case 11: //boundY2
-            OBND->y2 = *(SINT16 *)FieldValue;
+            OBND->y2 = *(int16_t *)FieldValue;
             break;
         case 12: //boundZ2
-            OBND->z2 = *(SINT16 *)FieldValue;
+            OBND->z2 = *(int16_t *)FieldValue;
             break;
         case 13: //full
-            FULL.Copy((STRING)FieldValue);
+            FULL.Copy((char *)FieldValue);
             break;
         case 14: //keywords
             KWDA.resize(ArraySize);
-            for (UINT32 i = 0; i < ArraySize; ++i)
+            for (uint32_t i = 0; i < ArraySize; ++i)
                 KWDA.value[i] = ((FORMIDARRAY)FieldValue)[i];
             return true;
         case 15: //description
-            DESC.Copy((STRING)FieldValue);
+            DESC.Copy((char *)FieldValue);
             break;
         case 16: //modPath
             MODL.Load();
-            MODL->MODL.Copy((STRING)FieldValue);
+            MODL->MODL.Copy((char *)FieldValue);
             break;
         case 17: //modt_p
             MODL.Load();
@@ -727,16 +727,16 @@ bool ALCHRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
                 MODL->Textures.MODS[ListIndex]->name = NULL;
                 if (FieldValue != NULL)
                 {
-                    ArraySize = (UINT32)strlen((STRING)FieldValue) + 1;
+                    ArraySize = (uint32_t)strlen((char *)FieldValue) + 1;
                     MODL->Textures.MODS[ListIndex]->name = new char[ArraySize];
-                    strcpy_s(MODL->Textures.MODS[ListIndex]->name, ArraySize, (STRING)FieldValue);
+                    strcpy_s(MODL->Textures.MODS[ListIndex]->name, ArraySize, (char *)FieldValue);
                 }
                 break;
             case 2: //texture
                 MODL->Textures.MODS[ListIndex]->texture = *(FORMID *)FieldValue;
                 return true;
             case 3: //index
-                MODL->Textures.MODS[ListIndex]->index = *(SINT32 *)FieldValue;
+                MODL->Textures.MODS[ListIndex]->index = *(int32_t *)FieldValue;
                 break;
             default:
                 break;
@@ -744,15 +744,15 @@ bool ALCHRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             break;
         case 19: //destructableHealth
             Destructable.Load();
-            Destructable->DEST->health = *(SINT32 *)FieldValue;
+            Destructable->DEST->health = *(int32_t *)FieldValue;
             break;
         case 20: //destructableCount
             Destructable.Load();
-            Destructable->DEST->count = *(UINT8 *)FieldValue;
+            Destructable->DEST->count = *(uint8_t *)FieldValue;
             break;
         case 21: //destructableFlags
             Destructable.Load();
-            Destructable->DEST->flags = *(UINT8 *)FieldValue;
+            Destructable->DEST->flags = *(uint8_t *)FieldValue;
             break;
         case 22: //destructableUnused1
             if (ArraySize != 2)
@@ -775,19 +775,19 @@ bool ALCHRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             switch (ListFieldID)
             {
             case 1: //health
-                Destructable->Stages.value[ListIndex]->DSTD->health = *(UINT8 *)FieldValue;
+                Destructable->Stages.value[ListIndex]->DSTD->health = *(uint8_t *)FieldValue;
                 break;
             case 2: //index
-                Destructable->Stages.value[ListIndex]->DSTD->index = *(UINT8 *)FieldValue;
+                Destructable->Stages.value[ListIndex]->DSTD->index = *(uint8_t *)FieldValue;
                 break;
             case 3: //stage
-                Destructable->Stages.value[ListIndex]->DSTD->stage = *(UINT8 *)FieldValue;
+                Destructable->Stages.value[ListIndex]->DSTD->stage = *(uint8_t *)FieldValue;
                 break;
             case 4: //flags
-                Destructable->Stages.value[ListIndex]->DSTD->flags = *(UINT8 *)FieldValue;
+                Destructable->Stages.value[ListIndex]->DSTD->flags = *(uint8_t *)FieldValue;
                 break;
             case 5: //dps
-                Destructable->Stages.value[ListIndex]->DSTD->dps = *(SINT32 *)FieldValue;
+                Destructable->Stages.value[ListIndex]->DSTD->dps = *(int32_t *)FieldValue;
                 break;
             case 6: //explosion
                 Destructable->Stages.value[ListIndex]->DSTD->explosion = *(FORMID *)FieldValue;
@@ -796,10 +796,10 @@ bool ALCHRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
                 Destructable->Stages.value[ListIndex]->DSTD->debris = *(FORMID *)FieldValue;
                 return true;
             case 8: //debrisCount
-                Destructable->Stages.value[ListIndex]->DSTD->debrisCount = *(SINT32 *)FieldValue;
+                Destructable->Stages.value[ListIndex]->DSTD->debrisCount = *(int32_t *)FieldValue;
                 break;
             case 9: //modPath
-                Destructable->Stages.value[ListIndex]->DMDL.Copy((STRING)FieldValue);
+                Destructable->Stages.value[ListIndex]->DMDL.Copy((char *)FieldValue);
                 break;
             case 10: //modt_p
                 Destructable->Stages.value[ListIndex]->DMDT.Copy((UINT8ARRAY)FieldValue, ArraySize);
@@ -821,16 +821,16 @@ bool ALCHRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
                     Destructable->Stages.value[ListIndex]->DMDS.MODS[ListX2Index]->name = NULL;
                     if (FieldValue != NULL)
                     {
-                        ArraySize = (UINT32)strlen((STRING)FieldValue) + 1;
+                        ArraySize = (uint32_t)strlen((char *)FieldValue) + 1;
                         Destructable->Stages.value[ListIndex]->DMDS.MODS[ListX2Index]->name = new char[ArraySize];
-                        strcpy_s(Destructable->Stages.value[ListIndex]->DMDS.MODS[ListX2Index]->name, ArraySize, (STRING)FieldValue);
+                        strcpy_s(Destructable->Stages.value[ListIndex]->DMDS.MODS[ListX2Index]->name, ArraySize, (char *)FieldValue);
                     }
                     break;
                 case 2: //texture
                     Destructable->Stages.value[ListIndex]->DMDS.MODS[ListX2Index]->texture = *(FORMID *)FieldValue;
                     return true;
                 case 3: //index
-                    Destructable->Stages.value[ListIndex]->DMDS.MODS[ListX2Index]->index = *(SINT32 *)FieldValue;
+                    Destructable->Stages.value[ListIndex]->DMDS.MODS[ListX2Index]->index = *(int32_t *)FieldValue;
                     break;
                 default:
                     break;
@@ -841,10 +841,10 @@ bool ALCHRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             }
             break;
         case 24: //iconPath
-            ICON.Copy((STRING)FieldValue);
+            ICON.Copy((char *)FieldValue);
             break;
         case 25: //smallIconPath
-            MICO.Copy((STRING)FieldValue);
+            MICO.Copy((char *)FieldValue);
             break;
         case 26: //pickupSound
             YNAM.value = *(FORMID *)FieldValue;
@@ -856,19 +856,19 @@ bool ALCHRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             ETYP.value = *(FORMID *)FieldValue;
             return true;
         case 29: //wieght
-            DATA.value = *(FLOAT32 *)FieldValue;
+            DATA.value = *(float *)FieldValue;
             break;
         case 30: //value
-            ENIT->value = *(SINT32 *)FieldValue;
+            ENIT->value = *(int32_t *)FieldValue;
             break;
         case 31: //flags
-            SetFlagMask(*(UINT8 *)FieldValue);
+            SetFlagMask(*(uint8_t *)FieldValue);
             break;
         case 32: //withdrawalEffect
             ENIT->withdrawalEffect = *(FORMID *)FieldValue;
             return true;
         case 33: //addictionChance
-            ENIT->addictionChance = *(FLOAT32 *)FieldValue;
+            ENIT->addictionChance = *(float *)FieldValue;
             break;
         case 34: //consumeSound
             ENIT->consumeSound = *(FORMID *)FieldValue;
@@ -889,13 +889,13 @@ bool ALCHRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
                 Effects.value[ListIndex]->EFID.value = *(FORMID *)FieldValue;
                 return true;
             case 2: //magnitude
-                Effects.value[ListIndex]->EFIT->magnitude = *(FLOAT32 *)FieldValue;
+                Effects.value[ListIndex]->EFIT->magnitude = *(float *)FieldValue;
                 break;
             case 3: //area
-                Effects.value[ListIndex]->EFIT->area = *(UINT32 *)FieldValue;
+                Effects.value[ListIndex]->EFIT->area = *(uint32_t *)FieldValue;
                 break;
             case 4: //duration
-                Effects.value[ListIndex]->EFIT->duration = *(UINT32 *)FieldValue;
+                Effects.value[ListIndex]->EFIT->duration = *(uint32_t *)FieldValue;
                 break;
             case 5: //conditions
                 if (ListX2FieldID == 0) //conditionsSize
@@ -910,7 +910,7 @@ bool ALCHRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
                 switch (ListX2FieldID)
                 {
                 case 1: //operType
-                    Effects.value[ListIndex]->CTDA.value[ListX2Index]->CTDA->operType = *(UINT8 *)FieldValue;
+                    Effects.value[ListIndex]->CTDA.value[ListX2Index]->CTDA->operType = *(uint8_t *)FieldValue;
                     break;
                 case 2: //unused1
                     if (ArraySize != 3)
@@ -923,7 +923,7 @@ bool ALCHRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
                     Effects.value[ListIndex]->CTDA.value[ListX2Index]->CTDA->compValue = *(FORMID_OR_FLOAT32 *)FieldValue;
                     return true;
                 case 4: //ifunc
-                    Effects.value[ListIndex]->CTDA.value[ListX2Index]->CTDA->ifunc = *(UINT16 *)FieldValue;
+                    Effects.value[ListIndex]->CTDA.value[ListX2Index]->CTDA->ifunc = *(uint16_t *)FieldValue;
                     return true;
                 case 5: //unused2
                     if (ArraySize != 2)
@@ -938,19 +938,19 @@ bool ALCHRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
                     Effects.value[ListIndex]->CTDA.value[ListX2Index]->CTDA->param2 = *(FORMID_OR_UINT32 *)FieldValue;
                     return true;
                 case 8: //runOnType
-                    Effects.value[ListIndex]->CTDA.value[ListX2Index]->CTDA->runOnType = *(UINT32 *)FieldValue;
+                    Effects.value[ListIndex]->CTDA.value[ListX2Index]->CTDA->runOnType = *(uint32_t *)FieldValue;
                     true;
                 case 9: //reference
                     Effects.value[ListIndex]->CTDA.value[ListX2Index]->CTDA->reference = *(FORMID_OR_UINT32 *)FieldValue;
                     return true;
                 case 10: //param3
-                    Effects.value[ListIndex]->CTDA.value[ListX2Index]->CTDA->param3 = *(SINT32 *)FieldValue;
+                    Effects.value[ListIndex]->CTDA.value[ListX2Index]->CTDA->param3 = *(int32_t *)FieldValue;
                     break;
                 case 11: //cis1
-                    Effects.value[ListIndex]->CTDA.value[ListX2Index]->CIS1.Copy((STRING)FieldValue);
+                    Effects.value[ListIndex]->CTDA.value[ListX2Index]->CIS1.Copy((char *)FieldValue);
                     return true; // affects how param1 is interpreted
                 case 12: //cis2
-                    Effects.value[ListIndex]->CTDA.value[ListX2Index]->CIS2.Copy((STRING)FieldValue);
+                    Effects.value[ListIndex]->CTDA.value[ListX2Index]->CIS2.Copy((char *)FieldValue);
                     return true; // affects how param2 is interpreted
                 default:
                     break;

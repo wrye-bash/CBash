@@ -38,7 +38,7 @@
 
 namespace FNV
 {
-UINT32 CSNORecord::GetFieldAttribute(FIELD_IDENTIFIERS, UINT32 WhichAttribute)
+uint32_t CSNORecord::GetFieldAttribute(FIELD_IDENTIFIERS, uint32_t WhichAttribute)
     {
     switch(FieldID)
         {
@@ -168,12 +168,12 @@ void * CSNORecord::GetField(FIELD_IDENTIFIERS, void **FieldValues)
     return NULL;
     }
 
-bool CSNORecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
+bool CSNORecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, uint32_t ArraySize)
     {
     switch(FieldID)
         {
         case 1: //flags1
-            SetHeaderFlagMask(*(UINT32 *)FieldValue);
+            SetHeaderFlagMask(*(uint32_t *)FieldValue);
             break;
         case 3: //versionControl1
             if(ArraySize != 4)
@@ -184,10 +184,10 @@ bool CSNORecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             ((UINT8ARRAY)&flagsUnk)[3] = ((UINT8ARRAY)FieldValue)[3];
             break;
         case 4: //eid
-            EDID.Copy((STRING)FieldValue);
+            EDID.Copy((char *)FieldValue);
             break;
         case 5: //formVersion
-            formVersion = *(UINT16 *)FieldValue;
+            formVersion = *(uint16_t *)FieldValue;
             break;
         case 6: //versionControl2
             if(ArraySize != 2)
@@ -196,27 +196,27 @@ bool CSNORecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             versionControl2[1] = ((UINT8ARRAY)FieldValue)[1];
             break;
         case 7: //full
-            FULL.Copy((STRING)FieldValue);
+            FULL.Copy((char *)FieldValue);
             break;
         case 8: //data DATA ,, Struct
             DATA.Load();
-            DATA->shufflePercent = *(FLOAT32 *)FieldValue;
+            DATA->shufflePercent = *(float *)FieldValue;
             break;
         case 9: //data DATA ,, Struct
             DATA.Load();
-            DATA->bjPayoutRatio = *(FLOAT32 *)FieldValue;
+            DATA->bjPayoutRatio = *(float *)FieldValue;
             break;
         case 10: //data DATA ,, Struct
             DATA.Load();
-            DATA->symbol1Stop = *(UINT32 *)FieldValue;
+            DATA->symbol1Stop = *(uint32_t *)FieldValue;
             break;
         case 11: //data DATA ,, Struct
             DATA.Load();
-            DATA->numDecks = *(UINT32 *)FieldValue;
+            DATA->numDecks = *(uint32_t *)FieldValue;
             break;
         case 12: //data DATA ,, Struct
             DATA.Load();
-            DATA->maxWinnings = *(UINT32 *)FieldValue;
+            DATA->maxWinnings = *(uint32_t *)FieldValue;
             break;
         case 13: //data DATA ,, Struct
             DATA.Load();
@@ -228,30 +228,30 @@ bool CSNORecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             return true;
         case 15: //data DATA ,, Struct
             DATA.Load();
-            DATA->flags = *(UINT32 *)FieldValue;
+            DATA->flags = *(uint32_t *)FieldValue;
             break;
         case 16: //modl Roulette Chip
             MODLRoulette.Load();
-            MODLRoulette.Copy((STRING)FieldValue);
+            MODLRoulette.Copy((char *)FieldValue);
             break;
         case 17: //modl Slot Machine Model
-            MODL.Copy((STRING)FieldValue);
+            MODL.Copy((char *)FieldValue);
             break;
         case 18: //mod2 Slot Machine Model (again?)
-            MOD2.Copy((STRING)FieldValue);
+            MOD2.Copy((char *)FieldValue);
             break;
         case 19: //mod3 BlackJack Table Model
-            MOD3.Copy((STRING)FieldValue);
+            MOD3.Copy((char *)FieldValue);
             break;
         case 20: //mod4 Roulette Table Model
-            MOD4.Copy((STRING)FieldValue);
+            MOD4.Copy((char *)FieldValue);
             break;
         case 21: //icon Symbol W
-            ICONW.Copy((STRING)FieldValue);
+            ICONW.Copy((char *)FieldValue);
             break;
         case 22: //ico2 Deck 4
             ICO24.Load();
-            ICO24.Copy((STRING)FieldValue);
+            ICO24.Copy((char *)FieldValue);
             break;
         default:
             break;

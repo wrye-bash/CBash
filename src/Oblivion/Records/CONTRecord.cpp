@@ -104,7 +104,7 @@ bool CONTRecord::VisitFormIDs(FormIDOp &op)
 
     if(SCRI.IsLoaded())
         op.Accept(SCRI.value);
-    for(UINT32 ListIndex = 0; ListIndex < CNTO.value.size(); ListIndex++)
+    for(uint32_t ListIndex = 0; ListIndex < CNTO.value.size(); ListIndex++)
         op.Accept(CNTO.value[ListIndex]->item);
     if(SNAM.IsLoaded())
         op.Accept(SNAM.value);
@@ -124,44 +124,44 @@ void CONTRecord::IsRespawn(bool value)
     SETBIT(DATA.value.flags, fIsRespawn, value);
     }
 
-bool CONTRecord::IsFlagMask(UINT8 Mask, bool Exact)
+bool CONTRecord::IsFlagMask(uint8_t Mask, bool Exact)
     {
     return Exact ? ((DATA.value.flags & Mask) == Mask) : ((DATA.value.flags & Mask) != 0);
     }
 
-void CONTRecord::SetFlagMask(UINT8 Mask)
+void CONTRecord::SetFlagMask(uint8_t Mask)
     {
     DATA.value.flags = Mask;
     }
 
-UINT32 CONTRecord::GetType()
+uint32_t CONTRecord::GetType()
     {
     return REV32(CONT);
     }
 
-STRING CONTRecord::GetStrType()
+char * CONTRecord::GetStrType()
     {
     return "CONT";
     }
 
-SINT32 CONTRecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk)
+int32_t CONTRecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk)
     {
-    UINT32 subType = 0;
-    UINT32 subSize = 0;
+    uint32_t subType = 0;
+    uint32_t subSize = 0;
     while(buffer < end_buffer){
-        subType = *(UINT32 *)buffer;
+        subType = *(uint32_t *)buffer;
         buffer += 4;
         switch(subType)
             {
             case REV32(XXXX):
                 buffer += 2;
-                subSize = *(UINT32 *)buffer;
+                subSize = *(uint32_t *)buffer;
                 buffer += 4;
-                subType = *(UINT32 *)buffer;
+                subType = *(uint32_t *)buffer;
                 buffer += 6;
                 break;
             default:
-                subSize = *(UINT16 *)buffer;
+                subSize = *(uint16_t *)buffer;
                 buffer += 2;
                 break;
             }
@@ -213,7 +213,7 @@ SINT32 CONTRecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer,
     return 0;
     }
 
-SINT32 CONTRecord::Unload()
+int32_t CONTRecord::Unload()
     {
     IsChanged(false);
     IsLoaded(false);
@@ -228,7 +228,7 @@ SINT32 CONTRecord::Unload()
     return 1;
     }
 
-SINT32 CONTRecord::WriteRecord(FileWriter &writer)
+int32_t CONTRecord::WriteRecord(FileWriter &writer)
     {
     WRITE(EDID);
     WRITE(FULL);

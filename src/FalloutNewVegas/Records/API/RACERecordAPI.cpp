@@ -38,7 +38,7 @@
 
 namespace FNV
 {
-UINT32 RACERecord::GetFieldAttribute(FIELD_IDENTIFIERS, UINT32 WhichAttribute)
+uint32_t RACERecord::GetFieldAttribute(FIELD_IDENTIFIERS, uint32_t WhichAttribute)
     {
     switch(FieldID)
         {
@@ -86,7 +86,7 @@ UINT32 RACERecord::GetFieldAttribute(FIELD_IDENTIFIERS, UINT32 WhichAttribute)
                     case 0: //fieldType
                         return LIST_FIELD;
                     case 1: //fieldSize
-                        return (UINT32)XNAM.value.size();
+                        return (uint32_t)XNAM.value.size();
                     default:
                         return UNKNOWN_FIELD;
                     }
@@ -213,7 +213,7 @@ UINT32 RACERecord::GetFieldAttribute(FIELD_IDENTIFIERS, UINT32 WhichAttribute)
                     case 0: //fieldType
                         return LIST_FIELD;
                     case 1: //fieldSize
-                        return (UINT32)MHMOD0.MODL->Textures.MODS.size();
+                        return (uint32_t)MHMOD0.MODL->Textures.MODS.size();
                     default:
                         return UNKNOWN_FIELD;
                     }
@@ -266,7 +266,7 @@ UINT32 RACERecord::GetFieldAttribute(FIELD_IDENTIFIERS, UINT32 WhichAttribute)
                     case 0: //fieldType
                         return LIST_FIELD;
                     case 1: //fieldSize
-                        return (UINT32)MHMOD1.MODL->Textures.MODS.size();
+                        return (uint32_t)MHMOD1.MODL->Textures.MODS.size();
                     default:
                         return UNKNOWN_FIELD;
                     }
@@ -319,7 +319,7 @@ UINT32 RACERecord::GetFieldAttribute(FIELD_IDENTIFIERS, UINT32 WhichAttribute)
                     case 0: //fieldType
                         return LIST_FIELD;
                     case 1: //fieldSize
-                        return (UINT32)MHMOD2.MODL->Textures.MODS.size();
+                        return (uint32_t)MHMOD2.MODL->Textures.MODS.size();
                     default:
                         return UNKNOWN_FIELD;
                     }
@@ -372,7 +372,7 @@ UINT32 RACERecord::GetFieldAttribute(FIELD_IDENTIFIERS, UINT32 WhichAttribute)
                     case 0: //fieldType
                         return LIST_FIELD;
                     case 1: //fieldSize
-                        return (UINT32)MHMOD3.MODL->Textures.MODS.size();
+                        return (uint32_t)MHMOD3.MODL->Textures.MODS.size();
                     default:
                         return UNKNOWN_FIELD;
                     }
@@ -425,7 +425,7 @@ UINT32 RACERecord::GetFieldAttribute(FIELD_IDENTIFIERS, UINT32 WhichAttribute)
                     case 0: //fieldType
                         return LIST_FIELD;
                     case 1: //fieldSize
-                        return (UINT32)MHMOD4.MODL->Textures.MODS.size();
+                        return (uint32_t)MHMOD4.MODL->Textures.MODS.size();
                     default:
                         return UNKNOWN_FIELD;
                     }
@@ -478,7 +478,7 @@ UINT32 RACERecord::GetFieldAttribute(FIELD_IDENTIFIERS, UINT32 WhichAttribute)
                     case 0: //fieldType
                         return LIST_FIELD;
                     case 1: //fieldSize
-                        return (UINT32)MHMOD5.MODL->Textures.MODS.size();
+                        return (uint32_t)MHMOD5.MODL->Textures.MODS.size();
                     default:
                         return UNKNOWN_FIELD;
                     }
@@ -531,7 +531,7 @@ UINT32 RACERecord::GetFieldAttribute(FIELD_IDENTIFIERS, UINT32 WhichAttribute)
                     case 0: //fieldType
                         return LIST_FIELD;
                     case 1: //fieldSize
-                        return (UINT32)MHMOD6.MODL->Textures.MODS.size();
+                        return (uint32_t)MHMOD6.MODL->Textures.MODS.size();
                     default:
                         return UNKNOWN_FIELD;
                     }
@@ -584,7 +584,7 @@ UINT32 RACERecord::GetFieldAttribute(FIELD_IDENTIFIERS, UINT32 WhichAttribute)
                     case 0: //fieldType
                         return LIST_FIELD;
                     case 1: //fieldSize
-                        return (UINT32)MHMOD7.MODL->Textures.MODS.size();
+                        return (uint32_t)MHMOD7.MODL->Textures.MODS.size();
                     default:
                         return UNKNOWN_FIELD;
                     }
@@ -637,7 +637,7 @@ UINT32 RACERecord::GetFieldAttribute(FIELD_IDENTIFIERS, UINT32 WhichAttribute)
                     case 0: //fieldType
                         return LIST_FIELD;
                     case 1: //fieldSize
-                        return (UINT32)FHMOD0.MODL->Textures.MODS.size();
+                        return (uint32_t)FHMOD0.MODL->Textures.MODS.size();
                     default:
                         return UNKNOWN_FIELD;
                     }
@@ -690,7 +690,7 @@ UINT32 RACERecord::GetFieldAttribute(FIELD_IDENTIFIERS, UINT32 WhichAttribute)
                     case 0: //fieldType
                         return LIST_FIELD;
                     case 1: //fieldSize
-                        return (UINT32)FHMOD1.MODL->Textures.MODS.size();
+                        return (uint32_t)FHMOD1.MODL->Textures.MODS.size();
                     default:
                         return UNKNOWN_FIELD;
                     }
@@ -743,7 +743,7 @@ UINT32 RACERecord::GetFieldAttribute(FIELD_IDENTIFIERS, UINT32 WhichAttribute)
                     case 0: //fieldType
                         return LIST_FIELD;
                     case 1: //fieldSize
-                        return (UINT32)FHMOD2.MODL->Textures.MODS.size();
+                        return (uint32_t)FHMOD2.MODL->Textures.MODS.size();
                     default:
                         return UNKNOWN_FIELD;
                     }
@@ -796,7 +796,7 @@ UINT32 RACERecord::GetFieldAttribute(FIELD_IDENTIFIERS, UINT32 WhichAttribute)
                     case 0: //fieldType
                         return LIST_FIELD;
                     case 1: //fieldSize
-                        return (UINT32)FHMOD3.MODL->Textures.MODS.size();
+                        return (uint32_t)FHMOD3.MODL->Textures.MODS.size();
                     default:
                         return UNKNOWN_FIELD;
                     }
@@ -849,7 +849,7 @@ UINT32 RACERecord::GetFieldAttribute(FIELD_IDENTIFIERS, UINT32 WhichAttribute)
                     case 0: //fieldType
                         return LIST_FIELD;
                     case 1: //fieldSize
-                        return (UINT32)FHMOD4.MODL->Textures.MODS.size();
+                        return (uint32_t)FHMOD4.MODL->Textures.MODS.size();
                     default:
                         return UNKNOWN_FIELD;
                     }
@@ -902,7 +902,7 @@ UINT32 RACERecord::GetFieldAttribute(FIELD_IDENTIFIERS, UINT32 WhichAttribute)
                     case 0: //fieldType
                         return LIST_FIELD;
                     case 1: //fieldSize
-                        return (UINT32)FHMOD5.MODL->Textures.MODS.size();
+                        return (uint32_t)FHMOD5.MODL->Textures.MODS.size();
                     default:
                         return UNKNOWN_FIELD;
                     }
@@ -955,7 +955,7 @@ UINT32 RACERecord::GetFieldAttribute(FIELD_IDENTIFIERS, UINT32 WhichAttribute)
                     case 0: //fieldType
                         return LIST_FIELD;
                     case 1: //fieldSize
-                        return (UINT32)FHMOD6.MODL->Textures.MODS.size();
+                        return (uint32_t)FHMOD6.MODL->Textures.MODS.size();
                     default:
                         return UNKNOWN_FIELD;
                     }
@@ -1008,7 +1008,7 @@ UINT32 RACERecord::GetFieldAttribute(FIELD_IDENTIFIERS, UINT32 WhichAttribute)
                     case 0: //fieldType
                         return LIST_FIELD;
                     case 1: //fieldSize
-                        return (UINT32)FHMOD7.MODL->Textures.MODS.size();
+                        return (uint32_t)FHMOD7.MODL->Textures.MODS.size();
                     default:
                         return UNKNOWN_FIELD;
                     }
@@ -1061,7 +1061,7 @@ UINT32 RACERecord::GetFieldAttribute(FIELD_IDENTIFIERS, UINT32 WhichAttribute)
                     case 0: //fieldType
                         return LIST_FIELD;
                     case 1: //fieldSize
-                        return (UINT32)MBMOD0.MODL->Textures.MODS.size();
+                        return (uint32_t)MBMOD0.MODL->Textures.MODS.size();
                     default:
                         return UNKNOWN_FIELD;
                     }
@@ -1114,7 +1114,7 @@ UINT32 RACERecord::GetFieldAttribute(FIELD_IDENTIFIERS, UINT32 WhichAttribute)
                     case 0: //fieldType
                         return LIST_FIELD;
                     case 1: //fieldSize
-                        return (UINT32)MBMOD1.MODL->Textures.MODS.size();
+                        return (uint32_t)MBMOD1.MODL->Textures.MODS.size();
                     default:
                         return UNKNOWN_FIELD;
                     }
@@ -1167,7 +1167,7 @@ UINT32 RACERecord::GetFieldAttribute(FIELD_IDENTIFIERS, UINT32 WhichAttribute)
                     case 0: //fieldType
                         return LIST_FIELD;
                     case 1: //fieldSize
-                        return (UINT32)MBMOD2.MODL->Textures.MODS.size();
+                        return (uint32_t)MBMOD2.MODL->Textures.MODS.size();
                     default:
                         return UNKNOWN_FIELD;
                     }
@@ -1220,7 +1220,7 @@ UINT32 RACERecord::GetFieldAttribute(FIELD_IDENTIFIERS, UINT32 WhichAttribute)
                     case 0: //fieldType
                         return LIST_FIELD;
                     case 1: //fieldSize
-                        return (UINT32)MBMOD3.MODL->Textures.MODS.size();
+                        return (uint32_t)MBMOD3.MODL->Textures.MODS.size();
                     default:
                         return UNKNOWN_FIELD;
                     }
@@ -1273,7 +1273,7 @@ UINT32 RACERecord::GetFieldAttribute(FIELD_IDENTIFIERS, UINT32 WhichAttribute)
                     case 0: //fieldType
                         return LIST_FIELD;
                     case 1: //fieldSize
-                        return (UINT32)FBMOD0.MODL->Textures.MODS.size();
+                        return (uint32_t)FBMOD0.MODL->Textures.MODS.size();
                     default:
                         return UNKNOWN_FIELD;
                     }
@@ -1326,7 +1326,7 @@ UINT32 RACERecord::GetFieldAttribute(FIELD_IDENTIFIERS, UINT32 WhichAttribute)
                     case 0: //fieldType
                         return LIST_FIELD;
                     case 1: //fieldSize
-                        return (UINT32)FBMOD1.MODL->Textures.MODS.size();
+                        return (uint32_t)FBMOD1.MODL->Textures.MODS.size();
                     default:
                         return UNKNOWN_FIELD;
                     }
@@ -1379,7 +1379,7 @@ UINT32 RACERecord::GetFieldAttribute(FIELD_IDENTIFIERS, UINT32 WhichAttribute)
                     case 0: //fieldType
                         return LIST_FIELD;
                     case 1: //fieldSize
-                        return (UINT32)FBMOD2.MODL->Textures.MODS.size();
+                        return (uint32_t)FBMOD2.MODL->Textures.MODS.size();
                     default:
                         return UNKNOWN_FIELD;
                     }
@@ -1432,7 +1432,7 @@ UINT32 RACERecord::GetFieldAttribute(FIELD_IDENTIFIERS, UINT32 WhichAttribute)
                     case 0: //fieldType
                         return LIST_FIELD;
                     case 1: //fieldSize
-                        return (UINT32)FBMOD3.MODL->Textures.MODS.size();
+                        return (uint32_t)FBMOD3.MODL->Textures.MODS.size();
                     default:
                         return UNKNOWN_FIELD;
                     }
@@ -1465,7 +1465,7 @@ UINT32 RACERecord::GetFieldAttribute(FIELD_IDENTIFIERS, UINT32 WhichAttribute)
                 case 0: //fieldType
                     return FORMID_ARRAY_FIELD;
                 case 1: //fieldSize
-                    return (UINT32)HNAM.value.size();
+                    return (uint32_t)HNAM.value.size();
                 default:
                     return UNKNOWN_FIELD;
                 }
@@ -1476,7 +1476,7 @@ UINT32 RACERecord::GetFieldAttribute(FIELD_IDENTIFIERS, UINT32 WhichAttribute)
                 case 0: //fieldType
                     return FORMID_ARRAY_FIELD;
                 case 1: //fieldSize
-                    return (UINT32)ENAM.value.size();
+                    return (uint32_t)ENAM.value.size();
                 default:
                     return UNKNOWN_FIELD;
                 }
@@ -2480,12 +2480,12 @@ void * RACERecord::GetField(FIELD_IDENTIFIERS, void **FieldValues)
     return NULL;
     }
 
-bool RACERecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
+bool RACERecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, uint32_t ArraySize)
     {
     switch(FieldID)
         {
         case 1: //flags1
-            SetHeaderFlagMask(*(UINT32 *)FieldValue);
+            SetHeaderFlagMask(*(uint32_t *)FieldValue);
             break;
         case 3: //versionControl1
             if(ArraySize != 4)
@@ -2496,10 +2496,10 @@ bool RACERecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             ((UINT8ARRAY)&flagsUnk)[3] = ((UINT8ARRAY)FieldValue)[3];
             break;
         case 4: //eid
-            EDID.Copy((STRING)FieldValue);
+            EDID.Copy((char *)FieldValue);
             break;
         case 5: //formVersion
-            formVersion = *(UINT16 *)FieldValue;
+            formVersion = *(uint16_t *)FieldValue;
             break;
         case 6: //versionControl2
             if(ArraySize != 2)
@@ -2508,10 +2508,10 @@ bool RACERecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             versionControl2[1] = ((UINT8ARRAY)FieldValue)[1];
             break;
         case 7: //full
-            FULL.Copy((STRING)FieldValue);
+            FULL.Copy((char *)FieldValue);
             break;
         case 8: //description
-            DESC.Copy((STRING)FieldValue);
+            DESC.Copy((char *)FieldValue);
             break;
         case 9: //relations
             if(ListFieldID == 0) //relationsSize
@@ -2529,56 +2529,56 @@ bool RACERecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
                     XNAM.value[ListIndex]->faction = *(FORMID *)FieldValue;
                     return true;
                 case 2: //mod
-                    XNAM.value[ListIndex]->mod = *(SINT32 *)FieldValue;
+                    XNAM.value[ListIndex]->mod = *(int32_t *)FieldValue;
                     break;
                 case 3: //groupReactionType
-                    XNAM.value[ListIndex]->SetType(*(UINT32 *)FieldValue);
+                    XNAM.value[ListIndex]->SetType(*(uint32_t *)FieldValue);
                     break;
                 default:
                     break;
                 }
             break;
         case 10: //skill1
-            DATA.value.skills[0].value = *(SINT8 *)FieldValue;
+            DATA.value.skills[0].value = *(int8_t *)FieldValue;
             break;
         case 11: //skill1Boost
-            DATA.value.skills[0].boost = *(SINT8 *)FieldValue;
+            DATA.value.skills[0].boost = *(int8_t *)FieldValue;
             break;
         case 12: //skill2
-            DATA.value.skills[1].value = *(SINT8 *)FieldValue;
+            DATA.value.skills[1].value = *(int8_t *)FieldValue;
             break;
         case 13: //skill2Boost
-            DATA.value.skills[1].boost = *(SINT8 *)FieldValue;
+            DATA.value.skills[1].boost = *(int8_t *)FieldValue;
             break;
         case 14: //skill3
-            DATA.value.skills[2].value = *(SINT8 *)FieldValue;
+            DATA.value.skills[2].value = *(int8_t *)FieldValue;
             break;
         case 15: //skill3Boost
-            DATA.value.skills[2].boost = *(SINT8 *)FieldValue;
+            DATA.value.skills[2].boost = *(int8_t *)FieldValue;
             break;
         case 16: //skill4
-            DATA.value.skills[3].value = *(SINT8 *)FieldValue;
+            DATA.value.skills[3].value = *(int8_t *)FieldValue;
             break;
         case 17: //skill4Boost
-            DATA.value.skills[3].boost = *(SINT8 *)FieldValue;
+            DATA.value.skills[3].boost = *(int8_t *)FieldValue;
             break;
         case 18: //skill5
-            DATA.value.skills[4].value = *(SINT8 *)FieldValue;
+            DATA.value.skills[4].value = *(int8_t *)FieldValue;
             break;
         case 19: //skill5Boost
-            DATA.value.skills[4].boost = *(SINT8 *)FieldValue;
+            DATA.value.skills[4].boost = *(int8_t *)FieldValue;
             break;
         case 20: //skill6
-            DATA.value.skills[5].value = *(SINT8 *)FieldValue;
+            DATA.value.skills[5].value = *(int8_t *)FieldValue;
             break;
         case 21: //skill6Boost
-            DATA.value.skills[5].boost = *(SINT8 *)FieldValue;
+            DATA.value.skills[5].boost = *(int8_t *)FieldValue;
             break;
         case 22: //skill7
-            DATA.value.skills[6].value = *(SINT8 *)FieldValue;
+            DATA.value.skills[6].value = *(int8_t *)FieldValue;
             break;
         case 23: //skill7Boost
-            DATA.value.skills[6].boost = *(SINT8 *)FieldValue;
+            DATA.value.skills[6].boost = *(int8_t *)FieldValue;
             break;
         case 24: //unused1
             if(ArraySize != 2)
@@ -2587,19 +2587,19 @@ bool RACERecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             DATA.value.unused1[1] = ((UINT8ARRAY)FieldValue)[1];
             break;
         case 25: //maleHeight
-            DATA.value.maleHeight = *(FLOAT32 *)FieldValue;
+            DATA.value.maleHeight = *(float *)FieldValue;
             break;
         case 26: //femaleHeight
-            DATA.value.femaleHeight = *(FLOAT32 *)FieldValue;
+            DATA.value.femaleHeight = *(float *)FieldValue;
             break;
         case 27: //maleWeight
-            DATA.value.maleWeight = *(FLOAT32 *)FieldValue;
+            DATA.value.maleWeight = *(float *)FieldValue;
             break;
         case 28: //femaleWeight
-            DATA.value.femaleWeight = *(FLOAT32 *)FieldValue;
+            DATA.value.femaleWeight = *(float *)FieldValue;
             break;
         case 29: //flags
-            SetFlagMask(*(UINT32 *)FieldValue);
+            SetFlagMask(*(uint32_t *)FieldValue);
             break;
         case 30: //older
             ONAM.value = *(FORMID *)FieldValue;
@@ -2625,28 +2625,28 @@ bool RACERecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             return true;
         case 36: //defaultHairMaleColor
             CNAM.Load();
-            CNAM.value.defaultHairMale = *(UINT8 *)FieldValue;
+            CNAM.value.defaultHairMale = *(uint8_t *)FieldValue;
             break;
         case 37: //defaultHairFemaleColor
             CNAM.Load();
-            CNAM.value.defaultHairFemale = *(UINT8 *)FieldValue;
+            CNAM.value.defaultHairFemale = *(uint8_t *)FieldValue;
             break;
         case 38: //mainClamp
-            PNAM.value = *(FLOAT32 *)FieldValue;
+            PNAM.value = *(float *)FieldValue;
             break;
         case 39: //faceClamp
-            UNAM.value = *(FLOAT32 *)FieldValue;
+            UNAM.value = *(float *)FieldValue;
             break;
         case 40: //attr_p
             ATTR.Copy((UINT8ARRAY)FieldValue, ArraySize);
             break;
         case 41: //maleHead_modPath
             MHMOD0.MODL.Load();
-            MHMOD0.MODL->MODL.Copy((STRING)FieldValue);
+            MHMOD0.MODL->MODL.Copy((char *)FieldValue);
             break;
         case 42: //maleHead_modb
             MHMOD0.MODL.Load();
-            MHMOD0.MODL->MODB.value = *(FLOAT32 *)FieldValue;
+            MHMOD0.MODL->MODB.value = *(float *)FieldValue;
             break;
         case 43: //maleHead_modt_p
             MHMOD0.MODL.Load();
@@ -2670,16 +2670,16 @@ bool RACERecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
                     MHMOD0.MODL->Textures.MODS[ListIndex]->name = NULL;
                     if(FieldValue != NULL)
                         {
-                        ArraySize = (UINT32)strlen((STRING)FieldValue) + 1;
+                        ArraySize = (uint32_t)strlen((char *)FieldValue) + 1;
                         MHMOD0.MODL->Textures.MODS[ListIndex]->name = new char[ArraySize];
-                        strcpy_s(MHMOD0.MODL->Textures.MODS[ListIndex]->name, ArraySize, (STRING)FieldValue);
+                        strcpy_s(MHMOD0.MODL->Textures.MODS[ListIndex]->name, ArraySize, (char *)FieldValue);
                         }
                     break;
                 case 2: //texture
                     MHMOD0.MODL->Textures.MODS[ListIndex]->texture = *(FORMID *)FieldValue;
                     return true;
                 case 3: //index
-                    MHMOD0.MODL->Textures.MODS[ListIndex]->index = *(SINT32 *)FieldValue;
+                    MHMOD0.MODL->Textures.MODS[ListIndex]->index = *(int32_t *)FieldValue;
                     break;
                 default:
                     break;
@@ -2687,21 +2687,21 @@ bool RACERecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             break;
         case 45: //maleHead_modelFlags
             MHMOD0.MODL.Load();
-            MHMOD0.MODL->SetFlagMask(*(UINT8 *)FieldValue);
+            MHMOD0.MODL->SetFlagMask(*(uint8_t *)FieldValue);
             break;
         case 46: //maleHead_iconPath
-            MHMOD0.ICON.Copy((STRING)FieldValue);
+            MHMOD0.ICON.Copy((char *)FieldValue);
             break;
         case 47: //maleHead_smallIconPath
-            MHMOD0.MICO.Copy((STRING)FieldValue);
+            MHMOD0.MICO.Copy((char *)FieldValue);
             break;
         case 48: //maleEars_modPath
             MHMOD1.MODL.Load();
-            MHMOD1.MODL->MODL.Copy((STRING)FieldValue);
+            MHMOD1.MODL->MODL.Copy((char *)FieldValue);
             break;
         case 49: //maleEars_modb
             MHMOD1.MODL.Load();
-            MHMOD1.MODL->MODB.value = *(FLOAT32 *)FieldValue;
+            MHMOD1.MODL->MODB.value = *(float *)FieldValue;
             break;
         case 50: //maleEars_modt_p
             MHMOD1.MODL.Load();
@@ -2725,16 +2725,16 @@ bool RACERecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
                     MHMOD1.MODL->Textures.MODS[ListIndex]->name = NULL;
                     if(FieldValue != NULL)
                         {
-                        ArraySize = (UINT32)strlen((STRING)FieldValue) + 1;
+                        ArraySize = (uint32_t)strlen((char *)FieldValue) + 1;
                         MHMOD1.MODL->Textures.MODS[ListIndex]->name = new char[ArraySize];
-                        strcpy_s(MHMOD1.MODL->Textures.MODS[ListIndex]->name, ArraySize, (STRING)FieldValue);
+                        strcpy_s(MHMOD1.MODL->Textures.MODS[ListIndex]->name, ArraySize, (char *)FieldValue);
                         }
                     break;
                 case 2: //texture
                     MHMOD1.MODL->Textures.MODS[ListIndex]->texture = *(FORMID *)FieldValue;
                     return true;
                 case 3: //index
-                    MHMOD1.MODL->Textures.MODS[ListIndex]->index = *(SINT32 *)FieldValue;
+                    MHMOD1.MODL->Textures.MODS[ListIndex]->index = *(int32_t *)FieldValue;
                     break;
                 default:
                     break;
@@ -2742,21 +2742,21 @@ bool RACERecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             break;
         case 52: //maleEars_modelFlags
             MHMOD1.MODL.Load();
-            MHMOD1.MODL->SetFlagMask(*(UINT8 *)FieldValue);
+            MHMOD1.MODL->SetFlagMask(*(uint8_t *)FieldValue);
             break;
         case 53: //maleEars_iconPath
-            MHMOD1.ICON.Copy((STRING)FieldValue);
+            MHMOD1.ICON.Copy((char *)FieldValue);
             break;
         case 54: //maleEars_smallIconPath
-            MHMOD1.MICO.Copy((STRING)FieldValue);
+            MHMOD1.MICO.Copy((char *)FieldValue);
             break;
         case 55: //maleMouth_modPath
             MHMOD2.MODL.Load();
-            MHMOD2.MODL->MODL.Copy((STRING)FieldValue);
+            MHMOD2.MODL->MODL.Copy((char *)FieldValue);
             break;
         case 56: //maleMouth_modb
             MHMOD2.MODL.Load();
-            MHMOD2.MODL->MODB.value = *(FLOAT32 *)FieldValue;
+            MHMOD2.MODL->MODB.value = *(float *)FieldValue;
             break;
         case 57: //maleMouth_modt_p
             MHMOD2.MODL.Load();
@@ -2780,16 +2780,16 @@ bool RACERecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
                     MHMOD2.MODL->Textures.MODS[ListIndex]->name = NULL;
                     if(FieldValue != NULL)
                         {
-                        ArraySize = (UINT32)strlen((STRING)FieldValue) + 1;
+                        ArraySize = (uint32_t)strlen((char *)FieldValue) + 1;
                         MHMOD2.MODL->Textures.MODS[ListIndex]->name = new char[ArraySize];
-                        strcpy_s(MHMOD2.MODL->Textures.MODS[ListIndex]->name, ArraySize, (STRING)FieldValue);
+                        strcpy_s(MHMOD2.MODL->Textures.MODS[ListIndex]->name, ArraySize, (char *)FieldValue);
                         }
                     break;
                 case 2: //texture
                     MHMOD2.MODL->Textures.MODS[ListIndex]->texture = *(FORMID *)FieldValue;
                     return true;
                 case 3: //index
-                    MHMOD2.MODL->Textures.MODS[ListIndex]->index = *(SINT32 *)FieldValue;
+                    MHMOD2.MODL->Textures.MODS[ListIndex]->index = *(int32_t *)FieldValue;
                     break;
                 default:
                     break;
@@ -2797,21 +2797,21 @@ bool RACERecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             break;
         case 59: //maleMouth_modelFlags
             MHMOD2.MODL.Load();
-            MHMOD2.MODL->SetFlagMask(*(UINT8 *)FieldValue);
+            MHMOD2.MODL->SetFlagMask(*(uint8_t *)FieldValue);
             break;
         case 60: //maleMouth_iconPath
-            MHMOD2.ICON.Copy((STRING)FieldValue);
+            MHMOD2.ICON.Copy((char *)FieldValue);
             break;
         case 61: //maleMouth_smallIconPath
-            MHMOD2.MICO.Copy((STRING)FieldValue);
+            MHMOD2.MICO.Copy((char *)FieldValue);
             break;
         case 62: //maleTeethLower_modPath
             MHMOD3.MODL.Load();
-            MHMOD3.MODL->MODL.Copy((STRING)FieldValue);
+            MHMOD3.MODL->MODL.Copy((char *)FieldValue);
             break;
         case 63: //maleTeethLower_modb
             MHMOD3.MODL.Load();
-            MHMOD3.MODL->MODB.value = *(FLOAT32 *)FieldValue;
+            MHMOD3.MODL->MODB.value = *(float *)FieldValue;
             break;
         case 64: //maleTeethLower_modt_p
             MHMOD3.MODL.Load();
@@ -2835,16 +2835,16 @@ bool RACERecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
                     MHMOD3.MODL->Textures.MODS[ListIndex]->name = NULL;
                     if(FieldValue != NULL)
                         {
-                        ArraySize = (UINT32)strlen((STRING)FieldValue) + 1;
+                        ArraySize = (uint32_t)strlen((char *)FieldValue) + 1;
                         MHMOD3.MODL->Textures.MODS[ListIndex]->name = new char[ArraySize];
-                        strcpy_s(MHMOD3.MODL->Textures.MODS[ListIndex]->name, ArraySize, (STRING)FieldValue);
+                        strcpy_s(MHMOD3.MODL->Textures.MODS[ListIndex]->name, ArraySize, (char *)FieldValue);
                         }
                     break;
                 case 2: //texture
                     MHMOD3.MODL->Textures.MODS[ListIndex]->texture = *(FORMID *)FieldValue;
                     return true;
                 case 3: //index
-                    MHMOD3.MODL->Textures.MODS[ListIndex]->index = *(SINT32 *)FieldValue;
+                    MHMOD3.MODL->Textures.MODS[ListIndex]->index = *(int32_t *)FieldValue;
                     break;
                 default:
                     break;
@@ -2852,21 +2852,21 @@ bool RACERecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             break;
         case 66: //maleTeethLower_modelFlags
             MHMOD3.MODL.Load();
-            MHMOD3.MODL->SetFlagMask(*(UINT8 *)FieldValue);
+            MHMOD3.MODL->SetFlagMask(*(uint8_t *)FieldValue);
             break;
         case 67: //maleTeethLower_iconPath
-            MHMOD3.ICON.Copy((STRING)FieldValue);
+            MHMOD3.ICON.Copy((char *)FieldValue);
             break;
         case 68: //maleTeethLower_smallIconPath
-            MHMOD3.MICO.Copy((STRING)FieldValue);
+            MHMOD3.MICO.Copy((char *)FieldValue);
             break;
         case 69: //maleTeethUpper_modPath
             MHMOD4.MODL.Load();
-            MHMOD4.MODL->MODL.Copy((STRING)FieldValue);
+            MHMOD4.MODL->MODL.Copy((char *)FieldValue);
             break;
         case 70: //maleTeethUpper_modb
             MHMOD4.MODL.Load();
-            MHMOD4.MODL->MODB.value = *(FLOAT32 *)FieldValue;
+            MHMOD4.MODL->MODB.value = *(float *)FieldValue;
             break;
         case 71: //maleTeethUpper_modt_p
             MHMOD4.MODL.Load();
@@ -2890,16 +2890,16 @@ bool RACERecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
                     MHMOD4.MODL->Textures.MODS[ListIndex]->name = NULL;
                     if(FieldValue != NULL)
                         {
-                        ArraySize = (UINT32)strlen((STRING)FieldValue) + 1;
+                        ArraySize = (uint32_t)strlen((char *)FieldValue) + 1;
                         MHMOD4.MODL->Textures.MODS[ListIndex]->name = new char[ArraySize];
-                        strcpy_s(MHMOD4.MODL->Textures.MODS[ListIndex]->name, ArraySize, (STRING)FieldValue);
+                        strcpy_s(MHMOD4.MODL->Textures.MODS[ListIndex]->name, ArraySize, (char *)FieldValue);
                         }
                     break;
                 case 2: //texture
                     MHMOD4.MODL->Textures.MODS[ListIndex]->texture = *(FORMID *)FieldValue;
                     return true;
                 case 3: //index
-                    MHMOD4.MODL->Textures.MODS[ListIndex]->index = *(SINT32 *)FieldValue;
+                    MHMOD4.MODL->Textures.MODS[ListIndex]->index = *(int32_t *)FieldValue;
                     break;
                 default:
                     break;
@@ -2907,21 +2907,21 @@ bool RACERecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             break;
         case 73: //maleTeethUpper_modelFlags
             MHMOD4.MODL.Load();
-            MHMOD4.MODL->SetFlagMask(*(UINT8 *)FieldValue);
+            MHMOD4.MODL->SetFlagMask(*(uint8_t *)FieldValue);
             break;
         case 74: //maleTeethUpper_iconPath
-            MHMOD4.ICON.Copy((STRING)FieldValue);
+            MHMOD4.ICON.Copy((char *)FieldValue);
             break;
         case 75: //maleTeethUpper_smallIconPath
-            MHMOD4.MICO.Copy((STRING)FieldValue);
+            MHMOD4.MICO.Copy((char *)FieldValue);
             break;
         case 76: //maleTongue_modPath
             MHMOD5.MODL.Load();
-            MHMOD5.MODL->MODL.Copy((STRING)FieldValue);
+            MHMOD5.MODL->MODL.Copy((char *)FieldValue);
             break;
         case 77: //maleTongue_modb
             MHMOD5.MODL.Load();
-            MHMOD5.MODL->MODB.value = *(FLOAT32 *)FieldValue;
+            MHMOD5.MODL->MODB.value = *(float *)FieldValue;
             break;
         case 78: //maleTongue_modt_p
             MHMOD5.MODL.Load();
@@ -2945,16 +2945,16 @@ bool RACERecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
                     MHMOD5.MODL->Textures.MODS[ListIndex]->name = NULL;
                     if(FieldValue != NULL)
                         {
-                        ArraySize = (UINT32)strlen((STRING)FieldValue) + 1;
+                        ArraySize = (uint32_t)strlen((char *)FieldValue) + 1;
                         MHMOD5.MODL->Textures.MODS[ListIndex]->name = new char[ArraySize];
-                        strcpy_s(MHMOD5.MODL->Textures.MODS[ListIndex]->name, ArraySize, (STRING)FieldValue);
+                        strcpy_s(MHMOD5.MODL->Textures.MODS[ListIndex]->name, ArraySize, (char *)FieldValue);
                         }
                     break;
                 case 2: //texture
                     MHMOD5.MODL->Textures.MODS[ListIndex]->texture = *(FORMID *)FieldValue;
                     return true;
                 case 3: //index
-                    MHMOD5.MODL->Textures.MODS[ListIndex]->index = *(SINT32 *)FieldValue;
+                    MHMOD5.MODL->Textures.MODS[ListIndex]->index = *(int32_t *)FieldValue;
                     break;
                 default:
                     break;
@@ -2962,21 +2962,21 @@ bool RACERecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             break;
         case 80: //maleTongue_modelFlags
             MHMOD5.MODL.Load();
-            MHMOD5.MODL->SetFlagMask(*(UINT8 *)FieldValue);
+            MHMOD5.MODL->SetFlagMask(*(uint8_t *)FieldValue);
             break;
         case 81: //maleTongue_iconPath
-            MHMOD5.ICON.Copy((STRING)FieldValue);
+            MHMOD5.ICON.Copy((char *)FieldValue);
             break;
         case 82: //maleTongue_smallIconPath
-            MHMOD5.MICO.Copy((STRING)FieldValue);
+            MHMOD5.MICO.Copy((char *)FieldValue);
             break;
         case 83: //maleLeftEye_modPath
             MHMOD6.MODL.Load();
-            MHMOD6.MODL->MODL.Copy((STRING)FieldValue);
+            MHMOD6.MODL->MODL.Copy((char *)FieldValue);
             break;
         case 84: //maleLeftEye_modb
             MHMOD6.MODL.Load();
-            MHMOD6.MODL->MODB.value = *(FLOAT32 *)FieldValue;
+            MHMOD6.MODL->MODB.value = *(float *)FieldValue;
             break;
         case 85: //maleLeftEye_modt_p
             MHMOD6.MODL.Load();
@@ -3000,16 +3000,16 @@ bool RACERecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
                     MHMOD6.MODL->Textures.MODS[ListIndex]->name = NULL;
                     if(FieldValue != NULL)
                         {
-                        ArraySize = (UINT32)strlen((STRING)FieldValue) + 1;
+                        ArraySize = (uint32_t)strlen((char *)FieldValue) + 1;
                         MHMOD6.MODL->Textures.MODS[ListIndex]->name = new char[ArraySize];
-                        strcpy_s(MHMOD6.MODL->Textures.MODS[ListIndex]->name, ArraySize, (STRING)FieldValue);
+                        strcpy_s(MHMOD6.MODL->Textures.MODS[ListIndex]->name, ArraySize, (char *)FieldValue);
                         }
                     break;
                 case 2: //texture
                     MHMOD6.MODL->Textures.MODS[ListIndex]->texture = *(FORMID *)FieldValue;
                     return true;
                 case 3: //index
-                    MHMOD6.MODL->Textures.MODS[ListIndex]->index = *(SINT32 *)FieldValue;
+                    MHMOD6.MODL->Textures.MODS[ListIndex]->index = *(int32_t *)FieldValue;
                     break;
                 default:
                     break;
@@ -3017,21 +3017,21 @@ bool RACERecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             break;
         case 87: //maleLeftEye_modelFlags
             MHMOD6.MODL.Load();
-            MHMOD6.MODL->SetFlagMask(*(UINT8 *)FieldValue);
+            MHMOD6.MODL->SetFlagMask(*(uint8_t *)FieldValue);
             break;
         case 88: //maleLeftEye_iconPath
-            MHMOD6.ICON.Copy((STRING)FieldValue);
+            MHMOD6.ICON.Copy((char *)FieldValue);
             break;
         case 89: //maleLeftEye_smallIconPath
-            MHMOD6.MICO.Copy((STRING)FieldValue);
+            MHMOD6.MICO.Copy((char *)FieldValue);
             break;
         case 90: //maleRightEye_modPath
             MHMOD7.MODL.Load();
-            MHMOD7.MODL->MODL.Copy((STRING)FieldValue);
+            MHMOD7.MODL->MODL.Copy((char *)FieldValue);
             break;
         case 91: //maleRightEye_modb
             MHMOD7.MODL.Load();
-            MHMOD7.MODL->MODB.value = *(FLOAT32 *)FieldValue;
+            MHMOD7.MODL->MODB.value = *(float *)FieldValue;
             break;
         case 92: //maleRightEye_modt_p
             MHMOD7.MODL.Load();
@@ -3055,16 +3055,16 @@ bool RACERecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
                     MHMOD7.MODL->Textures.MODS[ListIndex]->name = NULL;
                     if(FieldValue != NULL)
                         {
-                        ArraySize = (UINT32)strlen((STRING)FieldValue) + 1;
+                        ArraySize = (uint32_t)strlen((char *)FieldValue) + 1;
                         MHMOD7.MODL->Textures.MODS[ListIndex]->name = new char[ArraySize];
-                        strcpy_s(MHMOD7.MODL->Textures.MODS[ListIndex]->name, ArraySize, (STRING)FieldValue);
+                        strcpy_s(MHMOD7.MODL->Textures.MODS[ListIndex]->name, ArraySize, (char *)FieldValue);
                         }
                     break;
                 case 2: //texture
                     MHMOD7.MODL->Textures.MODS[ListIndex]->texture = *(FORMID *)FieldValue;
                     return true;
                 case 3: //index
-                    MHMOD7.MODL->Textures.MODS[ListIndex]->index = *(SINT32 *)FieldValue;
+                    MHMOD7.MODL->Textures.MODS[ListIndex]->index = *(int32_t *)FieldValue;
                     break;
                 default:
                     break;
@@ -3072,21 +3072,21 @@ bool RACERecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             break;
         case 94: //maleRightEye_modelFlags
             MHMOD7.MODL.Load();
-            MHMOD7.MODL->SetFlagMask(*(UINT8 *)FieldValue);
+            MHMOD7.MODL->SetFlagMask(*(uint8_t *)FieldValue);
             break;
         case 95: //maleRightEye_iconPath
-            MHMOD7.ICON.Copy((STRING)FieldValue);
+            MHMOD7.ICON.Copy((char *)FieldValue);
             break;
         case 96: //maleRightEye_smallIconPath
-            MHMOD7.MICO.Copy((STRING)FieldValue);
+            MHMOD7.MICO.Copy((char *)FieldValue);
             break;
         case 97: //femaleHead_modPath
             FHMOD0.MODL.Load();
-            FHMOD0.MODL->MODL.Copy((STRING)FieldValue);
+            FHMOD0.MODL->MODL.Copy((char *)FieldValue);
             break;
         case 98: //femaleHead_modb
             FHMOD0.MODL.Load();
-            FHMOD0.MODL->MODB.value = *(FLOAT32 *)FieldValue;
+            FHMOD0.MODL->MODB.value = *(float *)FieldValue;
             break;
         case 99: //femaleHead_modt_p
             FHMOD0.MODL.Load();
@@ -3110,16 +3110,16 @@ bool RACERecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
                     FHMOD0.MODL->Textures.MODS[ListIndex]->name = NULL;
                     if(FieldValue != NULL)
                         {
-                        ArraySize = (UINT32)strlen((STRING)FieldValue) + 1;
+                        ArraySize = (uint32_t)strlen((char *)FieldValue) + 1;
                         FHMOD0.MODL->Textures.MODS[ListIndex]->name = new char[ArraySize];
-                        strcpy_s(FHMOD0.MODL->Textures.MODS[ListIndex]->name, ArraySize, (STRING)FieldValue);
+                        strcpy_s(FHMOD0.MODL->Textures.MODS[ListIndex]->name, ArraySize, (char *)FieldValue);
                         }
                     break;
                 case 2: //texture
                     FHMOD0.MODL->Textures.MODS[ListIndex]->texture = *(FORMID *)FieldValue;
                     return true;
                 case 3: //index
-                    FHMOD0.MODL->Textures.MODS[ListIndex]->index = *(SINT32 *)FieldValue;
+                    FHMOD0.MODL->Textures.MODS[ListIndex]->index = *(int32_t *)FieldValue;
                     break;
                 default:
                     break;
@@ -3127,21 +3127,21 @@ bool RACERecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             break;
         case 101: //femaleHead_modelFlags
             FHMOD0.MODL.Load();
-            FHMOD0.MODL->SetFlagMask(*(UINT8 *)FieldValue);
+            FHMOD0.MODL->SetFlagMask(*(uint8_t *)FieldValue);
             break;
         case 102: //femaleHead_iconPath
-            FHMOD0.ICON.Copy((STRING)FieldValue);
+            FHMOD0.ICON.Copy((char *)FieldValue);
             break;
         case 103: //femaleHead_smallIconPath
-            FHMOD0.MICO.Copy((STRING)FieldValue);
+            FHMOD0.MICO.Copy((char *)FieldValue);
             break;
         case 104: //femaleEars_modPath
             FHMOD1.MODL.Load();
-            FHMOD1.MODL->MODL.Copy((STRING)FieldValue);
+            FHMOD1.MODL->MODL.Copy((char *)FieldValue);
             break;
         case 105: //femaleEars_modb
             FHMOD1.MODL.Load();
-            FHMOD1.MODL->MODB.value = *(FLOAT32 *)FieldValue;
+            FHMOD1.MODL->MODB.value = *(float *)FieldValue;
             break;
         case 106: //femaleEars_modt_p
             FHMOD1.MODL.Load();
@@ -3165,16 +3165,16 @@ bool RACERecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
                     FHMOD1.MODL->Textures.MODS[ListIndex]->name = NULL;
                     if(FieldValue != NULL)
                         {
-                        ArraySize = (UINT32)strlen((STRING)FieldValue) + 1;
+                        ArraySize = (uint32_t)strlen((char *)FieldValue) + 1;
                         FHMOD1.MODL->Textures.MODS[ListIndex]->name = new char[ArraySize];
-                        strcpy_s(FHMOD1.MODL->Textures.MODS[ListIndex]->name, ArraySize, (STRING)FieldValue);
+                        strcpy_s(FHMOD1.MODL->Textures.MODS[ListIndex]->name, ArraySize, (char *)FieldValue);
                         }
                     break;
                 case 2: //texture
                     FHMOD1.MODL->Textures.MODS[ListIndex]->texture = *(FORMID *)FieldValue;
                     return true;
                 case 3: //index
-                    FHMOD1.MODL->Textures.MODS[ListIndex]->index = *(SINT32 *)FieldValue;
+                    FHMOD1.MODL->Textures.MODS[ListIndex]->index = *(int32_t *)FieldValue;
                     break;
                 default:
                     break;
@@ -3182,21 +3182,21 @@ bool RACERecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             break;
         case 108: //femaleEars_modelFlags
             FHMOD1.MODL.Load();
-            FHMOD1.MODL->SetFlagMask(*(UINT8 *)FieldValue);
+            FHMOD1.MODL->SetFlagMask(*(uint8_t *)FieldValue);
             break;
         case 109: //femaleEars_iconPath
-            FHMOD1.ICON.Copy((STRING)FieldValue);
+            FHMOD1.ICON.Copy((char *)FieldValue);
             break;
         case 110: //femaleEars_smallIconPath
-            FHMOD1.MICO.Copy((STRING)FieldValue);
+            FHMOD1.MICO.Copy((char *)FieldValue);
             break;
         case 111: //femaleMouth_modPath
             FHMOD2.MODL.Load();
-            FHMOD2.MODL->MODL.Copy((STRING)FieldValue);
+            FHMOD2.MODL->MODL.Copy((char *)FieldValue);
             break;
         case 112: //femaleMouth_modb
             FHMOD2.MODL.Load();
-            FHMOD2.MODL->MODB.value = *(FLOAT32 *)FieldValue;
+            FHMOD2.MODL->MODB.value = *(float *)FieldValue;
             break;
         case 113: //femaleMouth_modt_p
             FHMOD2.MODL.Load();
@@ -3220,16 +3220,16 @@ bool RACERecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
                     FHMOD2.MODL->Textures.MODS[ListIndex]->name = NULL;
                     if(FieldValue != NULL)
                         {
-                        ArraySize = (UINT32)strlen((STRING)FieldValue) + 1;
+                        ArraySize = (uint32_t)strlen((char *)FieldValue) + 1;
                         FHMOD2.MODL->Textures.MODS[ListIndex]->name = new char[ArraySize];
-                        strcpy_s(FHMOD2.MODL->Textures.MODS[ListIndex]->name, ArraySize, (STRING)FieldValue);
+                        strcpy_s(FHMOD2.MODL->Textures.MODS[ListIndex]->name, ArraySize, (char *)FieldValue);
                         }
                     break;
                 case 2: //texture
                     FHMOD2.MODL->Textures.MODS[ListIndex]->texture = *(FORMID *)FieldValue;
                     return true;
                 case 3: //index
-                    FHMOD2.MODL->Textures.MODS[ListIndex]->index = *(SINT32 *)FieldValue;
+                    FHMOD2.MODL->Textures.MODS[ListIndex]->index = *(int32_t *)FieldValue;
                     break;
                 default:
                     break;
@@ -3237,21 +3237,21 @@ bool RACERecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             break;
         case 115: //femaleMouth_modelFlags
             FHMOD2.MODL.Load();
-            FHMOD2.MODL->SetFlagMask(*(UINT8 *)FieldValue);
+            FHMOD2.MODL->SetFlagMask(*(uint8_t *)FieldValue);
             break;
         case 116: //femaleMouth_iconPath
-            FHMOD2.ICON.Copy((STRING)FieldValue);
+            FHMOD2.ICON.Copy((char *)FieldValue);
             break;
         case 117: //femaleMouth_smallIconPath
-            FHMOD2.MICO.Copy((STRING)FieldValue);
+            FHMOD2.MICO.Copy((char *)FieldValue);
             break;
         case 118: //femaleTeethLower_modPath
             FHMOD3.MODL.Load();
-            FHMOD3.MODL->MODL.Copy((STRING)FieldValue);
+            FHMOD3.MODL->MODL.Copy((char *)FieldValue);
             break;
         case 119: //femaleTeethLower_modb
             FHMOD3.MODL.Load();
-            FHMOD3.MODL->MODB.value = *(FLOAT32 *)FieldValue;
+            FHMOD3.MODL->MODB.value = *(float *)FieldValue;
             break;
         case 120: //femaleTeethLower_modt_p
             FHMOD3.MODL.Load();
@@ -3275,16 +3275,16 @@ bool RACERecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
                     FHMOD3.MODL->Textures.MODS[ListIndex]->name = NULL;
                     if(FieldValue != NULL)
                         {
-                        ArraySize = (UINT32)strlen((STRING)FieldValue) + 1;
+                        ArraySize = (uint32_t)strlen((char *)FieldValue) + 1;
                         FHMOD3.MODL->Textures.MODS[ListIndex]->name = new char[ArraySize];
-                        strcpy_s(FHMOD3.MODL->Textures.MODS[ListIndex]->name, ArraySize, (STRING)FieldValue);
+                        strcpy_s(FHMOD3.MODL->Textures.MODS[ListIndex]->name, ArraySize, (char *)FieldValue);
                         }
                     break;
                 case 2: //texture
                     FHMOD3.MODL->Textures.MODS[ListIndex]->texture = *(FORMID *)FieldValue;
                     return true;
                 case 3: //index
-                    FHMOD3.MODL->Textures.MODS[ListIndex]->index = *(SINT32 *)FieldValue;
+                    FHMOD3.MODL->Textures.MODS[ListIndex]->index = *(int32_t *)FieldValue;
                     break;
                 default:
                     break;
@@ -3292,21 +3292,21 @@ bool RACERecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             break;
         case 122: //femaleTeethLower_modelFlags
             FHMOD3.MODL.Load();
-            FHMOD3.MODL->SetFlagMask(*(UINT8 *)FieldValue);
+            FHMOD3.MODL->SetFlagMask(*(uint8_t *)FieldValue);
             break;
         case 123: //femaleTeethLower_iconPath
-            FHMOD3.ICON.Copy((STRING)FieldValue);
+            FHMOD3.ICON.Copy((char *)FieldValue);
             break;
         case 124: //femaleTeethLower_smallIconPath
-            FHMOD3.MICO.Copy((STRING)FieldValue);
+            FHMOD3.MICO.Copy((char *)FieldValue);
             break;
         case 125: //femaleTeethUpper_modPath
             FHMOD4.MODL.Load();
-            FHMOD4.MODL->MODL.Copy((STRING)FieldValue);
+            FHMOD4.MODL->MODL.Copy((char *)FieldValue);
             break;
         case 126: //femaleTeethUpper_modb
             FHMOD4.MODL.Load();
-            FHMOD4.MODL->MODB.value = *(FLOAT32 *)FieldValue;
+            FHMOD4.MODL->MODB.value = *(float *)FieldValue;
             break;
         case 127: //femaleTeethUpper_modt_p
             FHMOD4.MODL.Load();
@@ -3330,16 +3330,16 @@ bool RACERecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
                     FHMOD4.MODL->Textures.MODS[ListIndex]->name = NULL;
                     if(FieldValue != NULL)
                         {
-                        ArraySize = (UINT32)strlen((STRING)FieldValue) + 1;
+                        ArraySize = (uint32_t)strlen((char *)FieldValue) + 1;
                         FHMOD4.MODL->Textures.MODS[ListIndex]->name = new char[ArraySize];
-                        strcpy_s(FHMOD4.MODL->Textures.MODS[ListIndex]->name, ArraySize, (STRING)FieldValue);
+                        strcpy_s(FHMOD4.MODL->Textures.MODS[ListIndex]->name, ArraySize, (char *)FieldValue);
                         }
                     break;
                 case 2: //texture
                     FHMOD4.MODL->Textures.MODS[ListIndex]->texture = *(FORMID *)FieldValue;
                     return true;
                 case 3: //index
-                    FHMOD4.MODL->Textures.MODS[ListIndex]->index = *(SINT32 *)FieldValue;
+                    FHMOD4.MODL->Textures.MODS[ListIndex]->index = *(int32_t *)FieldValue;
                     break;
                 default:
                     break;
@@ -3347,21 +3347,21 @@ bool RACERecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             break;
         case 129: //femaleTeethUpper_modelFlags
             FHMOD4.MODL.Load();
-            FHMOD4.MODL->SetFlagMask(*(UINT8 *)FieldValue);
+            FHMOD4.MODL->SetFlagMask(*(uint8_t *)FieldValue);
             break;
         case 130: //femaleTeethUpper_iconPath
-            FHMOD4.ICON.Copy((STRING)FieldValue);
+            FHMOD4.ICON.Copy((char *)FieldValue);
             break;
         case 131: //femaleTeethUpper_smallIconPath
-            FHMOD4.MICO.Copy((STRING)FieldValue);
+            FHMOD4.MICO.Copy((char *)FieldValue);
             break;
         case 132: //femaleTongue_modPath
             FHMOD5.MODL.Load();
-            FHMOD5.MODL->MODL.Copy((STRING)FieldValue);
+            FHMOD5.MODL->MODL.Copy((char *)FieldValue);
             break;
         case 133: //femaleTongue_modb
             FHMOD5.MODL.Load();
-            FHMOD5.MODL->MODB.value = *(FLOAT32 *)FieldValue;
+            FHMOD5.MODL->MODB.value = *(float *)FieldValue;
             break;
         case 134: //femaleTongue_modt_p
             FHMOD5.MODL.Load();
@@ -3385,16 +3385,16 @@ bool RACERecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
                     FHMOD5.MODL->Textures.MODS[ListIndex]->name = NULL;
                     if(FieldValue != NULL)
                         {
-                        ArraySize = (UINT32)strlen((STRING)FieldValue) + 1;
+                        ArraySize = (uint32_t)strlen((char *)FieldValue) + 1;
                         FHMOD5.MODL->Textures.MODS[ListIndex]->name = new char[ArraySize];
-                        strcpy_s(FHMOD5.MODL->Textures.MODS[ListIndex]->name, ArraySize, (STRING)FieldValue);
+                        strcpy_s(FHMOD5.MODL->Textures.MODS[ListIndex]->name, ArraySize, (char *)FieldValue);
                         }
                     break;
                 case 2: //texture
                     FHMOD5.MODL->Textures.MODS[ListIndex]->texture = *(FORMID *)FieldValue;
                     return true;
                 case 3: //index
-                    FHMOD5.MODL->Textures.MODS[ListIndex]->index = *(SINT32 *)FieldValue;
+                    FHMOD5.MODL->Textures.MODS[ListIndex]->index = *(int32_t *)FieldValue;
                     break;
                 default:
                     break;
@@ -3402,21 +3402,21 @@ bool RACERecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             break;
         case 136: //femaleTongue_modelFlags
             FHMOD5.MODL.Load();
-            FHMOD5.MODL->SetFlagMask(*(UINT8 *)FieldValue);
+            FHMOD5.MODL->SetFlagMask(*(uint8_t *)FieldValue);
             break;
         case 137: //femaleTongue_iconPath
-            FHMOD5.ICON.Copy((STRING)FieldValue);
+            FHMOD5.ICON.Copy((char *)FieldValue);
             break;
         case 138: //femaleTongue_smallIconPath
-            FHMOD5.MICO.Copy((STRING)FieldValue);
+            FHMOD5.MICO.Copy((char *)FieldValue);
             break;
         case 139: //femaleLeftEye_modPath
             FHMOD6.MODL.Load();
-            FHMOD6.MODL->MODL.Copy((STRING)FieldValue);
+            FHMOD6.MODL->MODL.Copy((char *)FieldValue);
             break;
         case 140: //femaleLeftEye_modb
             FHMOD6.MODL.Load();
-            FHMOD6.MODL->MODB.value = *(FLOAT32 *)FieldValue;
+            FHMOD6.MODL->MODB.value = *(float *)FieldValue;
             break;
         case 141: //femaleLeftEye_modt_p
             FHMOD6.MODL.Load();
@@ -3440,16 +3440,16 @@ bool RACERecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
                     FHMOD6.MODL->Textures.MODS[ListIndex]->name = NULL;
                     if(FieldValue != NULL)
                         {
-                        ArraySize = (UINT32)strlen((STRING)FieldValue) + 1;
+                        ArraySize = (uint32_t)strlen((char *)FieldValue) + 1;
                         FHMOD6.MODL->Textures.MODS[ListIndex]->name = new char[ArraySize];
-                        strcpy_s(FHMOD6.MODL->Textures.MODS[ListIndex]->name, ArraySize, (STRING)FieldValue);
+                        strcpy_s(FHMOD6.MODL->Textures.MODS[ListIndex]->name, ArraySize, (char *)FieldValue);
                         }
                     break;
                 case 2: //texture
                     FHMOD6.MODL->Textures.MODS[ListIndex]->texture = *(FORMID *)FieldValue;
                     return true;
                 case 3: //index
-                    FHMOD6.MODL->Textures.MODS[ListIndex]->index = *(SINT32 *)FieldValue;
+                    FHMOD6.MODL->Textures.MODS[ListIndex]->index = *(int32_t *)FieldValue;
                     break;
                 default:
                     break;
@@ -3457,21 +3457,21 @@ bool RACERecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             break;
         case 143: //femaleLeftEye_modelFlags
             FHMOD6.MODL.Load();
-            FHMOD6.MODL->SetFlagMask(*(UINT8 *)FieldValue);
+            FHMOD6.MODL->SetFlagMask(*(uint8_t *)FieldValue);
             break;
         case 144: //femaleLeftEye_iconPath
-            FHMOD6.ICON.Copy((STRING)FieldValue);
+            FHMOD6.ICON.Copy((char *)FieldValue);
             break;
         case 145: //femaleLeftEye_smallIconPath
-            FHMOD6.MICO.Copy((STRING)FieldValue);
+            FHMOD6.MICO.Copy((char *)FieldValue);
             break;
         case 146: //femaleRightEye_modPath
             FHMOD7.MODL.Load();
-            FHMOD7.MODL->MODL.Copy((STRING)FieldValue);
+            FHMOD7.MODL->MODL.Copy((char *)FieldValue);
             break;
         case 147: //femaleRightEye_modb
             FHMOD7.MODL.Load();
-            FHMOD7.MODL->MODB.value = *(FLOAT32 *)FieldValue;
+            FHMOD7.MODL->MODB.value = *(float *)FieldValue;
             break;
         case 148: //femaleRightEye_modt_p
             FHMOD7.MODL.Load();
@@ -3495,16 +3495,16 @@ bool RACERecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
                     FHMOD7.MODL->Textures.MODS[ListIndex]->name = NULL;
                     if(FieldValue != NULL)
                         {
-                        ArraySize = (UINT32)strlen((STRING)FieldValue) + 1;
+                        ArraySize = (uint32_t)strlen((char *)FieldValue) + 1;
                         FHMOD7.MODL->Textures.MODS[ListIndex]->name = new char[ArraySize];
-                        strcpy_s(FHMOD7.MODL->Textures.MODS[ListIndex]->name, ArraySize, (STRING)FieldValue);
+                        strcpy_s(FHMOD7.MODL->Textures.MODS[ListIndex]->name, ArraySize, (char *)FieldValue);
                         }
                     break;
                 case 2: //texture
                     FHMOD7.MODL->Textures.MODS[ListIndex]->texture = *(FORMID *)FieldValue;
                     return true;
                 case 3: //index
-                    FHMOD7.MODL->Textures.MODS[ListIndex]->index = *(SINT32 *)FieldValue;
+                    FHMOD7.MODL->Textures.MODS[ListIndex]->index = *(int32_t *)FieldValue;
                     break;
                 default:
                     break;
@@ -3512,21 +3512,21 @@ bool RACERecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             break;
         case 150: //femaleRightEye_modelFlags
             FHMOD7.MODL.Load();
-            FHMOD7.MODL->SetFlagMask(*(UINT8 *)FieldValue);
+            FHMOD7.MODL->SetFlagMask(*(uint8_t *)FieldValue);
             break;
         case 151: //femaleRightEye_iconPath
-            FHMOD7.ICON.Copy((STRING)FieldValue);
+            FHMOD7.ICON.Copy((char *)FieldValue);
             break;
         case 152: //femaleRightEye_smallIconPath
-            FHMOD7.MICO.Copy((STRING)FieldValue);
+            FHMOD7.MICO.Copy((char *)FieldValue);
             break;
         case 153: //maleUpperBody_modPath
             MBMOD0.MODL.Load();
-            MBMOD0.MODL->MODL.Copy((STRING)FieldValue);
+            MBMOD0.MODL->MODL.Copy((char *)FieldValue);
             break;
         case 154: //maleUpperBody_modb
             MBMOD0.MODL.Load();
-            MBMOD0.MODL->MODB.value = *(FLOAT32 *)FieldValue;
+            MBMOD0.MODL->MODB.value = *(float *)FieldValue;
             break;
         case 155: //maleUpperBody_modt_p
             MBMOD0.MODL.Load();
@@ -3550,16 +3550,16 @@ bool RACERecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
                     MBMOD0.MODL->Textures.MODS[ListIndex]->name = NULL;
                     if(FieldValue != NULL)
                         {
-                        ArraySize = (UINT32)strlen((STRING)FieldValue) + 1;
+                        ArraySize = (uint32_t)strlen((char *)FieldValue) + 1;
                         MBMOD0.MODL->Textures.MODS[ListIndex]->name = new char[ArraySize];
-                        strcpy_s(MBMOD0.MODL->Textures.MODS[ListIndex]->name, ArraySize, (STRING)FieldValue);
+                        strcpy_s(MBMOD0.MODL->Textures.MODS[ListIndex]->name, ArraySize, (char *)FieldValue);
                         }
                     break;
                 case 2: //texture
                     MBMOD0.MODL->Textures.MODS[ListIndex]->texture = *(FORMID *)FieldValue;
                     return true;
                 case 3: //index
-                    MBMOD0.MODL->Textures.MODS[ListIndex]->index = *(SINT32 *)FieldValue;
+                    MBMOD0.MODL->Textures.MODS[ListIndex]->index = *(int32_t *)FieldValue;
                     break;
                 default:
                     break;
@@ -3567,21 +3567,21 @@ bool RACERecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             break;
         case 157: //maleUpperBody_modelFlags
             MBMOD0.MODL.Load();
-            MBMOD0.MODL->SetFlagMask(*(UINT8 *)FieldValue);
+            MBMOD0.MODL->SetFlagMask(*(uint8_t *)FieldValue);
             break;
         case 158: //maleUpperBody_iconPath
-            MBMOD0.ICON.Copy((STRING)FieldValue);
+            MBMOD0.ICON.Copy((char *)FieldValue);
             break;
         case 159: //maleUpperBody_smallIconPath
-            MBMOD0.MICO.Copy((STRING)FieldValue);
+            MBMOD0.MICO.Copy((char *)FieldValue);
             break;
         case 160: //maleLeftHand_modPath
             MBMOD1.MODL.Load();
-            MBMOD1.MODL->MODL.Copy((STRING)FieldValue);
+            MBMOD1.MODL->MODL.Copy((char *)FieldValue);
             break;
         case 161: //maleLeftHand_modb
             MBMOD1.MODL.Load();
-            MBMOD1.MODL->MODB.value = *(FLOAT32 *)FieldValue;
+            MBMOD1.MODL->MODB.value = *(float *)FieldValue;
             break;
         case 162: //maleLeftHand_modt_p
             MBMOD1.MODL.Load();
@@ -3605,16 +3605,16 @@ bool RACERecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
                     MBMOD1.MODL->Textures.MODS[ListIndex]->name = NULL;
                     if(FieldValue != NULL)
                         {
-                        ArraySize = (UINT32)strlen((STRING)FieldValue) + 1;
+                        ArraySize = (uint32_t)strlen((char *)FieldValue) + 1;
                         MBMOD1.MODL->Textures.MODS[ListIndex]->name = new char[ArraySize];
-                        strcpy_s(MBMOD1.MODL->Textures.MODS[ListIndex]->name, ArraySize, (STRING)FieldValue);
+                        strcpy_s(MBMOD1.MODL->Textures.MODS[ListIndex]->name, ArraySize, (char *)FieldValue);
                         }
                     break;
                 case 2: //texture
                     MBMOD1.MODL->Textures.MODS[ListIndex]->texture = *(FORMID *)FieldValue;
                     return true;
                 case 3: //index
-                    MBMOD1.MODL->Textures.MODS[ListIndex]->index = *(SINT32 *)FieldValue;
+                    MBMOD1.MODL->Textures.MODS[ListIndex]->index = *(int32_t *)FieldValue;
                     break;
                 default:
                     break;
@@ -3622,21 +3622,21 @@ bool RACERecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             break;
         case 164: //maleLeftHand_modelFlags
             MBMOD1.MODL.Load();
-            MBMOD1.MODL->SetFlagMask(*(UINT8 *)FieldValue);
+            MBMOD1.MODL->SetFlagMask(*(uint8_t *)FieldValue);
             break;
         case 165: //maleLeftHand_iconPath
-            MBMOD1.ICON.Copy((STRING)FieldValue);
+            MBMOD1.ICON.Copy((char *)FieldValue);
             break;
         case 166: //maleLeftHand_smallIconPath
-            MBMOD1.MICO.Copy((STRING)FieldValue);
+            MBMOD1.MICO.Copy((char *)FieldValue);
             break;
         case 167: //maleRightHand_modPath
             MBMOD2.MODL.Load();
-            MBMOD2.MODL->MODL.Copy((STRING)FieldValue);
+            MBMOD2.MODL->MODL.Copy((char *)FieldValue);
             break;
         case 168: //maleRightHand_modb
             MBMOD2.MODL.Load();
-            MBMOD2.MODL->MODB.value = *(FLOAT32 *)FieldValue;
+            MBMOD2.MODL->MODB.value = *(float *)FieldValue;
             break;
         case 169: //maleRightHand_modt_p
             MBMOD2.MODL.Load();
@@ -3660,16 +3660,16 @@ bool RACERecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
                     MBMOD2.MODL->Textures.MODS[ListIndex]->name = NULL;
                     if(FieldValue != NULL)
                         {
-                        ArraySize = (UINT32)strlen((STRING)FieldValue) + 1;
+                        ArraySize = (uint32_t)strlen((char *)FieldValue) + 1;
                         MBMOD2.MODL->Textures.MODS[ListIndex]->name = new char[ArraySize];
-                        strcpy_s(MBMOD2.MODL->Textures.MODS[ListIndex]->name, ArraySize, (STRING)FieldValue);
+                        strcpy_s(MBMOD2.MODL->Textures.MODS[ListIndex]->name, ArraySize, (char *)FieldValue);
                         }
                     break;
                 case 2: //texture
                     MBMOD2.MODL->Textures.MODS[ListIndex]->texture = *(FORMID *)FieldValue;
                     return true;
                 case 3: //index
-                    MBMOD2.MODL->Textures.MODS[ListIndex]->index = *(SINT32 *)FieldValue;
+                    MBMOD2.MODL->Textures.MODS[ListIndex]->index = *(int32_t *)FieldValue;
                     break;
                 default:
                     break;
@@ -3677,21 +3677,21 @@ bool RACERecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             break;
         case 171: //maleRightHand_modelFlags
             MBMOD2.MODL.Load();
-            MBMOD2.MODL->SetFlagMask(*(UINT8 *)FieldValue);
+            MBMOD2.MODL->SetFlagMask(*(uint8_t *)FieldValue);
             break;
         case 172: //maleRightHand_iconPath
-            MBMOD2.ICON.Copy((STRING)FieldValue);
+            MBMOD2.ICON.Copy((char *)FieldValue);
             break;
         case 173: //maleRightHand_smallIconPath
-            MBMOD2.MICO.Copy((STRING)FieldValue);
+            MBMOD2.MICO.Copy((char *)FieldValue);
             break;
         case 174: //maleUpperBodyTexture_modPath
             MBMOD3.MODL.Load();
-            MBMOD3.MODL->MODL.Copy((STRING)FieldValue);
+            MBMOD3.MODL->MODL.Copy((char *)FieldValue);
             break;
         case 175: //maleUpperBodyTexture_modb
             MBMOD3.MODL.Load();
-            MBMOD3.MODL->MODB.value = *(FLOAT32 *)FieldValue;
+            MBMOD3.MODL->MODB.value = *(float *)FieldValue;
             break;
         case 176: //maleUpperBodyTexture_modt_p
             MBMOD3.MODL.Load();
@@ -3715,16 +3715,16 @@ bool RACERecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
                     MBMOD3.MODL->Textures.MODS[ListIndex]->name = NULL;
                     if(FieldValue != NULL)
                         {
-                        ArraySize = (UINT32)strlen((STRING)FieldValue) + 1;
+                        ArraySize = (uint32_t)strlen((char *)FieldValue) + 1;
                         MBMOD3.MODL->Textures.MODS[ListIndex]->name = new char[ArraySize];
-                        strcpy_s(MBMOD3.MODL->Textures.MODS[ListIndex]->name, ArraySize, (STRING)FieldValue);
+                        strcpy_s(MBMOD3.MODL->Textures.MODS[ListIndex]->name, ArraySize, (char *)FieldValue);
                         }
                     break;
                 case 2: //texture
                     MBMOD3.MODL->Textures.MODS[ListIndex]->texture = *(FORMID *)FieldValue;
                     return true;
                 case 3: //index
-                    MBMOD3.MODL->Textures.MODS[ListIndex]->index = *(SINT32 *)FieldValue;
+                    MBMOD3.MODL->Textures.MODS[ListIndex]->index = *(int32_t *)FieldValue;
                     break;
                 default:
                     break;
@@ -3732,21 +3732,21 @@ bool RACERecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             break;
         case 178: //maleUpperBodyTexture_modelFlags
             MBMOD3.MODL.Load();
-            MBMOD3.MODL->SetFlagMask(*(UINT8 *)FieldValue);
+            MBMOD3.MODL->SetFlagMask(*(uint8_t *)FieldValue);
             break;
         case 179: //maleUpperBodyTexture_iconPath
-            MBMOD3.ICON.Copy((STRING)FieldValue);
+            MBMOD3.ICON.Copy((char *)FieldValue);
             break;
         case 180: //maleUpperBodyTexture_smallIconPath
-            MBMOD3.MICO.Copy((STRING)FieldValue);
+            MBMOD3.MICO.Copy((char *)FieldValue);
             break;
         case 181: //femaleUpperBody_modPath
             FBMOD0.MODL.Load();
-            FBMOD0.MODL->MODL.Copy((STRING)FieldValue);
+            FBMOD0.MODL->MODL.Copy((char *)FieldValue);
             break;
         case 182: //femaleUpperBody_modb
             FBMOD0.MODL.Load();
-            FBMOD0.MODL->MODB.value = *(FLOAT32 *)FieldValue;
+            FBMOD0.MODL->MODB.value = *(float *)FieldValue;
             break;
         case 183: //femaleUpperBody_modt_p
             FBMOD0.MODL.Load();
@@ -3770,16 +3770,16 @@ bool RACERecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
                     FBMOD0.MODL->Textures.MODS[ListIndex]->name = NULL;
                     if(FieldValue != NULL)
                         {
-                        ArraySize = (UINT32)strlen((STRING)FieldValue) + 1;
+                        ArraySize = (uint32_t)strlen((char *)FieldValue) + 1;
                         FBMOD0.MODL->Textures.MODS[ListIndex]->name = new char[ArraySize];
-                        strcpy_s(FBMOD0.MODL->Textures.MODS[ListIndex]->name, ArraySize, (STRING)FieldValue);
+                        strcpy_s(FBMOD0.MODL->Textures.MODS[ListIndex]->name, ArraySize, (char *)FieldValue);
                         }
                     break;
                 case 2: //texture
                     FBMOD0.MODL->Textures.MODS[ListIndex]->texture = *(FORMID *)FieldValue;
                     return true;
                 case 3: //index
-                    FBMOD0.MODL->Textures.MODS[ListIndex]->index = *(SINT32 *)FieldValue;
+                    FBMOD0.MODL->Textures.MODS[ListIndex]->index = *(int32_t *)FieldValue;
                     break;
                 default:
                     break;
@@ -3787,21 +3787,21 @@ bool RACERecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             break;
         case 185: //femaleUpperBody_modelFlags
             FBMOD0.MODL.Load();
-            FBMOD0.MODL->SetFlagMask(*(UINT8 *)FieldValue);
+            FBMOD0.MODL->SetFlagMask(*(uint8_t *)FieldValue);
             break;
         case 186: //femaleUpperBody_iconPath
-            FBMOD0.ICON.Copy((STRING)FieldValue);
+            FBMOD0.ICON.Copy((char *)FieldValue);
             break;
         case 187: //femaleUpperBody_smallIconPath
-            FBMOD0.MICO.Copy((STRING)FieldValue);
+            FBMOD0.MICO.Copy((char *)FieldValue);
             break;
         case 188: //femaleLeftHand_modPath
             FBMOD1.MODL.Load();
-            FBMOD1.MODL->MODL.Copy((STRING)FieldValue);
+            FBMOD1.MODL->MODL.Copy((char *)FieldValue);
             break;
         case 189: //femaleLeftHand_modb
             FBMOD1.MODL.Load();
-            FBMOD1.MODL->MODB.value = *(FLOAT32 *)FieldValue;
+            FBMOD1.MODL->MODB.value = *(float *)FieldValue;
             break;
         case 190: //femaleLeftHand_modt_p
             FBMOD1.MODL.Load();
@@ -3825,16 +3825,16 @@ bool RACERecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
                     FBMOD1.MODL->Textures.MODS[ListIndex]->name = NULL;
                     if(FieldValue != NULL)
                         {
-                        ArraySize = (UINT32)strlen((STRING)FieldValue) + 1;
+                        ArraySize = (uint32_t)strlen((char *)FieldValue) + 1;
                         FBMOD1.MODL->Textures.MODS[ListIndex]->name = new char[ArraySize];
-                        strcpy_s(FBMOD1.MODL->Textures.MODS[ListIndex]->name, ArraySize, (STRING)FieldValue);
+                        strcpy_s(FBMOD1.MODL->Textures.MODS[ListIndex]->name, ArraySize, (char *)FieldValue);
                         }
                     break;
                 case 2: //texture
                     FBMOD1.MODL->Textures.MODS[ListIndex]->texture = *(FORMID *)FieldValue;
                     return true;
                 case 3: //index
-                    FBMOD1.MODL->Textures.MODS[ListIndex]->index = *(SINT32 *)FieldValue;
+                    FBMOD1.MODL->Textures.MODS[ListIndex]->index = *(int32_t *)FieldValue;
                     break;
                 default:
                     break;
@@ -3842,21 +3842,21 @@ bool RACERecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             break;
         case 192: //femaleLeftHand_modelFlags
             FBMOD1.MODL.Load();
-            FBMOD1.MODL->SetFlagMask(*(UINT8 *)FieldValue);
+            FBMOD1.MODL->SetFlagMask(*(uint8_t *)FieldValue);
             break;
         case 193: //femaleLeftHand_iconPath
-            FBMOD1.ICON.Copy((STRING)FieldValue);
+            FBMOD1.ICON.Copy((char *)FieldValue);
             break;
         case 194: //femaleLeftHand_smallIconPath
-            FBMOD1.MICO.Copy((STRING)FieldValue);
+            FBMOD1.MICO.Copy((char *)FieldValue);
             break;
         case 195: //femaleRightHand_modPath
             FBMOD2.MODL.Load();
-            FBMOD2.MODL->MODL.Copy((STRING)FieldValue);
+            FBMOD2.MODL->MODL.Copy((char *)FieldValue);
             break;
         case 196: //femaleRightHand_modb
             FBMOD2.MODL.Load();
-            FBMOD2.MODL->MODB.value = *(FLOAT32 *)FieldValue;
+            FBMOD2.MODL->MODB.value = *(float *)FieldValue;
             break;
         case 197: //femaleRightHand_modt_p
             FBMOD2.MODL.Load();
@@ -3880,16 +3880,16 @@ bool RACERecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
                     FBMOD2.MODL->Textures.MODS[ListIndex]->name = NULL;
                     if(FieldValue != NULL)
                         {
-                        ArraySize = (UINT32)strlen((STRING)FieldValue) + 1;
+                        ArraySize = (uint32_t)strlen((char *)FieldValue) + 1;
                         FBMOD2.MODL->Textures.MODS[ListIndex]->name = new char[ArraySize];
-                        strcpy_s(FBMOD2.MODL->Textures.MODS[ListIndex]->name, ArraySize, (STRING)FieldValue);
+                        strcpy_s(FBMOD2.MODL->Textures.MODS[ListIndex]->name, ArraySize, (char *)FieldValue);
                         }
                     break;
                 case 2: //texture
                     FBMOD2.MODL->Textures.MODS[ListIndex]->texture = *(FORMID *)FieldValue;
                     return true;
                 case 3: //index
-                    FBMOD2.MODL->Textures.MODS[ListIndex]->index = *(SINT32 *)FieldValue;
+                    FBMOD2.MODL->Textures.MODS[ListIndex]->index = *(int32_t *)FieldValue;
                     break;
                 default:
                     break;
@@ -3897,21 +3897,21 @@ bool RACERecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             break;
         case 199: //femaleRightHand_modelFlags
             FBMOD2.MODL.Load();
-            FBMOD2.MODL->SetFlagMask(*(UINT8 *)FieldValue);
+            FBMOD2.MODL->SetFlagMask(*(uint8_t *)FieldValue);
             break;
         case 200: //femaleRightHand_iconPath
-            FBMOD2.ICON.Copy((STRING)FieldValue);
+            FBMOD2.ICON.Copy((char *)FieldValue);
             break;
         case 201: //femaleRightHand_smallIconPath
-            FBMOD2.MICO.Copy((STRING)FieldValue);
+            FBMOD2.MICO.Copy((char *)FieldValue);
             break;
         case 202: //femaleUpperBodyTexture_modPath
             FBMOD3.MODL.Load();
-            FBMOD3.MODL->MODL.Copy((STRING)FieldValue);
+            FBMOD3.MODL->MODL.Copy((char *)FieldValue);
             break;
         case 203: //femaleUpperBodyTexture_modb
             FBMOD3.MODL.Load();
-            FBMOD3.MODL->MODB.value = *(FLOAT32 *)FieldValue;
+            FBMOD3.MODL->MODB.value = *(float *)FieldValue;
             break;
         case 204: //femaleUpperBodyTexture_modt_p
             FBMOD3.MODL.Load();
@@ -3935,16 +3935,16 @@ bool RACERecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
                     FBMOD3.MODL->Textures.MODS[ListIndex]->name = NULL;
                     if(FieldValue != NULL)
                         {
-                        ArraySize = (UINT32)strlen((STRING)FieldValue) + 1;
+                        ArraySize = (uint32_t)strlen((char *)FieldValue) + 1;
                         FBMOD3.MODL->Textures.MODS[ListIndex]->name = new char[ArraySize];
-                        strcpy_s(FBMOD3.MODL->Textures.MODS[ListIndex]->name, ArraySize, (STRING)FieldValue);
+                        strcpy_s(FBMOD3.MODL->Textures.MODS[ListIndex]->name, ArraySize, (char *)FieldValue);
                         }
                     break;
                 case 2: //texture
                     FBMOD3.MODL->Textures.MODS[ListIndex]->texture = *(FORMID *)FieldValue;
                     return true;
                 case 3: //index
-                    FBMOD3.MODL->Textures.MODS[ListIndex]->index = *(SINT32 *)FieldValue;
+                    FBMOD3.MODL->Textures.MODS[ListIndex]->index = *(int32_t *)FieldValue;
                     break;
                 default:
                     break;
@@ -3952,22 +3952,22 @@ bool RACERecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             break;
         case 206: //femaleUpperBodyTexture_modelFlags
             FBMOD3.MODL.Load();
-            FBMOD3.MODL->SetFlagMask(*(UINT8 *)FieldValue);
+            FBMOD3.MODL->SetFlagMask(*(uint8_t *)FieldValue);
             break;
         case 207: //femaleUpperBodyTexture_iconPath
-            FBMOD3.ICON.Copy((STRING)FieldValue);
+            FBMOD3.ICON.Copy((char *)FieldValue);
             break;
         case 208: //femaleUpperBodyTexture_smallIconPath
-            FBMOD3.MICO.Copy((STRING)FieldValue);
+            FBMOD3.MICO.Copy((char *)FieldValue);
             break;
         case 209: //hairs
             HNAM.value.resize(ArraySize);
-            for(UINT32 x = 0; x < ArraySize; x++)
+            for(uint32_t x = 0; x < ArraySize; x++)
                 HNAM.value[x] = ((FORMIDARRAY)FieldValue)[x];
             return true;
         case 210: //eyes
             ENAM.value.resize(ArraySize);
-            for(UINT32 x = 0; x < ArraySize; x++)
+            for(uint32_t x = 0; x < ArraySize; x++)
                 ENAM.value[x] = ((FORMIDARRAY)FieldValue)[x];
             return true;
         case 211: //maleFggs_p

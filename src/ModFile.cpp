@@ -38,7 +38,7 @@
 #include "ModFile.h"
 #include "GenericRecord.h"
 
-ModFile::ModFile(Collection *_Parent, STRING filename, STRING modname, const UINT32 _flags):
+ModFile::ModFile(Collection *_Parent, char * filename, char * modname, const uint32_t _flags):
     Parent(_Parent),
     Flags(_flags),
     TES4(),
@@ -61,7 +61,7 @@ ModFile::ModFile(Collection *_Parent, STRING filename, STRING modname, const UIN
         {
         Flags.IsNoLoad = Flags.IsNoLoad || !exists();
         TES4.IsLoaded(true);
-        STRING const _Name = ModName;
+        char * const _Name = ModName;
         TES4.IsESM(icmps(".esm",_Name + strlen(_Name) - 4) == 0);
         }
     }
@@ -193,7 +193,7 @@ FormIDMasterUpdater::~FormIDMasterUpdater()
     //
     }
 
-bool FormIDMasterUpdater::Accept(UINT32 &curFormID)
+bool FormIDMasterUpdater::Accept(uint32_t &curFormID)
     {
     //If formID is not set, or the formID belongs to the engine, do nothing
     //Any formID whose objectID is less than END_HARDCODED_IDS is given the 00 modIndex by the engine regardless of what it actually is
@@ -205,7 +205,7 @@ bool FormIDMasterUpdater::Accept(UINT32 &curFormID)
         return stop;
         }
 
-    UINT32 modIndex = curFormID >> 24;
+    uint32_t modIndex = curFormID >> 24;
     //result = result || modIndex == 0xFF;
     //printer("Checking %08X against %02X, %02X, %02X\n", curFormID, ExpandedIndex, CollapseTable[modIndex], CollapsedIndex);
     //If the formID belongs to the mod, or if the master is already present, do nothing
@@ -222,13 +222,13 @@ bool FormIDMasterUpdater::Accept(UINT32 &curFormID)
     return stop;
     }
 
-bool FormIDMasterUpdater::AcceptMGEF(UINT32 &curMgefCode)
+bool FormIDMasterUpdater::AcceptMGEF(uint32_t &curMgefCode)
     {
     //If MgefCode is not set, do nothing
     if(curMgefCode == 0)
         return stop;
 
-    UINT32 modIndex = curMgefCode & 0x000000FF;
+    uint32_t modIndex = curMgefCode & 0x000000FF;
     //result = result || modIndex == 0xFF;
     //If the MgefCode belongs to the mod, or if the master is already present, do nothing
     if((modIndex == ExpandedIndex) || (CollapseTable[modIndex] != CollapsedIndex))

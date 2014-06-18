@@ -142,41 +142,41 @@ bool TREERecord::VisitFormIDs(FormIDOp &op)
 
     if(MODL.IsLoaded())
         {
-        for(UINT32 x = 0; x < MODL->Textures.MODS.size(); x++)
+        for(uint32_t x = 0; x < MODL->Textures.MODS.size(); x++)
             op.Accept(MODL->Textures.MODS[x]->texture);
         }
 
     return op.Stop();
     }
 
-UINT32 TREERecord::GetType()
+uint32_t TREERecord::GetType()
     {
     return REV32(TREE);
     }
 
-STRING TREERecord::GetStrType()
+char * TREERecord::GetStrType()
     {
     return "TREE";
     }
 
-SINT32 TREERecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk)
+int32_t TREERecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk)
     {
-    UINT32 subType = 0;
-    UINT32 subSize = 0;
+    uint32_t subType = 0;
+    uint32_t subSize = 0;
     while(buffer < end_buffer){
-        subType = *(UINT32 *)buffer;
+        subType = *(uint32_t *)buffer;
         buffer += 4;
         switch(subType)
             {
             case REV32(XXXX):
                 buffer += 2;
-                subSize = *(UINT32 *)buffer;
+                subSize = *(uint32_t *)buffer;
                 buffer += 4;
-                subType = *(UINT32 *)buffer;
+                subType = *(uint32_t *)buffer;
                 buffer += 6;
                 break;
             default:
-                subSize = *(UINT16 *)buffer;
+                subSize = *(uint16_t *)buffer;
                 buffer += 2;
                 break;
             }
@@ -236,7 +236,7 @@ SINT32 TREERecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer,
     return 0;
     }
 
-SINT32 TREERecord::Unload()
+int32_t TREERecord::Unload()
     {
     IsChanged(false);
     IsLoaded(false);
@@ -251,7 +251,7 @@ SINT32 TREERecord::Unload()
     return 1;
     }
 
-SINT32 TREERecord::WriteRecord(FileWriter &writer)
+int32_t TREERecord::WriteRecord(FileWriter &writer)
     {
     WRITE(EDID);
     WRITE(OBND);

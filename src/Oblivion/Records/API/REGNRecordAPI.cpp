@@ -38,7 +38,7 @@
 
 namespace Ob
 {
-UINT32 REGNRecord::GetFieldAttribute(FIELD_IDENTIFIERS, UINT32 WhichAttribute)
+uint32_t REGNRecord::GetFieldAttribute(FIELD_IDENTIFIERS, uint32_t WhichAttribute)
     {
     switch(FieldID)
         {
@@ -81,7 +81,7 @@ UINT32 REGNRecord::GetFieldAttribute(FIELD_IDENTIFIERS, UINT32 WhichAttribute)
                     case 0: //fieldType
                         return LIST_FIELD;
                     case 1: //fieldSize
-                        return (UINT32)Areas.value.size();
+                        return (uint32_t)Areas.value.size();
                     default:
                         return UNKNOWN_FIELD;
                     }
@@ -102,7 +102,7 @@ UINT32 REGNRecord::GetFieldAttribute(FIELD_IDENTIFIERS, UINT32 WhichAttribute)
                             case 0: //fieldType
                                 return LIST_FIELD;
                             case 1: //fieldSize
-                                return (UINT32)Areas.value[ListIndex]->RPLD.value.size();
+                                return (uint32_t)Areas.value[ListIndex]->RPLD.value.size();
                             default:
                                 return UNKNOWN_FIELD;
                             }
@@ -132,7 +132,7 @@ UINT32 REGNRecord::GetFieldAttribute(FIELD_IDENTIFIERS, UINT32 WhichAttribute)
                     case 0: //fieldType
                         return LIST_FIELD;
                     case 1: //fieldSize
-                        return (UINT32)Entries.value.size();
+                        return (uint32_t)Entries.value.size();
                     default:
                         return UNKNOWN_FIELD;
                     }
@@ -167,7 +167,7 @@ UINT32 REGNRecord::GetFieldAttribute(FIELD_IDENTIFIERS, UINT32 WhichAttribute)
                             case 0: //fieldType
                                 return LIST_FIELD;
                             case 1: //fieldSize
-                                return (UINT32)Entries.value[ListIndex]->RDOT.value.size();
+                                return (uint32_t)Entries.value[ListIndex]->RDOT.value.size();
                             default:
                                 return UNKNOWN_FIELD;
                             }
@@ -265,7 +265,7 @@ UINT32 REGNRecord::GetFieldAttribute(FIELD_IDENTIFIERS, UINT32 WhichAttribute)
                             case 0: //fieldType
                                 return LIST_FIELD;
                             case 1: //fieldSize
-                                return (UINT32)Entries.value[ListIndex]->RDGS.value.size();
+                                return (uint32_t)Entries.value[ListIndex]->RDGS.value.size();
                             default:
                                 return UNKNOWN_FIELD;
                             }
@@ -301,7 +301,7 @@ UINT32 REGNRecord::GetFieldAttribute(FIELD_IDENTIFIERS, UINT32 WhichAttribute)
                             case 0: //fieldType
                                 return LIST_FIELD;
                             case 1: //fieldSize
-                                return (UINT32)Entries.value[ListIndex]->RDSD.value.size();
+                                return (uint32_t)Entries.value[ListIndex]->RDSD.value.size();
                             default:
                                 return UNKNOWN_FIELD;
                             }
@@ -329,7 +329,7 @@ UINT32 REGNRecord::GetFieldAttribute(FIELD_IDENTIFIERS, UINT32 WhichAttribute)
                             case 0: //fieldType
                                 return LIST_FIELD;
                             case 1: //fieldSize
-                                return (UINT32)Entries.value[ListIndex]->RDWT.value.size();
+                                return (uint32_t)Entries.value[ListIndex]->RDWT.value.size();
                             default:
                                 return UNKNOWN_FIELD;
                             }
@@ -537,30 +537,30 @@ void * REGNRecord::GetField(FIELD_IDENTIFIERS, void **FieldValues)
     return NULL;
     }
 
-bool REGNRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
+bool REGNRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, uint32_t ArraySize)
     {
     switch(FieldID)
         {
         case 1: //flags1
-            SetHeaderFlagMask(*(UINT32 *)FieldValue);
+            SetHeaderFlagMask(*(uint32_t *)FieldValue);
             break;
         case 3: //flags2
-            SetHeaderUnknownFlagMask(*(UINT32 *)FieldValue);
+            SetHeaderUnknownFlagMask(*(uint32_t *)FieldValue);
             break;
         case 4: //eid
-            EDID.Copy((STRING)FieldValue);
+            EDID.Copy((char *)FieldValue);
             break;
         case 5: //iconPath
-            ICON.Copy((STRING)FieldValue);
+            ICON.Copy((char *)FieldValue);
             break;
         case 6: //mapRed
-            RCLR.value.red = *(UINT8 *)FieldValue;
+            RCLR.value.red = *(uint8_t *)FieldValue;
             break;
         case 7: //mapGreen
-            RCLR.value.green = *(UINT8 *)FieldValue;
+            RCLR.value.green = *(uint8_t *)FieldValue;
             break;
         case 8: //mapBlue
-            RCLR.value.blue = *(UINT8 *)FieldValue;
+            RCLR.value.blue = *(uint8_t *)FieldValue;
             break;
         case 9: //unused1
             if(ArraySize != 1)
@@ -584,7 +584,7 @@ bool REGNRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             switch(ListFieldID)
                 {
                 case 1: //edgeFalloff
-                    Areas.value[ListIndex]->RPLI.value = *(UINT32 *)FieldValue;
+                    Areas.value[ListIndex]->RPLI.value = *(uint32_t *)FieldValue;
                     break;
                 case 2: //points
                     if(ListX2FieldID == 0) //pointsSize
@@ -599,10 +599,10 @@ bool REGNRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
                     switch(ListX2FieldID)
                         {
                         case 1: //posX
-                            Areas.value[ListIndex]->RPLD.value[ListX2Index].posX = *(FLOAT32 *)FieldValue;
+                            Areas.value[ListIndex]->RPLD.value[ListX2Index].posX = *(float *)FieldValue;
                             break;
                         case 2: //posY
-                            Areas.value[ListIndex]->RPLD.value[ListX2Index].posY = *(FLOAT32 *)FieldValue;
+                            Areas.value[ListIndex]->RPLD.value[ListX2Index].posY = *(float *)FieldValue;
                             break;
                         default:
                             break;
@@ -625,13 +625,13 @@ bool REGNRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             switch(ListFieldID)
                 {
                 case 1: //entryType
-                    Entries.value[ListIndex]->SetType(*(UINT32 *)FieldValue);
+                    Entries.value[ListIndex]->SetType(*(uint32_t *)FieldValue);
                     return true;
                 case 2: //flags
-                    Entries.value[ListIndex]->SetFlagMask(*(UINT8 *)FieldValue);
+                    Entries.value[ListIndex]->SetFlagMask(*(uint8_t *)FieldValue);
                     break;
                 case 3: //priority
-                    Entries.value[ListIndex]->RDAT.value.priority = *(UINT8 *)FieldValue;
+                    Entries.value[ListIndex]->RDAT.value.priority = *(uint8_t *)FieldValue;
                     break;
                 case 4: //unused1
                     if(ArraySize != 2)
@@ -655,7 +655,7 @@ bool REGNRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
                             Entries.value[ListIndex]->RDOT.value[ListX2Index].objectId = *(FORMID *)FieldValue;
                             return true;
                         case 2: //parentIndex
-                            Entries.value[ListIndex]->RDOT.value[ListX2Index].parentIndex = *(UINT16 *)FieldValue;
+                            Entries.value[ListIndex]->RDOT.value[ListX2Index].parentIndex = *(uint16_t *)FieldValue;
                             break;
                         case 3: //unused1
                             if(ArraySize != 2)
@@ -664,25 +664,25 @@ bool REGNRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
                             Entries.value[ListIndex]->RDOT.value[ListX2Index].unused1[1] = ((UINT8ARRAY)FieldValue)[1];
                             break;
                         case 4: //density
-                            Entries.value[ListIndex]->RDOT.value[ListX2Index].density = *(FLOAT32 *)FieldValue;
+                            Entries.value[ListIndex]->RDOT.value[ListX2Index].density = *(float *)FieldValue;
                             break;
                         case 5: //clustering
-                            Entries.value[ListIndex]->RDOT.value[ListX2Index].clustering = *(UINT8 *)FieldValue;
+                            Entries.value[ListIndex]->RDOT.value[ListX2Index].clustering = *(uint8_t *)FieldValue;
                             break;
                         case 6: //minSlope
-                            Entries.value[ListIndex]->RDOT.value[ListX2Index].minSlope = *(UINT8 *)FieldValue;
+                            Entries.value[ListIndex]->RDOT.value[ListX2Index].minSlope = *(uint8_t *)FieldValue;
                             break;
                         case 7: //maxSlope
-                            Entries.value[ListIndex]->RDOT.value[ListX2Index].maxSlope = *(UINT8 *)FieldValue;
+                            Entries.value[ListIndex]->RDOT.value[ListX2Index].maxSlope = *(uint8_t *)FieldValue;
                             break;
                         case 8: //flags
-                            Entries.value[ListIndex]->RDOT.value[ListX2Index].SetFlagMask(*(UINT8 *)FieldValue);
+                            Entries.value[ListIndex]->RDOT.value[ListX2Index].SetFlagMask(*(uint8_t *)FieldValue);
                             break;
                         case 9: //radiusWRTParent
-                            Entries.value[ListIndex]->RDOT.value[ListX2Index].radiusWRTParent = *(UINT16 *)FieldValue;
+                            Entries.value[ListIndex]->RDOT.value[ListX2Index].radiusWRTParent = *(uint16_t *)FieldValue;
                             break;
                         case 10: //radius
-                            Entries.value[ListIndex]->RDOT.value[ListX2Index].radius = *(UINT16 *)FieldValue;
+                            Entries.value[ListIndex]->RDOT.value[ListX2Index].radius = *(uint16_t *)FieldValue;
                             break;
                         case 11: //unk1
                             if(ArraySize != 4)
@@ -693,25 +693,25 @@ bool REGNRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
                             Entries.value[ListIndex]->RDOT.value[ListX2Index].unk1[3] = ((UINT8ARRAY)FieldValue)[3];
                             break;
                         case 12: //maxHeight
-                            Entries.value[ListIndex]->RDOT.value[ListX2Index].maxHeight = *(FLOAT32 *)FieldValue;
+                            Entries.value[ListIndex]->RDOT.value[ListX2Index].maxHeight = *(float *)FieldValue;
                             break;
                         case 13: //sink
-                            Entries.value[ListIndex]->RDOT.value[ListX2Index].sink = *(FLOAT32 *)FieldValue;
+                            Entries.value[ListIndex]->RDOT.value[ListX2Index].sink = *(float *)FieldValue;
                             break;
                         case 14: //sinkVar
-                            Entries.value[ListIndex]->RDOT.value[ListX2Index].sinkVar = *(FLOAT32 *)FieldValue;
+                            Entries.value[ListIndex]->RDOT.value[ListX2Index].sinkVar = *(float *)FieldValue;
                             break;
                         case 15: //sizeVar
-                            Entries.value[ListIndex]->RDOT.value[ListX2Index].sizeVar = *(FLOAT32 *)FieldValue;
+                            Entries.value[ListIndex]->RDOT.value[ListX2Index].sizeVar = *(float *)FieldValue;
                             break;
                         case 16: //angleVarX
-                            Entries.value[ListIndex]->RDOT.value[ListX2Index].angleVarX = *(UINT16 *)FieldValue;
+                            Entries.value[ListIndex]->RDOT.value[ListX2Index].angleVarX = *(uint16_t *)FieldValue;
                             break;
                         case 17: //angleVarY
-                            Entries.value[ListIndex]->RDOT.value[ListX2Index].angleVarY = *(UINT16 *)FieldValue;
+                            Entries.value[ListIndex]->RDOT.value[ListX2Index].angleVarY = *(uint16_t *)FieldValue;
                             break;
                         case 18: //angleVarZ
-                            Entries.value[ListIndex]->RDOT.value[ListX2Index].angleVarZ = *(UINT16 *)FieldValue;
+                            Entries.value[ListIndex]->RDOT.value[ListX2Index].angleVarZ = *(uint16_t *)FieldValue;
                             break;
                         case 19: //unused2
                             if(ArraySize != 2)
@@ -732,10 +732,10 @@ bool REGNRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
                         }
                     break;
                 case 6: //mapName
-                    Entries.value[ListIndex]->RDMP.Copy((STRING)FieldValue);
+                    Entries.value[ListIndex]->RDMP.Copy((char *)FieldValue);
                     break;
                 case 7: //iconPath
-                    Entries.value[ListIndex]->ICON.Copy((STRING)FieldValue);
+                    Entries.value[ListIndex]->ICON.Copy((char *)FieldValue);
                     break;
                 case 8: //grasses
                     if(ListX2FieldID == 0) //grassesSize
@@ -765,7 +765,7 @@ bool REGNRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
                         }
                     break;
                 case 9: //musicType
-                    Entries.value[ListIndex]->SetMusicType(*(UINT32 *)FieldValue);
+                    Entries.value[ListIndex]->SetMusicType(*(uint32_t *)FieldValue);
                     break;
                 case 10: //sounds
                     if(ListX2FieldID == 0) //soundsSize
@@ -783,10 +783,10 @@ bool REGNRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
                             Entries.value[ListIndex]->RDSD.value[ListX2Index].sound = *(FORMID *)FieldValue;
                             return true;
                         case 2: //flags
-                            Entries.value[ListIndex]->RDSD.value[ListX2Index].SetFlagMask(*(UINT32 *)FieldValue);
+                            Entries.value[ListIndex]->RDSD.value[ListX2Index].SetFlagMask(*(uint32_t *)FieldValue);
                             break;
                         case 3: //chance
-                            Entries.value[ListIndex]->RDSD.value[ListX2Index].chance = *(UINT32 *)FieldValue;
+                            Entries.value[ListIndex]->RDSD.value[ListX2Index].chance = *(uint32_t *)FieldValue;
                             break;
                         default:
                             break;
@@ -808,7 +808,7 @@ bool REGNRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
                             Entries.value[ListIndex]->RDWT.value[ListX2Index].weather = *(FORMID *)FieldValue;
                             return true;
                         case 2: //chance
-                            Entries.value[ListIndex]->RDWT.value[ListX2Index].chance = *(UINT32 *)FieldValue;
+                            Entries.value[ListIndex]->RDWT.value[ListX2Index].chance = *(uint32_t *)FieldValue;
                             break;
                         default:
                             break;

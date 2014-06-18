@@ -44,13 +44,13 @@ class SOUNRecord : public Record
     private:
         struct SOUNSNDX
             {
-            UINT8   minDistance, maxDistance;
-            SINT8   freqAdjustment;
-            UINT8   unused1;
-            UINT16  flags;
-            UINT8   unused2[2];
-            SINT16  staticAtten;
-            UINT8   stopTime,startTime;
+            uint8_t   minDistance, maxDistance;
+            int8_t   freqAdjustment;
+            uint8_t   unused1;
+            uint16_t  flags;
+            uint8_t   unused2[2];
+            int16_t  staticAtten;
+            uint8_t   stopTime,startTime;
 
             SOUNSNDX();
             ~SOUNSNDX();
@@ -99,17 +99,17 @@ class SOUNRecord : public Record
         bool   IsFlagMask(unsigned short Mask, bool Exact=false);
         void   SetFlagMask(unsigned short Mask);
 
-        UINT32 GetFieldAttribute(DEFAULTED_FIELD_IDENTIFIERS, UINT32 WhichAttribute=0);
+        uint32_t GetFieldAttribute(DEFAULTED_FIELD_IDENTIFIERS, uint32_t WhichAttribute=0);
         void * GetField(DEFAULTED_FIELD_IDENTIFIERS, void **FieldValues=NULL);
-        bool   SetField(DEFAULTED_FIELD_IDENTIFIERS, void *FieldValue=NULL, UINT32 ArraySize=0);
+        bool   SetField(DEFAULTED_FIELD_IDENTIFIERS, void *FieldValue=NULL, uint32_t ArraySize=0);
         void   DeleteField(DEFAULTED_FIELD_IDENTIFIERS);
 
-        UINT32 GetType();
-        STRING GetStrType();
+        uint32_t GetType();
+        char * GetStrType();
 
-        SINT32 ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk=false);
-        SINT32 Unload();
-        SINT32 WriteRecord(FileWriter &writer);
+        int32_t ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk=false);
+        int32_t Unload();
+        int32_t WriteRecord(FileWriter &writer);
 
         bool operator ==(const SOUNRecord &other) const;
         bool operator !=(const SOUNRecord &other) const;

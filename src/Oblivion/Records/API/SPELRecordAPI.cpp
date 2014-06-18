@@ -38,7 +38,7 @@
 
 namespace Ob
 {
-UINT32 SPELRecord::GetFieldAttribute(FIELD_IDENTIFIERS, UINT32 WhichAttribute)
+uint32_t SPELRecord::GetFieldAttribute(FIELD_IDENTIFIERS, uint32_t WhichAttribute)
     {
     switch(FieldID)
         {
@@ -81,7 +81,7 @@ UINT32 SPELRecord::GetFieldAttribute(FIELD_IDENTIFIERS, UINT32 WhichAttribute)
                     case 0: //fieldType
                         return LIST_FIELD;
                     case 1: //fieldSize
-                        return (UINT32)Effects.value.size();
+                        return (uint32_t)Effects.value.size();
                     default:
                         return UNKNOWN_FIELD;
                     }
@@ -407,33 +407,33 @@ void * SPELRecord::GetField(FIELD_IDENTIFIERS, void **FieldValues)
     return NULL;
     }
 
-bool SPELRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
+bool SPELRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, uint32_t ArraySize)
     {
     switch(FieldID)
         {
         case 1: //flags1
-            SetHeaderFlagMask(*(UINT32 *)FieldValue);
+            SetHeaderFlagMask(*(uint32_t *)FieldValue);
             break;
         case 3: //flags2
-            SetHeaderUnknownFlagMask(*(UINT32 *)FieldValue);
+            SetHeaderUnknownFlagMask(*(uint32_t *)FieldValue);
             break;
         case 4: //eid
-            EDID.Copy((STRING)FieldValue);
+            EDID.Copy((char *)FieldValue);
             break;
         case 5: //full
-            FULL.Copy((STRING)FieldValue);
+            FULL.Copy((char *)FieldValue);
             break;
         case 6: //spellType
-            SetType(*(UINT32 *)FieldValue);
+            SetType(*(uint32_t *)FieldValue);
             break;
         case 7: //cost
-            SPIT.value.cost = *(UINT32 *)FieldValue;
+            SPIT.value.cost = *(uint32_t *)FieldValue;
             break;
         case 8: //levelType
-            SPIT.value.levelType = *(UINT32 *)FieldValue;
+            SPIT.value.levelType = *(uint32_t *)FieldValue;
             break;
         case 9: //flags
-            SetFlagMask(*(UINT8 *)FieldValue);
+            SetFlagMask(*(uint8_t *)FieldValue);
             break;
         case 10: //unused1
             if(ArraySize != 3)
@@ -460,16 +460,16 @@ bool SPELRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
                     Effects.value[ListIndex]->EFIT.value.name = *(MGEFCODE_OR_UINT32 *)FieldValue;
                     return true;
                 case 3: //magnitude
-                    Effects.value[ListIndex]->EFIT.value.magnitude = *(UINT32 *)FieldValue;
+                    Effects.value[ListIndex]->EFIT.value.magnitude = *(uint32_t *)FieldValue;
                     break;
                 case 4: //area
-                    Effects.value[ListIndex]->EFIT.value.area = *(UINT32 *)FieldValue;
+                    Effects.value[ListIndex]->EFIT.value.area = *(uint32_t *)FieldValue;
                     break;
                 case 5: //duration
-                    Effects.value[ListIndex]->EFIT.value.duration = *(UINT32 *)FieldValue;
+                    Effects.value[ListIndex]->EFIT.value.duration = *(uint32_t *)FieldValue;
                     break;
                 case 6: //rangeType
-                    Effects.value[ListIndex]->SetRange(*(UINT32 *)FieldValue);
+                    Effects.value[ListIndex]->SetRange(*(uint32_t *)FieldValue);
                     break;
                 case 7: //actorValue
                     Effects.value[ListIndex]->EFIT.value.actorValue = *(FORMID_OR_MGEFCODE_OR_ACTORVALUE_OR_UINT32 *)FieldValue;
@@ -480,14 +480,14 @@ bool SPELRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
                     return true;
                 case 9: //school
                     Effects.value[ListIndex]->SCIT.Load();
-                    Effects.value[ListIndex]->SCIT->schoolType = *(UINT32 *)FieldValue;
+                    Effects.value[ListIndex]->SCIT->schoolType = *(uint32_t *)FieldValue;
                     break;
                 case 10: //visual
                     Effects.value[ListIndex]->SCIT.Load();
                     Effects.value[ListIndex]->SCIT->visual = *(MGEFCODE_OR_UINT32 *)FieldValue;
                     return true;
                 case 11: //flags
-                    Effects.value[ListIndex]->SetFlagMask(*(UINT8 *)FieldValue);
+                    Effects.value[ListIndex]->SetFlagMask(*(uint8_t *)FieldValue);
                     break;
                 case 12: //unused1
                     if(ArraySize != 3)
@@ -498,32 +498,32 @@ bool SPELRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
                     Effects.value[ListIndex]->SCIT->unused1[2] = ((UINT8ARRAY)FieldValue)[2];
                     break;
                 case 13: //full
-                    Effects.value[ListIndex]->FULL.Copy((STRING)FieldValue);
+                    Effects.value[ListIndex]->FULL.Copy((char *)FieldValue);
                     break;
                 //OBME Fields
                 case 14: //recordVersion
                     Effects.value[ListIndex]->OBME.Load();
-                    Effects.value[ListIndex]->OBME->EFME.value.recordVersion = *(UINT8 *)FieldValue;
+                    Effects.value[ListIndex]->OBME->EFME.value.recordVersion = *(uint8_t *)FieldValue;
                     break;
                 case 15: //betaVersion
                     Effects.value[ListIndex]->OBME.Load();
-                    Effects.value[ListIndex]->OBME->EFME.value.betaVersion = *(UINT8 *)FieldValue;
+                    Effects.value[ListIndex]->OBME->EFME.value.betaVersion = *(uint8_t *)FieldValue;
                     break;
                 case 16: //minorVersion
                     Effects.value[ListIndex]->OBME.Load();
-                    Effects.value[ListIndex]->OBME->EFME.value.minorVersion = *(UINT8 *)FieldValue;
+                    Effects.value[ListIndex]->OBME->EFME.value.minorVersion = *(uint8_t *)FieldValue;
                     break;
                 case 17: //majorVersion
                     Effects.value[ListIndex]->OBME.Load();
-                    Effects.value[ListIndex]->OBME->EFME.value.majorVersion = *(UINT8 *)FieldValue;
+                    Effects.value[ListIndex]->OBME->EFME.value.majorVersion = *(uint8_t *)FieldValue;
                     break;
                 case 18: //efitParamInfo
                     Effects.value[ListIndex]->OBME.Load();
-                    Effects.value[ListIndex]->OBME->EFME.value.efitParamInfo = *(UINT8 *)FieldValue;
+                    Effects.value[ListIndex]->OBME->EFME.value.efitParamInfo = *(uint8_t *)FieldValue;
                     return true;
                 case 19: //efixParamInfo
                     Effects.value[ListIndex]->OBME.Load();
-                    Effects.value[ListIndex]->OBME->EFME.value.efixParamInfo = *(UINT8 *)FieldValue;
+                    Effects.value[ListIndex]->OBME->EFME.value.efixParamInfo = *(uint8_t *)FieldValue;
                     return true;
                 case 20: //reserved1
                     if(ArraySize != 0xA)
@@ -533,18 +533,18 @@ bool SPELRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
                     break;
                 case 21: //iconPath
                     Effects.value[ListIndex]->OBME.Load();
-                    Effects.value[ListIndex]->OBME->EFII.Copy((STRING)FieldValue);
+                    Effects.value[ListIndex]->OBME->EFII.Copy((char *)FieldValue);
                     break;
                 case 22: //efixOverrides
-                    Effects.value[ListIndex]->OBME_SetOverrideFlagMask(*(UINT32 *)FieldValue);
+                    Effects.value[ListIndex]->OBME_SetOverrideFlagMask(*(uint32_t *)FieldValue);
                     return true;
                 case 23: //efixFlags
-                    Effects.value[ListIndex]->OBME_SetFlagMask(*(UINT32 *)FieldValue);
+                    Effects.value[ListIndex]->OBME_SetFlagMask(*(uint32_t *)FieldValue);
                     return true;
                 case 24: //baseCost
                     Effects.value[ListIndex]->OBME.Load();
                     Effects.value[ListIndex]->OBME->EFIX.Load();
-                    Effects.value[ListIndex]->OBME->EFIX->baseCost = *(FLOAT32 *)FieldValue;
+                    Effects.value[ListIndex]->OBME->EFIX->baseCost = *(float *)FieldValue;
                     break;
                 case 25: //resistAV
                     Effects.value[ListIndex]->OBME.Load();
@@ -565,19 +565,19 @@ bool SPELRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
         //OBME Fields
         case 12: //recordVersion
             OBME.Load();
-            OBME->OBME.value.recordVersion = *(UINT8 *)FieldValue;
+            OBME->OBME.value.recordVersion = *(uint8_t *)FieldValue;
             break;
         case 13: //betaVersion
             OBME.Load();
-            OBME->OBME.value.betaVersion = *(UINT8 *)FieldValue;
+            OBME->OBME.value.betaVersion = *(uint8_t *)FieldValue;
             break;
         case 14: //minorVersion
             OBME.Load();
-            OBME->OBME.value.minorVersion = *(UINT8 *)FieldValue;
+            OBME->OBME.value.minorVersion = *(uint8_t *)FieldValue;
             break;
         case 15: //majorVersion
             OBME.Load();
-            OBME->OBME.value.majorVersion = *(UINT8 *)FieldValue;
+            OBME->OBME.value.majorVersion = *(uint8_t *)FieldValue;
             break;
         case 16: //reserved
             if(ArraySize != 0x1C)

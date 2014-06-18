@@ -48,8 +48,8 @@ class ALOCRecord : public FNVRecord //Media Location Controller
         RawRecord NAM2; //Unknown
         RawRecord NAM3; //Unknown
         OptSimpleFloatSubRecord<flt_0> NAM4; //Location Delay
-        OptSimpleSubRecord<UINT32> NAM5; //Day Start
-        OptSimpleSubRecord<UINT32> NAM6; //Night Start
+        OptSimpleSubRecord<uint32_t> NAM5; //Day Start
+        OptSimpleSubRecord<uint32_t> NAM6; //Night Start
         OptSimpleFloatSubRecord<flt_0> NAM7; //Retrigger Delay
         OrderedSparseArray<FORMID> HNAM; // Neutral Media Sets
         OrderedSparseArray<FORMID> ZNAM; // Ally Media Sets
@@ -66,17 +66,17 @@ class ALOCRecord : public FNVRecord //Media Location Controller
 
         bool   VisitFormIDs(FormIDOp &op);
 
-        UINT32 GetFieldAttribute(DEFAULTED_FIELD_IDENTIFIERS, UINT32 WhichAttribute=0);
+        uint32_t GetFieldAttribute(DEFAULTED_FIELD_IDENTIFIERS, uint32_t WhichAttribute=0);
         void * GetField(DEFAULTED_FIELD_IDENTIFIERS, void **FieldValues=NULL);
-        bool   SetField(DEFAULTED_FIELD_IDENTIFIERS, void *FieldValue=NULL, UINT32 ArraySize=0);
+        bool   SetField(DEFAULTED_FIELD_IDENTIFIERS, void *FieldValue=NULL, uint32_t ArraySize=0);
         void   DeleteField(DEFAULTED_FIELD_IDENTIFIERS);
 
-        UINT32 GetType();
-        STRING GetStrType();
+        uint32_t GetType();
+        char * GetStrType();
 
-        SINT32 ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk);
-        SINT32 Unload();
-        SINT32 WriteRecord(FileWriter &writer);
+        int32_t ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk);
+        int32_t Unload();
+        int32_t WriteRecord(FileWriter &writer);
 
         bool operator ==(const ALOCRecord &other) const;
         bool operator !=(const ALOCRecord &other) const;

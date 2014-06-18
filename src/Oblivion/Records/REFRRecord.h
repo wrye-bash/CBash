@@ -56,9 +56,9 @@ class REFRRecord : public Record
 
         struct REFRXLOC
             {
-            UINT8   level, unused1[3];
+            uint8_t   level, unused1[3];
             FORMID  key;
-            UINT8   unused2[4], flags, unused3[3];
+            uint8_t   unused2[4], flags, unused3[3];
 
             REFRXLOC();
             ~REFRXLOC();
@@ -71,8 +71,8 @@ class REFRRecord : public Record
             {
             union
                 {
-                UINT32  seed;
-                UINT8   offset;
+                uint32_t  seed;
+                uint8_t   offset;
                 };
             bool isOffset;
 
@@ -89,7 +89,7 @@ class REFRRecord : public Record
             {
             StringRecord FULL;
             ReqSubRecord<GENTNAM> TNAM;
-            ReqSimpleSubRecord<UINT8> FNAM;
+            ReqSimpleSubRecord<uint8_t> FNAM;
 
             void Write(FileWriter &writer);
 
@@ -160,16 +160,16 @@ class REFRRecord : public Record
             SemiOptSubRecord<REFRXSED> XSED; //SpeedTree Seed
             OptSubRecord<GENXLOD> XLOD; //Distant LOD Data
             OptSimpleFloatSubRecord<flt_0> XCHG; //Charge
-            OptSimpleSubRecord<SINT32> XHLT; //Health
+            OptSimpleSubRecord<int32_t> XHLT; //Health
             OptSubRecord<GENXPCI> XPCI; //Unknown
-            OptSimpleSubRecord<SINT32> XLCM; //Level Modifier
+            OptSimpleSubRecord<int32_t> XLCM; //Level Modifier
             OptSimpleSubRecord<FORMID> XRTM; //Unknown
-            OptSimpleSubRecord<UINT32> XACT; //Action Flag
-            OptSimpleSubRecord<SINT32> XCNT; //Count
+            OptSimpleSubRecord<uint32_t> XACT; //Action Flag
+            OptSimpleSubRecord<int32_t> XCNT; //Count
             OptSubRecord<REFRMAPMARKER> Marker; //Map Marker Data
             //bool ONAM; //Open by Default, empty marker, written whenever fOpenByDefault is true
             OptSimpleFloatSubRecord<flt_1> XSCL; //scale
-            OptSimpleSubRecord<UINT8> XSOL; //Soul
+            OptSimpleSubRecord<uint8_t> XSOL; //Soul
             ReqSubRecord<GENPOSDATA> DATA; //Position/Rotation
 
             bool IsOpenByDefault();
@@ -190,15 +190,15 @@ class REFRRecord : public Record
 
         bool   IsOppositeParent();
         void   IsOppositeParent(bool value);
-        bool   IsParentFlagMask(UINT8 Mask, bool Exact=false);
-        void   SetParentFlagMask(UINT8 Mask);
+        bool   IsParentFlagMask(uint8_t Mask, bool Exact=false);
+        void   SetParentFlagMask(uint8_t Mask);
 
         bool   IsVisible();
         void   IsVisible(bool value);
         bool   IsCanTravelTo();
         void   IsCanTravelTo(bool value);
-        bool   IsMapFlagMask(UINT8 Mask, bool Exact=false);
-        void   SetMapFlagMask(UINT8 Mask);
+        bool   IsMapFlagMask(uint8_t Mask, bool Exact=false);
+        void   SetMapFlagMask(uint8_t Mask);
 
         bool   IsUseDefault();
         void   IsUseDefault(bool value);
@@ -208,13 +208,13 @@ class REFRRecord : public Record
         void   IsOpen(bool value);
         bool   IsOpenByDefault();
         void   IsOpenByDefault(bool value);
-        bool   IsActionFlagMask(UINT32 Mask, bool Exact=false);
-        void   SetActionFlagMask(UINT32 Mask);
+        bool   IsActionFlagMask(uint32_t Mask, bool Exact=false);
+        void   SetActionFlagMask(uint32_t Mask);
 
         bool   IsLeveledLock();
         void   IsLeveledLock(bool value);
-        bool   IsLockFlagMask(UINT8 Mask, bool Exact=false);
-        void   SetLockFlagMask(UINT8 Mask);
+        bool   IsLockFlagMask(uint8_t Mask, bool Exact=false);
+        void   SetLockFlagMask(uint8_t Mask);
 
         bool   IsNoMarker();
         void   IsNoMarker(bool value);
@@ -242,8 +242,8 @@ class REFRRecord : public Record
         void   IsOblivionGate(bool value);
         bool   IsUnknownDoorIcon();
         void   IsUnknownDoorIcon(bool value);
-        bool   IsMarkerType(UINT8 Type);
-        void   SetMarkerType(UINT8 Type);
+        bool   IsMarkerType(uint8_t Type);
+        void   SetMarkerType(uint8_t Type);
 
         bool   IsNoSoul();
         void   IsNoSoul(bool value);
@@ -257,20 +257,20 @@ class REFRRecord : public Record
         void   IsGreaterSoul(bool value);
         bool   IsGrandSoul();
         void   IsGrandSoul(bool value);
-        bool   IsSoul(UINT8 Type);
-        void   SetSoul(UINT8 Type);
+        bool   IsSoul(uint8_t Type);
+        void   SetSoul(uint8_t Type);
 
-        UINT32 GetFieldAttribute(DEFAULTED_FIELD_IDENTIFIERS, UINT32 WhichAttribute=0);
+        uint32_t GetFieldAttribute(DEFAULTED_FIELD_IDENTIFIERS, uint32_t WhichAttribute=0);
         void * GetField(DEFAULTED_FIELD_IDENTIFIERS, void **FieldValues=NULL);
-        bool   SetField(DEFAULTED_FIELD_IDENTIFIERS, void *FieldValue=NULL, UINT32 ArraySize=0);
+        bool   SetField(DEFAULTED_FIELD_IDENTIFIERS, void *FieldValue=NULL, uint32_t ArraySize=0);
         void   DeleteField(DEFAULTED_FIELD_IDENTIFIERS);
 
-        UINT32 GetType();
-        STRING GetStrType();
+        uint32_t GetType();
+        char * GetStrType();
 
-        SINT32 ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk=false);
-        SINT32 Unload();
-        SINT32 WriteRecord(FileWriter &writer);
+        int32_t ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk=false);
+        int32_t Unload();
+        int32_t WriteRecord(FileWriter &writer);
 
         bool operator ==(const REFRRecord &other) const;
         bool operator !=(const REFRRecord &other) const;

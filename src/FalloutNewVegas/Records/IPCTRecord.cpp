@@ -117,7 +117,7 @@ bool IPCTRecord::VisitFormIDs(FormIDOp &op)
 
     if(MODL.IsLoaded())
         {
-        for(UINT32 x = 0; x < MODL->Textures.MODS.size(); x++)
+        for(uint32_t x = 0; x < MODL->Textures.MODS.size(); x++)
             op.Accept(MODL->Textures.MODS[x]->texture);
         }
     if(DNAM.IsLoaded())
@@ -142,13 +142,13 @@ void IPCTRecord::IsNoDecalData(bool value)
     SETBIT(DATA->flags, fIsNoDecalData, value);
     }
 
-bool IPCTRecord::IsFlagMask(UINT32 Mask, bool Exact)
+bool IPCTRecord::IsFlagMask(uint32_t Mask, bool Exact)
     {
     if (!DATA.IsLoaded()) return false;
     return Exact ? ((DATA->flags & Mask) == Mask) : ((DATA->flags & Mask) != 0);
     }
 
-void IPCTRecord::SetFlagMask(UINT32 Mask)
+void IPCTRecord::SetFlagMask(uint32_t Mask)
     {
     DATA.Load();
     DATA->flags = Mask;
@@ -205,58 +205,58 @@ void IPCTRecord::IsObjectAlphaTesting(bool value)
     SETBIT(DODT->flags, fIsAlphaTesting, value);
     }
 
-bool IPCTRecord::IsObjectFlagMask(UINT8 Mask, bool Exact)
+bool IPCTRecord::IsObjectFlagMask(uint8_t Mask, bool Exact)
     {
     if(!DODT.IsLoaded()) return false;
     return Exact ? ((DODT->flags & Mask) == Mask) : ((DODT->flags & Mask) != 0);
     }
 
-void IPCTRecord::SetObjectFlagMask(UINT8 Mask)
+void IPCTRecord::SetObjectFlagMask(uint8_t Mask)
     {
     DODT.Load();
     DODT->flags = Mask;
     }
 
-bool IPCTRecord::IsSoundLevelType(UINT8 Type)
+bool IPCTRecord::IsSoundLevelType(uint8_t Type)
     {
     if (!DATA.IsLoaded()) return false;
     return DATA->soundLevel == Type;
     }
 
-void IPCTRecord::SetSoundLevelType(UINT8 Type)
+void IPCTRecord::SetSoundLevelType(uint8_t Type)
     {
     DATA.Load();
     DATA->soundLevel = Type;
     }
 
-UINT32 IPCTRecord::GetType()
+uint32_t IPCTRecord::GetType()
     {
     return REV32(IPCT);
     }
 
-STRING IPCTRecord::GetStrType()
+char * IPCTRecord::GetStrType()
     {
     return "IPCT";
     }
 
-SINT32 IPCTRecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk)
+int32_t IPCTRecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk)
     {
-    UINT32 subType = 0;
-    UINT32 subSize = 0;
+    uint32_t subType = 0;
+    uint32_t subSize = 0;
     while(buffer < end_buffer){
-        subType = *(UINT32 *)buffer;
+        subType = *(uint32_t *)buffer;
         buffer += 4;
         switch(subType)
             {
             case REV32(XXXX):
                 buffer += 2;
-                subSize = *(UINT32 *)buffer;
+                subSize = *(uint32_t *)buffer;
                 buffer += 4;
-                subType = *(UINT32 *)buffer;
+                subType = *(uint32_t *)buffer;
                 buffer += 6;
                 break;
             default:
-                subSize = *(UINT16 *)buffer;
+                subSize = *(uint16_t *)buffer;
                 buffer += 2;
                 break;
             }
@@ -312,7 +312,7 @@ SINT32 IPCTRecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer,
     return 0;
     }
 
-SINT32 IPCTRecord::Unload()
+int32_t IPCTRecord::Unload()
     {
     IsChanged(false);
     IsLoaded(false);
@@ -326,7 +326,7 @@ SINT32 IPCTRecord::Unload()
     return 1;
     }
 
-SINT32 IPCTRecord::WriteRecord(FileWriter &writer)
+int32_t IPCTRecord::WriteRecord(FileWriter &writer)
     {
     WRITE(EDID);
 

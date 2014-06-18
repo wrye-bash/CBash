@@ -75,7 +75,7 @@ bool LVSPRecord::VisitFormIDs(FormIDOp &op)
     if(!IsLoaded())
         return false;
 
-    for(UINT32 ListIndex = 0; ListIndex < Entries.value.size(); ListIndex++)
+    for(uint32_t ListIndex = 0; ListIndex < Entries.value.size(); ListIndex++)
         op.Accept(Entries.value[ListIndex]->listId);
 
     return op.Stop();
@@ -114,46 +114,46 @@ void LVSPRecord::IsUseAllSpells(bool value)
     *LVLF.value = value ? (*LVLF.value | fUseAllSpells) : (*LVLF.value & ~fUseAllSpells);
     }
 
-bool LVSPRecord::IsFlagMask(UINT8 Mask, bool Exact)
+bool LVSPRecord::IsFlagMask(uint8_t Mask, bool Exact)
     {
     LVLF.Load();
     return Exact ? ((*LVLF.value & Mask) == Mask) : ((*LVLF.value & Mask) != 0);
     }
 
-void LVSPRecord::SetFlagMask(UINT8 Mask)
+void LVSPRecord::SetFlagMask(uint8_t Mask)
     {
     LVLF.Load();
     *LVLF.value = Mask;
     }
 
-UINT32 LVSPRecord::GetType()
+uint32_t LVSPRecord::GetType()
     {
     return REV32(LVSP);
     }
 
-STRING LVSPRecord::GetStrType()
+char * LVSPRecord::GetStrType()
     {
     return "LVSP";
     }
 
-SINT32 LVSPRecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk)
+int32_t LVSPRecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk)
     {
-    UINT32 subType = 0;
-    UINT32 subSize = 0;
+    uint32_t subType = 0;
+    uint32_t subSize = 0;
     while(buffer < end_buffer){
-        subType = *(UINT32 *)buffer;
+        subType = *(uint32_t *)buffer;
         buffer += 4;
         switch(subType)
             {
             case REV32(XXXX):
                 buffer += 2;
-                subSize = *(UINT32 *)buffer;
+                subSize = *(uint32_t *)buffer;
                 buffer += 4;
-                subType = *(UINT32 *)buffer;
+                subType = *(uint32_t *)buffer;
                 buffer += 6;
                 break;
             default:
-                subSize = *(UINT16 *)buffer;
+                subSize = *(uint16_t *)buffer;
                 buffer += 2;
                 break;
             }
@@ -189,7 +189,7 @@ SINT32 LVSPRecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer,
     return 0;
     }
 
-SINT32 LVSPRecord::Unload()
+int32_t LVSPRecord::Unload()
     {
     IsChanged(false);
     IsLoaded(false);
@@ -200,7 +200,7 @@ SINT32 LVSPRecord::Unload()
     return 1;
     }
 
-SINT32 LVSPRecord::WriteRecord(FileWriter &writer)
+int32_t LVSPRecord::WriteRecord(FileWriter &writer)
     {
     WRITE(EDID);
     WRITE(LVLD);

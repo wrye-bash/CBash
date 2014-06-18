@@ -38,7 +38,7 @@
 #include "../GenericRecord.h"
 #include "FNVFile.h"
 
-FNVFile::FNVFile(Collection *_Parent, STRING FileName, STRING ModName, const UINT32 _flags):
+FNVFile::FNVFile(Collection *_Parent, char * FileName, char * ModName, const uint32_t _flags):
     ModFile(_Parent, FileName, ModName, _flags)
     {
     //
@@ -49,13 +49,13 @@ FNVFile::~FNVFile()
     //
     }
 
-void FNVFile::SetFilter(bool inclusive, boost::unordered_set<UINT32> &RecordTypes, boost::unordered_set<FORMID> &WorldSpaces) {
+void FNVFile::SetFilter(bool inclusive, boost::unordered_set<uint32_t> &RecordTypes, boost::unordered_set<FORMID> &WorldSpaces) {
   filter_inclusive = inclusive;
   filter_records = RecordTypes;
   filter_wspaces = WorldSpaces;
 }
 
-SINT32 FNVFile::LoadTES4()
+int32_t FNVFile::LoadTES4()
     {
     if(TES4.IsLoaded() || !Open())
         {
@@ -65,26 +65,26 @@ SINT32 FNVFile::LoadTES4()
         }
     buffer_position = buffer_start + 4;
 
-    UINT32 recSize = 0;
-    recSize = *(UINT32 *)buffer_position;
+    uint32_t recSize = 0;
+    recSize = *(uint32_t *)buffer_position;
     buffer_position += 4;
 
-    TES4.flags = *(UINT32 *)buffer_position;
+    TES4.flags = *(uint32_t *)buffer_position;
     buffer_position += 4;
 
     TES4.formID = *(FORMID *)buffer_position;
     buffer_position += 4;
 
-    TES4.flagsUnk = *(UINT32 *)buffer_position;
+    TES4.flagsUnk = *(uint32_t *)buffer_position;
     buffer_position += 4;
 
-    TES4.formVersion = *(UINT16 *)buffer_position;
+    TES4.formVersion = *(uint16_t *)buffer_position;
     buffer_position += 2;
 
-    TES4.versionControl2[0] = *(UINT8 *)buffer_position;
+    TES4.versionControl2[0] = *(uint8_t *)buffer_position;
     buffer_position++;
 
-    TES4.versionControl2[1] = *(UINT8 *)buffer_position;
+    TES4.versionControl2[1] = *(uint8_t *)buffer_position;
     buffer_position++;
 
     TES4.recData = buffer_position;
@@ -94,7 +94,7 @@ SINT32 FNVFile::LoadTES4()
     return 1;
     }
 
-SINT32 FNVFile::Load(RecordOp &read_parser, RecordOp &indexer, std::vector<FormIDResolver *> &Expanders, std::vector<Record *> &DeletedRecords)
+int32_t FNVFile::Load(RecordOp &read_parser, RecordOp &indexer, std::vector<FormIDResolver *> &Expanders, std::vector<Record *> &DeletedRecords)
     {
     enum IgTopRecords {
         eIgGMST = REV32(GMST) | 0x00001000, //Record::fIsIgnored
@@ -214,9 +214,9 @@ SINT32 FNVFile::Load(RecordOp &read_parser, RecordOp &indexer, std::vector<FormI
 
     Flags.LoadedGRUPs = true;
     unsigned char *group_buffer_end = NULL;
-    UINT32 GRUPSize;
-    UINT32 GRUPLabel;
-    boost::unordered_set<UINT32> UsedFormIDs;
+    uint32_t GRUPSize;
+    uint32_t GRUPLabel;
+    boost::unordered_set<uint32_t> UsedFormIDs;
 
     RecordOp skip_parser;
     RecordOp &parser = Flags.IsFullLoad ? read_parser : skip_parser;
@@ -226,10 +226,10 @@ SINT32 FNVFile::Load(RecordOp &read_parser, RecordOp &indexer, std::vector<FormI
 
     while(buffer_position < buffer_end){
         buffer_position += 4; //Skip "GRUP"
-        GRUPSize = *(UINT32 *)buffer_position;
+        GRUPSize = *(uint32_t *)buffer_position;
         group_buffer_end = buffer_position + GRUPSize - 4;
         buffer_position += 4;
-        GRUPLabel = *(UINT32 *)buffer_position;
+        GRUPLabel = *(uint32_t *)buffer_position;
         buffer_position += 8; //Skip type (tops will all == 0)
 
         //printer("%c%c%c%c\n", ((char *)&GRUPLabel)[0], ((char *)&GRUPLabel)[1], ((char *)&GRUPLabel)[2], ((char *)&GRUPLabel)[3]);
@@ -642,11 +642,11 @@ SINT32 FNVFile::Load(RecordOp &read_parser, RecordOp &indexer, std::vector<FormI
             default:
                 if(GRUPLabel == 0 && GRUPSize == 0)
                     {
-                    printer("FNVFile::Read: Warning - Unknown record group (%c%c%c%c) encountered in mod \"%s\". Bad file structure, zeros found past end of groups.\n", ((STRING)&GRUPLabel)[0], ((STRING)&GRUPLabel)[1], ((STRING)&GRUPLabel)[2], ((STRING)&GRUPLabel)[3], ModName);
+                    printer("FNVFile::Read: Warning - Unknown record group (%c%c%c%c) encountered in mod \"%s\". Bad file structure, zeros found past end of groups.\n", ((char *)&GRUPLabel)[0], ((char *)&GRUPLabel)[1], ((char *)&GRUPLabel)[2], ((char *)&GRUPLabel)[3], ModName);
                     return 1;
                     }
                 //else
-                //    printer("FNVFile::Read: Error - Unknown record group (%c%c%c%c) encountered in mod \"%s\". ", ((STRING)&GRUPLabel)[0], ((STRING)&GRUPLabel)[1], ((STRING)&GRUPLabel)[2], ((STRING)&GRUPLabel)[3], ModName);
+                //    printer("FNVFile::Read: Error - Unknown record group (%c%c%c%c) encountered in mod \"%s\". ", ((char *)&GRUPLabel)[0], ((char *)&GRUPLabel)[1], ((char *)&GRUPLabel)[2], ((char *)&GRUPLabel)[3], ModName);
 
                 if(GRUPSize == 0)
                     {
@@ -672,251 +672,251 @@ SINT32 FNVFile::Load(RecordOp &read_parser, RecordOp &indexer, std::vector<FormI
     return 1;
     }
 
-UINT32 FNVFile::GetNumRecords(const UINT32 &RecordType)
+uint32_t FNVFile::GetNumRecords(const uint32_t &RecordType)
     {
     switch(RecordType)
         {
         case REV32(GMST):
-            return (UINT32)GMST.pool.used_object_capacity();
+            return (uint32_t)GMST.pool.used_object_capacity();
         case REV32(TXST):
-            return (UINT32)TXST.pool.used_object_capacity();
+            return (uint32_t)TXST.pool.used_object_capacity();
         case REV32(MICN):
-            return (UINT32)MICN.pool.used_object_capacity();
+            return (uint32_t)MICN.pool.used_object_capacity();
         case REV32(GLOB):
-            return (UINT32)GLOB.pool.used_object_capacity();
+            return (uint32_t)GLOB.pool.used_object_capacity();
         case REV32(CLAS):
-            return (UINT32)CLAS.pool.used_object_capacity();
+            return (uint32_t)CLAS.pool.used_object_capacity();
         case REV32(FACT):
-            return (UINT32)FACT.pool.used_object_capacity();
+            return (uint32_t)FACT.pool.used_object_capacity();
         case REV32(HDPT):
-            return (UINT32)HDPT.pool.used_object_capacity();
+            return (uint32_t)HDPT.pool.used_object_capacity();
         case REV32(HAIR):
-            return (UINT32)HAIR.pool.used_object_capacity();
+            return (uint32_t)HAIR.pool.used_object_capacity();
         case REV32(EYES):
-            return (UINT32)EYES.pool.used_object_capacity();
+            return (uint32_t)EYES.pool.used_object_capacity();
         case REV32(RACE):
-            return (UINT32)RACE.pool.used_object_capacity();
+            return (uint32_t)RACE.pool.used_object_capacity();
         case REV32(SOUN):
-            return (UINT32)SOUN.pool.used_object_capacity();
+            return (uint32_t)SOUN.pool.used_object_capacity();
         case REV32(ASPC):
-            return (UINT32)ASPC.pool.used_object_capacity();
+            return (uint32_t)ASPC.pool.used_object_capacity();
         case REV32(MGEF):
-            return (UINT32)MGEF.pool.used_object_capacity();
+            return (uint32_t)MGEF.pool.used_object_capacity();
         case REV32(SCPT):
-            return (UINT32)SCPT.pool.used_object_capacity();
+            return (uint32_t)SCPT.pool.used_object_capacity();
         case REV32(LTEX):
-            return (UINT32)LTEX.pool.used_object_capacity();
+            return (uint32_t)LTEX.pool.used_object_capacity();
         case REV32(ENCH):
-            return (UINT32)ENCH.pool.used_object_capacity();
+            return (uint32_t)ENCH.pool.used_object_capacity();
         case REV32(SPEL):
-            return (UINT32)SPEL.pool.used_object_capacity();
+            return (uint32_t)SPEL.pool.used_object_capacity();
         case REV32(ACTI):
-            return (UINT32)ACTI.pool.used_object_capacity();
+            return (uint32_t)ACTI.pool.used_object_capacity();
         case REV32(TACT):
-            return (UINT32)TACT.pool.used_object_capacity();
+            return (uint32_t)TACT.pool.used_object_capacity();
         case REV32(TERM):
-            return (UINT32)TERM.pool.used_object_capacity();
+            return (uint32_t)TERM.pool.used_object_capacity();
         case REV32(ARMO):
-            return (UINT32)ARMO.pool.used_object_capacity();
+            return (uint32_t)ARMO.pool.used_object_capacity();
         case REV32(BOOK):
-            return (UINT32)BOOK.pool.used_object_capacity();
+            return (uint32_t)BOOK.pool.used_object_capacity();
         case REV32(CONT):
-            return (UINT32)CONT.pool.used_object_capacity();
+            return (uint32_t)CONT.pool.used_object_capacity();
         case REV32(DOOR):
-            return (UINT32)DOOR.pool.used_object_capacity();
+            return (uint32_t)DOOR.pool.used_object_capacity();
         case REV32(INGR):
-            return (UINT32)INGR.pool.used_object_capacity();
+            return (uint32_t)INGR.pool.used_object_capacity();
         case REV32(LIGH):
-            return (UINT32)LIGH.pool.used_object_capacity();
+            return (uint32_t)LIGH.pool.used_object_capacity();
         case REV32(MISC):
-            return (UINT32)MISC.pool.used_object_capacity();
+            return (uint32_t)MISC.pool.used_object_capacity();
         case REV32(STAT):
-            return (UINT32)STAT.pool.used_object_capacity();
+            return (uint32_t)STAT.pool.used_object_capacity();
         case REV32(SCOL):
-            return (UINT32)SCOL.pool.used_object_capacity();
+            return (uint32_t)SCOL.pool.used_object_capacity();
         case REV32(MSTT):
-            return (UINT32)MSTT.pool.used_object_capacity();
+            return (uint32_t)MSTT.pool.used_object_capacity();
         case REV32(PWAT):
-            return (UINT32)PWAT.pool.used_object_capacity();
+            return (uint32_t)PWAT.pool.used_object_capacity();
         case REV32(GRAS):
-            return (UINT32)GRAS.pool.used_object_capacity();
+            return (uint32_t)GRAS.pool.used_object_capacity();
         case REV32(TREE):
-            return (UINT32)TREE.pool.used_object_capacity();
+            return (uint32_t)TREE.pool.used_object_capacity();
         case REV32(FURN):
-            return (UINT32)FURN.pool.used_object_capacity();
+            return (uint32_t)FURN.pool.used_object_capacity();
         case REV32(WEAP):
-            return (UINT32)WEAP.pool.used_object_capacity();
+            return (uint32_t)WEAP.pool.used_object_capacity();
         case REV32(AMMO):
-            return (UINT32)AMMO.pool.used_object_capacity();
+            return (uint32_t)AMMO.pool.used_object_capacity();
         case REV32(NPC_):
-            return (UINT32)NPC_.pool.used_object_capacity();
+            return (uint32_t)NPC_.pool.used_object_capacity();
         case REV32(CREA):
-            return (UINT32)CREA.pool.used_object_capacity();
+            return (uint32_t)CREA.pool.used_object_capacity();
         case REV32(LVLC):
-            return (UINT32)LVLC.pool.used_object_capacity();
+            return (uint32_t)LVLC.pool.used_object_capacity();
         case REV32(LVLN):
-            return (UINT32)LVLN.pool.used_object_capacity();
+            return (uint32_t)LVLN.pool.used_object_capacity();
         case REV32(KEYM):
-            return (UINT32)KEYM.pool.used_object_capacity();
+            return (uint32_t)KEYM.pool.used_object_capacity();
         case REV32(ALCH):
-            return (UINT32)ALCH.pool.used_object_capacity();
+            return (uint32_t)ALCH.pool.used_object_capacity();
         case REV32(IDLM):
-            return (UINT32)IDLM.pool.used_object_capacity();
+            return (uint32_t)IDLM.pool.used_object_capacity();
         case REV32(NOTE):
-            return (UINT32)NOTE.pool.used_object_capacity();
+            return (uint32_t)NOTE.pool.used_object_capacity();
         case REV32(COBJ):
-            return (UINT32)COBJ.pool.used_object_capacity();
+            return (uint32_t)COBJ.pool.used_object_capacity();
         case REV32(PROJ):
-            return (UINT32)PROJ.pool.used_object_capacity();
+            return (uint32_t)PROJ.pool.used_object_capacity();
         case REV32(LVLI):
-            return (UINT32)LVLI.pool.used_object_capacity();
+            return (uint32_t)LVLI.pool.used_object_capacity();
         case REV32(WTHR):
-            return (UINT32)WTHR.pool.used_object_capacity();
+            return (uint32_t)WTHR.pool.used_object_capacity();
         case REV32(CLMT):
-            return (UINT32)CLMT.pool.used_object_capacity();
+            return (uint32_t)CLMT.pool.used_object_capacity();
         case REV32(REGN):
-            return (UINT32)REGN.pool.used_object_capacity();
+            return (uint32_t)REGN.pool.used_object_capacity();
         case REV32(NAVI):
-            return (UINT32)NAVI.pool.used_object_capacity();
+            return (uint32_t)NAVI.pool.used_object_capacity();
         case REV32(CELL):
-            return (UINT32)CELL.cell_pool.used_object_capacity();
+            return (uint32_t)CELL.cell_pool.used_object_capacity();
         ///////////////////////////////////////////////
         //These return the absolute total number of these SubRecords
         //Use the GetFieldAttribute API instead if you want the number
         // of SubRecords associated with a specific parent record
         case REV32(INFO):
-            return (UINT32)DIAL.info_pool.used_object_capacity();
+            return (uint32_t)DIAL.info_pool.used_object_capacity();
         case REV32(ACHR):
-            return (UINT32)CELL.achr_pool.used_object_capacity();
+            return (uint32_t)CELL.achr_pool.used_object_capacity();
         case REV32(ACRE):
-            return (UINT32)CELL.acre_pool.used_object_capacity();
+            return (uint32_t)CELL.acre_pool.used_object_capacity();
         case REV32(REFR):
-            return (UINT32)CELL.refr_pool.used_object_capacity();
+            return (uint32_t)CELL.refr_pool.used_object_capacity();
         case REV32(PGRE):
-            return (UINT32)CELL.pgre_pool.used_object_capacity();
+            return (uint32_t)CELL.pgre_pool.used_object_capacity();
         case REV32(PMIS):
-            return (UINT32)CELL.pmis_pool.used_object_capacity();
+            return (uint32_t)CELL.pmis_pool.used_object_capacity();
         case REV32(PBEA):
-            return (UINT32)CELL.pbea_pool.used_object_capacity();
+            return (uint32_t)CELL.pbea_pool.used_object_capacity();
         case REV32(PFLA):
-            return (UINT32)CELL.pfla_pool.used_object_capacity();
+            return (uint32_t)CELL.pfla_pool.used_object_capacity();
         case REV32(PCBE):
-            return (UINT32)CELL.pcbe_pool.used_object_capacity();
+            return (uint32_t)CELL.pcbe_pool.used_object_capacity();
         case REV32(NAVM):
-            return (UINT32)CELL.navm_pool.used_object_capacity();
+            return (uint32_t)CELL.navm_pool.used_object_capacity();
         case REV32(LAND):
-            return (UINT32)WRLD.land_pool.used_object_capacity();
+            return (uint32_t)WRLD.land_pool.used_object_capacity();
         case REV32(WCEL):
-            return (UINT32)WRLD.cell_pool.used_object_capacity();
+            return (uint32_t)WRLD.cell_pool.used_object_capacity();
         case REV32(CLLS):
-            return (UINT32)CELL.cell_pool.used_object_capacity() + (UINT32)WRLD.cell_pool.used_object_capacity();
+            return (uint32_t)CELL.cell_pool.used_object_capacity() + (uint32_t)WRLD.cell_pool.used_object_capacity();
         ///////////////////////////////////////////////
         case REV32(WRLD):
-            return (UINT32)WRLD.wrld_pool.used_object_capacity();
+            return (uint32_t)WRLD.wrld_pool.used_object_capacity();
         case REV32(DIAL):
-            return (UINT32)DIAL.dial_pool.used_object_capacity();
+            return (uint32_t)DIAL.dial_pool.used_object_capacity();
         case REV32(QUST):
-            return (UINT32)QUST.pool.used_object_capacity();
+            return (uint32_t)QUST.pool.used_object_capacity();
         case REV32(IDLE):
-            return (UINT32)IDLE.pool.used_object_capacity();
+            return (uint32_t)IDLE.pool.used_object_capacity();
         case REV32(PACK):
-            return (UINT32)PACK.pool.used_object_capacity();
+            return (uint32_t)PACK.pool.used_object_capacity();
         case REV32(CSTY):
-            return (UINT32)CSTY.pool.used_object_capacity();
+            return (uint32_t)CSTY.pool.used_object_capacity();
         case REV32(LSCR):
-            return (UINT32)LSCR.pool.used_object_capacity();
+            return (uint32_t)LSCR.pool.used_object_capacity();
         case REV32(ANIO):
-            return (UINT32)ANIO.pool.used_object_capacity();
+            return (uint32_t)ANIO.pool.used_object_capacity();
         case REV32(WATR):
-            return (UINT32)WATR.pool.used_object_capacity();
+            return (uint32_t)WATR.pool.used_object_capacity();
         case REV32(EFSH):
-            return (UINT32)EFSH.pool.used_object_capacity();
+            return (uint32_t)EFSH.pool.used_object_capacity();
         case REV32(EXPL):
-            return (UINT32)EXPL.pool.used_object_capacity();
+            return (uint32_t)EXPL.pool.used_object_capacity();
         case REV32(DEBR):
-            return (UINT32)DEBR.pool.used_object_capacity();
+            return (uint32_t)DEBR.pool.used_object_capacity();
         case REV32(IMGS):
-            //return (UINT32)IMGS.pool.used_object_capacity();
+            //return (uint32_t)IMGS.pool.used_object_capacity();
         case REV32(IMAD):
-            //return (UINT32)IMAD.pool.used_object_capacity();
+            //return (uint32_t)IMAD.pool.used_object_capacity();
         case REV32(FLST):
-            //return (UINT32)FLST.pool.used_object_capacity();
+            //return (uint32_t)FLST.pool.used_object_capacity();
         case REV32(PERK):
-            //return (UINT32)PERK.pool.used_object_capacity();
+            //return (uint32_t)PERK.pool.used_object_capacity();
         case REV32(BPTD):
-            //return (UINT32)BPTD.pool.used_object_capacity();
+            //return (uint32_t)BPTD.pool.used_object_capacity();
         case REV32(ADDN):
-            //return (UINT32)ADDN.pool.used_object_capacity();
+            //return (uint32_t)ADDN.pool.used_object_capacity();
         case REV32(AVIF):
-            //return (UINT32)AVIF.pool.used_object_capacity();
+            //return (uint32_t)AVIF.pool.used_object_capacity();
         case REV32(RADS):
-            //return (UINT32)RADS.pool.used_object_capacity();
+            //return (uint32_t)RADS.pool.used_object_capacity();
         case REV32(CAMS):
-            //return (UINT32)CAMS.pool.used_object_capacity();
+            //return (uint32_t)CAMS.pool.used_object_capacity();
         case REV32(CPTH):
-            //return (UINT32)CPTH.pool.used_object_capacity();
+            //return (uint32_t)CPTH.pool.used_object_capacity();
         case REV32(VTYP):
-            //return (UINT32)VTYP.pool.used_object_capacity();
+            //return (uint32_t)VTYP.pool.used_object_capacity();
         case REV32(IPCT):
-            //return (UINT32)IPCT.pool.used_object_capacity();
+            //return (uint32_t)IPCT.pool.used_object_capacity();
         case REV32(IPDS):
-            //return (UINT32)IPDS.pool.used_object_capacity();
+            //return (uint32_t)IPDS.pool.used_object_capacity();
         case REV32(ARMA):
-            //return (UINT32)ARMA.pool.used_object_capacity();
+            //return (uint32_t)ARMA.pool.used_object_capacity();
         case REV32(ECZN):
-            //return (UINT32)ECZN.pool.used_object_capacity();
+            //return (uint32_t)ECZN.pool.used_object_capacity();
         case REV32(MESG):
-            //return (UINT32)MESG.pool.used_object_capacity();
+            //return (uint32_t)MESG.pool.used_object_capacity();
         case REV32(RGDL):
-            //return (UINT32)RGDL.pool.used_object_capacity();
+            //return (uint32_t)RGDL.pool.used_object_capacity();
         case REV32(DOBJ):
-            //return (UINT32)DOBJ.pool.used_object_capacity();
+            //return (uint32_t)DOBJ.pool.used_object_capacity();
         case REV32(LGTM):
-            //return (UINT32)LGTM.pool.used_object_capacity();
+            //return (uint32_t)LGTM.pool.used_object_capacity();
         case REV32(MUSC):
-            //return (UINT32)MUSC.pool.used_object_capacity();
+            //return (uint32_t)MUSC.pool.used_object_capacity();
         case REV32(IMOD):
-            //return (UINT32)IMOD.pool.used_object_capacity();
+            //return (uint32_t)IMOD.pool.used_object_capacity();
         case REV32(REPU):
-            //return (UINT32)REPU.pool.used_object_capacity();
+            //return (uint32_t)REPU.pool.used_object_capacity();
         case REV32(RCPE):
-            //return (UINT32)RCPE.pool.used_object_capacity();
+            //return (uint32_t)RCPE.pool.used_object_capacity();
         case REV32(RCCT):
-            //return (UINT32)RCCT.pool.used_object_capacity();
+            //return (uint32_t)RCCT.pool.used_object_capacity();
         case REV32(CHIP):
-            //return (UINT32)CHIP.pool.used_object_capacity();
+            //return (uint32_t)CHIP.pool.used_object_capacity();
         case REV32(CSNO):
-            //return (UINT32)CSNO.pool.used_object_capacity();
+            //return (uint32_t)CSNO.pool.used_object_capacity();
         case REV32(LSCT):
-            //return (UINT32)LSCT.pool.used_object_capacity();
+            //return (uint32_t)LSCT.pool.used_object_capacity();
         case REV32(MSET):
-            //return (UINT32)MSET.pool.used_object_capacity();
+            //return (uint32_t)MSET.pool.used_object_capacity();
         case REV32(ALOC):
-            //return (UINT32)ALOC.pool.used_object_capacity();
+            //return (uint32_t)ALOC.pool.used_object_capacity();
         case REV32(CHAL):
-            //return (UINT32)CHAL.pool.used_object_capacity();
+            //return (uint32_t)CHAL.pool.used_object_capacity();
         case REV32(AMEF):
-            //return (UINT32)AMEF.pool.used_object_capacity();
+            //return (uint32_t)AMEF.pool.used_object_capacity();
         case REV32(CCRD):
-            //return (UINT32)CCRD.pool.used_object_capacity();
+            //return (uint32_t)CCRD.pool.used_object_capacity();
         case REV32(CMNY):
-            //return (UINT32)CMNY.pool.used_object_capacity();
+            //return (uint32_t)CMNY.pool.used_object_capacity();
         case REV32(CDCK):
-            //return (UINT32)CDCK.pool.used_object_capacity();
+            //return (uint32_t)CDCK.pool.used_object_capacity();
         case REV32(DEHY):
-            //return (UINT32)DEHY.pool.used_object_capacity();
+            //return (uint32_t)DEHY.pool.used_object_capacity();
         case REV32(HUNG):
-            //return (UINT32)HUNG.pool.used_object_capacity();
+            //return (uint32_t)HUNG.pool.used_object_capacity();
         case REV32(SLPD):
-            //return (UINT32)SLPD.pool.used_object_capacity();
+            //return (uint32_t)SLPD.pool.used_object_capacity();
         default:
-            printer("FNVFile::GetNumRecords: Warning - Unable to count records (%c%c%c%c) in mod \"%s\". Unrecognized record type.\n", ((STRING)&RecordType)[0], ((STRING)&RecordType)[1], ((STRING)&RecordType)[2], ((STRING)&RecordType)[3], ModName);
+            printer("FNVFile::GetNumRecords: Warning - Unable to count records (%c%c%c%c) in mod \"%s\". Unrecognized record type.\n", ((char *)&RecordType)[0], ((char *)&RecordType)[1], ((char *)&RecordType)[2], ((char *)&RecordType)[3], ModName);
             break;
         }
     return 0;
     }
 
-Record * FNVFile::CreateRecord(const UINT32 &RecordType, STRING const &RecordEditorID, Record *&SourceRecord, Record *&ParentRecord, CreationFlags &options)
+Record * FNVFile::CreateRecord(const uint32_t &RecordType, char * const &RecordEditorID, Record *&SourceRecord, Record *&ParentRecord, CreationFlags &options)
     {
     //if(Flags.IsNoLoad)
     //    {
@@ -1300,13 +1300,13 @@ Record * FNVFile::CreateRecord(const UINT32 &RecordType, STRING const &RecordEdi
         case REV32(SLPD):
             //return SLPD.pool.construct(SourceRecord, this, true);
         default:
-            printer("FNVFile::CreateRecord: Error - Unable to create (%c%c%c%c) record in mod \"%s\". Unknown record type.\n", ((STRING)&RecordType)[0], ((STRING)&RecordType)[1], ((STRING)&RecordType)[2], ((STRING)&RecordType)[3], ModName);
+            printer("FNVFile::CreateRecord: Error - Unable to create (%c%c%c%c) record in mod \"%s\". Unknown record type.\n", ((char *)&RecordType)[0], ((char *)&RecordType)[1], ((char *)&RecordType)[2], ((char *)&RecordType)[3], ModName);
             break;
         }
     return newRecord;
     }
 
-SINT32 FNVFile::DeleteRecord(Record *&curRecord, RecordOp &deindexer)
+int32_t FNVFile::DeleteRecord(Record *&curRecord, RecordOp &deindexer)
     {
     switch(curRecord->GetType())
         {
@@ -1527,7 +1527,7 @@ SINT32 FNVFile::DeleteRecord(Record *&curRecord, RecordOp &deindexer)
                     }
                 else
                     {
-                    for(UINT32 ListIndex = 0; ListIndex < wrld_record->CELLS.size(); ++ListIndex)
+                    for(uint32_t ListIndex = 0; ListIndex < wrld_record->CELLS.size(); ++ListIndex)
                         {
                         if(wrld_record->CELLS[ListIndex] == curRecord)
                             {
@@ -1544,55 +1544,55 @@ SINT32 FNVFile::DeleteRecord(Record *&curRecord, RecordOp &deindexer)
                     }
                 }
             FNV::CELLRecord *cell_record = (FNV::CELLRecord *)curRecord;
-            for(UINT32 ListIndex = 0; ListIndex < cell_record->ACHR.size(); ++ListIndex)
+            for(uint32_t ListIndex = 0; ListIndex < cell_record->ACHR.size(); ++ListIndex)
                 {
                 deindexer.Accept(cell_record->ACHR[ListIndex]);
                 CELL.achr_pool.destroy(cell_record->ACHR[ListIndex]);
                 }
 
-            for(UINT32 ListIndex = 0; ListIndex < cell_record->ACRE.size(); ++ListIndex)
+            for(uint32_t ListIndex = 0; ListIndex < cell_record->ACRE.size(); ++ListIndex)
                 {
                 deindexer.Accept(cell_record->ACRE[ListIndex]);
                 CELL.acre_pool.destroy(cell_record->ACRE[ListIndex]);
                 }
 
-            for(UINT32 ListIndex = 0; ListIndex < cell_record->REFR.size(); ++ListIndex)
+            for(uint32_t ListIndex = 0; ListIndex < cell_record->REFR.size(); ++ListIndex)
                 {
                 deindexer.Accept(cell_record->REFR[ListIndex]);
                 CELL.refr_pool.destroy(cell_record->REFR[ListIndex]);
                 }
 
-            for(UINT32 ListIndex = 0; ListIndex < cell_record->PGRE.size(); ++ListIndex)
+            for(uint32_t ListIndex = 0; ListIndex < cell_record->PGRE.size(); ++ListIndex)
                 {
                 deindexer.Accept(cell_record->PGRE[ListIndex]);
                 CELL.pgre_pool.destroy(cell_record->PGRE[ListIndex]);
                 }
 
-            for(UINT32 ListIndex = 0; ListIndex < cell_record->PMIS.size(); ++ListIndex)
+            for(uint32_t ListIndex = 0; ListIndex < cell_record->PMIS.size(); ++ListIndex)
                 {
                 deindexer.Accept(cell_record->PMIS[ListIndex]);
                 CELL.pmis_pool.destroy(cell_record->PMIS[ListIndex]);
                 }
 
-            for(UINT32 ListIndex = 0; ListIndex < cell_record->PBEA.size(); ++ListIndex)
+            for(uint32_t ListIndex = 0; ListIndex < cell_record->PBEA.size(); ++ListIndex)
                 {
                 deindexer.Accept(cell_record->PBEA[ListIndex]);
                 CELL.pbea_pool.destroy(cell_record->PBEA[ListIndex]);
                 }
 
-            for(UINT32 ListIndex = 0; ListIndex < cell_record->PFLA.size(); ++ListIndex)
+            for(uint32_t ListIndex = 0; ListIndex < cell_record->PFLA.size(); ++ListIndex)
                 {
                 deindexer.Accept(cell_record->PFLA[ListIndex]);
                 CELL.pfla_pool.destroy(cell_record->PFLA[ListIndex]);
                 }
 
-            for(UINT32 ListIndex = 0; ListIndex < cell_record->PCBE.size(); ++ListIndex)
+            for(uint32_t ListIndex = 0; ListIndex < cell_record->PCBE.size(); ++ListIndex)
                 {
                 deindexer.Accept(cell_record->PCBE[ListIndex]);
                 CELL.pcbe_pool.destroy(cell_record->PCBE[ListIndex]);
                 }
 
-            for(UINT32 ListIndex = 0; ListIndex < cell_record->NAVM.size(); ++ListIndex)
+            for(uint32_t ListIndex = 0; ListIndex < cell_record->NAVM.size(); ++ListIndex)
                 {
                 deindexer.Accept(cell_record->NAVM[ListIndex]);
                 CELL.navm_pool.destroy(cell_record->NAVM[ListIndex]);
@@ -1616,58 +1616,58 @@ SINT32 FNVFile::DeleteRecord(Record *&curRecord, RecordOp &deindexer)
             if(cell_record != NULL) //Add it to list of cells to be deleted
                 wrld_record->CELLS.push_back(cell_record);
 
-            for(UINT32 ListIndex = 0; ListIndex < wrld_record->CELLS.size(); ++ListIndex)
+            for(uint32_t ListIndex = 0; ListIndex < wrld_record->CELLS.size(); ++ListIndex)
                 {
                 cell_record = (FNV::CELLRecord *)wrld_record->CELLS[ListIndex];
-                for(UINT32 ListX2Index = 0; ListX2Index < cell_record->ACHR.size(); ++ListX2Index)
+                for(uint32_t ListX2Index = 0; ListX2Index < cell_record->ACHR.size(); ++ListX2Index)
                     {
                     deindexer.Accept(cell_record->ACHR[ListX2Index]);
                     CELL.achr_pool.destroy(cell_record->ACHR[ListX2Index]);
                     }
 
-                for(UINT32 ListX2Index = 0; ListX2Index < cell_record->ACRE.size(); ++ListX2Index)
+                for(uint32_t ListX2Index = 0; ListX2Index < cell_record->ACRE.size(); ++ListX2Index)
                     {
                     deindexer.Accept(cell_record->ACRE[ListX2Index]);
                     CELL.acre_pool.destroy(cell_record->ACRE[ListX2Index]);
                     }
 
-                for(UINT32 ListX2Index = 0; ListX2Index < cell_record->REFR.size(); ++ListX2Index)
+                for(uint32_t ListX2Index = 0; ListX2Index < cell_record->REFR.size(); ++ListX2Index)
                     {
                     deindexer.Accept(cell_record->REFR[ListX2Index]);
                     CELL.refr_pool.destroy(cell_record->REFR[ListX2Index]);
                     }
 
-                for(UINT32 ListX2Index = 0; ListX2Index < cell_record->PGRE.size(); ++ListX2Index)
+                for(uint32_t ListX2Index = 0; ListX2Index < cell_record->PGRE.size(); ++ListX2Index)
                     {
                     deindexer.Accept(cell_record->PGRE[ListX2Index]);
                     CELL.pgre_pool.destroy(cell_record->PGRE[ListX2Index]);
                     }
 
-                for(UINT32 ListX2Index = 0; ListX2Index < cell_record->PMIS.size(); ++ListX2Index)
+                for(uint32_t ListX2Index = 0; ListX2Index < cell_record->PMIS.size(); ++ListX2Index)
                     {
                     deindexer.Accept(cell_record->PMIS[ListX2Index]);
                     CELL.pmis_pool.destroy(cell_record->PMIS[ListX2Index]);
                     }
 
-                for(UINT32 ListX2Index = 0; ListX2Index < cell_record->PBEA.size(); ++ListX2Index)
+                for(uint32_t ListX2Index = 0; ListX2Index < cell_record->PBEA.size(); ++ListX2Index)
                     {
                     deindexer.Accept(cell_record->PBEA[ListX2Index]);
                     CELL.pbea_pool.destroy(cell_record->PBEA[ListX2Index]);
                     }
 
-                for(UINT32 ListX2Index = 0; ListX2Index < cell_record->PFLA.size(); ++ListX2Index)
+                for(uint32_t ListX2Index = 0; ListX2Index < cell_record->PFLA.size(); ++ListX2Index)
                     {
                     deindexer.Accept(cell_record->PFLA[ListX2Index]);
                     CELL.pfla_pool.destroy(cell_record->PFLA[ListX2Index]);
                     }
 
-                for(UINT32 ListX2Index = 0; ListX2Index < cell_record->PCBE.size(); ++ListX2Index)
+                for(uint32_t ListX2Index = 0; ListX2Index < cell_record->PCBE.size(); ++ListX2Index)
                     {
                     deindexer.Accept(cell_record->PCBE[ListX2Index]);
                     CELL.pcbe_pool.destroy(cell_record->PCBE[ListX2Index]);
                     }
 
-                for(UINT32 ListX2Index = 0; ListX2Index < cell_record->NAVM.size(); ++ListX2Index)
+                for(uint32_t ListX2Index = 0; ListX2Index < cell_record->NAVM.size(); ++ListX2Index)
                     {
                     deindexer.Accept(cell_record->NAVM[ListX2Index]);
                     CELL.navm_pool.destroy(cell_record->NAVM[ListX2Index]);
@@ -1687,7 +1687,7 @@ SINT32 FNVFile::DeleteRecord(Record *&curRecord, RecordOp &deindexer)
         case REV32(DIAL):
             {
             FNV::DIALRecord *dial_record = (FNV::DIALRecord *)curRecord;
-            for(UINT32 ListIndex = 0; ListIndex < dial_record->INFO.size(); ++ListIndex)
+            for(uint32_t ListIndex = 0; ListIndex < dial_record->INFO.size(); ++ListIndex)
                 {
                 deindexer.Accept(dial_record->INFO[ListIndex]);
                 DIAL.info_pool.destroy(dial_record->INFO[ListIndex]);
@@ -1701,7 +1701,7 @@ SINT32 FNVFile::DeleteRecord(Record *&curRecord, RecordOp &deindexer)
             {
             FNV::DIALRecord *dial_record = (FNV::DIALRecord *)curRecord->GetParentRecord();
             bool info_found = false;
-            for(UINT32 ListIndex = 0; ListIndex < dial_record->INFO.size(); ++ListIndex)
+            for(uint32_t ListIndex = 0; ListIndex < dial_record->INFO.size(); ++ListIndex)
                 {
                 if(dial_record->INFO[ListIndex] == curRecord)
                     {
@@ -1724,7 +1724,7 @@ SINT32 FNVFile::DeleteRecord(Record *&curRecord, RecordOp &deindexer)
             {
             FNV::CELLRecord *cell_record = (FNV::CELLRecord *)curRecord->GetParentRecord();
             bool achr_found = false;
-            for(UINT32 ListIndex = 0; ListIndex < cell_record->ACHR.size(); ++ListIndex)
+            for(uint32_t ListIndex = 0; ListIndex < cell_record->ACHR.size(); ++ListIndex)
                 {
                 if(cell_record->ACHR[ListIndex] == curRecord)
                     {
@@ -1747,7 +1747,7 @@ SINT32 FNVFile::DeleteRecord(Record *&curRecord, RecordOp &deindexer)
             {
             FNV::CELLRecord *cell_record = (FNV::CELLRecord *)curRecord->GetParentRecord();
             bool child_found = false;
-            for(UINT32 ListIndex = 0; ListIndex < cell_record->ACRE.size(); ++ListIndex)
+            for(uint32_t ListIndex = 0; ListIndex < cell_record->ACRE.size(); ++ListIndex)
                 {
                 if(cell_record->ACRE[ListIndex] == curRecord)
                     {
@@ -1770,7 +1770,7 @@ SINT32 FNVFile::DeleteRecord(Record *&curRecord, RecordOp &deindexer)
             {
             FNV::CELLRecord *cell_record = (FNV::CELLRecord *)curRecord->GetParentRecord();
             bool child_found = false;
-            for(UINT32 ListIndex = 0; ListIndex < cell_record->REFR.size(); ++ListIndex)
+            for(uint32_t ListIndex = 0; ListIndex < cell_record->REFR.size(); ++ListIndex)
                 {
                 if(cell_record->REFR[ListIndex] == curRecord)
                     {
@@ -1793,7 +1793,7 @@ SINT32 FNVFile::DeleteRecord(Record *&curRecord, RecordOp &deindexer)
             {
             FNV::CELLRecord *cell_record = (FNV::CELLRecord *)curRecord->GetParentRecord();
             bool child_found = false;
-            for(UINT32 ListIndex = 0; ListIndex < cell_record->PGRE.size(); ++ListIndex)
+            for(uint32_t ListIndex = 0; ListIndex < cell_record->PGRE.size(); ++ListIndex)
                 {
                 if(cell_record->PGRE[ListIndex] == curRecord)
                     {
@@ -1816,7 +1816,7 @@ SINT32 FNVFile::DeleteRecord(Record *&curRecord, RecordOp &deindexer)
             {
             FNV::CELLRecord *cell_record = (FNV::CELLRecord *)curRecord->GetParentRecord();
             bool child_found = false;
-            for(UINT32 ListIndex = 0; ListIndex < cell_record->PMIS.size(); ++ListIndex)
+            for(uint32_t ListIndex = 0; ListIndex < cell_record->PMIS.size(); ++ListIndex)
                 {
                 if(cell_record->PMIS[ListIndex] == curRecord)
                     {
@@ -1839,7 +1839,7 @@ SINT32 FNVFile::DeleteRecord(Record *&curRecord, RecordOp &deindexer)
             {
             FNV::CELLRecord *cell_record = (FNV::CELLRecord *)curRecord->GetParentRecord();
             bool child_found = false;
-            for(UINT32 ListIndex = 0; ListIndex < cell_record->PBEA.size(); ++ListIndex)
+            for(uint32_t ListIndex = 0; ListIndex < cell_record->PBEA.size(); ++ListIndex)
                 {
                 if(cell_record->PBEA[ListIndex] == curRecord)
                     {
@@ -1862,7 +1862,7 @@ SINT32 FNVFile::DeleteRecord(Record *&curRecord, RecordOp &deindexer)
             {
             FNV::CELLRecord *cell_record = (FNV::CELLRecord *)curRecord->GetParentRecord();
             bool child_found = false;
-            for(UINT32 ListIndex = 0; ListIndex < cell_record->PFLA.size(); ++ListIndex)
+            for(uint32_t ListIndex = 0; ListIndex < cell_record->PFLA.size(); ++ListIndex)
                 {
                 if(cell_record->PFLA[ListIndex] == curRecord)
                     {
@@ -1885,7 +1885,7 @@ SINT32 FNVFile::DeleteRecord(Record *&curRecord, RecordOp &deindexer)
             {
             FNV::CELLRecord *cell_record = (FNV::CELLRecord *)curRecord->GetParentRecord();
             bool child_found = false;
-            for(UINT32 ListIndex = 0; ListIndex < cell_record->PCBE.size(); ++ListIndex)
+            for(uint32_t ListIndex = 0; ListIndex < cell_record->PCBE.size(); ++ListIndex)
                 {
                 if(cell_record->PCBE[ListIndex] == curRecord)
                     {
@@ -1908,7 +1908,7 @@ SINT32 FNVFile::DeleteRecord(Record *&curRecord, RecordOp &deindexer)
             {
             FNV::CELLRecord *cell_record = (FNV::CELLRecord *)curRecord->GetParentRecord();
             bool child_found = false;
-            for(UINT32 ListIndex = 0; ListIndex < cell_record->NAVM.size(); ++ListIndex)
+            for(uint32_t ListIndex = 0; ListIndex < cell_record->NAVM.size(); ++ListIndex)
                 {
                 if(cell_record->NAVM[ListIndex] == curRecord)
                     {
@@ -2149,7 +2149,7 @@ SINT32 FNVFile::DeleteRecord(Record *&curRecord, RecordOp &deindexer)
     return 0;
     }
 
-SINT32 FNVFile::Save(STRING const &SaveName, std::vector<FormIDResolver *> &Expanders, bool CloseMod, RecordOp &indexer)
+int32_t FNVFile::Save(char * const &SaveName, std::vector<FormIDResolver *> &Expanders, bool CloseMod, RecordOp &indexer)
     {
     if(!Flags.IsSaveable)
         {
@@ -2161,7 +2161,7 @@ SINT32 FNVFile::Save(STRING const &SaveName, std::vector<FormIDResolver *> &Expa
     if(writer.open() == -1)
         throw std::exception("FNVFile::Save: Error - Unable to open temporary file for writing\n");
 
-    UINT32 formCount = 0;
+    uint32_t formCount = 0;
     FormIDResolver expander(FormIDHandler.ExpandTable, FormIDHandler.FileStart, FormIDHandler.FileEnd);
     FormIDResolver collapser(FormIDHandler.CollapseTable, FormIDHandler.FileStart, FormIDHandler.FileEnd);
     //RecordReader reader(FormIDHandler);
@@ -2411,7 +2411,7 @@ void FNVFile::VisitAllRecords(RecordOp &op)
     return;
     }
 
-void FNVFile::VisitRecords(const UINT32 &RecordType, RecordOp &op)
+void FNVFile::VisitRecords(const uint32_t &RecordType, RecordOp &op)
     {
     //if(Flags.IsNoLoad)
     //    {
@@ -2771,7 +2771,7 @@ void FNVFile::VisitRecords(const UINT32 &RecordType, RecordOp &op)
             //SLPD.pool.VisitRecords(op);
             //break;
         default:
-            printer("FNVFile::VisitRecords: Error - Unable to visit record type (%c%c%c%c) in mod \"%s\". Unknown record type.\n", ((STRING)&RecordType)[0], ((STRING)&RecordType)[1], ((STRING)&RecordType)[2], ((STRING)&RecordType)[3], ModName);
+            printer("FNVFile::VisitRecords: Error - Unable to visit record type (%c%c%c%c) in mod \"%s\". Unknown record type.\n", ((char *)&RecordType)[0], ((char *)&RecordType)[1], ((char *)&RecordType)[2], ((char *)&RecordType)[3], ModName);
             break;
         }
     return;

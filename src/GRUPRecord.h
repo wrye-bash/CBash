@@ -45,12 +45,12 @@
 
 //#include "mmgr.h"
 
-template<class T, UINT32 RecType, UINT32 AllocUnit, bool IsKeyedByEditorID=false>
+template<class T, uint32_t RecType, uint32_t AllocUnit, bool IsKeyedByEditorID=false>
 class GRUPRecords
     {
     public:
         RecordPoolAllocator<T, RecType, AllocUnit> pool;
-        UINT32 stamp;
+        uint32_t stamp;
 
         GRUPRecords():
             stamp(134671)
@@ -63,9 +63,9 @@ class GRUPRecords
             //
             }
 
-        bool Read(unsigned char *&buffer_start, unsigned char *&buffer_position, unsigned char *&group_buffer_end, RecordOp &indexer, RecordOp &parser, std::vector<Record *> &DeletedRecords, RecordProcessor &processor, STRING &FileName)
+        bool Read(unsigned char *&buffer_start, unsigned char *&buffer_position, unsigned char *&group_buffer_end, RecordOp &indexer, RecordOp &parser, std::vector<Record *> &DeletedRecords, RecordProcessor &processor, char * &FileName)
             {
-            stamp = *(UINT32 *)buffer_position;
+            stamp = *(uint32_t *)buffer_position;
             buffer_position += 4;
             if(group_buffer_end <= buffer_position)
                 {
@@ -77,11 +77,11 @@ class GRUPRecords
                 }
 
             Record * curRecord = NULL;
-            UINT32 recordSize = 0;
+            uint32_t recordSize = 0;
             RecordHeader header;
 
             std::vector<RecordHeader> records;
-            records.reserve((UINT32)(group_buffer_end - buffer_position) / sizeof(T)); //gross overestimation, but good enough
+            records.reserve((uint32_t)(group_buffer_end - buffer_position) / sizeof(T)); //gross overestimation, but good enough
             while(buffer_position < group_buffer_end){
                 if((processor.IsSkipAllRecords && processor.IsTrackNewTypes) &&
                     processor.NewTypes.count(RecType) > 0)
@@ -91,15 +91,15 @@ class GRUPRecords
                     }
 
                 //Assumes that all records in a generic group are of the same type
-                header.type = *(UINT32 *)buffer_position;
+                header.type = *(uint32_t *)buffer_position;
                 buffer_position += 4;
-                recordSize = *(UINT32 *)buffer_position;
+                recordSize = *(uint32_t *)buffer_position;
                 buffer_position += 4;
-                header.flags = *(UINT32 *)buffer_position;
+                header.flags = *(uint32_t *)buffer_position;
                 buffer_position += 4;
                 header.formID = *(FORMID *)buffer_position;
                 buffer_position += 4;
-                header.flagsUnk = *(UINT32 *)buffer_position;
+                header.flagsUnk = *(uint32_t *)buffer_position;
                 buffer_position += 4;
 
                 if(processor.Accept(header))
@@ -115,13 +115,13 @@ class GRUPRecords
                 {
                 //Allocates many records at once in a contiguous space
                 //Allocate memory
-                unsigned char *buffer = (unsigned char *)malloc(sizeof(T) * (UINT32)records.size());
+                unsigned char *buffer = (unsigned char *)malloc(sizeof(T) * (uint32_t)records.size());
                 if(buffer == 0)
                     throw std::bad_alloc();
                 pool.add_buffer(buffer);
 
                 //Construct the records
-                for(UINT32 x = 0; x < records.size();++x)
+                for(uint32_t x = 0; x < records.size();++x)
                     {
                     header = records[x];
                     curRecord = new(buffer) T(header.data);
@@ -149,23 +149,23 @@ class GRUPRecords
             return true;
             }
 
-        UINT32 Write(FileWriter &writer, std::vector<FormIDResolver *> &Expanders, FormIDResolver &expander, FormIDResolver &collapser, const bool &bMastersChanged, bool CloseMod)
+        uint32_t Write(FileWriter &writer, std::vector<FormIDResolver *> &Expanders, FormIDResolver &expander, FormIDResolver &collapser, const bool &bMastersChanged, bool CloseMod)
             {
             std::vector<Record *> Records;
             pool.MakeRecordsVector(Records);
-            UINT32 numRecords = (UINT32)Records.size();
+            uint32_t numRecords = (uint32_t)Records.size();
             if(numRecords == 0)
                 return 0;
 
-            UINT32 type = REV32(GRUP);
-            UINT32 gType = eTop;
-            UINT32 TopSize = 0;
-            UINT32 TopLabel = RecType;
-            UINT32 formCount = 0;
+            uint32_t type = REV32(GRUP);
+            uint32_t gType = eTop;
+            uint32_t TopSize = 0;
+            uint32_t TopLabel = RecType;
+            uint32_t formCount = 0;
 
             //Top GRUP Header
             writer.file_write(&type, 4);
-            UINT32 TopSizePos = writer.file_tell();
+            uint32_t TopSizePos = writer.file_tell();
             writer.file_write(&TopSize, 4); //Placeholder: will be overwritten with correct value later.
             writer.file_write(&TopLabel, 4);
             writer.file_write(&gType, 4);
@@ -174,7 +174,7 @@ class GRUPRecords
             TopSize = 20;
 
             formCount += numRecords;
-            for(UINT32 p = 0; p < numRecords; p++)
+            for(uint32_t p = 0; p < numRecords; p++)
                 TopSize += Records[p]->Write(writer, bMastersChanged, expander, collapser, Expanders);
 
             writer.file_write(TopSizePos, &TopSize, 4);
@@ -187,12 +187,12 @@ class GRUPRecords
 
 #include "Oblivion/GRUPRecord.h"
 
-template<class T, UINT32 RecType, UINT32 AllocUnit, bool IsKeyedByEditorID=false>
+template<class T, uint32_t RecType, uint32_t AllocUnit, bool IsKeyedByEditorID=false>
 class FNVGRUPRecords
     {
     public:
         RecordPoolAllocator<T, RecType, AllocUnit> pool;
-        UINT32 stamp, unknown;
+        uint32_t stamp, unknown;
 
         FNVGRUPRecords():
             stamp(134671),
@@ -206,11 +206,11 @@ class FNVGRUPRecords
             //
             }
 
-        bool Read(unsigned char *&buffer_start, unsigned char *&buffer_position, unsigned char *&group_buffer_end, RecordOp &indexer, RecordOp &parser, std::vector<Record *> &DeletedRecords, RecordProcessor &processor, STRING &FileName)
+        bool Read(unsigned char *&buffer_start, unsigned char *&buffer_position, unsigned char *&group_buffer_end, RecordOp &indexer, RecordOp &parser, std::vector<Record *> &DeletedRecords, RecordProcessor &processor, char * &FileName)
             {
-            stamp = *(UINT32 *)buffer_position;
+            stamp = *(uint32_t *)buffer_position;
             buffer_position += 4;
-            unknown = *(UINT32 *)buffer_position;
+            unknown = *(uint32_t *)buffer_position;
             buffer_position += 4;
             if(group_buffer_end <= buffer_position)
                 {
@@ -222,11 +222,11 @@ class FNVGRUPRecords
                 }
 
             Record * curRecord = NULL;
-            UINT32 recordSize = 0;
+            uint32_t recordSize = 0;
             RecordHeader header;
 
             std::vector<RecordHeader> records;
-            records.reserve((UINT32)(group_buffer_end - buffer_position) / sizeof(T)); //gross overestimation, but good enough
+            records.reserve((uint32_t)(group_buffer_end - buffer_position) / sizeof(T)); //gross overestimation, but good enough
             while(buffer_position < group_buffer_end){
                 if((processor.IsSkipAllRecords && processor.IsTrackNewTypes) &&
                     processor.NewTypes.count(RecType) > 0)
@@ -236,21 +236,21 @@ class FNVGRUPRecords
                     }
 
                 //Assumes that all records in a generic group are of the same type
-                header.type = *(UINT32 *)buffer_position;
+                header.type = *(uint32_t *)buffer_position;
                 buffer_position += 4;
-                recordSize = *(UINT32 *)buffer_position;
+                recordSize = *(uint32_t *)buffer_position;
                 buffer_position += 4;
-                header.flags = *(UINT32 *)buffer_position;
+                header.flags = *(uint32_t *)buffer_position;
                 buffer_position += 4;
                 header.formID = *(FORMID *)buffer_position;
                 buffer_position += 4;
-                header.flagsUnk = *(UINT32 *)buffer_position; //VersionControl1
+                header.flagsUnk = *(uint32_t *)buffer_position; //VersionControl1
                 buffer_position += 4;
-                header.formVersion = *(UINT16 *)buffer_position;
+                header.formVersion = *(uint16_t *)buffer_position;
                 buffer_position += 2;
-                header.versionControl2[0] = *(UINT8 *)buffer_position;
+                header.versionControl2[0] = *(uint8_t *)buffer_position;
                 buffer_position++;
-                header.versionControl2[1] = *(UINT8 *)buffer_position;
+                header.versionControl2[1] = *(uint8_t *)buffer_position;
                 buffer_position++;
 
                 if(processor.Accept(header))
@@ -266,13 +266,13 @@ class FNVGRUPRecords
                 {
                 //Allocates many records at once in a contiguous space
                 //Allocate memory
-                unsigned char *buffer = (unsigned char *)malloc(sizeof(T) * (UINT32)records.size());
+                unsigned char *buffer = (unsigned char *)malloc(sizeof(T) * (uint32_t)records.size());
                 if(buffer == 0)
                     throw std::bad_alloc();
                 pool.add_buffer(buffer);
 
                 //Construct the records
-                for(UINT32 x = 0; x < records.size();++x)
+                for(uint32_t x = 0; x < records.size();++x)
                     {
                     header = records[x];
                     curRecord = new(buffer) T(header.data);
@@ -304,23 +304,23 @@ class FNVGRUPRecords
             return true;
             }
 
-        UINT32 Write(FileWriter &writer, std::vector<FormIDResolver *> &Expanders, FormIDResolver &expander, FormIDResolver &collapser, const bool &bMastersChanged, bool CloseMod)
+        uint32_t Write(FileWriter &writer, std::vector<FormIDResolver *> &Expanders, FormIDResolver &expander, FormIDResolver &collapser, const bool &bMastersChanged, bool CloseMod)
             {
             std::vector<Record *> Records;
             pool.MakeRecordsVector(Records);
-            UINT32 numRecords = (UINT32)Records.size();
+            uint32_t numRecords = (uint32_t)Records.size();
             if(numRecords == 0)
                 return 0;
 
-            UINT32 type = REV32(GRUP);
-            UINT32 gType = eTop;
-            UINT32 TopSize = 0;
-            UINT32 TopLabel = RecType;
-            UINT32 formCount = 0;
+            uint32_t type = REV32(GRUP);
+            uint32_t gType = eTop;
+            uint32_t TopSize = 0;
+            uint32_t TopLabel = RecType;
+            uint32_t formCount = 0;
 
             //Top GRUP Header
             writer.file_write(&type, 4);
-            UINT32 TopSizePos = writer.file_tell();
+            uint32_t TopSizePos = writer.file_tell();
             writer.file_write(&TopSize, 4); //Placeholder: will be overwritten with correct value later.
             writer.file_write(&TopLabel, 4);
             writer.file_write(&gType, 4);
@@ -330,7 +330,7 @@ class FNVGRUPRecords
             TopSize = 24;
 
             formCount += numRecords;
-            for(UINT32 p = 0; p < numRecords; p++)
+            for(uint32_t p = 0; p < numRecords; p++)
                 TopSize += Records[p]->Write(writer, bMastersChanged, expander, collapser, Expanders);
 
             writer.file_write(TopSizePos, &TopSize, 4);
@@ -343,12 +343,12 @@ class FNVGRUPRecords
 
 #include "FalloutNewVegas/GRUPRecord.h"
 
-template<class T, UINT32 RecType, UINT32 AllocUnit, bool IsKeyedByEditorID=false>
+template<class T, uint32_t RecType, uint32_t AllocUnit, bool IsKeyedByEditorID=false>
 class TES5GRUPRecords
     {
     public:
         RecordPoolAllocator<T, RecType, AllocUnit> pool;
-        UINT32 stamp, unknown;
+        uint32_t stamp, unknown;
 
         TES5GRUPRecords():
             stamp(134671),
@@ -362,11 +362,11 @@ class TES5GRUPRecords
         //
         }
 
-        bool Read(unsigned char *&buffer_start, unsigned char *&buffer_position, unsigned char *&group_buffer_end, RecordOp &indexer, RecordOp &parser, std::vector<Record *> &DeletedRecords, RecordProcessor &processor, STRING &FileName)
+        bool Read(unsigned char *&buffer_start, unsigned char *&buffer_position, unsigned char *&group_buffer_end, RecordOp &indexer, RecordOp &parser, std::vector<Record *> &DeletedRecords, RecordProcessor &processor, char * &FileName)
         {
-            stamp = *(UINT32 *)buffer_position;
+            stamp = *(uint32_t *)buffer_position;
             buffer_position += 4;
-            unknown = *(UINT32 *)buffer_position;
+            unknown = *(uint32_t *)buffer_position;
             buffer_position += 4;
             if(group_buffer_end <= buffer_position)
             {
@@ -378,11 +378,11 @@ class TES5GRUPRecords
             }
 
             Record * curRecord = NULL;
-            UINT32 recordSize = 0;
+            uint32_t recordSize = 0;
             RecordHeader header;
 
             std::vector<RecordHeader> records;
-            records.reserve((UINT32)(group_buffer_end - buffer_position) / sizeof(T)); //gross overestimation, but good enough
+            records.reserve((uint32_t)(group_buffer_end - buffer_position) / sizeof(T)); //gross overestimation, but good enough
             while(buffer_position < group_buffer_end)
             {
                 if ((processor.IsSkipAllRecords && processor.IsTrackNewTypes) &&
@@ -393,21 +393,21 @@ class TES5GRUPRecords
                 }
 
                 //Assumes that all records in a generic group are of the same type
-                header.type = *(UINT32 *)buffer_position;
+                header.type = *(uint32_t *)buffer_position;
                 buffer_position += 4;
-                recordSize = *(UINT32 *)buffer_position;
+                recordSize = *(uint32_t *)buffer_position;
                 buffer_position += 4;
-                header.flags = *(UINT32 *)buffer_position;
+                header.flags = *(uint32_t *)buffer_position;
                 buffer_position += 4;
                 header.formID = *(FORMID *)buffer_position;
                 buffer_position += 4;
-                header.flagsUnk = *(UINT32 *)buffer_position; //VersionControl1
+                header.flagsUnk = *(uint32_t *)buffer_position; //VersionControl1
                 buffer_position += 4;
-                header.formVersion = *(UINT16 *)buffer_position;
+                header.formVersion = *(uint16_t *)buffer_position;
                 buffer_position += 2;
-                header.versionControl2[0] = *(UINT8 *)buffer_position;
+                header.versionControl2[0] = *(uint8_t *)buffer_position;
                 buffer_position++;
-                header.versionControl2[1] = *(UINT8 *)buffer_position;
+                header.versionControl2[1] = *(uint8_t *)buffer_position;
                 buffer_position++;
 
                 if (processor.Accept(header))
@@ -423,13 +423,13 @@ class TES5GRUPRecords
             {
                 //Allocates many records at once in a contiguous space
                 //Allocate memory
-                unsigned char *buffer = (unsigned char *)malloc(sizeof(T) * (UINT32)records.size());
+                unsigned char *buffer = (unsigned char *)malloc(sizeof(T) * (uint32_t)records.size());
                 if (buffer == 0)
                     throw std::bad_alloc();
                 pool.add_buffer(buffer);
 
                 //Construct the records
-                for(UINT32 x = 0; x < records.size();++x)
+                for(uint32_t x = 0; x < records.size();++x)
                 {
                     header = records[x];
                     curRecord = new(buffer) T(header.data);
@@ -462,23 +462,23 @@ class TES5GRUPRecords
             return true;
         }
 
-        UINT32 Write(FileWriter &writer, std::vector<FormIDResolver *> &Expanders, FormIDResolver &expander, FormIDResolver &collapser, const bool &bMastersChanged, bool CloseMod)
+        uint32_t Write(FileWriter &writer, std::vector<FormIDResolver *> &Expanders, FormIDResolver &expander, FormIDResolver &collapser, const bool &bMastersChanged, bool CloseMod)
         {
             std::vector<Record *> Records;
             pool.MakeRecordsVector(Records);
-            UINT32 numRecords = (UINT32)Records.size();
+            uint32_t numRecords = (uint32_t)Records.size();
             if (numRecords == 0)
                 return 0;
 
-            UINT32 type = REV32(GRUP);
-            UINT32 gType = eTop;
-            UINT32 TopSize = 0;
-            UINT32 TopLabel = RecType;
-            UINT32 formCount = 0;
+            uint32_t type = REV32(GRUP);
+            uint32_t gType = eTop;
+            uint32_t TopSize = 0;
+            uint32_t TopLabel = RecType;
+            uint32_t formCount = 0;
 
             //Top GRUP Header
             writer.file_write(&type, 4);
-            UINT32 TopSizePos = writer.file_tell();
+            uint32_t TopSizePos = writer.file_tell();
             writer.file_write(&TopSize, 4); //Placeholder: will be overwritten with correct value later.
             writer.file_write(&TopLabel, 4);
             writer.file_write(&gType, 4);
@@ -488,7 +488,7 @@ class TES5GRUPRecords
             TopSize = 24;
 
             formCount += numRecords;
-            for(UINT32 p = 0; p < numRecords; p++)
+            for(uint32_t p = 0; p < numRecords; p++)
                 TopSize += Records[p]->Write(writer, bMastersChanged, expander, collapser, Expanders);
 
             writer.file_write(TopSizePos, &TopSize, 4);

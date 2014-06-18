@@ -218,12 +218,12 @@ void CREARecord::CREASound::IsWeapon(bool value)
         CSDT.value = eLeftFoot;
     }
 
-bool CREARecord::CREASound::IsType(UINT32 Type)
+bool CREARecord::CREASound::IsType(uint32_t Type)
     {
     return (CSDT.value == Type);
     }
 
-void CREARecord::CREASound::SetType(UINT32 Type)
+void CREARecord::CREASound::SetType(uint32_t Type)
     {
     CSDT.value = Type;
     }
@@ -308,23 +308,23 @@ bool CREARecord::VisitFormIDs(FormIDOp &op)
     if(!IsLoaded())
         return false;
 
-    for(UINT32 ListIndex = 0; ListIndex < SPLO.value.size(); ListIndex++)
+    for(uint32_t ListIndex = 0; ListIndex < SPLO.value.size(); ListIndex++)
         op.Accept(SPLO.value[ListIndex]);
-    for(UINT32 ListIndex = 0; ListIndex < SNAM.value.size(); ListIndex++)
+    for(uint32_t ListIndex = 0; ListIndex < SNAM.value.size(); ListIndex++)
         op.Accept(SNAM.value[ListIndex]->faction);
     if(INAM.IsLoaded())
         op.Accept(INAM.value);
     if(SCRI.IsLoaded())
         op.Accept(SCRI.value);
-    for(UINT32 ListIndex = 0; ListIndex < CNTO.value.size(); ListIndex++)
+    for(uint32_t ListIndex = 0; ListIndex < CNTO.value.size(); ListIndex++)
         op.Accept(CNTO.value[ListIndex]->item);
-    for(UINT32 ListIndex = 0; ListIndex < PKID.value.size(); ListIndex++)
+    for(uint32_t ListIndex = 0; ListIndex < PKID.value.size(); ListIndex++)
         op.Accept(PKID.value[ListIndex]);
     if(ZNAM.IsLoaded())
         op.Accept(ZNAM.value);
     if(CSCR.IsLoaded())
         op.Accept(CSCR.value);
-    for(UINT32 ListIndex = 0; ListIndex < Sounds.value.size(); ListIndex++)
+    for(uint32_t ListIndex = 0; ListIndex < Sounds.value.size(); ListIndex++)
         op.Accept(Sounds.value[ListIndex]->CSDI.value);
 
     return op.Stop();
@@ -590,12 +590,12 @@ void CREARecord::IsCorpseCheck(bool value)
     IsNoCorpseCheck(!value);
     }
 
-bool CREARecord::IsFlagMask(UINT32 Mask, bool Exact)
+bool CREARecord::IsFlagMask(uint32_t Mask, bool Exact)
     {
     return Exact ? ((ACBS.value.flags & Mask) == Mask) : ((ACBS.value.flags & Mask) != 0);
     }
 
-void CREARecord::SetFlagMask(UINT32 Mask)
+void CREARecord::SetFlagMask(uint32_t Mask)
     {
     ACBS.value.flags = Mask;
     }
@@ -678,12 +678,12 @@ void CREARecord::IsGiant(bool value)
         DATA.value.creatureType = eCreature;
     }
 
-bool CREARecord::IsType(UINT8 Type)
+bool CREARecord::IsType(uint8_t Type)
     {
     return (DATA.value.creatureType == Type);
     }
 
-void CREARecord::SetType(UINT8 Type)
+void CREARecord::SetType(uint8_t Type)
     {
     DATA.value.creatureType = Type;
     }
@@ -766,12 +766,12 @@ void CREARecord::IsGrandSoul(bool value)
         DATA.value.soul = eNone;
     }
 
-bool CREARecord::IsSoul(UINT8 Type)
+bool CREARecord::IsSoul(uint8_t Type)
     {
     return (DATA.value.soul == Type);
     }
 
-void CREARecord::SetSoul(UINT8 Type)
+void CREARecord::SetSoul(uint8_t Type)
     {
     DATA.value.soul = Type;
     }
@@ -916,45 +916,45 @@ void CREARecord::IsServicesRepair(bool value)
     SETBIT(AIDT.value.flags, fRepair, value);
     }
 
-bool CREARecord::IsServicesFlagMask(UINT32 Mask, bool Exact)
+bool CREARecord::IsServicesFlagMask(uint32_t Mask, bool Exact)
     {
     return Exact ? ((AIDT.value.flags & Mask) == Mask) : ((AIDT.value.flags & Mask) != 0);
     }
 
-void CREARecord::SetServicesFlagMask(UINT32 Mask)
+void CREARecord::SetServicesFlagMask(uint32_t Mask)
     {
     AIDT.value.flags = Mask;
     }
 
-UINT32 CREARecord::GetType()
+uint32_t CREARecord::GetType()
     {
     return REV32(CREA);
     }
 
-STRING CREARecord::GetStrType()
+char * CREARecord::GetStrType()
     {
     return "CREA";
     }
 
-SINT32 CREARecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk)
+int32_t CREARecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk)
     {
-    UINT32 subType = 0;
-    UINT32 subSize = 0;
+    uint32_t subType = 0;
+    uint32_t subSize = 0;
     FORMID curFormID = 0;
     while(buffer < end_buffer){
-        subType = *(UINT32 *)buffer;
+        subType = *(uint32_t *)buffer;
         buffer += 4;
         switch(subType)
             {
             case REV32(XXXX):
                 buffer += 2;
-                subSize = *(UINT32 *)buffer;
+                subSize = *(uint32_t *)buffer;
                 buffer += 4;
-                subType = *(UINT32 *)buffer;
+                subType = *(uint32_t *)buffer;
                 buffer += 6;
                 break;
             default:
-                subSize = *(UINT16 *)buffer;
+                subSize = *(uint16_t *)buffer;
                 buffer += 2;
                 break;
             }
@@ -989,7 +989,7 @@ SINT32 CREARecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer,
                 //Hack
                 {
                 bool unload_nift = true;
-                for(UINT32 x = 0; x < NIFT.GetSize(); ++x)
+                for(uint32_t x = 0; x < NIFT.GetSize(); ++x)
                     if(NIFT.value[x] != 0)
                         {
                         unload_nift = false;
@@ -1077,7 +1077,7 @@ SINT32 CREARecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer,
     return 0;
     }
 
-SINT32 CREARecord::Unload()
+int32_t CREARecord::Unload()
     {
     IsChanged(false);
     IsLoaded(false);
@@ -1108,7 +1108,7 @@ SINT32 CREARecord::Unload()
     return 1;
     }
 
-SINT32 CREARecord::WriteRecord(FileWriter &writer)
+int32_t CREARecord::WriteRecord(FileWriter &writer)
     {
     WRITE(EDID);
     WRITE(FULL);

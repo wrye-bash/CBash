@@ -246,20 +246,20 @@ class FNVFile : public ModFile
         //FNVGRUPRecords<FNV::HUNGRecord, REV32(HUNG), 5> HUNG;
         //FNVGRUPRecords<FNV::SLPDRecord, REV32(SLPD), 5> SLPD;
 
-        FNVFile(Collection *_Parent, STRING FileName, STRING ModName, const UINT32 _flags);
+        FNVFile(Collection *_Parent, char * FileName, char * ModName, const uint32_t _flags);
         ~FNVFile();
 
         Record * GetTES4();
-        SINT32   LoadTES4();
-        SINT32   Load(RecordOp &read_parser, RecordOp &indexer, std::vector<FormIDResolver *> &Expanders, std::vector<Record *> &DeletedRecords);
-        UINT32   GetNumRecords(const UINT32 &RecordType);
-        STRING   GetMasterName(UINT8 &CollapsedIndex);
-        Record * CreateRecord(const UINT32 &RecordType, STRING const &RecordEditorID, Record *&SourceRecord, Record *&ParentRecord, CreationFlags &options);
-        SINT32   DeleteRecord(Record *&curRecord, RecordOp &deindexer);
-        SINT32   Save(STRING const &SaveName, std::vector<FormIDResolver *> &Expanders, bool CloseMod, RecordOp &indexer);
+        int32_t   LoadTES4();
+        int32_t   Load(RecordOp &read_parser, RecordOp &indexer, std::vector<FormIDResolver *> &Expanders, std::vector<Record *> &DeletedRecords);
+        uint32_t   GetNumRecords(const uint32_t &RecordType);
+        char *   GetMasterName(uint8_t &CollapsedIndex);
+        Record * CreateRecord(const uint32_t &RecordType, char * const &RecordEditorID, Record *&SourceRecord, Record *&ParentRecord, CreationFlags &options);
+        int32_t   DeleteRecord(Record *&curRecord, RecordOp &deindexer);
+        int32_t   Save(char * const &SaveName, std::vector<FormIDResolver *> &Expanders, bool CloseMod, RecordOp &indexer);
 
-        void     SetFilter(bool inclusive, boost::unordered_set<UINT32> &RecordTypes, boost::unordered_set<FORMID> &WorldSpaces);
+        void     SetFilter(bool inclusive, boost::unordered_set<uint32_t> &RecordTypes, boost::unordered_set<FORMID> &WorldSpaces);
 
         void     VisitAllRecords(RecordOp &op);
-        void     VisitRecords(const UINT32 &RecordType, RecordOp &op);
+        void     VisitRecords(const uint32_t &RecordType, RecordOp &op);
     };

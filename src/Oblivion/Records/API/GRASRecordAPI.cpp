@@ -38,7 +38,7 @@
 
 namespace Ob
 {
-UINT32 GRASRecord::GetFieldAttribute(FIELD_IDENTIFIERS, UINT32 WhichAttribute)
+uint32_t GRASRecord::GetFieldAttribute(FIELD_IDENTIFIERS, uint32_t WhichAttribute)
     {
     switch(FieldID)
         {
@@ -179,39 +179,39 @@ void * GRASRecord::GetField(FIELD_IDENTIFIERS, void **FieldValues)
     return NULL;
     }
 
-bool GRASRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
+bool GRASRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, uint32_t ArraySize)
     {
     switch(FieldID)
         {
         case 1: //flags1
-            SetHeaderFlagMask(*(UINT32 *)FieldValue);
+            SetHeaderFlagMask(*(uint32_t *)FieldValue);
             break;
         case 3: //flags2
-            SetHeaderUnknownFlagMask(*(UINT32 *)FieldValue);
+            SetHeaderUnknownFlagMask(*(uint32_t *)FieldValue);
             break;
         case 4: //eid
-            EDID.Copy((STRING)FieldValue);
+            EDID.Copy((char *)FieldValue);
             break;
         case 5: //modPath
             MODL.Load();
-            MODL->MODL.Copy((STRING)FieldValue);
+            MODL->MODL.Copy((char *)FieldValue);
             break;
         case 6: //modb
             MODL.Load();
-            MODL->MODB.value = *(FLOAT32 *)FieldValue;
+            MODL->MODB.value = *(float *)FieldValue;
             break;
         case 7: //modt_p
             MODL.Load();
             MODL->MODT.Copy((UINT8ARRAY)FieldValue, ArraySize);
             break;
         case 8: //density
-            DATA.value.density = *(UINT8 *)FieldValue;
+            DATA.value.density = *(uint8_t *)FieldValue;
             break;
         case 9: //minSlope
-            DATA.value.minSlope = *(UINT8 *)FieldValue;
+            DATA.value.minSlope = *(uint8_t *)FieldValue;
             break;
         case 10: //maxSlope
-            DATA.value.maxSlope = *(UINT8 *)FieldValue;
+            DATA.value.maxSlope = *(uint8_t *)FieldValue;
             break;
         case 11: //unused1
             if(ArraySize != 1)
@@ -219,7 +219,7 @@ bool GRASRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             DATA.value.unused1 = ((UINT8ARRAY)FieldValue)[0];
             break;
         case 12: //waterDistance
-            DATA.value.waterDistance = *(UINT16 *)FieldValue;
+            DATA.value.waterDistance = *(uint16_t *)FieldValue;
             break;
         case 13: //unused2
             if(ArraySize != 2)
@@ -228,22 +228,22 @@ bool GRASRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             DATA.value.unused2[1] = ((UINT8ARRAY)FieldValue)[1];
             break;
         case 14: //waterOp
-            DATA.value.waterOp = *(UINT32 *)FieldValue;
+            DATA.value.waterOp = *(uint32_t *)FieldValue;
             break;
         case 15: //posRange
-            DATA.value.posRange = *(FLOAT32 *)FieldValue;
+            DATA.value.posRange = *(float *)FieldValue;
             break;
         case 16: //heightRange
-            DATA.value.heightRange = *(FLOAT32 *)FieldValue;
+            DATA.value.heightRange = *(float *)FieldValue;
             break;
         case 17: //colorRange
-            DATA.value.colorRange = *(FLOAT32 *)FieldValue;
+            DATA.value.colorRange = *(float *)FieldValue;
             break;
         case 18: //wavePeriod
-            DATA.value.wavePeriod = *(FLOAT32 *)FieldValue;
+            DATA.value.wavePeriod = *(float *)FieldValue;
             break;
         case 19: //flags
-            SetFlagMask(*(UINT8 *)FieldValue);
+            SetFlagMask(*(uint8_t *)FieldValue);
             break;
         case 20: //unused3
             if(ArraySize != 3)

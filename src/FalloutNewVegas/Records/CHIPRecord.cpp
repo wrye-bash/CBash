@@ -87,12 +87,12 @@ bool CHIPRecord::VisitFormIDs(FormIDOp &op)
 
     if(MODL.IsLoaded())
         {
-        for(UINT32 x = 0; x < MODL->Textures.MODS.size(); x++)
+        for(uint32_t x = 0; x < MODL->Textures.MODS.size(); x++)
             op.Accept(MODL->Textures.MODS[x]->texture);
         }
     if(Destructable.IsLoaded())
         {
-        for(UINT32 x = 0; x < Destructable->Stages.value.size(); ++x)
+        for(uint32_t x = 0; x < Destructable->Stages.value.size(); ++x)
             {
             op.Accept(Destructable->Stages.value[x]->DSTD.value.explosion);
             op.Accept(Destructable->Stages.value[x]->DSTD.value.debris);
@@ -106,34 +106,34 @@ bool CHIPRecord::VisitFormIDs(FormIDOp &op)
     return op.Stop();
     }
 
-UINT32 CHIPRecord::GetType()
+uint32_t CHIPRecord::GetType()
     {
     return REV32(CHIP);
     }
 
-STRING CHIPRecord::GetStrType()
+char * CHIPRecord::GetStrType()
     {
     return "CHIP";
     }
 
-SINT32 CHIPRecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk)
+int32_t CHIPRecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk)
     {
-    UINT32 subType = 0;
-    UINT32 subSize = 0;
+    uint32_t subType = 0;
+    uint32_t subSize = 0;
     while(buffer < end_buffer){
-        subType = *(UINT32 *)buffer;
+        subType = *(uint32_t *)buffer;
         buffer += 4;
         switch(subType)
             {
             case REV32(XXXX):
                 buffer += 2;
-                subSize = *(UINT32 *)buffer;
+                subSize = *(uint32_t *)buffer;
                 buffer += 4;
-                subType = *(UINT32 *)buffer;
+                subType = *(uint32_t *)buffer;
                 buffer += 6;
                 break;
             default:
-                subSize = *(UINT16 *)buffer;
+                subSize = *(uint16_t *)buffer;
                 buffer += 2;
                 break;
             }
@@ -216,7 +216,7 @@ SINT32 CHIPRecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer,
     return 0;
     }
 
-SINT32 CHIPRecord::Unload()
+int32_t CHIPRecord::Unload()
     {
     IsChanged(false);
     IsLoaded(false);
@@ -232,7 +232,7 @@ SINT32 CHIPRecord::Unload()
     return 1;
     }
 
-SINT32 CHIPRecord::WriteRecord(FileWriter &writer)
+int32_t CHIPRecord::WriteRecord(FileWriter &writer)
     {
     WRITE(EDID);
     WRITE(OBND);

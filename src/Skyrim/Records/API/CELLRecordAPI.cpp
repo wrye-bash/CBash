@@ -38,7 +38,7 @@
 
 namespace Sk
 {
-UINT32 CELLRecord::GetFieldAttribute(FIELD_IDENTIFIERS, UINT32 WhichAttribute)
+uint32_t CELLRecord::GetFieldAttribute(FIELD_IDENTIFIERS, uint32_t WhichAttribute)
     {
     switch(FieldID)
         {
@@ -192,7 +192,7 @@ UINT32 CELLRecord::GetFieldAttribute(FIELD_IDENTIFIERS, UINT32 WhichAttribute)
                     case 0: //fieldType
                         return LIST_FIELD;
                     case 1: //fieldSize
-                        return (UINT32)IMPS.value.size();
+                        return (uint32_t)IMPS.value.size();
                     default:
                         return UNKNOWN_FIELD;
                     }
@@ -248,7 +248,7 @@ UINT32 CELLRecord::GetFieldAttribute(FIELD_IDENTIFIERS, UINT32 WhichAttribute)
                 case 0: //fieldType
                     return FORMID_ARRAY_FIELD;
                 case 1: //fieldSize
-                    return (UINT32)XCLR.value.size();
+                    return (uint32_t)XCLR.value.size();
                 default:
                     return UNKNOWN_FIELD;
                 }
@@ -298,7 +298,7 @@ UINT32 CELLRecord::GetFieldAttribute(FIELD_IDENTIFIERS, UINT32 WhichAttribute)
                 case 0: //fieldType
                     return SUBRECORD_ARRAY_FIELD;
                 case 1: //fieldSize
-                    return (UINT32)ACHR.size();
+                    return (uint32_t)ACHR.size();
                 default:
                     return UNKNOWN_FIELD;
                 }
@@ -309,7 +309,7 @@ UINT32 CELLRecord::GetFieldAttribute(FIELD_IDENTIFIERS, UINT32 WhichAttribute)
                 case 0: //fieldType
                     return SUBRECORD_ARRAY_FIELD;
                 case 1: //fieldSize
-                    return (UINT32)ACRE.size();
+                    return (uint32_t)ACRE.size();
                 default:
                     return UNKNOWN_FIELD;
                 }
@@ -320,7 +320,7 @@ UINT32 CELLRecord::GetFieldAttribute(FIELD_IDENTIFIERS, UINT32 WhichAttribute)
                 case 0: //fieldType
                     return SUBRECORD_ARRAY_FIELD;
                 case 1: //fieldSize
-                    return (UINT32)REFR.size();
+                    return (uint32_t)REFR.size();
                 default:
                     return UNKNOWN_FIELD;
                 }
@@ -331,7 +331,7 @@ UINT32 CELLRecord::GetFieldAttribute(FIELD_IDENTIFIERS, UINT32 WhichAttribute)
                 case 0: //fieldType
                     return SUBRECORD_ARRAY_FIELD;
                 case 1: //fieldSize
-                    return (UINT32)PGRE.size();
+                    return (uint32_t)PGRE.size();
                 default:
                     return UNKNOWN_FIELD;
                 }
@@ -342,7 +342,7 @@ UINT32 CELLRecord::GetFieldAttribute(FIELD_IDENTIFIERS, UINT32 WhichAttribute)
                 case 0: //fieldType
                     return SUBRECORD_ARRAY_FIELD;
                 case 1: //fieldSize
-                    return (UINT32)PMIS.size();
+                    return (uint32_t)PMIS.size();
                 default:
                     return UNKNOWN_FIELD;
                 }
@@ -353,7 +353,7 @@ UINT32 CELLRecord::GetFieldAttribute(FIELD_IDENTIFIERS, UINT32 WhichAttribute)
                 case 0: //fieldType
                     return SUBRECORD_ARRAY_FIELD;
                 case 1: //fieldSize
-                    return (UINT32)PBEA.size();
+                    return (uint32_t)PBEA.size();
                 default:
                     return UNKNOWN_FIELD;
                 }
@@ -364,7 +364,7 @@ UINT32 CELLRecord::GetFieldAttribute(FIELD_IDENTIFIERS, UINT32 WhichAttribute)
                 case 0: //fieldType
                     return SUBRECORD_ARRAY_FIELD;
                 case 1: //fieldSize
-                    return (UINT32)PFLA.size();
+                    return (uint32_t)PFLA.size();
                 default:
                     return UNKNOWN_FIELD;
                 }
@@ -375,7 +375,7 @@ UINT32 CELLRecord::GetFieldAttribute(FIELD_IDENTIFIERS, UINT32 WhichAttribute)
                 case 0: //fieldType
                     return SUBRECORD_ARRAY_FIELD;
                 case 1: //fieldSize
-                    return (UINT32)PCBE.size();
+                    return (uint32_t)PCBE.size();
                 default:
                     return UNKNOWN_FIELD;
                 }
@@ -386,7 +386,7 @@ UINT32 CELLRecord::GetFieldAttribute(FIELD_IDENTIFIERS, UINT32 WhichAttribute)
                 case 0: //fieldType
                     return SUBRECORD_ARRAY_FIELD;
                 case 1: //fieldSize
-                    return (UINT32)NAVM.size();
+                    return (uint32_t)NAVM.size();
                 default:
                     return UNKNOWN_FIELD;
                 }
@@ -546,41 +546,41 @@ void * CELLRecord::GetField(FIELD_IDENTIFIERS, void **FieldValues)
             return &XCMO.value;
 #if 0
         case 57: //ACHR
-            for(UINT32 p = 0;p < (UINT32)ACHR.size();++p)
+            for(uint32_t p = 0;p < (uint32_t)ACHR.size();++p)
                 ((RECORDIDARRAY)FieldValues)[p] = ACHR[p];
             return NULL;
         case 58: //ACRE
-            for(UINT32 p = 0;p < (UINT32)ACRE.size();++p)
+            for(uint32_t p = 0;p < (uint32_t)ACRE.size();++p)
                 ((RECORDIDARRAY)FieldValues)[p] = ACRE[p];
             return NULL;
             //*FieldValues = ACRE.size() != 0 ? &ACRE[0] : NULL;
             //return NULL;
         case 59: //REFR
-            for(UINT32 p = 0;p < (UINT32)REFR.size();++p)
+            for(uint32_t p = 0;p < (uint32_t)REFR.size();++p)
                 ((RECORDIDARRAY)FieldValues)[p] = REFR[p];
             return NULL;
         case 60: //PGRE
-            for(UINT32 p = 0;p < (UINT32)PGRE.size();++p)
+            for(uint32_t p = 0;p < (uint32_t)PGRE.size();++p)
                 ((RECORDIDARRAY)FieldValues)[p] = PGRE[p];
             return NULL;
         case 61: //PMIS
-            for(UINT32 p = 0;p < (UINT32)PMIS.size();++p)
+            for(uint32_t p = 0;p < (uint32_t)PMIS.size();++p)
                 ((RECORDIDARRAY)FieldValues)[p] = PMIS[p];
             return NULL;
         case 62: //PBEA
-            for(UINT32 p = 0;p < (UINT32)PBEA.size();++p)
+            for(uint32_t p = 0;p < (uint32_t)PBEA.size();++p)
                 ((RECORDIDARRAY)FieldValues)[p] = PBEA[p];
             return NULL;
         case 63: //PFLA
-            for(UINT32 p = 0;p < (UINT32)PFLA.size();++p)
+            for(uint32_t p = 0;p < (uint32_t)PFLA.size();++p)
                 ((RECORDIDARRAY)FieldValues)[p] = PFLA[p];
             return NULL;
         case 64: //PCBE
-            for(UINT32 p = 0;p < (UINT32)PCBE.size();++p)
+            for(uint32_t p = 0;p < (uint32_t)PCBE.size();++p)
                 ((RECORDIDARRAY)FieldValues)[p] = PCBE[p];
             return NULL;
         case 65: //NAVM
-            for(UINT32 p = 0;p < (UINT32)NAVM.size();++p)
+            for(uint32_t p = 0;p < (uint32_t)NAVM.size();++p)
                 ((RECORDIDARRAY)FieldValues)[p] = NAVM[p];
             return NULL;
         case 66: //LAND
@@ -594,12 +594,12 @@ void * CELLRecord::GetField(FIELD_IDENTIFIERS, void **FieldValues)
     return NULL;
     }
 
-bool CELLRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
+bool CELLRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, uint32_t ArraySize)
     {
     switch(FieldID)
         {
         case 1: //flags1
-            SetHeaderFlagMask(*(UINT32 *)FieldValue);
+            SetHeaderFlagMask(*(uint32_t *)FieldValue);
             break;
         case 3: //versionControl1
             if(ArraySize != 4)
@@ -610,10 +610,10 @@ bool CELLRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             ((UINT8ARRAY)&flagsUnk)[3] = ((UINT8ARRAY)FieldValue)[3];
             break;
         case 4: //eid
-            EDID.Copy((STRING)FieldValue);
+            EDID.Copy((char *)FieldValue);
             break;
         case 5: //formVersion
-            formVersion = *(UINT16 *)FieldValue;
+            formVersion = *(uint16_t *)FieldValue;
             break;
         case 6: //versionControl2
             if(ArraySize != 2)
@@ -622,40 +622,40 @@ bool CELLRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             versionControl2[1] = ((UINT8ARRAY)FieldValue)[1];
             break;
         case 7: //full
-            FULL.Copy((STRING)FieldValue);
+            FULL.Copy((char *)FieldValue);
             break;
         case 8: //flags
-            SetFlagMask(*(UINT8 *)FieldValue);
+            SetFlagMask(*(uint8_t *)FieldValue);
             break;
         case 9: //posX
             if(IsInterior())
                 break;
             XCLC.Load();
-            XCLC->posX = *(SINT32 *)FieldValue;
+            XCLC->posX = *(int32_t *)FieldValue;
             break;
         case 10: //posY
             if(IsInterior())
                 break;
             XCLC.Load();
-            XCLC->posY = *(SINT32 *)FieldValue;
+            XCLC->posY = *(int32_t *)FieldValue;
             break;
         case 11: //quadFlags
             if(IsInterior())
                 break;
-            SetQuadFlagMask(*(UINT32 *)FieldValue);
+            SetQuadFlagMask(*(uint32_t *)FieldValue);
             break;
 #if 0
         case 12: //ambientRed
             XCLL.Load();
-            XCLL->ambient.red = *(UINT8 *)FieldValue;
+            XCLL->ambient.red = *(uint8_t *)FieldValue;
             break;
         case 13: //ambientGreen
             XCLL.Load();
-            XCLL->ambient.green = *(UINT8 *)FieldValue;
+            XCLL->ambient.green = *(uint8_t *)FieldValue;
             break;
         case 14: //ambientBlue
             XCLL.Load();
-            XCLL->ambient.blue = *(UINT8 *)FieldValue;
+            XCLL->ambient.blue = *(uint8_t *)FieldValue;
             break;
         case 15: //unused1
             if(ArraySize != 1)
@@ -665,15 +665,15 @@ bool CELLRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             break;
         case 16: //directionalRed
             XCLL.Load();
-            XCLL->directional.red = *(UINT8 *)FieldValue;
+            XCLL->directional.red = *(uint8_t *)FieldValue;
             break;
         case 17: //directionalGreen
             XCLL.Load();
-            XCLL->directional.green = *(UINT8 *)FieldValue;
+            XCLL->directional.green = *(uint8_t *)FieldValue;
             break;
         case 18: //directionalBlue
             XCLL.Load();
-            XCLL->directional.blue = *(UINT8 *)FieldValue;
+            XCLL->directional.blue = *(uint8_t *)FieldValue;
             break;
         case 19: //unused2
             if(ArraySize != 1)
@@ -683,15 +683,15 @@ bool CELLRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             break;
         case 20: //fogRed
             XCLL.Load();
-            XCLL->fog.red = *(UINT8 *)FieldValue;
+            XCLL->fog.red = *(uint8_t *)FieldValue;
             break;
         case 21: //fogGreen
             XCLL.Load();
-            XCLL->fog.green = *(UINT8 *)FieldValue;
+            XCLL->fog.green = *(uint8_t *)FieldValue;
             break;
         case 22: //fogBlue
             XCLL.Load();
-            XCLL->fog.blue = *(UINT8 *)FieldValue;
+            XCLL->fog.blue = *(uint8_t *)FieldValue;
             break;
         case 23: //unused3
             if(ArraySize != 1)
@@ -701,31 +701,31 @@ bool CELLRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             break;
         case 24: //fogNear
             XCLL.Load();
-            XCLL->fogNear = *(FLOAT32 *)FieldValue;
+            XCLL->fogNear = *(float *)FieldValue;
             break;
         case 25: //fogFar
             XCLL.Load();
-            XCLL->fogFar = *(FLOAT32 *)FieldValue;
+            XCLL->fogFar = *(float *)FieldValue;
             break;
         case 26: //directionalXY
             XCLL.Load();
-            XCLL->directionalXY = *(SINT32 *)FieldValue;
+            XCLL->directionalXY = *(int32_t *)FieldValue;
             break;
         case 27: //directionalZ
             XCLL.Load();
-            XCLL->directionalZ = *(SINT32 *)FieldValue;
+            XCLL->directionalZ = *(int32_t *)FieldValue;
             break;
         case 28: //directionalFade
             XCLL.Load();
-            XCLL->directionalFade = *(FLOAT32 *)FieldValue;
+            XCLL->directionalFade = *(float *)FieldValue;
             break;
         case 29: //fogClip
             XCLL.Load();
-            XCLL->fogClip = *(FLOAT32 *)FieldValue;
+            XCLL->fogClip = *(float *)FieldValue;
             break;
         case 30: //fogPower
             XCLL.Load();
-            XCLL->fogPower = *(FLOAT32 *)FieldValue;
+            XCLL->fogPower = *(float *)FieldValue;
             break;
 #endif
         case 31: //swappedImpacts
@@ -741,7 +741,7 @@ bool CELLRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             switch(ListFieldID)
                 {
                 case 1: //material
-                    IMPS.value[ListIndex]->material = *(UINT32 *)FieldValue;
+                    IMPS.value[ListIndex]->material = *(uint32_t *)FieldValue;
                     break;
                 case 2: //oldImpact
                     IMPS.value[ListIndex]->oldImpact = *(FORMID *)FieldValue;
@@ -756,7 +756,7 @@ bool CELLRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
         case 32: //concSolid
             if(FieldValue == NULL)
                 break;
-            ArraySize = (UINT32)strlen((STRING)FieldValue);
+            ArraySize = (uint32_t)strlen((char *)FieldValue);
             if(ArraySize > 29)
                 break;
             IMPF.Load();
@@ -766,7 +766,7 @@ bool CELLRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
         case 33: //concBroken
             if(FieldValue == NULL)
                 break;
-            ArraySize = (UINT32)strlen((STRING)FieldValue);
+            ArraySize = (uint32_t)strlen((char *)FieldValue);
             if(ArraySize > 29)
                 break;
             IMPF.Load();
@@ -776,7 +776,7 @@ bool CELLRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
         case 34: //metalSolid
             if(FieldValue == NULL)
                 break;
-            ArraySize = (UINT32)strlen((STRING)FieldValue);
+            ArraySize = (uint32_t)strlen((char *)FieldValue);
             if(ArraySize > 29)
                 break;
             IMPF.Load();
@@ -786,7 +786,7 @@ bool CELLRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
         case 35: //metalHollow
             if(FieldValue == NULL)
                 break;
-            ArraySize = (UINT32)strlen((STRING)FieldValue);
+            ArraySize = (uint32_t)strlen((char *)FieldValue);
             if(ArraySize > 29)
                 break;
             IMPF.Load();
@@ -796,7 +796,7 @@ bool CELLRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
         case 36: //metalSheet
             if(FieldValue == NULL)
                 break;
-            ArraySize = (UINT32)strlen((STRING)FieldValue);
+            ArraySize = (uint32_t)strlen((char *)FieldValue);
             if(ArraySize > 29)
                 break;
             IMPF.Load();
@@ -806,7 +806,7 @@ bool CELLRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
         case 37: //wood
             if(FieldValue == NULL)
                 break;
-            ArraySize = (UINT32)strlen((STRING)FieldValue);
+            ArraySize = (uint32_t)strlen((char *)FieldValue);
             if(ArraySize > 29)
                 break;
             IMPF.Load();
@@ -816,7 +816,7 @@ bool CELLRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
         case 38: //sand
             if(FieldValue == NULL)
                 break;
-            ArraySize = (UINT32)strlen((STRING)FieldValue);
+            ArraySize = (uint32_t)strlen((char *)FieldValue);
             if(ArraySize > 29)
                 break;
             IMPF.Load();
@@ -826,7 +826,7 @@ bool CELLRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
         case 39: //dirt
             if(FieldValue == NULL)
                 break;
-            ArraySize = (UINT32)strlen((STRING)FieldValue);
+            ArraySize = (uint32_t)strlen((char *)FieldValue);
             if(ArraySize > 29)
                 break;
             IMPF.Load();
@@ -836,7 +836,7 @@ bool CELLRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
         case 40: //grass
             if(FieldValue == NULL)
                 break;
-            ArraySize = (UINT32)strlen((STRING)FieldValue);
+            ArraySize = (uint32_t)strlen((char *)FieldValue);
             if(ArraySize > 29)
                 break;
             IMPF.Load();
@@ -846,7 +846,7 @@ bool CELLRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
         case 41: //water
             if(FieldValue == NULL)
                 break;
-            ArraySize = (UINT32)strlen((STRING)FieldValue);
+            ArraySize = (uint32_t)strlen((char *)FieldValue);
             if(ArraySize > 29)
                 break;
             IMPF.Load();
@@ -857,17 +857,17 @@ bool CELLRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             LTMP.value = *(FORMID *)FieldValue;
             return true;
         case 43: //lightFlags
-            SetLightFlagMask(*(UINT32 *)FieldValue);
+            SetLightFlagMask(*(uint32_t *)FieldValue);
             break;
         case 44: //waterHeight
-            XCLW.value = *(FLOAT32 *)FieldValue;
+            XCLW.value = *(float *)FieldValue;
             break;
         case 45: //waterNoisePath
-            XNAM.Copy((STRING)FieldValue);
+            XNAM.Copy((char *)FieldValue);
             break;
         case 46: //regions
             XCLR.value.resize(ArraySize);
-            for(UINT32 x = 0; x < ArraySize; x++)
+            for(uint32_t x = 0; x < ArraySize; x++)
                 XCLR.value[x] = ((FORMIDARRAY)FieldValue)[x];
             return true;
         case 47: //imageSpace
@@ -893,7 +893,7 @@ bool CELLRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
         case 53: //rank
             Ownership.Load();
             Ownership->XRNK.Load();
-            *Ownership->XRNK.value = *(SINT32 *)FieldValue;
+            *Ownership->XRNK.value = *(int32_t *)FieldValue;
             break;
 #endif
         case 54: //acousticSpace

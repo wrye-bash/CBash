@@ -38,7 +38,7 @@
 
 namespace FNV
 {
-UINT32 ACHRRecord::GetFieldAttribute(FIELD_IDENTIFIERS, UINT32 WhichAttribute)
+uint32_t ACHRRecord::GetFieldAttribute(FIELD_IDENTIFIERS, uint32_t WhichAttribute)
     {
     switch(FieldID)
         {
@@ -149,7 +149,7 @@ UINT32 ACHRRecord::GetFieldAttribute(FIELD_IDENTIFIERS, UINT32 WhichAttribute)
                     case 0: //fieldType
                         return LIST_FIELD;
                     case 1: //fieldSize
-                        return (UINT32)Patrol->VARS.value.size();
+                        return (uint32_t)Patrol->VARS.value.size();
                     default:
                         return UNKNOWN_FIELD;
                     }
@@ -204,7 +204,7 @@ UINT32 ACHRRecord::GetFieldAttribute(FIELD_IDENTIFIERS, UINT32 WhichAttribute)
                     case 0: //fieldType
                         return FORMID_OR_UINT32_ARRAY_FIELD;
                     case 1: //fieldSize
-                        return (UINT32)Patrol->SCR_.value.size();
+                        return (uint32_t)Patrol->SCR_.value.size();
                     default:
                         return UNKNOWN_FIELD;
                     }
@@ -251,7 +251,7 @@ UINT32 ACHRRecord::GetFieldAttribute(FIELD_IDENTIFIERS, UINT32 WhichAttribute)
                     case 0: //fieldType
                         return LIST_FIELD;
                     case 1: //fieldSize
-                        return (UINT32)XDCR.value.size();
+                        return (uint32_t)XDCR.value.size();
                     default:
                         return UNKNOWN_FIELD;
                     }
@@ -329,7 +329,7 @@ UINT32 ACHRRecord::GetFieldAttribute(FIELD_IDENTIFIERS, UINT32 WhichAttribute)
                     case 0: //fieldType
                         return LIST_FIELD;
                     case 1: //fieldSize
-                        return (UINT32)ActivateParents->XAPR.value.size();
+                        return (uint32_t)ActivateParents->XAPR.value.size();
                     default:
                         return UNKNOWN_FIELD;
                     }
@@ -475,7 +475,7 @@ void * ACHRRecord::GetField(FIELD_IDENTIFIERS, void **FieldValues)
                 *FieldValues = NULL;
                 return NULL;
                 }
-            for(UINT32 x = 0; x < Patrol->SCR_.value.size(); ++x)
+            for(uint32_t x = 0; x < Patrol->SCR_.value.size(); ++x)
                 ((FORMIDARRAY)FieldValues)[x] = Patrol->SCR_.value[x]->reference;
             return NULL;
         case 23: //topic
@@ -581,12 +581,12 @@ void * ACHRRecord::GetField(FIELD_IDENTIFIERS, void **FieldValues)
     return NULL;
     }
 
-bool ACHRRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
+bool ACHRRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, uint32_t ArraySize)
     {
     switch(FieldID)
         {
         case 1: //flags1
-            SetHeaderFlagMask(*(UINT32 *)FieldValue);
+            SetHeaderFlagMask(*(uint32_t *)FieldValue);
             break;
         case 3: //versionControl1
             if(ArraySize != 4)
@@ -597,10 +597,10 @@ bool ACHRRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             ((UINT8ARRAY)&flagsUnk)[3] = ((UINT8ARRAY)FieldValue)[3];
             break;
         case 4: //eid
-            EDID.Copy((STRING)FieldValue);
+            EDID.Copy((char *)FieldValue);
             break;
         case 5: //formVersion
-            formVersion = *(UINT16 *)FieldValue;
+            formVersion = *(uint16_t *)FieldValue;
             break;
         case 6: //versionControl2
             if(ArraySize != 2)
@@ -622,7 +622,7 @@ bool ACHRRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             break;
         case 11: //idleTime
             Patrol.Load();
-            Patrol->XPRD.value = *(FLOAT32 *)FieldValue;
+            Patrol->XPRD.value = *(float *)FieldValue;
             break;
         case 12: //idle
             Patrol.Load();
@@ -639,23 +639,23 @@ bool ACHRRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             break;
         case 14: //numRefs
             Patrol.Load();
-            Patrol->SCHR.value.numRefs = *(UINT32 *)FieldValue;
+            Patrol->SCHR.value.numRefs = *(uint32_t *)FieldValue;
             break;
         case 15: //compiledSize
             Patrol.Load();
-            Patrol->SCHR.value.compiledSize = *(UINT32 *)FieldValue;
+            Patrol->SCHR.value.compiledSize = *(uint32_t *)FieldValue;
             break;
         case 16: //lastIndex
             Patrol.Load();
-            Patrol->SCHR.value.lastIndex = *(UINT32 *)FieldValue;
+            Patrol->SCHR.value.lastIndex = *(uint32_t *)FieldValue;
             break;
         case 17: //scriptType
             Patrol.Load();
-            Patrol->SetType(*(UINT16 *)FieldValue);
+            Patrol->SetType(*(uint16_t *)FieldValue);
             break;
         case 18: //scriptFlags
             Patrol.Load();
-            Patrol->SetScriptFlagMask(*(UINT16 *)FieldValue);
+            Patrol->SetScriptFlagMask(*(uint16_t *)FieldValue);
             break;
         case 19: //compiled_p
             Patrol.Load();
@@ -664,7 +664,7 @@ bool ACHRRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             break;
         case 20: //scriptText
             Patrol.Load();
-            Patrol->SCTX.Copy((STRING)FieldValue);
+            Patrol->SCTX.Copy((char *)FieldValue);
             break;
         case 21: //VARS
             Patrol.Load();
@@ -680,7 +680,7 @@ bool ACHRRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             switch(ListFieldID)
                 {
                 case 1: //index
-                    Patrol->VARS.value[ListIndex]->SLSD.value.index = *(UINT32 *)FieldValue;
+                    Patrol->VARS.value[ListIndex]->SLSD.value.index = *(uint32_t *)FieldValue;
                     break;
                 case 2: //unused1
                     if(ArraySize != 12)
@@ -699,7 +699,7 @@ bool ACHRRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
                     Patrol->VARS.value[ListIndex]->SLSD.value.unused1[11] = ((UINT8ARRAY)FieldValue)[11];
                     break;
                 case 3: //flags
-                    Patrol->VARS.value[ListIndex]->SetFlagMask(*(UINT8 *)FieldValue);
+                    Patrol->VARS.value[ListIndex]->SetFlagMask(*(uint8_t *)FieldValue);
                     break;
                 case 4: //unused2
                     if(ArraySize != 7)
@@ -713,7 +713,7 @@ bool ACHRRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
                     Patrol->VARS.value[ListIndex]->SLSD.value.unused2[6] = ((UINT8ARRAY)FieldValue)[6];
                     break;
                 case 5: //name
-                    Patrol->VARS.value[ListIndex]->SCVR.Copy((STRING)FieldValue);
+                    Patrol->VARS.value[ListIndex]->SCVR.Copy((char *)FieldValue);
                     break;
                 default:
                     break;
@@ -734,7 +734,7 @@ bool ACHRRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
                 {
                 case 1: //reference
                     //Borrowing ArraySize to flag if the new value is a formID
-                    Patrol->SCR_.value[ListIndex]->reference = *(UINT32 *)FieldValue;
+                    Patrol->SCR_.value[ListIndex]->reference = *(uint32_t *)FieldValue;
                     Patrol->SCR_.value[ListIndex]->isSCRO = ArraySize ? true : false;
                     return ArraySize != 0;
                 default:
@@ -746,19 +746,19 @@ bool ACHRRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             Patrol->TNAM.value = *(FORMID *)FieldValue;
             return true;
         case 24: //levelMod
-            XLCM.value = *(SINT32 *)FieldValue;
+            XLCM.value = *(int32_t *)FieldValue;
             break;
         case 25: //merchantContainer
             XMRC.value = *(FORMID *)FieldValue;
             return true;
         case 26: //count
-            XCNT.value = *(SINT32 *)FieldValue;
+            XCNT.value = *(int32_t *)FieldValue;
             break;
         case 27: //radius
-            XRDS.value = *(FLOAT32 *)FieldValue;
+            XRDS.value = *(float *)FieldValue;
             break;
         case 28: //health
-            XHLP.value = *(FLOAT32 *)FieldValue;
+            XHLP.value = *(float *)FieldValue;
             break;
         case 29: //decals
             if(ListFieldID == 0) //decalsSize
@@ -789,15 +789,15 @@ bool ACHRRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             return true;
         case 31: //startRed
             XCLP.Load();
-            XCLP->start.red = *(UINT8 *)FieldValue;
+            XCLP->start.red = *(uint8_t *)FieldValue;
             break;
         case 32: //startGreen
             XCLP.Load();
-            XCLP->start.green = *(UINT8 *)FieldValue;
+            XCLP->start.green = *(uint8_t *)FieldValue;
             break;
         case 33: //startBlue
             XCLP.Load();
-            XCLP->start.blue = *(UINT8 *)FieldValue;
+            XCLP->start.blue = *(uint8_t *)FieldValue;
             break;
         case 34: //unused2
             if(ArraySize != 1)
@@ -807,15 +807,15 @@ bool ACHRRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             break;
         case 35: //endRed
             XCLP.Load();
-            XCLP->end.red = *(UINT8 *)FieldValue;
+            XCLP->end.red = *(uint8_t *)FieldValue;
             break;
         case 36: //endGreen
             XCLP.Load();
-            XCLP->end.green = *(UINT8 *)FieldValue;
+            XCLP->end.green = *(uint8_t *)FieldValue;
             break;
         case 37: //endBlue
             XCLP.Load();
-            XCLP->end.blue = *(UINT8 *)FieldValue;
+            XCLP->end.blue = *(uint8_t *)FieldValue;
             break;
         case 38: //unused3
             if(ArraySize != 1)
@@ -825,7 +825,7 @@ bool ACHRRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             break;
         case 39: //activateParentFlags
             ActivateParents.Load();
-            ActivateParents->SetFlagMask(*(UINT8 *)FieldValue);
+            ActivateParents->SetFlagMask(*(uint8_t *)FieldValue);
             break;
         case 40: //activateParentRefs
             ActivateParents.Load();
@@ -844,21 +844,21 @@ bool ACHRRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
                     ActivateParents->XAPR.value[ListIndex]->reference = *(FORMID *)FieldValue;
                     return true;
                 case 2: //delay
-                    ActivateParents->XAPR.value[ListIndex]->delay = *(FLOAT32 *)FieldValue;
+                    ActivateParents->XAPR.value[ListIndex]->delay = *(float *)FieldValue;
                     break;
                 default:
                     break;
                 }
             break;
         case 41: //prompt
-            XATO.Copy((STRING)FieldValue);
+            XATO.Copy((char *)FieldValue);
             break;
         case 42: //parent
             XESP.Load();
             XESP->parent = *(FORMID *)FieldValue;
             return true;
         case 43: //parentFlags
-            SetFlagMask(*(UINT8 *)FieldValue);
+            SetFlagMask(*(uint8_t *)FieldValue);
             break;
         case 44: //unused4
             if(ArraySize != 3)
@@ -875,28 +875,28 @@ bool ACHRRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             XMBR.value = *(FORMID *)FieldValue;
             return true;
         case 47: //ignoredBySandbox
-            XIBS.value = *(UINT8 *)FieldValue;
+            XIBS.value = *(uint8_t *)FieldValue;
             break;
         case 48: //scale
-            XSCL.value = *(FLOAT32 *)FieldValue;
+            XSCL.value = *(float *)FieldValue;
             break;
         case 49: //posX
-            DATA.value.posX = *(FLOAT32 *)FieldValue;
+            DATA.value.posX = *(float *)FieldValue;
             break;
         case 50: //posY
-            DATA.value.posY = *(FLOAT32 *)FieldValue;
+            DATA.value.posY = *(float *)FieldValue;
             break;
         case 51: //posZ
-            DATA.value.posZ = *(FLOAT32 *)FieldValue;
+            DATA.value.posZ = *(float *)FieldValue;
             break;
         case 52: //rotX
-            DATA.value.rotX = *(FLOAT32 *)FieldValue;
+            DATA.value.rotX = *(float *)FieldValue;
             break;
         case 53: //rotY
-            DATA.value.rotY = *(FLOAT32 *)FieldValue;
+            DATA.value.rotY = *(float *)FieldValue;
             break;
         case 54: //rotZ
-            DATA.value.rotZ = *(FLOAT32 *)FieldValue;
+            DATA.value.rotZ = *(float *)FieldValue;
             break;
         default:
             break;

@@ -38,7 +38,7 @@
 
 namespace FNV
 {
-UINT32 WEAPRecord::GetFieldAttribute(FIELD_IDENTIFIERS, UINT32 WhichAttribute)
+uint32_t WEAPRecord::GetFieldAttribute(FIELD_IDENTIFIERS, uint32_t WhichAttribute)
     {
     switch(FieldID)
         {
@@ -114,7 +114,7 @@ UINT32 WEAPRecord::GetFieldAttribute(FIELD_IDENTIFIERS, UINT32 WhichAttribute)
                     case 0: //fieldType
                         return LIST_FIELD;
                     case 1: //fieldSize
-                        return (UINT32)MODL->Textures.MODS.size();
+                        return (uint32_t)MODL->Textures.MODS.size();
                     default:
                         return UNKNOWN_FIELD;
                     }
@@ -177,7 +177,7 @@ UINT32 WEAPRecord::GetFieldAttribute(FIELD_IDENTIFIERS, UINT32 WhichAttribute)
                     case 0: //fieldType
                         return LIST_FIELD;
                     case 1: //fieldSize
-                        return (UINT32)Destructable->Stages.value.size();
+                        return (uint32_t)Destructable->Stages.value.size();
                     default:
                         return UNKNOWN_FIELD;
                     }
@@ -254,7 +254,7 @@ UINT32 WEAPRecord::GetFieldAttribute(FIELD_IDENTIFIERS, UINT32 WhichAttribute)
                     case 0: //fieldType
                         return LIST_FIELD;
                     case 1: //fieldSize
-                        return (UINT32)MOD2->Textures.MODS.size();
+                        return (uint32_t)MOD2->Textures.MODS.size();
                     default:
                         return UNKNOWN_FIELD;
                     }
@@ -300,7 +300,7 @@ UINT32 WEAPRecord::GetFieldAttribute(FIELD_IDENTIFIERS, UINT32 WhichAttribute)
                     case 0: //fieldType
                         return LIST_FIELD;
                     case 1: //fieldSize
-                        return (UINT32)MOD2->Textures.MODS.size();
+                        return (uint32_t)MOD2->Textures.MODS.size();
                     default:
                         return UNKNOWN_FIELD;
                     }
@@ -348,7 +348,7 @@ UINT32 WEAPRecord::GetFieldAttribute(FIELD_IDENTIFIERS, UINT32 WhichAttribute)
                     case 0: //fieldType
                         return LIST_FIELD;
                     case 1: //fieldSize
-                        return (UINT32)MOD2->Textures.MODS.size();
+                        return (uint32_t)MOD2->Textures.MODS.size();
                     default:
                         return UNKNOWN_FIELD;
                     }
@@ -1053,12 +1053,12 @@ void * WEAPRecord::GetField(FIELD_IDENTIFIERS, void **FieldValues)
     return NULL;
     }
 
-bool WEAPRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
+bool WEAPRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, uint32_t ArraySize)
     {
     switch(FieldID)
         {
         case 1: //flags
-            SetHeaderFlagMask(*(UINT32 *)FieldValue);
+            SetHeaderFlagMask(*(uint32_t *)FieldValue);
             break;
         case 3: //versionControl1
             if(ArraySize != 4)
@@ -1069,10 +1069,10 @@ bool WEAPRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             ((UINT8ARRAY)&flagsUnk)[3] = ((UINT8ARRAY)FieldValue)[3];
             break;
         case 4: //eid
-            EDID.Copy((STRING)FieldValue);
+            EDID.Copy((char *)FieldValue);
             break;
         case 5: //formVersion
-            formVersion = *(UINT16 *)FieldValue;
+            formVersion = *(uint16_t *)FieldValue;
             break;
         case 6: //versionControl2
             if(ArraySize != 2)
@@ -1081,33 +1081,33 @@ bool WEAPRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             versionControl2[1] = ((UINT8ARRAY)FieldValue)[1];
             break;
         case 7: //boundX1
-            OBND.value.x1 = *(SINT16 *)FieldValue;
+            OBND.value.x1 = *(int16_t *)FieldValue;
             break;
         case 8: //boundY1
-            OBND.value.y1 = *(SINT16 *)FieldValue;
+            OBND.value.y1 = *(int16_t *)FieldValue;
             break;
         case 9: //boundZ1
-            OBND.value.z1 = *(SINT16 *)FieldValue;
+            OBND.value.z1 = *(int16_t *)FieldValue;
             break;
         case 10: //boundX2
-            OBND.value.x2 = *(SINT16 *)FieldValue;
+            OBND.value.x2 = *(int16_t *)FieldValue;
             break;
         case 11: //boundY2
-            OBND.value.y2 = *(SINT16 *)FieldValue;
+            OBND.value.y2 = *(int16_t *)FieldValue;
             break;
         case 12: //boundZ2
-            OBND.value.z2 = *(SINT16 *)FieldValue;
+            OBND.value.z2 = *(int16_t *)FieldValue;
             break;
         case 13: //full
-            FULL.Copy((STRING)FieldValue);
+            FULL.Copy((char *)FieldValue);
             break;
         case 14: //modPath
             MODL.Load();
-            MODL->MODL.Copy((STRING)FieldValue);
+            MODL->MODL.Copy((char *)FieldValue);
             break;
         case 15: //modb
             MODL.Load();
-            MODL->MODB.value = *(FLOAT32 *)FieldValue;
+            MODL->MODB.value = *(float *)FieldValue;
             break;
         case 16: //modt_p
             MODL.Load();
@@ -1131,16 +1131,16 @@ bool WEAPRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
                     MODL->Textures.MODS[ListIndex]->name = NULL;
                     if(FieldValue != NULL)
                         {
-                        ArraySize = (UINT32)strlen((STRING)FieldValue) + 1;
+                        ArraySize = (uint32_t)strlen((char *)FieldValue) + 1;
                         MODL->Textures.MODS[ListIndex]->name = new char[ArraySize];
-                        strcpy_s(MODL->Textures.MODS[ListIndex]->name, ArraySize, (STRING)FieldValue);
+                        strcpy_s(MODL->Textures.MODS[ListIndex]->name, ArraySize, (char *)FieldValue);
                         }
                     break;
                 case 2: //texture
                     MODL->Textures.MODS[ListIndex]->texture = *(FORMID *)FieldValue;
                     return true;
                 case 3: //index
-                    MODL->Textures.MODS[ListIndex]->index = *(SINT32 *)FieldValue;
+                    MODL->Textures.MODS[ListIndex]->index = *(int32_t *)FieldValue;
                     break;
                 default:
                     break;
@@ -1148,13 +1148,13 @@ bool WEAPRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             break;
         case 18: //modelFlags
             MODL.Load();
-            MODL->SetFlagMask(*(UINT8 *)FieldValue);
+            MODL->SetFlagMask(*(uint8_t *)FieldValue);
             break;
         case 19: //iconPath
-            ICON.Copy((STRING)FieldValue);
+            ICON.Copy((char *)FieldValue);
             break;
         case 20: //smallIconPath
-            MICO.Copy((STRING)FieldValue);
+            MICO.Copy((char *)FieldValue);
             break;
         case 21: //script
             SCRI.value = *(FORMID *)FieldValue;
@@ -1163,22 +1163,22 @@ bool WEAPRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             EITM.value = *(FORMID *)FieldValue;
             return true;
         case 23: //chargeAmount
-            EAMT.value = *(SINT16 *)FieldValue;
+            EAMT.value = *(int16_t *)FieldValue;
             break;
         case 24: //ammo
             NAM0.value = *(FORMID *)FieldValue;
             return true;
         case 25: //destructableHealth
             Destructable.Load();
-            Destructable->DEST.value.health = *(SINT32 *)FieldValue;
+            Destructable->DEST.value.health = *(int32_t *)FieldValue;
             break;
         case 26: //destructableCount
             Destructable.Load();
-            Destructable->DEST.value.count = *(UINT8 *)FieldValue;
+            Destructable->DEST.value.count = *(uint8_t *)FieldValue;
             break;
         case 27: //destructableFlags
             Destructable.Load();
-            Destructable->SetFlagMask(*(UINT8 *)FieldValue);
+            Destructable->SetFlagMask(*(uint8_t *)FieldValue);
             break;
         case 28: //destructableUnused1
             if(ArraySize != 2)
@@ -1201,19 +1201,19 @@ bool WEAPRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             switch(ListFieldID)
                 {
                 case 1: //health
-                    Destructable->Stages.value[ListIndex]->DSTD.value.health = *(UINT8 *)FieldValue;
+                    Destructable->Stages.value[ListIndex]->DSTD.value.health = *(uint8_t *)FieldValue;
                     break;
                 case 2: //index
-                    Destructable->Stages.value[ListIndex]->DSTD.value.index = *(UINT8 *)FieldValue;
+                    Destructable->Stages.value[ListIndex]->DSTD.value.index = *(uint8_t *)FieldValue;
                     break;
                 case 3: //stage
-                    Destructable->Stages.value[ListIndex]->DSTD.value.stage = *(UINT8 *)FieldValue;
+                    Destructable->Stages.value[ListIndex]->DSTD.value.stage = *(uint8_t *)FieldValue;
                     break;
                 case 4: //flags
-                    Destructable->Stages.value[ListIndex]->SetFlagMask(*(UINT8 *)FieldValue);
+                    Destructable->Stages.value[ListIndex]->SetFlagMask(*(uint8_t *)FieldValue);
                     break;
                 case 5: //dps
-                    Destructable->Stages.value[ListIndex]->DSTD.value.dps = *(SINT32 *)FieldValue;
+                    Destructable->Stages.value[ListIndex]->DSTD.value.dps = *(int32_t *)FieldValue;
                     break;
                 case 6: //explosion
                     Destructable->Stages.value[ListIndex]->DSTD.value.explosion = *(FORMID *)FieldValue;
@@ -1222,10 +1222,10 @@ bool WEAPRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
                     Destructable->Stages.value[ListIndex]->DSTD.value.debris = *(FORMID *)FieldValue;
                     return true;
                 case 8: //debrisCount
-                    Destructable->Stages.value[ListIndex]->DSTD.value.debrisCount = *(SINT32 *)FieldValue;
+                    Destructable->Stages.value[ListIndex]->DSTD.value.debrisCount = *(int32_t *)FieldValue;
                     break;
                 case 9: //modPath
-                    Destructable->Stages.value[ListIndex]->DMDL.Copy((STRING)FieldValue);
+                    Destructable->Stages.value[ListIndex]->DMDL.Copy((char *)FieldValue);
                     break;
                 case 10: //modt_p
                     Destructable->Stages.value[ListIndex]->DMDT.Copy((UINT8ARRAY)FieldValue, ArraySize);
@@ -1238,7 +1238,7 @@ bool WEAPRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             REPL.value = *(FORMID *)FieldValue;
             return true;
         case 31: //equipmentType
-            ETYP.value = *(SINT32 *)FieldValue;
+            ETYP.value = *(int32_t *)FieldValue;
             break;
         case 32: //modelList
             BIPL.value = *(FORMID *)FieldValue;
@@ -1251,7 +1251,7 @@ bool WEAPRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             return true;
         case 35: //shell_modPath
             MOD2.Load();
-            MOD2->MODL.Copy((STRING)FieldValue);
+            MOD2->MODL.Copy((char *)FieldValue);
             break;
         case 36: //shell_modt_p
             MOD2.Load();
@@ -1275,16 +1275,16 @@ bool WEAPRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
                     MOD2->Textures.MODS[ListIndex]->name = NULL;
                     if(FieldValue != NULL)
                         {
-                        ArraySize = (UINT32)strlen((STRING)FieldValue) + 1;
+                        ArraySize = (uint32_t)strlen((char *)FieldValue) + 1;
                         MOD2->Textures.MODS[ListIndex]->name = new char[ArraySize];
-                        strcpy_s(MOD2->Textures.MODS[ListIndex]->name, ArraySize, (STRING)FieldValue);
+                        strcpy_s(MOD2->Textures.MODS[ListIndex]->name, ArraySize, (char *)FieldValue);
                         }
                     break;
                 case 2: //texture
                     MOD2->Textures.MODS[ListIndex]->texture = *(FORMID *)FieldValue;
                     return true;
                 case 3: //index
-                    MOD2->Textures.MODS[ListIndex]->index = *(SINT32 *)FieldValue;
+                    MOD2->Textures.MODS[ListIndex]->index = *(int32_t *)FieldValue;
                     break;
                 default:
                     break;
@@ -1292,7 +1292,7 @@ bool WEAPRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             break;
         case 38: //scope_modPath
             MOD2.Load();
-            MOD2->MODL.Copy((STRING)FieldValue);
+            MOD2->MODL.Copy((char *)FieldValue);
             break;
         case 39: //scope_modt_p
             MOD2.Load();
@@ -1316,16 +1316,16 @@ bool WEAPRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
                     MOD2->Textures.MODS[ListIndex]->name = NULL;
                     if(FieldValue != NULL)
                         {
-                        ArraySize = (UINT32)strlen((STRING)FieldValue) + 1;
+                        ArraySize = (uint32_t)strlen((char *)FieldValue) + 1;
                         MOD2->Textures.MODS[ListIndex]->name = new char[ArraySize];
-                        strcpy_s(MOD2->Textures.MODS[ListIndex]->name, ArraySize, (STRING)FieldValue);
+                        strcpy_s(MOD2->Textures.MODS[ListIndex]->name, ArraySize, (char *)FieldValue);
                         }
                     break;
                 case 2: //texture
                     MOD2->Textures.MODS[ListIndex]->texture = *(FORMID *)FieldValue;
                     return true;
                 case 3: //index
-                    MOD2->Textures.MODS[ListIndex]->index = *(SINT32 *)FieldValue;
+                    MOD2->Textures.MODS[ListIndex]->index = *(int32_t *)FieldValue;
                     break;
                 default:
                     break;
@@ -1336,7 +1336,7 @@ bool WEAPRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             return true;
         case 42: //world_modPath
             MOD2.Load();
-            MOD2->MODL.Copy((STRING)FieldValue);
+            MOD2->MODL.Copy((char *)FieldValue);
             break;
         case 43: //world_modt_p
             MOD2.Load();
@@ -1360,47 +1360,47 @@ bool WEAPRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
                     MOD2->Textures.MODS[ListIndex]->name = NULL;
                     if(FieldValue != NULL)
                         {
-                        ArraySize = (UINT32)strlen((STRING)FieldValue) + 1;
+                        ArraySize = (uint32_t)strlen((char *)FieldValue) + 1;
                         MOD2->Textures.MODS[ListIndex]->name = new char[ArraySize];
-                        strcpy_s(MOD2->Textures.MODS[ListIndex]->name, ArraySize, (STRING)FieldValue);
+                        strcpy_s(MOD2->Textures.MODS[ListIndex]->name, ArraySize, (char *)FieldValue);
                         }
                     break;
                 case 2: //texture
                     MOD2->Textures.MODS[ListIndex]->texture = *(FORMID *)FieldValue;
                     return true;
                 case 3: //index
-                    MOD2->Textures.MODS[ListIndex]->index = *(SINT32 *)FieldValue;
+                    MOD2->Textures.MODS[ListIndex]->index = *(int32_t *)FieldValue;
                     break;
                 default:
                     break;
                 }
             break;
         case 45: //vatsName
-            VANM.Copy((STRING)FieldValue);
+            VANM.Copy((char *)FieldValue);
             break;
         case 46: //weaponNode
-            NNAM.Copy((STRING)FieldValue);
+            NNAM.Copy((char *)FieldValue);
             break;
         case 47: //mod1Path
-            MWD1.Copy((STRING)FieldValue);
+            MWD1.Copy((char *)FieldValue);
             break;
         case 48: //mod2Path
-            MWD2.Copy((STRING)FieldValue);
+            MWD2.Copy((char *)FieldValue);
             break;
         case 49: //mod12Path
-            MWD3.Copy((STRING)FieldValue);
+            MWD3.Copy((char *)FieldValue);
             break;
         case 50: //mod3Path
-            MWD4.Copy((STRING)FieldValue);
+            MWD4.Copy((char *)FieldValue);
             break;
         case 51: //mod13Path
-            MWD5.Copy((STRING)FieldValue);
+            MWD5.Copy((char *)FieldValue);
             break;
         case 52: //mod23Path
-            MWD6.Copy((STRING)FieldValue);
+            MWD6.Copy((char *)FieldValue);
             break;
         case 53: //mod123Path
-            MWD7.Copy((STRING)FieldValue);
+            MWD7.Copy((char *)FieldValue);
             break;
         case 54: //impact
             INAM.value = *(FORMID *)FieldValue;
@@ -1475,166 +1475,166 @@ bool WEAPRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             WMS2.value = *(FORMID *)FieldValue;
             return true;
         case 78: //value
-            DATA.value.value = *(SINT32 *)FieldValue;
+            DATA.value.value = *(int32_t *)FieldValue;
             break;
         case 79: //health
-            DATA.value.health = *(SINT32 *)FieldValue;
+            DATA.value.health = *(int32_t *)FieldValue;
             break;
         case 80: //weight
-            DATA.value.weight = *(FLOAT32 *)FieldValue;
+            DATA.value.weight = *(float *)FieldValue;
             break;
         case 81: //damage
-            DATA.value.damage = *(SINT16 *)FieldValue;
+            DATA.value.damage = *(int16_t *)FieldValue;
             break;
         case 82: //clipSize
-            DATA.value.clipSize = *(UINT8 *)FieldValue;
+            DATA.value.clipSize = *(uint8_t *)FieldValue;
             break;
         case 83: //animType
-            SetType(*(UINT32 *)FieldValue);
+            SetType(*(uint32_t *)FieldValue);
             break;
         case 84: //animMult
-            DNAM.value.animMult = *(FLOAT32 *)FieldValue;
+            DNAM.value.animMult = *(float *)FieldValue;
             break;
         case 85: //reach
-            DNAM.value.reach = *(FLOAT32 *)FieldValue;
+            DNAM.value.reach = *(float *)FieldValue;
             break;
         case 86: //flags
-            SetFlagMask(*(UINT8 *)FieldValue);
+            SetFlagMask(*(uint8_t *)FieldValue);
             break;
         case 87: //gripAnim
-            SetGripType(*(UINT8 *)FieldValue);
+            SetGripType(*(uint8_t *)FieldValue);
             break;
         case 88: //ammoUse
-            DNAM.value.ammoUse = *(UINT8 *)FieldValue;
+            DNAM.value.ammoUse = *(uint8_t *)FieldValue;
             break;
         case 89: //reloadAnim
-            SetReloadType(*(UINT8 *)FieldValue);
+            SetReloadType(*(uint8_t *)FieldValue);
             break;
         case 90: //minSpread
-            DNAM.value.minSpread = *(FLOAT32 *)FieldValue;
+            DNAM.value.minSpread = *(float *)FieldValue;
             break;
         case 91: //spread
-            DNAM.value.spread = *(FLOAT32 *)FieldValue;
+            DNAM.value.spread = *(float *)FieldValue;
             break;
         case 92: //unknown1
-            DNAM.value.unknown1 = *(FLOAT32 *)FieldValue;
+            DNAM.value.unknown1 = *(float *)FieldValue;
             break;
         case 93: //sightFOV
-            DNAM.value.sightFOV = *(FLOAT32 *)FieldValue;
+            DNAM.value.sightFOV = *(float *)FieldValue;
             break;
         case 94: //unknown2
-            DNAM.value.unknown2 = *(FLOAT32 *)FieldValue;
+            DNAM.value.unknown2 = *(float *)FieldValue;
             break;
         case 95: //projectile
             DNAM.value.projectile = *(FORMID *)FieldValue;
             return true;
         case 96: //VATSHitChance
-            DNAM.value.VATSHitChance = *(UINT8 *)FieldValue;
+            DNAM.value.VATSHitChance = *(uint8_t *)FieldValue;
             break;
         case 97: //attackAnim
-            SetAttackType(*(UINT8 *)FieldValue);
+            SetAttackType(*(uint8_t *)FieldValue);
             break;
         case 98: //projectileCount
-            DNAM.value.projectileCount = *(UINT8 *)FieldValue;
+            DNAM.value.projectileCount = *(uint8_t *)FieldValue;
             break;
         case 99: //weaponAV
-            SetEmbeddedAVType(*(UINT8 *)FieldValue);
+            SetEmbeddedAVType(*(uint8_t *)FieldValue);
             break;
         case 100: //minRange
-            DNAM.value.minRange = *(FLOAT32 *)FieldValue;
+            DNAM.value.minRange = *(float *)FieldValue;
             break;
         case 101: //maxRange
-            DNAM.value.maxRange = *(FLOAT32 *)FieldValue;
+            DNAM.value.maxRange = *(float *)FieldValue;
             break;
         case 102: //onHit
-            SetOnHitType(*(UINT32 *)FieldValue);
+            SetOnHitType(*(uint32_t *)FieldValue);
             break;
         case 103: //extraFlags
-            SetAdvFlagMask(*(UINT32 *)FieldValue);
+            SetAdvFlagMask(*(uint32_t *)FieldValue);
             break;
         case 104: //animAttackMult
-            DNAM.value.animAttackMult = *(FLOAT32 *)FieldValue;
+            DNAM.value.animAttackMult = *(float *)FieldValue;
             break;
         case 105: //fireRate
-            DNAM.value.fireRate = *(FLOAT32 *)FieldValue;
+            DNAM.value.fireRate = *(float *)FieldValue;
             break;
         case 106: //overrideAP
-            DNAM.value.overrideAP = *(FLOAT32 *)FieldValue;
+            DNAM.value.overrideAP = *(float *)FieldValue;
             break;
         case 107: //leftRumble
-            DNAM.value.leftRumble = *(FLOAT32 *)FieldValue;
+            DNAM.value.leftRumble = *(float *)FieldValue;
             break;
         case 108: //timeRumble
-            DNAM.value.timeRumble = *(FLOAT32 *)FieldValue;
+            DNAM.value.timeRumble = *(float *)FieldValue;
             break;
         case 109: //overrideDamageToWeapon
-            DNAM.value.overrideDamageToWeapon = *(FLOAT32 *)FieldValue;
+            DNAM.value.overrideDamageToWeapon = *(float *)FieldValue;
             break;
         case 110: //reloadTime
-            DNAM.value.reloadTime = *(FLOAT32 *)FieldValue;
+            DNAM.value.reloadTime = *(float *)FieldValue;
             break;
         case 111: //jamTime
-            DNAM.value.jamTime = *(FLOAT32 *)FieldValue;
+            DNAM.value.jamTime = *(float *)FieldValue;
             break;
         case 112: //aimArc
-            DNAM.value.aimArc = *(FLOAT32 *)FieldValue;
+            DNAM.value.aimArc = *(float *)FieldValue;
             break;
         case 113: //skill
-            DNAM.value.skill = *(SINT32 *)FieldValue;
+            DNAM.value.skill = *(int32_t *)FieldValue;
             break;
         case 114: //rumbleType
-            SetRumbleType(*(UINT32 *)FieldValue);
+            SetRumbleType(*(uint32_t *)FieldValue);
             break;
         case 115: //rumbleWavelength
-            DNAM.value.rumbleWavelength = *(FLOAT32 *)FieldValue;
+            DNAM.value.rumbleWavelength = *(float *)FieldValue;
             break;
         case 116: //limbDamageMult
-            DNAM.value.limbDamageMult = *(FLOAT32 *)FieldValue;
+            DNAM.value.limbDamageMult = *(float *)FieldValue;
             break;
         case 117: //resistType
-            DNAM.value.resistType = *(SINT32 *)FieldValue;
+            DNAM.value.resistType = *(int32_t *)FieldValue;
             break;
         case 118: //sightUsage
-            DNAM.value.sightUsage = *(FLOAT32 *)FieldValue;
+            DNAM.value.sightUsage = *(float *)FieldValue;
             break;
         case 119: //semiFireDelayMin
-            DNAM.value.semiFireDelayMin = *(FLOAT32 *)FieldValue;
+            DNAM.value.semiFireDelayMin = *(float *)FieldValue;
             break;
         case 120: //semiFireDelayMax
-            DNAM.value.semiFireDelayMax = *(FLOAT32 *)FieldValue;
+            DNAM.value.semiFireDelayMax = *(float *)FieldValue;
             break;
         case 121: //unknown3
-            DNAM.value.unknown3 = *(FLOAT32 *)FieldValue;
+            DNAM.value.unknown3 = *(float *)FieldValue;
             break;
         case 122: //effectMod1
-            DNAM.value.effectMod1 = *(UINT32 *)FieldValue;
+            DNAM.value.effectMod1 = *(uint32_t *)FieldValue;
             break;
         case 123: //effectMod2
-            DNAM.value.effectMod2 = *(UINT32 *)FieldValue;
+            DNAM.value.effectMod2 = *(uint32_t *)FieldValue;
             break;
         case 124: //effectMod3
-            DNAM.value.effectMod3 = *(UINT32 *)FieldValue;
+            DNAM.value.effectMod3 = *(uint32_t *)FieldValue;
             break;
         case 125: //valueAMod1
-            DNAM.value.valueAMod1 = *(FLOAT32 *)FieldValue;
+            DNAM.value.valueAMod1 = *(float *)FieldValue;
             break;
         case 126: //valueAMod2
-            DNAM.value.valueAMod2 = *(FLOAT32 *)FieldValue;
+            DNAM.value.valueAMod2 = *(float *)FieldValue;
             break;
         case 127: //valueAMod3
-            DNAM.value.valueAMod3 = *(FLOAT32 *)FieldValue;
+            DNAM.value.valueAMod3 = *(float *)FieldValue;
             break;
         case 128: //overridePwrAtkAnim
-            SetPowerAttackAnimOverrideType(*(UINT32 *)FieldValue);
+            SetPowerAttackAnimOverrideType(*(uint32_t *)FieldValue);
             break;
         case 129: //strengthReq
-            DNAM.value.strengthReq = *(UINT32 *)FieldValue;
+            DNAM.value.strengthReq = *(uint32_t *)FieldValue;
             break;
         case 130: //unknown4
-            DNAM.value.unknown4 = *(UINT8 *)FieldValue;
+            DNAM.value.unknown4 = *(uint8_t *)FieldValue;
             break;
         case 131: //reloadAnimMod
-            SetModType(*(UINT8 *)FieldValue);
+            SetModType(*(uint8_t *)FieldValue);
             break;
         case 132: //unknown5
             if(ArraySize != 2)
@@ -1643,25 +1643,25 @@ bool WEAPRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             DNAM.value.unknown5[1] = ((UINT8ARRAY)FieldValue)[1];
             break;
         case 133: //regenRate
-            DNAM.value.regenRate = *(FLOAT32 *)FieldValue;
+            DNAM.value.regenRate = *(float *)FieldValue;
             break;
         case 134: //killImpulse
-            DNAM.value.killImpulse = *(FLOAT32 *)FieldValue;
+            DNAM.value.killImpulse = *(float *)FieldValue;
             break;
         case 135: //valueBMod1
-            DNAM.value.valueBMod1 = *(FLOAT32 *)FieldValue;
+            DNAM.value.valueBMod1 = *(float *)FieldValue;
             break;
         case 136: //valueBMod2
-            DNAM.value.valueBMod2 = *(FLOAT32 *)FieldValue;
+            DNAM.value.valueBMod2 = *(float *)FieldValue;
             break;
         case 137: //valueBMod3
-            DNAM.value.valueBMod3 = *(FLOAT32 *)FieldValue;
+            DNAM.value.valueBMod3 = *(float *)FieldValue;
             break;
         case 138: //skillReq
-            DNAM.value.skillReq = *(UINT32 *)FieldValue;
+            DNAM.value.skillReq = *(uint32_t *)FieldValue;
             break;
         case 139: //critDamage
-            CRDT.value.critDamage = *(UINT16 *)FieldValue;
+            CRDT.value.critDamage = *(uint16_t *)FieldValue;
             break;
         case 140: //unused1
             if(ArraySize != 2)
@@ -1670,10 +1670,10 @@ bool WEAPRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             CRDT.value.unused1[1] = ((UINT8ARRAY)FieldValue)[1];
             break;
         case 141: //critMult
-            CRDT.value.critMult = *(FLOAT32 *)FieldValue;
+            CRDT.value.critMult = *(float *)FieldValue;
             break;
         case 142: //critFlags
-            SetCritFlagMask(*(UINT8 *)FieldValue);
+            SetCritFlagMask(*(uint8_t *)FieldValue);
             break;
         case 143: //unused2
             if(ArraySize != 3)
@@ -1689,19 +1689,19 @@ bool WEAPRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             VATS.value.effect = *(FORMID *)FieldValue;
             return true;
         case 146: //vatsSkill
-            VATS.value.skill = *(FLOAT32 *)FieldValue;
+            VATS.value.skill = *(float *)FieldValue;
             break;
         case 147: //vatsDamageMult
-            VATS.value.damageMult = *(FLOAT32 *)FieldValue;
+            VATS.value.damageMult = *(float *)FieldValue;
             break;
         case 148: //AP
-            VATS.value.AP = *(FLOAT32 *)FieldValue;
+            VATS.value.AP = *(float *)FieldValue;
             break;
         case 149: //silenceType
-            SetVATSSilenceType(*(UINT8 *)FieldValue);
+            SetVATSSilenceType(*(uint8_t *)FieldValue);
             break;
         case 150: //modRequiredType
-            SetVATSModType(*(UINT8 *)FieldValue);
+            SetVATSModType(*(uint8_t *)FieldValue);
             break;
         case 151: //unused3
             if(ArraySize != 2)
@@ -1710,7 +1710,7 @@ bool WEAPRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             VATS.value.unused1[1] = ((UINT8ARRAY)FieldValue)[1];
             break;
         case 152: //soundLevelType
-            SetSoundLevelType(*(UINT32 *)FieldValue);
+            SetSoundLevelType(*(uint32_t *)FieldValue);
             break;
         default:
             break;

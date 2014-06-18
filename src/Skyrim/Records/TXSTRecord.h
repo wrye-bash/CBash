@@ -67,7 +67,7 @@ class TXSTRecord : public TES5Record //Texture Set
         StringRecord TX06; //Unknown (Skyrim)
         StringRecord TX07; //Unknown (Skyrim)
         OptSubRecord<GENDODT> DODT; //Decal Data
-        SemiOptSimpleSubRecord<UINT16> DNAM; //Flags
+        SemiOptSimpleSubRecord<uint16_t> DNAM; //Flags
 
         TXSTRecord(unsigned char *_recData=NULL);
         TXSTRecord(TXSTRecord *srcRecord);
@@ -75,8 +75,8 @@ class TXSTRecord : public TES5Record //Texture Set
 
         bool   IsNoSpecularMap();
         void   IsNoSpecularMap(bool value);
-        bool   IsFlagMask(UINT16 Mask, bool Exact=false);
-        void   SetFlagMask(UINT16 Mask);
+        bool   IsFlagMask(uint16_t Mask, bool Exact=false);
+        void   SetFlagMask(uint16_t Mask);
 
         bool   IsObjectParallax();
         void   IsObjectParallax(bool value);
@@ -84,20 +84,20 @@ class TXSTRecord : public TES5Record //Texture Set
         void   IsObjectAlphaBlending(bool value);
         bool   IsObjectAlphaTesting();
         void   IsObjectAlphaTesting(bool value);
-        bool   IsObjectFlagMask(UINT8 Mask, bool Exact=false);
-        void   SetObjectFlagMask(UINT8 Mask);
+        bool   IsObjectFlagMask(uint8_t Mask, bool Exact=false);
+        void   SetObjectFlagMask(uint8_t Mask);
 
-        UINT32 GetFieldAttribute(DEFAULTED_FIELD_IDENTIFIERS, UINT32 WhichAttribute=0);
+        uint32_t GetFieldAttribute(DEFAULTED_FIELD_IDENTIFIERS, uint32_t WhichAttribute=0);
         void * GetField(DEFAULTED_FIELD_IDENTIFIERS, void **FieldValues=NULL);
-        bool   SetField(DEFAULTED_FIELD_IDENTIFIERS, void *FieldValue=NULL, UINT32 ArraySize=0);
+        bool   SetField(DEFAULTED_FIELD_IDENTIFIERS, void *FieldValue=NULL, uint32_t ArraySize=0);
         void   DeleteField(DEFAULTED_FIELD_IDENTIFIERS);
 
-        UINT32 GetType();
-        STRING GetStrType();
+        uint32_t GetType();
+        char * GetStrType();
 
-        SINT32 ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk=false);
-        SINT32 Unload();
-        SINT32 WriteRecord(FileWriter &writer);
+        int32_t ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk=false);
+        int32_t Unload();
+        int32_t WriteRecord(FileWriter &writer);
 
         bool operator ==(const TXSTRecord &other) const;
         bool operator !=(const TXSTRecord &other) const;

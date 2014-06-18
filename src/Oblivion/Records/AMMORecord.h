@@ -46,11 +46,11 @@ class AMMORecord : public Record
         #pragma pack(2)
         struct AMMODATA
             {
-            FLOAT32 speed;
-            UINT8   flags, unused1[3];
-            UINT32  value;
-            FLOAT32 weight;
-            UINT16  damage;
+            float speed;
+            uint8_t   flags, unused1[3];
+            uint32_t  value;
+            float weight;
+            uint16_t  damage;
 
             AMMODATA();
             ~AMMODATA();
@@ -71,7 +71,7 @@ class AMMORecord : public Record
         OptSubRecord<GENMODEL> MODL; //Model
         StringRecord ICON; //Icon filename
         OptSimpleSubRecord<FORMID> ENAM; //Enchantment
-        OptSimpleSubRecord<UINT16> ANAM; //Enchantment Points
+        OptSimpleSubRecord<uint16_t> ANAM; //Enchantment Points
         ReqSubRecord<AMMODATA> DATA; //Data
 
         AMMORecord(unsigned char *_recData=NULL);
@@ -88,20 +88,20 @@ class AMMORecord : public Record
         void   IsNormalWeapon(bool value);
         bool   IsNormal();
         void   IsNormal(bool value);
-        bool   IsFlagMask(UINT8 Mask, bool Exact=false);
-        void   SetFlagMask(UINT8 Mask);
+        bool   IsFlagMask(uint8_t Mask, bool Exact=false);
+        void   SetFlagMask(uint8_t Mask);
 
-        UINT32 GetFieldAttribute(DEFAULTED_FIELD_IDENTIFIERS, UINT32 WhichAttribute=0);
+        uint32_t GetFieldAttribute(DEFAULTED_FIELD_IDENTIFIERS, uint32_t WhichAttribute=0);
         void * GetField(DEFAULTED_FIELD_IDENTIFIERS, void **FieldValues=NULL);
-        bool   SetField(DEFAULTED_FIELD_IDENTIFIERS, void *FieldValue=NULL, UINT32 ArraySize=0);
+        bool   SetField(DEFAULTED_FIELD_IDENTIFIERS, void *FieldValue=NULL, uint32_t ArraySize=0);
         void   DeleteField(DEFAULTED_FIELD_IDENTIFIERS);
 
-        UINT32 GetType();
-        STRING GetStrType();
+        uint32_t GetType();
+        char * GetStrType();
 
-        SINT32 ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk=false);
-        SINT32 Unload();
-        SINT32 WriteRecord(FileWriter &writer);
+        int32_t ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk=false);
+        int32_t Unload();
+        int32_t WriteRecord(FileWriter &writer);
 
         bool operator ==(const AMMORecord &other) const;
         bool operator !=(const AMMORecord &other) const;

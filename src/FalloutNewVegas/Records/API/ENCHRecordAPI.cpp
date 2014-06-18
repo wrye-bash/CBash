@@ -38,7 +38,7 @@
 
 namespace FNV
 {
-UINT32 ENCHRecord::GetFieldAttribute(FIELD_IDENTIFIERS, UINT32 WhichAttribute)
+uint32_t ENCHRecord::GetFieldAttribute(FIELD_IDENTIFIERS, uint32_t WhichAttribute)
     {
     switch(FieldID)
         {
@@ -103,7 +103,7 @@ UINT32 ENCHRecord::GetFieldAttribute(FIELD_IDENTIFIERS, UINT32 WhichAttribute)
                     case 0: //fieldType
                         return LIST_FIELD;
                     case 1: //fieldSize
-                        return (UINT32)Effects.value.size();
+                        return (uint32_t)Effects.value.size();
                     default:
                         return UNKNOWN_FIELD;
                     }
@@ -135,7 +135,7 @@ UINT32 ENCHRecord::GetFieldAttribute(FIELD_IDENTIFIERS, UINT32 WhichAttribute)
                             case 0: //fieldType
                                 return LIST_FIELD;
                             case 1: //fieldSize
-                                return (UINT32)Effects.value[ListIndex]->CTDA.value.size();
+                                return (uint32_t)Effects.value[ListIndex]->CTDA.value.size();
                             default:
                                 return UNKNOWN_FIELD;
                             }
@@ -355,12 +355,12 @@ void * ENCHRecord::GetField(FIELD_IDENTIFIERS, void **FieldValues)
     return NULL;
     }
 
-bool ENCHRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
+bool ENCHRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, uint32_t ArraySize)
     {
     switch(FieldID)
         {
         case 1: //flags1
-            SetHeaderFlagMask(*(UINT32 *)FieldValue);
+            SetHeaderFlagMask(*(uint32_t *)FieldValue);
             break;
         case 3: //versionControl1
             if(ArraySize != 4)
@@ -371,10 +371,10 @@ bool ENCHRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             ((UINT8ARRAY)&flagsUnk)[3] = ((UINT8ARRAY)FieldValue)[3];
             break;
         case 4: //eid
-            EDID.Copy((STRING)FieldValue);
+            EDID.Copy((char *)FieldValue);
             break;
         case 5: //formVersion
-            formVersion = *(UINT16 *)FieldValue;
+            formVersion = *(uint16_t *)FieldValue;
             break;
         case 6: //versionControl2
             if(ArraySize != 2)
@@ -383,19 +383,19 @@ bool ENCHRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             versionControl2[1] = ((UINT8ARRAY)FieldValue)[1];
             break;
         case 7: //full
-            FULL.Copy((STRING)FieldValue);
+            FULL.Copy((char *)FieldValue);
             break;
         case 8: //itemType
-            SetType(*(UINT32 *)FieldValue);
+            SetType(*(uint32_t *)FieldValue);
             break;
         case 9: //chargeAmountUnused
-            ENIT.value.chargeAmount = *(UINT32 *)FieldValue;
+            ENIT.value.chargeAmount = *(uint32_t *)FieldValue;
             break;
         case 10: //enchantCostUnused
-            ENIT.value.enchantCost = *(UINT32 *)FieldValue;
+            ENIT.value.enchantCost = *(uint32_t *)FieldValue;
             break;
         case 11: //flags
-            SetFlagMask(*(UINT8 *)FieldValue);
+            SetFlagMask(*(uint8_t *)FieldValue);
             break;
         case 12: //unused1
             if(ArraySize != 3)
@@ -420,19 +420,19 @@ bool ENCHRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
                     Effects.value[ListIndex]->EFID.value = *(FORMID *)FieldValue;
                     return true;
                 case 2: //magnitude
-                    Effects.value[ListIndex]->EFIT.value.magnitude = *(UINT32 *)FieldValue;
+                    Effects.value[ListIndex]->EFIT.value.magnitude = *(uint32_t *)FieldValue;
                     break;
                 case 3: //area
-                    Effects.value[ListIndex]->EFIT.value.area = *(UINT32 *)FieldValue;
+                    Effects.value[ListIndex]->EFIT.value.area = *(uint32_t *)FieldValue;
                     break;
                 case 4: //duration
-                    Effects.value[ListIndex]->EFIT.value.duration = *(UINT32 *)FieldValue;
+                    Effects.value[ListIndex]->EFIT.value.duration = *(uint32_t *)FieldValue;
                     break;
                 case 5: //rangeType
-                    Effects.value[ListIndex]->SetRange(*(UINT32 *)FieldValue);
+                    Effects.value[ListIndex]->SetRange(*(uint32_t *)FieldValue);
                     break;
                 case 6: //actorValue
-                    Effects.value[ListIndex]->EFIT.value.actorValue = *(SINT32 *)FieldValue;
+                    Effects.value[ListIndex]->EFIT.value.actorValue = *(int32_t *)FieldValue;
                     break;
                 case 7: //conditions
                     if(ListX2FieldID == 0) //conditionsSize
@@ -447,7 +447,7 @@ bool ENCHRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
                     switch(ListX2FieldID)
                         {
                         case 1: //operType
-                            Effects.value[ListIndex]->CTDA.value[ListX2Index]->operType = *(UINT8 *)FieldValue;
+                            Effects.value[ListIndex]->CTDA.value[ListX2Index]->operType = *(uint8_t *)FieldValue;
                             break;
                         case 2: //unused1
                             if(ArraySize != 3)
@@ -460,7 +460,7 @@ bool ENCHRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
                             Effects.value[ListIndex]->CTDA.value[ListX2Index]->compValue = *(FORMID_OR_FLOAT32 *)FieldValue;
                             return true;
                         case 4: //ifunc
-                            Effects.value[ListIndex]->CTDA.value[ListX2Index]->ifunc = *(UINT32 *)FieldValue;
+                            Effects.value[ListIndex]->CTDA.value[ListX2Index]->ifunc = *(uint32_t *)FieldValue;
                             return true;
                         case 5: //param1
                             Effects.value[ListIndex]->CTDA.value[ListX2Index]->param1 = *(FORMID_OR_UINT32 *)FieldValue;
@@ -469,7 +469,7 @@ bool ENCHRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
                             Effects.value[ListIndex]->CTDA.value[ListX2Index]->param2 = *(FORMID_OR_UINT32 *)FieldValue;
                             return true;
                         case 7: //runOnType
-                            Effects.value[ListIndex]->CTDA.value[ListX2Index]->runOnType = *(UINT32 *)FieldValue;
+                            Effects.value[ListIndex]->CTDA.value[ListX2Index]->runOnType = *(uint32_t *)FieldValue;
                             return true;
                         case 8: //reference
                             Effects.value[ListIndex]->CTDA.value[ListX2Index]->reference = *(FORMID_OR_UINT32 *)FieldValue;

@@ -37,16 +37,16 @@
 
 #include "PropertyInt.h"
 
-UINT32 PropertyInt::GetSize() const
+uint32_t PropertyInt::GetSize() const
 {
     // common + value
-    return Property::GetSize() + sizeof(SINT32);
+    return Property::GetSize() + sizeof(int32_t);
 }
 
-void PropertyInt::Read(unsigned char *&buffer, const SINT16 &version, const SINT16 &objFormat, const bool &CompressedOnDisk)
+void PropertyInt::Read(unsigned char *&buffer, const int16_t &version, const int16_t &objFormat, const bool &CompressedOnDisk)
 {
     Property::Read(buffer, version, objFormat, CompressedOnDisk);
-    value = *(SINT32 *)buffer;
+    value = *(int32_t *)buffer;
     buffer += 4;
 }
 
@@ -85,28 +85,28 @@ PropertyInt & PropertyInt::operator = (const PropertyInt &other)
     return *this;
 }
 
-UINT32 PropertyIntArray::GetSize() const
+uint32_t PropertyIntArray::GetSize() const
 {
     // common + itemCount + items
-    return Property::GetSize() + sizeof(UINT32) + (size() * sizeof(SINT32));
+    return Property::GetSize() + sizeof(uint32_t) + (size() * sizeof(int32_t));
 }
 
-void PropertyIntArray::Read(unsigned char *&buffer, const SINT16 &version, const SINT16 &objFormat, const bool &CompressedOnDisk)
+void PropertyIntArray::Read(unsigned char *&buffer, const int16_t &version, const int16_t &objFormat, const bool &CompressedOnDisk)
 {
-    UINT32 count = *(UINT32 *)buffer;
+    uint32_t count = *(uint32_t *)buffer;
     buffer += 4;
 
     resize(count);
-    memcpy(&((*this)[0]), buffer, count * sizeof(SINT32));
-    buffer += count * sizeof(SINT32);
+    memcpy(&((*this)[0]), buffer, count * sizeof(int32_t));
+    buffer += count * sizeof(int32_t);
 }
 
 void PropertyIntArray::Write(FileWriter &writer)
 {
     Property::Write(writer);
-    UINT32 count = size();
+    uint32_t count = size();
     writer.record_write(&count, sizeof(count));
-    writer.record_write(&((*this)[0]), count * sizeof(SINT32));
+    writer.record_write(&((*this)[0]), count * sizeof(int32_t));
 }
 
 bool PropertyIntArray::equals(const Property *other) const
@@ -116,7 +116,7 @@ bool PropertyIntArray::equals(const Property *other) const
         const PropertyIntArray *o = reinterpret_cast<const PropertyIntArray *>(other);
         if (size() != o->size())
             return false;
-        return memcmp(&((*this)[0]), &((*o)[0]), size() * sizeof(SINT32)) == 0;
+        return memcmp(&((*this)[0]), &((*o)[0]), size() * sizeof(int32_t)) == 0;
     }
     catch (...)
     {

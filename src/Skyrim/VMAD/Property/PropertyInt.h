@@ -42,10 +42,10 @@
 class PropertyInt : public Property
 {
 public:
-    SINT32 value;
+    int32_t value;
 
-    virtual UINT32 GetSize() const;
-    virtual void Read(unsigned char *&buffer, const SINT16 &version, const SINT16 &objFormat, const bool &CompressedOnDisk);
+    virtual uint32_t GetSize() const;
+    virtual void Read(unsigned char *&buffer, const int16_t &version, const int16_t &objFormat, const bool &CompressedOnDisk);
     virtual void Write(FileWriter &writer);
     virtual bool equals(const Property *other) const;
     virtual Property * Copy() const;
@@ -53,11 +53,11 @@ public:
     PropertyInt & operator = (const PropertyInt &other);
 };
 
-class PropertyIntArray : public Property, public std::vector<SINT32>
+class PropertyIntArray : public Property, public std::vector<int32_t>
 {
 public:
-    virtual UINT32 GetSize() const;
-    virtual void Read(unsigned char *&buffer, const SINT16 &version, const SINT16 &objFormat, const bool &CompressedOnDisk);
+    virtual uint32_t GetSize() const;
+    virtual void Read(unsigned char *&buffer, const int16_t &version, const int16_t &objFormat, const bool &CompressedOnDisk);
     virtual void Write(FileWriter &writer);
     virtual bool equals(const Property *other) const;
     virtual Property * Copy() const;

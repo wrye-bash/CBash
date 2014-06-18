@@ -181,12 +181,12 @@ void BPTDRecord::BPTDPart::IsAbsoluteHitChance(bool value)
     SETBIT(BPND.value.flags, fIsAbsoluteHitChance, value);
     }
 
-bool BPTDRecord::BPTDPart::IsFlagMask(UINT8 Mask, bool Exact)
+bool BPTDRecord::BPTDPart::IsFlagMask(uint8_t Mask, bool Exact)
     {
     return Exact ? ((BPND.value.flags & Mask) == Mask) : ((BPND.value.flags & Mask) != 0);
     }
 
-void BPTDRecord::BPTDPart::SetFlagMask(UINT8 Mask)
+void BPTDRecord::BPTDPart::SetFlagMask(uint8_t Mask)
     {
     BPND.value.flags = Mask;
     }
@@ -341,12 +341,12 @@ void BPTDRecord::BPTDPart::IsWeapon(bool value)
     BPND.value.partType = value ? eWeapon : eTorso;
     }
 
-bool BPTDRecord::BPTDPart::IsType(UINT8 Type)
+bool BPTDRecord::BPTDPart::IsType(uint8_t Type)
     {
     return BPND.value.partType == Type;
     }
 
-void BPTDRecord::BPTDPart::SetType(UINT8 Type)
+void BPTDRecord::BPTDPart::SetType(uint8_t Type)
     {
     BPND.value.partType = Type;
     }
@@ -422,10 +422,10 @@ bool BPTDRecord::VisitFormIDs(FormIDOp &op)
 
     if(MODL.IsLoaded())
         {
-        for(UINT32 x = 0; x < MODL->Textures.MODS.size(); x++)
+        for(uint32_t x = 0; x < MODL->Textures.MODS.size(); x++)
             op.Accept(MODL->Textures.MODS[x]->texture);
         }
-    for(UINT32 ListIndex = 0; ListIndex < Parts.value.size(); ListIndex++)
+    for(uint32_t ListIndex = 0; ListIndex < Parts.value.size(); ListIndex++)
         {
         op.Accept(Parts.value[ListIndex]->BPND.value.explodableDebris);
         op.Accept(Parts.value[ListIndex]->BPND.value.explodableExplosion);
@@ -439,34 +439,34 @@ bool BPTDRecord::VisitFormIDs(FormIDOp &op)
     return op.Stop();
     }
 
-UINT32 BPTDRecord::GetType()
+uint32_t BPTDRecord::GetType()
     {
     return REV32(BPTD);
     }
 
-STRING BPTDRecord::GetStrType()
+char * BPTDRecord::GetStrType()
     {
     return "BPTD";
     }
 
-SINT32 BPTDRecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk)
+int32_t BPTDRecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk)
     {
-    UINT32 subType = 0;
-    UINT32 subSize = 0;
+    uint32_t subType = 0;
+    uint32_t subSize = 0;
     while(buffer < end_buffer){
-        subType = *(UINT32 *)buffer;
+        subType = *(uint32_t *)buffer;
         buffer += 4;
         switch(subType)
             {
             case REV32(XXXX):
                 buffer += 2;
-                subSize = *(UINT32 *)buffer;
+                subSize = *(uint32_t *)buffer;
                 buffer += 4;
-                subType = *(UINT32 *)buffer;
+                subType = *(uint32_t *)buffer;
                 buffer += 6;
                 break;
             default:
-                subSize = *(UINT16 *)buffer;
+                subSize = *(uint16_t *)buffer;
                 buffer += 2;
                 break;
             }
@@ -549,7 +549,7 @@ SINT32 BPTDRecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer,
     return 0;
     }
 
-SINT32 BPTDRecord::Unload()
+int32_t BPTDRecord::Unload()
     {
     IsChanged(false);
     IsLoaded(false);
@@ -561,7 +561,7 @@ SINT32 BPTDRecord::Unload()
     return 1;
     }
 
-SINT32 BPTDRecord::WriteRecord(FileWriter &writer)
+int32_t BPTDRecord::WriteRecord(FileWriter &writer)
     {
     WRITE(EDID);
     MODL.Write(writer);

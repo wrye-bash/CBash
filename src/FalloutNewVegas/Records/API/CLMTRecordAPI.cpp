@@ -38,7 +38,7 @@
 
 namespace FNV
 {
-UINT32 CLMTRecord::GetFieldAttribute(FIELD_IDENTIFIERS, UINT32 WhichAttribute)
+uint32_t CLMTRecord::GetFieldAttribute(FIELD_IDENTIFIERS, uint32_t WhichAttribute)
     {
     switch(FieldID)
         {
@@ -82,7 +82,7 @@ UINT32 CLMTRecord::GetFieldAttribute(FIELD_IDENTIFIERS, UINT32 WhichAttribute)
                     case 0: //fieldType
                         return LIST_FIELD;
                     case 1: //fieldSize
-                        return (UINT32)Weathers.value.size();
+                        return (uint32_t)Weathers.value.size();
                     default:
                         return UNKNOWN_FIELD;
                     }
@@ -133,7 +133,7 @@ UINT32 CLMTRecord::GetFieldAttribute(FIELD_IDENTIFIERS, UINT32 WhichAttribute)
                     case 0: //fieldType
                         return LIST_FIELD;
                     case 1: //fieldSize
-                        return (UINT32)MODL->Textures.MODS.size();
+                        return (uint32_t)MODL->Textures.MODS.size();
                     default:
                         return UNKNOWN_FIELD;
                     }
@@ -258,12 +258,12 @@ void * CLMTRecord::GetField(FIELD_IDENTIFIERS, void **FieldValues)
     return NULL;
     }
 
-bool CLMTRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
+bool CLMTRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, uint32_t ArraySize)
     {
     switch(FieldID)
         {
         case 1: //flags1
-            SetHeaderFlagMask(*(UINT32 *)FieldValue);
+            SetHeaderFlagMask(*(uint32_t *)FieldValue);
             break;
         case 3: //versionControl1
             if(ArraySize != 4)
@@ -274,10 +274,10 @@ bool CLMTRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             ((UINT8ARRAY)&flagsUnk)[3] = ((UINT8ARRAY)FieldValue)[3];
             break;
         case 4: //eid
-            EDID.Copy((STRING)FieldValue);
+            EDID.Copy((char *)FieldValue);
             break;
         case 5: //formVersion
-            formVersion = *(UINT16 *)FieldValue;
+            formVersion = *(uint16_t *)FieldValue;
             break;
         case 6: //versionControl2
             if(ArraySize != 2)
@@ -301,7 +301,7 @@ bool CLMTRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
                     Weathers.value[ListIndex].weather = *(FORMID *)FieldValue;
                     return true;
                 case 2: //chance
-                    Weathers.value[ListIndex].chance = *(SINT32 *)FieldValue;
+                    Weathers.value[ListIndex].chance = *(int32_t *)FieldValue;
                     break;
                 case 3: //globalId
                     Weathers.value[ListIndex].globalId = *(FORMID *)FieldValue;
@@ -311,18 +311,18 @@ bool CLMTRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
                 }
             break;
         case 8: //sunPath
-            FNAM.Copy((STRING)FieldValue);
+            FNAM.Copy((char *)FieldValue);
             break;
         case 9: //glarePath
-            GNAM.Copy((STRING)FieldValue);
+            GNAM.Copy((char *)FieldValue);
             break;
         case 10: //modPath
             MODL.Load();
-            MODL->MODL.Copy((STRING)FieldValue);
+            MODL->MODL.Copy((char *)FieldValue);
             break;
         case 11: //modb
             MODL.Load();
-            MODL->MODB.value = *(FLOAT32 *)FieldValue;
+            MODL->MODB.value = *(float *)FieldValue;
             break;
         case 12: //modt_p
             MODL.Load();
@@ -346,16 +346,16 @@ bool CLMTRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
                     MODL->Textures.MODS[ListIndex]->name = NULL;
                     if(FieldValue != NULL)
                         {
-                        ArraySize = (UINT32)strlen((STRING)FieldValue) + 1;
+                        ArraySize = (uint32_t)strlen((char *)FieldValue) + 1;
                         MODL->Textures.MODS[ListIndex]->name = new char[ArraySize];
-                        strcpy_s(MODL->Textures.MODS[ListIndex]->name, ArraySize, (STRING)FieldValue);
+                        strcpy_s(MODL->Textures.MODS[ListIndex]->name, ArraySize, (char *)FieldValue);
                         }
                     break;
                 case 2: //texture
                     MODL->Textures.MODS[ListIndex]->texture = *(FORMID *)FieldValue;
                     return true;
                 case 3: //index
-                    MODL->Textures.MODS[ListIndex]->index = *(SINT32 *)FieldValue;
+                    MODL->Textures.MODS[ListIndex]->index = *(int32_t *)FieldValue;
                     break;
                 default:
                     break;
@@ -363,25 +363,25 @@ bool CLMTRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             break;
         case 14: //modelFlags
             MODL.Load();
-            MODL->SetFlagMask(*(UINT8 *)FieldValue);
+            MODL->SetFlagMask(*(uint8_t *)FieldValue);
             break;
         case 15: //riseBegin
-            TNAM.value.riseBegin = *(UINT8 *)FieldValue;
+            TNAM.value.riseBegin = *(uint8_t *)FieldValue;
             break;
         case 16: //riseEnd
-            TNAM.value.riseEnd = *(UINT8 *)FieldValue;
+            TNAM.value.riseEnd = *(uint8_t *)FieldValue;
             break;
         case 17: //setBegin
-            TNAM.value.setBegin = *(UINT8 *)FieldValue;
+            TNAM.value.setBegin = *(uint8_t *)FieldValue;
             break;
         case 18: //setEnd
-            TNAM.value.setEnd = *(UINT8 *)FieldValue;
+            TNAM.value.setEnd = *(uint8_t *)FieldValue;
             break;
         case 19: //volatility
-            TNAM.value.volatility = *(UINT8 *)FieldValue;
+            TNAM.value.volatility = *(uint8_t *)FieldValue;
             break;
         case 20: //phaseLength
-            TNAM.value.phaseLength = *(UINT8 *)FieldValue;
+            TNAM.value.phaseLength = *(uint8_t *)FieldValue;
             break;
         default:
             break;

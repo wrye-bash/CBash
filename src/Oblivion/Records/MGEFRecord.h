@@ -44,17 +44,17 @@ class MGEFRecord : public Record //Base Effect
     private:
         struct MGEFDATA
             {
-            UINT32  flags;
-            FLOAT32 baseCost;
+            uint32_t  flags;
+            float baseCost;
             FORMID  associated;
-            UINT32  schoolType;
-            UINT32  resistValue;
-            UINT16  numCounters; //According to OBME
-            UINT8   unused1[2];
+            uint32_t  schoolType;
+            uint32_t  resistValue;
+            uint16_t  numCounters; //According to OBME
+            uint8_t   unused1[2];
             FORMID  light;
-            FLOAT32 projectileSpeed;
+            float projectileSpeed;
             FORMID  effectShader, enchantEffect, castingSound, boltSound, hitSound, areaSound;
-            FLOAT32 cefEnchantment, cefBarter;
+            float cefEnchantment, cefBarter;
 
             MGEFDATA();
             ~MGEFDATA();
@@ -76,14 +76,14 @@ class MGEFRecord : public Record //Base Effect
 
         struct MGEFOBME
             {
-            UINT8   recordVersion, betaVersion, minorVersion, majorVersion;
-            UINT8   mgefParamAInfo;
-            UINT8   mgefParamBInfo;
-            UINT8   reserved1[2];
-            UINT32  handlerCode;
-            UINT32  flags;
-            UINT32  mgefParamB;
-            UINT8   reserved2[0x1C];
+            uint8_t   recordVersion, betaVersion, minorVersion, majorVersion;
+            uint8_t   mgefParamAInfo;
+            uint8_t   mgefParamBInfo;
+            uint8_t   reserved1[2];
+            uint32_t  handlerCode;
+            uint32_t  flags;
+            uint32_t  mgefParamB;
+            uint8_t   reserved2[0x1C];
 
             MGEFOBME();
             ~MGEFOBME();
@@ -261,8 +261,8 @@ class MGEFRecord : public Record //Base Effect
         void   IsMagnitudeIsLevel(bool value);
         bool   IsMagnitudeIsFeet();
         void   IsMagnitudeIsFeet(bool value);
-        bool   IsFlagMask(UINT32 Mask, bool Exact=false);
-        void   SetFlagMask(UINT32 Mask);
+        bool   IsFlagMask(uint32_t Mask, bool Exact=false);
+        void   SetFlagMask(uint32_t Mask);
 
         //OBME flags
         bool   IsBeneficial();
@@ -281,8 +281,8 @@ class MGEFRecord : public Record //Base Effect
         void   IsParamFlagD(bool value);
         bool   IsHidden();
         void   IsHidden(bool value);
-        bool   IsOBMEFlagMask(UINT32 Mask, bool Exact=false);
-        void   SetOBMEFlagMask(UINT32 Mask);
+        bool   IsOBMEFlagMask(uint32_t Mask, bool Exact=false);
+        void   SetOBMEFlagMask(uint32_t Mask);
 
         bool   IsSchoolAlteration();
         void   IsSchoolAlteration(bool value);
@@ -296,22 +296,22 @@ class MGEFRecord : public Record //Base Effect
         void   IsSchoolMysticism(bool value);
         bool   IsSchoolRestoration();
         void   IsSchoolRestoration(bool value);
-        bool   IsSchool(UINT32 Type);
-        void   SetSchool(UINT32 Type);
+        bool   IsSchool(uint32_t Type);
+        void   SetSchool(uint32_t Type);
 
-        UINT32 GetFieldAttribute(DEFAULTED_FIELD_IDENTIFIERS, UINT32 WhichAttribute=0);
+        uint32_t GetFieldAttribute(DEFAULTED_FIELD_IDENTIFIERS, uint32_t WhichAttribute=0);
         void * GetField(DEFAULTED_FIELD_IDENTIFIERS, void **FieldValues=NULL);
-        bool   SetField(DEFAULTED_FIELD_IDENTIFIERS, void *FieldValue=NULL, UINT32 ArraySize=0);
+        bool   SetField(DEFAULTED_FIELD_IDENTIFIERS, void *FieldValue=NULL, uint32_t ArraySize=0);
         void   DeleteField(DEFAULTED_FIELD_IDENTIFIERS);
 
-        UINT32 GetType();
-        STRING GetStrType();
+        uint32_t GetType();
+        char * GetStrType();
         bool   IsKeyedByEditorID();
-        STRING GetEditorIDKey();
+        char * GetEditorIDKey();
 
-        SINT32 ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk=false);
-        SINT32 Unload();
-        SINT32 WriteRecord(FileWriter &writer);
+        int32_t ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk=false);
+        int32_t Unload();
+        int32_t WriteRecord(FileWriter &writer);
 
         bool operator ==(const MGEFRecord &other) const;
         bool operator !=(const MGEFRecord &other) const;

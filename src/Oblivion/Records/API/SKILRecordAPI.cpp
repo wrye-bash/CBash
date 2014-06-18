@@ -38,7 +38,7 @@
 
 namespace Ob
 {
-UINT32 SKILRecord::GetFieldAttribute(FIELD_IDENTIFIERS, UINT32 WhichAttribute)
+uint32_t SKILRecord::GetFieldAttribute(FIELD_IDENTIFIERS, uint32_t WhichAttribute)
     {
     switch(FieldID)
         {
@@ -124,54 +124,54 @@ void * SKILRecord::GetField(FIELD_IDENTIFIERS, void **FieldValues)
     return NULL;
     }
 
-bool SKILRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
+bool SKILRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, uint32_t ArraySize)
     {
     switch(FieldID)
         {
         case 1: //flags1
-            SetHeaderFlagMask(*(UINT32 *)FieldValue);
+            SetHeaderFlagMask(*(uint32_t *)FieldValue);
             break;
         case 3: //flags2
-            SetHeaderUnknownFlagMask(*(UINT32 *)FieldValue);
+            SetHeaderUnknownFlagMask(*(uint32_t *)FieldValue);
             break;
         case 4: //eid
-            EDID.Copy((STRING)FieldValue);
+            EDID.Copy((char *)FieldValue);
             break;
         case 5: //skill
-            INDX.value = *(SINT32 *)FieldValue;
+            INDX.value = *(int32_t *)FieldValue;
             break;
         case 6: //description
-            DESC.Copy((STRING)FieldValue);
+            DESC.Copy((char *)FieldValue);
             break;
         case 7: //iconPath
-            ICON.Copy((STRING)FieldValue);
+            ICON.Copy((char *)FieldValue);
             break;
         case 8: //action
-            DATA.value.action = *(SINT32 *)FieldValue;
+            DATA.value.action = *(int32_t *)FieldValue;
             break;
         case 9: //attribute
-            DATA.value.attribute = *(SINT32 *)FieldValue;
+            DATA.value.attribute = *(int32_t *)FieldValue;
             break;
         case 10: //specialization
-            DATA.value.specialization = *(UINT32 *)FieldValue;
+            DATA.value.specialization = *(uint32_t *)FieldValue;
             break;
         case 11: //use0
-            DATA.value.use0 = *(FLOAT32 *)FieldValue;
+            DATA.value.use0 = *(float *)FieldValue;
             break;
         case 12: //use1
-            DATA.value.use1 = *(FLOAT32 *)FieldValue;
+            DATA.value.use1 = *(float *)FieldValue;
             break;
         case 13: //apprentice
-            ANAM.Copy((STRING)FieldValue);
+            ANAM.Copy((char *)FieldValue);
             break;
         case 14: //journeyman
-            JNAM.Copy((STRING)FieldValue);
+            JNAM.Copy((char *)FieldValue);
             break;
         case 15: //expert
-            ENAM.Copy((STRING)FieldValue);
+            ENAM.Copy((char *)FieldValue);
             break;
         case 16: //master
-            MNAM.Copy((STRING)FieldValue);
+            MNAM.Copy((char *)FieldValue);
             break;
         default:
             break;

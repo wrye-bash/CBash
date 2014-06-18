@@ -38,7 +38,7 @@
 
 namespace FNV
 {
-UINT32 TERMRecord::GetFieldAttribute(FIELD_IDENTIFIERS, UINT32 WhichAttribute)
+uint32_t TERMRecord::GetFieldAttribute(FIELD_IDENTIFIERS, uint32_t WhichAttribute)
     {
     switch(FieldID)
         {
@@ -114,7 +114,7 @@ UINT32 TERMRecord::GetFieldAttribute(FIELD_IDENTIFIERS, UINT32 WhichAttribute)
                     case 0: //fieldType
                         return LIST_FIELD;
                     case 1: //fieldSize
-                        return (UINT32)MODL->Textures.MODS.size();
+                        return (uint32_t)MODL->Textures.MODS.size();
                     default:
                         return UNKNOWN_FIELD;
                     }
@@ -167,7 +167,7 @@ UINT32 TERMRecord::GetFieldAttribute(FIELD_IDENTIFIERS, UINT32 WhichAttribute)
                     case 0: //fieldType
                         return LIST_FIELD;
                     case 1: //fieldSize
-                        return (UINT32)Destructable->Stages.value.size();
+                        return (uint32_t)Destructable->Stages.value.size();
                     default:
                         return UNKNOWN_FIELD;
                     }
@@ -241,7 +241,7 @@ UINT32 TERMRecord::GetFieldAttribute(FIELD_IDENTIFIERS, UINT32 WhichAttribute)
                     case 0: //fieldType
                         return LIST_FIELD;
                     case 1: //fieldSize
-                        return (UINT32)Menus.value.size();
+                        return (uint32_t)Menus.value.size();
                     default:
                         return UNKNOWN_FIELD;
                     }
@@ -302,7 +302,7 @@ UINT32 TERMRecord::GetFieldAttribute(FIELD_IDENTIFIERS, UINT32 WhichAttribute)
                             case 0: //fieldType
                                 return LIST_FIELD;
                             case 1: //fieldSize
-                                return (UINT32)Menus.value[ListIndex]->VARS.value.size();
+                                return (uint32_t)Menus.value[ListIndex]->VARS.value.size();
                             default:
                                 return UNKNOWN_FIELD;
                             }
@@ -353,7 +353,7 @@ UINT32 TERMRecord::GetFieldAttribute(FIELD_IDENTIFIERS, UINT32 WhichAttribute)
                             case 0: //fieldType
                                 return FORMID_OR_UINT32_ARRAY_FIELD;
                             case 1: //fieldSize
-                                return (UINT32)Menus.value[ListIndex]->SCR_.value.size();
+                                return (uint32_t)Menus.value[ListIndex]->SCR_.value.size();
                             default:
                                 return UNKNOWN_FIELD;
                             }
@@ -388,7 +388,7 @@ UINT32 TERMRecord::GetFieldAttribute(FIELD_IDENTIFIERS, UINT32 WhichAttribute)
                             case 0: //fieldType
                                 return LIST_FIELD;
                             case 1: //fieldSize
-                                return (UINT32)Menus.value[ListIndex]->CTDA.value.size();
+                                return (uint32_t)Menus.value[ListIndex]->CTDA.value.size();
                             default:
                                 return UNKNOWN_FIELD;
                             }
@@ -689,7 +689,7 @@ void * TERMRecord::GetField(FIELD_IDENTIFIERS, void **FieldValues)
                         }
                     return NULL;
                 case 15: //references
-                    for(UINT32 x = 0; x < Menus.value[ListIndex]->SCR_.value.size(); ++x)
+                    for(uint32_t x = 0; x < Menus.value[ListIndex]->SCR_.value.size(); ++x)
                         ((FORMIDARRAY)FieldValues)[x] = Menus.value[ListIndex]->SCR_.value[x]->reference;
                     return NULL;
                 case 16: //conditions
@@ -729,12 +729,12 @@ void * TERMRecord::GetField(FIELD_IDENTIFIERS, void **FieldValues)
     return NULL;
     }
 
-bool TERMRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
+bool TERMRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, uint32_t ArraySize)
     {
     switch(FieldID)
         {
         case 1: //flags1
-            SetHeaderFlagMask(*(UINT32 *)FieldValue);
+            SetHeaderFlagMask(*(uint32_t *)FieldValue);
             break;
         case 3: //versionControl1
             if(ArraySize != 4)
@@ -745,10 +745,10 @@ bool TERMRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             ((UINT8ARRAY)&flagsUnk)[3] = ((UINT8ARRAY)FieldValue)[3];
             break;
         case 4: //eid
-            EDID.Copy((STRING)FieldValue);
+            EDID.Copy((char *)FieldValue);
             break;
         case 5: //formVersion
-            formVersion = *(UINT16 *)FieldValue;
+            formVersion = *(uint16_t *)FieldValue;
             break;
         case 6: //versionControl2
             if(ArraySize != 2)
@@ -757,33 +757,33 @@ bool TERMRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             versionControl2[1] = ((UINT8ARRAY)FieldValue)[1];
             break;
         case 7: //boundX1
-            OBND.value.x1 = *(SINT16 *)FieldValue;
+            OBND.value.x1 = *(int16_t *)FieldValue;
             break;
         case 8: //boundY1
-            OBND.value.y1 = *(SINT16 *)FieldValue;
+            OBND.value.y1 = *(int16_t *)FieldValue;
             break;
         case 9: //boundZ1
-            OBND.value.z1 = *(SINT16 *)FieldValue;
+            OBND.value.z1 = *(int16_t *)FieldValue;
             break;
         case 10: //boundX2
-            OBND.value.x2 = *(SINT16 *)FieldValue;
+            OBND.value.x2 = *(int16_t *)FieldValue;
             break;
         case 11: //boundY2
-            OBND.value.y2 = *(SINT16 *)FieldValue;
+            OBND.value.y2 = *(int16_t *)FieldValue;
             break;
         case 12: //boundZ2
-            OBND.value.z2 = *(SINT16 *)FieldValue;
+            OBND.value.z2 = *(int16_t *)FieldValue;
             break;
         case 13: //full
-            FULL.Copy((STRING)FieldValue);
+            FULL.Copy((char *)FieldValue);
             break;
         case 14: //modPath
             MODL.Load();
-            MODL->MODL.Copy((STRING)FieldValue);
+            MODL->MODL.Copy((char *)FieldValue);
             break;
         case 15: //modb
             MODL.Load();
-            MODL->MODB.value = *(FLOAT32 *)FieldValue;
+            MODL->MODB.value = *(float *)FieldValue;
             break;
         case 16: //modt_p
             MODL.Load();
@@ -807,16 +807,16 @@ bool TERMRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
                     MODL->Textures.MODS[ListIndex]->name = NULL;
                     if(FieldValue != NULL)
                         {
-                        ArraySize = (UINT32)strlen((STRING)FieldValue) + 1;
+                        ArraySize = (uint32_t)strlen((char *)FieldValue) + 1;
                         MODL->Textures.MODS[ListIndex]->name = new char[ArraySize];
-                        strcpy_s(MODL->Textures.MODS[ListIndex]->name, ArraySize, (STRING)FieldValue);
+                        strcpy_s(MODL->Textures.MODS[ListIndex]->name, ArraySize, (char *)FieldValue);
                         }
                     break;
                 case 2: //texture
                     MODL->Textures.MODS[ListIndex]->texture = *(FORMID *)FieldValue;
                     return true;
                 case 3: //index
-                    MODL->Textures.MODS[ListIndex]->index = *(SINT32 *)FieldValue;
+                    MODL->Textures.MODS[ListIndex]->index = *(int32_t *)FieldValue;
                     break;
                 default:
                     break;
@@ -824,22 +824,22 @@ bool TERMRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             break;
         case 18: //modelFlags
             MODL.Load();
-            MODL->SetFlagMask(*(UINT8 *)FieldValue);
+            MODL->SetFlagMask(*(uint8_t *)FieldValue);
             break;
         case 19: //script
             SCRI.value = *(FORMID *)FieldValue;
             return true;
         case 20: //destructableHealth
             Destructable.Load();
-            Destructable->DEST.value.health = *(SINT32 *)FieldValue;
+            Destructable->DEST.value.health = *(int32_t *)FieldValue;
             break;
         case 21: //destructableCount
             Destructable.Load();
-            Destructable->DEST.value.count = *(UINT8 *)FieldValue;
+            Destructable->DEST.value.count = *(uint8_t *)FieldValue;
             break;
         case 22: //destructableFlags
             Destructable.Load();
-            Destructable->SetFlagMask(*(UINT8 *)FieldValue);
+            Destructable->SetFlagMask(*(uint8_t *)FieldValue);
             break;
         case 23: //destructableUnused1
             if(ArraySize != 2)
@@ -862,19 +862,19 @@ bool TERMRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             switch(ListFieldID)
                 {
                 case 1: //health
-                    Destructable->Stages.value[ListIndex]->DSTD.value.health = *(UINT8 *)FieldValue;
+                    Destructable->Stages.value[ListIndex]->DSTD.value.health = *(uint8_t *)FieldValue;
                     break;
                 case 2: //index
-                    Destructable->Stages.value[ListIndex]->DSTD.value.index = *(UINT8 *)FieldValue;
+                    Destructable->Stages.value[ListIndex]->DSTD.value.index = *(uint8_t *)FieldValue;
                     break;
                 case 3: //stage
-                    Destructable->Stages.value[ListIndex]->DSTD.value.stage = *(UINT8 *)FieldValue;
+                    Destructable->Stages.value[ListIndex]->DSTD.value.stage = *(uint8_t *)FieldValue;
                     break;
                 case 4: //flags
-                    Destructable->Stages.value[ListIndex]->SetFlagMask(*(UINT8 *)FieldValue);
+                    Destructable->Stages.value[ListIndex]->SetFlagMask(*(uint8_t *)FieldValue);
                     break;
                 case 5: //dps
-                    Destructable->Stages.value[ListIndex]->DSTD.value.dps = *(SINT32 *)FieldValue;
+                    Destructable->Stages.value[ListIndex]->DSTD.value.dps = *(int32_t *)FieldValue;
                     break;
                 case 6: //explosion
                     Destructable->Stages.value[ListIndex]->DSTD.value.explosion = *(FORMID *)FieldValue;
@@ -883,10 +883,10 @@ bool TERMRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
                     Destructable->Stages.value[ListIndex]->DSTD.value.debris = *(FORMID *)FieldValue;
                     return true;
                 case 8: //debrisCount
-                    Destructable->Stages.value[ListIndex]->DSTD.value.debrisCount = *(SINT32 *)FieldValue;
+                    Destructable->Stages.value[ListIndex]->DSTD.value.debrisCount = *(int32_t *)FieldValue;
                     break;
                 case 9: //modPath
-                    Destructable->Stages.value[ListIndex]->DMDL.Copy((STRING)FieldValue);
+                    Destructable->Stages.value[ListIndex]->DMDL.Copy((char *)FieldValue);
                     break;
                 case 10: //modt_p
                     Destructable->Stages.value[ListIndex]->DMDT.Copy((UINT8ARRAY)FieldValue, ArraySize);
@@ -896,7 +896,7 @@ bool TERMRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
                 }
             break;
         case 25: //description
-            DESC.Copy((STRING)FieldValue);
+            DESC.Copy((char *)FieldValue);
             break;
         case 26: //loopSound
             SNAM.value = *(FORMID *)FieldValue;
@@ -905,13 +905,13 @@ bool TERMRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             PNAM.value = *(FORMID *)FieldValue;
             return true;
         case 28: //difficultyType
-            DNAM.value.difficultyType = *(UINT8 *)FieldValue;
+            DNAM.value.difficultyType = *(uint8_t *)FieldValue;
             break;
         case 29: //flags
-            SetFlagMask(*(UINT8 *)FieldValue);
+            SetFlagMask(*(uint8_t *)FieldValue);
             break;
         case 30: //serverType
-            SetServerType(*(UINT8 *)FieldValue);
+            SetServerType(*(uint8_t *)FieldValue);
             break;
         case 31: //unused1
             if(ArraySize != 1)
@@ -931,13 +931,13 @@ bool TERMRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             switch(ListFieldID)
                 {
                 case 1: //text
-                    Menus.value[ListIndex]->ITXT.Copy((STRING)FieldValue);
+                    Menus.value[ListIndex]->ITXT.Copy((char *)FieldValue);
                     break;
                 case 2: //resultText
-                    Menus.value[ListIndex]->RNAM.Copy((STRING)FieldValue);
+                    Menus.value[ListIndex]->RNAM.Copy((char *)FieldValue);
                     break;
                 case 3: //flags
-                    Menus.value[ListIndex]->SetFlagMask(*(UINT8 *)FieldValue);
+                    Menus.value[ListIndex]->SetFlagMask(*(uint8_t *)FieldValue);
                     break;
                 case 4: //displayNote
                     Menus.value[ListIndex]->INAM.value = *(FORMID *)FieldValue;
@@ -954,26 +954,26 @@ bool TERMRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
                     Menus.value[ListIndex]->SCHR.value.unused1[3] = ((UINT8ARRAY)FieldValue)[3];
                     break;
                 case 7: //numRefs
-                    Menus.value[ListIndex]->SCHR.value.numRefs = *(UINT32 *)FieldValue;
+                    Menus.value[ListIndex]->SCHR.value.numRefs = *(uint32_t *)FieldValue;
                     break;
                 case 8: //compiledSize
-                    Menus.value[ListIndex]->SCHR.value.compiledSize = *(UINT32 *)FieldValue;
+                    Menus.value[ListIndex]->SCHR.value.compiledSize = *(uint32_t *)FieldValue;
                     break;
                 case 9: //lastIndex
-                    Menus.value[ListIndex]->SCHR.value.lastIndex = *(UINT32 *)FieldValue;
+                    Menus.value[ListIndex]->SCHR.value.lastIndex = *(uint32_t *)FieldValue;
                     break;
                 case 10: //scriptType
-                    Menus.value[ListIndex]->SetType(*(UINT16 *)FieldValue);
+                    Menus.value[ListIndex]->SetType(*(uint16_t *)FieldValue);
                     break;
                 case 11: //scriptFlags
-                    Menus.value[ListIndex]->SetScriptFlagMask(*(UINT16 *)FieldValue);
+                    Menus.value[ListIndex]->SetScriptFlagMask(*(uint16_t *)FieldValue);
                     break;
                 case 12: //compiled_p
                     Menus.value[ListIndex]->SCDA.Copy((UINT8ARRAY)FieldValue, ArraySize);
                     Menus.value[ListIndex]->SCHR.value.compiledSize = ArraySize;
                     break;
                 case 13: //scriptText
-                    Menus.value[ListIndex]->SCTX.Copy((STRING)FieldValue);
+                    Menus.value[ListIndex]->SCTX.Copy((char *)FieldValue);
                     break;
                 case 14: //vars
                     if(ListX2FieldID == 0) //varsSize
@@ -988,7 +988,7 @@ bool TERMRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
                     switch(ListX2FieldID)
                         {
                         case 1: //index
-                            Menus.value[ListIndex]->VARS.value[ListX2Index]->SLSD.value.index = *(UINT32 *)FieldValue;
+                            Menus.value[ListIndex]->VARS.value[ListX2Index]->SLSD.value.index = *(uint32_t *)FieldValue;
                             break;
                         case 2: //unused1
                             if(ArraySize != 12)
@@ -1007,7 +1007,7 @@ bool TERMRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
                             Menus.value[ListIndex]->VARS.value[ListX2Index]->SLSD.value.unused1[11] = ((UINT8ARRAY)FieldValue)[11];
                             break;
                         case 3: //flags
-                            Menus.value[ListIndex]->VARS.value[ListX2Index]->SetFlagMask(*(UINT8 *)FieldValue);
+                            Menus.value[ListIndex]->VARS.value[ListX2Index]->SetFlagMask(*(uint8_t *)FieldValue);
                             break;
                         case 4: //unused2
                             if(ArraySize != 7)
@@ -1021,7 +1021,7 @@ bool TERMRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
                             Menus.value[ListIndex]->VARS.value[ListX2Index]->SLSD.value.unused2[6] = ((UINT8ARRAY)FieldValue)[6];
                             break;
                         case 5: //name
-                            Menus.value[ListIndex]->VARS.value[ListX2Index]->SCVR.Copy((STRING)FieldValue);
+                            Menus.value[ListIndex]->VARS.value[ListX2Index]->SCVR.Copy((char *)FieldValue);
                             break;
                         default:
                             break;
@@ -1041,7 +1041,7 @@ bool TERMRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
                         {
                         case 1: //reference
                             //Borrowing ArraySize to flag if the new value is a formID
-                            Menus.value[ListIndex]->SCR_.value[ListX2Index]->reference = *(UINT32 *)FieldValue;
+                            Menus.value[ListIndex]->SCR_.value[ListX2Index]->reference = *(uint32_t *)FieldValue;
                             Menus.value[ListIndex]->SCR_.value[ListX2Index]->isSCRO = ArraySize ? true : false;
                             return ArraySize != 0;
                         default:
@@ -1061,7 +1061,7 @@ bool TERMRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
                     switch(ListX2FieldID)
                         {
                         case 1: //operType
-                            Menus.value[ListIndex]->CTDA.value[ListX2Index]->operType = *(UINT8 *)FieldValue;
+                            Menus.value[ListIndex]->CTDA.value[ListX2Index]->operType = *(uint8_t *)FieldValue;
                             break;
                         case 2: //unused1
                             if(ArraySize != 3)
@@ -1074,7 +1074,7 @@ bool TERMRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
                             Menus.value[ListIndex]->CTDA.value[ListX2Index]->compValue = *(FORMID_OR_FLOAT32 *)FieldValue;
                             return true;
                         case 4: //ifunc
-                            Menus.value[ListIndex]->CTDA.value[ListX2Index]->ifunc = *(UINT32 *)FieldValue;
+                            Menus.value[ListIndex]->CTDA.value[ListX2Index]->ifunc = *(uint32_t *)FieldValue;
                             return true;
                         case 5: //param1
                             Menus.value[ListIndex]->CTDA.value[ListX2Index]->param1 = *(FORMID_OR_UINT32 *)FieldValue;
@@ -1083,7 +1083,7 @@ bool TERMRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
                             Menus.value[ListIndex]->CTDA.value[ListX2Index]->param2 = *(FORMID_OR_UINT32 *)FieldValue;
                             return true;
                         case 7: //runOnType
-                            Menus.value[ListIndex]->CTDA.value[ListX2Index]->runOnType = *(UINT32 *)FieldValue;
+                            Menus.value[ListIndex]->CTDA.value[ListX2Index]->runOnType = *(uint32_t *)FieldValue;
                             return true;
                         case 8: //reference
                             Menus.value[ListIndex]->CTDA.value[ListX2Index]->reference = *(FORMID_OR_UINT32 *)FieldValue;

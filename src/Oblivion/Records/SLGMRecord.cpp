@@ -162,12 +162,12 @@ void SLGMRecord::IsGrandSoul(bool value)
         SOUL.value = eNone;
     }
 
-bool SLGMRecord::IsSoul(UINT8 Type)
+bool SLGMRecord::IsSoul(uint8_t Type)
     {
     return (SOUL.value == Type);
     }
 
-void SLGMRecord::SetSoul(UINT8 Type)
+void SLGMRecord::SetSoul(uint8_t Type)
     {
     SOUL.value = Type;
     }
@@ -250,44 +250,44 @@ void SLGMRecord::IsGrandCapacity(bool value)
         SLCP.value= eNone;
     }
 
-bool SLGMRecord::IsCapacity(UINT8 Type)
+bool SLGMRecord::IsCapacity(uint8_t Type)
     {
     return (SLCP.value== Type);
     }
 
-void SLGMRecord::SetCapacity(UINT8 Type)
+void SLGMRecord::SetCapacity(uint8_t Type)
     {
     SLCP.value= Type;
     }
 
-UINT32 SLGMRecord::GetType()
+uint32_t SLGMRecord::GetType()
     {
     return REV32(SLGM);
     }
 
-STRING SLGMRecord::GetStrType()
+char * SLGMRecord::GetStrType()
     {
     return "SLGM";
     }
 
-SINT32 SLGMRecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk)
+int32_t SLGMRecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk)
     {
-    UINT32 subType = 0;
-    UINT32 subSize = 0;
+    uint32_t subType = 0;
+    uint32_t subSize = 0;
     while(buffer < end_buffer){
-        subType = *(UINT32 *)buffer;
+        subType = *(uint32_t *)buffer;
         buffer += 4;
         switch(subType)
             {
             case REV32(XXXX):
                 buffer += 2;
-                subSize = *(UINT32 *)buffer;
+                subSize = *(uint32_t *)buffer;
                 buffer += 4;
-                subType = *(UINT32 *)buffer;
+                subType = *(uint32_t *)buffer;
                 buffer += 6;
                 break;
             default:
-                subSize = *(UINT16 *)buffer;
+                subSize = *(uint16_t *)buffer;
                 buffer += 2;
                 break;
             }
@@ -339,7 +339,7 @@ SINT32 SLGMRecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer,
     return 0;
     }
 
-SINT32 SLGMRecord::Unload()
+int32_t SLGMRecord::Unload()
     {
     IsChanged(false);
     IsLoaded(false);
@@ -354,7 +354,7 @@ SINT32 SLGMRecord::Unload()
     return 1;
     }
 
-SINT32 SLGMRecord::WriteRecord(FileWriter &writer)
+int32_t SLGMRecord::WriteRecord(FileWriter &writer)
     {
     WRITE(EDID);
     WRITE(FULL);

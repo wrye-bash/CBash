@@ -52,17 +52,17 @@ class StringLookups
             eILStrings = 2,     // .ILSTRINGS file
         };
 
-        typedef std::map<UINT32,STRING> MapType;
+        typedef std::map<uint32_t,char *> MapType;
 
     private:
         boost::iostreams::mapped_file_source file_map_strings;
         boost::iostreams::mapped_file_source file_map_dlstrings;
         boost::iostreams::mapped_file_source file_map_ilstrings;
 
-        void Open(STRING FileName, boost::iostreams::mapped_file_source &file_map);
+        void Open(char * FileName, boost::iostreams::mapped_file_source &file_map);
         void Load(boost::iostreams::mapped_file_source &file_map, typeTypes Type);
 
-        STRING GetFileName(STRING ModName, STRING Language, typeTypes Type) const;
+        char * GetFileName(char * ModName, char * Language, typeTypes Type) const;
 
     public:
         /* For now we'll merge everything into one map, for speed an memory
@@ -72,7 +72,7 @@ class StringLookups
 
         StringLookups();
 
-        bool Open(STRING ModName);
+        bool Open(char * ModName);
         bool Close();
 
         void Load();
@@ -84,24 +84,24 @@ class LStringRecord
         bool IsOnDisk;
 
     public:
-        STRING value;
+        char * value;
 
         LStringRecord();
         LStringRecord(const LStringRecord &p);
         ~LStringRecord();
 
-        UINT32 GetSize() const;
+        uint32_t GetSize() const;
 
         bool IsLoaded() const;
         void Load();
         void Unload();
 
-        bool Read(unsigned char *&buffer, const UINT32 &subSize, const bool &CompressedOnDisk, StringLookups *LookupStrings);
-        void Write(UINT32 _Type, FileWriter &writer);
-        void ReqWrite(UINT32 _Type, FileWriter &writer);
+        bool Read(unsigned char *&buffer, const uint32_t &subSize, const bool &CompressedOnDisk, StringLookups *LookupStrings);
+        void Write(uint32_t _Type, FileWriter &writer);
+        void ReqWrite(uint32_t _Type, FileWriter &writer);
 
-        void Copy(STRING FieldValue);
-        void TruncateCopy(STRING FieldValue, UINT32 MaxSize);
+        void Copy(char * FieldValue);
+        void TruncateCopy(char * FieldValue, uint32_t MaxSize);
 
         bool equals(const LStringRecord &other) const;
         bool equalsi(const LStringRecord &other) const;

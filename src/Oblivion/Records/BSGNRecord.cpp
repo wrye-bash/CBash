@@ -76,41 +76,41 @@ bool BSGNRecord::VisitFormIDs(FormIDOp &op)
     if(!IsLoaded())
         return false;
 
-    for(UINT32 ListIndex = 0; ListIndex < SPLO.value.size(); ListIndex++)
+    for(uint32_t ListIndex = 0; ListIndex < SPLO.value.size(); ListIndex++)
         op.Accept(SPLO.value[ListIndex]);
 
     return op.Stop();
     }
 
-UINT32 BSGNRecord::GetType()
+uint32_t BSGNRecord::GetType()
     {
     return REV32(BSGN);
     }
 
-STRING BSGNRecord::GetStrType()
+char * BSGNRecord::GetStrType()
     {
     return "BSGN";
     }
 
-SINT32 BSGNRecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk)
+int32_t BSGNRecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk)
     {
-    UINT32 subType = 0;
-    UINT32 subSize = 0;
+    uint32_t subType = 0;
+    uint32_t subSize = 0;
     FORMID curFormID = 0;
     while(buffer < end_buffer){
-        subType = *(UINT32 *)buffer;
+        subType = *(uint32_t *)buffer;
         buffer += 4;
         switch(subType)
             {
             case REV32(XXXX):
                 buffer += 2;
-                subSize = *(UINT32 *)buffer;
+                subSize = *(uint32_t *)buffer;
                 buffer += 4;
-                subType = *(UINT32 *)buffer;
+                subType = *(uint32_t *)buffer;
                 buffer += 6;
                 break;
             default:
-                subSize = *(UINT16 *)buffer;
+                subSize = *(uint16_t *)buffer;
                 buffer += 2;
                 break;
             }
@@ -144,7 +144,7 @@ SINT32 BSGNRecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer,
     return 0;
     }
 
-SINT32 BSGNRecord::Unload()
+int32_t BSGNRecord::Unload()
     {
     IsChanged(false);
     IsLoaded(false);
@@ -156,7 +156,7 @@ SINT32 BSGNRecord::Unload()
     return 1;
     }
 
-SINT32 BSGNRecord::WriteRecord(FileWriter &writer)
+int32_t BSGNRecord::WriteRecord(FileWriter &writer)
     {
     WRITE(EDID);
     WRITE(FULL);

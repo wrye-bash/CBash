@@ -208,13 +208,13 @@ void RGDLRecord::IsDisableOnMove(bool value)
     SETBIT(RAPS->flags, fIsDisableOnMove, value);
     }
 
-bool RGDLRecord::IsFlagMask(UINT8 Mask, bool Exact)
+bool RGDLRecord::IsFlagMask(uint8_t Mask, bool Exact)
     {
     if (!RAPS.IsLoaded()) return false;
     return Exact ? ((RAPS->flags & Mask) == Mask) : ((RAPS->flags & Mask) != 0);
     }
 
-void RGDLRecord::SetFlagMask(UINT8 Mask)
+void RGDLRecord::SetFlagMask(uint8_t Mask)
     {
     RAPS.Load();
     RAPS->flags = Mask;
@@ -232,13 +232,13 @@ bool RGDLRecord::IsFeedback()
     return (DATA->feedbackType == eFeedback);
     }
 
-bool RGDLRecord::IsFeedbackType(UINT8 Type)
+bool RGDLRecord::IsFeedbackType(uint8_t Type)
     {
     if (!DATA.IsLoaded()) return false;
     return DATA->feedbackType == Type;
     }
 
-void RGDLRecord::SetFeedbackType(UINT8 Type)
+void RGDLRecord::SetFeedbackType(uint8_t Type)
     {
     DATA.Load();
     DATA->feedbackType = Type;
@@ -256,13 +256,13 @@ bool RGDLRecord::IsFootIK()
     return (DATA->footIKType == eFootIK);
     }
 
-bool RGDLRecord::IsFootType(UINT8 Type)
+bool RGDLRecord::IsFootType(uint8_t Type)
     {
     if (!DATA.IsLoaded()) return false;
     return DATA->footIKType == Type;
     }
 
-void RGDLRecord::SetFootType(UINT8 Type)
+void RGDLRecord::SetFootType(uint8_t Type)
     {
     DATA.Load();
     DATA->footIKType = Type;
@@ -280,13 +280,13 @@ bool RGDLRecord::IsLookIK()
     return (DATA->lookIKType == eLookIK);
     }
 
-bool RGDLRecord::IsLookType(UINT8 Type)
+bool RGDLRecord::IsLookType(uint8_t Type)
     {
     if (!DATA.IsLoaded()) return false;
     return DATA->lookIKType == Type;
     }
 
-void RGDLRecord::SetLookType(UINT8 Type)
+void RGDLRecord::SetLookType(uint8_t Type)
     {
     DATA.Load();
     DATA->lookIKType = Type;
@@ -304,13 +304,13 @@ bool RGDLRecord::IsGrabIK()
     return (DATA->grabIKType == eGrabIK);
     }
 
-bool RGDLRecord::IsGrabType(UINT8 Type)
+bool RGDLRecord::IsGrabType(uint8_t Type)
     {
     if (!DATA.IsLoaded()) return false;
     return DATA->grabIKType == Type;
     }
 
-void RGDLRecord::SetGrabType(UINT8 Type)
+void RGDLRecord::SetGrabType(uint8_t Type)
     {
     DATA.Load();
     DATA->grabIKType = Type;
@@ -328,46 +328,46 @@ bool RGDLRecord::IsMatchPose()
     return (DATA->matchPoseType == eMatchPose);
     }
 
-bool RGDLRecord::IsMatchType(UINT8 Type)
+bool RGDLRecord::IsMatchType(uint8_t Type)
     {
     if (!DATA.IsLoaded()) return false;
     return DATA->matchPoseType == Type;
     }
 
-void RGDLRecord::SetMatchType(UINT8 Type)
+void RGDLRecord::SetMatchType(uint8_t Type)
     {
     DATA.Load();
     DATA->matchPoseType = Type;
     }
 
-UINT32 RGDLRecord::GetType()
+uint32_t RGDLRecord::GetType()
     {
     return REV32(RGDL);
     }
 
-STRING RGDLRecord::GetStrType()
+char * RGDLRecord::GetStrType()
     {
     return "RGDL";
     }
 
-SINT32 RGDLRecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk)
+int32_t RGDLRecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk)
     {
-    UINT32 subType = 0;
-    UINT32 subSize = 0;
+    uint32_t subType = 0;
+    uint32_t subSize = 0;
     while(buffer < end_buffer){
-        subType = *(UINT32 *)buffer;
+        subType = *(uint32_t *)buffer;
         buffer += 4;
         switch(subType)
             {
             case REV32(XXXX):
                 buffer += 2;
-                subSize = *(UINT32 *)buffer;
+                subSize = *(uint32_t *)buffer;
                 buffer += 4;
-                subType = *(UINT32 *)buffer;
+                subType = *(uint32_t *)buffer;
                 buffer += 6;
                 break;
             default:
-                subSize = *(UINT16 *)buffer;
+                subSize = *(uint16_t *)buffer;
                 buffer += 2;
                 break;
             }
@@ -412,7 +412,7 @@ SINT32 RGDLRecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer,
     return 0;
     }
 
-SINT32 RGDLRecord::Unload()
+int32_t RGDLRecord::Unload()
     {
     IsChanged(false);
     IsLoaded(false);
@@ -428,7 +428,7 @@ SINT32 RGDLRecord::Unload()
     return 1;
     }
 
-SINT32 RGDLRecord::WriteRecord(FileWriter &writer)
+int32_t RGDLRecord::WriteRecord(FileWriter &writer)
     {
     WRITE(EDID);
     WRITE(NVER);

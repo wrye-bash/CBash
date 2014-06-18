@@ -103,19 +103,19 @@ bool PGRERecord::VisitFormIDs(FormIDOp &op)
     if(Patrol.IsLoaded())
         {
         op.Accept(Patrol->INAM.value);
-        for(UINT32 x = 0; x < Patrol->SCR_.value.size(); x++)
+        for(uint32_t x = 0; x < Patrol->SCR_.value.size(); x++)
             if(Patrol->SCR_.value[x]->isSCRO)
                 op.Accept(Patrol->SCR_.value[x]->reference);
         op.Accept(Patrol->TNAM.value);
         }
     if(Ownership.IsLoaded())
         op.Accept(Ownership->XOWN.value);
-    for(UINT32 x = 0; x < XDCR.value.size(); x++)
+    for(uint32_t x = 0; x < XDCR.value.size(); x++)
         op.Accept(XDCR.value[x]->reference);
     if(XLKR.IsLoaded())
         op.Accept(XLKR.value);
     if(ActivateParents.IsLoaded())
-        for(UINT32 x = 0; x < ActivateParents->XAPR.value.size(); x++)
+        for(uint32_t x = 0; x < ActivateParents->XAPR.value.size(); x++)
             op.Accept(ActivateParents->XAPR.value[x]->reference);
     if(XESP.IsLoaded())
         op.Accept(XESP->parent);
@@ -123,7 +123,7 @@ bool PGRERecord::VisitFormIDs(FormIDOp &op)
         op.Accept(XEMI.value);
     if(XMBR.IsLoaded())
         op.Accept(XMBR.value);
-    for(UINT32 x = 0; x < XPWR.value.size(); x++)
+    for(uint32_t x = 0; x < XPWR.value.size(); x++)
         op.Accept(XPWR.value[x]->reference);
 
     return op.Stop();
@@ -151,46 +151,46 @@ void PGRERecord::IsPopIn(bool value)
     SETBIT(XESP->flags, fIsPopIn, value);
     }
 
-bool PGRERecord::IsFlagMask(UINT8 Mask, bool Exact)
+bool PGRERecord::IsFlagMask(uint8_t Mask, bool Exact)
     {
     if(!XESP.IsLoaded()) return false;
     return Exact ? ((XESP->flags & Mask) == Mask) : ((XESP->flags & Mask) != 0);
     }
 
-void PGRERecord::SetFlagMask(UINT8 Mask)
+void PGRERecord::SetFlagMask(uint8_t Mask)
     {
     XESP.Load();
     XESP->flags = Mask;
     }
 
-UINT32 PGRERecord::GetType()
+uint32_t PGRERecord::GetType()
     {
     return REV32(PGRE);
     }
 
-STRING PGRERecord::GetStrType()
+char * PGRERecord::GetStrType()
     {
     return "PGRE";
     }
 
-SINT32 PGRERecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk)
+int32_t PGRERecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk)
     {
-    UINT32 subType = 0;
-    UINT32 subSize = 0;
+    uint32_t subType = 0;
+    uint32_t subSize = 0;
     while(buffer < end_buffer){
-        subType = *(UINT32 *)buffer;
+        subType = *(uint32_t *)buffer;
         buffer += 4;
         switch(subType)
             {
             case REV32(XXXX):
                 buffer += 2;
-                subSize = *(UINT32 *)buffer;
+                subSize = *(uint32_t *)buffer;
                 buffer += 4;
-                subType = *(UINT32 *)buffer;
+                subType = *(uint32_t *)buffer;
                 buffer += 6;
                 break;
             default:
-                subSize = *(UINT16 *)buffer;
+                subSize = *(uint16_t *)buffer;
                 buffer += 2;
                 break;
             }
@@ -331,7 +331,7 @@ SINT32 PGRERecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer,
     return 0;
     }
 
-SINT32 PGRERecord::Unload()
+int32_t PGRERecord::Unload()
     {
     IsChanged(false);
     IsLoaded(false);
@@ -361,7 +361,7 @@ SINT32 PGRERecord::Unload()
     return 1;
     }
 
-SINT32 PGRERecord::WriteRecord(FileWriter &writer)
+int32_t PGRERecord::WriteRecord(FileWriter &writer)
     {
     WRITE(EDID);
     WRITE(NAME);

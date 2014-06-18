@@ -38,7 +38,7 @@
 
 namespace Ob
 {
-UINT32 CLOTRecord::GetFieldAttribute(FIELD_IDENTIFIERS, UINT32 WhichAttribute)
+uint32_t CLOTRecord::GetFieldAttribute(FIELD_IDENTIFIERS, uint32_t WhichAttribute)
     {
     switch(FieldID)
         {
@@ -200,21 +200,21 @@ void * CLOTRecord::GetField(FIELD_IDENTIFIERS, void **FieldValues)
     return NULL;
     }
 
-bool CLOTRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
+bool CLOTRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, uint32_t ArraySize)
     {
     switch(FieldID)
         {
         case 1: //flags1
-            SetHeaderFlagMask(*(UINT32 *)FieldValue);
+            SetHeaderFlagMask(*(uint32_t *)FieldValue);
             break;
         case 3: //flags2
-            SetHeaderUnknownFlagMask(*(UINT32 *)FieldValue);
+            SetHeaderUnknownFlagMask(*(uint32_t *)FieldValue);
             break;
         case 4: //eid
-            EDID.Copy((STRING)FieldValue);
+            EDID.Copy((char *)FieldValue);
             break;
         case 5: //full
-            FULL.Copy((STRING)FieldValue);
+            FULL.Copy((char *)FieldValue);
             break;
         case 6: //script
             SCRI.value = *(FORMID *)FieldValue;
@@ -223,18 +223,18 @@ bool CLOTRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             ENAM.value = *(FORMID *)FieldValue;
             return true;
         case 8: //enchantPoints
-            ANAM.value = *(UINT16 *)FieldValue;
+            ANAM.value = *(uint16_t *)FieldValue;
             break;
         case 9: //flags
-            SetFlagMask(*(UINT32 *)FieldValue);
+            SetFlagMask(*(uint32_t *)FieldValue);
             break;
         case 10: //maleBody_modPath
             MODL.Load();
-            MODL->MODL.Copy((STRING)FieldValue);
+            MODL->MODL.Copy((char *)FieldValue);
             break;
         case 11: //maleBody_modb
             MODL.Load();
-            MODL->MODB.value = *(FLOAT32 *)FieldValue;
+            MODL->MODB.value = *(float *)FieldValue;
             break;
         case 12: //maleBody_modt_p
             MODL.Load();
@@ -242,26 +242,26 @@ bool CLOTRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             break;
         case 13: //maleWorld_modPath
             MOD2.Load();
-            MOD2->MODL.Copy((STRING)FieldValue);
+            MOD2->MODL.Copy((char *)FieldValue);
             break;
         case 14: //maleWorld_modb
             MOD2.Load();
-            MOD2->MODB.value = *(FLOAT32 *)FieldValue;
+            MOD2->MODB.value = *(float *)FieldValue;
             break;
         case 15: //maleWorld_modt_p
             MOD2.Load();
             MOD2->MODT.Copy((UINT8ARRAY)FieldValue, ArraySize);
             break;
         case 16: //maleIconPath
-            ICON.Copy((STRING)FieldValue);
+            ICON.Copy((char *)FieldValue);
             break;
         case 17: //femaleBody_modPath
             MOD3.Load();
-            MOD3->MODL.Copy((STRING)FieldValue);
+            MOD3->MODL.Copy((char *)FieldValue);
             break;
         case 18: //femaleBody_modb
             MOD3.Load();
-            MOD3->MODB.value = *(FLOAT32 *)FieldValue;
+            MOD3->MODB.value = *(float *)FieldValue;
             break;
         case 19: //femaleBody_modt_p
             MOD3.Load();
@@ -269,24 +269,24 @@ bool CLOTRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             break;
         case 20: //femaleWorld_modPath
             MOD4.Load();
-            MOD4->MODL.Copy((STRING)FieldValue);
+            MOD4->MODL.Copy((char *)FieldValue);
             break;
         case 21: //femaleWorld_modb
             MOD4.Load();
-            MOD4->MODB.value = *(FLOAT32 *)FieldValue;
+            MOD4->MODB.value = *(float *)FieldValue;
             break;
         case 22: //femaleWorld_modt_p
             MOD4.Load();
             MOD4->MODT.Copy((UINT8ARRAY)FieldValue, ArraySize);
             break;
         case 23: //femaleIconPath
-            ICO2.Copy((STRING)FieldValue);
+            ICO2.Copy((char *)FieldValue);
             break;
         case 24: //value
-            DATA.value.value = *(UINT32 *)FieldValue;
+            DATA.value.value = *(uint32_t *)FieldValue;
             break;
         case 25: //weight
-            DATA.value.weight = *(FLOAT32 *)FieldValue;
+            DATA.value.weight = *(float *)FieldValue;
             break;
         default:
             break;

@@ -218,10 +218,10 @@ bool NPC_Record::VisitFormIDs(FormIDOp &op)
 
     if(MODL.IsLoaded())
         {
-        for(UINT32 x = 0; x < MODL->Textures.MODS.size(); x++)
+        for(uint32_t x = 0; x < MODL->Textures.MODS.size(); x++)
             op.Accept(MODL->Textures.MODS[x]->texture);
         }
-    for(UINT32 x = 0; x < SNAM.value.size(); x++)
+    for(uint32_t x = 0; x < SNAM.value.size(); x++)
         op.Accept(SNAM.value[x]->faction);
     if(INAM.IsLoaded())
         op.Accept(INAM.value);
@@ -231,13 +231,13 @@ bool NPC_Record::VisitFormIDs(FormIDOp &op)
         op.Accept(TPLT.value);
     if(RNAM.IsLoaded())
         op.Accept(RNAM.value);
-    for(UINT32 x = 0; x < SPLO.value.size(); x++)
+    for(uint32_t x = 0; x < SPLO.value.size(); x++)
         op.Accept(SPLO.value[x]);
     if(EITM.IsLoaded())
         op.Accept(EITM.value);
     if(Destructable.IsLoaded())
         {
-        for(UINT32 x = 0; x < Destructable->Stages.value.size(); ++x)
+        for(uint32_t x = 0; x < Destructable->Stages.value.size(); ++x)
             {
             op.Accept(Destructable->Stages.value[x]->DSTD.value.explosion);
             op.Accept(Destructable->Stages.value[x]->DSTD.value.debris);
@@ -245,17 +245,17 @@ bool NPC_Record::VisitFormIDs(FormIDOp &op)
         }
     if(SCRI.IsLoaded())
         op.Accept(SCRI.value);
-    for(UINT32 x = 0; x < CNTO.value.size(); ++x)
+    for(uint32_t x = 0; x < CNTO.value.size(); ++x)
         {
         op.Accept(CNTO.value[x]->CNTO.value.item);
         if(CNTO.value[x]->IsGlobal())
             op.Accept(CNTO.value[x]->COED->globalOrRank);
         }
-    for(UINT32 x = 0; x < PKID.value.size(); x++)
+    for(uint32_t x = 0; x < PKID.value.size(); x++)
         op.Accept(PKID.value[x]);
     if(CNAM.IsLoaded())
         op.Accept(CNAM.value);
-    for(UINT32 x = 0; x < PNAM.value.size(); x++)
+    for(uint32_t x = 0; x < PNAM.value.size(); x++)
         op.Accept(PNAM.value[x]);
     if(HNAM.IsLoaded())
         op.Accept(HNAM.value);
@@ -426,12 +426,12 @@ void NPC_Record::IsNoHeadTracking(bool value)
     SETBIT(ACBS.value.flags, fIsNoHeadTracking, value);
     }
 
-bool NPC_Record::IsFlagMask(UINT32 Mask, bool Exact)
+bool NPC_Record::IsFlagMask(uint32_t Mask, bool Exact)
     {
     return Exact ? ((ACBS.value.flags & Mask) == Mask) : ((ACBS.value.flags & Mask) != 0);
     }
 
-void NPC_Record::SetFlagMask(UINT32 Mask)
+void NPC_Record::SetFlagMask(uint32_t Mask)
     {
     ACBS.value.flags = Mask;
     }
@@ -536,12 +536,12 @@ void NPC_Record::IsUseScript(bool value)
     SETBIT(ACBS.value.templateFlags, fIsUseScript, value);
     }
 
-bool NPC_Record::IsTemplateFlagMask(UINT16 Mask, bool Exact)
+bool NPC_Record::IsTemplateFlagMask(uint16_t Mask, bool Exact)
     {
     return Exact ? ((ACBS.value.templateFlags & Mask) == Mask) : ((ACBS.value.templateFlags & Mask) != 0);
     }
 
-void NPC_Record::SetTemplateFlagMask(UINT16 Mask)
+void NPC_Record::SetTemplateFlagMask(uint16_t Mask)
     {
     ACBS.value.templateFlags = Mask;
     }
@@ -558,13 +558,13 @@ void NPC_Record::IsAggroRadiusBehavior(bool value)
     AIDT->aggroFlags = value ? (AIDT->aggroFlags | fIsAggroRadiusBehavior) : (AIDT->aggroFlags & ~fIsAggroRadiusBehavior);
     }
 
-bool NPC_Record::IsAggroFlagMask(UINT8 Mask, bool Exact)
+bool NPC_Record::IsAggroFlagMask(uint8_t Mask, bool Exact)
     {
     if(!AIDT.IsLoaded()) return false;
     return Exact ? ((AIDT->aggroFlags & Mask) == Mask) : ((AIDT->aggroFlags & Mask) != 0);
     }
 
-void NPC_Record::SetAggroFlagMask(UINT8 Mask)
+void NPC_Record::SetAggroFlagMask(uint8_t Mask)
     {
     AIDT.Load();
     AIDT->aggroFlags = Mask;
@@ -726,13 +726,13 @@ void NPC_Record::IsServicesRepair(bool value)
     AIDT->flags = value ? (AIDT->flags | fIsServicesRepair) : (AIDT->flags & ~fIsServicesRepair);
     }
 
-bool NPC_Record::IsServicesFlagMask(UINT32 Mask, bool Exact)
+bool NPC_Record::IsServicesFlagMask(uint32_t Mask, bool Exact)
     {
     if(!AIDT.IsLoaded()) return false;
     return Exact ? ((AIDT->flags & Mask) == Mask) : ((AIDT->flags & Mask) != 0);
     }
 
-void NPC_Record::SetServicesFlagMask(UINT32 Mask)
+void NPC_Record::SetServicesFlagMask(uint32_t Mask)
     {
     AIDT.Load();
     AIDT->flags = Mask;
@@ -786,13 +786,13 @@ void NPC_Record::IsFrenzied(bool value)
     AIDT->aggression = value ? eFrenzied : eUnaggressive;
     }
 
-bool NPC_Record::IsAggressionType(UINT8 Type)
+bool NPC_Record::IsAggressionType(uint8_t Type)
     {
     if(!AIDT.IsLoaded()) return false;
     return AIDT->aggression == Type;
     }
 
-void NPC_Record::SetAggressionType(UINT8 Type)
+void NPC_Record::SetAggressionType(uint8_t Type)
     {
     AIDT.Load();
     AIDT->aggression = Type;
@@ -858,13 +858,13 @@ void NPC_Record::IsFoolhardy(bool value)
     AIDT->confidence = value ? eFoolhardy : eCowardly;
     }
 
-bool NPC_Record::IsConfidenceType(UINT8 Type)
+bool NPC_Record::IsConfidenceType(uint8_t Type)
     {
     if(!AIDT.IsLoaded()) return false;
     return AIDT->confidence == Type;
     }
 
-void NPC_Record::SetConfidenceType(UINT8 Type)
+void NPC_Record::SetConfidenceType(uint8_t Type)
     {
     AIDT.Load();
     AIDT->confidence = Type;
@@ -966,13 +966,13 @@ void NPC_Record::IsSad(bool value)
     AIDT->mood = value ? eSad : eNeutral;
     }
 
-bool NPC_Record::IsMoodType(UINT8 Type)
+bool NPC_Record::IsMoodType(uint8_t Type)
     {
     if(!AIDT.IsLoaded()) return false;
     return AIDT->mood == Type;
     }
 
-void NPC_Record::SetMoodType(UINT8 Type)
+void NPC_Record::SetMoodType(uint8_t Type)
     {
     AIDT.Load();
     AIDT->mood = Type;
@@ -1014,13 +1014,13 @@ void NPC_Record::IsHelpsFriendsAndAllies(bool value)
     AIDT->assistance = value ? eHelpsFriendsAndAllies : eHelpsNobody;
     }
 
-bool NPC_Record::IsAssistanceType(UINT8 Type)
+bool NPC_Record::IsAssistanceType(uint8_t Type)
     {
     if(!AIDT.IsLoaded()) return false;
     return AIDT->assistance == Type;
     }
 
-void NPC_Record::SetAssistanceType(UINT8 Type)
+void NPC_Record::SetAssistanceType(uint8_t Type)
     {
     AIDT.Load();
     AIDT->assistance = Type;
@@ -1146,44 +1146,44 @@ void NPC_Record::IsOrganicGlow(bool value)
     NAM4.value = value ? eOrganicGlow : eStone;
     }
 
-bool NPC_Record::IsImpactType(UINT32 Type)
+bool NPC_Record::IsImpactType(uint32_t Type)
     {
     return NAM4.value == Type;
     }
 
-void NPC_Record::SetImpactType(UINT32 Type)
+void NPC_Record::SetImpactType(uint32_t Type)
     {
     NAM4.value = Type;
     }
 
-UINT32 NPC_Record::GetType()
+uint32_t NPC_Record::GetType()
     {
     return REV32(NPC_);
     }
 
-STRING NPC_Record::GetStrType()
+char * NPC_Record::GetStrType()
     {
     return "NPC_";
     }
 
-SINT32 NPC_Record::ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk)
+int32_t NPC_Record::ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk)
     {
-    UINT32 subType = 0;
-    UINT32 subSize = 0;
+    uint32_t subType = 0;
+    uint32_t subSize = 0;
     while(buffer < end_buffer){
-        subType = *(UINT32 *)buffer;
+        subType = *(uint32_t *)buffer;
         buffer += 4;
         switch(subType)
             {
             case REV32(XXXX):
                 buffer += 2;
-                subSize = *(UINT32 *)buffer;
+                subSize = *(uint32_t *)buffer;
                 buffer += 4;
-                subType = *(UINT32 *)buffer;
+                subType = *(uint32_t *)buffer;
                 buffer += 6;
                 break;
             default:
-                subSize = *(UINT16 *)buffer;
+                subSize = *(uint16_t *)buffer;
                 buffer += 2;
                 break;
             }
@@ -1348,7 +1348,7 @@ SINT32 NPC_Record::ParseRecord(unsigned char *buffer, unsigned char *end_buffer,
     return 0;
     }
 
-SINT32 NPC_Record::Unload()
+int32_t NPC_Record::Unload()
     {
     IsChanged(false);
     IsLoaded(false);
@@ -1390,7 +1390,7 @@ SINT32 NPC_Record::Unload()
     return 1;
     }
 
-SINT32 NPC_Record::WriteRecord(FileWriter &writer)
+int32_t NPC_Record::WriteRecord(FileWriter &writer)
     {
     WRITE(EDID);
     WRITE(OBND);

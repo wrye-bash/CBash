@@ -102,7 +102,7 @@ bool SPELRecord::VisitFormIDs(FormIDOp &op)
     if(!IsLoaded())
         return false;
 
-    for(UINT32 ListIndex = 0; ListIndex < Effects.value.size(); ListIndex++)
+    for(uint32_t ListIndex = 0; ListIndex < Effects.value.size(); ListIndex++)
         Effects.value[ListIndex]->VisitFormIDs(op);
 
     return op.Stop();
@@ -218,12 +218,12 @@ void SPELRecord::IsTouchExplodes(bool value)
     SETBIT(SPIT.value.flags, fIsTouchExplodesWOTarget, value);
     }
 
-bool SPELRecord::IsFlagMask(UINT8 Mask, bool Exact)
+bool SPELRecord::IsFlagMask(uint8_t Mask, bool Exact)
     {
     return Exact ? ((SPIT.value.flags & Mask) == Mask) : ((SPIT.value.flags & Mask) != 0);
     }
 
-void SPELRecord::SetFlagMask(UINT8 Mask)
+void SPELRecord::SetFlagMask(uint8_t Mask)
     {
     SPIT.value.flags = Mask;
     }
@@ -306,12 +306,12 @@ void SPELRecord::IsPoison(bool value)
         SPIT.value.spellType = eSpell;
     }
 
-bool SPELRecord::IsType(UINT32 Type)
+bool SPELRecord::IsType(uint32_t Type)
     {
     return (SPIT.value.spellType == Type);
     }
 
-void SPELRecord::SetType(UINT32 Type)
+void SPELRecord::SetType(uint32_t Type)
     {
     SPIT.value.spellType = Type;
     }
@@ -381,45 +381,45 @@ void SPELRecord::IsMaster(bool value)
         SPIT.value.levelType = eNovice;
     }
 
-bool SPELRecord::IsLevel(UINT32 Type)
+bool SPELRecord::IsLevel(uint32_t Type)
     {
     return (SPIT.value.levelType == Type);
     }
 
-void SPELRecord::SetLevel(UINT32 Type)
+void SPELRecord::SetLevel(uint32_t Type)
     {
     SPIT.value.levelType = Type;
     }
 
-UINT32 SPELRecord::GetType()
+uint32_t SPELRecord::GetType()
     {
     return REV32(SPEL);
     }
 
-STRING SPELRecord::GetStrType()
+char * SPELRecord::GetStrType()
     {
     return "SPEL";
     }
 
-SINT32 SPELRecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk)
+int32_t SPELRecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk)
     {
-    UINT32 subType = 0;
-    UINT32 subSize = 0;
+    uint32_t subType = 0;
+    uint32_t subSize = 0;
     bool bNoOBME = true;
     while(buffer < end_buffer){
-        subType = *(UINT32 *)buffer;
+        subType = *(uint32_t *)buffer;
         buffer += 4;
         switch(subType)
             {
             case REV32(XXXX):
                 buffer += 2;
-                subSize = *(UINT32 *)buffer;
+                subSize = *(uint32_t *)buffer;
                 buffer += 4;
-                subType = *(UINT32 *)buffer;
+                subType = *(uint32_t *)buffer;
                 buffer += 6;
                 break;
             default:
-                subSize = *(UINT16 *)buffer;
+                subSize = *(uint16_t *)buffer;
                 buffer += 2;
                 break;
             }
@@ -497,7 +497,7 @@ SINT32 SPELRecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer,
     return 0;
     }
 
-SINT32 SPELRecord::Unload()
+int32_t SPELRecord::Unload()
     {
     IsChanged(false);
     IsLoaded(false);
@@ -509,7 +509,7 @@ SINT32 SPELRecord::Unload()
     return 1;
     }
 
-SINT32 SPELRecord::WriteRecord(FileWriter &writer)
+int32_t SPELRecord::WriteRecord(FileWriter &writer)
     {
     WRITE(EDID);
     if(OBME.IsLoaded())

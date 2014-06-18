@@ -40,7 +40,7 @@ namespace Sk
 
 // VMAD not accessible via API
 
-UINT32 ACTIRecord::GetFieldAttribute(FIELD_IDENTIFIERS, UINT32 WhichAttribute)
+uint32_t ACTIRecord::GetFieldAttribute(FIELD_IDENTIFIERS, uint32_t WhichAttribute)
 {
     switch (FieldID)
     {
@@ -114,7 +114,7 @@ UINT32 ACTIRecord::GetFieldAttribute(FIELD_IDENTIFIERS, UINT32 WhichAttribute)
             case 0: //fieldType
                 return LIST_FIELD;
             case 1: //fieldSize
-                return (UINT32)MODL->Textures.MODS.size();
+                return (uint32_t)MODL->Textures.MODS.size();
             default:
                 return UNKNOWN_FIELD;
             }
@@ -163,7 +163,7 @@ UINT32 ACTIRecord::GetFieldAttribute(FIELD_IDENTIFIERS, UINT32 WhichAttribute)
             case 0: //fieldType
                 return LIST_FIELD;
             case 1: //fieldSize
-                return (UINT32)Destructable->Stages.value.size();
+                return (uint32_t)Destructable->Stages.value.size();
             default:
                 return UNKNOWN_FIELD;
             }
@@ -416,12 +416,12 @@ void * ACTIRecord::GetField(FIELD_IDENTIFIERS, void **FieldValues)
     return NULL;
 }
 
-bool ACTIRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
+bool ACTIRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, uint32_t ArraySize)
 {
     switch (FieldID)
     {
     case 1: //flags1
-        SetHeaderFlagMask(*(UINT32 *)FieldValue);
+        SetHeaderFlagMask(*(uint32_t *)FieldValue);
         break;
     case 3: //versionControl1
         if (ArraySize != 4)
@@ -432,10 +432,10 @@ bool ACTIRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
         ((UINT8ARRAY)&flagsUnk)[3] = ((UINT8ARRAY)FieldValue)[3];
         break;
     case 4: //eid
-        EDID.Copy((STRING)FieldValue);
+        EDID.Copy((char *)FieldValue);
         break;
     case 5: //formVersion
-        formVersion = *(UINT16 *)FieldValue;
+        formVersion = *(uint16_t *)FieldValue;
         break;
     case 6: //versionControl2
         if (ArraySize != 2)
@@ -444,29 +444,29 @@ bool ACTIRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
         versionControl2[1] = ((UINT8ARRAY)FieldValue)[1];
         break;
     case 7: //boundX1
-        OBND.value.x1 = *(SINT16 *)FieldValue;
+        OBND.value.x1 = *(int16_t *)FieldValue;
         break;
     case 8: //boundY1
-        OBND.value.y1 = *(SINT16 *)FieldValue;
+        OBND.value.y1 = *(int16_t *)FieldValue;
         break;
     case 9: //boundZ1
-        OBND.value.z1 = *(SINT16 *)FieldValue;
+        OBND.value.z1 = *(int16_t *)FieldValue;
         break;
     case 10: //boundX2
-        OBND.value.x2 = *(SINT16 *)FieldValue;
+        OBND.value.x2 = *(int16_t *)FieldValue;
         break;
     case 11: //boundY2
-        OBND.value.y2 = *(SINT16 *)FieldValue;
+        OBND.value.y2 = *(int16_t *)FieldValue;
         break;
     case 12: //boundZ2
-        OBND.value.z2 = *(SINT16 *)FieldValue;
+        OBND.value.z2 = *(int16_t *)FieldValue;
         break;
     case 13: //full
-        FULL.Copy((STRING)FieldValue);
+        FULL.Copy((char *)FieldValue);
         break;
     case 14: //modPath
         MODL.Load();
-        MODL->MODL.Copy((STRING)FieldValue);
+        MODL->MODL.Copy((char *)FieldValue);
         break;
     case 15: //modt_p
         MODL.Load();
@@ -490,16 +490,16 @@ bool ACTIRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             MODL->Textures.MODS[ListIndex]->name = NULL;
             if (FieldValue != NULL)
             {
-                ArraySize = (UINT32)strlen((STRING)FieldValue) + 1;
+                ArraySize = (uint32_t)strlen((char *)FieldValue) + 1;
                 MODL->Textures.MODS[ListIndex]->name = new char[ArraySize];
-                strcpy_s(MODL->Textures.MODS[ListIndex]->name, ArraySize, (STRING)FieldValue);
+                strcpy_s(MODL->Textures.MODS[ListIndex]->name, ArraySize, (char *)FieldValue);
             }
             break;
         case 2: //texture
             MODL->Textures.MODS[ListIndex]->texture = *(FORMID *)FieldValue;
             return true;
         case 3: //index
-            MODL->Textures.MODS[ListIndex]->index = *(SINT32 *)FieldValue;
+            MODL->Textures.MODS[ListIndex]->index = *(int32_t *)FieldValue;
             break;
         default:
             break;
@@ -507,15 +507,15 @@ bool ACTIRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
         break;
     case 17: //destructableHealth
         Destructable.Load();
-        Destructable->DEST.value.health = *(SINT32 *)FieldValue;
+        Destructable->DEST.value.health = *(int32_t *)FieldValue;
         break;
     case 18: //destructableCount
         Destructable.Load();
-        Destructable->DEST.value.count = *(UINT8 *)FieldValue;
+        Destructable->DEST.value.count = *(uint8_t *)FieldValue;
         break;
     case 19: //destructableFlags
         Destructable.Load();
-        Destructable->DEST->flags = *(UINT8 *)FieldValue;
+        Destructable->DEST->flags = *(uint8_t *)FieldValue;
         break;
     case 20: //destructableUnused1
         if (ArraySize != 2)
@@ -538,19 +538,19 @@ bool ACTIRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
         switch (ListFieldID)
         {
         case 1: //health
-            Destructable->Stages.value[ListIndex]->DSTD.value.health = *(UINT8 *)FieldValue;
+            Destructable->Stages.value[ListIndex]->DSTD.value.health = *(uint8_t *)FieldValue;
             break;
         case 2: //index
-            Destructable->Stages.value[ListIndex]->DSTD.value.index = *(UINT8 *)FieldValue;
+            Destructable->Stages.value[ListIndex]->DSTD.value.index = *(uint8_t *)FieldValue;
             break;
         case 3: //stage
-            Destructable->Stages.value[ListIndex]->DSTD.value.stage = *(UINT8 *)FieldValue;
+            Destructable->Stages.value[ListIndex]->DSTD.value.stage = *(uint8_t *)FieldValue;
             break;
         case 4: //flags
-            Destructable->Stages.value[ListIndex]->DSTD.value.flags = *(UINT8 *)FieldValue;
+            Destructable->Stages.value[ListIndex]->DSTD.value.flags = *(uint8_t *)FieldValue;
             break;
         case 5: //dps
-            Destructable->Stages.value[ListIndex]->DSTD.value.dps = *(SINT32 *)FieldValue;
+            Destructable->Stages.value[ListIndex]->DSTD.value.dps = *(int32_t *)FieldValue;
             break;
         case 6: //explosion
             Destructable->Stages.value[ListIndex]->DSTD.value.explosion = *(FORMID *)FieldValue;
@@ -559,10 +559,10 @@ bool ACTIRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             Destructable->Stages.value[ListIndex]->DSTD.value.debris = *(FORMID *)FieldValue;
             return true;
         case 8: //debrisCount
-            Destructable->Stages.value[ListIndex]->DSTD.value.debrisCount = *(SINT32 *)FieldValue;
+            Destructable->Stages.value[ListIndex]->DSTD.value.debrisCount = *(int32_t *)FieldValue;
             break;
         case 9: //modPath
-            Destructable->Stages.value[ListIndex]->DMDL.Copy((STRING)FieldValue);
+            Destructable->Stages.value[ListIndex]->DMDL.Copy((char *)FieldValue);
             break;
         case 10: //modt_p
             Destructable->Stages.value[ListIndex]->DMDT.Copy((UINT8ARRAY)FieldValue, ArraySize);
@@ -581,16 +581,16 @@ bool ACTIRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
                 Destructable->Stages.value[ListIndex]->DMDS.MODS[ListX2Index]->name = NULL;
                 if (FieldValue != NULL)
                 {
-                    ArraySize = (UINT32)strlen((STRING)FieldValue) + 1;
+                    ArraySize = (uint32_t)strlen((char *)FieldValue) + 1;
                     Destructable->Stages.value[ListIndex]->DMDS.MODS[ListX2Index]->name = new char[ArraySize];
-                    strcpy_s(Destructable->Stages.value[ListIndex]->DMDS.MODS[ListX2Index]->name, ArraySize, (STRING)FieldValue);
+                    strcpy_s(Destructable->Stages.value[ListIndex]->DMDS.MODS[ListX2Index]->name, ArraySize, (char *)FieldValue);
                 }
                 break;
             case 2: //texture
                 Destructable->Stages.value[ListIndex]->DMDS.MODS[ListX2Index]->texture = *(FORMID *)FieldValue;
                 return true;
             case 3: //index
-                Destructable->Stages.value[ListIndex]->DMDS.MODS[ListX2Index]->index = *(SINT32 *)FieldValue;
+                Destructable->Stages.value[ListIndex]->DMDS.MODS[ListX2Index]->index = *(int32_t *)FieldValue;
                 break;
             default:
                 break;
@@ -602,20 +602,20 @@ bool ACTIRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
         break;
     case 22: //keywords
         KWDA.resize(ArraySize);
-        for (UINT32 x = 0; x < ArraySize; ++x)
+        for (uint32_t x = 0; x < ArraySize; ++x)
             KWDA.value[x] = ((FORMIDARRAY)FieldValue)[x];
         return true;
     case 23: //colorRed
-        PNAM->red = *(UINT8 *)FieldValue;
+        PNAM->red = *(uint8_t *)FieldValue;
         break;
     case 24: //colorGreen
-        PNAM->green = *(UINT8 *)FieldValue;
+        PNAM->green = *(uint8_t *)FieldValue;
         break;
     case 25: //colorBlue
-        PNAM->blue = *(UINT8 *)FieldValue;
+        PNAM->blue = *(uint8_t *)FieldValue;
         break;
     case 26: //colorUnk
-        PNAM->unk1 = *(UINT8 *)FieldValue;
+        PNAM->unk1 = *(uint8_t *)FieldValue;
         break;
     case 27: //loopSound
         SNAM.value = *(FORMID *)FieldValue;
@@ -627,10 +627,10 @@ bool ACTIRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
         WNAM.value = *(FORMID *)FieldValue;
         return true;
     case 30: //textOverride
-        RNAM.Copy((STRING)FieldValue);
+        RNAM.Copy((char *)FieldValue);
         break;
     case 31: //flags
-        FNAM.value = *(UINT16 *)FieldValue;
+        FNAM.value = *(uint16_t *)FieldValue;
         break;
     case 32: //interactionKywd
         KNAM.value = *(FORMID *)FieldValue;

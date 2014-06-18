@@ -73,25 +73,25 @@ class SCPTRecord : public FNVRecord //Script
         void   IsQuest(bool value);
         bool   IsEffect();
         void   IsEffect(bool value);
-        bool   IsType(UINT16 Type);
-        void   SetType(UINT16 Type);
+        bool   IsType(uint16_t Type);
+        void   SetType(uint16_t Type);
 
         bool   IsScriptEnabled();
         void   IsScriptEnabled(bool value);
-        bool   IsScriptFlagMask(UINT16 Mask, bool Exact=false);
-        void   SetScriptFlagMask(UINT16 Mask);
+        bool   IsScriptFlagMask(uint16_t Mask, bool Exact=false);
+        void   SetScriptFlagMask(uint16_t Mask);
 
-        UINT32 GetFieldAttribute(DEFAULTED_FIELD_IDENTIFIERS, UINT32 WhichAttribute=0);
+        uint32_t GetFieldAttribute(DEFAULTED_FIELD_IDENTIFIERS, uint32_t WhichAttribute=0);
         void * GetField(DEFAULTED_FIELD_IDENTIFIERS, void **FieldValues=NULL);
-        bool   SetField(DEFAULTED_FIELD_IDENTIFIERS, void *FieldValue=NULL, UINT32 ArraySize=0);
+        bool   SetField(DEFAULTED_FIELD_IDENTIFIERS, void *FieldValue=NULL, uint32_t ArraySize=0);
         void   DeleteField(DEFAULTED_FIELD_IDENTIFIERS);
 
-        UINT32 GetType();
-        STRING GetStrType();
+        uint32_t GetType();
+        char * GetStrType();
 
-        SINT32 ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk=false);
-        SINT32 Unload();
-        SINT32 WriteRecord(FileWriter &writer);
+        int32_t ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk=false);
+        int32_t Unload();
+        int32_t WriteRecord(FileWriter &writer);
 
         bool operator ==(const SCPTRecord &other) const;
         bool operator !=(const SCPTRecord &other) const;

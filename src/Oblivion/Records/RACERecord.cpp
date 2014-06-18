@@ -176,9 +176,9 @@ bool RACERecord::VisitFormIDs(FormIDOp &op)
     if(!IsLoaded())
         return false;
 
-    for(UINT32 ListIndex = 0; ListIndex < SPLO.value.size(); ListIndex++)
+    for(uint32_t ListIndex = 0; ListIndex < SPLO.value.size(); ListIndex++)
         op.Accept(SPLO.value[ListIndex]);
-    for(UINT32 ListIndex = 0; ListIndex < XNAM.value.size(); ListIndex++)
+    for(uint32_t ListIndex = 0; ListIndex < XNAM.value.size(); ListIndex++)
         op.Accept(XNAM.value[ListIndex]->faction);
     if(VNAM.IsLoaded())
         {
@@ -190,9 +190,9 @@ bool RACERecord::VisitFormIDs(FormIDOp &op)
         op.Accept(DNAM.value.defaultHairFemale);
         op.Accept(DNAM.value.defaultHairMale);
         }
-    for(UINT32 ListIndex = 0; ListIndex < HNAM.value.size(); ListIndex++)
+    for(uint32_t ListIndex = 0; ListIndex < HNAM.value.size(); ListIndex++)
         op.Accept(HNAM.value[ListIndex]);
-    for(UINT32 ListIndex = 0; ListIndex < ENAM.value.size(); ListIndex++)
+    for(uint32_t ListIndex = 0; ListIndex < ENAM.value.size(); ListIndex++)
         op.Accept(ENAM.value[ListIndex]);
 
     return op.Stop();
@@ -208,27 +208,27 @@ void RACERecord::IsPlayable(bool value)
     SETBIT(DATA.value.flags, fIsPlayable, value);
     }
 
-bool RACERecord::IsFlagMask(UINT32 Mask, bool Exact)
+bool RACERecord::IsFlagMask(uint32_t Mask, bool Exact)
     {
     return Exact ? ((DATA.value.flags & Mask) == Mask) : ((DATA.value.flags & Mask) != 0);
     }
 
-void RACERecord::SetFlagMask(UINT32 Mask)
+void RACERecord::SetFlagMask(uint32_t Mask)
     {
     DATA.value.flags = Mask;
     }
 
-UINT32 RACERecord::GetType()
+uint32_t RACERecord::GetType()
     {
     return REV32(RACE);
     }
 
-STRING RACERecord::GetStrType()
+char * RACERecord::GetStrType()
     {
     return "RACE";
     }
 
-SINT32 RACERecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk)
+int32_t RACERecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk)
     {
     enum faceEnum
         {
@@ -260,24 +260,24 @@ SINT32 RACERecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer,
         fIsFemale = 0x80000000
         };
 
-    UINT32 subType = 0;
-    UINT32 subSize = 0;
-    UINT32 part_id = 0;
-    UINT32 temp_id = 0;
+    uint32_t subType = 0;
+    uint32_t subSize = 0;
+    uint32_t part_id = 0;
+    uint32_t temp_id = 0;
     while(buffer < end_buffer){
-        subType = *(UINT32 *)buffer;
+        subType = *(uint32_t *)buffer;
         buffer += 4;
         switch(subType)
             {
             case REV32(XXXX):
                 buffer += 2;
-                subSize = *(UINT32 *)buffer;
+                subSize = *(uint32_t *)buffer;
                 buffer += 4;
-                subType = *(UINT32 *)buffer;
+                subType = *(uint32_t *)buffer;
                 buffer += 6;
                 break;
             default:
-                subSize = *(UINT16 *)buffer;
+                subSize = *(uint16_t *)buffer;
                 buffer += 2;
                 break;
             }
@@ -332,7 +332,7 @@ SINT32 RACERecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer,
                 part_id = fIsBody;
                 break;
             case REV32(INDX):
-                temp_id = *(UINT32 *)buffer;
+                temp_id = *(uint32_t *)buffer;
                 buffer += 4;
                 part_id = (part_id & 0xFF000000) | temp_id;
                 break;
@@ -626,7 +626,7 @@ SINT32 RACERecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer,
     return 0;
     }
 
-SINT32 RACERecord::Unload()
+int32_t RACERecord::Unload()
     {
     IsChanged(false);
     IsLoaded(false);
@@ -672,7 +672,7 @@ SINT32 RACERecord::Unload()
     return 1;
     }
 
-SINT32 RACERecord::WriteRecord(FileWriter &writer)
+int32_t RACERecord::WriteRecord(FileWriter &writer)
     {
     WRITE(EDID);
     WRITE(FULL);
@@ -688,7 +688,7 @@ SINT32 RACERecord::WriteRecord(FileWriter &writer)
     WRITE(ATTR);
 
     WRITEEMPTY(NAM0);
-    UINT32 curINDX = 0;
+    uint32_t curINDX = 0;
     writer.record_write_subrecord(REV32(INDX), &curINDX, 4);
     MOD0.Write(writer);
     curINDX = 1;

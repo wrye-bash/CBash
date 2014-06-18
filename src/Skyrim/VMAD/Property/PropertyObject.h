@@ -41,15 +41,15 @@
 
 struct _ObjectRef
 {
-    UINT32 formId;
-    UINT16 aliasId;
+    uint32_t formId;
+    uint16_t aliasId;
 };
 
 class PropertyObject : public Property, public _ObjectRef
 {
 public:
-    virtual UINT32 GetSize() const;
-    virtual void Read(unsigned char *&buffer, const SINT16 &version, const SINT16 &objFormat, const bool &CompressedOnDisk);
+    virtual uint32_t GetSize() const;
+    virtual void Read(unsigned char *&buffer, const int16_t &version, const int16_t &objFormat, const bool &CompressedOnDisk);
     virtual void Write(FileWriter &writer);
     virtual bool equals(const Property *other) const;
     virtual Property * Copy() const;
@@ -60,8 +60,8 @@ public:
 class PropertyObjectArray : public Property, public std::vector<_ObjectRef>
 {
 public:
-    virtual UINT32 GetSize() const;
-    virtual void Read(unsigned char *&buffer, const SINT16 &version, const SINT16 &objFormat, const bool &CompressedOnDisk);
+    virtual uint32_t GetSize() const;
+    virtual void Read(unsigned char *&buffer, const int16_t &version, const int16_t &objFormat, const bool &CompressedOnDisk);
     virtual void Write(FileWriter &writer);
     virtual bool equals(const Property *other) const;
     virtual Property * Copy() const;

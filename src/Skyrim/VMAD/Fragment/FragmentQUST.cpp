@@ -73,48 +73,48 @@ FragmentQUST::FragmentQUST()
 
 FragmentQUST::~FragmentQUST()
 {
-    for (UINT16 i = 0; i < fragments.size(); ++i)
+    for (uint16_t i = 0; i < fragments.size(); ++i)
         delete fragments[i];
-    for (UINT16 i = 0; i < aliases.size(); ++i)
+    for (uint16_t i = 0; i < aliases.size(); ++i)
         delete aliases[i];
 }
 
-void FragmentQUST::Read(unsigned char *&buffer, const SINT16 &version, const SINT16 &objFormat, const bool &CompressedOnDisk)
+void FragmentQUST::Read(unsigned char *&buffer, const int16_t &version, const int16_t &objFormat, const bool &CompressedOnDisk)
 {
     // unk1
-    unk1 = *(UINT8 *)buffer;
+    unk1 = *(uint8_t *)buffer;
     buffer += 1;
     // fragmentCount
-    UINT16 count = *(UINT16 *)buffer;
+    uint16_t count = *(uint16_t *)buffer;
     buffer += 2;
     // fileName
-    UINT16 nameSize = *(UINT16 *)buffer;
+    uint16_t nameSize = *(uint16_t *)buffer;
     buffer += 2;
     fileName.Read(buffer, nameSize, CompressedOnDisk);
     // fragments
-    for (UINT16 i = 0; i < count; ++i)
+    for (uint16_t i = 0; i < count; ++i)
     {
         Fragment *f = new Fragment;
-        f->stage = *(UINT16 *)buffer;
+        f->stage = *(uint16_t *)buffer;
         buffer += 2;
-        f->unk1 = *(UINT16 *)buffer;
+        f->unk1 = *(uint16_t *)buffer;
         buffer += 2;
-        f->stageIndex = *(SINT32 *)buffer;
+        f->stageIndex = *(int32_t *)buffer;
         buffer += 4;
-        f->unk2 = *(UINT8 *)buffer;
+        f->unk2 = *(uint8_t *)buffer;
         buffer += 1;
-        nameSize = *(UINT16 *)buffer;
+        nameSize = *(uint16_t *)buffer;
         buffer += 2;
         f->scriptName.Read(buffer, nameSize, CompressedOnDisk);
-        nameSize = *(UINT16 *)buffer;
+        nameSize = *(uint16_t *)buffer;
         buffer += 2;
         f->fragmentName.Read(buffer, nameSize, CompressedOnDisk);
         fragments.push_back(f);
     }
     // aliasCount
-    count = *(UINT16 *)buffer;
+    count = *(uint16_t *)buffer;
     buffer += 2;
-    for (UINT16 i = 0; i < count; ++i)
+    for (uint16_t i = 0; i < count; ++i)
     {
         aliases.push_back(new Alias);
         aliases.back()->Read(buffer, version, objFormat, CompressedOnDisk);
@@ -123,23 +123,23 @@ void FragmentQUST::Read(unsigned char *&buffer, const SINT16 &version, const SIN
 
 void FragmentQUST::VisitFormIDs(FormIDOp &op)
 {
-    for (UINT16 i = 0; i < aliases.size(); ++i)
+    for (uint16_t i = 0; i < aliases.size(); ++i)
         aliases[i]->VisitFormIDs(op);
 }
 
-UINT32 FragmentQUST::GetSize() const
+uint32_t FragmentQUST::GetSize() const
 {
     // unk1 + fragmentCount + fileNameSize + aliasCount
-    UINT32 total = sizeof(UINT8) + sizeof(UINT16) + sizeof(UINT16) + sizeof(UINT16);
+    uint32_t total = sizeof(uint8_t) + sizeof(uint16_t) + sizeof(uint16_t) + sizeof(uint16_t);
     total += fileName.GetSize();
-    for (UINT16 i = 0; i < fragments.size(); ++i)
+    for (uint16_t i = 0; i < fragments.size(); ++i)
     {
         // stage + unk1 + stageIndex + unk2 + scriptNameSize + fragmentNameSize
-        total += (4 * sizeof(UINT16)) + sizeof(UINT8) + sizeof(SINT32);
+        total += (4 * sizeof(uint16_t)) + sizeof(uint8_t) + sizeof(int32_t);
         total += fragments[i]->scriptName.GetSize();
         total += fragments[i]->fragmentName.GetSize();
     }
-    for (UINT16 i = 0; i < aliases.size(); ++i)
+    for (uint16_t i = 0; i < aliases.size(); ++i)
         total += aliases[i]->GetSize();
     return total;
 }
@@ -147,21 +147,21 @@ UINT32 FragmentQUST::GetSize() const
 void FragmentQUST::Write(FileWriter &writer) const
 {
     writer.record_write(&unk1, sizeof(unk1));
-    UINT16 count = fragments.size();
+    uint16_t count = fragments.size();
     writer.record_write(&count, sizeof(count));
     fileName.Write16(writer);
-    for (UINT16 i = 0; i < count; ++i)
+    for (uint16_t i = 0; i < count; ++i)
     {
-        writer.record_write(&(fragments[i]->stage), sizeof(UINT16));
-        writer.record_write(&(fragments[i]->unk1), sizeof(UINT16));
-        writer.record_write(&(fragments[i]->stageIndex), sizeof(SINT32));
-        writer.record_write(&(fragments[i]->unk2), sizeof(UINT8));
+        writer.record_write(&(fragments[i]->stage), sizeof(uint16_t));
+        writer.record_write(&(fragments[i]->unk1), sizeof(uint16_t));
+        writer.record_write(&(fragments[i]->stageIndex), sizeof(int32_t));
+        writer.record_write(&(fragments[i]->unk2), sizeof(uint8_t));
         fragments[i]->scriptName.Write16(writer);
         fragments[i]->fragmentName.Write16(writer);
     }
     count = aliases.size();
     writer.record_write(&count, sizeof(count));
-    for (UINT16 i = 0; i < count; ++i)
+    for (uint16_t i = 0; i < count; ++i)
         aliases[i]->Write(writer);
 }
 
@@ -172,12 +172,12 @@ bool FragmentQUST::equals(const Fragments *other) const
         const FragmentQUST *o = reinterpret_cast<const FragmentQUST *>(other);
         if (fragments.size() != o->fragments.size())
             return false;
-        for (UINT16 i = 0; i < fragments.size(); ++i)
+        for (uint16_t i = 0; i < fragments.size(); ++i)
             if (*(fragments[i]) != *(o->fragments[i]))
                 return false;
         if (aliases.size() != o->aliases.size())
             return false;
-        for (UINT16 i = 0; i < aliases.size(); ++i)
+        for (uint16_t i = 0; i < aliases.size(); ++i)
             if (*(aliases[i]) != *(o->aliases[i]))
                 return false;
         return true;
@@ -200,20 +200,20 @@ FragmentQUST & FragmentQUST::operator = (const FragmentQUST &other)
     unk1 = other.unk1;
     fileName = other.fileName;
 
-    for (UINT16 i = 0; i < fragments.size(); ++i)
+    for (uint16_t i = 0; i < fragments.size(); ++i)
         delete fragments[i];
     fragments.clear();
 
-    for (UINT16 i = 0; i < other.fragments.size(); ++i)
+    for (uint16_t i = 0; i < other.fragments.size(); ++i)
     {
         fragments.push_back(new Fragment);
         *(fragments.back()) = *(other.fragments[i]);
     }
 
-    for (UINT16 i = 0; i < aliases.size(); ++i)
+    for (uint16_t i = 0; i < aliases.size(); ++i)
         delete aliases[i];
 
-    for (UINT16 i = 0; i < other.aliases.size(); ++i)
+    for (uint16_t i = 0; i < other.aliases.size(); ++i)
     {
         aliases.push_back(new Alias);
         *(aliases.back()) = *(other.aliases[i]);

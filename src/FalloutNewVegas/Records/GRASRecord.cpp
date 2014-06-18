@@ -121,7 +121,7 @@ bool GRASRecord::VisitFormIDs(FormIDOp &op)
 
     if(MODL.IsLoaded())
         {
-        for(UINT32 x = 0; x < MODL->Textures.MODS.size(); x++)
+        for(uint32_t x = 0; x < MODL->Textures.MODS.size(); x++)
             op.Accept(MODL->Textures.MODS[x]->texture);
         }
 
@@ -158,44 +158,44 @@ void GRASRecord::IsFitSlope(bool value)
     SETBIT(DATA.value.flags, fIsFitSlope, value);
     }
 
-bool GRASRecord::IsFlagMask(UINT8 Mask, bool Exact)
+bool GRASRecord::IsFlagMask(uint8_t Mask, bool Exact)
     {
     return Exact ? ((DATA.value.flags & Mask) == Mask) : ((DATA.value.flags & Mask) != 0);
     }
 
-void GRASRecord::SetFlagMask(UINT8 Mask)
+void GRASRecord::SetFlagMask(uint8_t Mask)
     {
     DATA.value.flags = Mask;
     }
 
-UINT32 GRASRecord::GetType()
+uint32_t GRASRecord::GetType()
     {
     return REV32(GRAS);
     }
 
-STRING GRASRecord::GetStrType()
+char * GRASRecord::GetStrType()
     {
     return "GRAS";
     }
 
-SINT32 GRASRecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk)
+int32_t GRASRecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk)
     {
-    UINT32 subType = 0;
-    UINT32 subSize = 0;
+    uint32_t subType = 0;
+    uint32_t subSize = 0;
     while(buffer < end_buffer){
-        subType = *(UINT32 *)buffer;
+        subType = *(uint32_t *)buffer;
         buffer += 4;
         switch(subType)
             {
             case REV32(XXXX):
                 buffer += 2;
-                subSize = *(UINT32 *)buffer;
+                subSize = *(uint32_t *)buffer;
                 buffer += 4;
-                subType = *(UINT32 *)buffer;
+                subType = *(uint32_t *)buffer;
                 buffer += 6;
                 break;
             default:
-                subSize = *(UINT16 *)buffer;
+                subSize = *(uint16_t *)buffer;
                 buffer += 2;
                 break;
             }
@@ -243,7 +243,7 @@ SINT32 GRASRecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer,
     return 0;
     }
 
-SINT32 GRASRecord::Unload()
+int32_t GRASRecord::Unload()
     {
     IsChanged(false);
     IsLoaded(false);
@@ -254,7 +254,7 @@ SINT32 GRASRecord::Unload()
     return 1;
     }
 
-SINT32 GRASRecord::WriteRecord(FileWriter &writer)
+int32_t GRASRecord::WriteRecord(FileWriter &writer)
     {
     WRITE(EDID);
     WRITE(OBND);

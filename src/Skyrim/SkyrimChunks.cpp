@@ -195,7 +195,7 @@ void SKDESTRUCT::Write(FileWriter &writer)
 
 void SKDESTRUCT::VisitFormIDs(FormIDOp &op)
 {
-    for (UINT32 x = 0; x < Stages.value.size(); ++x)
+    for (uint32_t x = 0; x < Stages.value.size(); ++x)
         Stages.value[x]->VisitFormIDs(op);
 }
 
@@ -274,7 +274,7 @@ void SKCTDA::Write(FileWriter &writer)
 bool SKCTDA::operator == (const SKCTDA &other) const
 {
     return (operType == other.operType &&
-            (IsUseGlobal() ? compValue == other.compValue : AlmostEqual(*(FLOAT32 *)&compValue, *(FLOAT32 *)&other.compValue, 2)) &&
+            (IsUseGlobal() ? compValue == other.compValue : AlmostEqual(*(float *)&compValue, *(float *)&other.compValue, 2)) &&
             ifunc == other.ifunc &&
             param1 == other.param1 &&
             param2 == other.param2 &&
@@ -367,12 +367,12 @@ void SKCTDA::IsLessOrEqual(bool value)
         operType = (operType & fOperFlagMask) | eGreater;
 }
 
-bool SKCTDA::IsType(UINT8 Type) const
+bool SKCTDA::IsType(uint8_t Type) const
 {
     return (operType & eOperTypeMask) == (Type & eOperTypeMask);
 }
 
-void SKCTDA::SetType(UINT8 Type)
+void SKCTDA::SetType(uint8_t Type)
 {
     operType = (operType & fOperFlagMask) | (Type & eOperTypeMask);
 }
@@ -438,13 +438,13 @@ void SKCTDA::IsSwapSubject(bool value)
     SETBIT(operType, fIsSwapSubject, value);
 }
 
-bool SKCTDA::IsFlagMask(UINT8 Mask, bool Exact) const
+bool SKCTDA::IsFlagMask(uint8_t Mask, bool Exact) const
 {
     return Exact ? (operType & fOperFlagMask & Mask) == (Mask & fOperFlagMask)
                  : (operType & fOperFlagMask & Mask) != 0;
 }
 
-void SKCTDA::SetFlagMask(UINT8 Mask)
+void SKCTDA::SetFlagMask(uint8_t Mask)
 {
     operType = (operType & eOperTypeMask) | (Mask & fOperFlagMask);
 }
@@ -529,12 +529,12 @@ void SKCTDA::IsResultOnEventData(bool value)
     runOnType = value ? ePackageData : eSubject;
 }
 
-bool SKCTDA::IsResultOnType(UINT32 Type) const
+bool SKCTDA::IsResultOnType(uint32_t Type) const
 {
     return runOnType == Type;
 }
 
-void SKCTDA::SetResultOnType(UINT32 Type)
+void SKCTDA::SetResultOnType(uint32_t Type)
 {
     runOnType = Type;
 }
@@ -593,7 +593,7 @@ bool SKEFIT::operator != (const SKEFIT &other) const
 bool SKEffect::VisitFormIDs(FormIDOp &op)
 {
     op.Accept(EFID.value);
-    for (UINT32 i = 0; i < CTDA.value.size(); ++i)
+    for (uint32_t i = 0; i < CTDA.value.size(); ++i)
         CTDA.value[i]->VisitFormIDs(op);
     return op.Stop();
 }

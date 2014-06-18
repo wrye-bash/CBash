@@ -41,14 +41,14 @@
 namespace Sk {
 
 // LVLO subrecord for leveled lists.  Different than previous games
-// in that 'level' is a UINT16 now instead of a SINT16
+// in that 'level' is a uint16_t now instead of a int16_t
 struct SKLVLO
     {
-        UINT16  level;
-        UINT8   unused1[2];
+        uint16_t  level;
+        uint8_t   unused1[2];
         FORMID  listId;
-        SINT16  count;
-        UINT8   unused2[2];
+        int16_t  count;
+        uint8_t   unused2[2];
 
         SKLVLO();
         ~SKLVLO();
@@ -91,7 +91,7 @@ struct MODEL
 
 struct GENCNAM  // Color
     {
-        UINT8 red, green, blue, unk1; // unk in xEdit, unused on UESPWiki
+        uint8_t red, green, blue, unk1; // unk in xEdit, unused on UESPWiki
 
         GENCNAM();
         ~GENCNAM();
@@ -138,15 +138,15 @@ struct SKDESTRUCT //Destructable
 
 struct SKCTDA //Condition
 {
-    UINT8   operType, unused1[3]; //Type, Unused
+    uint8_t   operType, unused1[3]; //Type, Unused
     FORMID_OR_FLOAT32 compValue; //Float or Global (if fIsUseGlobal is true)
-    UINT16  ifunc; // function index
-    UINT8   unused2[2]; // padding
+    uint16_t  ifunc; // function index
+    uint8_t   unused2[2]; // padding
     FORMID_OR_UINT32 param1, param2;
     //Below are not always present on chunk...
-    UINT32  runOnType; //Run On
+    uint32_t  runOnType; //Run On
     FORMID_OR_UINT32 reference; //Reference (if runOn == 2) or Unused
-    SINT32  param3;
+    int32_t  param3;
 
     enum operTypeType
     {
@@ -203,8 +203,8 @@ struct SKCTDA //Condition
     void IsLess(bool value);
     bool IsLessOrEqual() const;
     void IsLessOrEqual(bool value);
-    bool IsType(UINT8 Type) const;
-    void SetType(UINT8 Type);
+    bool IsType(uint8_t Type) const;
+    void SetType(uint8_t Type);
 
     bool IsNone() const;
     void IsNone(bool value);
@@ -218,8 +218,8 @@ struct SKCTDA //Condition
     void IsUsePackData(bool value);
     bool IsSwapSubject() const;
     void IsSwapSubject(bool value);
-    bool IsFlagMask(UINT8 Mask, bool Exact = false) const;
-    void SetFlagMask(UINT8 Mask);
+    bool IsFlagMask(uint8_t Mask, bool Exact = false) const;
+    void SetFlagMask(uint8_t Mask);
 
     bool IsResultOnSubject() const;
     void IsResultOnSubject(bool value);
@@ -237,8 +237,8 @@ struct SKCTDA //Condition
     void IsResultOnPackageData(bool value);
     bool IsResultOnEventData() const;
     void IsResultOnEventData(bool value);
-    bool IsResultOnType(UINT32 Type) const;
-    void SetResultOnType(UINT32 Type);
+    bool IsResultOnType(uint32_t Type) const;
+    void SetResultOnType(uint32_t Type);
 };
 SIZE_CHECK(SKCTDA, 32);
 
@@ -258,8 +258,8 @@ struct SKCondition
 
 struct SKEFIT
 {
-    FLOAT32 magnitude;
-    UINT32  area, duration;
+    float magnitude;
+    uint32_t  area, duration;
 
     SKEFIT();
     ~SKEFIT();

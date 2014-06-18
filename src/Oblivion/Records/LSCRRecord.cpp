@@ -102,7 +102,7 @@ bool LSCRRecord::VisitFormIDs(FormIDOp &op)
     if(!IsLoaded())
         return false;
 
-    for(UINT32 ListIndex = 0; ListIndex < LNAM.value.size(); ListIndex++)
+    for(uint32_t ListIndex = 0; ListIndex < LNAM.value.size(); ListIndex++)
         {
         op.Accept(LNAM.value[ListIndex]->direct);
         op.Accept(LNAM.value[ListIndex]->indirect);
@@ -111,34 +111,34 @@ bool LSCRRecord::VisitFormIDs(FormIDOp &op)
     return op.Stop();
     }
 
-UINT32 LSCRRecord::GetType()
+uint32_t LSCRRecord::GetType()
     {
     return REV32(LSCR);
     }
 
-STRING LSCRRecord::GetStrType()
+char * LSCRRecord::GetStrType()
     {
     return "LSCR";
     }
 
-SINT32 LSCRRecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk)
+int32_t LSCRRecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk)
     {
-    UINT32 subType = 0;
-    UINT32 subSize = 0;
+    uint32_t subType = 0;
+    uint32_t subSize = 0;
     while(buffer < end_buffer){
-        subType = *(UINT32 *)buffer;
+        subType = *(uint32_t *)buffer;
         buffer += 4;
         switch(subType)
             {
             case REV32(XXXX):
                 buffer += 2;
-                subSize = *(UINT32 *)buffer;
+                subSize = *(uint32_t *)buffer;
                 buffer += 4;
-                subType = *(UINT32 *)buffer;
+                subType = *(uint32_t *)buffer;
                 buffer += 6;
                 break;
             default:
-                subSize = *(UINT16 *)buffer;
+                subSize = *(uint16_t *)buffer;
                 buffer += 2;
                 break;
             }
@@ -169,7 +169,7 @@ SINT32 LSCRRecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer,
     return 0;
     }
 
-SINT32 LSCRRecord::Unload()
+int32_t LSCRRecord::Unload()
     {
     IsChanged(false);
     IsLoaded(false);
@@ -180,7 +180,7 @@ SINT32 LSCRRecord::Unload()
     return 1;
     }
 
-SINT32 LSCRRecord::WriteRecord(FileWriter &writer)
+int32_t LSCRRecord::WriteRecord(FileWriter &writer)
     {
     WRITE(EDID);
     WRITE(ICON);

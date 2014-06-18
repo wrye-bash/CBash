@@ -38,7 +38,7 @@
 
 namespace FNV
 {
-UINT32 INFORecord::GetFieldAttribute(FIELD_IDENTIFIERS, UINT32 WhichAttribute)
+uint32_t INFORecord::GetFieldAttribute(FIELD_IDENTIFIERS, uint32_t WhichAttribute)
     {
     switch(FieldID)
         {
@@ -92,7 +92,7 @@ UINT32 INFORecord::GetFieldAttribute(FIELD_IDENTIFIERS, UINT32 WhichAttribute)
                 case 0: //fieldType
                     return FORMID_ARRAY_FIELD;
                 case 1: //fieldSize
-                    return (UINT32)NAME.value.size();
+                    return (uint32_t)NAME.value.size();
                 default:
                     return UNKNOWN_FIELD;
                 }
@@ -105,7 +105,7 @@ UINT32 INFORecord::GetFieldAttribute(FIELD_IDENTIFIERS, UINT32 WhichAttribute)
                     case 0: //fieldType
                         return LIST_FIELD;
                     case 1: //fieldSize
-                        return (UINT32)Responses.value.size();
+                        return (uint32_t)Responses.value.size();
                     default:
                         return UNKNOWN_FIELD;
                     }
@@ -182,7 +182,7 @@ UINT32 INFORecord::GetFieldAttribute(FIELD_IDENTIFIERS, UINT32 WhichAttribute)
                     case 0: //fieldType
                         return LIST_FIELD;
                     case 1: //fieldSize
-                        return (UINT32)CTDA.value.size();
+                        return (uint32_t)CTDA.value.size();
                     default:
                         return UNKNOWN_FIELD;
                     }
@@ -312,7 +312,7 @@ UINT32 INFORecord::GetFieldAttribute(FIELD_IDENTIFIERS, UINT32 WhichAttribute)
                 case 0: //fieldType
                     return FORMID_ARRAY_FIELD;
                 case 1: //fieldSize
-                    return (UINT32)TCLT.value.size();
+                    return (uint32_t)TCLT.value.size();
                 default:
                     return UNKNOWN_FIELD;
                 }
@@ -323,7 +323,7 @@ UINT32 INFORecord::GetFieldAttribute(FIELD_IDENTIFIERS, UINT32 WhichAttribute)
                 case 0: //fieldType
                     return FORMID_ARRAY_FIELD;
                 case 1: //fieldSize
-                    return (UINT32)TCLF.value.size();
+                    return (uint32_t)TCLF.value.size();
                 default:
                     return UNKNOWN_FIELD;
                 }
@@ -334,7 +334,7 @@ UINT32 INFORecord::GetFieldAttribute(FIELD_IDENTIFIERS, UINT32 WhichAttribute)
                 case 0: //fieldType
                     return FORMID_ARRAY_FIELD;
                 case 1: //fieldSize
-                    return (UINT32)TCFU.value.size();
+                    return (uint32_t)TCFU.value.size();
                 default:
                     return UNKNOWN_FIELD;
                 }
@@ -381,7 +381,7 @@ UINT32 INFORecord::GetFieldAttribute(FIELD_IDENTIFIERS, UINT32 WhichAttribute)
                     case 0: //fieldType
                         return LIST_FIELD;
                     case 1: //fieldSize
-                        return (UINT32)BeginVARS.value.size();
+                        return (uint32_t)BeginVARS.value.size();
                     default:
                         return UNKNOWN_FIELD;
                     }
@@ -433,7 +433,7 @@ UINT32 INFORecord::GetFieldAttribute(FIELD_IDENTIFIERS, UINT32 WhichAttribute)
                     case 0: //fieldType
                         return FORMID_OR_UINT32_ARRAY_FIELD;
                     case 1: //fieldSize
-                        return (UINT32)BeginSCR_.value.size();
+                        return (uint32_t)BeginSCR_.value.size();
                     default:
                         return UNKNOWN_FIELD;
                     }
@@ -502,7 +502,7 @@ UINT32 INFORecord::GetFieldAttribute(FIELD_IDENTIFIERS, UINT32 WhichAttribute)
                     case 0: //fieldType
                         return LIST_FIELD;
                     case 1: //fieldSize
-                        return (UINT32)EndVARS.value.size();
+                        return (uint32_t)EndVARS.value.size();
                     default:
                         return UNKNOWN_FIELD;
                     }
@@ -554,7 +554,7 @@ UINT32 INFORecord::GetFieldAttribute(FIELD_IDENTIFIERS, UINT32 WhichAttribute)
                     case 0: //fieldType
                         return FORMID_OR_UINT32_ARRAY_FIELD;
                     case 1: //fieldSize
-                        return (UINT32)EndSCR_.value.size();
+                        return (uint32_t)EndSCR_.value.size();
                     default:
                         return UNKNOWN_FIELD;
                     }
@@ -746,7 +746,7 @@ void * INFORecord::GetField(FIELD_IDENTIFIERS, void **FieldValues)
                 }
             return NULL;
         case 28: //references
-            for(UINT32 x = 0; x < BeginSCR_.value.size(); ++x)
+            for(uint32_t x = 0; x < BeginSCR_.value.size(); ++x)
                 ((FORMIDARRAY)FieldValues)[x] = BeginSCR_.value[x]->reference;
             return NULL;
         case 29: //unused2
@@ -790,7 +790,7 @@ void * INFORecord::GetField(FIELD_IDENTIFIERS, void **FieldValues)
                 }
             return NULL;
         case 38: //endReferences
-            for(UINT32 x = 0; x < EndSCR_.value.size(); ++x)
+            for(uint32_t x = 0; x < EndSCR_.value.size(); ++x)
                 ((FORMIDARRAY)FieldValues)[x] = EndSCR_.value[x]->reference;
             return NULL;
         case 39: //unusedSound
@@ -811,12 +811,12 @@ void * INFORecord::GetField(FIELD_IDENTIFIERS, void **FieldValues)
     return NULL;
     }
 
-bool INFORecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
+bool INFORecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, uint32_t ArraySize)
     {
     switch(FieldID)
         {
         case 1: //flags1
-            SetHeaderFlagMask(*(UINT32 *)FieldValue);
+            SetHeaderFlagMask(*(uint32_t *)FieldValue);
             break;
         case 3: //versionControl1
             if(ArraySize != 4)
@@ -827,7 +827,7 @@ bool INFORecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             ((UINT8ARRAY)&flagsUnk)[3] = ((UINT8ARRAY)FieldValue)[3];
             break;
         case 5: //formVersion
-            formVersion = *(UINT16 *)FieldValue;
+            formVersion = *(uint16_t *)FieldValue;
             break;
         case 6: //versionControl2
             if(ArraySize != 2)
@@ -836,13 +836,13 @@ bool INFORecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             versionControl2[1] = ((UINT8ARRAY)FieldValue)[1];
             break;
         case 7: //dialType
-            SetDialogType(*(UINT8 *)FieldValue);
+            SetDialogType(*(uint8_t *)FieldValue);
             break;
         case 8: //nextSpeaker
-            SetSpeakerType(*(UINT8 *)FieldValue);
+            SetSpeakerType(*(uint8_t *)FieldValue);
             break;
         case 9: //flags
-            SetFlagMask(*(UINT16 *)FieldValue);
+            SetFlagMask(*(uint16_t *)FieldValue);
             break;
         case 10: //quest
             QSTI.value = *(FORMID *)FieldValue;
@@ -855,7 +855,7 @@ bool INFORecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             return true;
         case 13: //addTopics
             NAME.resize(ArraySize);
-            for(UINT32 x = 0; x < ArraySize; x++)
+            for(uint32_t x = 0; x < ArraySize; x++)
                 NAME.value[x] = ((FORMIDARRAY)FieldValue)[x];
             return true;
         case 14: //responses
@@ -871,10 +871,10 @@ bool INFORecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             switch(ListFieldID)
                 {
                 case 1: //emotionType
-                    Responses.value[ListIndex]->SetType(*(UINT32 *)FieldValue);
+                    Responses.value[ListIndex]->SetType(*(uint32_t *)FieldValue);
                     break;
                 case 2: //emotionValue
-                    Responses.value[ListIndex]->TRDT.value.emotionValue = *(SINT32 *)FieldValue;
+                    Responses.value[ListIndex]->TRDT.value.emotionValue = *(int32_t *)FieldValue;
                     break;
                 case 3: //unused1
                     if(ArraySize != 4)
@@ -885,7 +885,7 @@ bool INFORecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
                     Responses.value[ListIndex]->TRDT.value.unused1[3] = ((UINT8ARRAY)FieldValue)[3];
                     break;
                 case 4: //responseNum
-                    Responses.value[ListIndex]->TRDT.value.responseNum = *(UINT8 *)FieldValue;
+                    Responses.value[ListIndex]->TRDT.value.responseNum = *(uint8_t *)FieldValue;
                     break;
                 case 5: //unused2
                     if(ArraySize != 3)
@@ -898,7 +898,7 @@ bool INFORecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
                     Responses.value[ListIndex]->TRDT.value.sound = *(FORMID *)FieldValue;
                     return true;
                 case 7: //flags
-                    Responses.value[ListIndex]->SetFlagMask(*(UINT8 *)FieldValue);
+                    Responses.value[ListIndex]->SetFlagMask(*(uint8_t *)FieldValue);
                     break;
                 case 8: //unused3
                     if(ArraySize != 3)
@@ -908,13 +908,13 @@ bool INFORecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
                     Responses.value[ListIndex]->TRDT.value.unused3[2] = ((UINT8ARRAY)FieldValue)[2];
                     break;
                 case 9: //responseText
-                    Responses.value[ListIndex]->NAM1.Copy((STRING)FieldValue);
+                    Responses.value[ListIndex]->NAM1.Copy((char *)FieldValue);
                     break;
                 case 10: //actorNotes
-                    Responses.value[ListIndex]->NAM2.Copy((STRING)FieldValue);
+                    Responses.value[ListIndex]->NAM2.Copy((char *)FieldValue);
                     break;
                 case 11: //editNotes
-                    Responses.value[ListIndex]->NAM3.Copy((STRING)FieldValue);
+                    Responses.value[ListIndex]->NAM3.Copy((char *)FieldValue);
                     break;
                 case 12: //speakerAnim
                     Responses.value[ListIndex]->SNAM.value = *(FORMID *)FieldValue;
@@ -939,7 +939,7 @@ bool INFORecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             switch(ListFieldID)
                 {
                 case 1: //operType
-                    CTDA.value[ListIndex]->operType = *(UINT8 *)FieldValue;
+                    CTDA.value[ListIndex]->operType = *(uint8_t *)FieldValue;
                     break;
                 case 2: //unused1
                     if(ArraySize != 3)
@@ -952,19 +952,19 @@ bool INFORecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
                     CTDA.value[ListIndex]->compValue = *(FORMID_OR_FLOAT32 *)FieldValue;
                     return true;
                 case 4: //ifunc
-                    CTDA.value[ListIndex]->ifunc = *(UINT32 *)FieldValue;
+                    CTDA.value[ListIndex]->ifunc = *(uint32_t *)FieldValue;
                     return true;
                 case 5: //param1
-                    CTDA.value[ListIndex]->param1 = *(UINT32 *)FieldValue;
+                    CTDA.value[ListIndex]->param1 = *(uint32_t *)FieldValue;
                     return true;
                 case 6: //param2
-                    CTDA.value[ListIndex]->param2 = *(UINT32 *)FieldValue;
+                    CTDA.value[ListIndex]->param2 = *(uint32_t *)FieldValue;
                     return true;
                 case 7: //runOnType
-                    CTDA.value[ListIndex]->runOnType = *(UINT32 *)FieldValue;
+                    CTDA.value[ListIndex]->runOnType = *(uint32_t *)FieldValue;
                     return true;
                 case 8: //reference
-                    CTDA.value[ListIndex]->reference = *(UINT32 *)FieldValue;
+                    CTDA.value[ListIndex]->reference = *(uint32_t *)FieldValue;
                     return true;
                 default:
                     break;
@@ -972,17 +972,17 @@ bool INFORecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             break;
         case 16: //choices
             TCLT.resize(ArraySize);
-            for(UINT32 x = 0; x < ArraySize; x++)
+            for(uint32_t x = 0; x < ArraySize; x++)
                 TCLT.value[x] = ((FORMIDARRAY)FieldValue)[x];
             return true;
         case 17: //linksFrom
             TCLF.resize(ArraySize);
-            for(UINT32 x = 0; x < ArraySize; x++)
+            for(uint32_t x = 0; x < ArraySize; x++)
                 TCLF.value[x] = ((FORMIDARRAY)FieldValue)[x];
             return true;
         case 18: //unknown
             TCFU.resize(ArraySize);
-            for(UINT32 x = 0; x < ArraySize; x++)
+            for(uint32_t x = 0; x < ArraySize; x++)
                 TCFU.value[x] = ((FORMIDARRAY)FieldValue)[x];
             return true;
         case 19: //unused1
@@ -994,26 +994,26 @@ bool INFORecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             BeginSCHR.value.unused1[3] = ((UINT8ARRAY)FieldValue)[3];
             break;
         case 20: //numRefs
-            BeginSCHR.value.numRefs = *(UINT32 *)FieldValue;
+            BeginSCHR.value.numRefs = *(uint32_t *)FieldValue;
             break;
         case 21: //compiledSize
-            BeginSCHR.value.compiledSize = *(UINT32 *)FieldValue;
+            BeginSCHR.value.compiledSize = *(uint32_t *)FieldValue;
             break;
         case 22: //lastIndex
-            BeginSCHR.value.lastIndex = *(UINT32 *)FieldValue;
+            BeginSCHR.value.lastIndex = *(uint32_t *)FieldValue;
             break;
         case 23: //scriptType
-            SetBeginType(*(UINT16 *)FieldValue);
+            SetBeginType(*(uint16_t *)FieldValue);
             break;
         case 24: //scriptFlags
-            SetBeginScriptFlagMask(*(UINT16 *)FieldValue);
+            SetBeginScriptFlagMask(*(uint16_t *)FieldValue);
             break;
         case 25: //compiled_p
             BeginSCDA.Copy((UINT8ARRAY)FieldValue, ArraySize);
             BeginSCHR.value.compiledSize = ArraySize;
             break;
         case 26: //scriptText
-            BeginSCTX.Copy((STRING)FieldValue);
+            BeginSCTX.Copy((char *)FieldValue);
             break;
         case 27: //vars
             if(ListFieldID == 0) //varsSize
@@ -1028,7 +1028,7 @@ bool INFORecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             switch(ListFieldID)
                 {
                 case 1: //index
-                    BeginVARS.value[ListIndex]->SLSD.value.index = *(UINT32 *)FieldValue;
+                    BeginVARS.value[ListIndex]->SLSD.value.index = *(uint32_t *)FieldValue;
                     break;
                 case 2: //unused1
                     if(ArraySize != 12)
@@ -1047,7 +1047,7 @@ bool INFORecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
                     BeginVARS.value[ListIndex]->SLSD.value.unused1[11] = ((UINT8ARRAY)FieldValue)[11];
                     break;
                 case 3: //flags
-                    BeginVARS.value[ListIndex]->SetFlagMask(*(UINT8 *)FieldValue);
+                    BeginVARS.value[ListIndex]->SetFlagMask(*(uint8_t *)FieldValue);
                     break;
                 case 4: //unused2
                     if(ArraySize != 7)
@@ -1061,7 +1061,7 @@ bool INFORecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
                     BeginVARS.value[ListIndex]->SLSD.value.unused2[6] = ((UINT8ARRAY)FieldValue)[6];
                     break;
                 case 5: //name
-                    BeginVARS.value[ListIndex]->SCVR.Copy((STRING)FieldValue);
+                    BeginVARS.value[ListIndex]->SCVR.Copy((char *)FieldValue);
                     break;
                 default:
                     break;
@@ -1081,7 +1081,7 @@ bool INFORecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
                 {
                 case 1: //reference
                     //Borrowing ArraySize to flag if the new value is a formID
-                    BeginSCR_.value[ListIndex]->reference = *(UINT32 *)FieldValue;
+                    BeginSCR_.value[ListIndex]->reference = *(uint32_t *)FieldValue;
                     BeginSCR_.value[ListIndex]->isSCRO = ArraySize ? true : false;
                     return ArraySize != 0;
                 default:
@@ -1097,26 +1097,26 @@ bool INFORecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             EndSCHR.value.unused1[3] = ((UINT8ARRAY)FieldValue)[3];
             break;
         case 30: //endNumRefs
-            EndSCHR.value.numRefs = *(UINT32 *)FieldValue;
+            EndSCHR.value.numRefs = *(uint32_t *)FieldValue;
             break;
         case 31: //endCompiledSize
-            EndSCHR.value.compiledSize = *(UINT32 *)FieldValue;
+            EndSCHR.value.compiledSize = *(uint32_t *)FieldValue;
             break;
         case 32: //endLastIndex
-            EndSCHR.value.lastIndex = *(UINT32 *)FieldValue;
+            EndSCHR.value.lastIndex = *(uint32_t *)FieldValue;
             break;
         case 33: //endScriptType
-            SetEndType(*(UINT16 *)FieldValue);
+            SetEndType(*(uint16_t *)FieldValue);
             break;
         case 34: //endScriptFlags
-            SetEndScriptFlagMask(*(UINT16 *)FieldValue);
+            SetEndScriptFlagMask(*(uint16_t *)FieldValue);
             break;
         case 35: //endCompiled_p
             EndSCDA.Copy((UINT8ARRAY)FieldValue, ArraySize);
             BeginSCHR.value.compiledSize = ArraySize;
             break;
         case 36: //endScriptText
-            EndSCTX.Copy((STRING)FieldValue);
+            EndSCTX.Copy((char *)FieldValue);
             break;
         case 37: //endVars
             if(ListFieldID == 0) //endVarsSize
@@ -1131,7 +1131,7 @@ bool INFORecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             switch(ListFieldID)
                 {
                 case 1: //index
-                    EndVARS.value[ListIndex]->SLSD.value.index = *(UINT32 *)FieldValue;
+                    EndVARS.value[ListIndex]->SLSD.value.index = *(uint32_t *)FieldValue;
                     break;
                 case 2: //unused1
                     if(ArraySize != 12)
@@ -1150,7 +1150,7 @@ bool INFORecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
                     EndVARS.value[ListIndex]->SLSD.value.unused1[11] = ((UINT8ARRAY)FieldValue)[11];
                     break;
                 case 3: //flags
-                    EndVARS.value[ListIndex]->SetFlagMask(*(UINT8 *)FieldValue);
+                    EndVARS.value[ListIndex]->SetFlagMask(*(uint8_t *)FieldValue);
                     break;
                 case 4: //unused2
                     if(ArraySize != 7)
@@ -1164,7 +1164,7 @@ bool INFORecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
                     EndVARS.value[ListIndex]->SLSD.value.unused2[6] = ((UINT8ARRAY)FieldValue)[6];
                     break;
                 case 5: //name
-                    EndVARS.value[ListIndex]->SCVR.Copy((STRING)FieldValue);
+                    EndVARS.value[ListIndex]->SCVR.Copy((char *)FieldValue);
                     break;
                 default:
                     break;
@@ -1184,7 +1184,7 @@ bool INFORecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
                 {
                 case 1: //reference
                     //Borrowing ArraySize to flag if the new value is a formID
-                    EndSCR_.value[ListIndex]->reference = *(UINT32 *)FieldValue;
+                    EndSCR_.value[ListIndex]->reference = *(uint32_t *)FieldValue;
                     EndSCR_.value[ListIndex]->isSCRO = ArraySize ? true : false;
                     return ArraySize != 0;
                 default:
@@ -1195,7 +1195,7 @@ bool INFORecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             SNDD.value = *(FORMID *)FieldValue;
             return true;
         case 40: //prompt
-            RNAM.Copy((STRING)FieldValue);
+            RNAM.Copy((char *)FieldValue);
             break;
         case 41: //speaker
             ANAM.value = *(FORMID *)FieldValue;
@@ -1204,7 +1204,7 @@ bool INFORecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             KNAM.value = *(FORMID *)FieldValue;
             return true;
         case 43: //challengeType
-            DNAM.value = *(UINT32 *)FieldValue;
+            DNAM.value = *(uint32_t *)FieldValue;
             break;
         default:
             break;

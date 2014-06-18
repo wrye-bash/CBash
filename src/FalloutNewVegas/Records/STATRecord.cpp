@@ -81,7 +81,7 @@ bool STATRecord::VisitFormIDs(FormIDOp &op)
 
     if(MODL.IsLoaded())
         {
-        for(UINT32 x = 0; x < MODL->Textures.MODS.size(); x++)
+        for(uint32_t x = 0; x < MODL->Textures.MODS.size(); x++)
             op.Accept(MODL->Textures.MODS[x]->texture);
         }
     if(RNAM.IsLoaded())
@@ -222,46 +222,46 @@ void STATRecord::IsSoundBushJ(bool value)
     *BRUS.value = value ? eBushJ : eNone;
     }
 
-bool STATRecord::IsSoundType(SINT8 Type)
+bool STATRecord::IsSoundType(int8_t Type)
     {
     if(!BRUS.IsLoaded()) return false;
     return *BRUS.value == Type;
     }
 
-void STATRecord::SetSoundType(SINT8 Type)
+void STATRecord::SetSoundType(int8_t Type)
     {
     BRUS.Load();
     *BRUS.value = Type;
     }
 
-UINT32 STATRecord::GetType()
+uint32_t STATRecord::GetType()
     {
     return REV32(STAT);
     }
 
-STRING STATRecord::GetStrType()
+char * STATRecord::GetStrType()
     {
     return "STAT";
     }
 
-SINT32 STATRecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk)
+int32_t STATRecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk)
     {
-    UINT32 subType = 0;
-    UINT32 subSize = 0;
+    uint32_t subType = 0;
+    uint32_t subSize = 0;
     while(buffer < end_buffer){
-        subType = *(UINT32 *)buffer;
+        subType = *(uint32_t *)buffer;
         buffer += 4;
         switch(subType)
             {
             case REV32(XXXX):
                 buffer += 2;
-                subSize = *(UINT32 *)buffer;
+                subSize = *(uint32_t *)buffer;
                 buffer += 4;
-                subType = *(UINT32 *)buffer;
+                subType = *(uint32_t *)buffer;
                 buffer += 6;
                 break;
             default:
-                subSize = *(UINT16 *)buffer;
+                subSize = *(uint16_t *)buffer;
                 buffer += 2;
                 break;
             }
@@ -312,7 +312,7 @@ SINT32 STATRecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer,
     return 0;
     }
 
-SINT32 STATRecord::Unload()
+int32_t STATRecord::Unload()
     {
     IsChanged(false);
     IsLoaded(false);
@@ -324,7 +324,7 @@ SINT32 STATRecord::Unload()
     return 1;
     }
 
-SINT32 STATRecord::WriteRecord(FileWriter &writer)
+int32_t STATRecord::WriteRecord(FileWriter &writer)
     {
     WRITE(EDID);
     WRITE(OBND);

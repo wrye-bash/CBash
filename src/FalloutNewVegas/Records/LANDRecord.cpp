@@ -67,8 +67,8 @@ bool LANDRecord::LANDNORMALS::operator !=(const LANDNORMALS &other) const
 bool LANDRecord::LANDVNML::operator ==(const LANDVNML &other) const
     {
     //Record order matters on normals, so equality testing is easy
-    for(UINT32 x = 0; x < 33; ++x)
-        for(UINT32 y = 0; y < 33; ++y)
+    for(uint32_t x = 0; x < 33; ++x)
+        for(uint32_t y = 0; y < 33; ++y)
             if(VNML[x][y] != other.VNML[x][y])
                 return false;
     return true;
@@ -96,8 +96,8 @@ bool LANDRecord::LANDVHGT::operator ==(const LANDVHGT &other) const
     if(AlmostEqual(offset,other.offset,2))
         {
         //Record order matters on heights, so equality testing is easy
-        for(UINT32 x = 0; x < 33; ++x)
-            for(UINT32 y = 0; y < 33; ++y)
+        for(uint32_t x = 0; x < 33; ++x)
+            for(uint32_t y = 0; y < 33; ++y)
                 if(VHGT[x][y] != other.VHGT[x][y])
                     return false;
         return true;
@@ -139,8 +139,8 @@ bool LANDRecord::LANDCOLORS::operator !=(const LANDCOLORS &other) const
 bool LANDRecord::LANDVCLR::operator ==(const LANDVCLR &other) const
     {
     //Record order matters on colors, so equality testing is easy
-    for(UINT32 x = 0; x < 33; ++x)
-        for(UINT32 y = 0; y < 33; ++y)
+    for(uint32_t x = 0; x < 33; ++x)
+        for(uint32_t y = 0; y < 33; ++y)
             if(VCLR[x][y] != other.VCLR[x][y])
                 return false;
     return true;
@@ -271,17 +271,17 @@ bool LANDRecord::VisitFormIDs(FormIDOp &op)
     if(!IsLoaded())
         return false;
 
-    for(UINT32 x = 0; x < BTXT.value.size(); ++x)
+    for(uint32_t x = 0; x < BTXT.value.size(); ++x)
         op.Accept(BTXT.value[x]->texture);
-    for(UINT32 x = 0; x < Layers.value.size(); ++x)
+    for(uint32_t x = 0; x < Layers.value.size(); ++x)
         op.Accept(Layers.value[x]->ATXT.value.texture);
-    for(UINT32 x = 0; x < VTEX.value.size(); x++)
+    for(uint32_t x = 0; x < VTEX.value.size(); x++)
         op.Accept(VTEX.value[x]);
 
     return op.Stop();
     }
 
-UINT8 LANDRecord::CalcQuadrant(const UINT32 &row, const UINT32 &column)
+uint8_t LANDRecord::CalcQuadrant(const uint32_t &row, const uint32_t &column)
     {
     if(column > 16)
         {
@@ -295,7 +295,7 @@ UINT8 LANDRecord::CalcQuadrant(const UINT32 &row, const UINT32 &column)
         }
     }
 
-UINT16 LANDRecord::CalcPosition(const UINT8 &curQuadrant, const UINT32 &row, const UINT32 &column)
+uint16_t LANDRecord::CalcPosition(const uint8_t &curQuadrant, const uint32_t &row, const uint32_t &column)
     {
     switch(curQuadrant)
         {
@@ -312,50 +312,50 @@ UINT16 LANDRecord::CalcPosition(const UINT8 &curQuadrant, const UINT32 &row, con
         }
     }
 
-UINT32 LANDRecord::GetType()
+uint32_t LANDRecord::GetType()
     {
     return REV32(LAND);
     }
 
-STRING LANDRecord::GetStrType()
+char * LANDRecord::GetStrType()
     {
     return "LAND";
     }
 
-FLOAT32 LANDRecord::CalcHeight(const UINT32 &row, const UINT32 &column)
+float LANDRecord::CalcHeight(const uint32_t &row, const uint32_t &column)
     {
     if(!VHGT.IsLoaded())
         return 0.0f;
 
-    FLOAT32 fRetValue = VHGT->offset * 8.0f;
+    float fRetValue = VHGT->offset * 8.0f;
 
-    for(UINT32 curRow = 0; curRow <= row; ++curRow)
+    for(uint32_t curRow = 0; curRow <= row; ++curRow)
         fRetValue += (VHGT->VHGT[curRow][0] * 8.0f);
 
-    for(UINT32 curColumn = 1; curColumn <= column; ++curColumn)
+    for(uint32_t curColumn = 1; curColumn <= column; ++curColumn)
         fRetValue += (VHGT->VHGT[row][curColumn] * 8.0f);
 
     return fRetValue;
     }
 
-SINT32 LANDRecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk)
+int32_t LANDRecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk)
     {
-    UINT32 subType = 0;
-    UINT32 subSize = 0;
+    uint32_t subType = 0;
+    uint32_t subSize = 0;
     while(buffer < end_buffer){
-        subType = *(UINT32 *)buffer;
+        subType = *(uint32_t *)buffer;
         buffer += 4;
         switch(subType)
             {
             case REV32(XXXX):
                 buffer += 2;
-                subSize = *(UINT32 *)buffer;
+                subSize = *(uint32_t *)buffer;
                 buffer += 4;
-                subType = *(UINT32 *)buffer;
+                subType = *(uint32_t *)buffer;
                 buffer += 6;
                 break;
             default:
-                subSize = *(UINT16 *)buffer;
+                subSize = *(uint16_t *)buffer;
                 buffer += 2;
                 break;
             }
@@ -387,19 +387,19 @@ SINT32 LANDRecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer,
                 //switch(curTexture.value.quadrant)
                 //    {
                 //    case eBottomLeft:
-                //        for(UINT32 x = 0; x < VTXT.size(); ++x)
+                //        for(uint32_t x = 0; x < VTXT.size(); ++x)
                 //            Merged->Points[(VTXT[x].position % 17)][(VTXT[x].position / 17)].AlphaLayer[curTexture.value.layer] = VTXT[x].opacity;
                 //        break;
                 //    case eBottomRight:
-                //        for(UINT32 x = 0; x < VTXT.size(); ++x)
+                //        for(uint32_t x = 0; x < VTXT.size(); ++x)
                 //            Merged->Points[(VTXT[x].position % 17) + 16][(VTXT[x].position / 17)].AlphaLayer[curTexture.value.layer] = VTXT[x].opacity;
                 //        break;
                 //    case eTopLeft:
-                //        for(UINT32 x = 0; x < VTXT.size(); ++x)
+                //        for(uint32_t x = 0; x < VTXT.size(); ++x)
                 //            Merged->Points[(VTXT[x].position % 17)][(VTXT[x].position / 17) + 16].AlphaLayer[curTexture.value.layer] = VTXT[x].opacity;
                 //        break;
                 //    case eTopRight:
-                //        for(UINT32 x = 0; x < VTXT.size(); ++x)
+                //        for(uint32_t x = 0; x < VTXT.size(); ++x)
                 //            Merged->Points[(VTXT[x].position % 17) + 16][(VTXT[x].position / 17) + 16].AlphaLayer[curTexture.value.layer] = VTXT[x].opacity;
                 //        break;
                 //    default:
@@ -423,7 +423,7 @@ SINT32 LANDRecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer,
     return 0;
     }
 
-SINT32 LANDRecord::Unload()
+int32_t LANDRecord::Unload()
     {
     IsChanged(false);
     IsLoaded(false);
@@ -437,7 +437,7 @@ SINT32 LANDRecord::Unload()
     return 1;
     }
 
-SINT32 LANDRecord::WriteRecord(FileWriter &writer)
+int32_t LANDRecord::WriteRecord(FileWriter &writer)
     {
     WRITE(DATA);
     WRITE(VNML);

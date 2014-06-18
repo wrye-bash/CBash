@@ -69,7 +69,7 @@ inline void ValidatePointer(const void *testPointer)
         throw Ex_NULL();
     }
 
-ModFile *ValidateLoadOrderIndex(Collection *curCollection, const UINT32 ModIndex)
+ModFile *ValidateLoadOrderIndex(Collection *curCollection, const uint32_t ModIndex)
     {
     //ModFiles will never contain null pointers
     if(ModIndex >= curCollection->LoadOrder255.size())
@@ -77,13 +77,13 @@ ModFile *ValidateLoadOrderIndex(Collection *curCollection, const UINT32 ModIndex
     return curCollection->LoadOrder255[ModIndex];
     }
 
-ModFile *ValidateLoadOrderIndex(Collection *curCollection, STRING const ModName)
+ModFile *ValidateLoadOrderIndex(Collection *curCollection, char * const ModName)
     {
     //ValidatePointer(ModName);
-    STRING NonGhostName = DeGhostModName(ModName);
-    STRING const &CompName = NonGhostName ? NonGhostName : ModName;
+    char * NonGhostName = DeGhostModName(ModName);
+    char * const &CompName = NonGhostName ? NonGhostName : ModName;
     //ModFiles will never contain null pointers
-    for(UINT32 x = 0; x < curCollection->LoadOrder255.size();++x)
+    for(uint32_t x = 0; x < curCollection->LoadOrder255.size();++x)
         if(icmps(CompName, curCollection->LoadOrder255[x]->ModName) == 0)
             {
             delete []NonGhostName;
@@ -106,14 +106,14 @@ ModFile *ValidateLoadOrderIndex(Collection *curCollection, STRING const ModName)
 //class CBashUINT32
 //    {
 //    private:
-//        UINT32 _FieldID;
+//        uint32_t _FieldID;
 //    public:
-//        CBashUINT32(UINT32 FieldID):_FieldID(FieldID) {}
-//        UINT32 get()
+//        CBashUINT32(uint32_t FieldID):_FieldID(FieldID) {}
+//        uint32_t get()
 //            {
 //            return 0;
 //            }
-//        UINT32 set()
+//        uint32_t set()
 //            {
 //            return 0;
 //            }
@@ -123,7 +123,7 @@ ModFile *ValidateLoadOrderIndex(Collection *curCollection, STRING const ModName)
 //    {
 //    using namespace boost::python;
 //
-//    class_<CBashUINT32>("CBashUINT32", init<UINT32>())
+//    class_<CBashUINT32>("CBashUINT32", init<uint32_t>())
 //        .def("__get__", &CBashUINT32::get)
 //        .def("__set__", &CBashUINT32::set);
 //    }
@@ -133,17 +133,17 @@ ModFile *ValidateLoadOrderIndex(Collection *curCollection, STRING const ModName)
 ////////////////////////////////////////////////////////////////////////
 //Exported DLL
 //Version info functions
-CPPDLLEXTERN UINT32 GetVersionMajor()
+CPPDLLEXTERN uint32_t GetVersionMajor()
     {
     return MAJOR_VERSION;
     }
 
-CPPDLLEXTERN UINT32 GetVersionMinor()
+CPPDLLEXTERN uint32_t GetVersionMinor()
     {
     return MINOR_VERSION;
     }
 
-CPPDLLEXTERN UINT32 GetVersionRevision()
+CPPDLLEXTERN uint32_t GetVersionRevision()
     {
     return REVISION_VERSION;
     }
@@ -162,7 +162,7 @@ int logback_printer(const char * _Format, ...)
     return nSize;
     }
 
-CPPDLLEXTERN void RedirectMessages(SINT32 (*_LoggingCallback)(const STRING))
+CPPDLLEXTERN void RedirectMessages(int32_t (*_LoggingCallback)(const char *))
     {
     if(_LoggingCallback)
         {
@@ -176,7 +176,7 @@ CPPDLLEXTERN void RedirectMessages(SINT32 (*_LoggingCallback)(const STRING))
         }
     }
 
-CPPDLLEXTERN void AllowRaising(void (*_RaiseCallback)(const STRING))
+CPPDLLEXTERN void AllowRaising(void (*_RaiseCallback)(const char *))
     {
     RaiseCallback = _RaiseCallback;
     }
@@ -212,7 +212,7 @@ int handle_program_memory_depletion(size_t size)
     return 0;
     }
 
-CPPDLLEXTERN Collection * CreateCollection(STRING const ModsPath, const UINT32 CollectionType)
+CPPDLLEXTERN Collection * CreateCollection(char * const ModsPath, const uint32_t CollectionType)
     {
     PROFILE_FUNC
 
@@ -232,7 +232,7 @@ CPPDLLEXTERN Collection * CreateCollection(STRING const ModsPath, const UINT32 C
     try
         {
         ValidatePointer(ModsPath);
-        for(UINT32 p = 0; p < Collections.size(); ++p)
+        for(uint32_t p = 0; p < Collections.size(); ++p)
             {
             if(Collections[p] == NULL)
                 {
@@ -257,20 +257,20 @@ CPPDLLEXTERN Collection * CreateCollection(STRING const ModsPath, const UINT32 C
     return NULL;
     }
 
-CPPDLLEXTERN SINT32 DeleteCollection(Collection *CollectionID)
+CPPDLLEXTERN int32_t DeleteCollection(Collection *CollectionID)
     {
     PROFILE_FUNC
 
     try
         {
         //ValidatePointer(CollectionID);
-        for(UINT32 ListIndex = 0; ListIndex < Collections.size(); ++ListIndex)
+        for(uint32_t ListIndex = 0; ListIndex < Collections.size(); ++ListIndex)
             {
             if(Collections[ListIndex] == CollectionID)
                 {
-                for(UINT32 ListX2Index = 0; ListX2Index < CollectionID->ModFiles.size(); ++ListX2Index)
+                for(uint32_t ListX2Index = 0; ListX2Index < CollectionID->ModFiles.size(); ++ListX2Index)
                     CollectionID->ModFiles[ListX2Index]->Close();
-                for(UINT32 ListX2Index = 0; ListX2Index < CollectionID->closing_ops.size(); ++ListX2Index)
+                for(uint32_t ListX2Index = 0; ListX2Index < CollectionID->closing_ops.size(); ++ListX2Index)
                     {
                     CollectionID->closing_ops[ListX2Index]->perform();
                     delete CollectionID->closing_ops[ListX2Index];
@@ -279,7 +279,7 @@ CPPDLLEXTERN SINT32 DeleteCollection(Collection *CollectionID)
                 Collections[ListIndex] = NULL;
                 }
             }
-        for(UINT32 ListIndex = 0; ListIndex < Collections.size(); ++ListIndex)
+        for(uint32_t ListIndex = 0; ListIndex < Collections.size(); ++ListIndex)
             {
             if(Collections[ListIndex] != NULL)
                 return 0;
@@ -344,7 +344,7 @@ CPPDLLEXTERN SINT32 DeleteCollection(Collection *CollectionID)
     return -1;
     }
 
-CPPDLLEXTERN SINT32 LoadCollection(Collection *CollectionID, bool (*_ProgressCallback)(const UINT32, const UINT32, const STRING))
+CPPDLLEXTERN int32_t LoadCollection(Collection *CollectionID, bool (*_ProgressCallback)(const uint32_t, const uint32_t, const char *))
     {
     PROFILE_FUNC
 
@@ -368,7 +368,7 @@ CPPDLLEXTERN SINT32 LoadCollection(Collection *CollectionID, bool (*_ProgressCal
     return -1;
     }
 
-CPPDLLEXTERN SINT32 UnloadCollection(Collection *CollectionID)
+CPPDLLEXTERN int32_t UnloadCollection(Collection *CollectionID)
     {
     PROFILE_FUNC
 
@@ -392,7 +392,7 @@ CPPDLLEXTERN SINT32 UnloadCollection(Collection *CollectionID)
     return -1;
     }
 
-CPPDLLEXTERN SINT32 GetCollectionType(Collection *CollectionID)
+CPPDLLEXTERN int32_t GetCollectionType(Collection *CollectionID)
     {
     PROFILE_FUNC
 
@@ -415,13 +415,13 @@ CPPDLLEXTERN SINT32 GetCollectionType(Collection *CollectionID)
     return -1;
     }
 
-CPPDLLEXTERN SINT32 UnloadAllCollections()
+CPPDLLEXTERN int32_t UnloadAllCollections()
     {
     PROFILE_FUNC
 
     try
         {
-        for(UINT32 p = 0; p < Collections.size(); ++p)
+        for(uint32_t p = 0; p < Collections.size(); ++p)
             Collections[p]->Unload();
         return 0;
         }
@@ -439,13 +439,13 @@ CPPDLLEXTERN SINT32 UnloadAllCollections()
     return -1;
     }
 
-CPPDLLEXTERN SINT32 DeleteAllCollections()
+CPPDLLEXTERN int32_t DeleteAllCollections()
     {
     PROFILE_FUNC
 
     try
         {
-        for(UINT32 p = 0; p < Collections.size(); ++p)
+        for(uint32_t p = 0; p < Collections.size(); ++p)
             delete Collections[p];
         Collections.clear();
         return 0;
@@ -466,7 +466,7 @@ CPPDLLEXTERN SINT32 DeleteAllCollections()
 ////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////
 //Mod action functions
-CPPDLLEXTERN ModFile * AddMod(Collection *CollectionID, STRING const ModName, const UINT32 ModFlagsField)
+CPPDLLEXTERN ModFile * AddMod(Collection *CollectionID, char * const ModName, const uint32_t ModFlagsField)
     {
     PROFILE_FUNC
 
@@ -492,7 +492,7 @@ CPPDLLEXTERN ModFile * AddMod(Collection *CollectionID, STRING const ModName, co
     return NULL;
     }
 
-CPPDLLEXTERN SINT32 LoadMod(ModFile *ModID)
+CPPDLLEXTERN int32_t LoadMod(ModFile *ModID)
     {
     PROFILE_FUNC
 
@@ -518,7 +518,7 @@ CPPDLLEXTERN SINT32 LoadMod(ModFile *ModID)
     return -1;
     }
 
-CPPDLLEXTERN SINT32 UnloadMod(ModFile *ModID)
+CPPDLLEXTERN int32_t UnloadMod(ModFile *ModID)
     {
     PROFILE_FUNC
 
@@ -543,7 +543,7 @@ CPPDLLEXTERN SINT32 UnloadMod(ModFile *ModID)
     return -1;
     }
 
-CPPDLLEXTERN SINT32 CleanModMasters(ModFile *ModID)
+CPPDLLEXTERN int32_t CleanModMasters(ModFile *ModID)
     {
     PROFILE_FUNC
 
@@ -567,9 +567,9 @@ CPPDLLEXTERN SINT32 CleanModMasters(ModFile *ModID)
     return -1;
     }
 
-CPPDLLEXTERN SINT32 SaveMod(ModFile *ModID, const UINT32 SaveFlagsField, STRING const DestinationName)
+CPPDLLEXTERN int32_t SaveMod(ModFile *ModID, const uint32_t SaveFlagsField, char * const DestinationName)
     {
-    SINT32 err = 0;
+    int32_t err = 0;
     SaveFlags flags(SaveFlagsField);
     try
         {
@@ -600,14 +600,14 @@ CPPDLLEXTERN SINT32 SaveMod(ModFile *ModID, const UINT32 SaveFlagsField, STRING 
     }
 ////////////////////////////////////////////////////////////////////////
 //Mod info functions
-CPPDLLEXTERN SINT32 GetAllNumMods(Collection *CollectionID)
+CPPDLLEXTERN int32_t GetAllNumMods(Collection *CollectionID)
     {
     PROFILE_FUNC
 
     try
         {
         //ValidatePointer(CollectionID);
-        return (SINT32)CollectionID->ModFiles.size();
+        return (int32_t)CollectionID->ModFiles.size();
         }
     catch(std::exception &ex)
         {
@@ -623,15 +623,15 @@ CPPDLLEXTERN SINT32 GetAllNumMods(Collection *CollectionID)
     return -1;
     }
 
-CPPDLLEXTERN SINT32 GetAllModIDs(Collection *CollectionID, MODIDARRAY ModIDs)
+CPPDLLEXTERN int32_t GetAllModIDs(Collection *CollectionID, MODIDARRAY ModIDs)
     {
     PROFILE_FUNC
 
     try
         {
         //ValidatePointer(CollectionID);
-        UINT32 numMods = (UINT32)CollectionID->ModFiles.size();
-        for(UINT32 x = 0; x < numMods; ++x)
+        uint32_t numMods = (uint32_t)CollectionID->ModFiles.size();
+        for(uint32_t x = 0; x < numMods; ++x)
             ModIDs[x] = CollectionID->ModFiles[x];
         return 0;
         }
@@ -649,14 +649,14 @@ CPPDLLEXTERN SINT32 GetAllModIDs(Collection *CollectionID, MODIDARRAY ModIDs)
     return -1;
     }
 
-CPPDLLEXTERN SINT32 GetLoadOrderNumMods(Collection *CollectionID)
+CPPDLLEXTERN int32_t GetLoadOrderNumMods(Collection *CollectionID)
     {
     PROFILE_FUNC
 
     try
         {
         //ValidatePointer(CollectionID);
-        return (SINT32)CollectionID->LoadOrder255.size();
+        return (int32_t)CollectionID->LoadOrder255.size();
         }
     catch(std::exception &ex)
         {
@@ -672,15 +672,15 @@ CPPDLLEXTERN SINT32 GetLoadOrderNumMods(Collection *CollectionID)
     return -1;
     }
 
-CPPDLLEXTERN SINT32 GetLoadOrderModIDs(Collection *CollectionID, MODIDARRAY ModIDs)
+CPPDLLEXTERN int32_t GetLoadOrderModIDs(Collection *CollectionID, MODIDARRAY ModIDs)
     {
     PROFILE_FUNC
 
     try
         {
         //ValidatePointer(CollectionID);
-        UINT32 numMods = (UINT32)CollectionID->LoadOrder255.size();
-        for(UINT32 x = 0; x < numMods; ++x)
+        uint32_t numMods = (uint32_t)CollectionID->LoadOrder255.size();
+        for(uint32_t x = 0; x < numMods; ++x)
             ModIDs[x] = CollectionID->LoadOrder255[x];
         return 0;
         }
@@ -698,7 +698,7 @@ CPPDLLEXTERN SINT32 GetLoadOrderModIDs(Collection *CollectionID, MODIDARRAY ModI
     return -1;
     }
 
-CPPDLLEXTERN STRING GetFileNameByID(ModFile *ModID)
+CPPDLLEXTERN char * GetFileNameByID(ModFile *ModID)
     {
     PROFILE_FUNC
 
@@ -721,7 +721,7 @@ CPPDLLEXTERN STRING GetFileNameByID(ModFile *ModID)
     return NULL;
     }
 
-CPPDLLEXTERN STRING GetFileNameByLoadOrder(Collection *CollectionID, const UINT32 ModIndex)
+CPPDLLEXTERN char * GetFileNameByLoadOrder(Collection *CollectionID, const uint32_t ModIndex)
     {
     PROFILE_FUNC
 
@@ -744,7 +744,7 @@ CPPDLLEXTERN STRING GetFileNameByLoadOrder(Collection *CollectionID, const UINT3
     return NULL;
     }
 
-CPPDLLEXTERN STRING GetModNameByID(ModFile *ModID)
+CPPDLLEXTERN char * GetModNameByID(ModFile *ModID)
     {
     PROFILE_FUNC
 
@@ -767,7 +767,7 @@ CPPDLLEXTERN STRING GetModNameByID(ModFile *ModID)
     return NULL;
     }
 
-CPPDLLEXTERN STRING GetModNameByLoadOrder(Collection *CollectionID, const UINT32 ModIndex)
+CPPDLLEXTERN char * GetModNameByLoadOrder(Collection *CollectionID, const uint32_t ModIndex)
     {
     PROFILE_FUNC
 
@@ -790,7 +790,7 @@ CPPDLLEXTERN STRING GetModNameByLoadOrder(Collection *CollectionID, const UINT32
     return NULL;
     }
 
-CPPDLLEXTERN ModFile * GetModIDByName(Collection *CollectionID, STRING const ModName)
+CPPDLLEXTERN ModFile * GetModIDByName(Collection *CollectionID, char * const ModName)
     {
     PROFILE_FUNC
 
@@ -798,10 +798,10 @@ CPPDLLEXTERN ModFile * GetModIDByName(Collection *CollectionID, STRING const Mod
         {
         //ValidatePointer(CollectionID);
         //ValidatePointer(ModName);
-        STRING NonGhostName = DeGhostModName(ModName);
-        STRING const &CompName = NonGhostName ? NonGhostName : ModName;
+        char * NonGhostName = DeGhostModName(ModName);
+        char * const &CompName = NonGhostName ? NonGhostName : ModName;
         //ModFiles will never contain null pointers
-        for(UINT32 x = 0; x < CollectionID->ModFiles.size();++x)
+        for(uint32_t x = 0; x < CollectionID->ModFiles.size();++x)
             if(_stricmp(CompName, CollectionID->ModFiles[x]->ModName) == 0)
                 {
                 delete []NonGhostName;
@@ -824,7 +824,7 @@ CPPDLLEXTERN ModFile * GetModIDByName(Collection *CollectionID, STRING const Mod
     return NULL;
     }
 
-CPPDLLEXTERN ModFile * GetModIDByLoadOrder(Collection *CollectionID, const UINT32 ModIndex)
+CPPDLLEXTERN ModFile * GetModIDByLoadOrder(Collection *CollectionID, const uint32_t ModIndex)
     {
     PROFILE_FUNC
 
@@ -848,7 +848,7 @@ CPPDLLEXTERN ModFile * GetModIDByLoadOrder(Collection *CollectionID, const UINT3
     return NULL;
     }
 
-CPPDLLEXTERN SINT32 GetModLoadOrderByName(Collection *CollectionID, STRING const ModName)
+CPPDLLEXTERN int32_t GetModLoadOrderByName(Collection *CollectionID, char * const ModName)
     {
     PROFILE_FUNC
 
@@ -871,7 +871,7 @@ CPPDLLEXTERN SINT32 GetModLoadOrderByName(Collection *CollectionID, STRING const
     return -1;
     }
 
-CPPDLLEXTERN SINT32 GetModLoadOrderByID(ModFile *ModID)
+CPPDLLEXTERN int32_t GetModLoadOrderByID(ModFile *ModID)
     {
     PROFILE_FUNC
 
@@ -967,7 +967,7 @@ CPPDLLEXTERN Collection * GetCollectionIDByModID(ModFile *ModID)
     return NULL;
     }
 
-CPPDLLEXTERN UINT32 IsModEmpty(ModFile *ModID)
+CPPDLLEXTERN uint32_t IsModEmpty(ModFile *ModID)
     {
     PROFILE_FUNC
 
@@ -990,7 +990,7 @@ CPPDLLEXTERN UINT32 IsModEmpty(ModFile *ModID)
     return 0;
     }
 
-CPPDLLEXTERN SINT32 GetModNumTypes(ModFile *ModID)
+CPPDLLEXTERN int32_t GetModNumTypes(ModFile *ModID)
     {
     PROFILE_FUNC
 
@@ -1005,7 +1005,7 @@ CPPDLLEXTERN SINT32 GetModNumTypes(ModFile *ModID)
             return -1;
             }
 
-        return (SINT32)ModID->FormIDHandler.NewTypes.size();
+        return (int32_t)ModID->FormIDHandler.NewTypes.size();
         }
     catch(std::exception &ex)
         {
@@ -1021,7 +1021,7 @@ CPPDLLEXTERN SINT32 GetModNumTypes(ModFile *ModID)
     return -1;
     }
 
-CPPDLLEXTERN SINT32 GetModTypes(ModFile *ModID, UINT32ARRAY RecordTypes)
+CPPDLLEXTERN int32_t GetModTypes(ModFile *ModID, UINT32ARRAY RecordTypes)
     {
     PROFILE_FUNC
 
@@ -1036,8 +1036,8 @@ CPPDLLEXTERN SINT32 GetModTypes(ModFile *ModID, UINT32ARRAY RecordTypes)
             return -1;
             }
 
-        UINT32 x = 0;
-        for(boost::unordered_set<UINT32>::iterator it = ModID->FormIDHandler.NewTypes.begin(); it != ModID->FormIDHandler.NewTypes.end(); ++it, ++x)
+        uint32_t x = 0;
+        for(boost::unordered_set<uint32_t>::iterator it = ModID->FormIDHandler.NewTypes.begin(); it != ModID->FormIDHandler.NewTypes.end(); ++it, ++x)
             RecordTypes[x] = *it;
         return 0;
         }
@@ -1055,7 +1055,7 @@ CPPDLLEXTERN SINT32 GetModTypes(ModFile *ModID, UINT32ARRAY RecordTypes)
     return -1;
     }
 
-CPPDLLEXTERN SINT32 GetModNumEmptyGRUPs(ModFile *ModID)
+CPPDLLEXTERN int32_t GetModNumEmptyGRUPs(ModFile *ModID)
     {
     PROFILE_FUNC
 
@@ -1078,7 +1078,7 @@ CPPDLLEXTERN SINT32 GetModNumEmptyGRUPs(ModFile *ModID)
     return -1;
     }
 
-CPPDLLEXTERN SINT32 GetModNumOrphans(ModFile *ModID)
+CPPDLLEXTERN int32_t GetModNumOrphans(ModFile *ModID)
     {
     PROFILE_FUNC
 
@@ -1101,14 +1101,14 @@ CPPDLLEXTERN SINT32 GetModNumOrphans(ModFile *ModID)
     return -1;
     }
 
-CPPDLLEXTERN SINT32 GetModOrphansFormIDs(ModFile *ModID, FORMIDARRAY FormIDs)
+CPPDLLEXTERN int32_t GetModOrphansFormIDs(ModFile *ModID, FORMIDARRAY FormIDs)
     {
     PROFILE_FUNC
 
     try
         {
         //ValidatePointer(ModID);
-        for(UINT32 ListIndex = 0; ListIndex < ModID->FormIDHandler.OrphanedRecords.size(); ++ListIndex)
+        for(uint32_t ListIndex = 0; ListIndex < ModID->FormIDHandler.OrphanedRecords.size(); ++ListIndex)
             FormIDs[ListIndex] = ModID->FormIDHandler.OrphanedRecords[ListIndex];
         return 0;
         }
@@ -1129,11 +1129,11 @@ CPPDLLEXTERN SINT32 GetModOrphansFormIDs(ModFile *ModID, FORMIDARRAY FormIDs)
 ////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////
 //FormID functions
-CPPDLLEXTERN STRING GetLongIDName(Record *RecordID, const UINT32 FormID, const bool IsMGEFCode)
+CPPDLLEXTERN char * GetLongIDName(Record *RecordID, const uint32_t FormID, const bool IsMGEFCode)
     {
     PROFILE_FUNC
 
-    UINT8 ModIndex = IsMGEFCode ? (UINT8)(FormID & 0x000000FF) : (UINT8)(FormID >> 24);
+    uint8_t ModIndex = IsMGEFCode ? (uint8_t)(FormID & 0x000000FF) : (uint8_t)(FormID >> 24);
     if(ModIndex == 0xFF)
         return NULL;
 
@@ -1141,7 +1141,7 @@ CPPDLLEXTERN STRING GetLongIDName(Record *RecordID, const UINT32 FormID, const b
         {
         //ValidatePointer(ModID);
         ModFile *ModID = RecordID->GetParentMod();
-        UINT8 CollapsedIndex = ModID->FormIDHandler.CollapseTable[ModIndex];
+        uint8_t CollapsedIndex = ModID->FormIDHandler.CollapseTable[ModIndex];
         if(CollapsedIndex >= ModID->TES4.MAST.size())
             return ModID->ModName;
         return ModID->TES4.MAST[CollapsedIndex];
@@ -1160,7 +1160,7 @@ CPPDLLEXTERN STRING GetLongIDName(Record *RecordID, const UINT32 FormID, const b
     return NULL;
     }
 
-CPPDLLEXTERN UINT32 MakeShortFormID(ModFile *ModID, const UINT32 ObjectID, const bool IsMGEFCode)
+CPPDLLEXTERN uint32_t MakeShortFormID(ModFile *ModID, const uint32_t ObjectID, const bool IsMGEFCode)
     {
     PROFILE_FUNC
 
@@ -1184,7 +1184,7 @@ CPPDLLEXTERN UINT32 MakeShortFormID(ModFile *ModID, const UINT32 ObjectID, const
 ////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////
 //Record action functions
-CPPDLLEXTERN Record * CreateRecord(ModFile *ModID, const UINT32 RecordType, const FORMID RecordFormID, STRING const RecordEditorID, Record *ParentID, const UINT32 CreateFlags)
+CPPDLLEXTERN Record * CreateRecord(ModFile *ModID, const uint32_t RecordType, const FORMID RecordFormID, char * const RecordEditorID, Record *ParentID, const uint32_t CreateFlags)
     {
     PROFILE_FUNC
 
@@ -1209,7 +1209,7 @@ CPPDLLEXTERN Record * CreateRecord(ModFile *ModID, const UINT32 RecordType, cons
     return 0;
     }
 
-CPPDLLEXTERN Record * CopyRecord(Record *RecordID, ModFile *DestModID, Record *DestParentID, const FORMID DestRecordFormID, STRING const DestRecordEditorID, const UINT32 CreateFlags)
+CPPDLLEXTERN Record * CopyRecord(Record *RecordID, ModFile *DestModID, Record *DestParentID, const FORMID DestRecordFormID, char * const DestRecordEditorID, const uint32_t CreateFlags)
     {
     PROFILE_FUNC
 
@@ -1235,7 +1235,7 @@ CPPDLLEXTERN Record * CopyRecord(Record *RecordID, ModFile *DestModID, Record *D
     return NULL;
     }
 
-CPPDLLEXTERN SINT32 UnloadRecord(Record *RecordID)
+CPPDLLEXTERN int32_t UnloadRecord(Record *RecordID)
     {
     PROFILE_FUNC
 
@@ -1258,7 +1258,7 @@ CPPDLLEXTERN SINT32 UnloadRecord(Record *RecordID)
     return 0;
     }
 
-CPPDLLEXTERN SINT32 ResetRecord(Record *RecordID)
+CPPDLLEXTERN int32_t ResetRecord(Record *RecordID)
     {
     PROFILE_FUNC
 
@@ -1282,7 +1282,7 @@ CPPDLLEXTERN SINT32 ResetRecord(Record *RecordID)
     return 0;
     }
 
-CPPDLLEXTERN SINT32 DeleteRecord(Record *RecordID)
+CPPDLLEXTERN int32_t DeleteRecord(Record *RecordID)
     {
     PROFILE_FUNC
 
@@ -1295,7 +1295,7 @@ CPPDLLEXTERN SINT32 DeleteRecord(Record *RecordID)
         if(RecordID->IsWinningDetermined() && (RecordID->IsWinning() || RecordID->IsExtendedWinning()))
             {
             FORMID FormID = RecordID->formID;
-            STRING EditorID = RecordID->GetEditorIDKey();
+            char * EditorID = RecordID->GetEditorIDKey();
             bool IsKeyedByEditorID = RecordID->IsKeyedByEditorID();
             Collection *CollectionID = RecordID->GetParentMod()->Parent;
             if(RecordID->GetParentMod()->DeleteRecord(RecordID, deindexer))
@@ -1330,7 +1330,7 @@ CPPDLLEXTERN SINT32 DeleteRecord(Record *RecordID)
     }
 ////////////////////////////////////////////////////////////////////////
 //Record info functions
-CPPDLLEXTERN Record * GetRecordID(ModFile *ModID, const FORMID RecordFormID, STRING const RecordEditorID)
+CPPDLLEXTERN Record * GetRecordID(ModFile *ModID, const FORMID RecordFormID, char * const RecordEditorID)
     {
     PROFILE_FUNC
 
@@ -1363,7 +1363,7 @@ CPPDLLEXTERN Record * GetRecordID(ModFile *ModID, const FORMID RecordFormID, STR
     return NULL;
     }
 
-CPPDLLEXTERN SINT32 GetNumRecords(ModFile *ModID, const UINT32 RecordType)
+CPPDLLEXTERN int32_t GetNumRecords(ModFile *ModID, const uint32_t RecordType)
     {
     PROFILE_FUNC
 
@@ -1386,7 +1386,7 @@ CPPDLLEXTERN SINT32 GetNumRecords(ModFile *ModID, const UINT32 RecordType)
     return -1;
     }
 
-CPPDLLEXTERN SINT32 GetRecordIDs(ModFile *ModID, const UINT32 RecordType, RECORDIDARRAY RecordIDs)
+CPPDLLEXTERN int32_t GetRecordIDs(ModFile *ModID, const uint32_t RecordType, RECORDIDARRAY RecordIDs)
     {
     PROFILE_FUNC
 
@@ -1411,7 +1411,7 @@ CPPDLLEXTERN SINT32 GetRecordIDs(ModFile *ModID, const UINT32 RecordType, RECORD
     return -1;
     }
 
-CPPDLLEXTERN SINT32 IsRecordWinning(Record *RecordID, const bool GetExtendedConflicts)
+CPPDLLEXTERN int32_t IsRecordWinning(Record *RecordID, const bool GetExtendedConflicts)
     {
     PROFILE_FUNC
 
@@ -1448,7 +1448,7 @@ CPPDLLEXTERN SINT32 IsRecordWinning(Record *RecordID, const bool GetExtendedConf
     return -1;
     }
 
-CPPDLLEXTERN SINT32 GetNumRecordConflicts(Record *RecordID, const bool GetExtendedConflicts)
+CPPDLLEXTERN int32_t GetNumRecordConflicts(Record *RecordID, const bool GetExtendedConflicts)
     {
     PROFILE_FUNC
 
@@ -1471,7 +1471,7 @@ CPPDLLEXTERN SINT32 GetNumRecordConflicts(Record *RecordID, const bool GetExtend
     return -1;
     }
 
-CPPDLLEXTERN SINT32 GetRecordConflicts(Record *RecordID, RECORDIDARRAY RecordIDs, const bool GetExtendedConflicts)
+CPPDLLEXTERN int32_t GetRecordConflicts(Record *RecordID, RECORDIDARRAY RecordIDs, const bool GetExtendedConflicts)
     {
     PROFILE_FUNC
 
@@ -1494,7 +1494,7 @@ CPPDLLEXTERN SINT32 GetRecordConflicts(Record *RecordID, RECORDIDARRAY RecordIDs
     return -1;
     }
 
-CPPDLLEXTERN SINT32 GetRecordHistory(Record *RecordID, RECORDIDARRAY RecordIDs)
+CPPDLLEXTERN int32_t GetRecordHistory(Record *RecordID, RECORDIDARRAY RecordIDs)
     {
     PROFILE_FUNC
 
@@ -1518,7 +1518,7 @@ CPPDLLEXTERN SINT32 GetRecordHistory(Record *RecordID, RECORDIDARRAY RecordIDs)
     return -1;
     }
 
-CPPDLLEXTERN SINT32 GetNumIdenticalToMasterRecords(ModFile *ModID)
+CPPDLLEXTERN int32_t GetNumIdenticalToMasterRecords(ModFile *ModID)
     {
     PROFILE_FUNC
     if(ModID->Flags.IsExtendedConflicts)
@@ -1553,7 +1553,7 @@ CPPDLLEXTERN SINT32 GetNumIdenticalToMasterRecords(ModFile *ModID)
     return -1;
     }
 
-CPPDLLEXTERN SINT32 GetIdenticalToMasterRecords(ModFile *ModID, RECORDIDARRAY RecordIDs)
+CPPDLLEXTERN int32_t GetIdenticalToMasterRecords(ModFile *ModID, RECORDIDARRAY RecordIDs)
     {
     PROFILE_FUNC
 
@@ -1562,7 +1562,7 @@ CPPDLLEXTERN SINT32 GetIdenticalToMasterRecords(ModFile *ModID, RECORDIDARRAY Re
         //ValidatePointer(RecordID1);
                 //ValidatePointer(RecordID2);
         typedef boost::unordered_set<Record *>::iterator identical_it;
-        UINT32 count = 0;
+        uint32_t count = 0;
         for(identical_it item = ModID->Parent->identical_records.begin(); item != ModID->Parent->identical_records.end(); item++)
             RecordIDs[count++] = *item;
 
@@ -1583,7 +1583,7 @@ CPPDLLEXTERN SINT32 GetIdenticalToMasterRecords(ModFile *ModID, RECORDIDARRAY Re
     return -1;
     }
 
-CPPDLLEXTERN SINT32 IsRecordFormIDsInvalid(Record *RecordID)
+CPPDLLEXTERN int32_t IsRecordFormIDsInvalid(Record *RecordID)
     {
     PROFILE_FUNC
 
@@ -1607,7 +1607,7 @@ CPPDLLEXTERN SINT32 IsRecordFormIDsInvalid(Record *RecordID)
     }
 ////////////////////////////////////////////////////////////////////////
 //Mod or Record action functions
-CPPDLLEXTERN SINT32 UpdateReferences(ModFile *ModID, Record *RecordID, FORMIDARRAY OldFormIDs, FORMIDARRAY NewFormIDs, UINT32ARRAY Changes, const UINT32 ArraySize)
+CPPDLLEXTERN int32_t UpdateReferences(ModFile *ModID, Record *RecordID, FORMIDARRAY OldFormIDs, FORMIDARRAY NewFormIDs, UINT32ARRAY Changes, const uint32_t ArraySize)
     {
     PROFILE_FUNC
 
@@ -1620,10 +1620,10 @@ CPPDLLEXTERN SINT32 UpdateReferences(ModFile *ModID, Record *RecordID, FORMIDARR
         {
         //ValidatePointer(CollectionID);
         //ValidatePointer(ModID);
-        UINT32 count = 0;
+        uint32_t count = 0;
         if(RecordID != NULL) //Swap possible uses of FormIDToReplace in a specific record only
             {
-            for(UINT32 ListIndex = 0; ListIndex < ArraySize; ++ListIndex)
+            for(uint32_t ListIndex = 0; ListIndex < ArraySize; ++ListIndex)
                 {
                 //Sanity check.
                 if(OldFormIDs[ListIndex] == NewFormIDs[ListIndex])
@@ -1646,10 +1646,10 @@ CPPDLLEXTERN SINT32 UpdateReferences(ModFile *ModID, Record *RecordID, FORMIDARR
             std::map<FORMID, std::vector<Record *> > formID_users;
             RecordFormIDMapper mapper(formID_users, ModID->FormIDHandler, ModID->Parent->Expanders);
             ModID->VisitAllRecords(mapper);
-            UINT32 OldFormID = 0, NewFormID = 0;
+            uint32_t OldFormID = 0, NewFormID = 0;
             RecordReader reader(ModID);
             Record *curRecord;
-            for(UINT32 ListIndex = 0; ListIndex < ArraySize; ++ListIndex)
+            for(uint32_t ListIndex = 0; ListIndex < ArraySize; ++ListIndex)
                 {
                 //Sanity check.
                 OldFormID = OldFormIDs[ListIndex];
@@ -1658,7 +1658,7 @@ CPPDLLEXTERN SINT32 UpdateReferences(ModFile *ModID, Record *RecordID, FORMIDARR
                     continue;
                 FormIDSwapper swapper(OldFormID, NewFormID, ModID->FormIDHandler);
                 std::vector<Record *> &users = formID_users[OldFormID];
-                for(UINT32 ListX2Index = 0; ListX2Index < users.size(); ++ListX2Index)
+                for(uint32_t ListX2Index = 0; ListX2Index < users.size(); ++ListX2Index)
                     {
                     curRecord = users[ListX2Index];
                     reader.Accept(curRecord);
@@ -1687,7 +1687,7 @@ CPPDLLEXTERN SINT32 UpdateReferences(ModFile *ModID, Record *RecordID, FORMIDARR
     }
 ////////////////////////////////////////////////////////////////////////
 //Mod or Record info functions
-CPPDLLEXTERN SINT32 GetRecordUpdatedReferences(Collection *CollectionID, Record *RecordID)
+CPPDLLEXTERN int32_t GetRecordUpdatedReferences(Collection *CollectionID, Record *RecordID)
     {
     PROFILE_FUNC
 
@@ -1717,7 +1717,7 @@ CPPDLLEXTERN SINT32 GetRecordUpdatedReferences(Collection *CollectionID, Record 
 ////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////
 //Field action functions
-CPPDLLEXTERN SINT32 SetIDFields(Record *RecordID, const FORMID FormID, STRING const EditorID)
+CPPDLLEXTERN int32_t SetIDFields(Record *RecordID, const FORMID FormID, char * const EditorID)
     {
     PROFILE_FUNC
 
@@ -1742,7 +1742,7 @@ CPPDLLEXTERN SINT32 SetIDFields(Record *RecordID, const FORMID FormID, STRING co
     return -1;
     }
 
-CPPDLLEXTERN void SetField(Record *RecordID, FIELD_IDENTIFIERS, void *FieldValue, const UINT32 ArraySize)
+CPPDLLEXTERN void SetField(Record *RecordID, FIELD_IDENTIFIERS, void *FieldValue, const uint32_t ArraySize)
     {
     PROFILE_FUNC
 
@@ -1769,10 +1769,10 @@ CPPDLLEXTERN void SetField(Record *RecordID, FIELD_IDENTIFIERS, void *FieldValue
             //RecordID->HasInvalidFormIDs(checker.result);
             //if(checker.result)
             //    {
-            //    UINT8 ModIndex = (UINT8)(RecordID->formID >> 24);
+            //    uint8_t ModIndex = (uint8_t)(RecordID->formID >> 24);
             //    ModFile *ModID = RecordID->GetParentMod();
-            //    UINT8 CollapsedIndex = ModID->FormIDHandler.CollapseTable[ModIndex];
-            //    STRING LongID = CollapsedIndex >= ModID->TES4.MAST.size() ? ModID->ModName : ModID->TES4.MAST[CollapsedIndex];
+            //    uint8_t CollapsedIndex = ModID->FormIDHandler.CollapseTable[ModIndex];
+            //    char * LongID = CollapsedIndex >= ModID->TES4.MAST.size() ? ModID->ModName : ModID->TES4.MAST[CollapsedIndex];
             //    VSDPRINT(RecordID->GetStrType());
             //    PRINT_FIELD_IDENTIFIERS;
             //    printer("SetField: Error! Record (%s, 0x%06X) in mod (%s) contains an invalid FormID!\n", LongID, RecordID->formID & 0x00FFFFFF, ModID->ModName);
@@ -1837,7 +1837,7 @@ CPPDLLEXTERN void DeleteField(Record *RecordID, FIELD_IDENTIFIERS)
     }
 ////////////////////////////////////////////////////////////////////////
 //Field info functions
-CPPDLLEXTERN UINT32 GetFieldAttribute(Record *RecordID, FIELD_IDENTIFIERS, const UINT32 WhichAttribute)
+CPPDLLEXTERN uint32_t GetFieldAttribute(Record *RecordID, FIELD_IDENTIFIERS, const uint32_t WhichAttribute)
     {
     PROFILE_FUNC
 

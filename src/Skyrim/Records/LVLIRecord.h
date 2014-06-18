@@ -55,10 +55,10 @@ class LVLIRecord : public TES5Record //Leveled Item
     public:
         StringRecord EDID; //Editor ID
         ReqSubRecord<GENOBND> OBND; //Object bounds
-        ReqSimpleSubRecord<UINT8> LVLD; //Chance none
-        ReqSimpleSubRecord<UINT8> LVLF; //Flags
-        // ReqSimpleSubRecord<UINT8> LLCT; //Count
-        ReqCounted<UnorderedSparseArray<SKLVLOCOED *>, UINT8, REV32(LLCT)> Entries; //Leveled List Entries (LVLO + COED)
+        ReqSimpleSubRecord<uint8_t> LVLD; //Chance none
+        ReqSimpleSubRecord<uint8_t> LVLF; //Flags
+        // ReqSimpleSubRecord<uint8_t> LLCT; //Count
+        ReqCounted<UnorderedSparseArray<SKLVLOCOED *>, uint8_t, REV32(LLCT)> Entries; //Leveled List Entries (LVLO + COED)
         OptSimpleSubRecord<FORMID> LVLG; // List owner
 
         LVLIRecord(unsigned char *_recData=NULL);
@@ -73,20 +73,20 @@ class LVLIRecord : public TES5Record //Leveled Item
         void   IsCalcForEachItem(bool value);
         bool   IsUseAllSpells();
         void   IsUseAllSpells(bool value);
-        bool   IsFlagMask(UINT8 Mask, bool Exact=false);
-        void   SetFlagMask(UINT8 Mask);
+        bool   IsFlagMask(uint8_t Mask, bool Exact=false);
+        void   SetFlagMask(uint8_t Mask);
 
-        UINT32 GetFieldAttribute(DEFAULTED_FIELD_IDENTIFIERS, UINT32 WhichAttribute=0);
+        uint32_t GetFieldAttribute(DEFAULTED_FIELD_IDENTIFIERS, uint32_t WhichAttribute=0);
         void * GetField(DEFAULTED_FIELD_IDENTIFIERS, void **FieldValues=NULL);
-        bool   SetField(DEFAULTED_FIELD_IDENTIFIERS, void *FieldValue=NULL, UINT32 ArraySize=0);
+        bool   SetField(DEFAULTED_FIELD_IDENTIFIERS, void *FieldValue=NULL, uint32_t ArraySize=0);
         void   DeleteField(DEFAULTED_FIELD_IDENTIFIERS);
 
-        UINT32 GetType();
-        STRING GetStrType();
+        uint32_t GetType();
+        char * GetStrType();
 
-        SINT32 ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk=false);
-        SINT32 Unload();
-        SINT32 WriteRecord(FileWriter &writer);
+        int32_t ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk=false);
+        int32_t Unload();
+        int32_t WriteRecord(FileWriter &writer);
 
         bool operator ==(const LVLIRecord &other) const;
         bool operator !=(const LVLIRecord &other) const;

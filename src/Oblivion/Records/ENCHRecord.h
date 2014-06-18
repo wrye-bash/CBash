@@ -44,8 +44,8 @@ class ENCHRecord : public Record //Enchantment
     private:
         struct ENCHENIT
             {
-            UINT32 itemType, chargeAmount, enchantCost;
-            UINT8  flags, unused1[3];
+            uint32_t itemType, chargeAmount, enchantCost;
+            uint8_t  flags, unused1[3];
 
             ENCHENIT();
             ~ENCHENIT();
@@ -82,8 +82,8 @@ class ENCHRecord : public Record //Enchantment
 
         bool   IsNoAutoCalc();
         void   IsNoAutoCalc(bool value);
-        bool   IsFlagMask(UINT8 Mask, bool Exact=false);
-        void   SetFlagMask(UINT8 Mask);
+        bool   IsFlagMask(uint8_t Mask, bool Exact=false);
+        void   SetFlagMask(uint8_t Mask);
 
         bool   IsScroll();
         void   IsScroll(bool value);
@@ -93,20 +93,20 @@ class ENCHRecord : public Record //Enchantment
         void   IsWeapon(bool value);
         bool   IsApparel();
         void   IsApparel(bool value);
-        bool   IsType(UINT32 Type);
-        void   SetType(UINT32 Type);
+        bool   IsType(uint32_t Type);
+        void   SetType(uint32_t Type);
 
-        UINT32 GetFieldAttribute(DEFAULTED_FIELD_IDENTIFIERS, UINT32 WhichAttribute=0);
+        uint32_t GetFieldAttribute(DEFAULTED_FIELD_IDENTIFIERS, uint32_t WhichAttribute=0);
         void * GetField(DEFAULTED_FIELD_IDENTIFIERS, void **FieldValues=NULL);
-        bool   SetField(DEFAULTED_FIELD_IDENTIFIERS, void *FieldValue=NULL, UINT32 ArraySize=0);
+        bool   SetField(DEFAULTED_FIELD_IDENTIFIERS, void *FieldValue=NULL, uint32_t ArraySize=0);
         void   DeleteField(DEFAULTED_FIELD_IDENTIFIERS);
 
-        UINT32 GetType();
-        STRING GetStrType();
+        uint32_t GetType();
+        char * GetStrType();
 
-        SINT32 ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk=false);
-        SINT32 Unload();
-        SINT32 WriteRecord(FileWriter &writer);
+        int32_t ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk=false);
+        int32_t Unload();
+        int32_t WriteRecord(FileWriter &writer);
 
         bool operator ==(const ENCHRecord &other) const;
         bool operator !=(const ENCHRecord &other) const;

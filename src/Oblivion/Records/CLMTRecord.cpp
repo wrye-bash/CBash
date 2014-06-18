@@ -131,40 +131,40 @@ bool CLMTRecord::VisitFormIDs(FormIDOp &op)
     if(!IsLoaded())
         return false;
 
-    for(UINT32 ListIndex = 0; ListIndex < Weathers.value.size(); ListIndex++)
+    for(uint32_t ListIndex = 0; ListIndex < Weathers.value.size(); ListIndex++)
         op.Accept(Weathers.value[ListIndex].weather);
 
     return op.Stop();
     }
 
-UINT32 CLMTRecord::GetType()
+uint32_t CLMTRecord::GetType()
     {
     return REV32(CLMT);
     }
 
-STRING CLMTRecord::GetStrType()
+char * CLMTRecord::GetStrType()
     {
     return "CLMT";
     }
 
-SINT32 CLMTRecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk)
+int32_t CLMTRecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk)
     {
-    UINT32 subType = 0;
-    UINT32 subSize = 0;
+    uint32_t subType = 0;
+    uint32_t subSize = 0;
     while(buffer < end_buffer){
-        subType = *(UINT32 *)buffer;
+        subType = *(uint32_t *)buffer;
         buffer += 4;
         switch(subType)
             {
             case REV32(XXXX):
                 buffer += 2;
-                subSize = *(UINT32 *)buffer;
+                subSize = *(uint32_t *)buffer;
                 buffer += 4;
-                subType = *(UINT32 *)buffer;
+                subType = *(uint32_t *)buffer;
                 buffer += 6;
                 break;
             default:
-                subSize = *(UINT16 *)buffer;
+                subSize = *(uint16_t *)buffer;
                 buffer += 2;
                 break;
             }
@@ -210,7 +210,7 @@ SINT32 CLMTRecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer,
     return 0;
     }
 
-SINT32 CLMTRecord::Unload()
+int32_t CLMTRecord::Unload()
     {
     IsChanged(false);
     IsLoaded(false);
@@ -223,7 +223,7 @@ SINT32 CLMTRecord::Unload()
     return 1;
     }
 
-SINT32 CLMTRecord::WriteRecord(FileWriter &writer)
+int32_t CLMTRecord::WriteRecord(FileWriter &writer)
     {
     WRITE(EDID);
     WRITEAS(Weathers,WLST);

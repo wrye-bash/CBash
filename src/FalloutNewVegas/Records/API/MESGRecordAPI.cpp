@@ -38,7 +38,7 @@
 
 namespace FNV
 {
-UINT32 MESGRecord::GetFieldAttribute(FIELD_IDENTIFIERS, UINT32 WhichAttribute)
+uint32_t MESGRecord::GetFieldAttribute(FIELD_IDENTIFIERS, uint32_t WhichAttribute)
     {
     switch(FieldID)
         {
@@ -194,12 +194,12 @@ void * MESGRecord::GetField(FIELD_IDENTIFIERS, void **FieldValues)
     return NULL;
     }
 
-bool MESGRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
+bool MESGRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, uint32_t ArraySize)
     {
     switch(FieldID)
         {
         case 1: //flags1
-            SetHeaderFlagMask(*(UINT32 *)FieldValue);
+            SetHeaderFlagMask(*(uint32_t *)FieldValue);
             break;
         case 3: //versionControl1
             if(ArraySize != 4)
@@ -210,10 +210,10 @@ bool MESGRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             ((UINT8ARRAY)&flagsUnk)[3] = ((UINT8ARRAY)FieldValue)[3];
             break;
         case 4: //eid
-            EDID.Copy((STRING)FieldValue);
+            EDID.Copy((char *)FieldValue);
             break;
         case 5: //formVersion
-            formVersion = *(UINT16 *)FieldValue;
+            formVersion = *(uint16_t *)FieldValue;
             break;
         case 6: //versionControl2
             if(ArraySize != 2)
@@ -222,10 +222,10 @@ bool MESGRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             versionControl2[1] = ((UINT8ARRAY)FieldValue)[1];
             break;
         case 7: //description
-            DESC.Copy((STRING)FieldValue);
+            DESC.Copy((char *)FieldValue);
             break;
         case 8: //full
-            FULL.Copy((STRING)FieldValue);
+            FULL.Copy((char *)FieldValue);
             break;
         case 9: //inam Icon
             INAM.Load();
@@ -233,18 +233,18 @@ bool MESGRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             return true;
         case 10: //dnam Flags
             DNAM.Load();
-            DNAM.value = *(UINT32 *)FieldValue;
+            DNAM.value = *(uint32_t *)FieldValue;
             break;
         case 11: //tnam Display Time
             TNAM.Load();
-            TNAM.value = *(UINT32 *)FieldValue;
+            TNAM.value = *(uint32_t *)FieldValue;
             break;
         case 12: //itxt Button Text
-            //ITXT.Copy((STRING)FieldValue);
+            //ITXT.Copy((char *)FieldValue);
             break;
         case 13: //ctda Conditions
             //CTDAs.Load();
-            //CTDAs->value13 = *(UINT8 *)FieldValue;
+            //CTDAs->value13 = *(uint8_t *)FieldValue;
             break;
         case 14: //ctda_p Conditions
             if(ArraySize != 3)
@@ -258,7 +258,7 @@ bool MESGRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             //return UNPARSEDGET_FIELD15;
         case 16: //ctda Conditions
             //CTDAs.Load();
-            //CTDAs->value16 = *(UINT32 *)FieldValue;
+            //CTDAs->value16 = *(uint32_t *)FieldValue;
             break;
         case 17: //ctda_p Conditions
             if(ArraySize != 4)
@@ -280,7 +280,7 @@ bool MESGRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             break;
         case 19: //ctda Conditions
             //CTDAs.Load();
-            //CTDAs->value19 = *(UINT32 *)FieldValue;
+            //CTDAs->value19 = *(uint32_t *)FieldValue;
             break;
         case 20: //ctda Conditions
             //return UNPARSEDGET_FIELD20;

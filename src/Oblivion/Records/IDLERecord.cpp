@@ -98,7 +98,7 @@ bool IDLERecord::VisitFormIDs(FormIDOp &op)
     if(!IsLoaded())
         return false;
 
-    for(UINT32 ListIndex = 0; ListIndex < CTDA.value.size(); ListIndex++)
+    for(uint32_t ListIndex = 0; ListIndex < CTDA.value.size(); ListIndex++)
         CTDA.value[ListIndex]->VisitFormIDs(op);
 
     op.Accept(DATA.value.parent);
@@ -198,12 +198,12 @@ void IDLERecord::IsUpperBody(bool value)
         ANAM.value = ANAM.value & 0x80 | eLowerBody;
     }
 
-bool IDLERecord::IsType(UINT8 Type)
+bool IDLERecord::IsType(uint8_t Type)
     {
     return ((ANAM.value & ~0x80) == (Type & ~0x80));
     }
 
-void IDLERecord::SetType(UINT8 Type)
+void IDLERecord::SetType(uint8_t Type)
     {
     ANAM.value = ANAM.value & 0x80 | (Type & ~0x80);
     }
@@ -228,44 +228,44 @@ void IDLERecord::IsReturnFile(bool value)
     IsNotReturnFile(!value);
     }
 
-bool IDLERecord::IsFlagMask(UINT8 Mask, bool Exact)
+bool IDLERecord::IsFlagMask(uint8_t Mask, bool Exact)
     {
     return Exact ? (((ANAM.value & 0x80) & (Mask & 0x80)) == Mask) : (((ANAM.value & 0x80) & (Mask & 0x80)) != 0);
     }
 
-void IDLERecord::SetFlagMask(UINT8 Mask)
+void IDLERecord::SetFlagMask(uint8_t Mask)
     {
     ANAM.value = ANAM.value & ~0x80 | (Mask & 0x80);
     }
 
-UINT32 IDLERecord::GetType()
+uint32_t IDLERecord::GetType()
     {
     return REV32(IDLE);
     }
 
-STRING IDLERecord::GetStrType()
+char * IDLERecord::GetStrType()
     {
     return "IDLE";
     }
 
-SINT32 IDLERecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk)
+int32_t IDLERecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk)
     {
-    UINT32 subType = 0;
-    UINT32 subSize = 0;
+    uint32_t subType = 0;
+    uint32_t subSize = 0;
     while(buffer < end_buffer){
-        subType = *(UINT32 *)buffer;
+        subType = *(uint32_t *)buffer;
         buffer += 4;
         switch(subType)
             {
             case REV32(XXXX):
                 buffer += 2;
-                subSize = *(UINT32 *)buffer;
+                subSize = *(uint32_t *)buffer;
                 buffer += 4;
-                subType = *(UINT32 *)buffer;
+                subType = *(uint32_t *)buffer;
                 buffer += 6;
                 break;
             default:
-                subSize = *(UINT16 *)buffer;
+                subSize = *(uint16_t *)buffer;
                 buffer += 2;
                 break;
             }
@@ -309,7 +309,7 @@ SINT32 IDLERecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer,
     return 0;
     }
 
-SINT32 IDLERecord::Unload()
+int32_t IDLERecord::Unload()
     {
     IsChanged(false);
     IsLoaded(false);
@@ -321,7 +321,7 @@ SINT32 IDLERecord::Unload()
     return 1;
     }
 
-SINT32 IDLERecord::WriteRecord(FileWriter &writer)
+int32_t IDLERecord::WriteRecord(FileWriter &writer)
     {
     WRITE(EDID);
     MODL.Write(writer);

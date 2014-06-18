@@ -38,7 +38,7 @@
 
 namespace Ob
 {
-UINT32 SOUNRecord::GetFieldAttribute(FIELD_IDENTIFIERS, UINT32 WhichAttribute)
+uint32_t SOUNRecord::GetFieldAttribute(FIELD_IDENTIFIERS, uint32_t WhichAttribute)
     {
     switch(FieldID)
         {
@@ -136,30 +136,30 @@ void * SOUNRecord::GetField(FIELD_IDENTIFIERS, void **FieldValues)
     return NULL;
     }
 
-bool SOUNRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
+bool SOUNRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, uint32_t ArraySize)
     {
     switch(FieldID)
         {
         case 1: //flags1
-            SetHeaderFlagMask(*(UINT32 *)FieldValue);
+            SetHeaderFlagMask(*(uint32_t *)FieldValue);
             break;
         case 3: //flags2
-            SetHeaderUnknownFlagMask(*(UINT32 *)FieldValue);
+            SetHeaderUnknownFlagMask(*(uint32_t *)FieldValue);
             break;
         case 4: //eid
-            EDID.Copy((STRING)FieldValue);
+            EDID.Copy((char *)FieldValue);
             break;
         case 5: //soundPath
-            FNAM.Copy((STRING)FieldValue);
+            FNAM.Copy((char *)FieldValue);
             break;
         case 6: //minDistance
-            SNDX.value.minDistance = *(UINT8 *)FieldValue;
+            SNDX.value.minDistance = *(uint8_t *)FieldValue;
             break;
         case 7: //maxDistance
-            SNDX.value.maxDistance = *(UINT8 *)FieldValue;
+            SNDX.value.maxDistance = *(uint8_t *)FieldValue;
             break;
         case 8: //freqAdjustment
-            SNDX.value.freqAdjustment = *(SINT8 *)FieldValue;
+            SNDX.value.freqAdjustment = *(int8_t *)FieldValue;
             break;
         case 9: //unused1
             if(ArraySize != 1)
@@ -167,7 +167,7 @@ bool SOUNRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             SNDX.value.unused1 = ((UINT8ARRAY)FieldValue)[0];
             break;
         case 10: //flags
-            SetFlagMask(*(UINT16 *)FieldValue);
+            SetFlagMask(*(uint16_t *)FieldValue);
             break;
         case 11: //unused2
             if(ArraySize != 2)
@@ -176,13 +176,13 @@ bool SOUNRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             SNDX.value.unused2[1] = ((UINT8ARRAY)FieldValue)[1];
             break;
         case 12: //staticAtten
-            SNDX.value.staticAtten = *(SINT16 *)FieldValue;
+            SNDX.value.staticAtten = *(int16_t *)FieldValue;
             break;
         case 13: //stopTime
-            SNDX.value.stopTime = *(UINT8 *)FieldValue;
+            SNDX.value.stopTime = *(uint8_t *)FieldValue;
             break;
         case 14: //startTime
-            SNDX.value.startTime = *(UINT8 *)FieldValue;
+            SNDX.value.startTime = *(uint8_t *)FieldValue;
             break;
         default:
             break;

@@ -46,8 +46,8 @@ class APPARecord : public TES5Record // Apparatus record
     public:
         struct APPADATA
         {
-            UINT32 value;
-            FLOAT32 weight;
+            uint32_t value;
+            float weight;
 
             APPADATA();
             ~APPADATA();
@@ -67,7 +67,7 @@ class APPARecord : public TES5Record // Apparatus record
         OptSubRecord<GENDESTRUCT> DEST; // Destruction data
         OptSimpleSubRecord<FORMID> YNAM; // Sound - pick up
         OptSimpleSubRecord<FORMID> ZNAM; // Sound - drop
-        ReqSimpleSubRecord<UINT32> QUAL; // Quality
+        ReqSimpleSubRecord<uint32_t> QUAL; // Quality
         LStringRecord DESC; // Description
         ReqSubRecord<APPADATA> DATA; // data
 
@@ -77,17 +77,17 @@ class APPARecord : public TES5Record // Apparatus record
 
         bool VisitFormIDs(FormIDOp &op);
 
-        UINT32 GetFieldAttribute(DEFAULTED_FIELD_IDENTIFIERS, UINT32 WhichAttribute=0);
+        uint32_t GetFieldAttribute(DEFAULTED_FIELD_IDENTIFIERS, uint32_t WhichAttribute=0);
         void * GetField(DEFAULTED_FIELD_IDENTIFIERS, void **FieldValues=NULL);
-        bool   SetField(DEFAULTED_FIELD_IDENTIFIERS, void *FieldValue=NULL, UINT32 ArraySize=0);
+        bool   SetField(DEFAULTED_FIELD_IDENTIFIERS, void *FieldValue=NULL, uint32_t ArraySize=0);
         void   DeleteField(DEFAULTED_FIELD_IDENTIFIERS);
 
-        UINT32 GetType();
-        STRING GetStrType();
+        uint32_t GetType();
+        char * GetStrType();
 
-        SINT32 ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk=false);
-        SINT32 Unload();
-        SINT32 WriteRecord(FileWriter &writer);
+        int32_t ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk=false);
+        int32_t Unload();
+        int32_t WriteRecord(FileWriter &writer);
 
         bool operator ==(const APPARecord &other) const;
         bool operator !=(const APPARecord &other) const;

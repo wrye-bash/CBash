@@ -270,7 +270,7 @@ bool MGEFRecord::VisitFormIDs(FormIDOp &op)
         if(DATA.value.resistValue >= 0x800)
             op.Accept(DATA.value.resistValue);
 
-        for(UINT32 ListIndex = 0; ListIndex < ESCE.value.size(); ++ListIndex)
+        for(uint32_t ListIndex = 0; ListIndex < ESCE.value.size(); ++ListIndex)
             if(ESCE.value[ListIndex] >= 0x80000000)
                 op.AcceptMGEF(ESCE.value[ListIndex]);
         }
@@ -689,12 +689,12 @@ void MGEFRecord::IsMagnitudeIsFeet(bool value)
     SETBIT(DATA.value.flags, fIsMagnitudeIsFeet, value);
     }
 
-bool MGEFRecord::IsFlagMask(UINT32 Mask, bool Exact)
+bool MGEFRecord::IsFlagMask(uint32_t Mask, bool Exact)
     {
     return Exact ? ((DATA.value.flags & Mask) == Mask) : ((DATA.value.flags & Mask) != 0);
     }
 
-void MGEFRecord::SetFlagMask(UINT32 Mask)
+void MGEFRecord::SetFlagMask(uint32_t Mask)
     {
     DATA.value.flags = Mask;
     }
@@ -788,13 +788,13 @@ void MGEFRecord::IsHidden(bool value)
     OBME->OBME.value.flags = value ? (OBME->OBME.value.flags | fOBME_IsHidden) : (OBME->OBME.value.flags & ~fOBME_IsHidden);
     }
 
-bool MGEFRecord::IsOBMEFlagMask(UINT32 Mask, bool Exact)
+bool MGEFRecord::IsOBMEFlagMask(uint32_t Mask, bool Exact)
     {
     if(!OBME.IsLoaded()) return false;
     return Exact ? ((OBME->OBME.value.flags & Mask) == Mask) : ((OBME->OBME.value.flags & Mask) != 0);
     }
 
-void MGEFRecord::SetOBMEFlagMask(UINT32 Mask)
+void MGEFRecord::SetOBMEFlagMask(uint32_t Mask)
     {
     OBME.Load();
     OBME->OBME.value.flags = Mask;
@@ -860,22 +860,22 @@ void MGEFRecord::IsSchoolRestoration(bool value)
     DATA.value.schoolType = value ? eRestoration : eAlteration;
     }
 
-bool MGEFRecord::IsSchool(UINT32 Type)
+bool MGEFRecord::IsSchool(uint32_t Type)
     {
     return (DATA.value.schoolType == Type);
     }
 
-void MGEFRecord::SetSchool(UINT32 Type)
+void MGEFRecord::SetSchool(uint32_t Type)
     {
     DATA.value.schoolType = Type;
     }
 
-UINT32 MGEFRecord::GetType()
+uint32_t MGEFRecord::GetType()
     {
     return REV32(MGEF);
     }
 
-STRING MGEFRecord::GetStrType()
+char * MGEFRecord::GetStrType()
     {
     return "MGEF";
     }
@@ -885,32 +885,32 @@ bool MGEFRecord::IsKeyedByEditorID()
     return true;
     }
 
-STRING MGEFRecord::GetEditorIDKey()
+char * MGEFRecord::GetEditorIDKey()
     {
     if(OBME.IsLoaded())
         return &OBME->EDDX.value.mgefCode[0];
     else
-        return (STRING)GetField(4);
+        return (char *)GetField(4);
     }
 
-SINT32 MGEFRecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk)
+int32_t MGEFRecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk)
     {
-    UINT32 subType = 0;
-    UINT32 subSize = 0;
+    uint32_t subType = 0;
+    uint32_t subSize = 0;
     while(buffer < end_buffer){
-        subType = *(UINT32 *)buffer;
+        subType = *(uint32_t *)buffer;
         buffer += 4;
         switch(subType)
             {
             case REV32(XXXX):
                 buffer += 2;
-                subSize = *(UINT32 *)buffer;
+                subSize = *(uint32_t *)buffer;
                 buffer += 4;
-                subType = *(UINT32 *)buffer;
+                subType = *(uint32_t *)buffer;
                 buffer += 6;
                 break;
             default:
-                subSize = *(UINT16 *)buffer;
+                subSize = *(uint16_t *)buffer;
                 buffer += 2;
                 break;
             }
@@ -974,7 +974,7 @@ SINT32 MGEFRecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer,
     return 0;
     }
 
-SINT32 MGEFRecord::Unload()
+int32_t MGEFRecord::Unload()
     {
     IsChanged(false);
     IsLoaded(false);
@@ -992,7 +992,7 @@ SINT32 MGEFRecord::Unload()
     return 1;
     }
 
-SINT32 MGEFRecord::WriteRecord(FileWriter &writer)
+int32_t MGEFRecord::WriteRecord(FileWriter &writer)
     {
     if(OBME.IsLoaded())
         {
@@ -1008,7 +1008,7 @@ SINT32 MGEFRecord::WriteRecord(FileWriter &writer)
         WRITE(DESC);
         WRITE(ICON);
         MODL.Write(writer);
-        DATA.value.numCounters = (UINT16)ESCE.value.size(); //Just to ensure that the proper value is written
+        DATA.value.numCounters = (uint16_t)ESCE.value.size(); //Just to ensure that the proper value is written
         WRITE(DATA);
         if(OBME->DATX.IsLoaded())
             OBME->WRITE(DATX);
@@ -1021,7 +1021,7 @@ SINT32 MGEFRecord::WriteRecord(FileWriter &writer)
         WRITE(DESC);
         WRITE(ICON);
         MODL.Write(writer);
-        DATA.value.numCounters = (UINT16)ESCE.value.size(); //Just to ensure that the proper value is written
+        DATA.value.numCounters = (uint16_t)ESCE.value.size(); //Just to ensure that the proper value is written
         WRITE(DATA);
         WRITE(ESCE);
         }

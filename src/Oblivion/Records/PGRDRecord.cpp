@@ -128,40 +128,40 @@ bool PGRDRecord::VisitFormIDs(FormIDOp &op)
     if(!IsLoaded())
         return false;
 
-    for(UINT32 x = 0; x < PGRL.value.size(); x++)
+    for(uint32_t x = 0; x < PGRL.value.size(); x++)
         op.Accept(PGRL.value[x]->points.value[0]);
 
     return op.Stop();
     }
 
-UINT32 PGRDRecord::GetType()
+uint32_t PGRDRecord::GetType()
     {
     return REV32(PGRD);
     }
 
-STRING PGRDRecord::GetStrType()
+char * PGRDRecord::GetStrType()
     {
     return "PGRD";
     }
 
-SINT32 PGRDRecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk)
+int32_t PGRDRecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk)
     {
-    UINT32 subType = 0;
-    UINT32 subSize = 0;
+    uint32_t subType = 0;
+    uint32_t subSize = 0;
     while(buffer < end_buffer){
-        subType = *(UINT32 *)buffer;
+        subType = *(uint32_t *)buffer;
         buffer += 4;
         switch(subType)
             {
             case REV32(XXXX):
                 buffer += 2;
-                subSize = *(UINT32 *)buffer;
+                subSize = *(uint32_t *)buffer;
                 buffer += 4;
-                subType = *(UINT32 *)buffer;
+                subType = *(uint32_t *)buffer;
                 buffer += 6;
                 break;
             default:
-                subSize = *(UINT16 *)buffer;
+                subSize = *(uint16_t *)buffer;
                 buffer += 2;
                 break;
             }
@@ -199,7 +199,7 @@ SINT32 PGRDRecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer,
     return 0;
     }
 
-SINT32 PGRDRecord::Unload()
+int32_t PGRDRecord::Unload()
     {
     IsChanged(false);
     IsLoaded(false);
@@ -212,7 +212,7 @@ SINT32 PGRDRecord::Unload()
     return 1;
     }
 
-SINT32 PGRDRecord::WriteRecord(FileWriter &writer)
+int32_t PGRDRecord::WriteRecord(FileWriter &writer)
     {
     WRITE(DATA);
     WRITE(PGRP);

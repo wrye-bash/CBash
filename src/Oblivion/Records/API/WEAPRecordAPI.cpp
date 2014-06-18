@@ -38,7 +38,7 @@
 
 namespace Ob
 {
-UINT32 WEAPRecord::GetFieldAttribute(FIELD_IDENTIFIERS, UINT32 WhichAttribute)
+uint32_t WEAPRecord::GetFieldAttribute(FIELD_IDENTIFIERS, uint32_t WhichAttribute)
     {
     switch(FieldID)
         {
@@ -150,36 +150,36 @@ void * WEAPRecord::GetField(FIELD_IDENTIFIERS, void **FieldValues)
     return NULL;
     }
 
-bool WEAPRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
+bool WEAPRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, uint32_t ArraySize)
     {
     switch(FieldID)
         {
         case 1: //flags1
-            SetHeaderFlagMask(*(UINT32 *)FieldValue);
+            SetHeaderFlagMask(*(uint32_t *)FieldValue);
             break;
         case 3: //flags2
-            SetHeaderUnknownFlagMask(*(UINT32 *)FieldValue);
+            SetHeaderUnknownFlagMask(*(uint32_t *)FieldValue);
             break;
         case 4: //eid
-            EDID.Copy((STRING)FieldValue);
+            EDID.Copy((char *)FieldValue);
             break;
         case 5: //full
-            FULL.Copy((STRING)FieldValue);
+            FULL.Copy((char *)FieldValue);
             break;
         case 6: //modPath
             MODL.Load();
-            MODL->MODL.Copy((STRING)FieldValue);
+            MODL->MODL.Copy((char *)FieldValue);
             break;
         case 7: //modb
             MODL.Load();
-            MODL->MODB.value = *(FLOAT32 *)FieldValue;
+            MODL->MODB.value = *(float *)FieldValue;
             break;
         case 8: //modt_p
             MODL.Load();
             MODL->MODT.Copy((UINT8ARRAY)FieldValue, ArraySize);
             break;
         case 9: //iconPath
-            ICON.Copy((STRING)FieldValue);
+            ICON.Copy((char *)FieldValue);
             break;
         case 10: //script
             SCRI.value = *(FORMID *)FieldValue;
@@ -188,31 +188,31 @@ bool WEAPRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             ENAM.value = *(FORMID *)FieldValue;
             return true;
         case 12: //enchantPoints
-            ANAM.value = *(UINT16 *)FieldValue;
+            ANAM.value = *(uint16_t *)FieldValue;
             break;
         case 13: //weaponType
-            SetType(*(UINT32 *)FieldValue);
+            SetType(*(uint32_t *)FieldValue);
             break;
         case 14: //speed
-            DATA.value.speed = *(FLOAT32 *)FieldValue;
+            DATA.value.speed = *(float *)FieldValue;
             break;
         case 15: //reach
-            DATA.value.reach = *(FLOAT32 *)FieldValue;
+            DATA.value.reach = *(float *)FieldValue;
             break;
         case 16: //flags
-            SetFlagMask(*(UINT32 *)FieldValue);
+            SetFlagMask(*(uint32_t *)FieldValue);
             break;
         case 17: //value
-            DATA.value.value = *(UINT32 *)FieldValue;
+            DATA.value.value = *(uint32_t *)FieldValue;
             break;
         case 18: //health
-            DATA.value.health = *(UINT32 *)FieldValue;
+            DATA.value.health = *(uint32_t *)FieldValue;
             break;
         case 19: //weight
-            DATA.value.weight = *(FLOAT32 *)FieldValue;
+            DATA.value.weight = *(float *)FieldValue;
             break;
         case 20: //damage
-            DATA.value.damage = *(UINT16 *)FieldValue;
+            DATA.value.damage = *(uint16_t *)FieldValue;
             break;
         default:
             break;

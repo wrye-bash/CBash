@@ -38,7 +38,7 @@
 
 namespace FNV
 {
-UINT32 RGDLRecord::GetFieldAttribute(FIELD_IDENTIFIERS, UINT32 WhichAttribute)
+uint32_t RGDLRecord::GetFieldAttribute(FIELD_IDENTIFIERS, uint32_t WhichAttribute)
     {
     switch(FieldID)
         {
@@ -274,12 +274,12 @@ void * RGDLRecord::GetField(FIELD_IDENTIFIERS, void **FieldValues)
     return NULL;
     }
 
-bool RGDLRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
+bool RGDLRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, uint32_t ArraySize)
     {
     switch(FieldID)
         {
         case 1: //flags1
-            SetHeaderFlagMask(*(UINT32 *)FieldValue);
+            SetHeaderFlagMask(*(uint32_t *)FieldValue);
             break;
         case 3: //versionControl1
             if(ArraySize != 4)
@@ -290,10 +290,10 @@ bool RGDLRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             ((UINT8ARRAY)&flagsUnk)[3] = ((UINT8ARRAY)FieldValue)[3];
             break;
         case 4: //eid
-            EDID.Copy((STRING)FieldValue);
+            EDID.Copy((char *)FieldValue);
             break;
         case 5: //formVersion
-            formVersion = *(UINT16 *)FieldValue;
+            formVersion = *(uint16_t *)FieldValue;
             break;
         case 6: //versionControl2
             if(ArraySize != 2)
@@ -303,11 +303,11 @@ bool RGDLRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             break;
         case 7: //nver Version
             NVER.Load();
-            NVER.value = *(UINT32 *)FieldValue;
+            NVER.value = *(uint32_t *)FieldValue;
             break;
         case 8: //data DATA ,, Struct
             DATA.Load();
-            DATA->numBones = *(UINT32 *)FieldValue;
+            DATA->numBones = *(uint32_t *)FieldValue;
             break;
         case 9: //data_p DATA ,, Struct
             if(ArraySize != 4)
@@ -320,23 +320,23 @@ bool RGDLRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             break;
         case 10: //data DATA ,, Struct
             DATA.Load();
-            DATA->feedbackType = *(UINT8 *)FieldValue;
+            DATA->feedbackType = *(uint8_t *)FieldValue;
             break;
         case 11: //data DATA ,, Struct
             DATA.Load();
-            DATA->footIKType = *(UINT8 *)FieldValue;
+            DATA->footIKType = *(uint8_t *)FieldValue;
             break;
         case 12: //data DATA ,, Struct
             DATA.Load();
-            DATA->lookIKType = *(UINT8 *)FieldValue;
+            DATA->lookIKType = *(uint8_t *)FieldValue;
             break;
         case 13: //data DATA ,, Struct
             DATA.Load();
-            DATA->grabIKType = *(UINT8 *)FieldValue;
+            DATA->grabIKType = *(uint8_t *)FieldValue;
             break;
         case 14: //data DATA ,, Struct
             DATA.Load();
-            DATA->matchPoseType = *(UINT8 *)FieldValue;
+            DATA->matchPoseType = *(uint8_t *)FieldValue;
             break;
         case 15: //data_p DATA ,, Struct
             if(ArraySize != 1)
@@ -354,73 +354,73 @@ bool RGDLRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             return true;
         case 18: //rafd RAFD ,, Struct
             RAFD.Load();
-            RAFD->blendAmt = *(FLOAT32 *)FieldValue;
+            RAFD->blendAmt = *(float *)FieldValue;
             break;
         case 19: //rafd RAFD ,, Struct
             RAFD.Load();
-            RAFD->hierachyGain = *(FLOAT32 *)FieldValue;
+            RAFD->hierachyGain = *(float *)FieldValue;
             break;
         case 20: //rafd RAFD ,, Struct
             RAFD.Load();
-            RAFD->posGain = *(FLOAT32 *)FieldValue;
+            RAFD->posGain = *(float *)FieldValue;
             break;
         case 21: //rafd RAFD ,, Struct
             RAFD.Load();
-            RAFD->velGain = *(FLOAT32 *)FieldValue;
+            RAFD->velGain = *(float *)FieldValue;
             break;
         case 22: //rafd RAFD ,, Struct
             RAFD.Load();
-            RAFD->accGain = *(FLOAT32 *)FieldValue;
+            RAFD->accGain = *(float *)FieldValue;
             break;
         case 23: //rafd RAFD ,, Struct
             RAFD.Load();
-            RAFD->snapGain = *(FLOAT32 *)FieldValue;
+            RAFD->snapGain = *(float *)FieldValue;
             break;
         case 24: //rafd RAFD ,, Struct
             RAFD.Load();
-            RAFD->velDamping = *(FLOAT32 *)FieldValue;
+            RAFD->velDamping = *(float *)FieldValue;
             break;
         case 25: //rafd RAFD ,, Struct
             RAFD.Load();
-            RAFD->snapLinVel = *(FLOAT32 *)FieldValue;
+            RAFD->snapLinVel = *(float *)FieldValue;
             break;
         case 26: //rafd RAFD ,, Struct
             RAFD.Load();
-            RAFD->snapAngVel = *(FLOAT32 *)FieldValue;
+            RAFD->snapAngVel = *(float *)FieldValue;
             break;
         case 27: //rafd RAFD ,, Struct
             RAFD.Load();
-            RAFD->snapLinDist = *(FLOAT32 *)FieldValue;
+            RAFD->snapLinDist = *(float *)FieldValue;
             break;
         case 28: //rafd RAFD ,, Struct
             RAFD.Load();
-            RAFD->snapAngDist = *(FLOAT32 *)FieldValue;
+            RAFD->snapAngDist = *(float *)FieldValue;
             break;
         case 29: //rafd RAFD ,, Struct
             RAFD.Load();
-            RAFD->posLinVel = *(FLOAT32 *)FieldValue;
+            RAFD->posLinVel = *(float *)FieldValue;
             break;
         case 30: //rafd RAFD ,, Struct
             RAFD.Load();
-            RAFD->posAngVel = *(FLOAT32 *)FieldValue;
+            RAFD->posAngVel = *(float *)FieldValue;
             break;
         case 31: //rafd RAFD ,, Struct
             RAFD.Load();
-            RAFD->posProjectileVel = *(SINT32 *)FieldValue;
+            RAFD->posProjectileVel = *(int32_t *)FieldValue;
             break;
         case 32: //rafd RAFD ,, Struct
             RAFD.Load();
-            RAFD->posMeleeVel = *(SINT32 *)FieldValue;
+            RAFD->posMeleeVel = *(int32_t *)FieldValue;
             break;
         case 33: //rafb Feedback Dynamic Bones
             break; //unparsed
         case 34: //raps RAPS ,, Struct
             RAPS.Load();
-            RAPS->matchBones1 = *(UINT16 *)FieldValue;
+            RAPS->matchBones1 = *(uint16_t *)FieldValue;
             break;
         case 35: //raps RAPS ,, Struct
             RAPS.Load();
-            RAPS->flags = *(UINT8 *)FieldValue;
+            RAPS->flags = *(uint8_t *)FieldValue;
             break;
         case 36: //raps_p RAPS ,, Struct
             if(ArraySize != 1)
@@ -430,22 +430,22 @@ bool RGDLRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             break;
         case 37: //raps RAPS ,, Struct
             RAPS.Load();
-            RAPS->motorsStrength = *(FLOAT32 *)FieldValue;
+            RAPS->motorsStrength = *(float *)FieldValue;
             break;
         case 38: //raps RAPS ,, Struct
             RAPS.Load();
-            RAPS->poseDelay = *(FLOAT32 *)FieldValue;
+            RAPS->poseDelay = *(float *)FieldValue;
             break;
         case 39: //raps RAPS ,, Struct
             RAPS.Load();
-            RAPS->errorAllowance = *(FLOAT32 *)FieldValue;
+            RAPS->errorAllowance = *(float *)FieldValue;
             break;
         case 40: //raps RAPS ,, Struct
             RAPS.Load();
-            RAPS->disableDisplacement = *(FLOAT32 *)FieldValue;
+            RAPS->disableDisplacement = *(float *)FieldValue;
             break;
         case 41: //anam Death Pose
-            ANAM.Copy((STRING)FieldValue);
+            ANAM.Copy((char *)FieldValue);
             break;
         default:
             break;

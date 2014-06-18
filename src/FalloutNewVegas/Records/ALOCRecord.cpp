@@ -92,22 +92,22 @@ bool ALOCRecord::VisitFormIDs(FormIDOp &op)
         return false;
 
     if(HNAM.IsLoaded())
-        for (UINT32 ListIndex = 0; ListIndex < HNAM.value.size(); ListIndex++)
+        for (uint32_t ListIndex = 0; ListIndex < HNAM.value.size(); ListIndex++)
             op.Accept(HNAM.value[ListIndex]);
     if(ZNAM.IsLoaded())
-        for (UINT32 ListIndex = 0; ListIndex < ZNAM.value.size(); ListIndex++)
+        for (uint32_t ListIndex = 0; ListIndex < ZNAM.value.size(); ListIndex++)
             op.Accept(ZNAM.value[ListIndex]);
     if (XNAM.IsLoaded())
-        for (UINT32 ListIndex = 0; ListIndex < XNAM.value.size(); ListIndex++)
+        for (uint32_t ListIndex = 0; ListIndex < XNAM.value.size(); ListIndex++)
             op.Accept(XNAM.value[ListIndex]);
     if (YNAM.IsLoaded())
-        for (UINT32 ListIndex = 0; ListIndex < YNAM.value.size(); ListIndex++)
+        for (uint32_t ListIndex = 0; ListIndex < YNAM.value.size(); ListIndex++)
             op.Accept(YNAM.value[ListIndex]);
     if (LNAM.IsLoaded())
-        for (UINT32 ListIndex = 0; ListIndex < LNAM.value.size(); ListIndex++)
+        for (uint32_t ListIndex = 0; ListIndex < LNAM.value.size(); ListIndex++)
             op.Accept(LNAM.value[ListIndex]);
     if (GNAM.IsLoaded())
-        for (UINT32 ListIndex = 0; ListIndex < GNAM.value.size(); ListIndex++)
+        for (uint32_t ListIndex = 0; ListIndex < GNAM.value.size(); ListIndex++)
             op.Accept(GNAM.value[ListIndex]);
     if (RNAM.IsLoaded())
         op.Accept(RNAM.value);
@@ -115,34 +115,34 @@ bool ALOCRecord::VisitFormIDs(FormIDOp &op)
     return op.Stop();
     }
 
-UINT32 ALOCRecord::GetType()
+uint32_t ALOCRecord::GetType()
     {
     return REV32(ALOC);
     }
 
-STRING ALOCRecord::GetStrType()
+char * ALOCRecord::GetStrType()
     {
     return "ALOC";
     }
 
-SINT32 ALOCRecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk)
+int32_t ALOCRecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk)
     {
-    UINT32 subType = 0;
-    UINT32 subSize = 0;
+    uint32_t subType = 0;
+    uint32_t subSize = 0;
     while(buffer < end_buffer){
-        subType = *(UINT32 *)buffer;
+        subType = *(uint32_t *)buffer;
         buffer += 4;
         switch(subType)
             {
             case REV32(XXXX):
                 buffer += 2;
-                subSize = *(UINT32 *)buffer;
+                subSize = *(uint32_t *)buffer;
                 buffer += 4;
-                subType = *(UINT32 *)buffer;
+                subType = *(uint32_t *)buffer;
                 buffer += 6;
                 break;
             default:
-                subSize = *(UINT16 *)buffer;
+                subSize = *(uint16_t *)buffer;
                 buffer += 2;
                 break;
             }
@@ -211,7 +211,7 @@ SINT32 ALOCRecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer,
     return 0;
     }
 
-SINT32 ALOCRecord::Unload()
+int32_t ALOCRecord::Unload()
     {
     IsChanged(false);
     IsLoaded(false);
@@ -235,7 +235,7 @@ SINT32 ALOCRecord::Unload()
     return 1;
     }
 
-SINT32 ALOCRecord::WriteRecord(FileWriter &writer)
+int32_t ALOCRecord::WriteRecord(FileWriter &writer)
     {
     WRITE(EDID);
     WRITE(FULL);

@@ -44,11 +44,11 @@ class ALCHRecord : public FNVRecord //Ingestible
     private:
         struct ALCHENIT //Effect Data
             {
-            SINT32  value; //Value
-            UINT8   flags; //Flags?
-            UINT8   unused1[3]; //Unused
+            int32_t  value; //Value
+            uint8_t   flags; //Flags?
+            uint8_t   unused1[3]; //Unused
             FORMID  withdrawalEffect; //Withdrawal Effect
-            FLOAT32 addictionChance; //Addiction Chance
+            float addictionChance; //Addiction Chance
             FORMID  consumeSound; //Sound - Consume
 
             ALCHENIT();
@@ -91,7 +91,7 @@ class ALCHRecord : public FNVRecord //Ingestible
         StringRecord ICON; //Large Icon Filename
         StringRecord MICO; //Small Icon Filename
         OptSimpleSubRecord<FORMID> SCRI; //Script
-        OptSimpleSubRecord<SINT32> ETYP; //Equipment Type
+        OptSimpleSubRecord<int32_t> ETYP; //Equipment Type
         ReqSimpleFloatSubRecord<flt_0> DATA; //Weight
         ReqSubRecord<ALCHENIT> ENIT; //Effect Data
         UnorderedSparseArray<FNVEffect *> Effects; //Effects
@@ -111,8 +111,8 @@ class ALCHRecord : public FNVRecord //Ingestible
         void   IsFood(bool value);
         bool   IsMedicine();
         void   IsMedicine(bool value);
-        bool   IsFlagMask(UINT8 Mask, bool Exact=false);
-        void   SetFlagMask(UINT8 Mask);
+        bool   IsFlagMask(uint8_t Mask, bool Exact=false);
+        void   SetFlagMask(uint8_t Mask);
 
         bool   IsNone();
         void   IsNone(bool value);
@@ -144,20 +144,20 @@ class ALCHRecord : public FNVRecord //Ingestible
         void   IsEdible(bool value);
         bool   IsAlcohol();
         void   IsAlcohol(bool value);
-        bool   IsEquipmentType(SINT32 Type);
-        void   SetEquipmentType(SINT32 Type);
+        bool   IsEquipmentType(int32_t Type);
+        void   SetEquipmentType(int32_t Type);
 
-        UINT32 GetFieldAttribute(DEFAULTED_FIELD_IDENTIFIERS, UINT32 WhichAttribute=0);
+        uint32_t GetFieldAttribute(DEFAULTED_FIELD_IDENTIFIERS, uint32_t WhichAttribute=0);
         void * GetField(DEFAULTED_FIELD_IDENTIFIERS, void **FieldValues=NULL);
-        bool   SetField(DEFAULTED_FIELD_IDENTIFIERS, void *FieldValue=NULL, UINT32 ArraySize=0);
+        bool   SetField(DEFAULTED_FIELD_IDENTIFIERS, void *FieldValue=NULL, uint32_t ArraySize=0);
         void   DeleteField(DEFAULTED_FIELD_IDENTIFIERS);
 
-        UINT32 GetType();
-        STRING GetStrType();
+        uint32_t GetType();
+        char * GetStrType();
 
-        SINT32 ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk=false);
-        SINT32 Unload();
-        SINT32 WriteRecord(FileWriter &writer);
+        int32_t ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk=false);
+        int32_t Unload();
+        int32_t WriteRecord(FileWriter &writer);
 
         bool operator ==(const ALCHRecord &other) const;
         bool operator !=(const ALCHRecord &other) const;

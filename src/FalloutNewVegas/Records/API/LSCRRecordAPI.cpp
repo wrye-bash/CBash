@@ -38,7 +38,7 @@
 
 namespace FNV
 {
-UINT32 LSCRRecord::GetFieldAttribute(FIELD_IDENTIFIERS, UINT32 WhichAttribute)
+uint32_t LSCRRecord::GetFieldAttribute(FIELD_IDENTIFIERS, uint32_t WhichAttribute)
     {
     switch(FieldID)
         {
@@ -88,7 +88,7 @@ UINT32 LSCRRecord::GetFieldAttribute(FIELD_IDENTIFIERS, UINT32 WhichAttribute)
                     case 0: //fieldType
                         return LIST_FIELD;
                     case 1: //fieldSize
-                        return (UINT32)LNAM.value.size();
+                        return (uint32_t)LNAM.value.size();
                     default:
                         return UNKNOWN_FIELD;
                     }
@@ -170,12 +170,12 @@ void * LSCRRecord::GetField(FIELD_IDENTIFIERS, void **FieldValues)
     return NULL;
     }
 
-bool LSCRRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
+bool LSCRRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, uint32_t ArraySize)
     {
     switch(FieldID)
         {
         case 1: //flags1
-            SetHeaderFlagMask(*(UINT32 *)FieldValue);
+            SetHeaderFlagMask(*(uint32_t *)FieldValue);
             break;
         case 3: //versionControl1
             if(ArraySize != 4)
@@ -186,10 +186,10 @@ bool LSCRRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             ((UINT8ARRAY)&flagsUnk)[3] = ((UINT8ARRAY)FieldValue)[3];
             break;
         case 4: //eid
-            EDID.Copy((STRING)FieldValue);
+            EDID.Copy((char *)FieldValue);
             break;
         case 5: //formVersion
-            formVersion = *(UINT16 *)FieldValue;
+            formVersion = *(uint16_t *)FieldValue;
             break;
         case 6: //versionControl2
             if(ArraySize != 2)
@@ -198,13 +198,13 @@ bool LSCRRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             versionControl2[1] = ((UINT8ARRAY)FieldValue)[1];
             break;
         case 7: //iconPath
-            ICON.Copy((STRING)FieldValue);
+            ICON.Copy((char *)FieldValue);
             break;
         case 8: //smallIconPath
-            MICO.Copy((STRING)FieldValue);
+            MICO.Copy((char *)FieldValue);
             break;
         case 9: //text
-            DESC.Copy((STRING)FieldValue);
+            DESC.Copy((char *)FieldValue);
             break;
         case 10: //locations
             if(ListFieldID == 0) //locationsSize
@@ -225,10 +225,10 @@ bool LSCRRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
                     LNAM.value[ListIndex]->indirect = *(FORMID *)FieldValue;
                     return true;
                 case 3: //gridY
-                    LNAM.value[ListIndex]->gridY = *(SINT16 *)FieldValue;
+                    LNAM.value[ListIndex]->gridY = *(int16_t *)FieldValue;
                     break;
                 case 4: //gridX
-                    LNAM.value[ListIndex]->gridX = *(SINT16 *)FieldValue;
+                    LNAM.value[ListIndex]->gridX = *(int16_t *)FieldValue;
                     break;
                 default:
                     break;

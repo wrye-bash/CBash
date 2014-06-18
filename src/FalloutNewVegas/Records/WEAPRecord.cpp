@@ -359,7 +359,7 @@ bool WEAPRecord::VisitFormIDs(FormIDOp &op)
 
     if(MODL.IsLoaded())
         {
-        for(UINT32 x = 0; x < MODL->Textures.MODS.size(); x++)
+        for(uint32_t x = 0; x < MODL->Textures.MODS.size(); x++)
             op.Accept(MODL->Textures.MODS[x]->texture);
         }
     if(SCRI.IsLoaded())
@@ -370,7 +370,7 @@ bool WEAPRecord::VisitFormIDs(FormIDOp &op)
         op.Accept(NAM0.value);
     if(Destructable.IsLoaded())
         {
-        for(UINT32 x = 0; x < Destructable->Stages.value.size(); ++x)
+        for(uint32_t x = 0; x < Destructable->Stages.value.size(); ++x)
             {
             op.Accept(Destructable->Stages.value[x]->DSTD.value.explosion);
             op.Accept(Destructable->Stages.value[x]->DSTD.value.debris);
@@ -386,19 +386,19 @@ bool WEAPRecord::VisitFormIDs(FormIDOp &op)
         op.Accept(ZNAM.value);
     if(MOD2.IsLoaded())
         {
-        for(UINT32 x = 0; x < MOD2->Textures.MODS.size(); x++)
+        for(uint32_t x = 0; x < MOD2->Textures.MODS.size(); x++)
             op.Accept(MOD2->Textures.MODS[x]->texture);
         }
     if(MOD3.IsLoaded())
         {
-        for(UINT32 x = 0; x < MOD3->Textures.MODS.size(); x++)
+        for(uint32_t x = 0; x < MOD3->Textures.MODS.size(); x++)
             op.Accept(MOD3->Textures.MODS[x]->texture);
         }
     if(EFSD.IsLoaded())
         op.Accept(EFSD.value);
     if(MOD4.IsLoaded())
         {
-        for(UINT32 x = 0; x < MOD4->Textures.MODS.size(); x++)
+        for(uint32_t x = 0; x < MOD4->Textures.MODS.size(); x++)
             op.Accept(MOD4->Textures.MODS[x]->texture);
         }
     if(INAM.IsLoaded())
@@ -535,12 +535,12 @@ void WEAPRecord::IsNonPlayable(bool value)
     SETBIT(DNAM.value.flags1, fIsNonPlayable, value);
     }
 
-bool WEAPRecord::IsFlagMask(UINT8 Mask, bool Exact)
+bool WEAPRecord::IsFlagMask(uint8_t Mask, bool Exact)
     {
     return Exact ? ((DNAM.value.flags1 & Mask) == Mask) : ((DNAM.value.flags1 & Mask) != 0);
     }
 
-void WEAPRecord::SetFlagMask(UINT8 Mask)
+void WEAPRecord::SetFlagMask(uint8_t Mask)
     {
     DNAM.value.flags1 = Mask;
     }
@@ -685,12 +685,12 @@ void WEAPRecord::IsScopeFromMod(bool value)
     SETBIT(DNAM.value.flags2, fIsScopeFromMod, value);
     }
 
-bool WEAPRecord::IsAdvFlagMask(UINT32 Mask, bool Exact)
+bool WEAPRecord::IsAdvFlagMask(uint32_t Mask, bool Exact)
     {
     return Exact ? ((DNAM.value.flags2 & Mask) == Mask) : ((DNAM.value.flags2 & Mask) != 0);
     }
 
-void WEAPRecord::SetAdvFlagMask(UINT32 Mask)
+void WEAPRecord::SetAdvFlagMask(uint32_t Mask)
     {
     DNAM.value.flags2 = Mask;
     }
@@ -705,12 +705,12 @@ void WEAPRecord::IsCritOnDeath(bool value)
     SETBIT(CRDT.value.flags, fIsOnDeath, value);
     }
 
-bool WEAPRecord::IsCritFlagMask(UINT8 Mask, bool Exact)
+bool WEAPRecord::IsCritFlagMask(uint8_t Mask, bool Exact)
     {
     return Exact ? ((CRDT.value.flags & Mask) == Mask) : ((CRDT.value.flags & Mask) != 0);
     }
 
-void WEAPRecord::SetCritFlagMask(UINT8 Mask)
+void WEAPRecord::SetCritFlagMask(uint8_t Mask)
     {
     CRDT.value.flags = Mask;
     }
@@ -865,12 +865,12 @@ void WEAPRecord::IsAlcohol(bool value)
     ETYP.value = value ? eAlcohol : eNone;
     }
 
-bool WEAPRecord::IsEquipmentType(SINT32 Type)
+bool WEAPRecord::IsEquipmentType(int32_t Type)
     {
     return ETYP.value == Type;
     }
 
-void WEAPRecord::SetEquipmentType(SINT32 Type)
+void WEAPRecord::SetEquipmentType(int32_t Type)
     {
     ETYP.value = Type;
     }
@@ -1015,12 +1015,12 @@ void WEAPRecord::IsThrown1Hand(bool value)
     DNAM.value.animType = value ? eThrown1Hand : eHand2Hand;
     }
 
-bool WEAPRecord::IsType(UINT32 Type)
+bool WEAPRecord::IsType(uint32_t Type)
     {
     return DNAM.value.animType == Type;
     }
 
-void WEAPRecord::SetType(UINT32 Type)
+void WEAPRecord::SetType(uint32_t Type)
     {
     DNAM.value.animType = Type;
     }
@@ -1095,12 +1095,12 @@ void WEAPRecord::IsGripDefault(bool value)
     DNAM.value.gripAnim = value ? eHandGripDefault : eHandGrip1;
     }
 
-bool WEAPRecord::IsGripType(UINT8 Type)
+bool WEAPRecord::IsGripType(uint8_t Type)
     {
     return DNAM.value.gripAnim == Type;
     }
 
-void WEAPRecord::SetGripType(UINT8 Type)
+void WEAPRecord::SetGripType(uint8_t Type)
     {
     DNAM.value.gripAnim = Type;
     }
@@ -1335,12 +1335,12 @@ void WEAPRecord::IsReloadZ(bool value)
     DNAM.value.reloadAnim = value ? eReloadZ : eReloadA;
     }
 
-bool WEAPRecord::IsReloadType(UINT8 Type)
+bool WEAPRecord::IsReloadType(uint8_t Type)
     {
     return DNAM.value.reloadAnim == Type;
     }
 
-void WEAPRecord::SetReloadType(UINT8 Type)
+void WEAPRecord::SetReloadType(uint8_t Type)
     {
     DNAM.value.reloadAnim = Type;
     }
@@ -1575,12 +1575,12 @@ void WEAPRecord::IsAttackDefault(bool value)
     DNAM.value.attackAnim = value ? eAttackDefault : eAttackLeft;
     }
 
-bool WEAPRecord::IsAttackType(UINT8 Type)
+bool WEAPRecord::IsAttackType(uint8_t Type)
     {
     return DNAM.value.attackAnim == Type;
     }
 
-void WEAPRecord::SetAttackType(UINT8 Type)
+void WEAPRecord::SetAttackType(uint8_t Type)
     {
     DNAM.value.attackAnim = Type;
     }
@@ -1655,12 +1655,12 @@ void WEAPRecord::IsEmbeddedAVBrain(bool value)
     DNAM.value.weaponAV = value ? eBrain : ePerception;
     }
 
-bool WEAPRecord::IsEmbeddedAVType(UINT8 Type)
+bool WEAPRecord::IsEmbeddedAVType(uint8_t Type)
     {
     return DNAM.value.weaponAV == Type;
     }
 
-void WEAPRecord::SetEmbeddedAVType(UINT8 Type)
+void WEAPRecord::SetEmbeddedAVType(uint8_t Type)
     {
     DNAM.value.weaponAV = Type;
     }
@@ -1705,12 +1705,12 @@ void WEAPRecord::IsOnHitNoDismemberExplode(bool value)
     DNAM.value.onHit = value ? eNoDismemberExplode : eNormalFormulaBehavior;
     }
 
-bool WEAPRecord::IsOnHitType(UINT32 Type)
+bool WEAPRecord::IsOnHitType(uint32_t Type)
     {
     return DNAM.value.onHit == Type;
     }
 
-void WEAPRecord::SetOnHitType(UINT32 Type)
+void WEAPRecord::SetOnHitType(uint32_t Type)
     {
     DNAM.value.onHit = Type;
     }
@@ -1755,12 +1755,12 @@ void WEAPRecord::IsRumbleSawtooth(bool value)
     DNAM.value.rumbleType = value ? eSawtooth : eConstant;
     }
 
-bool WEAPRecord::IsRumbleType(UINT32 Type)
+bool WEAPRecord::IsRumbleType(uint32_t Type)
     {
     return DNAM.value.rumbleType == Type;
     }
 
-void WEAPRecord::SetRumbleType(UINT32 Type)
+void WEAPRecord::SetRumbleType(uint32_t Type)
     {
     DNAM.value.rumbleType = Type;
     }
@@ -1835,12 +1835,12 @@ void WEAPRecord::IsPowerAttackAnimOverrideDefault(bool value)
     DNAM.value.overridePwrAtkAnim = value ? eAttackCustomDefault : eAttackCustom1Power;
     }
 
-bool WEAPRecord::IsPowerAttackAnimOverrideType(UINT32 Type)
+bool WEAPRecord::IsPowerAttackAnimOverrideType(uint32_t Type)
     {
     return DNAM.value.overridePwrAtkAnim == Type;
     }
 
-void WEAPRecord::SetPowerAttackAnimOverrideType(UINT32 Type)
+void WEAPRecord::SetPowerAttackAnimOverrideType(uint32_t Type)
     {
     DNAM.value.overridePwrAtkAnim = Type;
     }
@@ -2075,12 +2075,12 @@ void WEAPRecord::IsModReloadZ(bool value)
     DNAM.value.reloadAnimMod = value ? eReloadZ : eReloadA;
     }
 
-bool WEAPRecord::IsModType(UINT8 Type)
+bool WEAPRecord::IsModType(uint8_t Type)
     {
     return DNAM.value.reloadAnimMod == Type;
     }
 
-void WEAPRecord::SetModType(UINT8 Type)
+void WEAPRecord::SetModType(uint8_t Type)
     {
     DNAM.value.reloadAnimMod = Type;
     }
@@ -2105,12 +2105,12 @@ void WEAPRecord::IsVATSSilent(bool value)
     VATS.value.silenceType = value ? eIsSilent : eIsNotSilent;
     }
 
-bool WEAPRecord::IsVATSSilenceType(UINT8 Type)
+bool WEAPRecord::IsVATSSilenceType(uint8_t Type)
     {
     return VATS.value.silenceType == Type;
     }
 
-void WEAPRecord::SetVATSSilenceType(UINT8 Type)
+void WEAPRecord::SetVATSSilenceType(uint8_t Type)
     {
     VATS.value.silenceType = Type;
     }
@@ -2135,12 +2135,12 @@ void WEAPRecord::IsVATSModRequired(bool value)
     VATS.value.modRequiredType = value ? eIsModRequired : eIsNotModRequired;
     }
 
-bool WEAPRecord::IsVATSModType(UINT8 Type)
+bool WEAPRecord::IsVATSModType(uint8_t Type)
     {
     return VATS.value.modRequiredType == Type;
     }
 
-void WEAPRecord::SetVATSModType(UINT8 Type)
+void WEAPRecord::SetVATSModType(uint8_t Type)
     {
     VATS.value.modRequiredType = Type;
     }
@@ -2175,50 +2175,50 @@ void WEAPRecord::IsSilent(bool value)
     VNAM.value = value ? eSilent : eNormal;
     }
 
-bool WEAPRecord::IsSoundLevelType(UINT32 Type)
+bool WEAPRecord::IsSoundLevelType(uint32_t Type)
     {
     return VNAM.value == Type;
     }
 
-void WEAPRecord::SetSoundLevelType(UINT32 Type)
+void WEAPRecord::SetSoundLevelType(uint32_t Type)
     {
     VNAM.value = Type;
     }
 
-UINT32 WEAPRecord::GetType()
+uint32_t WEAPRecord::GetType()
     {
     return REV32(WEAP);
     }
 
-STRING WEAPRecord::GetStrType()
+char * WEAPRecord::GetStrType()
     {
     return "WEAP";
     }
 
-SINT32 WEAPRecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk)
+int32_t WEAPRecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk)
     {
-    UINT32 subType = 0;
-    UINT32 subSize = 0;
-    UINT32 curSound = 0;
+    uint32_t subType = 0;
+    uint32_t subSize = 0;
+    uint32_t curSound = 0;
     enum curSounds
         {
         fIsGun3DRead   = 0x01,
         fIsShoot3DRead = 0x02
         };
     while(buffer < end_buffer){
-        subType = *(UINT32 *)buffer;
+        subType = *(uint32_t *)buffer;
         buffer += 4;
         switch(subType)
             {
             case REV32(XXXX):
                 buffer += 2;
-                subSize = *(UINT32 *)buffer;
+                subSize = *(uint32_t *)buffer;
                 buffer += 4;
-                subType = *(UINT32 *)buffer;
+                subType = *(uint32_t *)buffer;
                 buffer += 6;
                 break;
             default:
-                subSize = *(UINT16 *)buffer;
+                subSize = *(uint16_t *)buffer;
                 buffer += 2;
                 break;
             }
@@ -2478,7 +2478,7 @@ SINT32 WEAPRecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer,
     return 0;
     }
 
-SINT32 WEAPRecord::Unload()
+int32_t WEAPRecord::Unload()
     {
     IsChanged(false);
     IsLoaded(false);
@@ -2543,7 +2543,7 @@ SINT32 WEAPRecord::Unload()
     return 1;
     }
 
-SINT32 WEAPRecord::WriteRecord(FileWriter &writer)
+int32_t WEAPRecord::WriteRecord(FileWriter &writer)
     {
     WRITE(EDID);
     WRITE(OBND);

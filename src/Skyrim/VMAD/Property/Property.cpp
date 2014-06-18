@@ -87,7 +87,7 @@ bool Property::IsBoolArray() const
     return type == eBoolArray;
     }
 
-bool Property::IsType(UINT8 Type) const
+bool Property::IsType(uint8_t Type) const
     {
     return type == Type;
     }
@@ -112,35 +112,35 @@ void Property::IsRemoved(bool value)
     SETBIT(status, fIsRemoved, value);
     }
 
-bool Property::IsStatusMask(UINT8 Mask, bool Exact)
+bool Property::IsStatusMask(uint8_t Mask, bool Exact)
     {
     return Exact ? (status & Mask) == Mask : (status & Mask) != 0;
     }
 
-void Property::SetStatusMask(UINT8 Mask)
+void Property::SetStatusMask(uint8_t Mask)
     {
     status = Mask;
     }
 
-UINT32 Property::GetSize() const
+uint32_t Property::GetSize() const
     {
     return (sizeof(type) + sizeof(status) +
-            sizeof(UINT16) + name.GetSize());
+            sizeof(uint16_t) + name.GetSize());
     }
 
-void Property::Read(unsigned char *&buffer, const SINT16 &version, const SINT16 &objFormat, const bool &CompressedOnDisk)
+void Property::Read(unsigned char *&buffer, const int16_t &version, const int16_t &objFormat, const bool &CompressedOnDisk)
 {
     // name
-    UINT16 nameSize = *(UINT16 *)buffer;
+    uint16_t nameSize = *(uint16_t *)buffer;
     buffer += 2;
     name.Read(buffer, nameSize, CompressedOnDisk);
     // type
-    type = *(UINT8 *)buffer;
+    type = *(uint8_t *)buffer;
     buffer += 1;
     // status
     if (version >= 4)
     {
-        status = *(UINT8 *)buffer;
+        status = *(uint8_t *)buffer;
         buffer += 1;
     }
     else
@@ -151,7 +151,7 @@ void Property::Read(unsigned char *&buffer, const SINT16 &version, const SINT16 
 void Property::Write(FileWriter &writer)
 {
     // name
-    UINT16 nameSize = (UINT16)name.GetSize();
+    uint16_t nameSize = (uint16_t)name.GetSize();
     writer.record_write(&nameSize, sizeof(nameSize));
     name.Write16(writer);
     // type

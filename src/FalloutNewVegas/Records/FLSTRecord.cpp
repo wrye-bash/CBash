@@ -77,40 +77,40 @@ bool FLSTRecord::VisitFormIDs(FormIDOp &op)
         return false;
 
     if(LNAM.IsLoaded())
-        for (UINT32 ListIndex = 0; ListIndex < LNAM.value.size(); ListIndex++)
+        for (uint32_t ListIndex = 0; ListIndex < LNAM.value.size(); ListIndex++)
             op.Accept(LNAM.value[ListIndex]);
 
     return op.Stop();
     }
 
-UINT32 FLSTRecord::GetType()
+uint32_t FLSTRecord::GetType()
     {
     return REV32(FLST);
     }
 
-STRING FLSTRecord::GetStrType()
+char * FLSTRecord::GetStrType()
     {
     return "FLST";
     }
 
-SINT32 FLSTRecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk)
+int32_t FLSTRecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk)
     {
-    UINT32 subType = 0;
-    UINT32 subSize = 0;
+    uint32_t subType = 0;
+    uint32_t subSize = 0;
     while(buffer < end_buffer){
-        subType = *(UINT32 *)buffer;
+        subType = *(uint32_t *)buffer;
         buffer += 4;
         switch(subType)
             {
             case REV32(XXXX):
                 buffer += 2;
-                subSize = *(UINT32 *)buffer;
+                subSize = *(uint32_t *)buffer;
                 buffer += 4;
-                subType = *(UINT32 *)buffer;
+                subType = *(uint32_t *)buffer;
                 buffer += 6;
                 break;
             default:
-                subSize = *(UINT16 *)buffer;
+                subSize = *(uint16_t *)buffer;
                 buffer += 2;
                 break;
             }
@@ -134,7 +134,7 @@ SINT32 FLSTRecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer,
     return 0;
     }
 
-SINT32 FLSTRecord::Unload()
+int32_t FLSTRecord::Unload()
     {
     IsChanged(false);
     IsLoaded(false);
@@ -143,7 +143,7 @@ SINT32 FLSTRecord::Unload()
     return 1;
     }
 
-SINT32 FLSTRecord::WriteRecord(FileWriter &writer)
+int32_t FLSTRecord::WriteRecord(FileWriter &writer)
     {
     WRITE(EDID);
     WRITE(LNAM);

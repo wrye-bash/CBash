@@ -38,7 +38,7 @@
 
 namespace FNV
 {
-UINT32 CREARecord::GetFieldAttribute(FIELD_IDENTIFIERS, UINT32 WhichAttribute)
+uint32_t CREARecord::GetFieldAttribute(FIELD_IDENTIFIERS, uint32_t WhichAttribute)
     {
     switch(FieldID)
         {
@@ -114,7 +114,7 @@ UINT32 CREARecord::GetFieldAttribute(FIELD_IDENTIFIERS, UINT32 WhichAttribute)
                     case 0: //fieldType
                         return LIST_FIELD;
                     case 1: //fieldSize
-                        return (UINT32)MODL->Textures.MODS.size();
+                        return (uint32_t)MODL->Textures.MODS.size();
                     default:
                         return UNKNOWN_FIELD;
                     }
@@ -143,7 +143,7 @@ UINT32 CREARecord::GetFieldAttribute(FIELD_IDENTIFIERS, UINT32 WhichAttribute)
                 case 0: //fieldType
                     return FORMID_ARRAY_FIELD;
                 case 1: //fieldSize
-                    return (UINT32)SPLO.value.size();
+                    return (uint32_t)SPLO.value.size();
                 default:
                     return UNKNOWN_FIELD;
                 }
@@ -158,7 +158,7 @@ UINT32 CREARecord::GetFieldAttribute(FIELD_IDENTIFIERS, UINT32 WhichAttribute)
                 case 0: //fieldType
                     return ISTRING_ARRAY_FIELD;
                 case 1: //fieldSize
-                    return (UINT32)NIFZ.value.size();
+                    return (uint32_t)NIFZ.value.size();
                 default:
                     return UNKNOWN_FIELD;
                 }
@@ -202,7 +202,7 @@ UINT32 CREARecord::GetFieldAttribute(FIELD_IDENTIFIERS, UINT32 WhichAttribute)
                     case 0: //fieldType
                         return LIST_FIELD;
                     case 1: //fieldSize
-                        return (UINT32)SNAM.value.size();
+                        return (uint32_t)SNAM.value.size();
                     default:
                         return UNKNOWN_FIELD;
                     }
@@ -266,7 +266,7 @@ UINT32 CREARecord::GetFieldAttribute(FIELD_IDENTIFIERS, UINT32 WhichAttribute)
                     case 0: //fieldType
                         return LIST_FIELD;
                     case 1: //fieldSize
-                        return (UINT32)Destructable->Stages.value.size();
+                        return (uint32_t)Destructable->Stages.value.size();
                     default:
                         return UNKNOWN_FIELD;
                     }
@@ -319,7 +319,7 @@ UINT32 CREARecord::GetFieldAttribute(FIELD_IDENTIFIERS, UINT32 WhichAttribute)
                     case 0: //fieldType
                         return LIST_FIELD;
                     case 1: //fieldSize
-                        return (UINT32)CNTO.value.size();
+                        return (uint32_t)CNTO.value.size();
                     default:
                         return UNKNOWN_FIELD;
                     }
@@ -393,7 +393,7 @@ UINT32 CREARecord::GetFieldAttribute(FIELD_IDENTIFIERS, UINT32 WhichAttribute)
                 case 0: //fieldType
                     return FORMID_ARRAY_FIELD;
                 case 1: //fieldSize
-                    return (UINT32)PKID.value.size();
+                    return (uint32_t)PKID.value.size();
                 default:
                     return UNKNOWN_FIELD;
                 }
@@ -404,7 +404,7 @@ UINT32 CREARecord::GetFieldAttribute(FIELD_IDENTIFIERS, UINT32 WhichAttribute)
                 case 0: //fieldType
                     return ISTRING_ARRAY_FIELD;
                 case 1: //fieldSize
-                    return (UINT32)KFFZ.value.size();
+                    return (uint32_t)KFFZ.value.size();
                 default:
                     return UNKNOWN_FIELD;
                 }
@@ -472,7 +472,7 @@ UINT32 CREARecord::GetFieldAttribute(FIELD_IDENTIFIERS, UINT32 WhichAttribute)
                     case 0: //fieldType
                         return LIST_FIELD;
                     case 1: //fieldSize
-                        return (UINT32)Types.value.size();
+                        return (uint32_t)Types.value.size();
                     default:
                         return UNKNOWN_FIELD;
                     }
@@ -494,7 +494,7 @@ UINT32 CREARecord::GetFieldAttribute(FIELD_IDENTIFIERS, UINT32 WhichAttribute)
                             case 0: //fieldType
                                 return LIST_FIELD;
                             case 1: //fieldSize
-                                return (UINT32)Types.value[ListIndex]->Sounds.value.size();
+                                return (uint32_t)Types.value[ListIndex]->Sounds.value.size();
                             default:
                                 return UNKNOWN_FIELD;
                             }
@@ -596,7 +596,7 @@ void * CREARecord::GetField(FIELD_IDENTIFIERS, void **FieldValues)
         case 21: //unarmedAnim
             return &EAMT.value;
         case 22: //bodyParts
-            for(UINT32 p = 0;p < NIFZ.value.size();p++)
+            for(uint32_t p = 0;p < NIFZ.value.size();p++)
                 FieldValues[p] = NIFZ.value[p];
             return NULL;
         case 23: //nift_p
@@ -739,7 +739,7 @@ void * CREARecord::GetField(FIELD_IDENTIFIERS, void **FieldValues)
             *FieldValues = PKID.IsLoaded() ? &PKID.value[0] : NULL;
             return NULL;
         case 58: //animations
-            for(UINT32 p = 0;p < KFFZ.value.size();p++)
+            for(uint32_t p = 0;p < KFFZ.value.size();p++)
                 FieldValues[p] = KFFZ.value[p];
             return NULL;
         case 59: //creatureType
@@ -825,12 +825,12 @@ void * CREARecord::GetField(FIELD_IDENTIFIERS, void **FieldValues)
     return NULL;
     }
 
-bool CREARecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
+bool CREARecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, uint32_t ArraySize)
     {
     switch(FieldID)
         {
         case 1: //flags1
-            SetHeaderFlagMask(*(UINT32 *)FieldValue);
+            SetHeaderFlagMask(*(uint32_t *)FieldValue);
             break;
         case 3: //versionControl1
             if(ArraySize != 4)
@@ -841,10 +841,10 @@ bool CREARecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             ((UINT8ARRAY)&flagsUnk)[3] = ((UINT8ARRAY)FieldValue)[3];
             break;
         case 4: //eid
-            EDID.Copy((STRING)FieldValue);
+            EDID.Copy((char *)FieldValue);
             break;
         case 5: //formVersion
-            formVersion = *(UINT16 *)FieldValue;
+            formVersion = *(uint16_t *)FieldValue;
             break;
         case 6: //versionControl2
             if(ArraySize != 2)
@@ -853,33 +853,33 @@ bool CREARecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             versionControl2[1] = ((UINT8ARRAY)FieldValue)[1];
             break;
         case 7: //boundX1
-            OBND.value.x1 = *(SINT16 *)FieldValue;
+            OBND.value.x1 = *(int16_t *)FieldValue;
             break;
         case 8: //boundY1
-            OBND.value.y1 = *(SINT16 *)FieldValue;
+            OBND.value.y1 = *(int16_t *)FieldValue;
             break;
         case 9: //boundZ1
-            OBND.value.z1 = *(SINT16 *)FieldValue;
+            OBND.value.z1 = *(int16_t *)FieldValue;
             break;
         case 10: //boundX2
-            OBND.value.x2 = *(SINT16 *)FieldValue;
+            OBND.value.x2 = *(int16_t *)FieldValue;
             break;
         case 11: //boundY2
-            OBND.value.y2 = *(SINT16 *)FieldValue;
+            OBND.value.y2 = *(int16_t *)FieldValue;
             break;
         case 12: //boundZ2
-            OBND.value.z2 = *(SINT16 *)FieldValue;
+            OBND.value.z2 = *(int16_t *)FieldValue;
             break;
         case 13: //full
-            FULL.Copy((STRING)FieldValue);
+            FULL.Copy((char *)FieldValue);
             break;
         case 14: //modPath
             MODL.Load();
-            MODL->MODL.Copy((STRING)FieldValue);
+            MODL->MODL.Copy((char *)FieldValue);
             break;
         case 15: //modb
             MODL.Load();
-            MODL->MODB.value = *(FLOAT32 *)FieldValue;
+            MODL->MODB.value = *(float *)FieldValue;
             break;
         case 16: //modt_p
             MODL.Load();
@@ -903,16 +903,16 @@ bool CREARecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
                     MODL->Textures.MODS[ListIndex]->name = NULL;
                     if(FieldValue != NULL)
                         {
-                        ArraySize = (UINT32)strlen((STRING)FieldValue) + 1;
+                        ArraySize = (uint32_t)strlen((char *)FieldValue) + 1;
                         MODL->Textures.MODS[ListIndex]->name = new char[ArraySize];
-                        strcpy_s(MODL->Textures.MODS[ListIndex]->name, ArraySize, (STRING)FieldValue);
+                        strcpy_s(MODL->Textures.MODS[ListIndex]->name, ArraySize, (char *)FieldValue);
                         }
                     break;
                 case 2: //texture
                     MODL->Textures.MODS[ListIndex]->texture = *(FORMID *)FieldValue;
                     return true;
                 case 3: //index
-                    MODL->Textures.MODS[ListIndex]->index = *(SINT32 *)FieldValue;
+                    MODL->Textures.MODS[ListIndex]->index = *(int32_t *)FieldValue;
                     break;
                 default:
                     break;
@@ -920,18 +920,18 @@ bool CREARecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             break;
         case 18: //modelFlags
             MODL.Load();
-            MODL->SetFlagMask(*(UINT8 *)FieldValue);
+            MODL->SetFlagMask(*(uint8_t *)FieldValue);
             break;
         case 19: //actorEffects
             SPLO.resize(ArraySize);
-            for(UINT32 x = 0; x < ArraySize; x++)
+            for(uint32_t x = 0; x < ArraySize; x++)
                 SPLO.value[x] = ((FORMIDARRAY)FieldValue)[x];
             return true;
         case 20: //unarmedEffect
             EITM.value = *(FORMID *)FieldValue;
             return true;
         case 21: //unarmedAnim
-            SetAttackAnimType(*(UINT16 *)FieldValue);
+            SetAttackAnimType(*(uint16_t *)FieldValue);
             break;
         case 22: //bodyParts
             NIFZ.Copy((STRINGARRAY)FieldValue, ArraySize);
@@ -940,34 +940,34 @@ bool CREARecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             NIFT.Copy((UINT8ARRAY)FieldValue, ArraySize);
             break;
         case 24: //flags
-            SetFlagMask(*(UINT32 *)FieldValue);
+            SetFlagMask(*(uint32_t *)FieldValue);
             break;
         case 25: //fatigue
-            ACBS.value.fatigue = *(UINT16 *)FieldValue;
+            ACBS.value.fatigue = *(uint16_t *)FieldValue;
             break;
         case 26: //barterGold
-            ACBS.value.barterGold = *(UINT16 *)FieldValue;
+            ACBS.value.barterGold = *(uint16_t *)FieldValue;
             break;
         case 27: //level
-            ACBS.value.level = *(SINT16 *)FieldValue;
+            ACBS.value.level = *(int16_t *)FieldValue;
             break;
         case 28: //calcMin
-            ACBS.value.calcMin = *(UINT16 *)FieldValue;
+            ACBS.value.calcMin = *(uint16_t *)FieldValue;
             break;
         case 29: //calcMax
-            ACBS.value.calcMax = *(UINT16 *)FieldValue;
+            ACBS.value.calcMax = *(uint16_t *)FieldValue;
             break;
         case 30: //speedMult
-            ACBS.value.speedMult = *(UINT16 *)FieldValue;
+            ACBS.value.speedMult = *(uint16_t *)FieldValue;
             break;
         case 31: //karma
-            ACBS.value.karma = *(FLOAT32 *)FieldValue;
+            ACBS.value.karma = *(float *)FieldValue;
             break;
         case 32: //dispBase
-            ACBS.value.dispBase = *(SINT16 *)FieldValue;
+            ACBS.value.dispBase = *(int16_t *)FieldValue;
             break;
         case 33: //templateFlags
-            SetTemplateFlagMask(*(UINT16 *)FieldValue);
+            SetTemplateFlagMask(*(uint16_t *)FieldValue);
             break;
         case 34: //factions
             if(ListFieldID == 0) //altTexturesSize
@@ -985,7 +985,7 @@ bool CREARecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
                     SNAM.value[ListIndex]->faction = *(FORMID *)FieldValue;
                     return true;
                 case 2: //rank
-                    SNAM.value[ListIndex]->rank = *(UINT8 *)FieldValue;
+                    SNAM.value[ListIndex]->rank = *(uint8_t *)FieldValue;
                     break;
                 case 3: //unused1
                     if(ArraySize != 3)
@@ -1009,15 +1009,15 @@ bool CREARecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             return true;
         case 38: //destructableHealth
             Destructable.Load();
-            Destructable->DEST.value.health = *(SINT32 *)FieldValue;
+            Destructable->DEST.value.health = *(int32_t *)FieldValue;
             break;
         case 39: //destructableCount
             Destructable.Load();
-            Destructable->DEST.value.count = *(UINT8 *)FieldValue;
+            Destructable->DEST.value.count = *(uint8_t *)FieldValue;
             break;
         case 40: //destructableFlags
             Destructable.Load();
-            Destructable->SetFlagMask(*(UINT8 *)FieldValue);
+            Destructable->SetFlagMask(*(uint8_t *)FieldValue);
             break;
         case 41: //destructableUnused1
             if(ArraySize != 2)
@@ -1040,19 +1040,19 @@ bool CREARecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             switch(ListFieldID)
                 {
                 case 1: //health
-                    Destructable->Stages.value[ListIndex]->DSTD.value.health = *(UINT8 *)FieldValue;
+                    Destructable->Stages.value[ListIndex]->DSTD.value.health = *(uint8_t *)FieldValue;
                     break;
                 case 2: //index
-                    Destructable->Stages.value[ListIndex]->DSTD.value.index = *(UINT8 *)FieldValue;
+                    Destructable->Stages.value[ListIndex]->DSTD.value.index = *(uint8_t *)FieldValue;
                     break;
                 case 3: //stage
-                    Destructable->Stages.value[ListIndex]->DSTD.value.stage = *(UINT8 *)FieldValue;
+                    Destructable->Stages.value[ListIndex]->DSTD.value.stage = *(uint8_t *)FieldValue;
                     break;
                 case 4: //flags
-                    Destructable->Stages.value[ListIndex]->SetFlagMask(*(UINT8 *)FieldValue);
+                    Destructable->Stages.value[ListIndex]->SetFlagMask(*(uint8_t *)FieldValue);
                     break;
                 case 5: //dps
-                    Destructable->Stages.value[ListIndex]->DSTD.value.dps = *(SINT32 *)FieldValue;
+                    Destructable->Stages.value[ListIndex]->DSTD.value.dps = *(int32_t *)FieldValue;
                     break;
                 case 6: //explosion
                     Destructable->Stages.value[ListIndex]->DSTD.value.explosion = *(FORMID *)FieldValue;
@@ -1061,10 +1061,10 @@ bool CREARecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
                     Destructable->Stages.value[ListIndex]->DSTD.value.debris = *(FORMID *)FieldValue;
                     return true;
                 case 8: //debrisCount
-                    Destructable->Stages.value[ListIndex]->DSTD.value.debrisCount = *(SINT32 *)FieldValue;
+                    Destructable->Stages.value[ListIndex]->DSTD.value.debrisCount = *(int32_t *)FieldValue;
                     break;
                 case 9: //modPath
-                    Destructable->Stages.value[ListIndex]->DMDL.Copy((STRING)FieldValue);
+                    Destructable->Stages.value[ListIndex]->DMDL.Copy((char *)FieldValue);
                     break;
                 case 10: //modt_p
                     Destructable->Stages.value[ListIndex]->DMDT.Copy((UINT8ARRAY)FieldValue, ArraySize);
@@ -1092,7 +1092,7 @@ bool CREARecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
                     CNTO.value[ListIndex]->CNTO.value.item = *(FORMID *)FieldValue;
                     return true;
                 case 2: //count
-                    CNTO.value[ListIndex]->CNTO.value.count = *(SINT32 *)FieldValue;
+                    CNTO.value[ListIndex]->CNTO.value.count = *(int32_t *)FieldValue;
                     break;
                 case 3: //owner
                     CNTO.value[ListIndex]->COED.Load();
@@ -1104,26 +1104,26 @@ bool CREARecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
                     return true;
                 case 5: //condition
                     CNTO.value[ListIndex]->COED.Load();
-                    CNTO.value[ListIndex]->COED->condition = *(FLOAT32 *)FieldValue;
+                    CNTO.value[ListIndex]->COED->condition = *(float *)FieldValue;
                     break;
                 default:
                     break;
                 }
             break;
         case 45: //aggression
-            SetAggressionType(*(UINT8 *)FieldValue);
+            SetAggressionType(*(uint8_t *)FieldValue);
             break;
         case 46: //confidence
-            SetConfidenceType(*(UINT8 *)FieldValue);
+            SetConfidenceType(*(uint8_t *)FieldValue);
             break;
         case 47: //energyLevel
-            AIDT.value.energyLevel = *(UINT8 *)FieldValue;
+            AIDT.value.energyLevel = *(uint8_t *)FieldValue;
             break;
         case 48: //responsibility
-            AIDT.value.responsibility = *(UINT8 *)FieldValue;
+            AIDT.value.responsibility = *(uint8_t *)FieldValue;
             break;
         case 49: //mood
-            SetMoodType(*(UINT8 *)FieldValue);
+            SetMoodType(*(uint8_t *)FieldValue);
             break;
         case 50: //unused1
             if(ArraySize != 3)
@@ -1133,45 +1133,45 @@ bool CREARecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             AIDT.value.unused1[2] = ((UINT8ARRAY)FieldValue)[2];
             break;
         case 51: //services
-            SetServicesFlagMask(*(UINT32 *)FieldValue);
+            SetServicesFlagMask(*(uint32_t *)FieldValue);
             break;
         case 52: //trainSkill
-            AIDT.value.trainSkill = *(SINT8 *)FieldValue;
+            AIDT.value.trainSkill = *(int8_t *)FieldValue;
             break;
         case 53: //trainLevel
-            AIDT.value.trainLevel = *(UINT8 *)FieldValue;
+            AIDT.value.trainLevel = *(uint8_t *)FieldValue;
             break;
         case 54: //assistance
-            SetAssistanceType(*(UINT8 *)FieldValue);
+            SetAssistanceType(*(uint8_t *)FieldValue);
             break;
         case 55: //aggroFlags
-            SetAggroFlagMask(*(UINT8 *)FieldValue);
+            SetAggroFlagMask(*(uint8_t *)FieldValue);
             break;
         case 56: //aggroRadius
-            AIDT.value.aggroRadius = *(SINT32 *)FieldValue;
+            AIDT.value.aggroRadius = *(int32_t *)FieldValue;
             break;
         case 57: //aiPackages
             PKID.resize(ArraySize);
-            for(UINT32 x = 0; x < ArraySize; x++)
+            for(uint32_t x = 0; x < ArraySize; x++)
                 PKID.value[x] = ((FORMIDARRAY)FieldValue)[x];
             return true;
         case 58: //animations
             KFFZ.Copy((STRINGARRAY)FieldValue, ArraySize);
             break;
         case 59: //creatureType
-            SetType(*(UINT8 *)FieldValue);
+            SetType(*(uint8_t *)FieldValue);
             break;
         case 60: //combat
-            DATA.value.combat = *(UINT8 *)FieldValue;
+            DATA.value.combat = *(uint8_t *)FieldValue;
             break;
         case 61: //magic
-            DATA.value.magic = *(UINT8 *)FieldValue;
+            DATA.value.magic = *(uint8_t *)FieldValue;
             break;
         case 62: //stealth
-            DATA.value.stealth = *(UINT8 *)FieldValue;
+            DATA.value.stealth = *(uint8_t *)FieldValue;
             break;
         case 63: //health
-            DATA.value.health = *(UINT16 *)FieldValue;
+            DATA.value.health = *(uint16_t *)FieldValue;
             break;
         case 64: //unused2
             if(ArraySize != 2)
@@ -1180,31 +1180,31 @@ bool CREARecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             DATA.value.unused1[1] = ((UINT8ARRAY)FieldValue)[1];
             break;
         case 65: //attackDamage
-            DATA.value.attackDamage = *(SINT16 *)FieldValue;
+            DATA.value.attackDamage = *(int16_t *)FieldValue;
             break;
         case 66: //strength
-            DATA.value.strength = *(UINT8 *)FieldValue;
+            DATA.value.strength = *(uint8_t *)FieldValue;
             break;
         case 67: //perception
-            DATA.value.perception = *(UINT8 *)FieldValue;
+            DATA.value.perception = *(uint8_t *)FieldValue;
             break;
         case 68: //endurance
-            DATA.value.endurance = *(UINT8 *)FieldValue;
+            DATA.value.endurance = *(uint8_t *)FieldValue;
             break;
         case 69: //charisma
-            DATA.value.charisma = *(UINT8 *)FieldValue;
+            DATA.value.charisma = *(uint8_t *)FieldValue;
             break;
         case 70: //intelligence
-            DATA.value.intelligence = *(UINT8 *)FieldValue;
+            DATA.value.intelligence = *(uint8_t *)FieldValue;
             break;
         case 71: //agility
-            DATA.value.agility = *(UINT8 *)FieldValue;
+            DATA.value.agility = *(uint8_t *)FieldValue;
             break;
         case 72: //luck
-            DATA.value.luck = *(UINT8 *)FieldValue;
+            DATA.value.luck = *(uint8_t *)FieldValue;
             break;
         case 73: //attackReach
-            RNAM.value = *(UINT8 *)FieldValue;
+            RNAM.value = *(uint8_t *)FieldValue;
             break;
         case 74: //combatStyle
             ZNAM.value = *(FORMID *)FieldValue;
@@ -1214,20 +1214,20 @@ bool CREARecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             return true;
         case 76: //turningSpeed
             TNAM.Load();
-            *TNAM.value = *(FLOAT32 *)FieldValue;
+            *TNAM.value = *(float *)FieldValue;
             break;
         case 77: //baseScale
             BNAM.Load();
-            *BNAM.value = *(FLOAT32 *)FieldValue;
+            *BNAM.value = *(float *)FieldValue;
             break;
         case 78: //footWeight
-            WNAM.value = *(FLOAT32 *)FieldValue;
+            WNAM.value = *(float *)FieldValue;
             break;
         case 79: //impactType
-            SetImpactType(*(UINT32 *)FieldValue);
+            SetImpactType(*(uint32_t *)FieldValue);
             break;
         case 80: //soundLevel
-            SetSoundLevelType(*(UINT32 *)FieldValue);
+            SetSoundLevelType(*(uint32_t *)FieldValue);
             break;
         case 81: //inheritsSoundsFrom
             CSCR.value = *(FORMID *)FieldValue;
@@ -1245,7 +1245,7 @@ bool CREARecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             switch(ListFieldID)
                 {
                 case 1: //soundType
-                    Types.value[ListIndex]->SetType(*(UINT32 *)FieldValue);
+                    Types.value[ListIndex]->SetType(*(uint32_t *)FieldValue);
                     break;
                 case 2: //sounds
                     if(ListX2FieldID == 0) //soundTypesSize
@@ -1263,7 +1263,7 @@ bool CREARecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
                             Types.value[ListIndex]->Sounds.value[ListX2Index]->CSDI.value = *(FORMID *)FieldValue;
                             return true;
                         case 2: //chance
-                            Types.value[ListIndex]->Sounds.value[ListX2Index]->CSDC.value = *(UINT8 *)FieldValue;
+                            Types.value[ListIndex]->Sounds.value[ListX2Index]->CSDC.value = *(uint8_t *)FieldValue;
                             break;
                         default:
                             break;

@@ -47,53 +47,53 @@ formId(0), aliasId(0)
 
 Alias::~Alias()
 {
-    for (UINT16 i = 0; i < scripts.size(); ++i)
+    for (uint16_t i = 0; i < scripts.size(); ++i)
         delete scripts[i];
 }
 
 void Alias::VisitFormIDs(FormIDOp &op)
 {
     op.Accept(formId);
-    for (UINT16 i = 0; i < scripts.size(); ++i)
+    for (uint16_t i = 0; i < scripts.size(); ++i)
         scripts[i]->VisitFormIDs(op);
 }
 
-void Alias::Read(unsigned char *&buffer, const SINT16 &version, const SINT16 &objFormat, const bool &CompressedOnDisk)
+void Alias::Read(unsigned char *&buffer, const int16_t &version, const int16_t &objFormat, const bool &CompressedOnDisk)
 {
     // object
     if (objFormat == 1)
     {
-        formId = *(UINT32 *)buffer;
+        formId = *(uint32_t *)buffer;
         buffer += 4;
-        aliasId = *(UINT16 *)buffer;
+        aliasId = *(uint16_t *)buffer;
         buffer += 4;
     }
     else
     {
         buffer += 2;
-        aliasId = *(UINT16 *)buffer;
+        aliasId = *(uint16_t *)buffer;
         buffer += 2;
-        formId = *(UINT32 *)buffer;
+        formId = *(uint32_t *)buffer;
         buffer += 4;
     }
     // version, objFormat
     buffer += 8;
     // scriptCount
-    UINT16 count = *(UINT16 *)buffer;
+    uint16_t count = *(uint16_t *)buffer;
     buffer += 2;
     // scripts
-    for (UINT16 i = 0; i < count; ++i)
+    for (uint16_t i = 0; i < count; ++i)
     {
         scripts.push_back(new Script);
         scripts.back()->Read(buffer, version, objFormat, CompressedOnDisk);
     }
 }
 
-UINT32 Alias::GetSize() const
+uint32_t Alias::GetSize() const
 {
     // object (formid(4) + aliasId(2) + null(2)) + version + objFormat + scriptCount
-    UINT32 total = sizeof(UINT32)+ (5 * sizeof(UINT16)+sizeof(UINT16));
-    for (UINT16 i = 0; i < scripts.size(); ++i)
+    uint32_t total = sizeof(uint32_t)+ (5 * sizeof(uint16_t)+sizeof(uint16_t));
+    for (uint16_t i = 0; i < scripts.size(); ++i)
         total += scripts[i]->GetSize();
     return total;
 }
@@ -101,17 +101,17 @@ UINT32 Alias::GetSize() const
 void Alias::Write(FileWriter &writer)
 {
     // always write format 2
-    UINT16 null = 0;
+    uint16_t null = 0;
     writer.record_write(&null, sizeof(null));
     writer.record_write(&aliasId, sizeof(aliasId));
     writer.record_write(&formId, sizeof(formId));
-    SINT16 version = 5;
+    int16_t version = 5;
     writer.record_write(&version, sizeof(version));
-    SINT16 objFormat = 2;
+    int16_t objFormat = 2;
     writer.record_write(&objFormat, sizeof(objFormat));
-    UINT16 count = scripts.size();
+    uint16_t count = scripts.size();
     writer.record_write(&count, sizeof(count));
-    for (UINT16 i = 0; i < count; ++i)
+    for (uint16_t i = 0; i < count; ++i)
         scripts[i]->Write(writer);
 }
 
@@ -120,11 +120,11 @@ Alias & Alias::operator = (const Alias &other)
     formId = other.formId;
     aliasId = other.aliasId;
 
-    for (UINT16 i = 0; i < scripts.size(); ++i)
+    for (uint16_t i = 0; i < scripts.size(); ++i)
         delete scripts[i];
     scripts.clear();
 
-    for (UINT16 i = 0; i < other.scripts.size(); ++i)
+    for (uint16_t i = 0; i < other.scripts.size(); ++i)
     {
         scripts.push_back(new Script);
         *(scripts.back()) = *(other.scripts[i]);
@@ -140,7 +140,7 @@ bool Alias::operator == (const Alias &other) const
         return false;
     if (scripts.size() != other.scripts.size())
         return false;
-    for (UINT16 i = 0; i < scripts.size(); ++i)
+    for (uint16_t i = 0; i < scripts.size(); ++i)
         if (*(scripts[i]) != *(other.scripts[i]))
             return false;
     return true;

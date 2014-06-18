@@ -38,7 +38,7 @@
 
 namespace FNV
 {
-UINT32 LSCTRecord::GetFieldAttribute(FIELD_IDENTIFIERS, UINT32 WhichAttribute)
+uint32_t LSCTRecord::GetFieldAttribute(FIELD_IDENTIFIERS, uint32_t WhichAttribute)
     {
     switch(FieldID)
         {
@@ -196,12 +196,12 @@ void * LSCTRecord::GetField(FIELD_IDENTIFIERS, void **FieldValues)
     return NULL;
     }
 
-bool LSCTRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
+bool LSCTRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, uint32_t ArraySize)
     {
     switch(FieldID)
         {
         case 1: //flags1
-            SetHeaderFlagMask(*(UINT32 *)FieldValue);
+            SetHeaderFlagMask(*(uint32_t *)FieldValue);
             break;
         case 3: //versionControl1
             if(ArraySize != 4)
@@ -212,10 +212,10 @@ bool LSCTRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             ((UINT8ARRAY)&flagsUnk)[3] = ((UINT8ARRAY)FieldValue)[3];
             break;
         case 4: //eid
-            EDID.Copy((STRING)FieldValue);
+            EDID.Copy((char *)FieldValue);
             break;
         case 5: //formVersion
-            formVersion = *(UINT16 *)FieldValue;
+            formVersion = *(uint16_t *)FieldValue;
             break;
         case 6: //versionControl2
             if(ArraySize != 2)
@@ -225,47 +225,47 @@ bool LSCTRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             break;
         case 7: //data DATA ,, Struct
             DATA.Load();
-            DATA->screenType = *(UINT32 *)FieldValue;
+            DATA->screenType = *(uint32_t *)FieldValue;
             break;
         case 8: //data DATA ,, Struct
             DATA.Load();
-            DATA->x = *(UINT32 *)FieldValue;
+            DATA->x = *(uint32_t *)FieldValue;
             break;
         case 9: //data DATA ,, Struct
             DATA.Load();
-            DATA->y = *(UINT32 *)FieldValue;
+            DATA->y = *(uint32_t *)FieldValue;
             break;
         case 10: //data DATA ,, Struct
             DATA.Load();
-            DATA->width = *(UINT32 *)FieldValue;
+            DATA->width = *(uint32_t *)FieldValue;
             break;
         case 11: //data DATA ,, Struct
             DATA.Load();
-            DATA->height = *(UINT32 *)FieldValue;
+            DATA->height = *(uint32_t *)FieldValue;
             break;
         case 12: //data DATA ,, Struct
             DATA.Load();
-            DATA->orientation = *(FLOAT32 *)FieldValue;
+            DATA->orientation = *(float *)FieldValue;
             break;
         case 13: //data DATA ,, Struct
             DATA.Load();
-            DATA->font1 = *(UINT32 *)FieldValue;
+            DATA->font1 = *(uint32_t *)FieldValue;
             break;
         case 14: //data DATA ,, Struct
             DATA.Load();
-            DATA->font1Red = *(FLOAT32 *)FieldValue;
+            DATA->font1Red = *(float *)FieldValue;
             break;
         case 15: //data DATA ,, Struct
             DATA.Load();
-            DATA->font1Green = *(FLOAT32 *)FieldValue;
+            DATA->font1Green = *(float *)FieldValue;
             break;
         case 16: //data DATA ,, Struct
             DATA.Load();
-            DATA->font1Blue = *(FLOAT32 *)FieldValue;
+            DATA->font1Blue = *(float *)FieldValue;
             break;
         case 17: //data DATA ,, Struct
             DATA.Load();
-            DATA->alignmentType = *(UINT32 *)FieldValue;
+            DATA->alignmentType = *(uint32_t *)FieldValue;
             break;
         case 18: //data_p DATA ,, Struct
             if(ArraySize != 20)
@@ -276,19 +276,19 @@ bool LSCTRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             break;
         case 19: //data DATA ,, Struct
             DATA.Load();
-            DATA->font2 = *(UINT32 *)FieldValue;
+            DATA->font2 = *(uint32_t *)FieldValue;
             break;
         case 20: //data DATA ,, Struct
             DATA.Load();
-            DATA->font2Red = *(FLOAT32 *)FieldValue;
+            DATA->font2Red = *(float *)FieldValue;
             break;
         case 21: //data DATA ,, Struct
             DATA.Load();
-            DATA->font2Green = *(FLOAT32 *)FieldValue;
+            DATA->font2Green = *(float *)FieldValue;
             break;
         case 22: //data DATA ,, Struct
             DATA.Load();
-            DATA->font2Blue = *(FLOAT32 *)FieldValue;
+            DATA->font2Blue = *(float *)FieldValue;
             break;
         case 23: //data_p DATA ,, Struct
             if(ArraySize != 4)
@@ -301,7 +301,7 @@ bool LSCTRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             break;
         case 24: //data DATA ,, Struct
             DATA.Load();
-            DATA->stats = *(UINT32 *)FieldValue;
+            DATA->stats = *(uint32_t *)FieldValue;
             break;
         default:
             break;

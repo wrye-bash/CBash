@@ -251,44 +251,44 @@ void SOUNRecord::IsMuteWhenSubmerged(bool value)
     SETBIT(SNDD.value.flags, fIsMuteWhenSubmerged, value);
     }
 
-bool SOUNRecord::IsFlagMask(UINT32 Mask, bool Exact)
+bool SOUNRecord::IsFlagMask(uint32_t Mask, bool Exact)
     {
     return Exact ? ((SNDD.value.flags & Mask) == Mask) : ((SNDD.value.flags & Mask) != 0);
     }
 
-void SOUNRecord::SetFlagMask(UINT32 Mask)
+void SOUNRecord::SetFlagMask(uint32_t Mask)
     {
     SNDD.value.flags = Mask;
     }
 
-UINT32 SOUNRecord::GetType()
+uint32_t SOUNRecord::GetType()
     {
     return REV32(SOUN);
     }
 
-STRING SOUNRecord::GetStrType()
+char * SOUNRecord::GetStrType()
     {
     return "SOUN";
     }
 
-SINT32 SOUNRecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk)
+int32_t SOUNRecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk)
     {
-    UINT32 subType = 0;
-    UINT32 subSize = 0;
+    uint32_t subType = 0;
+    uint32_t subSize = 0;
     while(buffer < end_buffer){
-        subType = *(UINT32 *)buffer;
+        subType = *(uint32_t *)buffer;
         buffer += 4;
         switch(subType)
             {
             case REV32(XXXX):
                 buffer += 2;
-                subSize = *(UINT32 *)buffer;
+                subSize = *(uint32_t *)buffer;
                 buffer += 4;
-                subType = *(UINT32 *)buffer;
+                subType = *(uint32_t *)buffer;
                 buffer += 6;
                 break;
             default:
-                subSize = *(UINT16 *)buffer;
+                subSize = *(uint16_t *)buffer;
                 buffer += 2;
                 break;
             }
@@ -337,7 +337,7 @@ SINT32 SOUNRecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer,
     return 0;
     }
 
-SINT32 SOUNRecord::Unload()
+int32_t SOUNRecord::Unload()
     {
     IsChanged(false);
     IsLoaded(false);
@@ -349,7 +349,7 @@ SINT32 SOUNRecord::Unload()
     return 1;
     }
 
-SINT32 SOUNRecord::WriteRecord(FileWriter &writer)
+int32_t SOUNRecord::WriteRecord(FileWriter &writer)
     {
     WRITE(EDID);
     WRITE(OBND);

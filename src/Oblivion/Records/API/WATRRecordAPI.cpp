@@ -38,7 +38,7 @@
 
 namespace Ob
 {
-UINT32 WATRRecord::GetFieldAttribute(FIELD_IDENTIFIERS, UINT32 WhichAttribute)
+uint32_t WATRRecord::GetFieldAttribute(FIELD_IDENTIFIERS, uint32_t WhichAttribute)
     {
     switch(FieldID)
         {
@@ -292,89 +292,89 @@ void * WATRRecord::GetField(FIELD_IDENTIFIERS, void **FieldValues)
     return NULL;
     }
 
-bool WATRRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
+bool WATRRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, uint32_t ArraySize)
     {
     switch(FieldID)
         {
         case 1: //flags1
-            SetHeaderFlagMask(*(UINT32 *)FieldValue);
+            SetHeaderFlagMask(*(uint32_t *)FieldValue);
             break;
         case 3: //flags2
-            SetHeaderUnknownFlagMask(*(UINT32 *)FieldValue);
+            SetHeaderUnknownFlagMask(*(uint32_t *)FieldValue);
             break;
         case 4: //eid
-            EDID.Copy((STRING)FieldValue);
+            EDID.Copy((char *)FieldValue);
             break;
         case 5: //texturePath
-            TNAM.Copy((STRING)FieldValue);
+            TNAM.Copy((char *)FieldValue);
             break;
         case 6: //opacity
-            ANAM.value = *(UINT8 *)FieldValue;
+            ANAM.value = *(uint8_t *)FieldValue;
             break;
         case 7: //flags
-            SetFlagMask(*(UINT8 *)FieldValue);
+            SetFlagMask(*(uint8_t *)FieldValue);
             break;
         case 8: //materialPath
-            MNAM.Copy((STRING)FieldValue);
+            MNAM.Copy((char *)FieldValue);
             break;
         case 9: //sound
             SNAM.value = *(FORMID *)FieldValue;
             return true;
         case 10: //windVelocity
             DATA.Load();
-            DATA->windVelocity = *(FLOAT32 *)FieldValue;
+            DATA->windVelocity = *(float *)FieldValue;
             break;
         case 11: //windDirection
             DATA.Load();
-            DATA->windDirection = *(FLOAT32 *)FieldValue;
+            DATA->windDirection = *(float *)FieldValue;
             break;
         case 12: //waveAmp
             DATA.Load();
-            DATA->waveAmp = *(FLOAT32 *)FieldValue;
+            DATA->waveAmp = *(float *)FieldValue;
             break;
         case 13: //waveFreq
             DATA.Load();
-            DATA->waveFreq = *(FLOAT32 *)FieldValue;
+            DATA->waveFreq = *(float *)FieldValue;
             break;
         case 14: //sunPower
             DATA.Load();
-            DATA->sunPower = *(FLOAT32 *)FieldValue;
+            DATA->sunPower = *(float *)FieldValue;
             break;
         case 15: //reflectAmt
             DATA.Load();
-            DATA->reflectAmt = *(FLOAT32 *)FieldValue;
+            DATA->reflectAmt = *(float *)FieldValue;
             break;
         case 16: //fresnelAmt
             DATA.Load();
-            DATA->fresnelAmt = *(FLOAT32 *)FieldValue;
+            DATA->fresnelAmt = *(float *)FieldValue;
             break;
         case 17: //xSpeed
             DATA.Load();
-            DATA->xSpeed = *(FLOAT32 *)FieldValue;
+            DATA->xSpeed = *(float *)FieldValue;
             break;
         case 18: //ySpeed
             DATA.Load();
-            DATA->ySpeed = *(FLOAT32 *)FieldValue;
+            DATA->ySpeed = *(float *)FieldValue;
             break;
         case 19: //fogNear
             DATA.Load();
-            DATA->fogNear = *(FLOAT32 *)FieldValue;
+            DATA->fogNear = *(float *)FieldValue;
             break;
         case 20: //fogFar
             DATA.Load();
-            DATA->fogFar = *(FLOAT32 *)FieldValue;
+            DATA->fogFar = *(float *)FieldValue;
             break;
         case 21: //shallowRed
             DATA.Load();
-            DATA->shallow.red = *(UINT8 *)FieldValue;
+            DATA->shallow.red = *(uint8_t *)FieldValue;
             break;
         case 22: //shallowGreen
             DATA.Load();
-            DATA->shallow.green = *(UINT8 *)FieldValue;
+            DATA->shallow.green = *(uint8_t *)FieldValue;
             break;
         case 23: //shallowBlue
             DATA.Load();
-            DATA->shallow.blue = *(UINT8 *)FieldValue;
+            DATA->shallow.blue = *(uint8_t *)FieldValue;
             break;
         case 24: //unused1
             if(ArraySize != 1)
@@ -384,15 +384,15 @@ bool WATRRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             break;
         case 25: //deepRed
             DATA.Load();
-            DATA->deep.red = *(UINT8 *)FieldValue;
+            DATA->deep.red = *(uint8_t *)FieldValue;
             break;
         case 26: //deepGreen
             DATA.Load();
-            DATA->deep.green = *(UINT8 *)FieldValue;
+            DATA->deep.green = *(uint8_t *)FieldValue;
             break;
         case 27: //deepBlue
             DATA.Load();
-            DATA->deep.blue = *(UINT8 *)FieldValue;
+            DATA->deep.blue = *(uint8_t *)FieldValue;
             break;
         case 28: //unused2
             if(ArraySize != 1)
@@ -402,15 +402,15 @@ bool WATRRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             break;
         case 29: //reflRed
             DATA.Load();
-            DATA->refl.red = *(UINT8 *)FieldValue;
+            DATA->refl.red = *(uint8_t *)FieldValue;
             break;
         case 30: //reflGreen
             DATA.Load();
-            DATA->refl.green = *(UINT8 *)FieldValue;
+            DATA->refl.green = *(uint8_t *)FieldValue;
             break;
         case 31: //reflBlue
             DATA.Load();
-            DATA->refl.blue = *(UINT8 *)FieldValue;
+            DATA->refl.blue = *(uint8_t *)FieldValue;
             break;
         case 32: //unused3
             if(ArraySize != 1)
@@ -420,7 +420,7 @@ bool WATRRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             break;
         case 33: //blend
             DATA.Load();
-            DATA->blend = *(UINT8 *)FieldValue;
+            DATA->blend = *(uint8_t *)FieldValue;
             break;
         case 34: //unused4
             if(ArraySize != 3)
@@ -432,47 +432,47 @@ bool WATRRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             break;
         case 35: //rainForce
             DATA.Load();
-            DATA->rainForce = *(FLOAT32 *)FieldValue;
+            DATA->rainForce = *(float *)FieldValue;
             break;
         case 36: //rainVelocity
             DATA.Load();
-            DATA->rainVelocity = *(FLOAT32 *)FieldValue;
+            DATA->rainVelocity = *(float *)FieldValue;
             break;
         case 37: //rainFalloff
             DATA.Load();
-            DATA->rainFalloff = *(FLOAT32 *)FieldValue;
+            DATA->rainFalloff = *(float *)FieldValue;
             break;
         case 38: //rainDampner
             DATA.Load();
-            DATA->rainDampner = *(FLOAT32 *)FieldValue;
+            DATA->rainDampner = *(float *)FieldValue;
             break;
         case 39: //rainSize
             DATA.Load();
-            DATA->rainSize = *(FLOAT32 *)FieldValue;
+            DATA->rainSize = *(float *)FieldValue;
             break;
         case 40: //dispForce
             DATA.Load();
-            DATA->dispForce = *(FLOAT32 *)FieldValue;
+            DATA->dispForce = *(float *)FieldValue;
             break;
         case 41: //dispVelocity
             DATA.Load();
-            DATA->dispVelocity = *(FLOAT32 *)FieldValue;
+            DATA->dispVelocity = *(float *)FieldValue;
             break;
         case 42: //dispFalloff
             DATA.Load();
-            DATA->dispFalloff = *(FLOAT32 *)FieldValue;
+            DATA->dispFalloff = *(float *)FieldValue;
             break;
         case 43: //dispDampner
             DATA.Load();
-            DATA->dispDampner = *(FLOAT32 *)FieldValue;
+            DATA->dispDampner = *(float *)FieldValue;
             break;
         case 44: //dispSize
             DATA.Load();
-            DATA->dispSize = *(FLOAT32 *)FieldValue;
+            DATA->dispSize = *(float *)FieldValue;
             break;
         case 45: //damage
             DATA.Load();
-            DATA->damage = *(UINT16 *)FieldValue;
+            DATA->damage = *(uint16_t *)FieldValue;
             break;
         case 46: //dayWater
             GNAM.Load();

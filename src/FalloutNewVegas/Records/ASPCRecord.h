@@ -90,10 +90,10 @@ class ASPCRecord : public FNVRecord //Acoustic Space
         ReqSimpleSubRecord<FORMID> DuskSNAM; //Dusk
         ReqSimpleSubRecord<FORMID> NightSNAM; //Night
         ReqSimpleSubRecord<FORMID> WallaSNAM; //Walla
-        ReqSimpleSubRecord<UINT32> WNAM; //Walla Trigger Count
+        ReqSimpleSubRecord<uint32_t> WNAM; //Walla Trigger Count
         OptSimpleSubRecord<FORMID> RDAT; //Use Sound from Region (Interiors Only)
-        ReqSimpleSubRecord<UINT32> ANAM; //Environment Type
-        ReqSimpleSubRecord<UINT32> INAM; //Is Interior
+        ReqSimpleSubRecord<uint32_t> ANAM; //Environment Type
+        ReqSimpleSubRecord<uint32_t> INAM; //Is Interior
 
         ASPCRecord(unsigned char *_recData=NULL);
         ASPCRecord(ASPCRecord *srcRecord);
@@ -163,27 +163,27 @@ class ASPCRecord : public FNVRecord //Acoustic Space
         void   IsEnvironmentLargeHall(bool value);
         bool   IsEnvironmentPlate();
         void   IsEnvironmentPlate(bool value);
-        bool   IsEnvironmentType(UINT32 Type);
-        void   SetEnvironmentType(UINT32 Type);
+        bool   IsEnvironmentType(uint32_t Type);
+        void   SetEnvironmentType(uint32_t Type);
 
         bool   IsSpaceExterior();
         void   IsSpaceExterior(bool value);
         bool   IsSpaceInterior();
         void   IsSpaceInterior(bool value);
-        bool   IsSpaceType(UINT32 Type);
-        void   SetSpaceType(UINT32 Type);
+        bool   IsSpaceType(uint32_t Type);
+        void   SetSpaceType(uint32_t Type);
 
-        UINT32 GetFieldAttribute(DEFAULTED_FIELD_IDENTIFIERS, UINT32 WhichAttribute=0);
+        uint32_t GetFieldAttribute(DEFAULTED_FIELD_IDENTIFIERS, uint32_t WhichAttribute=0);
         void * GetField(DEFAULTED_FIELD_IDENTIFIERS, void **FieldValues=NULL);
-        bool   SetField(DEFAULTED_FIELD_IDENTIFIERS, void *FieldValue=NULL, UINT32 ArraySize=0);
+        bool   SetField(DEFAULTED_FIELD_IDENTIFIERS, void *FieldValue=NULL, uint32_t ArraySize=0);
         void   DeleteField(DEFAULTED_FIELD_IDENTIFIERS);
 
-        UINT32 GetType();
-        STRING GetStrType();
+        uint32_t GetType();
+        char * GetStrType();
 
-        SINT32 ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk=false);
-        SINT32 Unload();
-        SINT32 WriteRecord(FileWriter &writer);
+        int32_t ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk=false);
+        int32_t Unload();
+        int32_t WriteRecord(FileWriter &writer);
 
         bool operator ==(const ASPCRecord &other) const;
         bool operator !=(const ASPCRecord &other) const;

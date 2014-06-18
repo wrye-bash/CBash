@@ -46,14 +46,14 @@ class NPC_Record : public Record //Non-Player Character
         #pragma pack(1)
         struct NPC_DATA //Data
             {
-            UINT8   armorer, athletics, blade, block, blunt,
+            uint8_t   armorer, athletics, blade, block, blunt,
                     h2h, heavyArmor, alchemy, alteration,
                     conjuration, destruction, illusion,
                     mysticism, restoration, acrobatics,
                     lightArmor, marksman, mercantile,
                     security, sneak, speechcraft;
-            UINT16  health;
-            UINT8   unused1[2], strength, intelligence,
+            uint16_t  health;
+            uint8_t   unused1[2], strength, intelligence,
                     willpower, agility, speed, endurance,
                     personality, luck;
 
@@ -121,7 +121,7 @@ class NPC_Record : public Record //Non-Player Character
         RawRecord FGGS; //FaceGen Geometry-Symmetric
         RawRecord FGGA; //FaceGen Geometry-Asymmetric
         RawRecord FGTS; //FaceGen Texture-Symmetric
-        ReqSimpleSubRecord<UINT16> FNAM; //Unknown
+        ReqSimpleSubRecord<uint16_t> FNAM; //Unknown
 
         NPC_Record(unsigned char *_recData=NULL);
         NPC_Record(NPC_Record *srcRecord);
@@ -157,8 +157,8 @@ class NPC_Record : public Record //Non-Player Character
         void   IsPersuasion(bool value);
         bool   IsCanCorpseCheck();
         void   IsCanCorpseCheck(bool value);
-        bool   IsFlagMask(UINT32 Mask, bool Exact=false);
-        void   SetFlagMask(UINT32 Mask);
+        bool   IsFlagMask(uint32_t Mask, bool Exact=false);
+        void   SetFlagMask(uint32_t Mask);
 
         bool   IsServicesWeapons();
         void   IsServicesWeapons(bool value);
@@ -188,20 +188,20 @@ class NPC_Record : public Record //Non-Player Character
         void   IsServicesRecharge(bool value);
         bool   IsServicesRepair();
         void   IsServicesRepair(bool value);
-        bool   IsServicesFlagMask(UINT32 Mask, bool Exact=false);
-        void   SetServicesFlagMask(UINT32 Mask);
+        bool   IsServicesFlagMask(uint32_t Mask, bool Exact=false);
+        void   SetServicesFlagMask(uint32_t Mask);
 
-        UINT32 GetFieldAttribute(DEFAULTED_FIELD_IDENTIFIERS, UINT32 WhichAttribute=0);
+        uint32_t GetFieldAttribute(DEFAULTED_FIELD_IDENTIFIERS, uint32_t WhichAttribute=0);
         void * GetField(DEFAULTED_FIELD_IDENTIFIERS, void **FieldValues=NULL);
-        bool   SetField(DEFAULTED_FIELD_IDENTIFIERS, void *FieldValue=NULL, UINT32 ArraySize=0);
+        bool   SetField(DEFAULTED_FIELD_IDENTIFIERS, void *FieldValue=NULL, uint32_t ArraySize=0);
         void   DeleteField(DEFAULTED_FIELD_IDENTIFIERS);
 
-        UINT32 GetType();
-        STRING GetStrType();
+        uint32_t GetType();
+        char * GetStrType();
 
-        SINT32 ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk=false);
-        SINT32 Unload();
-        SINT32 WriteRecord(FileWriter &writer);
+        int32_t ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk=false);
+        int32_t Unload();
+        int32_t WriteRecord(FileWriter &writer);
 
         bool operator ==(const NPC_Record &other) const;
         bool operator !=(const NPC_Record &other) const;

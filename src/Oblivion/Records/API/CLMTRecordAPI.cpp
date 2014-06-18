@@ -38,7 +38,7 @@
 
 namespace Ob
 {
-UINT32 CLMTRecord::GetFieldAttribute(FIELD_IDENTIFIERS, UINT32 WhichAttribute)
+uint32_t CLMTRecord::GetFieldAttribute(FIELD_IDENTIFIERS, uint32_t WhichAttribute)
     {
     switch(FieldID)
         {
@@ -60,7 +60,7 @@ UINT32 CLMTRecord::GetFieldAttribute(FIELD_IDENTIFIERS, UINT32 WhichAttribute)
                     case 0: //fieldType
                         return LIST_FIELD;
                     case 1: //fieldSize
-                        return (UINT32)Weathers.value.size();
+                        return (uint32_t)Weathers.value.size();
                     default:
                         return UNKNOWN_FIELD;
                     }
@@ -171,18 +171,18 @@ void * CLMTRecord::GetField(FIELD_IDENTIFIERS, void **FieldValues)
     return NULL;
     }
 
-bool CLMTRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
+bool CLMTRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, uint32_t ArraySize)
     {
     switch(FieldID)
         {
         case 1: //flags1
-            SetHeaderFlagMask(*(UINT32 *)FieldValue);
+            SetHeaderFlagMask(*(uint32_t *)FieldValue);
             break;
         case 3: //flags2
-            SetHeaderUnknownFlagMask(*(UINT32 *)FieldValue);
+            SetHeaderUnknownFlagMask(*(uint32_t *)FieldValue);
             break;
         case 4: //eid
-            EDID.Copy((STRING)FieldValue);
+            EDID.Copy((char *)FieldValue);
             break;
         case 5: //weathers
             if(ListFieldID == 0) //weathersSize
@@ -200,47 +200,47 @@ bool CLMTRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
                     Weathers.value[ListIndex].weather = *(FORMID *)FieldValue;
                     return true;
                 case 2: //chance
-                    Weathers.value[ListIndex].chance = *(SINT32 *)FieldValue;
+                    Weathers.value[ListIndex].chance = *(int32_t *)FieldValue;
                     break;
                 default:
                     break;
                 }
             break;
         case 6: //sunPath
-            FNAM.Copy((STRING)FieldValue);
+            FNAM.Copy((char *)FieldValue);
             break;
         case 7: //glarePath
-            GNAM.Copy((STRING)FieldValue);
+            GNAM.Copy((char *)FieldValue);
             break;
         case 8: //modPath
             MODL.Load();
-            MODL->MODL.Copy((STRING)FieldValue);
+            MODL->MODL.Copy((char *)FieldValue);
             break;
         case 9: //modb
             MODL.Load();
-            MODL->MODB.value = *(FLOAT32 *)FieldValue;
+            MODL->MODB.value = *(float *)FieldValue;
             break;
         case 10: //modt_p
             MODL.Load();
             MODL->MODT.Copy((UINT8ARRAY)FieldValue, ArraySize);
             break;
         case 11: //riseBegin
-            TNAM.value.riseBegin = *(UINT8 *)FieldValue;
+            TNAM.value.riseBegin = *(uint8_t *)FieldValue;
             break;
         case 12: //riseEnd
-            TNAM.value.riseEnd = *(UINT8 *)FieldValue;
+            TNAM.value.riseEnd = *(uint8_t *)FieldValue;
             break;
         case 13: //setBegin
-            TNAM.value.setBegin = *(UINT8 *)FieldValue;
+            TNAM.value.setBegin = *(uint8_t *)FieldValue;
             break;
         case 14: //setEnd
-            TNAM.value.setEnd = *(UINT8 *)FieldValue;
+            TNAM.value.setEnd = *(uint8_t *)FieldValue;
             break;
         case 15: //volatility
-            TNAM.value.volatility = *(UINT8 *)FieldValue;
+            TNAM.value.volatility = *(uint8_t *)FieldValue;
             break;
         case 16: //phaseLength
-            TNAM.value.phaseLength = *(UINT8 *)FieldValue;
+            TNAM.value.phaseLength = *(uint8_t *)FieldValue;
             break;
         default:
             break;

@@ -55,24 +55,10 @@ class Collection;
 class ModFile;
 class Record;
 
-#ifndef UINT32
-    #define UINT32 unsigned long
-#endif
-
-#ifndef SINT32
-    #define SINT32 signed long
-#endif
-
-#ifndef STRING
-    #define STRING char *
-#endif
-
-#ifndef FORMID
-    #define FORMID unsigned long
-#endif
+typedef uint32_t FORMID;
 
 #ifndef FIELD_IDENTIFIERS
-    #define FIELD_IDENTIFIERS const UINT32 FieldID, const UINT32 ListIndex, const UINT32 ListFieldID, const UINT32 ListX2Index, const UINT32 ListX2FieldID, const UINT32 ListX3Index, const UINT32 ListX3FieldID
+    #define FIELD_IDENTIFIERS const uint32_t FieldID, const uint32_t ListIndex, const uint32_t ListFieldID, const uint32_t ListX2Index, const uint32_t ListX2FieldID, const uint32_t ListX3Index, const uint32_t ListX3FieldID
 #endif
 
 /**

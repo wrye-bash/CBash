@@ -106,43 +106,43 @@ bool MESGRecord::VisitFormIDs(FormIDOp &op)
 
     if(INAM.IsLoaded())
         op.Accept(INAM.value);
-    for(UINT32 ButtonIndex = 0; ButtonIndex < Buttons.size(); ButtonIndex++)
+    for(uint32_t ButtonIndex = 0; ButtonIndex < Buttons.size(); ButtonIndex++)
         {
-        for (UINT32 ConditionIndex = 0; ConditionIndex < Buttons[ButtonIndex].CTDA.value.size(); ConditionIndex++)
+        for (uint32_t ConditionIndex = 0; ConditionIndex < Buttons[ButtonIndex].CTDA.value.size(); ConditionIndex++)
             Buttons[ButtonIndex].CTDA.value[ConditionIndex].VisitFormIDs(op);
         }
 
     return op.Stop();
     }
 
-UINT32 MESGRecord::GetType()
+uint32_t MESGRecord::GetType()
     {
     return REV32(MESG);
     }
 
-STRING MESGRecord::GetStrType()
+char * MESGRecord::GetStrType()
     {
     return "MESG";
     }
 
-SINT32 MESGRecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk)
+int32_t MESGRecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk)
     {
-    UINT32 subType = 0;
-    UINT32 subSize = 0;
+    uint32_t subType = 0;
+    uint32_t subSize = 0;
     while(buffer < end_buffer){
-        subType = *(UINT32 *)buffer;
+        subType = *(uint32_t *)buffer;
         buffer += 4;
         switch(subType)
             {
             case REV32(XXXX):
                 buffer += 2;
-                subSize = *(UINT32 *)buffer;
+                subSize = *(uint32_t *)buffer;
                 buffer += 4;
-                subType = *(UINT32 *)buffer;
+                subType = *(uint32_t *)buffer;
                 buffer += 6;
                 break;
             default:
-                subSize = *(UINT16 *)buffer;
+                subSize = *(uint16_t *)buffer;
                 buffer += 2;
                 break;
             }
@@ -219,7 +219,7 @@ SINT32 MESGRecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer,
     return 0;
     }
 
-SINT32 MESGRecord::Unload()
+int32_t MESGRecord::Unload()
     {
     IsChanged(false);
     IsLoaded(false);
@@ -243,7 +243,7 @@ SINT32 MESGRecord::Unload()
     return 1;
     }
 
-SINT32 MESGRecord::WriteRecord(FileWriter &writer)
+int32_t MESGRecord::WriteRecord(FileWriter &writer)
     {
     WRITE(EDID);
     WRITE(DESC);
@@ -281,7 +281,7 @@ SINT32 MESGRecord::WriteRecord(FileWriter &writer)
         //SaveHandler.writeSubRecord(REV32(NAM9), NAM9.value, NAM9.GetSize());
     WRITE(DNAM);
     WRITE(TNAM);
-    for(UINT32 ListIndex = 0; ListIndex < Buttons.size(); ListIndex++)
+    for(uint32_t ListIndex = 0; ListIndex < Buttons.size(); ListIndex++)
     {
         Buttons[ListIndex].ITXT.Write(REV32(ITXT), writer);
         Buttons[ListIndex].CTDA.Write(REV32(CTDA), writer);

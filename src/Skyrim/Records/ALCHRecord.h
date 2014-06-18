@@ -45,10 +45,10 @@ class ALCHRecord : public TES5Record // Ingestible
     {
         struct ALCHENIT //Effect Data
         {
-            SINT32  value; //Value
-            UINT32  flags; //Flags
+            int32_t  value; //Value
+            uint32_t  flags; //Flags
             FORMID  withdrawalEffect; //Withdrawal Effect
-            FLOAT32 addictionChance; //Addiction Chance
+            float addictionChance; //Addiction Chance
             FORMID  consumeSound; //Sound - Consume
 
             ALCHENIT();
@@ -71,7 +71,7 @@ class ALCHRecord : public TES5Record // Ingestible
         StringRecord EDID; // Editor ID
         ReqSubRecord<GENOBND> OBND; // Object Bounds
         LStringRecord FULL; // Name
-        OptCounted<OrderedPackedArray<FORMID>, UINT32, REV32(KSIZ)> KWDA; // Keywords
+        OptCounted<OrderedPackedArray<FORMID>, uint32_t, REV32(KSIZ)> KWDA; // Keywords
         LStringRecord DESC; // Description
         OptSubRecord<FNVWORLDMODEL> MODL; // Model
         OptSubRecord<SKDESTRUCT> Destructable; // Destruction Data
@@ -98,20 +98,20 @@ class ALCHRecord : public TES5Record // Ingestible
         void   IsMedicine(bool value);
         bool   IsPoison() const;
         void   IsPoison(bool value);
-        bool   IsFlagMask(UINT8 Mask, bool Exact = false) const;
-        void   SetFlagMask(UINT8 Mask);
+        bool   IsFlagMask(uint8_t Mask, bool Exact = false) const;
+        void   SetFlagMask(uint8_t Mask);
 
-        UINT32 GetFieldAttribute(DEFAULTED_FIELD_IDENTIFIERS, UINT32 WhichAttribute=0);
+        uint32_t GetFieldAttribute(DEFAULTED_FIELD_IDENTIFIERS, uint32_t WhichAttribute=0);
         void * GetField(DEFAULTED_FIELD_IDENTIFIERS, void **FieldValues=NULL);
-        bool   SetField(DEFAULTED_FIELD_IDENTIFIERS, void *FieldValue=NULL, UINT32 ArraySize=0);
+        bool   SetField(DEFAULTED_FIELD_IDENTIFIERS, void *FieldValue=NULL, uint32_t ArraySize=0);
         void   DeleteField(DEFAULTED_FIELD_IDENTIFIERS);
 
-        UINT32 GetType();
-        STRING GetStrType();
+        uint32_t GetType();
+        char * GetStrType();
 
-        SINT32 ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk=false);
-        SINT32 Unload();
-        SINT32 WriteRecord(FileWriter &writer);
+        int32_t ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk=false);
+        int32_t Unload();
+        int32_t WriteRecord(FileWriter &writer);
 
         bool operator ==(const ALCHRecord &other) const;
         bool operator !=(const ALCHRecord &other) const;

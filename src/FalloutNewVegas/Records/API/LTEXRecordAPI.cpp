@@ -38,7 +38,7 @@
 
 namespace FNV
 {
-UINT32 LTEXRecord::GetFieldAttribute(FIELD_IDENTIFIERS, UINT32 WhichAttribute)
+uint32_t LTEXRecord::GetFieldAttribute(FIELD_IDENTIFIERS, uint32_t WhichAttribute)
     {
     switch(FieldID)
         {
@@ -94,7 +94,7 @@ UINT32 LTEXRecord::GetFieldAttribute(FIELD_IDENTIFIERS, UINT32 WhichAttribute)
                 case 0: //fieldType
                     return FORMID_ARRAY_FIELD;
                 case 1: //fieldSize
-                    return (UINT32)GNAM.value.size();
+                    return (uint32_t)GNAM.value.size();
                 default:
                     return UNKNOWN_FIELD;
                 }
@@ -145,12 +145,12 @@ void * LTEXRecord::GetField(FIELD_IDENTIFIERS, void **FieldValues)
     return NULL;
     }
 
-bool LTEXRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
+bool LTEXRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, uint32_t ArraySize)
     {
     switch(FieldID)
         {
         case 1: //flags1
-            SetHeaderFlagMask(*(UINT32 *)FieldValue);
+            SetHeaderFlagMask(*(uint32_t *)FieldValue);
             break;
         case 3: //versionControl1
             if(ArraySize != 4)
@@ -161,10 +161,10 @@ bool LTEXRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             ((UINT8ARRAY)&flagsUnk)[3] = ((UINT8ARRAY)FieldValue)[3];
             break;
         case 4: //eid
-            EDID.Copy((STRING)FieldValue);
+            EDID.Copy((char *)FieldValue);
             break;
         case 5: //formVersion
-            formVersion = *(UINT16 *)FieldValue;
+            formVersion = *(uint16_t *)FieldValue;
             break;
         case 6: //versionControl2
             if(ArraySize != 2)
@@ -173,29 +173,29 @@ bool LTEXRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             versionControl2[1] = ((UINT8ARRAY)FieldValue)[1];
             break;
         case 7: //iconPath
-            ICON.Copy((STRING)FieldValue);
+            ICON.Copy((char *)FieldValue);
             break;
         case 8: //smallIconPath
-            MICO.Copy((STRING)FieldValue);
+            MICO.Copy((char *)FieldValue);
             break;
         case 9: //texture
             TNAM.value = *(FORMID *)FieldValue;
             return true;
         case 10: //types
-            HNAM.value.types = *(UINT8 *)FieldValue;
+            HNAM.value.types = *(uint8_t *)FieldValue;
             break;
         case 11: //friction
-            HNAM.value.friction = *(UINT8 *)FieldValue;
+            HNAM.value.friction = *(uint8_t *)FieldValue;
             break;
         case 12: //restitution
-            HNAM.value.restitution = *(UINT8 *)FieldValue;
+            HNAM.value.restitution = *(uint8_t *)FieldValue;
             break;
         case 13: //specularExponent
-            SNAM.value = *(UINT8 *)FieldValue;
+            SNAM.value = *(uint8_t *)FieldValue;
             break;
         case 14: //grasses
             GNAM.value.resize(ArraySize);
-            for(UINT32 x = 0; x < ArraySize; x++)
+            for(uint32_t x = 0; x < ArraySize; x++)
                 GNAM.value[x] = ((FORMIDARRAY)FieldValue)[x];
             return true;
         default:

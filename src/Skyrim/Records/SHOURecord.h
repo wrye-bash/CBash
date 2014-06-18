@@ -47,7 +47,7 @@ class SHOURecord : public TES5Record // Shout record
     {
         FORMID word;
         FORMID spell;
-        FLOAT32 recovery;
+        float recovery;
 
         SHOUSNAM();
         ~SHOUSNAM();
@@ -60,7 +60,7 @@ class SHOURecord : public TES5Record // Shout record
 public:
     StringRecord EDID; // Editor ID
     LStringRecord FULL; // Name
-    OptSimpleSubRecord<UINT32, 0> MDOB; // Inventory Model
+    OptSimpleSubRecord<uint32_t, 0> MDOB; // Inventory Model
     UnorderedSparseArray<SHOUSNAM> SNAM; // Words of Power
 
     SHOURecord(unsigned char *_recData=NULL);
@@ -69,17 +69,17 @@ public:
 
     bool VisitFormIDs(FormIDOp &op);
 
-    UINT32 GetFieldAttribute(DEFAULTED_FIELD_IDENTIFIERS, UINT32 WhichAttribute=0);
+    uint32_t GetFieldAttribute(DEFAULTED_FIELD_IDENTIFIERS, uint32_t WhichAttribute=0);
     void * GetField(DEFAULTED_FIELD_IDENTIFIERS, void **FieldValues=NULL);
-    bool   SetField(DEFAULTED_FIELD_IDENTIFIERS, void *FieldValue=NULL, UINT32 ArraySize=0);
+    bool   SetField(DEFAULTED_FIELD_IDENTIFIERS, void *FieldValue=NULL, uint32_t ArraySize=0);
     void   DeleteField(DEFAULTED_FIELD_IDENTIFIERS);
 
-    UINT32 GetType();
-    STRING GetStrType();
+    uint32_t GetType();
+    char * GetStrType();
 
-    SINT32 ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk=false);
-    SINT32 Unload();
-    SINT32 WriteRecord(FileWriter &writer);
+    int32_t ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk=false);
+    int32_t Unload();
+    int32_t WriteRecord(FileWriter &writer);
 
     bool operator ==(const SHOURecord &other) const;
     bool operator !=(const SHOURecord &other) const;

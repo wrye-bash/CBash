@@ -59,11 +59,11 @@ public:
 
     void VisitFormIDs(FormIDOp &op);
 
-    UINT32 GetSize() const;
+    uint32_t GetSize() const;
 
-    void Read(unsigned char *&buffer, const UINT32 &subSize, const UINT32 &recordType, bool CompressedOnDisk);
-    void Write(UINT32 _Type, FileWriter &writer);
-    void ReqWrite(UINT32 _Type, FileWriter &writer);
+    void Read(unsigned char *&buffer, const uint32_t &subSize, const uint32_t &recordType, bool CompressedOnDisk);
+    void Write(uint32_t _Type, FileWriter &writer);
+    void ReqWrite(uint32_t _Type, FileWriter &writer);
 
     VMADRecord & operator = (const VMADRecord &other);
 

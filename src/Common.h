@@ -54,8 +54,8 @@
 #include "Types.h"
 
 extern int (*printer)(const char * _Format, ...);
-extern SINT32 (*LoggingCallback)(const STRING);
-extern void (*RaiseCallback)(const STRING);
+extern int32_t (*LoggingCallback)(const char *);
+extern void (*RaiseCallback)(const char *);
 
 enum API_FieldTypes {
     UNKNOWN_FIELD = 0,
@@ -176,8 +176,8 @@ class Ex_INVALIDMODINDEX : public std::exception
     };
 
 //wrappers for _stricmp and strcmp that handle NULL args
-int icmps(const STRING lhs, const STRING rhs);
-int cmps(const STRING lhs, const STRING rhs);
+int icmps(const char * lhs, const char * rhs);
+int cmps(const char * lhs, const char * rhs);
 
 class ModFile;
 class Record;
@@ -185,13 +185,13 @@ class StringRecord;
 
 struct sameStr
     {
-    bool operator()( const STRING s1, const STRING s2 ) const;
+    bool operator()( const char * s1, const char * s2 ) const;
     };
 
-bool ReadChunk(unsigned char *&buffer, const UINT32 &buffer_size, void *dest_buffer, const UINT32 &dest_buffer_size, const bool &skip_load);
+bool ReadChunk(unsigned char *&buffer, const uint32_t &buffer_size, void *dest_buffer, const uint32_t &dest_buffer_size, const bool &skip_load);
 
-typedef std::multimap<UINT32, Record *> FormID_Map;
-typedef std::multimap<STRING, Record *, sameStr> EditorID_Map;
+typedef std::multimap<uint32_t, Record *> FormID_Map;
+typedef std::multimap<char *, Record *, sameStr> EditorID_Map;
 
 typedef FormID_Map::iterator FormID_Iterator;
 typedef EditorID_Map::iterator EditorID_Iterator;
@@ -201,27 +201,27 @@ typedef std::pair<EditorID_Iterator, EditorID_Iterator> EditorID_Range;
 
 typedef std::pair<varType, varType> FunctionArguments;
 
-typedef std::map<UINT32, FunctionArguments>::value_type Function_ArgumentsType;
-typedef std::map<UINT32, STRING>::value_type Function_NameType;
-typedef std::map<UINT32, std::vector<UINT32> >::value_type RecordType_PossibleGroupsType;
+typedef std::map<uint32_t, FunctionArguments>::value_type Function_ArgumentsType;
+typedef std::map<uint32_t, char *>::value_type Function_NameType;
+typedef std::map<uint32_t, std::vector<uint32_t> >::value_type RecordType_PossibleGroupsType;
 
-typedef std::map<UINT32, std::vector<UINT32> >::const_iterator RecordType_PossibleGroups_Iterator;
-typedef std::map<UINT32, FunctionArguments>::const_iterator Function_Arguments_Iterator;
-typedef std::map<UINT32, STRING>::const_iterator ID_Name_Iterator;
+typedef std::map<uint32_t, std::vector<uint32_t> >::const_iterator RecordType_PossibleGroups_Iterator;
+typedef std::map<uint32_t, FunctionArguments>::const_iterator Function_Arguments_Iterator;
+typedef std::map<uint32_t, char *>::const_iterator ID_Name_Iterator;
 
-extern const std::map<UINT32, FunctionArguments> Function_Arguments;
-extern const std::map<UINT32, STRING> Function_Name;
-extern const std::map<UINT32, STRING> Comparison_Name;
-extern const std::map<UINT32, STRING> IDLEGroup_Name;
-extern const std::map<UINT32, STRING> PACKAIType_Name;
-extern const std::map<UINT32, STRING> PACKLocType_Name;
-extern const std::map<UINT32, STRING> PACKTargetType_Name;
-extern const std::map<UINT32, STRING> HardCodedFormID_EditorID;
+extern const std::map<uint32_t, FunctionArguments> Function_Arguments;
+extern const std::map<uint32_t, char *> Function_Name;
+extern const std::map<uint32_t, char *> Comparison_Name;
+extern const std::map<uint32_t, char *> IDLEGroup_Name;
+extern const std::map<uint32_t, char *> PACKAIType_Name;
+extern const std::map<uint32_t, char *> PACKLocType_Name;
+extern const std::map<uint32_t, char *> PACKTargetType_Name;
+extern const std::map<uint32_t, char *> HardCodedFormID_EditorID;
 
-extern const std::map<UINT32, FunctionArguments> FNVFunction_Arguments;
-extern const UINT32 VATSFunction_Argument[];
+extern const std::map<uint32_t, FunctionArguments> FNVFunction_Arguments;
+extern const uint32_t VATSFunction_Argument[];
 
-extern const std::map<UINT32, FunctionArguments> SKFunction_Arguments;
+extern const std::map<uint32_t, FunctionArguments> SKFunction_Arguments;
 
 extern const float flt_max;
 extern const float flt_min;
@@ -238,7 +238,7 @@ extern const float flt_n2147483648;
 #endif
 
 #ifdef CBASH_DEBUG_CHUNK
-    void peek_around(unsigned char *position, UINT32 length);
+    void peek_around(unsigned char *position, uint32_t length);
 #endif
 
 class GenericOp
@@ -253,47 +253,47 @@ class GenericOp
 class RenameOp : public GenericOp
     {
     private:
-        STRING original_name;
-        STRING destination_name;
+        char * original_name;
+        char * destination_name;
 
     public:
-        RenameOp(STRING _original_name, STRING _destination_name);
+        RenameOp(char * _original_name, char * _destination_name);
         ~RenameOp();
 
         bool perform();
     };
 
-STRING DeGhostModName(STRING const ModName);
-bool FileExists(STRING const FileName);
-STRING GetTemporaryFileName(STRING FileName, bool IsBackup=false);
-bool AlmostEqual(FLOAT32 A, FLOAT32 B, SINT32 maxUlps);
+char * DeGhostModName(char * const ModName);
+bool FileExists(char * const FileName);
+char * GetTemporaryFileName(char * FileName, bool IsBackup=false);
+bool AlmostEqual(float A, float B, int32_t maxUlps);
 
 class FileWriter
     {
     private:
         unsigned char *file_buffer, *record_buffer, *compressed_buffer;
-        UINT32 file_buffer_used, record_buffer_used, compressed_buffer_used;
-        UINT32 file_buffer_size, record_buffer_size, compressed_buffer_size;
+        uint32_t file_buffer_used, record_buffer_used, compressed_buffer_used;
+        uint32_t file_buffer_size, record_buffer_size, compressed_buffer_size;
         int fh;
-        STRING FileName;
+        char * FileName;
 
     public:
-        FileWriter(STRING filename, UINT32 size);
+        FileWriter(char * filename, uint32_t size);
         ~FileWriter();
 
-        SINT32 open();
-        SINT32 close();
+        int32_t open();
+        int32_t close();
 
-        void   record_write(const void *source, UINT32 length);
-        void   record_write_subheader(UINT32 signature, UINT32 length);
-        void   record_write_subrecord(UINT32 signature, const void *source, UINT32 length);
-        UINT32 record_compress();
-        UINT32 record_size();
+        void   record_write(const void *source, uint32_t length);
+        void   record_write_subheader(uint32_t signature, uint32_t length);
+        void   record_write_subrecord(uint32_t signature, const void *source, uint32_t length);
+        uint32_t record_compress();
+        uint32_t record_size();
         void   record_flush();
 
-        UINT32 file_tell();
-        void   file_write(const void *source_buffer, UINT32 source_buffer_used);
-        void   file_write(UINT32 position, const void *source_buffer, UINT32 source_buffer_used);
+        uint32_t file_tell();
+        void   file_write(const void *source_buffer, uint32_t source_buffer_used);
+        void   file_write(uint32_t position, const void *source_buffer, uint32_t source_buffer_used);
     };
 
 class FormIDHandlerClass
@@ -309,8 +309,8 @@ class FormIDHandlerClass
 
     //A formID is composed of two parts, the modIndex and the objectID.
     // The modIndex identifies the originating mod and the objectID identifies the record within that mod.
-    // The modIndex is a UINT8 index, and the objectID is a UINT24.
-    // They are combined into a single UINT32 where 0xFF000000 is the modIndex and the objectID is 0x00FFFFFF.
+    // The modIndex is a uint8_t index, and the objectID is a UINT24.
+    // They are combined into a single uint32_t where 0xFF000000 is the modIndex and the objectID is 0x00FFFFFF.
     // I.E. a modIndex of 0x01 and an objectID of 0x00084F would result in the formID 0x0100084F.
     // Considering that Oblivion.esm alone has over a million records,
     //  and that each record may reference multiple other records, this is both a fast and low memory method.
@@ -397,9 +397,9 @@ class FormIDHandlerClass
     //
     // Each approach satisfies the conditions to uniquely identify a record, but they have their own pros and cons.
     //  FormID Pros:
-    //   1) A UINT32 uses much less memory than a string and UINT32.
-    //   2) It is much faster to load a UINT32 than a string and UINT32.
-    //   3) Comparing UINT32's is much faster than case insensitive comparing a string and a UINT32.
+    //   1) A uint32_t uses much less memory than a string and uint32_t.
+    //   2) It is much faster to load a uint32_t than a string and uint32_t.
+    //   3) Comparing uint32_t's is much faster than case insensitive comparing a string and a uint32_t.
     //  FormID Cons:
     //   1) The resolution process is a bit involved.
     //   2) Depending on implementation, resolving a formID can be very slow.
@@ -436,29 +436,29 @@ class FormIDHandlerClass
     // CBash uses the terminology "expand" when resolving an on disk formID to an in memory formID,
     // and "collapse" when resolving an in memory formID to an on disk formID.
     public:
-        std::vector<STRING> &MAST;        //The list of masters
-        std::vector<STRING> LoadOrder255;       //The current load order of active mods
-        boost::unordered_set<UINT32> NewTypes;  //Tracks the type of any new records for reporting
-        UINT32 &nextObject;                     //The object counter for quickly providing new objectIDs
-        UINT8  ExpandTable[256];                //Maps the on disk modIndex to the in memory modIndex
-        UINT8  CollapseTable[256];              //Maps the in memory modIndex to the on disk modIndex (not always a direct inverse of ExpandTable)
+        std::vector<char *> &MAST;        //The list of masters
+        std::vector<char *> LoadOrder255;       //The current load order of active mods
+        boost::unordered_set<uint32_t> NewTypes;  //Tracks the type of any new records for reporting
+        uint32_t &nextObject;                     //The object counter for quickly providing new objectIDs
+        uint8_t  ExpandTable[256];                //Maps the on disk modIndex to the in memory modIndex
+        uint8_t  CollapseTable[256];              //Maps the in memory modIndex to the on disk modIndex (not always a direct inverse of ExpandTable)
         unsigned char * FileStart;
         unsigned char * FileEnd;
-        UINT8  ExpandedIndex;                   //The load order index
-        UINT8  CollapsedIndex;                  //The size of MAST
+        uint8_t  ExpandedIndex;                   //The load order index
+        uint8_t  CollapsedIndex;                  //The size of MAST
         bool   IsEmpty;
         bool   bMastersChanged;
-        SINT32 EmptyGRUPs;
+        int32_t EmptyGRUPs;
         std::vector<FORMID> OrphanedRecords;
 
-        FormIDHandlerClass(std::vector<STRING> &_MAST, UINT32 &_NextObject);
+        FormIDHandlerClass(std::vector<char *> &_MAST, uint32_t &_NextObject);
         ~FormIDHandlerClass();
 
-        void   SetLoadOrder(std::vector<STRING> &cLoadOrder);
-        UINT32 NextExpandedFormID();
-        void   CreateFormIDLookup(const UINT8 expandedIndex);
+        void   SetLoadOrder(std::vector<char *> &cLoadOrder);
+        uint32_t NextExpandedFormID();
+        void   CreateFormIDLookup(const uint8_t expandedIndex);
         void   UpdateFormIDLookup();
-        void   AddMaster(STRING const curMaster);
+        void   AddMaster(char * const curMaster);
         bool   MastersChanged();
         bool   IsValid(const unsigned char *_SrcBuf);
     };
@@ -467,7 +467,7 @@ class CreationFlags
     {
     public:
         CreationFlags();
-        CreationFlags(UINT32 nFlags);
+        CreationFlags(uint32_t nFlags);
         ~CreationFlags();
 
         bool SetAsOverride;
@@ -476,14 +476,14 @@ class CreationFlags
         //Internal use
         bool ExistingReturned;
 
-        UINT32 GetFlags();
+        uint32_t GetFlags();
     };
 
 class ModFlags
     {
     public:
         ModFlags();
-        ModFlags(UINT32 _Flags);
+        ModFlags(uint32_t _Flags);
         ~ModFlags();
 
         bool IsMinLoad;
@@ -505,14 +505,14 @@ class ModFlags
         //For internal use, may not be set by constructor
         bool LoadedGRUPs;
 
-        UINT32 GetFlags();
+        uint32_t GetFlags();
     };
 
 class SaveFlags
     {
     public:
         SaveFlags();
-        SaveFlags(UINT32 _Flags);
+        SaveFlags(uint32_t _Flags);
         ~SaveFlags();
 
         bool IsCleanMasters;
@@ -532,47 +532,47 @@ class StringRecord
             #define O_GET_VALUE(x) (x.value)
             #define VAL_NAME value
         #else
-            //Save memory on x86 builds by using the unused high bit of the STRING pointer
+            //Save memory on x86 builds by using the unused high bit of the char * pointer
             enum flagsFlags
                 {
                 fIsOnDisk = 0x80000000
                 };
-            #define O_IS_ON_DISK(x) (((UINT32)x._value & 0x80000000) != 0)
-            #define S_IS_ON_DISK (((UINT32)_value & 0x80000000) != 0)
-            #define O_SET_ON_DISK(x, y) (x._value = y ? (STRING)((UINT32)x._value | 0x80000000) : (STRING)((UINT32)x._value & ~0x80000000))
-            #define S_SET_ON_DISK(x) (_value = x ? (STRING)((UINT32)_value | 0x80000000) : (STRING)((UINT32)_value & ~0x80000000))
-            #define S_GET_VALUE ((STRING)((UINT32)_value & ~0x80000000))
-            #define O_GET_VALUE(x) ((STRING)((UINT32)x._value & ~0x80000000))
+            #define O_IS_ON_DISK(x) (((uint32_t)x._value & 0x80000000) != 0)
+            #define S_IS_ON_DISK (((uint32_t)_value & 0x80000000) != 0)
+            #define O_SET_ON_DISK(x, y) (x._value = y ? (char *)((uint32_t)x._value | 0x80000000) : (char *)((uint32_t)x._value & ~0x80000000))
+            #define S_SET_ON_DISK(x) (_value = x ? (char *)((uint32_t)_value | 0x80000000) : (char *)((uint32_t)_value & ~0x80000000))
+            #define S_GET_VALUE ((char *)((uint32_t)_value & ~0x80000000))
+            #define O_GET_VALUE(x) ((char *)((uint32_t)x._value & ~0x80000000))
             #define VAL_NAME _value
-            STRING _value;
+            char * _value;
         #endif
 
     public:
         #ifdef CBASH_X64_COMPATIBILITY
-            STRING value;
+            char * value;
         #else
-            __declspec(property(get=GetString)) STRING value;
+            __declspec(property(get=GetString)) char * value;
         #endif
 
         StringRecord();
         StringRecord(const StringRecord &p);
         ~StringRecord();
 
-        UINT32 GetSize() const;
+        uint32_t GetSize() const;
         #ifndef CBASH_X64_COMPATIBILITY
-            STRING GetString();
+            char * GetString();
         #endif
 
         bool IsLoaded() const;
         void Load();
         void Unload();
 
-        bool Read(unsigned char *&buffer, const UINT32 &subSize, const bool &CompressedOnDisk);
-        void Write(UINT32 _Type, FileWriter &writer);
-        void ReqWrite(UINT32 _Type, FileWriter &writer);
+        bool Read(unsigned char *&buffer, const uint32_t &subSize, const bool &CompressedOnDisk);
+        void Write(uint32_t _Type, FileWriter &writer);
+        void ReqWrite(uint32_t _Type, FileWriter &writer);
 
-        void Copy(STRING FieldValue);
-        void TruncateCopy(STRING FieldValue, UINT32 MaxSize);
+        void Copy(char * FieldValue);
+        void TruncateCopy(char * FieldValue, uint32_t MaxSize);
 
         bool equals(const StringRecord &other) const;
         bool equalsi(const StringRecord &other) const;
@@ -582,29 +582,29 @@ class StringRecord
 class NonNullStringRecord
     {
     private:
-        UINT32 DiskSize;
-        STRING _value;
+        uint32_t DiskSize;
+        char * _value;
 
     public:
-        __declspec(property(get=GetString)) STRING value;
+        __declspec(property(get=GetString)) char * value;
 
         NonNullStringRecord();
         NonNullStringRecord(const NonNullStringRecord &p);
         ~NonNullStringRecord();
 
-        UINT32 GetSize() const;
-        STRING GetString();
+        uint32_t GetSize() const;
+        char * GetString();
 
         bool IsLoaded() const;
         void Load();
         void Unload();
 
-        bool Read(unsigned char *&buffer, const UINT32 &subSize, const bool &CompressedOnDisk);
-        void Write(UINT32 _Type, FileWriter &writer);
+        bool Read(unsigned char *&buffer, const uint32_t &subSize, const bool &CompressedOnDisk);
+        void Write(uint32_t _Type, FileWriter &writer);
         void Write16(FileWriter &writer) const;
-        void ReqWrite(UINT32 _Type, FileWriter &writer);
+        void ReqWrite(uint32_t _Type, FileWriter &writer);
 
-        void Copy(STRING FieldValue);
+        void Copy(char * FieldValue);
 
         bool equals(const NonNullStringRecord &other) const;
         bool equalsi(const NonNullStringRecord &other) const;
@@ -614,23 +614,23 @@ class NonNullStringRecord
 class UnorderedPackedStrings
     {
     public:
-        std::vector<STRING> value;
+        std::vector<char *> value;
 
         UnorderedPackedStrings();
         ~UnorderedPackedStrings();
 
-        UINT32 GetSize() const;
+        uint32_t GetSize() const;
 
         bool IsLoaded() const;
         void Load();
         void Unload();
 
-        void resize(UINT32 newSize);
+        void resize(uint32_t newSize);
 
-        bool Read(unsigned char *&buffer, const UINT32 &subSize);
-        void Write(UINT32 _Type, FileWriter &writer);
+        bool Read(unsigned char *&buffer, const uint32_t &subSize);
+        void Write(uint32_t _Type, FileWriter &writer);
 
-        void Copy(STRINGARRAY FieldValue, UINT32 ArraySize);
+        void Copy(STRINGARRAY FieldValue, uint32_t ArraySize);
 
         UnorderedPackedStrings& operator = (const UnorderedPackedStrings &rhs);
         bool equals(const UnorderedPackedStrings &other) const;
@@ -648,24 +648,24 @@ class RawRecord
             };
 
     public:
-        UINT32 size;
+        uint32_t size;
         unsigned char *value;
 
         RawRecord();
         RawRecord(const RawRecord &p);
         ~RawRecord();
 
-        UINT32 GetSize() const;
+        uint32_t GetSize() const;
 
         bool IsLoaded() const;
         void Load();
         void Unload();
 
-        bool Read(unsigned char *&buffer, const UINT32 &subSize, const bool &CompressedOnDisk);
-        void Write(UINT32 _Type, FileWriter &writer);
-        void ReqWrite(UINT32 _Type, FileWriter &writer);
+        bool Read(unsigned char *&buffer, const uint32_t &subSize, const bool &CompressedOnDisk);
+        void Write(uint32_t _Type, FileWriter &writer);
+        void ReqWrite(uint32_t _Type, FileWriter &writer);
 
-        void Copy(unsigned char *FieldValue, UINT32 nSize);
+        void Copy(unsigned char *FieldValue, uint32_t nSize);
 
         RawRecord& operator = (const RawRecord &rhs);
         bool operator ==(const RawRecord &other) const;
@@ -693,7 +693,7 @@ struct SimpleSubRecord
         //
         }
 
-    UINT32 GetSize() const
+    uint32_t GetSize() const
         {
         return sizeof(T);
         }
@@ -711,13 +711,13 @@ struct SimpleSubRecord
         value = defaultValue;
         isLoaded = false;
         }
-    bool Read(unsigned char *&buffer, const UINT32 &subSize)
+    bool Read(unsigned char *&buffer, const uint32_t &subSize)
         {
         bool was_loaded = ReadChunk(buffer, subSize, &value, sizeof(T), isLoaded);
         isLoaded = true;
         return was_loaded;
         }
-    void Write(UINT32 _Type, FileWriter &writer)
+    void Write(uint32_t _Type, FileWriter &writer)
         {
         if(isLoaded && value != defaultValue)
             writer.record_write_subrecord(_Type, &value, sizeof(T));
@@ -746,7 +746,7 @@ struct SimpleSubRecord
 template<const float &defaultValue=flt_0>
 struct SimpleFloatSubRecord
     {
-    FLOAT32 value;
+    float value;
     bool isLoaded;
 
     SimpleFloatSubRecord():
@@ -760,9 +760,9 @@ struct SimpleFloatSubRecord
         //
         }
 
-    UINT32 GetSize() const
+    uint32_t GetSize() const
         {
-        return sizeof(FLOAT32);
+        return sizeof(float);
         }
 
     bool IsLoaded() const
@@ -781,22 +781,22 @@ struct SimpleFloatSubRecord
         isLoaded = false;
         }
 
-    bool Read(unsigned char *&buffer, const UINT32 &subSize)
+    bool Read(unsigned char *&buffer, const uint32_t &subSize)
         {
-        bool was_loaded = ReadChunk(buffer, subSize, &value, sizeof(FLOAT32), isLoaded);
+        bool was_loaded = ReadChunk(buffer, subSize, &value, sizeof(float), isLoaded);
         isLoaded = true;
         return was_loaded;
         }
 
-    void Write(UINT32 _Type, FileWriter &writer)
+    void Write(uint32_t _Type, FileWriter &writer)
         {
         if(isLoaded && value != defaultValue)
-            writer.record_write_subrecord(_Type, &value, sizeof(FLOAT32));
+            writer.record_write_subrecord(_Type, &value, sizeof(float));
         }
 
-    void ReqWrite(UINT32 _Type, FileWriter &writer)
+    void ReqWrite(uint32_t _Type, FileWriter &writer)
         {
-        writer.record_write_subrecord(_Type, &value, sizeof(FLOAT32));
+        writer.record_write_subrecord(_Type, &value, sizeof(float));
         }
 
     SimpleFloatSubRecord<defaultValue>& operator = (const SimpleFloatSubRecord<defaultValue> &rhs)
@@ -842,7 +842,7 @@ struct ReqSimpleSubRecord
         //
         }
 
-    UINT32 GetSize() const
+    uint32_t GetSize() const
         {
         return sizeof(T);
         }
@@ -862,12 +862,12 @@ struct ReqSimpleSubRecord
         value = defaultValue;
         }
 
-    bool Read(unsigned char *&buffer, const UINT32 &subSize)
+    bool Read(unsigned char *&buffer, const uint32_t &subSize)
         {
         return ReadChunk(buffer, subSize, &value, sizeof(T), false);
         }
 
-    void Write(UINT32 _Type, FileWriter &writer)
+    void Write(uint32_t _Type, FileWriter &writer)
         {
         writer.record_write_subrecord(_Type, &value, sizeof(T));
         }
@@ -893,7 +893,7 @@ struct ReqSimpleSubRecord
 template<const float &defaultValue=flt_0>
 struct ReqSimpleFloatSubRecord
     {
-    FLOAT32 value;
+    float value;
 
     ReqSimpleFloatSubRecord():
         value(defaultValue)
@@ -906,9 +906,9 @@ struct ReqSimpleFloatSubRecord
         //
         }
 
-    UINT32 GetSize() const
+    uint32_t GetSize() const
         {
-        return sizeof(FLOAT32);
+        return sizeof(float);
         }
 
     bool IsLoaded() const
@@ -926,14 +926,14 @@ struct ReqSimpleFloatSubRecord
         value = defaultValue;
         }
 
-    bool Read(unsigned char *&buffer, const UINT32 &subSize)
+    bool Read(unsigned char *&buffer, const uint32_t &subSize)
         {
-        return ReadChunk(buffer, subSize, &value, sizeof(FLOAT32), false);
+        return ReadChunk(buffer, subSize, &value, sizeof(float), false);
         }
 
-    void Write(UINT32 _Type, FileWriter &writer)
+    void Write(uint32_t _Type, FileWriter &writer)
         {
-        writer.record_write_subrecord(_Type, &value, sizeof(FLOAT32));
+        writer.record_write_subrecord(_Type, &value, sizeof(float));
         }
 
     ReqSimpleFloatSubRecord<defaultValue>& operator = (const ReqSimpleFloatSubRecord<defaultValue> &rhs)
@@ -972,7 +972,7 @@ struct OptSimpleSubRecord
         //
         }
 
-    UINT32 GetSize() const
+    uint32_t GetSize() const
         {
         return sizeof(T);
         }
@@ -992,18 +992,18 @@ struct OptSimpleSubRecord
         value = defaultValue;
         }
 
-    bool Read(unsigned char *&buffer, const UINT32 &subSize)
+    bool Read(unsigned char *&buffer, const uint32_t &subSize)
         {
         return ReadChunk(buffer, subSize, &value, sizeof(T), false);
         }
 
-    void Write(UINT32 _Type, FileWriter &writer)
+    void Write(uint32_t _Type, FileWriter &writer)
         {
         if(value != defaultValue)
             writer.record_write_subrecord(_Type, &value, sizeof(T));
         }
 
-    void ReqWrite(UINT32 _Type, FileWriter &writer)
+    void ReqWrite(uint32_t _Type, FileWriter &writer)
         {
         writer.record_write_subrecord(_Type, &value, sizeof(T));
         }
@@ -1044,7 +1044,7 @@ struct OptZeroSubRecord
     //
   }
 
-  UINT32 GetSize() const
+  uint32_t GetSize() const
   {
     return sizeof(T);
   }
@@ -1064,18 +1064,18 @@ struct OptZeroSubRecord
     memset(&value, 0, GetSize());
   }
 
-  bool Read(unsigned char *&buffer, const UINT32 &subSize)
+  bool Read(unsigned char *&buffer, const uint32_t &subSize)
   {
     return ReadChunk(buffer, subSize, &value, sizeof(T), false);
   }
 
-  void Write(UINT32 _Type, FileWriter &writer)
+  void Write(uint32_t _Type, FileWriter &writer)
   {
     if(value != defaultValue)
       writer.record_write_subrecord(_Type, &value, sizeof(T));
   }
 
-  void ReqWrite(UINT32 _Type, FileWriter &writer)
+  void ReqWrite(uint32_t _Type, FileWriter &writer)
   {
     writer.record_write_subrecord(_Type, &value, sizeof(T));
   }
@@ -1101,7 +1101,7 @@ struct OptZeroSubRecord
 template<const float &defaultValue=flt_0>
 struct OptSimpleFloatSubRecord
     {
-    FLOAT32 value;
+    float value;
 
     OptSimpleFloatSubRecord():
         value(defaultValue)
@@ -1113,9 +1113,9 @@ struct OptSimpleFloatSubRecord
         Unload();
         }
 
-    UINT32 GetSize() const
+    uint32_t GetSize() const
         {
-        return sizeof(FLOAT32);
+        return sizeof(float);
         }
 
     bool IsLoaded() const
@@ -1133,20 +1133,20 @@ struct OptSimpleFloatSubRecord
         value = defaultValue;
         }
 
-    bool Read(unsigned char *&buffer, const UINT32 &subSize)
+    bool Read(unsigned char *&buffer, const uint32_t &subSize)
         {
-        return ReadChunk(buffer, subSize, &value, sizeof(FLOAT32), false);
+        return ReadChunk(buffer, subSize, &value, sizeof(float), false);
         }
 
-    void Write(UINT32 _Type, FileWriter &writer)
+    void Write(uint32_t _Type, FileWriter &writer)
         {
         if(IsLoaded())
-            writer.record_write_subrecord(_Type, &value, sizeof(FLOAT32));
+            writer.record_write_subrecord(_Type, &value, sizeof(float));
         }
 
-    void ReqWrite(UINT32 _Type, FileWriter &writer)
+    void ReqWrite(uint32_t _Type, FileWriter &writer)
         {
-        writer.record_write_subrecord(_Type, &value, sizeof(FLOAT32));
+        writer.record_write_subrecord(_Type, &value, sizeof(float));
         }
 
     OptSimpleFloatSubRecord<defaultValue>& operator = (const OptSimpleFloatSubRecord<defaultValue> &rhs)
@@ -1186,7 +1186,7 @@ struct SemiOptSimpleSubRecord
         Unload();
         }
 
-    UINT32 GetSize() const
+    uint32_t GetSize() const
         {
         return sizeof(T);
         }
@@ -1208,7 +1208,7 @@ struct SemiOptSimpleSubRecord
         value = NULL;
         }
 
-    bool Read(unsigned char *&buffer, const UINT32 &subSize)
+    bool Read(unsigned char *&buffer, const uint32_t &subSize)
         {
         bool is_loaded = (value != NULL);
         if(!is_loaded)
@@ -1216,7 +1216,7 @@ struct SemiOptSimpleSubRecord
         return ReadChunk(buffer, subSize, value, sizeof(T), is_loaded);
         }
 
-    void Write(UINT32 _Type, FileWriter &writer)
+    void Write(uint32_t _Type, FileWriter &writer)
         {
         if(value != NULL)
             writer.record_write_subrecord(_Type, value, sizeof(T));
@@ -1262,7 +1262,7 @@ struct SemiOptSimpleSubRecord
 template<const float &defaultValue=flt_0>
 struct SemiOptSimpleFloatSubRecord
     {
-    FLOAT32 *value;
+    float *value;
 
     SemiOptSimpleFloatSubRecord():
         value(NULL)
@@ -1274,9 +1274,9 @@ struct SemiOptSimpleFloatSubRecord
         Unload();
         }
 
-    UINT32 GetSize() const
+    uint32_t GetSize() const
         {
-        return sizeof(FLOAT32);
+        return sizeof(float);
         }
 
     bool IsLoaded() const
@@ -1287,7 +1287,7 @@ struct SemiOptSimpleFloatSubRecord
     void Load()
         {
         if(value == NULL)
-            value = new FLOAT32(defaultValue);
+            value = new float(defaultValue);
         }
 
     void Unload()
@@ -1296,17 +1296,17 @@ struct SemiOptSimpleFloatSubRecord
         value = NULL;
         }
 
-    bool Read(unsigned char *&buffer, const UINT32 &subSize)
+    bool Read(unsigned char *&buffer, const uint32_t &subSize)
         {
         bool is_loaded = (value != NULL);
         if(!is_loaded)
-            value = new FLOAT32(defaultValue);
-        return ReadChunk(buffer, subSize, value, sizeof(FLOAT32), is_loaded);
+            value = new float(defaultValue);
+        return ReadChunk(buffer, subSize, value, sizeof(float), is_loaded);
         }
-    void Write(UINT32 _Type, FileWriter &writer)
+    void Write(uint32_t _Type, FileWriter &writer)
         {
         if(value != NULL)
-            writer.record_write_subrecord(_Type, value, sizeof(FLOAT32));
+            writer.record_write_subrecord(_Type, value, sizeof(float));
         }
 
     SemiOptSimpleFloatSubRecord<defaultValue>& operator = (const SemiOptSimpleFloatSubRecord<defaultValue> &rhs)
@@ -1315,7 +1315,7 @@ struct SemiOptSimpleFloatSubRecord
             if(rhs.value != NULL)
                 {
                 if(value == NULL)
-                    value = new FLOAT32(defaultValue);
+                    value = new float(defaultValue);
                 *value = *rhs.value;
                 }
             else
@@ -1364,7 +1364,7 @@ struct SubRecord
         //
         }
 
-    UINT32 GetSize() const
+    uint32_t GetSize() const
         {
         return sizeof(T);
         }
@@ -1387,13 +1387,13 @@ struct SubRecord
         isLoaded = false;
         }
 
-    bool Read(unsigned char *&buffer, const UINT32 &subSize)
+    bool Read(unsigned char *&buffer, const uint32_t &subSize)
         {
         bool was_loaded = ReadChunk(buffer, subSize, &value, sizeof(T), isLoaded);
         isLoaded = true;
         return was_loaded;
         }
-    void Write(UINT32 _Type, FileWriter &writer)
+    void Write(uint32_t _Type, FileWriter &writer)
         {
         if(isLoaded)
             writer.record_write_subrecord(_Type, &value, sizeof(T));
@@ -1432,7 +1432,7 @@ struct ReqSubRecord
         //
         }
 
-    UINT32 GetSize() const
+    uint32_t GetSize() const
         {
         return sizeof(T);
         }
@@ -1452,15 +1452,15 @@ struct ReqSubRecord
         value = newValue;
         }
 
-    bool Read(unsigned char *&buffer, const UINT32 &subSize)
+    bool Read(unsigned char *&buffer, const uint32_t &subSize)
         {
         return ReadChunk(buffer, subSize, &value, sizeof(T), false);
     //#ifdef CBASH_CHUNK_LCHECK
     //    else if(subSize < sizeof(T))
     //        {
     //    #ifdef CBASH_CHUNK_WARN
-    //        UINT32 test = *((UINT32 *)(buffer - 6));
-    //        UINT32 test2 = *((UINT32 *)(buffer + subSize));
+    //        uint32_t test = *((uint32_t *)(buffer - 6));
+    //        uint32_t test2 = *((uint32_t *)(buffer + subSize));
     //        if (!(test == REV32(DATA) && (test2 == REV32(DIAL) || test2 == REV32(GRUP)) && subSize == 1 && sizeof(T) == 2) &&
     //            !(test == REV32(DATA) && (test2 == REV32(CNAM) || test2 == REV32(RNAM) || test2 == REV32(WMI1)) && sizeof(T) == 4 && subSize == 1) &&
     //            !(test == REV32(SNDX) && subSize == 12) &&
@@ -1488,7 +1488,7 @@ struct ReqSubRecord
     //        memcpy(&value, buffer, subSize);
     //        }
         }
-    void Write(UINT32 _Type, FileWriter &writer)
+    void Write(uint32_t _Type, FileWriter &writer)
         {
         writer.record_write_subrecord(_Type, &value, sizeof(T));
         }
@@ -1545,7 +1545,7 @@ struct OptSubRecord
         Unload();
         }
 
-    UINT32 GetSize() const
+    uint32_t GetSize() const
         {
         return sizeof(T);
         }
@@ -1566,7 +1566,7 @@ struct OptSubRecord
         value = NULL;
         }
 
-    bool Read(unsigned char *&buffer, const UINT32 &subSize)
+    bool Read(unsigned char *&buffer, const uint32_t &subSize)
         {
         bool is_loaded = (value != NULL);
         if(!is_loaded)
@@ -1576,8 +1576,8 @@ struct OptSubRecord
         //    else if(subSize < sizeof(T))
         //    {
         //#ifdef CBASH_CHUNK_WARN
-        //    UINT32 test = *((UINT32 *)(buffer - 6));
-        //    UINT32 test2 = *((UINT32 *)(buffer + subSize));
+        //    uint32_t test = *((uint32_t *)(buffer - 6));
+        //    uint32_t test2 = *((uint32_t *)(buffer + subSize));
         //    if (!(test == REV32(XCLC) && subSize == 8) &&
         //        !(test == REV32(DAT2) && (test2 == REV32(ONAM) || test2 == REV32(QNAM) || test2 == REV32(RCIL) || test2 == REV32(AMMO)) && subSize == 12 && sizeof(T) == 20)
         //        )
@@ -1601,7 +1601,7 @@ struct OptSubRecord
             value->Write(writer);
         }
 
-    void Write(UINT32 _Type, FileWriter &writer)
+    void Write(uint32_t _Type, FileWriter &writer)
         {
         if(value != NULL)
             writer.record_write_subrecord(_Type, value, sizeof(T));
@@ -1667,7 +1667,7 @@ struct SemiOptSubRecord
         Unload();
         }
 
-    UINT32 GetSize() const
+    uint32_t GetSize() const
         {
         return sizeof(T);
         }
@@ -1689,7 +1689,7 @@ struct SemiOptSubRecord
         value = NULL;
         }
 
-    bool Read(unsigned char *&buffer, const UINT32 &subSize)
+    bool Read(unsigned char *&buffer, const uint32_t &subSize)
         {
         bool is_loaded = (value != NULL);
         if(!is_loaded)
@@ -1699,7 +1699,7 @@ struct SemiOptSubRecord
     //    else if(subSize < sizeof(T))
     //        {
     //    #ifdef CBASH_CHUNK_WARN
-    //        UINT32 test = *((UINT32 *)(buffer - 6));
+    //        uint32_t test = *((uint32_t *)(buffer - 6));
     //        if(!(test == REV32(XLOC) && subSize == 12 && sizeof(T) == 20))
     //            {
     //            printer("SemiOptSubRecord: Info - Unable to fully parse chunk (%c%c%c%c). Size "
@@ -1721,7 +1721,7 @@ struct SemiOptSubRecord
             value->Write(writer);
         }
 
-    void Write(UINT32 _Type, FileWriter &writer)
+    void Write(uint32_t _Type, FileWriter &writer)
         {
         if(value != NULL)
             writer.record_write_subrecord(_Type, value, sizeof(T));
@@ -1788,7 +1788,7 @@ struct OBMEEFIXSubRecord
         Unload();
         }
 
-    UINT32 GetSize() const
+    uint32_t GetSize() const
         {
         return sizeof(T);
         }
@@ -1823,7 +1823,7 @@ struct OBMEEFIXSubRecord
         value = NULL;
         }
 
-    bool Read(unsigned char *&buffer, const UINT32 &subSize)
+    bool Read(unsigned char *&buffer, const uint32_t &subSize)
         {
         bool is_loaded = (value != NULL);
         if(!is_loaded)
@@ -1831,7 +1831,7 @@ struct OBMEEFIXSubRecord
         return ReadChunk(buffer, subSize, value, sizeof(T), is_loaded);
         }
 
-    void Write(UINT32 _Type, FileWriter &writer)
+    void Write(uint32_t _Type, FileWriter &writer)
         {
         if(IsLoaded())
             writer.record_write_subrecord(_Type, value, sizeof(T));
@@ -1894,9 +1894,9 @@ struct OrderedPackedArray
         //
         }
 
-    UINT32 GetSize() const
+    uint32_t GetSize() const
         {
-        return sizeof(T) * (UINT32)value.size();
+        return sizeof(T) * (uint32_t)value.size();
         }
 
     bool IsLoaded() const
@@ -1909,13 +1909,13 @@ struct OrderedPackedArray
         value.clear();
         }
 
-    void resize(UINT32 &newSize)
+    void resize(uint32_t &newSize)
         {
         value.resize(newSize);
         return;
         }
 
-    bool Read(unsigned char *&buffer, const UINT32 &subSize)
+    bool Read(unsigned char *&buffer, const uint32_t &subSize)
         {
         if(subSize % sizeof(T) == 0)
             {
@@ -1941,11 +1941,11 @@ struct OrderedPackedArray
         return true;
         }
 
-    void Write(UINT32 _Type, FileWriter &writer)
+    void Write(uint32_t _Type, FileWriter &writer)
         {
         std::sort(value.begin(), value.end(), _Pr());
         if(value.size())
-            writer.record_write_subrecord(_Type, &value[0], (UINT32)value.size() * sizeof(T));
+            writer.record_write_subrecord(_Type, &value[0], (uint32_t)value.size() * sizeof(T));
         }
 
     OrderedPackedArray<T, _Pr>& operator = (const OrderedPackedArray<T, _Pr> &rhs)
@@ -1953,7 +1953,7 @@ struct OrderedPackedArray
         if(this != &rhs)
             {
             value.resize(rhs.value.size());
-            for(UINT32 x = 0; x < value.size(); x++)
+            for(uint32_t x = 0; x < value.size(); x++)
                 value[x] = rhs.value[x];
             }
         return *this;
@@ -1963,7 +1963,7 @@ struct OrderedPackedArray
         {
         if(value.size() == other.value.size())
             {
-            for(UINT32 x = 0; x < (UINT32)value.size(); ++x)
+            for(uint32_t x = 0; x < (uint32_t)value.size(); ++x)
                 if(value[x] != other.value[x])
                     return false;
             return true;
@@ -1992,9 +1992,9 @@ struct UnorderedPackedArray
         //
         }
 
-    UINT32 GetSize() const
+    uint32_t GetSize() const
         {
-        return sizeof(T) * (UINT32)value.size();
+        return sizeof(T) * (uint32_t)value.size();
         }
 
     bool IsLoaded() const
@@ -2007,13 +2007,13 @@ struct UnorderedPackedArray
         value.clear();
         }
 
-    void resize(UINT32 newSize)
+    void resize(uint32_t newSize)
         {
         value.resize(newSize);
         return;
         }
 
-    bool Read(unsigned char *&buffer, const UINT32 &subSize)
+    bool Read(unsigned char *&buffer, const uint32_t &subSize)
         {
         if(subSize % sizeof(T) == 0)
             {
@@ -2039,16 +2039,16 @@ struct UnorderedPackedArray
         return true;
         }
 
-    void Write(UINT32 _Type, FileWriter &writer)
+    void Write(uint32_t _Type, FileWriter &writer)
         {
         if(value.size())
-            writer.record_write_subrecord(_Type, &value[0], (UINT32)value.size() * sizeof(T));
+            writer.record_write_subrecord(_Type, &value[0], (uint32_t)value.size() * sizeof(T));
         }
 
-    void ReqWrite(UINT32 _Type, FileWriter &writer)
+    void ReqWrite(uint32_t _Type, FileWriter &writer)
         {
         if(value.size())
-            writer.record_write_subrecord(_Type, &value[0], (UINT32)value.size() * sizeof(T));
+            writer.record_write_subrecord(_Type, &value[0], (uint32_t)value.size() * sizeof(T));
         else
             writer.record_write_subheader(_Type, 0);
         }
@@ -2058,7 +2058,7 @@ struct UnorderedPackedArray
         if(this != &rhs)
             {
             value.resize(rhs.value.size());
-            for(UINT32 x = 0; x < value.size(); x++)
+            for(uint32_t x = 0; x < value.size(); x++)
                 value[x] = rhs.value[x];
             }
         return *this;
@@ -2068,10 +2068,10 @@ struct UnorderedPackedArray
         {
         if(value.size() == other.value.size())
             {
-            for(UINT32 x = 0; x < value.size(); ++x)
+            for(uint32_t x = 0; x < value.size(); ++x)
                 {
                 bool good = false;
-                for(UINT32 y = 0; y < value.size(); ++y)
+                for(uint32_t y = 0; y < value.size(); ++y)
                     if(value[x] == other.value[y])
                         {
                         //Found its match
@@ -2115,13 +2115,13 @@ struct OrderedSparseArray
         value.clear();
         }
 
-    void resize(UINT32 &newSize)
+    void resize(uint32_t &newSize)
         {
         value.resize(newSize);
         return;
         }
 
-    bool Read(unsigned char *&buffer, const UINT32 &subSize)
+    bool Read(unsigned char *&buffer, const uint32_t &subSize)
         {
         T curValue;
         if(subSize > sizeof(T))
@@ -2161,26 +2161,26 @@ struct OrderedSparseArray
     void Write(FileWriter &writer)
         {
         std::sort(value.begin(), value.end(), _Pr());
-        for(UINT32 p = 0; p < value.size(); p++)
+        for(uint32_t p = 0; p < value.size(); p++)
             value[p].Write(writer);
         }
 
-    void Write(UINT32 _Type, FileWriter &writer)
+    void Write(uint32_t _Type, FileWriter &writer)
         {
         std::sort(value.begin(), value.end(), _Pr());
-        for(UINT32 p = 0; p < value.size(); p++)
+        for(uint32_t p = 0; p < value.size(); p++)
             writer.record_write_subrecord(_Type, &value[p], sizeof(T));
         }
 
     void Write(FileWriter &writer, bool)
         {
-        for(UINT32 p = 0; p < value.size(); p++)
+        for(uint32_t p = 0; p < value.size(); p++)
             value[p].Write(writer);
         }
 
-    void Write(UINT32 _Type, FileWriter &writer, bool)
+    void Write(uint32_t _Type, FileWriter &writer, bool)
         {
-        for(UINT32 p = 0; p < value.size(); p++)
+        for(uint32_t p = 0; p < value.size(); p++)
             writer.record_write_subrecord(_Type, &value[p], sizeof(T));
         }
 
@@ -2189,7 +2189,7 @@ struct OrderedSparseArray
         if(this != &rhs)
             {
             value.resize(rhs.value.size());
-            for(UINT32 x = 0; x < value.size(); x++)
+            for(uint32_t x = 0; x < value.size(); x++)
                 value[x] = rhs.value[x];
             }
         return *this;
@@ -2199,7 +2199,7 @@ struct OrderedSparseArray
         {
         if(value.size() == other.value.size())
             {
-            for(UINT32 x = 0; x < (UINT32)value.size(); ++x)
+            for(uint32_t x = 0; x < (uint32_t)value.size(); ++x)
                 if(value[x] != other.value[x])
                     return false;
             return true;
@@ -2232,15 +2232,15 @@ struct OrderedSparseArray<T *, _Pr>
         }
     void Unload()
         {
-        for(UINT32 x = 0; x < value.size(); ++x)
+        for(uint32_t x = 0; x < value.size(); ++x)
             delete value[x];
         value.clear();
         }
 
-    void resize(UINT32 &newSize)
+    void resize(uint32_t &newSize)
         {
         //Shrink
-        UINT32 size = (UINT32)value.size();
+        uint32_t size = (uint32_t)value.size();
         for(; size > newSize;)
             delete value[--size];
         value.resize(newSize);
@@ -2250,7 +2250,7 @@ struct OrderedSparseArray<T *, _Pr>
         return;
         }
 
-    bool Read(unsigned char *&buffer, const UINT32 &subSize)
+    bool Read(unsigned char *&buffer, const uint32_t &subSize)
         {
         value.push_back(new T);
         if(subSize > sizeof(T))
@@ -2269,7 +2269,7 @@ struct OrderedSparseArray<T *, _Pr>
             else if(subSize < sizeof(T))
             {
             #ifdef CBASH_CHUNK_WARN
-                UINT32 test = *((UINT32 *)(buffer - 6));
+                uint32_t test = *((uint32_t *)(buffer - 6));
                 if (!((test == REV32(SCRO) || test == REV32(SCRV)) && subSize == 4) &&
                     !(test == REV32(CTDA) && (subSize == 20 || subSize == 24)&& sizeof(T) == 28)
                     )
@@ -2295,26 +2295,26 @@ struct OrderedSparseArray<T *, _Pr>
     void Write(FileWriter &writer)
         {
         std::sort(value.begin(), value.end(), _Pr());
-        for(UINT32 p = 0; p < value.size(); p++)
+        for(uint32_t p = 0; p < value.size(); p++)
             value[p]->Write(writer);
         }
 
     void Write(FileWriter &writer, bool)
         {
-        for(UINT32 p = 0; p < value.size(); p++)
+        for(uint32_t p = 0; p < value.size(); p++)
             value[p]->Write(writer);
         }
 
-    void Write(UINT32 _Type, FileWriter &writer)
+    void Write(uint32_t _Type, FileWriter &writer)
         {
         std::sort(value.begin(), value.end(), _Pr());
-        for(UINT32 p = 0; p < value.size(); p++)
+        for(uint32_t p = 0; p < value.size(); p++)
             writer.record_write_subrecord(_Type, value[p], sizeof(T));
         }
 
-    void Write(UINT32 _Type, FileWriter &writer, bool)
+    void Write(uint32_t _Type, FileWriter &writer, bool)
         {
-        for(UINT32 p = 0; p < value.size(); p++)
+        for(uint32_t p = 0; p < value.size(); p++)
             writer.record_write_subrecord(_Type, value[p], sizeof(T));
         }
 
@@ -2323,7 +2323,7 @@ struct OrderedSparseArray<T *, _Pr>
         if(this != &rhs)
             {
             value.resize(rhs.value.size());
-            for(UINT32 x = 0; x < value.size(); x++)
+            for(uint32_t x = 0; x < value.size(); x++)
                 {
                 value[x] = new T;
                 *value[x] = *rhs.value[x];
@@ -2335,7 +2335,7 @@ struct OrderedSparseArray<T *, _Pr>
         {
         if(value.size() == other.value.size())
             {
-            for(UINT32 x = 0; x < (UINT32)value.size(); ++x)
+            for(uint32_t x = 0; x < (uint32_t)value.size(); ++x)
                 if(*value[x] != *other.value[x])
                     return false;
             return true;
@@ -2372,13 +2372,13 @@ struct UnorderedSparseArray
         value.clear();
         }
 
-    void resize(UINT32 &newSize)
+    void resize(uint32_t &newSize)
         {
         value.resize(newSize);
         return;
         }
 
-    bool Read(unsigned char *&buffer, const UINT32 &subSize)
+    bool Read(unsigned char *&buffer, const uint32_t &subSize)
         {
         T curValue;
         if(subSize > sizeof(T))
@@ -2417,12 +2417,12 @@ struct UnorderedSparseArray
 
     void Write(FileWriter &writer)
         {
-        for(UINT32 p = 0; p < value.size(); p++)
+        for(uint32_t p = 0; p < value.size(); p++)
             value[p].Write(writer);
         }
-    void Write(UINT32 _Type, FileWriter &writer)
+    void Write(uint32_t _Type, FileWriter &writer)
         {
-        for(UINT32 p = 0; p < value.size(); p++)
+        for(uint32_t p = 0; p < value.size(); p++)
             writer.record_write_subrecord(_Type, &value[p], sizeof(T));
         }
 
@@ -2431,7 +2431,7 @@ struct UnorderedSparseArray
         if(this != &rhs)
             {
             value.resize(rhs.value.size());
-            for(UINT32 x = 0; x < value.size(); x++)
+            for(uint32_t x = 0; x < value.size(); x++)
                 value[x] = rhs.value[x];
             }
         return *this;
@@ -2441,10 +2441,10 @@ struct UnorderedSparseArray
         {
         if(value.size() == other.value.size())
             {
-            for(UINT32 x = 0; x < value.size(); ++x)
+            for(uint32_t x = 0; x < value.size(); ++x)
                 {
                 bool good = false;
-                for(UINT32 y = 0; y < value.size(); ++y)
+                for(uint32_t y = 0; y < value.size(); ++y)
                     if(value[x] == other.value[y])
                         {
                         //Found its match
@@ -2484,15 +2484,15 @@ struct UnorderedSparseArray<T *>
 
     void Unload()
         {
-        for(UINT32 x = 0; x < value.size(); ++x)
+        for(uint32_t x = 0; x < value.size(); ++x)
             delete value[x];
         value.clear();
         }
 
-    void resize(UINT32 &newSize)
+    void resize(uint32_t &newSize)
         {
         //Shrink
-        UINT32 size = (UINT32)value.size();
+        uint32_t size = (uint32_t)value.size();
         for(; size > newSize;)
             delete value[--size];
         value.resize(newSize);
@@ -2502,7 +2502,7 @@ struct UnorderedSparseArray<T *>
         return;
         }
 
-    bool Read(unsigned char *&buffer, const UINT32 &subSize)
+    bool Read(unsigned char *&buffer, const uint32_t &subSize)
         {
         value.push_back(new T);
         if(subSize > sizeof(T))
@@ -2540,12 +2540,12 @@ struct UnorderedSparseArray<T *>
 
     void Write(FileWriter &writer)
         {
-        for(UINT32 p = 0; p < value.size(); p++)
+        for(uint32_t p = 0; p < value.size(); p++)
             value[p]->Write(writer);
         }
-    void Write(UINT32 _Type, FileWriter &writer)
+    void Write(uint32_t _Type, FileWriter &writer)
         {
-        for(UINT32 p = 0; p < value.size(); p++)
+        for(uint32_t p = 0; p < value.size(); p++)
             writer.record_write_subrecord(_Type, value[p], sizeof(T));
         }
 
@@ -2554,7 +2554,7 @@ struct UnorderedSparseArray<T *>
         if(this != &rhs)
             {
             value.resize(rhs.value.size());
-            for(UINT32 x = 0; x < value.size(); x++)
+            for(uint32_t x = 0; x < value.size(); x++)
                 {
                 value[x] = new T;
                 *value[x] = *rhs.value[x];
@@ -2567,10 +2567,10 @@ struct UnorderedSparseArray<T *>
         {
         if(value.size() == other.value.size())
             {
-            for(UINT32 x = 0; x < value.size(); ++x)
+            for(uint32_t x = 0; x < value.size(); ++x)
                 {
                 bool good = false;
-                for(UINT32 y = 0; y < value.size(); ++y)
+                for(uint32_t y = 0; y < value.size(); ++y)
                     if(*value[x] == *other.value[y])
                         {
                         //Found its match
@@ -2597,11 +2597,11 @@ public:
     {
         countType count = value.size();
         writer.record_write_subrecord(countRecord, &count, sizeof(count));
-        for (UINT32 p = 0; p < value.size(); p++)
+        for (uint32_t p = 0; p < value.size(); p++)
             value[p]->Write(writer);
     }
 
-    void Write(UINT32 _Type, FileWriter &writer)
+    void Write(uint32_t _Type, FileWriter &writer)
     {
         countType count = value.size();
         writer.record_write_subrecord(countRecord, &count, sizeof(count));
@@ -2619,12 +2619,12 @@ public:
         if (count)
         {
             writer.record_write_subrecord(countRecord, &count, sizeof(count));
-            for (UINT32 p = 0; p < value.size(); p++)
+            for (uint32_t p = 0; p < value.size(); p++)
                 value[p]->Write(writer);
         }
     }
 
-    void Write(UINT32 _Type, FileWriter &writer)
+    void Write(uint32_t _Type, FileWriter &writer)
     {
         countType count = value.size();
         if (count)

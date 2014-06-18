@@ -44,30 +44,30 @@ class EFSHRecord : public FNVRecord //Effect Shader
     private:
         struct EFSHDATA
             {
-            UINT8   flags, unused1[3];
-            UINT32  memSBlend, memBlendOp, memZFunc;
+            uint8_t   flags, unused1[3];
+            uint32_t  memSBlend, memBlendOp, memZFunc;
             GENCLR  fill;
-            FLOAT32 fillAIn, fillAFull, fillAOut, fillAPRatio, fillAAmp,
+            float fillAIn, fillAFull, fillAOut, fillAPRatio, fillAAmp,
                     fillAFreq, fillAnimSpdU, fillAnimSpdV, edgeEffOff;
             GENCLR  edgeEff;
-            FLOAT32 edgeEffAIn, edgeEffAFull, edgeEffAOut, edgeEffAPRatio, edgeEffAAmp,
+            float edgeEffAIn, edgeEffAFull, edgeEffAOut, edgeEffAPRatio, edgeEffAAmp,
                     edgeEffAFreq,  fillAFRatio, edgeEffAFRatio;
-            UINT32  memDBlend, partSBlend, partBlendOp, partZFunc, partDBlend;
-            FLOAT32 partBUp, partBFull, partBDown, partBFRatio, partBPRatio, partLTime,
+            uint32_t  memDBlend, partSBlend, partBlendOp, partZFunc, partDBlend;
+            float partBUp, partBFull, partBDown, partBFRatio, partBPRatio, partLTime,
                     partLDelta, partNSpd, partNAcc, partVel1, partVel2, partVel3,
                     partAcc1, partAcc2, partAcc3, partKey1, partKey2, partKey1Time,
                     partKey2Time;
             GENCLR  key1;
             GENCLR  key2;
             GENCLR  key3;
-            FLOAT32 key1A, key2A, key3A, key1Time, key2Time, key3Time;
-            FLOAT32 partInitSpd, partInitRot, partInitRotDelta, partRotSpd, partRotDelta;
+            float key1A, key2A, key3A, key1Time, key2Time, key3Time;
+            float partInitSpd, partInitRot, partInitRotDelta, partRotSpd, partRotDelta;
             FORMID  addon;
-            FLOAT32 holesSTime, holesETime, holesSValue, holesEValue, edgeWidth;
+            float holesSTime, holesETime, holesSValue, holesEValue, edgeWidth;
             GENCLR  edge;
-            FLOAT32 explWindSpd;
-            UINT32  textCountU, textCountV;
-            FLOAT32 addonFITime, addonFOTime, addonScaleStart, addonScaleEnd,
+            float explWindSpd;
+            uint32_t  textCountU, textCountV;
+            float addonFITime, addonFOTime, addonScaleStart, addonScaleEnd,
                     addonScaleInTime, addonScaleOutTime;
 
             EFSHDATA();
@@ -114,20 +114,20 @@ class EFSHRecord : public FNVRecord //Effect Shader
         void   IsMemSkinOnly(bool value);
         bool   IsMembraneShaderSkinOnly();
         void   IsMembraneShaderSkinOnly(bool value);
-        bool   IsFlagMask(UINT8 Mask, bool Exact=false);
-        void   SetFlagMask(UINT8 Mask);
+        bool   IsFlagMask(uint8_t Mask, bool Exact=false);
+        void   SetFlagMask(uint8_t Mask);
 
-        UINT32 GetFieldAttribute(DEFAULTED_FIELD_IDENTIFIERS, UINT32 WhichAttribute=0);
+        uint32_t GetFieldAttribute(DEFAULTED_FIELD_IDENTIFIERS, uint32_t WhichAttribute=0);
         void * GetField(DEFAULTED_FIELD_IDENTIFIERS, void **FieldValues=NULL);
-        bool   SetField(DEFAULTED_FIELD_IDENTIFIERS, void *FieldValue=NULL, UINT32 ArraySize=0);
+        bool   SetField(DEFAULTED_FIELD_IDENTIFIERS, void *FieldValue=NULL, uint32_t ArraySize=0);
         void   DeleteField(DEFAULTED_FIELD_IDENTIFIERS);
 
-        UINT32 GetType();
-        STRING GetStrType();
+        uint32_t GetType();
+        char * GetStrType();
 
-        SINT32 ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk=false);
-        SINT32 Unload();
-        SINT32 WriteRecord(FileWriter &writer);
+        int32_t ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk=false);
+        int32_t Unload();
+        int32_t WriteRecord(FileWriter &writer);
 
         bool operator ==(const EFSHRecord &other) const;
         bool operator !=(const EFSHRecord &other) const;

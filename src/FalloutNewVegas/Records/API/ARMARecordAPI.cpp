@@ -38,7 +38,7 @@
 
 namespace FNV
 {
-UINT32 ARMARecord::GetFieldAttribute(FIELD_IDENTIFIERS, UINT32 WhichAttribute)
+uint32_t ARMARecord::GetFieldAttribute(FIELD_IDENTIFIERS, uint32_t WhichAttribute)
     {
     switch(FieldID)
         {
@@ -336,12 +336,12 @@ void * ARMARecord::GetField(FIELD_IDENTIFIERS, void **FieldValues)
     return NULL;
     }
 
-bool ARMARecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
+bool ARMARecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, uint32_t ArraySize)
     {
     switch(FieldID)
         {
         case 1: //flags1
-            SetHeaderFlagMask(*(UINT32 *)FieldValue);
+            SetHeaderFlagMask(*(uint32_t *)FieldValue);
             break;
         case 3: //versionControl1
             if(ArraySize != 4)
@@ -352,10 +352,10 @@ bool ARMARecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             ((UINT8ARRAY)&flagsUnk)[3] = ((UINT8ARRAY)FieldValue)[3];
             break;
         case 4: //eid
-            EDID.Copy((STRING)FieldValue);
+            EDID.Copy((char *)FieldValue);
             break;
         case 5: //formVersion
-            formVersion = *(UINT16 *)FieldValue;
+            formVersion = *(uint16_t *)FieldValue;
             break;
         case 6: //versionControl2
             if(ArraySize != 2)
@@ -365,26 +365,26 @@ bool ARMARecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             break;
         case 7: //boundX
             OBND.Load();
-            OBND->x1 = *(SINT16 *)FieldValue;
+            OBND->x1 = *(int16_t *)FieldValue;
             break;
         case 8: //boundY
             OBND.Load();
-            OBND->y1 = *(SINT16 *)FieldValue;
+            OBND->y1 = *(int16_t *)FieldValue;
             break;
         case 9: //boundZ
             OBND.Load();
-            OBND->z1 = *(SINT16 *)FieldValue;
+            OBND->z1 = *(int16_t *)FieldValue;
             break;
         case 10: //full
-            FULL.Copy((STRING)FieldValue);
+            FULL.Copy((char *)FieldValue);
             break;
         case 11: //bmdt Biped Data
             BMDT.Load();
-            BMDT->bipedFlags = *(UINT32 *)FieldValue;
+            BMDT->bipedFlags = *(uint32_t *)FieldValue;
             break;
         case 12: //bmdt Biped Data
             BMDT.Load();
-            BMDT->generalFlags = *(UINT8 *)FieldValue;
+            BMDT->generalFlags = *(uint8_t *)FieldValue;
             break;
         case 13: //bmdt_p Biped Data
             if(ArraySize != 3)
@@ -396,7 +396,7 @@ bool ARMARecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             break;
         case 14: //modPath
             MODL.Load();
-            MODL->MODL.Copy((STRING)FieldValue);
+            MODL->MODL.Copy((char *)FieldValue);
             break;
         case 15: //modt_p
             MODL.Load();
@@ -404,7 +404,7 @@ bool ARMARecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             break;
         case 16: //mods Alternate Texture
             MODL.Load();
-            //MODL->Textures.MODS.Copy((STRING)FieldValue);
+            //MODL->Textures.MODS.Copy((char *)FieldValue);
             break;
         case 17: //mods Alternate Texture
             MODL.Load();
@@ -414,16 +414,16 @@ bool ARMARecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
         case 18: //mods Alternate Texture
             MODL.Load();
             //MODL->Textures.MODS.Load();
-            //MODL->Textures.MODS->value18 = *(SINT32 *)FieldValue;
+            //MODL->Textures.MODS->value18 = *(int32_t *)FieldValue;
             break;
         case 19: //modelFlags
             MODL.Load();
             MODL->MODD.Load();
-            MODL->MODD.value = *(UINT8 *)FieldValue;
+            MODL->MODD.value = *(uint8_t *)FieldValue;
             break;
         case 20: //mod2 Model Filename
             MOD2.Load();
-            MOD2->MODL.Copy((STRING)FieldValue);
+            MOD2->MODL.Copy((char *)FieldValue);
             break;
         case 21: //mo2t_p Texture Files Hashes
             MOD2.Load();
@@ -431,7 +431,7 @@ bool ARMARecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             break;
         case 22: //mo2s Alternate Texture
             MOD2.Load();
-            //MOD2->Textures.MODS.Copy((STRING)FieldValue);
+            //MOD2->Textures.MODS.Copy((char *)FieldValue);
             break;
         case 23: //mo2s Alternate Texture
             MOD2.Load();
@@ -441,17 +441,17 @@ bool ARMARecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
         case 24: //mo2s Alternate Texture
             MOD2.Load();
             //MOD2->Textures.MODS.Load();
-            //MOD2->Textures.MODS->value24 = *(SINT32 *)FieldValue;
+            //MOD2->Textures.MODS->value24 = *(int32_t *)FieldValue;
             break;
         case 25: //icon Male icon filename
-            ICON.Copy((STRING)FieldValue);
+            ICON.Copy((char *)FieldValue);
             break;
         case 26: //mico Male mico filename
-            MICO.Copy((STRING)FieldValue);
+            MICO.Copy((char *)FieldValue);
             break;
         case 27: //mod3 Model Filename
             MOD3.Load();
-            MOD3->MODL.Copy((STRING)FieldValue);
+            MOD3->MODL.Copy((char *)FieldValue);
             break;
         case 28: //mo3t_p Texture Files Hashes
             MOD3.Load();
@@ -459,7 +459,7 @@ bool ARMARecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             break;
         case 29: //mo3s Alternate Texture
             MOD3.Load();
-            //MOD3->Textures.MODS.Copy((STRING)FieldValue);
+            //MOD3->Textures.MODS.Copy((char *)FieldValue);
             break;
         case 30: //mo3s Alternate Texture
             MOD3.Load();
@@ -469,16 +469,16 @@ bool ARMARecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
         case 31: //mo3s Alternate Texture
             MOD3.Load();
             //MOD3->Textures.MODS.Load();
-            //MOD3->Textures.MODS->value31 = *(SINT32 *)FieldValue;
+            //MOD3->Textures.MODS->value31 = *(int32_t *)FieldValue;
             break;
         case 32: //mosd FaceGen Model Flags
             MOD3.Load();
             MOD3->MODD.Load();
-            MOD3->MODD.value = *(UINT8 *)FieldValue;
+            MOD3->MODD.value = *(uint8_t *)FieldValue;
             break;
         case 33: //mod4 Model Filename
             MOD4.Load();
-            MOD4->MODL.Copy((STRING)FieldValue);
+            MOD4->MODL.Copy((char *)FieldValue);
             break;
         case 34: //mo4t_p Texture Files Hashes
             MOD4.Load();
@@ -486,7 +486,7 @@ bool ARMARecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             break;
         case 35: //mo4s Alternate Texture
             MOD4.Load();
-            //MOD4->Textures.MODS.Copy((STRING)FieldValue);
+            //MOD4->Textures.MODS.Copy((char *)FieldValue);
             break;
         case 36: //mo4s Alternate Texture
             MOD4.Load();
@@ -496,37 +496,37 @@ bool ARMARecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
         case 37: //mo4s Alternate Texture
             MOD4.Load();
             //MOD4->Textures.MODS.Load();
-            //MOD4->Textures.MODS->value37 = *(SINT32 *)FieldValue;
+            //MOD4->Textures.MODS->value37 = *(int32_t *)FieldValue;
             break;
         case 38: //ico2 Female icon filename
-            ICO2.Copy((STRING)FieldValue);
+            ICO2.Copy((char *)FieldValue);
             break;
         case 39: //mic2 Female mico filename
-            MIC2.Copy((STRING)FieldValue);
+            MIC2.Copy((char *)FieldValue);
             break;
         case 40: //etyp Equipment Type
             ETYP.Load();
-            ETYP.value = *(SINT32 *)FieldValue;
+            ETYP.value = *(int32_t *)FieldValue;
             break;
         case 41: //data DATA ,, Struct
             DATA.Load();
-            DATA->value = *(SINT32 *)FieldValue;
+            DATA->value = *(int32_t *)FieldValue;
             break;
         case 42: //data DATA ,, Struct
             DATA.Load();
-            DATA->health = *(SINT32 *)FieldValue;
+            DATA->health = *(int32_t *)FieldValue;
             break;
         case 43: //data DATA ,, Struct
             DATA.Load();
-            DATA->weight = *(FLOAT32 *)FieldValue;
+            DATA->weight = *(float *)FieldValue;
             break;
         case 44: //dnam DNAM ,, Struct
             DNAM.Load();
-            DNAM->AR = *(SINT16 *)FieldValue;
+            DNAM->AR = *(int16_t *)FieldValue;
             break;
         case 45: //dnam DNAM ,, Struct
             DNAM.Load();
-            DNAM->flags = *(UINT16 *)FieldValue;
+            DNAM->flags = *(uint16_t *)FieldValue;
             break;
         case 46: //dnam_p DNAM ,, Struct
             //DNAM.Copy((UINT8ARRAY)FieldValue, ArraySize);

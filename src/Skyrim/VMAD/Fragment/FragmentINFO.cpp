@@ -44,46 +44,46 @@ FragmentINFO::FragmentINFO()
 
 FragmentINFO::~FragmentINFO()
 {
-    for (UINT8 i = 0; i < fragments.size(); ++i)
+    for (uint8_t i = 0; i < fragments.size(); ++i)
         delete fragments[i];
 }
 
 void FragmentINFO::Read(unsigned char *&buffer, const bool &CompressedOnDisk)
 {
     // unk1
-    unk1 = *(UINT8 *)buffer;
+    unk1 = *(uint8_t *)buffer;
     buffer += 1;
     // fragmentCount
-    UINT8 count = *(UINT8 *)buffer;
+    uint8_t count = *(uint8_t *)buffer;
     buffer += 1;
     // fileName
-    UINT16 nameSize = *(UINT16 *)buffer;
+    uint16_t nameSize = *(uint16_t *)buffer;
     buffer += 2;
     fileName.Read(buffer, nameSize, CompressedOnDisk);
     // fragments
-    for (UINT8 i = 0; i < count; ++i)
+    for (uint8_t i = 0; i < count; ++i)
     {
         GenFragment *f = new GenFragment;
-        f->unk1 = *(UINT8 *)buffer;
+        f->unk1 = *(uint8_t *)buffer;
         buffer += 1;
-        UINT16 nameSize = *(UINT16 *)buffer;
+        uint16_t nameSize = *(uint16_t *)buffer;
         buffer += 2;
         f->scriptName.Read(buffer, nameSize, CompressedOnDisk);
-        nameSize = *(UINT16 *)buffer;
+        nameSize = *(uint16_t *)buffer;
         buffer += 2;
         f->fragmentName.Read(buffer, nameSize, CompressedOnDisk);
     }
 }
 
-UINT32 FragmentINFO::GetSize() const
+uint32_t FragmentINFO::GetSize() const
 {
     // unk1 + fragmentCount + fileNameSize
-    UINT32 total = sizeof(UINT8) + sizeof(UINT8) + sizeof(UINT16);
+    uint32_t total = sizeof(uint8_t) + sizeof(uint8_t) + sizeof(uint16_t);
     total += fileName.GetSize();
-    for (UINT8 i = 0; i < fragments.size(); ++i)
+    for (uint8_t i = 0; i < fragments.size(); ++i)
     {
         // unk1 + scriptNameSize + fragmentNameSize
-        total += sizeof(UINT8) + sizeof(UINT16) + sizeof(UINT16);
+        total += sizeof(uint8_t) + sizeof(uint16_t) + sizeof(uint16_t);
         total += fragments[i]->scriptName.GetSize();
         total += fragments[i]->fragmentName.GetSize();
     }
@@ -93,12 +93,12 @@ UINT32 FragmentINFO::GetSize() const
 void FragmentINFO::Write(FileWriter &writer) const
 {
     writer.record_write(&unk1, sizeof(unk1));
-    UINT16 count = fragments.size();
+    uint16_t count = fragments.size();
     writer.record_write(&count, sizeof(count));
     fileName.Write16(writer);
-    for (UINT16 i = 0; i < count; ++i)
+    for (uint16_t i = 0; i < count; ++i)
     {
-        writer.record_write(&(fragments[i]->unk1), sizeof(UINT8));
+        writer.record_write(&(fragments[i]->unk1), sizeof(uint8_t));
         fragments[i]->scriptName.Write16(writer);
         fragments[i]->fragmentName.Write16(writer);
     }
@@ -111,7 +111,7 @@ bool FragmentINFO::equals(const Fragments *other) const
         const FragmentINFO *o = reinterpret_cast<const FragmentINFO *>(other);
         if (fragments.size() != o->fragments.size())
             return false;
-        for (UINT16 i = 0; i < fragments.size(); ++i)
+        for (uint16_t i = 0; i < fragments.size(); ++i)
             if (*(fragments[i]) != *(o->fragments[i]))
                 return false;
         return true;
@@ -134,11 +134,11 @@ FragmentINFO & FragmentINFO::operator = (const FragmentINFO &other)
     unk1 = other.unk1;
     fileName = other.fileName;
 
-    for (UINT16 i = 0; i < fragments.size(); ++i)
+    for (uint16_t i = 0; i < fragments.size(); ++i)
         delete fragments[i];
     fragments.clear();
 
-    for (UINT16 i = 0; i < other.fragments.size(); ++i)
+    for (uint16_t i = 0; i < other.fragments.size(); ++i)
     {
         fragments.push_back(new GenFragment);
         *(fragments.back()) = *(other.fragments[i]);

@@ -76,10 +76,10 @@ bool DIALRecord::VisitFormIDs(FormIDOp &op)
     if(!IsLoaded())
         return false;
 
-    for(UINT32 ListIndex = 0; ListIndex < QSTI.value.size(); ListIndex++)
+    for(uint32_t ListIndex = 0; ListIndex < QSTI.value.size(); ListIndex++)
         op.Accept(QSTI.value[ListIndex]);
 
-    for(UINT32 ListIndex = 0; ListIndex < QSTR.value.size(); ListIndex++)
+    for(uint32_t ListIndex = 0; ListIndex < QSTR.value.size(); ListIndex++)
         op.Accept(QSTR.value[ListIndex]);
 
     return op.Stop();
@@ -176,44 +176,44 @@ void DIALRecord::IsMisc(bool value)
         DATA.value = eTopic;
     }
 
-bool DIALRecord::IsType(UINT8 Type)
+bool DIALRecord::IsType(uint8_t Type)
     {
     return (DATA.value == Type);
     }
 
-void DIALRecord::SetType(UINT8 Type)
+void DIALRecord::SetType(uint8_t Type)
     {
     DATA.value = Type;
     }
 
-UINT32 DIALRecord::GetType()
+uint32_t DIALRecord::GetType()
     {
     return REV32(DIAL);
     }
 
-STRING DIALRecord::GetStrType()
+char * DIALRecord::GetStrType()
     {
     return "DIAL";
     }
 
-SINT32 DIALRecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk)
+int32_t DIALRecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk)
     {
-    UINT32 subType = 0;
-    UINT32 subSize = 0;
+    uint32_t subType = 0;
+    uint32_t subSize = 0;
     while(buffer < end_buffer){
-        subType = *(UINT32 *)buffer;
+        subType = *(uint32_t *)buffer;
         buffer += 4;
         switch(subType)
             {
             case REV32(XXXX):
                 buffer += 2;
-                subSize = *(UINT32 *)buffer;
+                subSize = *(uint32_t *)buffer;
                 buffer += 4;
-                subType = *(UINT32 *)buffer;
+                subType = *(uint32_t *)buffer;
                 buffer += 6;
                 break;
             default:
-                subSize = *(UINT16 *)buffer;
+                subSize = *(uint16_t *)buffer;
                 buffer += 2;
                 break;
             }
@@ -247,7 +247,7 @@ SINT32 DIALRecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer,
     return 0;
     }
 
-SINT32 DIALRecord::Unload()
+int32_t DIALRecord::Unload()
     {
     IsChanged(false);
     IsLoaded(false);
@@ -259,7 +259,7 @@ SINT32 DIALRecord::Unload()
     return 1;
     }
 
-SINT32 DIALRecord::WriteRecord(FileWriter &writer)
+int32_t DIALRecord::WriteRecord(FileWriter &writer)
     {
     WRITE(EDID);
     WRITE(QSTI);
@@ -295,7 +295,7 @@ bool DIALRecord::deep_equals(Record *master, RecordOp &read_self, RecordOp &read
     if(INFO.size() > ((DIALRecord *)master)->INFO.size())
         return false;
 
-    for(UINT32 ListIndex = 0; ListIndex < INFO.size(); ++ListIndex)
+    for(uint32_t ListIndex = 0; ListIndex < INFO.size(); ++ListIndex)
         if(identical_records.count(INFO[ListIndex]) == 0)
                 return false;
     return true;

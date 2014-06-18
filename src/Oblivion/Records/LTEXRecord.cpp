@@ -100,7 +100,7 @@ bool LTEXRecord::VisitFormIDs(FormIDOp &op)
     if(!IsLoaded())
         return false;
 
-    for(UINT32 ListIndex = 0; ListIndex < GNAM.value.size(); ListIndex++)
+    for(uint32_t ListIndex = 0; ListIndex < GNAM.value.size(); ListIndex++)
         op.Accept(GNAM.value[ListIndex]);
 
     return op.Stop();
@@ -477,46 +477,46 @@ void LTEXRecord::IsElevator(bool value)
     HNAM->types = value ? eElevator : eDirt;
     }
 
-bool LTEXRecord::IsType(UINT8 Type)
+bool LTEXRecord::IsType(uint8_t Type)
     {
     HNAM.Load();
     return (HNAM->types == Type);
     }
 
-void LTEXRecord::SetType(UINT8 Type)
+void LTEXRecord::SetType(uint8_t Type)
     {
     HNAM.Load();
     HNAM->types = Type;
     }
 
-UINT32 LTEXRecord::GetType()
+uint32_t LTEXRecord::GetType()
     {
     return REV32(LTEX);
     }
 
-STRING LTEXRecord::GetStrType()
+char * LTEXRecord::GetStrType()
     {
     return "LTEX";
     }
 
-SINT32 LTEXRecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk)
+int32_t LTEXRecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk)
     {
-    UINT32 subType = 0;
-    UINT32 subSize = 0;
+    uint32_t subType = 0;
+    uint32_t subSize = 0;
     while(buffer < end_buffer){
-        subType = *(UINT32 *)buffer;
+        subType = *(uint32_t *)buffer;
         buffer += 4;
         switch(subType)
             {
             case REV32(XXXX):
                 buffer += 2;
-                subSize = *(UINT32 *)buffer;
+                subSize = *(uint32_t *)buffer;
                 buffer += 4;
-                subType = *(UINT32 *)buffer;
+                subType = *(uint32_t *)buffer;
                 buffer += 6;
                 break;
             default:
-                subSize = *(UINT16 *)buffer;
+                subSize = *(uint16_t *)buffer;
                 buffer += 2;
                 break;
             }
@@ -550,7 +550,7 @@ SINT32 LTEXRecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer,
     return 0;
     }
 
-SINT32 LTEXRecord::Unload()
+int32_t LTEXRecord::Unload()
     {
     IsChanged(false);
     IsLoaded(false);
@@ -562,7 +562,7 @@ SINT32 LTEXRecord::Unload()
     return 1;
     }
 
-SINT32 LTEXRecord::WriteRecord(FileWriter &writer)
+int32_t LTEXRecord::WriteRecord(FileWriter &writer)
     {
     WRITE(EDID);
     WRITE(ICON);

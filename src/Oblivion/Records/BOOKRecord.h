@@ -46,10 +46,10 @@ class BOOKRecord : public Record //Book
         #pragma pack(2)
         struct BOOKDATA
             {
-            UINT8   flags;
-            SINT8   teaches;
-            UINT32  value;
-            FLOAT32 weight;
+            uint8_t   flags;
+            int8_t   teaches;
+            uint32_t  value;
+            float weight;
 
             BOOKDATA();
             ~BOOKDATA();
@@ -73,7 +73,7 @@ class BOOKRecord : public Record //Book
         StringRecord DESC; //Description
         OptSimpleSubRecord<FORMID> SCRI; //Script
         OptSimpleSubRecord<FORMID> ENAM; //Enchantment
-        OptSimpleSubRecord<UINT16> ANAM; //Enchantment Points
+        OptSimpleSubRecord<uint16_t> ANAM; //Enchantment Points
         ReqSubRecord<BOOKDATA> DATA; //Data
 
         BOOKRecord(unsigned char *_recData=NULL);
@@ -88,20 +88,20 @@ class BOOKRecord : public Record //Book
         void   IsFixed(bool value);
         bool   IsCantBeTaken();
         void   IsCantBeTaken(bool value);
-        bool   IsFlagMask(UINT8 Mask, bool Exact=false);
-        void   SetFlagMask(UINT8 Mask);
+        bool   IsFlagMask(uint8_t Mask, bool Exact=false);
+        void   SetFlagMask(uint8_t Mask);
 
-        UINT32 GetFieldAttribute(DEFAULTED_FIELD_IDENTIFIERS, UINT32 WhichAttribute=0);
+        uint32_t GetFieldAttribute(DEFAULTED_FIELD_IDENTIFIERS, uint32_t WhichAttribute=0);
         void * GetField(DEFAULTED_FIELD_IDENTIFIERS, void **FieldValues=NULL);
-        bool   SetField(DEFAULTED_FIELD_IDENTIFIERS, void *FieldValue=NULL, UINT32 ArraySize=0);
+        bool   SetField(DEFAULTED_FIELD_IDENTIFIERS, void *FieldValue=NULL, uint32_t ArraySize=0);
         void   DeleteField(DEFAULTED_FIELD_IDENTIFIERS);
 
-        UINT32 GetType();
-        STRING GetStrType();
+        uint32_t GetType();
+        char * GetStrType();
 
-        SINT32 ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk=false);
-        SINT32 Unload();
-        SINT32 WriteRecord(FileWriter &writer);
+        int32_t ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk=false);
+        int32_t Unload();
+        int32_t WriteRecord(FileWriter &writer);
 
         bool operator ==(const BOOKRecord &other) const;
         bool operator !=(const BOOKRecord &other) const;

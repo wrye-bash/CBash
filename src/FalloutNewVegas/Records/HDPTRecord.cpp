@@ -81,11 +81,11 @@ bool HDPTRecord::VisitFormIDs(FormIDOp &op)
 
     if(MODL.IsLoaded())
         {
-        for(UINT32 x = 0; x < MODL->Textures.MODS.size(); x++)
+        for(uint32_t x = 0; x < MODL->Textures.MODS.size(); x++)
             op.Accept(MODL->Textures.MODS[x]->texture);
         }
 
-    for(UINT32 x = 0; x < HNAM.value.size(); x++)
+    for(uint32_t x = 0; x < HNAM.value.size(); x++)
         op.Accept(HNAM.value[x]);
 
     return op.Stop();
@@ -101,44 +101,44 @@ void HDPTRecord::IsPlayable(bool value)
     SETBIT(DATA.value, fIsPlayable, value);
     }
 
-bool HDPTRecord::IsFlagMask(UINT8 Mask, bool Exact)
+bool HDPTRecord::IsFlagMask(uint8_t Mask, bool Exact)
     {
     return Exact ? ((DATA.value & Mask) == Mask) : ((DATA.value & Mask) != 0);
     }
 
-void HDPTRecord::SetFlagMask(UINT8 Mask)
+void HDPTRecord::SetFlagMask(uint8_t Mask)
     {
     DATA.value = Mask;
     }
 
-UINT32 HDPTRecord::GetType()
+uint32_t HDPTRecord::GetType()
     {
     return REV32(HDPT);
     }
 
-STRING HDPTRecord::GetStrType()
+char * HDPTRecord::GetStrType()
     {
     return "HDPT";
     }
 
-SINT32 HDPTRecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk)
+int32_t HDPTRecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk)
     {
-    UINT32 subType = 0;
-    UINT32 subSize = 0;
+    uint32_t subType = 0;
+    uint32_t subSize = 0;
     while(buffer < end_buffer){
-        subType = *(UINT32 *)buffer;
+        subType = *(uint32_t *)buffer;
         buffer += 4;
         switch(subType)
             {
             case REV32(XXXX):
                 buffer += 2;
-                subSize = *(UINT32 *)buffer;
+                subSize = *(uint32_t *)buffer;
                 buffer += 4;
-                subType = *(UINT32 *)buffer;
+                subType = *(uint32_t *)buffer;
                 buffer += 6;
                 break;
             default:
-                subSize = *(UINT16 *)buffer;
+                subSize = *(uint16_t *)buffer;
                 buffer += 2;
                 break;
             }
@@ -189,7 +189,7 @@ SINT32 HDPTRecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer,
     return 0;
     }
 
-SINT32 HDPTRecord::Unload()
+int32_t HDPTRecord::Unload()
     {
     IsChanged(false);
     IsLoaded(false);
@@ -201,7 +201,7 @@ SINT32 HDPTRecord::Unload()
     return 1;
     }
 
-SINT32 HDPTRecord::WriteRecord(FileWriter &writer)
+int32_t HDPTRecord::WriteRecord(FileWriter &writer)
     {
     WRITE(EDID);
     WRITE(FULL);

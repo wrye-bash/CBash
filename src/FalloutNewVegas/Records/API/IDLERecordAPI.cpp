@@ -38,7 +38,7 @@
 
 namespace FNV
 {
-UINT32 IDLERecord::GetFieldAttribute(FIELD_IDENTIFIERS, UINT32 WhichAttribute)
+uint32_t IDLERecord::GetFieldAttribute(FIELD_IDENTIFIERS, uint32_t WhichAttribute)
     {
     switch(FieldID)
         {
@@ -100,7 +100,7 @@ UINT32 IDLERecord::GetFieldAttribute(FIELD_IDENTIFIERS, UINT32 WhichAttribute)
                     case 0: //fieldType
                         return LIST_FIELD;
                     case 1: //fieldSize
-                        return (UINT32)MODL->Textures.MODS.size();
+                        return (uint32_t)MODL->Textures.MODS.size();
                     default:
                         return UNKNOWN_FIELD;
                     }
@@ -131,7 +131,7 @@ UINT32 IDLERecord::GetFieldAttribute(FIELD_IDENTIFIERS, UINT32 WhichAttribute)
                     case 0: //fieldType
                         return LIST_FIELD;
                     case 1: //fieldSize
-                        return (UINT32)CTDA.value.size();
+                        return (uint32_t)CTDA.value.size();
                     default:
                         return UNKNOWN_FIELD;
                     }
@@ -261,7 +261,7 @@ UINT32 IDLERecord::GetFieldAttribute(FIELD_IDENTIFIERS, UINT32 WhichAttribute)
                 case 0: //fieldType
                     return FORMID_ARRAY_FIELD;
                 case 1: //fieldSize
-                    return (UINT32)ANAM.value.size();
+                    return (uint32_t)ANAM.value.size();
                 default:
                     return UNKNOWN_FIELD;
                 }
@@ -402,12 +402,12 @@ void * IDLERecord::GetField(FIELD_IDENTIFIERS, void **FieldValues)
     return NULL;
     }
 
-bool IDLERecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
+bool IDLERecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, uint32_t ArraySize)
     {
     switch(FieldID)
         {
         case 1: //flags1
-            SetHeaderFlagMask(*(UINT32 *)FieldValue);
+            SetHeaderFlagMask(*(uint32_t *)FieldValue);
             break;
         case 3: //versionControl1
             if(ArraySize != 4)
@@ -418,10 +418,10 @@ bool IDLERecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             ((UINT8ARRAY)&flagsUnk)[3] = ((UINT8ARRAY)FieldValue)[3];
             break;
         case 4: //eid
-            EDID.Copy((STRING)FieldValue);
+            EDID.Copy((char *)FieldValue);
             break;
         case 5: //formVersion
-            formVersion = *(UINT16 *)FieldValue;
+            formVersion = *(uint16_t *)FieldValue;
             break;
         case 6: //versionControl2
             if(ArraySize != 2)
@@ -431,11 +431,11 @@ bool IDLERecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             break;
         case 7: //modPath
             MODL.Load();
-            MODL->MODL.Copy((STRING)FieldValue);
+            MODL->MODL.Copy((char *)FieldValue);
             break;
         case 8: //modb
             MODL.Load();
-            MODL->MODB.value = *(FLOAT32 *)FieldValue;
+            MODL->MODB.value = *(float *)FieldValue;
             break;
         case 9: //modt_p
             MODL.Load();
@@ -459,16 +459,16 @@ bool IDLERecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
                     MODL->Textures.MODS[ListIndex]->name = NULL;
                     if(FieldValue != NULL)
                         {
-                        ArraySize = (UINT32)strlen((STRING)FieldValue) + 1;
+                        ArraySize = (uint32_t)strlen((char *)FieldValue) + 1;
                         MODL->Textures.MODS[ListIndex]->name = new char[ArraySize];
-                        strcpy_s(MODL->Textures.MODS[ListIndex]->name, ArraySize, (STRING)FieldValue);
+                        strcpy_s(MODL->Textures.MODS[ListIndex]->name, ArraySize, (char *)FieldValue);
                         }
                     break;
                 case 2: //texture
                     MODL->Textures.MODS[ListIndex]->texture = *(FORMID *)FieldValue;
                     return true;
                 case 3: //index
-                    MODL->Textures.MODS[ListIndex]->index = *(SINT32 *)FieldValue;
+                    MODL->Textures.MODS[ListIndex]->index = *(int32_t *)FieldValue;
                     break;
                 default:
                     break;
@@ -476,7 +476,7 @@ bool IDLERecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             break;
         case 11: //modelFlags
             MODL.Load();
-            MODL->SetFlagMask(*(UINT8 *)FieldValue);
+            MODL->SetFlagMask(*(uint8_t *)FieldValue);
             break;
         case 12: //conditions
             if(ListFieldID == 0) //conditionsSize
@@ -491,7 +491,7 @@ bool IDLERecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             switch(ListFieldID)
                 {
                 case 1: //operType
-                    CTDA.value[ListIndex]->operType = *(UINT8 *)FieldValue;
+                    CTDA.value[ListIndex]->operType = *(uint8_t *)FieldValue;
                     break;
                 case 2: //unused1
                     if(ArraySize != 3)
@@ -504,19 +504,19 @@ bool IDLERecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
                     CTDA.value[ListIndex]->compValue = *(FORMID_OR_FLOAT32 *)FieldValue;
                     return true;
                 case 4: //ifunc
-                    CTDA.value[ListIndex]->ifunc = *(UINT32 *)FieldValue;
+                    CTDA.value[ListIndex]->ifunc = *(uint32_t *)FieldValue;
                     return true;
                 case 5: //param1
-                    CTDA.value[ListIndex]->param1 = *(UINT32 *)FieldValue;
+                    CTDA.value[ListIndex]->param1 = *(uint32_t *)FieldValue;
                     return true;
                 case 6: //param2
-                    CTDA.value[ListIndex]->param2 = *(UINT32 *)FieldValue;
+                    CTDA.value[ListIndex]->param2 = *(uint32_t *)FieldValue;
                     return true;
                 case 7: //runOnType
-                    CTDA.value[ListIndex]->runOnType = *(UINT32 *)FieldValue;
+                    CTDA.value[ListIndex]->runOnType = *(uint32_t *)FieldValue;
                     return true;
                 case 8: //reference
-                    CTDA.value[ListIndex]->reference = *(UINT32 *)FieldValue;
+                    CTDA.value[ListIndex]->reference = *(uint32_t *)FieldValue;
                     return true;
                 default:
                     break;
@@ -524,17 +524,17 @@ bool IDLERecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             break;
         case 13: //animations
             ANAM.value.resize(ArraySize);
-            for(UINT32 x = 0; x < ArraySize; x++)
+            for(uint32_t x = 0; x < ArraySize; x++)
                 ANAM.value[x] = ((FORMIDARRAY)FieldValue)[x];
             return true;
         case 14: //group
-            DATA.value.group = *(UINT8 *)FieldValue;
+            DATA.value.group = *(uint8_t *)FieldValue;
             break;
         case 15: //minLooping
-            DATA.value.minLooping = *(UINT8 *)FieldValue;
+            DATA.value.minLooping = *(uint8_t *)FieldValue;
             break;
         case 16: //maxLooping
-            DATA.value.maxLooping = *(UINT8 *)FieldValue;
+            DATA.value.maxLooping = *(uint8_t *)FieldValue;
             break;
         case 17: //unused1
             if(ArraySize != 1)
@@ -542,10 +542,10 @@ bool IDLERecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             DATA.value.unused1 = ((UINT8ARRAY)FieldValue)[0];
             break;
         case 18: //replayDelay
-            DATA.value.replayDelay = *(SINT16 *)FieldValue;
+            DATA.value.replayDelay = *(int16_t *)FieldValue;
             break;
         case 19: //flags
-            SetFlagMask(*(UINT8 *)FieldValue);
+            SetFlagMask(*(uint8_t *)FieldValue);
             break;
         case 20: //unused2
             if(ArraySize != 1)

@@ -105,7 +105,7 @@ ALCHRecord::~ALCHRecord()
 
 bool ALCHRecord::VisitFormIDs(FormIDOp &op)
 {
-    for (UINT32 i = 0; i < KWDA.value.size(); ++i)
+    for (uint32_t i = 0; i < KWDA.value.size(); ++i)
         op.Accept(KWDA.value[i]);
     if (MODL.IsLoaded())
         MODL->Textures.VisitFormIDs(op);
@@ -119,7 +119,7 @@ bool ALCHRecord::VisitFormIDs(FormIDOp &op)
         op.Accept(ETYP.value);
     op.Accept(ENIT->withdrawalEffect);
     op.Accept(ENIT->consumeSound);
-    for (UINT32 i = 0; i < Effects.value.size(); ++i)
+    for (uint32_t i = 0; i < Effects.value.size(); ++i)
         Effects.value[i]->VisitFormIDs(op);
 
     return op.Stop();
@@ -165,46 +165,46 @@ void ALCHRecord::IsPoison(bool value)
     SETBIT(ENIT->flags, fIsPoison, value);
 }
 
-bool ALCHRecord::IsFlagMask(UINT8 Mask, bool Exact) const
+bool ALCHRecord::IsFlagMask(uint8_t Mask, bool Exact) const
 {
     return Exact ? (ENIT->flags & Mask) == Mask : (ENIT->flags & Mask) != 0;
 }
 
-void ALCHRecord::SetFlagMask(UINT8 Mask)
+void ALCHRecord::SetFlagMask(uint8_t Mask)
 {
     ENIT->flags = Mask;
 }
 
-UINT32 ALCHRecord::GetType()
+uint32_t ALCHRecord::GetType()
 {
     return REV32(ALCH);
 }
 
-STRING ALCHRecord::GetStrType()
+char * ALCHRecord::GetStrType()
 {
     return "ALCH";
 }
 
-SINT32 ALCHRecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk)
+int32_t ALCHRecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk)
 {
-    UINT32 subType = 0;
-    UINT32 subSize = 0;
+    uint32_t subType = 0;
+    uint32_t subSize = 0;
     StringLookups *LookupStrings = GetParentMod()->TES4.LookupStrings;
     while(buffer < end_buffer)
     {
-        subType = *(UINT32 *)buffer;
+        subType = *(uint32_t *)buffer;
         buffer += 4;
         switch(subType)
         {
         case REV32(XXXX):
             buffer += 2;
-            subSize = *(UINT32 *)buffer;
+            subSize = *(uint32_t *)buffer;
             buffer += 4;
-            subType = *(UINT32 *)buffer;
+            subType = *(uint32_t *)buffer;
             buffer += 6;
             break;
         default:
-            subSize = *(UINT16 *)buffer;
+            subSize = *(uint16_t *)buffer;
             buffer += 2;
             break;
         }
@@ -334,7 +334,7 @@ SINT32 ALCHRecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer,
     return 0;
 }
 
-SINT32 ALCHRecord::Unload()
+int32_t ALCHRecord::Unload()
 {
     IsLoaded(false);
     IsChanged(false);
@@ -356,7 +356,7 @@ SINT32 ALCHRecord::Unload()
     return 1;
 }
 
-SINT32 ALCHRecord::WriteRecord(FileWriter &writer)
+int32_t ALCHRecord::WriteRecord(FileWriter &writer)
 {
     WRITE(EDID);
     WRITE(OBND);

@@ -46,14 +46,14 @@
 //class SortedRecords
 //    {
 //    public:
-//        UINT32 size;
+//        uint32_t size;
 //        Record ** records;
 //
 //        SortedRecords();
 //        ~SortedRecords();
 //
 //        void push_back(Record *&record);
-//        void erase(UINT32 &index);
+//        void erase(uint32_t &index);
 //    };
 
 //struct IndexedRecords
@@ -62,7 +62,7 @@
 //    };
 
 //typedef std::map<FORMID, SortedRecords>   FormID_Map;
-//typedef std::map<STRING, SortedRecords, sameStr> EditorID_Map;
+//typedef std::map<char *, SortedRecords, sameStr> EditorID_Map;
 //
 //typedef FormID_Map::iterator FormID_Iterator;
 //typedef EditorID_Map::iterator EditorID_Iterator;
@@ -70,7 +70,7 @@
 class Collection
     {
     private:
-        STRING ModsDir;
+        char * ModsDir;
         bool IsLoaded;
         std::vector<Record *> sortedConflicts;
 
@@ -91,42 +91,42 @@ class Collection
         boost::unordered_set<Record *> changed_records;
         std::vector<GenericOp *> closing_ops;
 
-        boost::unordered_set<UINT32> filter_records;
+        boost::unordered_set<uint32_t> filter_records;
         boost::unordered_set<FORMID> filter_wspaces;
         bool filter_inclusive;
 
-        Collection(STRING const &ModsPath, UINT32 _CollectionType);
+        Collection(char * const &ModsPath, uint32_t _CollectionType);
         ~Collection();
 
-        ModFile * AddMod(STRING const &_FileName, ModFlags &flags, bool IsPreloading=false);
-        ModFile * IsModAdded(STRING const &ModName);
-        SINT32 SaveMod(ModFile *&curModFile, SaveFlags &flags, STRING const DestinationName);
+        ModFile * AddMod(char * const &_FileName, ModFlags &flags, bool IsPreloading=false);
+        ModFile * IsModAdded(char * const &ModName);
+        int32_t SaveMod(ModFile *&curModFile, SaveFlags &flags, char * const DestinationName);
 
         void SetFilterMode(bool inclusive);
-        void AddRecordFilter(UINT32 recordtype);
+        void AddRecordFilter(uint32_t recordtype);
         void AddWSpaceFilter(FORMID worldspace);
         void ResetFilter();
 
         // Callback(position, maximum, modfile-name);
-        SINT32 Load(bool (*_ProgressCallback)(const UINT32, const UINT32, const STRING) = NULL);
+        int32_t Load(bool (*_ProgressCallback)(const uint32_t, const uint32_t, const char *) = NULL);
         void   UndeleteRecords(std::vector<std::pair<ModFile *, std::vector<Record *> > > &DeletedRecords);
-        SINT32 Unload();
+        int32_t Unload();
 
         FormID_Iterator LookupRecord(ModFile *&curModFile, const FORMID &RecordFormID, Record *&curRecord);
-        EditorID_Iterator LookupRecord(ModFile *&curModFile, STRING const &RecordEditorID, Record *&curRecord);
+        EditorID_Iterator LookupRecord(ModFile *&curModFile, char * const &RecordEditorID, Record *&curRecord);
         FormID_Iterator LookupWinningRecord(const FORMID &RecordFormID, ModFile *&WinningModFile, Record *&WinningRecord, const bool GetExtendedConflicts=false);
-        EditorID_Iterator LookupWinningRecord(STRING const &RecordEditorID, ModFile *&WinningModFile, Record *&WinningRecord, const bool GetExtendedConflicts=false);
+        EditorID_Iterator LookupWinningRecord(char * const &RecordEditorID, ModFile *&WinningModFile, Record *&WinningRecord, const bool GetExtendedConflicts=false);
 
-        UINT32 GetNumRecordConflicts(Record *&curRecord, const bool GetExtendedConflicts);
-        SINT32 GetRecordConflicts(Record *&curRecord, RECORDIDARRAY RecordIDs, const bool GetExtendedConflicts);
-        SINT32 GetRecordHistory(Record *&curRecord, RECORDIDARRAY RecordIDs);
+        uint32_t GetNumRecordConflicts(Record *&curRecord, const bool GetExtendedConflicts);
+        int32_t GetRecordConflicts(Record *&curRecord, RECORDIDARRAY RecordIDs, const bool GetExtendedConflicts);
+        int32_t GetRecordHistory(Record *&curRecord, RECORDIDARRAY RecordIDs);
 
-        UINT32 NextFreeExpandedFormID(ModFile *&curModFile, UINT32 depth = 0);
-        Record * CreateRecord(ModFile *&curModFile, const UINT32 &RecordType, FORMID RecordFormID, STRING const &RecordEditorID, const FORMID &ParentFormID, UINT32 CreateFlags);
-        Record * CopyRecord(Record *&curRecord, ModFile *&DestModFile, const FORMID &DestParentFormID, FORMID DestRecordFormID, STRING const &DestRecordEditorID, UINT32 CreateFlags);
-        SINT32 CleanModMasters(ModFile *curModFile);
+        uint32_t NextFreeExpandedFormID(ModFile *&curModFile, uint32_t depth = 0);
+        Record * CreateRecord(ModFile *&curModFile, const uint32_t &RecordType, FORMID RecordFormID, char * const &RecordEditorID, const FORMID &ParentFormID, uint32_t CreateFlags);
+        Record * CopyRecord(Record *&curRecord, ModFile *&DestModFile, const FORMID &DestParentFormID, FORMID DestRecordFormID, char * const &DestRecordEditorID, uint32_t CreateFlags);
+        int32_t CleanModMasters(ModFile *curModFile);
 
-        SINT32 SetIDFields(Record *&RecordID, FORMID FormID, STRING const &EditorID);
+        int32_t SetIDFields(Record *&RecordID, FORMID FormID, char * const &EditorID);
     };
 
 class RecordReader : public RecordOp
@@ -153,8 +153,8 @@ class RecordInvalidFormIDChecker : public RecordOp
                 InvalidFormIDChecker();
                 ~InvalidFormIDChecker();
 
-                bool Accept(UINT32 &curFormID);
-                bool AcceptMGEF(UINT32 &curMgefCode);
+                bool Accept(uint32_t &curFormID);
+                bool AcceptMGEF(uint32_t &curMgefCode);
             } checker;
 
     public:
@@ -184,7 +184,7 @@ class IdenticalToMasterRetriever : public RecordOp
     private:
         EditorID_Map &EditorID_ModFile_Record;
         FormID_Map &FormID_ModFile_Record;
-        const UINT8 &MasterIndex;
+        const uint8_t &MasterIndex;
         boost::unordered_set<Record *> &identical_records;
         std::vector<FormIDResolver *> &Expanders;
 
@@ -204,7 +204,7 @@ class RecordFormIDSwapper : public RecordOp
         RecordReader reader;
 
     public:
-        RecordFormIDSwapper(const UINT32 &_FormIDToMatch, const UINT32 &_FormIDToSwap, FormIDHandlerClass &_FormIDHandler, std::vector<FormIDResolver *> &_Expanders);
+        RecordFormIDSwapper(const uint32_t &_FormIDToMatch, const uint32_t &_FormIDToSwap, FormIDHandlerClass &_FormIDHandler, std::vector<FormIDResolver *> &_Expanders);
         ~RecordFormIDSwapper();
 
         bool Accept(Record *&curRecord);
@@ -224,8 +224,8 @@ class RecordFormIDMapper : public RecordOp
                 FormIDMapper(std::map<FORMID, std::vector<Record *> > &_formID_users);
                 ~FormIDMapper();
 
-                bool Accept(UINT32 &curFormID);
-                bool AcceptMGEF(UINT32 &curMgefCode);
+                bool Accept(uint32_t &curFormID);
+                bool AcceptMGEF(uint32_t &curMgefCode);
             } mapper;
 
         RecordReader reader;
@@ -246,14 +246,14 @@ class RecordMasterCollector : public RecordOp
         class FormIDMasterCollector : public FormIDOp
             {
             public:
-                UINT8 UsedTable[256];
-                UINT8 (&CollapseTable)[256];
+                uint8_t UsedTable[256];
+                uint8_t (&CollapseTable)[256];
 
-                FormIDMasterCollector(UINT8 (&CollapseTable)[256]);
+                FormIDMasterCollector(uint8_t (&CollapseTable)[256]);
                 ~FormIDMasterCollector();
 
-                bool Accept(UINT32 &curFormID);
-                bool AcceptMGEF(UINT32 &curMgefCode);
+                bool Accept(uint32_t &curFormID);
+                bool AcceptMGEF(uint32_t &curMgefCode);
             } collector;
 
         RecordMasterCollector(FormIDHandlerClass &_FormIDHandler, std::vector<FormIDResolver *> &_Expanders);

@@ -38,7 +38,7 @@
 
 namespace Ob
 {
-UINT32 ROADRecord::GetFieldAttribute(FIELD_IDENTIFIERS, UINT32 WhichAttribute)
+uint32_t ROADRecord::GetFieldAttribute(FIELD_IDENTIFIERS, uint32_t WhichAttribute)
     {
     switch(FieldID)
         {
@@ -60,7 +60,7 @@ UINT32 ROADRecord::GetFieldAttribute(FIELD_IDENTIFIERS, UINT32 WhichAttribute)
                     case 0: //fieldType
                         return LIST_FIELD;
                     case 1: //fieldSize
-                        return (UINT32)PGRP.value.size();
+                        return (uint32_t)PGRP.value.size();
                     default:
                         return UNKNOWN_FIELD;
                     }
@@ -101,7 +101,7 @@ UINT32 ROADRecord::GetFieldAttribute(FIELD_IDENTIFIERS, UINT32 WhichAttribute)
                     case 0: //fieldType
                         return LIST_FIELD;
                     case 1: //fieldSize
-                        return (UINT32)PGRR.value.size();
+                        return (uint32_t)PGRR.value.size();
                     default:
                         return UNKNOWN_FIELD;
                     }
@@ -184,15 +184,15 @@ void * ROADRecord::GetField(FIELD_IDENTIFIERS, void **FieldValues)
     return NULL;
     }
 
-bool ROADRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
+bool ROADRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, uint32_t ArraySize)
     {
     switch(FieldID)
         {
         case 1: //flags1
-            SetHeaderFlagMask(*(UINT32 *)FieldValue);
+            SetHeaderFlagMask(*(uint32_t *)FieldValue);
             break;
         case 3: //flags2
-            SetHeaderUnknownFlagMask(*(UINT32 *)FieldValue);
+            SetHeaderUnknownFlagMask(*(uint32_t *)FieldValue);
             break;
         case 5: //pgrp
             if(ListFieldID == 0) //pgrpSize
@@ -207,16 +207,16 @@ bool ROADRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             switch(ListFieldID)
                 {
                 case 1: //x
-                    PGRP.value[ListIndex].x = *(FLOAT32 *)FieldValue;
+                    PGRP.value[ListIndex].x = *(float *)FieldValue;
                     break;
                 case 2: //y
-                    PGRP.value[ListIndex].y = *(FLOAT32 *)FieldValue;
+                    PGRP.value[ListIndex].y = *(float *)FieldValue;
                     break;
                 case 3: //z
-                    PGRP.value[ListIndex].z = *(FLOAT32 *)FieldValue;
+                    PGRP.value[ListIndex].z = *(float *)FieldValue;
                     break;
                 case 4: //connections
-                    PGRP.value[ListIndex].connections = *(UINT8 *)FieldValue;
+                    PGRP.value[ListIndex].connections = *(uint8_t *)FieldValue;
                     break;
                 case 5: //unused1
                     if(ArraySize != 3)
@@ -242,13 +242,13 @@ bool ROADRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             switch(ListFieldID)
                 {
                 case 1: //x
-                    PGRR.value[ListIndex].x = *(FLOAT32 *)FieldValue;
+                    PGRR.value[ListIndex].x = *(float *)FieldValue;
                     break;
                 case 2: //y
-                    PGRR.value[ListIndex].y = *(FLOAT32 *)FieldValue;
+                    PGRR.value[ListIndex].y = *(float *)FieldValue;
                     break;
                 case 3: //z
-                    PGRR.value[ListIndex].z = *(FLOAT32 *)FieldValue;
+                    PGRR.value[ListIndex].z = *(float *)FieldValue;
                     break;
                 default:
                     break;

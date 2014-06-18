@@ -44,15 +44,15 @@ class WATRRecord : public FNVRecord //Water
     private:
         struct WATRDNAM
             {
-            FLOAT32 unknown1, unknown2, unknown3, unknown4,
+            float unknown1, unknown2, unknown3, unknown4,
                     sunPower, reflectAmt, fresnelAmt;
-            UINT8   unused1[4];
-            FLOAT32 fogNear, fogFar;
+            uint8_t   unused1[4];
+            float fogNear, fogFar;
             GENCLR  shallow;
             GENCLR  deep;
             GENCLR  refl;
-            UINT8   unused2[4];
-            FLOAT32 rainForce, rainVelocity, rainFalloff, rainDampner,
+            uint8_t   unused2[4];
+            float rainForce, rainVelocity, rainFalloff, rainDampner,
                     dispSize, dispForce, dispVelocity, dispFalloff,
                     dispDampner, rainSize, normalsNoiseScale, noise1Direction,
                     noise2Direction, noise3Direction, noise1Speed,
@@ -63,7 +63,7 @@ class WATRRecord : public FNVRecord //Water
                     noise2UVScale, noise3UVScale;
 
             //Below aren't on older DATA, and also a few DNAM
-            FLOAT32 noise1AmpScale, noise2AmpScale, noise3AmpScale;
+            float noise1AmpScale, noise2AmpScale, noise3AmpScale;
 
             WATRDNAM();
             ~WATRDNAM();
@@ -92,12 +92,12 @@ class WATRRecord : public FNVRecord //Water
         StringRecord EDID; //Editor ID
         StringRecord FULL; //Name
         StringRecord NNAM; //Noise Map
-        ReqSimpleSubRecord<UINT8, 75> ANAM; //opacity
-        ReqSimpleSubRecord<UINT8> FNAM; //Flags
+        ReqSimpleSubRecord<uint8_t, 75> ANAM; //opacity
+        ReqSimpleSubRecord<uint8_t> FNAM; //Flags
         StringRecord MNAM; //Material ID
         OptSimpleSubRecord<FORMID> SNAM; //Sound
         OptSimpleSubRecord<FORMID> XNAM; //Actor Effect
-        ReqSimpleSubRecord<UINT16> DATA; //Damage (May be 186 size struct (older format))
+        ReqSimpleSubRecord<uint16_t> DATA; //Damage (May be 186 size struct (older format))
         ReqSubRecord<WATRDNAM> DNAM; //Visual Data (May be listed as DATA an old format, auto upgrade to DNAM on read)
         ReqSubRecord<WATRGNAM> GNAM; //Related Waters (Unused)
 
@@ -113,20 +113,20 @@ class WATRRecord : public FNVRecord //Water
         void   IsCausesDamage(bool value);
         bool   IsReflective();
         void   IsReflective(bool value);
-        bool   IsFlagMask(UINT8 Mask, bool Exact=false);
-        void   SetFlagMask(UINT8 Mask);
+        bool   IsFlagMask(uint8_t Mask, bool Exact=false);
+        void   SetFlagMask(uint8_t Mask);
 
-        UINT32 GetFieldAttribute(DEFAULTED_FIELD_IDENTIFIERS, UINT32 WhichAttribute=0);
+        uint32_t GetFieldAttribute(DEFAULTED_FIELD_IDENTIFIERS, uint32_t WhichAttribute=0);
         void * GetField(DEFAULTED_FIELD_IDENTIFIERS, void **FieldValues=NULL);
-        bool   SetField(DEFAULTED_FIELD_IDENTIFIERS, void *FieldValue=NULL, UINT32 ArraySize=0);
+        bool   SetField(DEFAULTED_FIELD_IDENTIFIERS, void *FieldValue=NULL, uint32_t ArraySize=0);
         void   DeleteField(DEFAULTED_FIELD_IDENTIFIERS);
 
-        UINT32 GetType();
-        STRING GetStrType();
+        uint32_t GetType();
+        char * GetStrType();
 
-        SINT32 ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk=false);
-        SINT32 Unload();
-        SINT32 WriteRecord(FileWriter &writer);
+        int32_t ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk=false);
+        int32_t Unload();
+        int32_t WriteRecord(FileWriter &writer);
 
         bool operator ==(const WATRRecord &other) const;
         bool operator !=(const WATRRecord &other) const;

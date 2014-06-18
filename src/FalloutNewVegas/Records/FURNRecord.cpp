@@ -83,14 +83,14 @@ bool FURNRecord::VisitFormIDs(FormIDOp &op)
 
     if(MODL.IsLoaded())
         {
-        for(UINT32 x = 0; x < MODL->Textures.MODS.size(); x++)
+        for(uint32_t x = 0; x < MODL->Textures.MODS.size(); x++)
             op.Accept(MODL->Textures.MODS[x]->texture);
         }
     if(SCRI.IsLoaded())
         op.Accept(SCRI.value);
     if(Destructable.IsLoaded())
         {
-        for(UINT32 x = 0; x < Destructable->Stages.value.size(); ++x)
+        for(uint32_t x = 0; x < Destructable->Stages.value.size(); ++x)
             {
             op.Accept(Destructable->Stages.value[x]->DSTD.value.explosion);
             op.Accept(Destructable->Stages.value[x]->DSTD.value.debris);
@@ -438,44 +438,44 @@ void FURNRecord::IsSleepAnim(bool value)
         }
     }
 
-bool FURNRecord::IsFlagMask(UINT32 Mask, bool Exact)
+bool FURNRecord::IsFlagMask(uint32_t Mask, bool Exact)
     {
     return Exact ? ((MNAM.value & Mask) == Mask) : ((MNAM.value & Mask) != 0);
     }
 
-void FURNRecord::SetFlagMask(UINT32 Mask)
+void FURNRecord::SetFlagMask(uint32_t Mask)
     {
     MNAM.value = Mask;
     }
 
-UINT32 FURNRecord::GetType()
+uint32_t FURNRecord::GetType()
     {
     return REV32(FURN);
     }
 
-STRING FURNRecord::GetStrType()
+char * FURNRecord::GetStrType()
     {
     return "FURN";
     }
 
-SINT32 FURNRecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk)
+int32_t FURNRecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk)
     {
-    UINT32 subType = 0;
-    UINT32 subSize = 0;
+    uint32_t subType = 0;
+    uint32_t subSize = 0;
     while(buffer < end_buffer){
-        subType = *(UINT32 *)buffer;
+        subType = *(uint32_t *)buffer;
         buffer += 4;
         switch(subType)
             {
             case REV32(XXXX):
                 buffer += 2;
-                subSize = *(UINT32 *)buffer;
+                subSize = *(uint32_t *)buffer;
                 buffer += 4;
-                subType = *(UINT32 *)buffer;
+                subType = *(uint32_t *)buffer;
                 buffer += 6;
                 break;
             default:
-                subSize = *(UINT16 *)buffer;
+                subSize = *(uint16_t *)buffer;
                 buffer += 2;
                 break;
             }
@@ -553,7 +553,7 @@ SINT32 FURNRecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer,
     return 0;
     }
 
-SINT32 FURNRecord::Unload()
+int32_t FURNRecord::Unload()
     {
     IsChanged(false);
     IsLoaded(false);
@@ -567,7 +567,7 @@ SINT32 FURNRecord::Unload()
     return 1;
     }
 
-SINT32 FURNRecord::WriteRecord(FileWriter &writer)
+int32_t FURNRecord::WriteRecord(FileWriter &writer)
     {
     WRITE(EDID);
     WRITE(OBND);

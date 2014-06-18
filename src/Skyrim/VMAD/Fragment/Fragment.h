@@ -42,7 +42,7 @@ class FormIDOp;
 
 struct GenFragment
 {
-    UINT8 unk1;
+    uint8_t unk1;
     NonNullStringRecord scriptName;
     NonNullStringRecord fragmentName;
 
@@ -56,13 +56,13 @@ class Fragments
 {
 public:
     NonNullStringRecord fileName;
-    UINT8 unk1;
+    uint8_t unk1;
 
     Fragments();
     virtual ~Fragments();
 
     virtual void VisitFormIDs(FormIDOp &op);
-    virtual UINT32 GetSize() const = 0;
+    virtual uint32_t GetSize() const = 0;
     virtual void Write(FileWriter &writer) const = 0;
     virtual bool equals(const Fragments *other) const = 0;
     virtual Fragments * Copy() const = 0;

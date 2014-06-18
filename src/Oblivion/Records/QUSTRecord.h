@@ -44,7 +44,7 @@ class QUSTRecord : public Record //Quest
     private:
         struct QUSTDATA
             {
-            UINT8   flags, priority;
+            uint8_t   flags, priority;
 
             QUSTDATA();
             ~QUSTDATA();
@@ -55,7 +55,7 @@ class QUSTRecord : public Record //Quest
 
         struct QUSTEntry //Log Entry
             {
-            ReqSimpleSubRecord<UINT8> QSDT; //Stage Flags
+            ReqSimpleSubRecord<uint8_t> QSDT; //Stage Flags
             OrderedSparseArray<GENCTDA *> CTDA; //Conditions
             StringRecord CNAM; //Log Entry
             ReqSubRecord<GENSCHR> SCHR; //Basic Script Data
@@ -77,8 +77,8 @@ class QUSTRecord : public Record //Quest
 
             bool IsCompletes();
             void IsCompletes(bool value);
-            bool IsFlagMask(UINT8 Mask, bool Exact=false);
-            void SetFlagMask(UINT8 Mask);
+            bool IsFlagMask(uint8_t Mask, bool Exact=false);
+            void SetFlagMask(uint8_t Mask);
 
             bool IsObject();
             void IsObject(bool value);
@@ -86,8 +86,8 @@ class QUSTRecord : public Record //Quest
             void IsQuest(bool value);
             bool IsEffect();
             void IsEffect(bool value);
-            bool IsType(UINT16 Type);
-            void SetType(UINT16 Type);
+            bool IsType(uint16_t Type);
+            void SetType(uint16_t Type);
 
             void Write(FileWriter &writer);
 
@@ -97,7 +97,7 @@ class QUSTRecord : public Record //Quest
 
         struct QUSTStage //Stage
             {
-            ReqSimpleSubRecord<UINT16> INDX; //Stage Index
+            ReqSimpleSubRecord<uint16_t> INDX; //Stage Index
             UnorderedSparseArray<QUSTEntry *> Entries; //Log Entries
 
             void Write(FileWriter &writer);
@@ -109,7 +109,7 @@ class QUSTRecord : public Record //Quest
         struct QUSTQSTA //Target
             {
             FORMID  targetId; //Target
-            UINT8   flags, unused1[3]; //Flags, Unused
+            uint8_t   flags, unused1[3]; //Flags, Unused
 
             QUSTQSTA();
             ~QUSTQSTA();
@@ -130,8 +130,8 @@ class QUSTRecord : public Record //Quest
 
             bool IsIgnoresLocks();
             void IsIgnoresLocks(bool value);
-            bool IsFlagMask(UINT8 Mask, bool Exact=false);
-            void SetFlagMask(UINT8 Mask);
+            bool IsFlagMask(uint8_t Mask, bool Exact=false);
+            void SetFlagMask(uint8_t Mask);
 
             void Write(FileWriter &writer);
 
@@ -168,20 +168,20 @@ class QUSTRecord : public Record //Quest
         void   IsRepeatedTopics(bool value);
         bool   IsRepeatedStages();
         void   IsRepeatedStages(bool value);
-        bool   IsFlagMask(UINT8 Mask, bool Exact=false);
-        void   SetFlagMask(UINT8 Mask);
+        bool   IsFlagMask(uint8_t Mask, bool Exact=false);
+        void   SetFlagMask(uint8_t Mask);
 
-        UINT32 GetFieldAttribute(DEFAULTED_FIELD_IDENTIFIERS, UINT32 WhichAttribute=0);
+        uint32_t GetFieldAttribute(DEFAULTED_FIELD_IDENTIFIERS, uint32_t WhichAttribute=0);
         void * GetField(DEFAULTED_FIELD_IDENTIFIERS, void **FieldValues=NULL);
-        bool   SetField(DEFAULTED_FIELD_IDENTIFIERS, void *FieldValue=NULL, UINT32 ArraySize=0);
+        bool   SetField(DEFAULTED_FIELD_IDENTIFIERS, void *FieldValue=NULL, uint32_t ArraySize=0);
         void   DeleteField(DEFAULTED_FIELD_IDENTIFIERS);
 
-        UINT32 GetType();
-        STRING GetStrType();
+        uint32_t GetType();
+        char * GetStrType();
 
-        SINT32 ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk=false);
-        SINT32 Unload();
-        SINT32 WriteRecord(FileWriter &writer);
+        int32_t ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk=false);
+        int32_t Unload();
+        int32_t WriteRecord(FileWriter &writer);
 
         bool operator ==(const QUSTRecord &other) const;
         bool operator !=(const QUSTRecord &other) const;

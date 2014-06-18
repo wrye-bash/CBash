@@ -43,9 +43,9 @@ class FragmentSCEN : public Fragments
 public:
     struct FragmentPhase
     {
-        UINT8 flags;
-        UINT8 index;
-        UINT32 unk1;
+        uint8_t flags;
+        uint8_t index;
+        uint32_t unk1;
         NonNullStringRecord scriptName;
         NonNullStringRecord fragmentName;
 
@@ -76,7 +76,7 @@ public:
 
     void Read(unsigned char *&buffer, const bool &CompressedOnDisk);
 
-    virtual UINT32 GetSize() const;
+    virtual uint32_t GetSize() const;
     virtual void Write(FileWriter &writer) const;
     virtual bool equals(const Fragments *other) const;
     virtual Fragments * Copy() const;

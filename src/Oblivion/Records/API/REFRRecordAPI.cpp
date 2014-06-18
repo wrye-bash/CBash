@@ -38,7 +38,7 @@
 
 namespace Ob
 {
-UINT32 REFRRecord::GetFieldAttribute(FIELD_IDENTIFIERS, UINT32 WhichAttribute)
+uint32_t REFRRecord::GetFieldAttribute(FIELD_IDENTIFIERS, uint32_t WhichAttribute)
     {
     switch(FieldID)
         {
@@ -334,19 +334,19 @@ void * REFRRecord::GetField(FIELD_IDENTIFIERS, void **FieldValues)
     return NULL;
     }
 
-bool REFRRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
+bool REFRRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, uint32_t ArraySize)
     {
     Data.Load();
     switch(FieldID)
         {
         case 1: //flags1
-            SetHeaderFlagMask(*(UINT32 *)FieldValue);
+            SetHeaderFlagMask(*(uint32_t *)FieldValue);
             break;
         case 3: //flags2
-            SetHeaderUnknownFlagMask(*(UINT32 *)FieldValue);
+            SetHeaderUnknownFlagMask(*(uint32_t *)FieldValue);
             break;
         case 4: //eid
-            Data->EDID.Copy((STRING)FieldValue);
+            Data->EDID.Copy((char *)FieldValue);
             break;
         case 5: //base
             Data->NAME.value = *(FORMID *)FieldValue;
@@ -357,31 +357,31 @@ bool REFRRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             return true;
         case 7: //destinationPosX
             Data->XTEL.Load();
-            Data->XTEL->destination.posX = *(FLOAT32 *)FieldValue;
+            Data->XTEL->destination.posX = *(float *)FieldValue;
             break;
         case 8: //destinationPosY
             Data->XTEL.Load();
-            Data->XTEL->destination.posY = *(FLOAT32 *)FieldValue;
+            Data->XTEL->destination.posY = *(float *)FieldValue;
             break;
         case 9: //destinationPosZ
             Data->XTEL.Load();
-            Data->XTEL->destination.posZ = *(FLOAT32 *)FieldValue;
+            Data->XTEL->destination.posZ = *(float *)FieldValue;
             break;
         case 10: //destinationRotX
             Data->XTEL.Load();
-            Data->XTEL->destination.rotX = *(FLOAT32 *)FieldValue;
+            Data->XTEL->destination.rotX = *(float *)FieldValue;
             break;
         case 11: //destinationRotY
             Data->XTEL.Load();
-            Data->XTEL->destination.rotY = *(FLOAT32 *)FieldValue;
+            Data->XTEL->destination.rotY = *(float *)FieldValue;
             break;
         case 12: //destinationRotZ
             Data->XTEL.Load();
-            Data->XTEL->destination.rotZ = *(FLOAT32 *)FieldValue;
+            Data->XTEL->destination.rotZ = *(float *)FieldValue;
             break;
         case 13: //lockLevel
             Data->XLOC.Load();
-            Data->XLOC->level = *(UINT8 *)FieldValue;
+            Data->XLOC->level = *(uint8_t *)FieldValue;
             break;
         case 14: //unused1
             if(ArraySize != 3)
@@ -405,7 +405,7 @@ bool REFRRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             Data->XLOC->unused2[3] = ((UINT8ARRAY)FieldValue)[3];
             break;
         case 17: //lockFlags
-            SetLockFlagMask(*(UINT8 *)FieldValue);
+            SetLockFlagMask(*(uint8_t *)FieldValue);
             break;
         case 18: //unused3
             if(ArraySize != 3)
@@ -422,7 +422,7 @@ bool REFRRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
         case 20: //rank
             Data->Ownership.Load();
             Data->Ownership->XRNK.Load();
-            *Data->Ownership->XRNK.value = *(SINT32 *)FieldValue;
+            *Data->Ownership->XRNK.value = *(int32_t *)FieldValue;
             break;
         case 21: //globalVariable
             Data->Ownership.Load();
@@ -433,7 +433,7 @@ bool REFRRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             Data->XESP->parent = *(FORMID *)FieldValue;
             return true;
         case 23: //parentFlags
-            SetParentFlagMask(*(UINT8 *)FieldValue);
+            SetParentFlagMask(*(uint8_t *)FieldValue);
             break;
         case 24: //unused4
             if(ArraySize != 3)
@@ -452,31 +452,31 @@ bool REFRRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             if(ArraySize)
                 {
                 Data->XSED->isOffset = true;
-                Data->XSED->offset = *(UINT8 *)FieldValue;
+                Data->XSED->offset = *(uint8_t *)FieldValue;
                 }
             else
                 {
                 Data->XSED->isOffset = false;
-                Data->XSED->seed = *(UINT32 *)FieldValue;
+                Data->XSED->seed = *(uint32_t *)FieldValue;
                 }
             break;
         case 27: //lod1
             Data->XLOD.Load();
-            Data->XLOD->lod1 = *(FLOAT32 *)FieldValue;
+            Data->XLOD->lod1 = *(float *)FieldValue;
             break;
         case 28: //lod2
             Data->XLOD.Load();
-            Data->XLOD->lod2 = *(FLOAT32 *)FieldValue;
+            Data->XLOD->lod2 = *(float *)FieldValue;
             break;
         case 29: //lod3
             Data->XLOD.Load();
-            Data->XLOD->lod3 = *(FLOAT32 *)FieldValue;
+            Data->XLOD->lod3 = *(float *)FieldValue;
             break;
         case 30: //charge
-            Data->XCHG.value = *(FLOAT32 *)FieldValue;
+            Data->XCHG.value = *(float *)FieldValue;
             break;
         case 31: //health
-            Data->XHLT.value = *(SINT32 *)FieldValue;
+            Data->XHLT.value = *(int32_t *)FieldValue;
             break;
         case 32: //unknownXPCIFormID
             Data->XPCI.Load();
@@ -484,29 +484,29 @@ bool REFRRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             return true;
         case 33: //unknownXPCIString
             Data->XPCI.Load();
-            Data->XPCI->FULL.Copy((STRING)FieldValue);
+            Data->XPCI->FULL.Copy((char *)FieldValue);
             break;
         case 34: //levelMod
-            Data->XLCM.value = *(SINT32 *)FieldValue;
+            Data->XLCM.value = *(int32_t *)FieldValue;
             break;
         case 35: //unknownXRTMFormID
             Data->XRTM.value = *(FORMID *)FieldValue;
             return true;
         case 36: //actionFlags
-            SetActionFlagMask(*(UINT32 *)FieldValue);
+            SetActionFlagMask(*(uint32_t *)FieldValue);
             break;
         case 37: //count
-            Data->XCNT.value = *(SINT32 *)FieldValue;
+            Data->XCNT.value = *(int32_t *)FieldValue;
             break;
         case 38: //markerFlags
-            SetMapFlagMask(*(UINT8 *)FieldValue);
+            SetMapFlagMask(*(uint8_t *)FieldValue);
             break;
         case 39: //markerName
             Data->Marker.Load();
-            Data->Marker->FULL.Copy((STRING)FieldValue);
+            Data->Marker->FULL.Copy((char *)FieldValue);
             break;
         case 40: //markerType
-            SetMarkerType(*(UINT8 *)FieldValue);
+            SetMarkerType(*(uint8_t *)FieldValue);
             break;
         case 41: //markerUnused
             if(ArraySize != 1)
@@ -516,28 +516,28 @@ bool REFRRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             break;
         case 42: //scale
             Data->XSCL.Load();
-            Data->XSCL.value = *(FLOAT32 *)FieldValue;
+            Data->XSCL.value = *(float *)FieldValue;
             break;
         case 43: //soulType
-            SetSoul(*(UINT8 *)FieldValue);
+            SetSoul(*(uint8_t *)FieldValue);
             break;
         case 44: //posX
-            Data->DATA.value.posX = *(FLOAT32 *)FieldValue;
+            Data->DATA.value.posX = *(float *)FieldValue;
             break;
         case 45: //posY
-            Data->DATA.value.posY = *(FLOAT32 *)FieldValue;
+            Data->DATA.value.posY = *(float *)FieldValue;
             break;
         case 46: //posZ
-            Data->DATA.value.posZ = *(FLOAT32 *)FieldValue;
+            Data->DATA.value.posZ = *(float *)FieldValue;
             break;
         case 47: //rotX
-            Data->DATA.value.rotX = *(FLOAT32 *)FieldValue;
+            Data->DATA.value.rotX = *(float *)FieldValue;
             break;
         case 48: //rotY
-            Data->DATA.value.rotY = *(FLOAT32 *)FieldValue;
+            Data->DATA.value.rotY = *(float *)FieldValue;
             break;
         case 49: //rotZ
-            Data->DATA.value.rotZ = *(FLOAT32 *)FieldValue;
+            Data->DATA.value.rotZ = *(float *)FieldValue;
             break;
         default:
             break;

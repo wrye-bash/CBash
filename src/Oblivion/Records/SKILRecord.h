@@ -44,9 +44,9 @@ class SKILRecord : public Record
     private:
         struct SKILDATA
             {
-            SINT32  action, attribute;
-            UINT32  specialization;
-            FLOAT32 use0, use1;
+            int32_t  action, attribute;
+            uint32_t  specialization;
+            float use0, use1;
 
             SKILDATA();
             ~SKILDATA();
@@ -57,7 +57,7 @@ class SKILRecord : public Record
 
     public:
         StringRecord EDID; //Editor ID
-        ReqSimpleSubRecord<SINT32, 26> INDX; //Skill
+        ReqSimpleSubRecord<int32_t, 26> INDX; //Skill
         StringRecord DESC; //Description
         StringRecord ICON; //Icon filename
         ReqSubRecord<SKILDATA> DATA; //Skill Data
@@ -70,17 +70,17 @@ class SKILRecord : public Record
         SKILRecord(SKILRecord *srcRecord);
         ~SKILRecord();
 
-        UINT32 GetFieldAttribute(DEFAULTED_FIELD_IDENTIFIERS, UINT32 WhichAttribute=0);
+        uint32_t GetFieldAttribute(DEFAULTED_FIELD_IDENTIFIERS, uint32_t WhichAttribute=0);
         void * GetField(DEFAULTED_FIELD_IDENTIFIERS, void **FieldValues=NULL);
-        bool   SetField(DEFAULTED_FIELD_IDENTIFIERS, void *FieldValue=NULL, UINT32 ArraySize=0);
+        bool   SetField(DEFAULTED_FIELD_IDENTIFIERS, void *FieldValue=NULL, uint32_t ArraySize=0);
         void   DeleteField(DEFAULTED_FIELD_IDENTIFIERS);
 
-        UINT32 GetType();
-        STRING GetStrType();
+        uint32_t GetType();
+        char * GetStrType();
 
-        SINT32 ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk=false);
-        SINT32 Unload();
-        SINT32 WriteRecord(FileWriter &writer);
+        int32_t ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk=false);
+        int32_t Unload();
+        int32_t WriteRecord(FileWriter &writer);
 
         bool operator ==(const SKILRecord &other) const;
         bool operator !=(const SKILRecord &other) const;

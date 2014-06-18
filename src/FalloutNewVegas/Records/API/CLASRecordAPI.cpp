@@ -38,7 +38,7 @@
 
 namespace FNV
 {
-UINT32 CLASRecord::GetFieldAttribute(FIELD_IDENTIFIERS, UINT32 WhichAttribute)
+uint32_t CLASRecord::GetFieldAttribute(FIELD_IDENTIFIERS, uint32_t WhichAttribute)
     {
     switch(FieldID)
         {
@@ -194,12 +194,12 @@ void * CLASRecord::GetField(FIELD_IDENTIFIERS, void **FieldValues)
     return NULL;
     }
 
-bool CLASRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
+bool CLASRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, uint32_t ArraySize)
     {
     switch(FieldID)
         {
         case 1: //flags1
-            SetHeaderFlagMask(*(UINT32 *)FieldValue);
+            SetHeaderFlagMask(*(uint32_t *)FieldValue);
             break;
         case 3: //versionControl1
             if(ArraySize != 4)
@@ -210,10 +210,10 @@ bool CLASRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             ((UINT8ARRAY)&flagsUnk)[3] = ((UINT8ARRAY)FieldValue)[3];
             break;
         case 4: //eid
-            EDID.Copy((STRING)FieldValue);
+            EDID.Copy((char *)FieldValue);
             break;
         case 5: //formVersion
-            formVersion = *(UINT16 *)FieldValue;
+            formVersion = *(uint16_t *)FieldValue;
             break;
         case 6: //versionControl2
             if(ArraySize != 2)
@@ -222,40 +222,40 @@ bool CLASRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             versionControl2[1] = ((UINT8ARRAY)FieldValue)[1];
             break;
         case 7: //full
-            FULL.Copy((STRING)FieldValue);
+            FULL.Copy((char *)FieldValue);
             break;
         case 8: //description
-            DESC.Copy((STRING)FieldValue);
+            DESC.Copy((char *)FieldValue);
             break;
         case 9: //iconPath
-            ICON.Copy((STRING)FieldValue);
+            ICON.Copy((char *)FieldValue);
             break;
         case 10: //smallIconPath
-            MICO.Copy((STRING)FieldValue);
+            MICO.Copy((char *)FieldValue);
             break;
         case 11: //tagSkills1
-            DATA.value.tagSkills[0] = *(SINT32 *)FieldValue;
+            DATA.value.tagSkills[0] = *(int32_t *)FieldValue;
             break;
         case 12: //tagSkills2
-            DATA.value.tagSkills[1] = *(SINT32 *)FieldValue;
+            DATA.value.tagSkills[1] = *(int32_t *)FieldValue;
             break;
         case 13: //tagSkills3
-            DATA.value.tagSkills[2] = *(SINT32 *)FieldValue;
+            DATA.value.tagSkills[2] = *(int32_t *)FieldValue;
             break;
         case 14: //tagSkills4
-            DATA.value.tagSkills[3] = *(SINT32 *)FieldValue;
+            DATA.value.tagSkills[3] = *(int32_t *)FieldValue;
             break;
         case 15: //flags
-            SetFlagMask(*(UINT32 *)FieldValue);
+            SetFlagMask(*(uint32_t *)FieldValue);
             break;
         case 16: //services
-            SetServicesFlagMask(*(UINT32 *)FieldValue);
+            SetServicesFlagMask(*(uint32_t *)FieldValue);
             break;
         case 17: //trainSkill
-            DATA.value.trainSkill = *(SINT8 *)FieldValue;
+            DATA.value.trainSkill = *(int8_t *)FieldValue;
             break;
         case 18: //trainLevel
-            DATA.value.trainLevel = *(UINT8 *)FieldValue;
+            DATA.value.trainLevel = *(uint8_t *)FieldValue;
             break;
         case 19: //unused1
             if(ArraySize != 2)
@@ -264,25 +264,25 @@ bool CLASRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             DATA.value.unused1[1] = ((UINT8ARRAY)FieldValue)[1];
             break;
         case 20: //strength
-            ATTR.value.strength = *(UINT8 *)FieldValue;
+            ATTR.value.strength = *(uint8_t *)FieldValue;
             break;
         case 21: //perception
-            ATTR.value.perception = *(UINT8 *)FieldValue;
+            ATTR.value.perception = *(uint8_t *)FieldValue;
             break;
         case 22: //endurance
-            ATTR.value.endurance = *(UINT8 *)FieldValue;
+            ATTR.value.endurance = *(uint8_t *)FieldValue;
             break;
         case 23: //charisma
-            ATTR.value.charisma = *(UINT8 *)FieldValue;
+            ATTR.value.charisma = *(uint8_t *)FieldValue;
             break;
         case 24: //intelligence
-            ATTR.value.intelligence = *(UINT8 *)FieldValue;
+            ATTR.value.intelligence = *(uint8_t *)FieldValue;
             break;
         case 25: //agility
-            ATTR.value.agility = *(UINT8 *)FieldValue;
+            ATTR.value.agility = *(uint8_t *)FieldValue;
             break;
         case 26: //luck
-            ATTR.value.luck = *(UINT8 *)FieldValue;
+            ATTR.value.luck = *(uint8_t *)FieldValue;
             break;
         default:
             break;

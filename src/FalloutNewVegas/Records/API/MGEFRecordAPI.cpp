@@ -38,7 +38,7 @@
 
 namespace FNV
 {
-UINT32 MGEFRecord::GetFieldAttribute(FIELD_IDENTIFIERS, UINT32 WhichAttribute)
+uint32_t MGEFRecord::GetFieldAttribute(FIELD_IDENTIFIERS, uint32_t WhichAttribute)
     {
     switch(FieldID)
         {
@@ -108,7 +108,7 @@ UINT32 MGEFRecord::GetFieldAttribute(FIELD_IDENTIFIERS, UINT32 WhichAttribute)
                     case 0: //fieldType
                         return LIST_FIELD;
                     case 1: //fieldSize
-                        return (UINT32)MODL->Textures.MODS.size();
+                        return (uint32_t)MODL->Textures.MODS.size();
                     default:
                         return UNKNOWN_FIELD;
                     }
@@ -283,12 +283,12 @@ void * MGEFRecord::GetField(FIELD_IDENTIFIERS, void **FieldValues)
     return NULL;
     }
 
-bool MGEFRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
+bool MGEFRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, uint32_t ArraySize)
     {
     switch(FieldID)
         {
         case 1: //flags1
-            SetHeaderFlagMask(*(UINT32 *)FieldValue);
+            SetHeaderFlagMask(*(uint32_t *)FieldValue);
             break;
         case 3: //versionControl1
             if(ArraySize != 4)
@@ -299,10 +299,10 @@ bool MGEFRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             ((UINT8ARRAY)&flagsUnk)[3] = ((UINT8ARRAY)FieldValue)[3];
             break;
         case 4: //eid
-            EDID.Copy((STRING)FieldValue);
+            EDID.Copy((char *)FieldValue);
             break;
         case 5: //formVersion
-            formVersion = *(UINT16 *)FieldValue;
+            formVersion = *(uint16_t *)FieldValue;
             break;
         case 6: //versionControl2
             if(ArraySize != 2)
@@ -311,24 +311,24 @@ bool MGEFRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             versionControl2[1] = ((UINT8ARRAY)FieldValue)[1];
             break;
         case 7: //full
-            FULL.Copy((STRING)FieldValue);
+            FULL.Copy((char *)FieldValue);
             break;
         case 8: //description
-            DESC.Copy((STRING)FieldValue);
+            DESC.Copy((char *)FieldValue);
             break;
         case 9: //iconPath
-            ICON.Copy((STRING)FieldValue);
+            ICON.Copy((char *)FieldValue);
             break;
         case 10: //smallIconPath
-            MICO.Copy((STRING)FieldValue);
+            MICO.Copy((char *)FieldValue);
             break;
         case 11: //modPath
             MODL.Load();
-            MODL->MODL.Copy((STRING)FieldValue);
+            MODL->MODL.Copy((char *)FieldValue);
             break;
         case 12: //modb
             MODL.Load();
-            MODL->MODB.value = *(FLOAT32 *)FieldValue;
+            MODL->MODB.value = *(float *)FieldValue;
             break;
         case 13: //modt_p
             MODL.Load();
@@ -352,16 +352,16 @@ bool MGEFRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
                     MODL->Textures.MODS[ListIndex]->name = NULL;
                     if(FieldValue != NULL)
                         {
-                        ArraySize = (UINT32)strlen((STRING)FieldValue) + 1;
+                        ArraySize = (uint32_t)strlen((char *)FieldValue) + 1;
                         MODL->Textures.MODS[ListIndex]->name = new char[ArraySize];
-                        strcpy_s(MODL->Textures.MODS[ListIndex]->name, ArraySize, (STRING)FieldValue);
+                        strcpy_s(MODL->Textures.MODS[ListIndex]->name, ArraySize, (char *)FieldValue);
                         }
                     break;
                 case 2: //texture
                     MODL->Textures.MODS[ListIndex]->texture = *(FORMID *)FieldValue;
                     return true;
                 case 3: //index
-                    MODL->Textures.MODS[ListIndex]->index = *(SINT32 *)FieldValue;
+                    MODL->Textures.MODS[ListIndex]->index = *(int32_t *)FieldValue;
                     break;
                 default:
                     break;
@@ -369,25 +369,25 @@ bool MGEFRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             break;
         case 15: //modelFlags
             MODL.Load();
-            MODL->SetFlagMask(*(UINT8 *)FieldValue);
+            MODL->SetFlagMask(*(uint8_t *)FieldValue);
             break;
         case 16: //flags
-            SetFlagMask(*(UINT32 *)FieldValue);
+            SetFlagMask(*(uint32_t *)FieldValue);
             break;
         case 17: //baseCostUnused
-            DATA.value.baseCost = *(FLOAT32 *)FieldValue;
+            DATA.value.baseCost = *(float *)FieldValue;
             break;
         case 18: //associated
             DATA.value.associated = *(FORMID *)FieldValue;
             return true;
         case 19: //schoolUnused
-            DATA.value.schoolType = *(UINT32 *)FieldValue;
+            DATA.value.schoolType = *(uint32_t *)FieldValue;
             break;
         case 20: //resistType
-            DATA.value.resistType = *(SINT32 *)FieldValue;
+            DATA.value.resistType = *(int32_t *)FieldValue;
             break;
         case 21: //numCounters
-            DATA.value.numCounters = *(UINT16 *)FieldValue;
+            DATA.value.numCounters = *(uint16_t *)FieldValue;
             break;
         case 22: //unused1
             if(ArraySize != 2)
@@ -399,7 +399,7 @@ bool MGEFRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             DATA.value.light = *(FORMID *)FieldValue;
             return true;
         case 24: //projectileSpeed
-            DATA.value.projectileSpeed = *(FLOAT32 *)FieldValue;
+            DATA.value.projectileSpeed = *(float *)FieldValue;
             break;
         case 25: //effectShader
             DATA.value.effectShader = *(FORMID *)FieldValue;
@@ -420,16 +420,16 @@ bool MGEFRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             DATA.value.areaSound = *(FORMID *)FieldValue;
             return true;
         case 31: //cefEnchantmentUnused
-            DATA.value.cefEnchantment = *(FLOAT32 *)FieldValue;
+            DATA.value.cefEnchantment = *(float *)FieldValue;
             break;
         case 32: //cefBarterUnused
-            DATA.value.cefBarter = *(FLOAT32 *)FieldValue;
+            DATA.value.cefBarter = *(float *)FieldValue;
             break;
         case 33: //archType
-            SetType(*(UINT32 *)FieldValue);
+            SetType(*(uint32_t *)FieldValue);
             break;
         case 34: //actorValue
-            DATA.value.actorValue = *(SINT32 *)FieldValue;
+            DATA.value.actorValue = *(int32_t *)FieldValue;
             break;
         default:
             break;

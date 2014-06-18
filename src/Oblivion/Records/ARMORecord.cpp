@@ -319,44 +319,44 @@ void ARMORecord::IsHeavyArmor(bool value)
     SETBIT(BMDT.value, fIsHeavyArmor, value);
     }
 
-bool ARMORecord::IsFlagMask(UINT32 Mask, bool Exact)
+bool ARMORecord::IsFlagMask(uint32_t Mask, bool Exact)
     {
     return Exact ? ((BMDT.value & Mask) == Mask) : ((BMDT.value & Mask) != 0);
     }
 
-void ARMORecord::SetFlagMask(UINT32 Mask)
+void ARMORecord::SetFlagMask(uint32_t Mask)
     {
     BMDT.value = Mask;
     }
 
-UINT32 ARMORecord::GetType()
+uint32_t ARMORecord::GetType()
     {
     return REV32(ARMO);
     }
 
-STRING ARMORecord::GetStrType()
+char * ARMORecord::GetStrType()
     {
     return "ARMO";
     }
 
-SINT32 ARMORecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk)
+int32_t ARMORecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk)
     {
-    UINT32 subType = 0;
-    UINT32 subSize = 0;
+    uint32_t subType = 0;
+    uint32_t subSize = 0;
     while(buffer < end_buffer){
-        subType = *(UINT32 *)buffer;
+        subType = *(uint32_t *)buffer;
         buffer += 4;
         switch(subType)
             {
             case REV32(XXXX):
                 buffer += 2;
-                subSize = *(UINT32 *)buffer;
+                subSize = *(uint32_t *)buffer;
                 buffer += 4;
-                subType = *(UINT32 *)buffer;
+                subType = *(uint32_t *)buffer;
                 buffer += 6;
                 break;
             default:
-                subSize = *(UINT16 *)buffer;
+                subSize = *(uint16_t *)buffer;
                 buffer += 2;
                 break;
             }
@@ -450,7 +450,7 @@ SINT32 ARMORecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer,
     return 0;
     }
 
-SINT32 ARMORecord::Unload()
+int32_t ARMORecord::Unload()
     {
     IsChanged(false);
     IsLoaded(false);
@@ -470,7 +470,7 @@ SINT32 ARMORecord::Unload()
     return 1;
     }
 
-SINT32 ARMORecord::WriteRecord(FileWriter &writer)
+int32_t ARMORecord::WriteRecord(FileWriter &writer)
     {
     WRITE(EDID);
     WRITE(FULL);

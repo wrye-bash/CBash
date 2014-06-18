@@ -44,12 +44,12 @@ class PACKRecord : public FNVRecord //Package
     private:
         struct PACKPKDT //General
             {
-            UINT32  flags; //General Flags
-            UINT8   aiType, unused1; //Type, Unused
-            UINT16  behaviorFlags; //Fallout Behavior Flags
+            uint32_t  flags; //General Flags
+            uint8_t   aiType, unused1; //Type, Unused
+            uint16_t  behaviorFlags; //Fallout Behavior Flags
             //Below are not always present in chunk...
-            UINT16  specificFlags; //Type Specific Flags
-            UINT8   unused2[2]; //Unused
+            uint16_t  specificFlags; //Type Specific Flags
+            uint8_t   unused2[2]; //Unused
 
             PACKPKDT();
             ~PACKPKDT();
@@ -60,9 +60,9 @@ class PACKRecord : public FNVRecord //Package
 
         struct PACKPLDT //Location
             {
-            SINT32  locType;
+            int32_t  locType;
             FORMID_OR_UINT32  locId;
-            SINT32  locRadius;
+            int32_t  locRadius;
 
             PACKPLDT();
             ~PACKPLDT();
@@ -73,10 +73,10 @@ class PACKRecord : public FNVRecord //Package
 
         struct PACKPSDT //Schedule
             {
-            SINT8   month, day;
-            UINT8   date;
-            SINT8   time;
-            SINT32  duration;
+            int8_t   month, day;
+            uint8_t   date;
+            int8_t   time;
+            int32_t  duration;
 
             PACKPSDT();
             ~PACKPSDT();
@@ -87,10 +87,10 @@ class PACKRecord : public FNVRecord //Package
 
         struct PACKPTDT //Target
             {
-            SINT32  targetType; //Type
+            int32_t  targetType; //Type
             FORMID_OR_UINT32 targetId; //Reference
-            SINT32  targetCountOrDistance; //Count / Distance
-            FLOAT32 unknown; //Unknown
+            int32_t  targetCountOrDistance; //Count / Distance
+            float unknown; //Unknown
 
             PACKPTDT();
             ~PACKPTDT();
@@ -101,11 +101,11 @@ class PACKRecord : public FNVRecord //Package
 
         struct PACKPKW3 //Use Weapon Data
             {
-            UINT32  flags; //Flags
-            UINT8   fireRate, fireType; //Fire Rate, Fire Count
-            UINT16  burstNum, minShots, maxShots; //Number of Bursts, Shoots Per Volleys (Min, Max)
-            FLOAT32 minPause, maxPause; //Pause Between Volleys (Min, Max)
-            UINT8   unused[4]; //Unused
+            uint32_t  flags; //Flags
+            uint8_t   fireRate, fireType; //Fire Rate, Fire Count
+            uint16_t  burstNum, minShots, maxShots; //Number of Bursts, Shoots Per Volleys (Min, Max)
+            float minPause, maxPause; //Pause Between Volleys (Min, Max)
+            uint8_t   unused[4]; //Unused
 
             PACKPKW3();
             ~PACKPKW3();
@@ -116,12 +116,12 @@ class PACKRecord : public FNVRecord //Package
 
         struct PACKPKDD //Dialogue Data
             {
-            FLOAT32 FOV; //FOV
+            float FOV; //FOV
             FORMID  topic; //Topic
-            UINT32  flags; //Flags
-            UINT8   unused1[4];
-            UINT32  dialType;
-            UINT8   unknown[4];
+            uint32_t  flags; //Flags
+            uint8_t   unused1[4];
+            uint32_t  dialType;
+            uint8_t   unknown[4];
 
             PACKPKDD();
             ~PACKPKDD();
@@ -308,16 +308,16 @@ class PACKRecord : public FNVRecord //Package
         ReqSubRecord<PACKPSDT> PSDT; //Schedule
         OptSubRecord<PACKPTDT> PTDT; //Target 1
         OrderedSparseArray<FNVCTDA *> CTDA; //Conditions
-        OptSimpleSubRecord<UINT8> IDLF; //Idle Animation Flags
-        OptSimpleSubRecord<UINT8> IDLC; //Idle Animation Count (may be a UINT32 instead, but only the lower 8 bits are used, so check size on read)
+        OptSimpleSubRecord<uint8_t> IDLF; //Idle Animation Flags
+        OptSimpleSubRecord<uint8_t> IDLC; //Idle Animation Count (may be a uint32_t instead, but only the lower 8 bits are used, so check size on read)
         OptSimpleFloatSubRecord<flt_0> IDLT; //Idle Timer Setting
         UnorderedPackedArray<FORMID> IDLA; //Animations
         RawRecord IDLB; //Unused
         //OptSubRecord<GENPKED> PKED; //Eat Marker (Empty)
-        OptSimpleSubRecord<UINT32> PKE2; //Escort Distance
+        OptSimpleSubRecord<uint32_t> PKE2; //Escort Distance
         OptSimpleSubRecord<FORMID> CNAM; //Combat Style
         OptSimpleFloatSubRecord<flt_0> PKFD; //Follow - Start Location - Trigger Radius
-        OptSimpleSubRecord<UINT16> PKPT; //Patrol Flags, is sometimes a UINT8
+        OptSimpleSubRecord<uint16_t> PKPT; //Patrol Flags, is sometimes a uint8_t
         OptSubRecord<PACKPKW3> PKW3; //Use Weapon Data
         OptSubRecord<PACKPTDT> PTD2; //Target 2
         //OptSubRecord<GENPUID> PUID; //Use Item Marker (Empty)
@@ -408,8 +408,8 @@ class PACKRecord : public FNVRecord //Package
         void   IsNoCombatAlert(bool value);
         bool   IsNoWarnAttackBehavior();
         void   IsNoWarnAttackBehavior(bool value);
-        bool   IsFlagMask(UINT32 Mask, bool Exact=false);
-        void   SetFlagMask(UINT32 Mask);
+        bool   IsFlagMask(uint32_t Mask, bool Exact=false);
+        void   SetFlagMask(uint32_t Mask);
 
         bool   IsHellosToPlayer();
         void   IsHellosToPlayer(bool value);
@@ -429,8 +429,8 @@ class PACKRecord : public FNVRecord //Package
         void   IsAllowIdleChatter(bool value);
         bool   IsAvoidRadiation();
         void   IsAvoidRadiation(bool value);
-        bool   IsBehaviorFlagMask(UINT16 Mask, bool Exact=false);
-        void   SetBehaviorFlagMask(UINT16 Mask);
+        bool   IsBehaviorFlagMask(uint16_t Mask, bool Exact=false);
+        void   SetBehaviorFlagMask(uint16_t Mask);
 
         bool   IsHide();//Ambush only
         void   IsHide(bool value);//Ambush only
@@ -456,15 +456,15 @@ class PACKRecord : public FNVRecord //Package
         void   IsAllowKilling(bool value);
         bool   IsAllowStealing();
         void   IsAllowStealing(bool value);
-        bool   IsSpecificFlagMask(UINT16 Mask, bool Exact=false);
-        void   SetSpecificFlagMask(UINT16 Mask);
+        bool   IsSpecificFlagMask(uint16_t Mask, bool Exact=false);
+        void   SetSpecificFlagMask(uint16_t Mask);
 
         bool   IsRunInSequence();
         void   IsRunInSequence(bool value);
         bool   IsDoOnce();
         void   IsDoOnce(bool value);
-        bool   IsIdleFlagMask(UINT8 Mask, bool Exact=false);
-        void   SetIdleFlagMask(UINT8 Mask);
+        bool   IsIdleFlagMask(uint8_t Mask, bool Exact=false);
+        void   SetIdleFlagMask(uint8_t Mask);
 
         bool   IsAlwaysHit();
         void   IsAlwaysHit(bool value);
@@ -474,30 +474,30 @@ class PACKRecord : public FNVRecord //Package
         void   IsCrouchToReload(bool value);
         bool   IsHoldFireWhenBlocked();
         void   IsHoldFireWhenBlocked(bool value);
-        bool   IsWeaponFlagMask(UINT32 Mask, bool Exact=false);
-        void   SetWeaponFlagMask(UINT32 Mask);
+        bool   IsWeaponFlagMask(uint32_t Mask, bool Exact=false);
+        void   SetWeaponFlagMask(uint32_t Mask);
 
         bool   IsNoHeadtracking();
         void   IsNoHeadtracking(bool value);
         bool   IsDontControlTargetMovement();
         void   IsDontControlTargetMovement(bool value);
-        bool   IsDialogueFlagMask(UINT32 Mask, bool Exact=false);
-        void   SetDialogueFlagMask(UINT32 Mask);
+        bool   IsDialogueFlagMask(uint32_t Mask, bool Exact=false);
+        void   SetDialogueFlagMask(uint32_t Mask);
 
         bool   IsBeginScriptEnabled();
         void   IsBeginScriptEnabled(bool value);
-        bool   IsBeginScriptFlagMask(UINT16 Mask, bool Exact=false);
-        void   SetBeginScriptFlagMask(UINT16 Mask);
+        bool   IsBeginScriptFlagMask(uint16_t Mask, bool Exact=false);
+        void   SetBeginScriptFlagMask(uint16_t Mask);
 
         bool   IsEndScriptEnabled();
         void   IsEndScriptEnabled(bool value);
-        bool   IsEndScriptFlagMask(UINT16 Mask, bool Exact=false);
-        void   SetEndScriptFlagMask(UINT16 Mask);
+        bool   IsEndScriptFlagMask(uint16_t Mask, bool Exact=false);
+        void   SetEndScriptFlagMask(uint16_t Mask);
 
         bool   IsChangeScriptEnabled();
         void   IsChangeScriptEnabled(bool value);
-        bool   IsChangeScriptFlagMask(UINT16 Mask, bool Exact=false);
-        void   SetChangeScriptFlagMask(UINT16 Mask);
+        bool   IsChangeScriptFlagMask(uint16_t Mask, bool Exact=false);
+        void   SetChangeScriptFlagMask(uint16_t Mask);
 
         bool   IsAIFind();
         void   IsAIFind(bool value);
@@ -531,8 +531,8 @@ class PACKRecord : public FNVRecord //Package
         void   IsAIDialogue(bool value);
         bool   IsAIUseWeapon();
         void   IsAIUseWeapon(bool value);
-        bool   IsAIType(UINT8 Type);
-        void   SetAIType(UINT8 Type);
+        bool   IsAIType(uint8_t Type);
+        void   SetAIType(uint8_t Type);
 
         bool   IsLoc1NearReference();
         void   IsLoc1NearReference(bool value);
@@ -550,8 +550,8 @@ class PACKRecord : public FNVRecord //Package
         void   IsLoc1NearLinkedReference(bool value);
         bool   IsLoc1AtPackageLocation();
         void   IsLoc1AtPackageLocation(bool value);
-        bool   IsLoc1Type(SINT32 Type);
-        void   SetLoc1Type(SINT32 Type);
+        bool   IsLoc1Type(int32_t Type);
+        void   SetLoc1Type(int32_t Type);
 
         bool   IsLoc2NearReference();
         void   IsLoc2NearReference(bool value);
@@ -569,8 +569,8 @@ class PACKRecord : public FNVRecord //Package
         void   IsLoc2NearLinkedReference(bool value);
         bool   IsLoc2AtPackageLocation();
         void   IsLoc2AtPackageLocation(bool value);
-        bool   IsLoc2Type(SINT32 Type);
-        void   SetLoc2Type(SINT32 Type);
+        bool   IsLoc2Type(int32_t Type);
+        void   SetLoc2Type(int32_t Type);
 
         bool   IsTarget1Reference();
         void   IsTarget1Reference(bool value);
@@ -580,8 +580,8 @@ class PACKRecord : public FNVRecord //Package
         void   IsTarget1ObjectType(bool value);
         bool   IsTarget1LinkedReference();
         void   IsTarget1LinkedReference(bool value);
-        bool   IsTarget1Type(SINT32 Type);
-        void   SetTarget1Type(SINT32 Type);
+        bool   IsTarget1Type(int32_t Type);
+        void   SetTarget1Type(int32_t Type);
 
         bool   IsTarget2Reference();
         void   IsTarget2Reference(bool value);
@@ -591,8 +591,8 @@ class PACKRecord : public FNVRecord //Package
         void   IsTarget2ObjectType(bool value);
         bool   IsTarget2LinkedReference();
         void   IsTarget2LinkedReference(bool value);
-        bool   IsTarget2Type(SINT32 Type);
-        void   SetTarget2Type(SINT32 Type);
+        bool   IsTarget2Type(int32_t Type);
+        void   SetTarget2Type(int32_t Type);
 
         bool   IsAnyDay();
         void   IsAnyDay(bool value);
@@ -618,36 +618,36 @@ class PACKRecord : public FNVRecord //Package
         void   IsMWF(bool value);
         bool   IsTTh();
         void   IsTTh(bool value);
-        bool   IsDayType(SINT8 Type);
-        void   SetDayType(SINT8 Type);
+        bool   IsDayType(int8_t Type);
+        void   SetDayType(int8_t Type);
 
         bool   IsNotRepeatable();
         void   IsNotRepeatable(bool value);
         bool   IsRepeatable();
         void   IsRepeatable(bool value);
-        bool   IsRepeatType(UINT16 Type);
-        void   SetRepeatType(UINT16 Type);
+        bool   IsRepeatType(uint16_t Type);
+        void   SetRepeatType(uint16_t Type);
 
         bool   IsAutoFire();
         void   IsAutoFire(bool value);
         bool   IsVolleyFire();
         void   IsVolleyFire(bool value);
-        bool   IsFireType(UINT8 Type);
-        void   SetFireType(UINT8 Type);
+        bool   IsFireType(uint8_t Type);
+        void   SetFireType(uint8_t Type);
 
         bool   IsNumberOfBursts();
         void   IsNumberOfBursts(bool value);
         bool   IsRepeatFire();
         void   IsRepeatFire(bool value);
-        bool   IsFireCountType(UINT8 Type);
-        void   SetFireCountType(UINT8 Type);
+        bool   IsFireCountType(uint8_t Type);
+        void   SetFireCountType(uint8_t Type);
 
         bool   IsConversation();
         void   IsConversation(bool value);
         bool   IsSayTo();
         void   IsSayTo(bool value);
-        bool   IsDialogueType(UINT32 Type);
-        void   SetDialogueType(UINT32 Type);
+        bool   IsDialogueType(uint32_t Type);
+        void   SetDialogueType(uint32_t Type);
 
         bool   IsBeginObject();
         void   IsBeginObject(bool value);
@@ -655,8 +655,8 @@ class PACKRecord : public FNVRecord //Package
         void   IsBeginQuest(bool value);
         bool   IsBeginEffect();
         void   IsBeginEffect(bool value);
-        bool   IsBeginType(UINT16 Type);
-        void   SetBeginType(UINT16 Type);
+        bool   IsBeginType(uint16_t Type);
+        void   SetBeginType(uint16_t Type);
 
         bool   IsEndObject();
         void   IsEndObject(bool value);
@@ -664,8 +664,8 @@ class PACKRecord : public FNVRecord //Package
         void   IsEndQuest(bool value);
         bool   IsEndEffect();
         void   IsEndEffect(bool value);
-        bool   IsEndType(UINT16 Type);
-        void   SetEndType(UINT16 Type);
+        bool   IsEndType(uint16_t Type);
+        void   SetEndType(uint16_t Type);
 
         bool   IsChangeObject();
         void   IsChangeObject(bool value);
@@ -673,20 +673,20 @@ class PACKRecord : public FNVRecord //Package
         void   IsChangeQuest(bool value);
         bool   IsChangeEffect();
         void   IsChangeEffect(bool value);
-        bool   IsChangeType(UINT16 Type);
-        void   SetChangeType(UINT16 Type);
+        bool   IsChangeType(uint16_t Type);
+        void   SetChangeType(uint16_t Type);
 
-        UINT32 GetFieldAttribute(DEFAULTED_FIELD_IDENTIFIERS, UINT32 WhichAttribute=0);
+        uint32_t GetFieldAttribute(DEFAULTED_FIELD_IDENTIFIERS, uint32_t WhichAttribute=0);
         void * GetField(DEFAULTED_FIELD_IDENTIFIERS, void **FieldValues=NULL);
-        bool   SetField(DEFAULTED_FIELD_IDENTIFIERS, void *FieldValue=NULL, UINT32 ArraySize=0);
+        bool   SetField(DEFAULTED_FIELD_IDENTIFIERS, void *FieldValue=NULL, uint32_t ArraySize=0);
         void   DeleteField(DEFAULTED_FIELD_IDENTIFIERS);
 
-        UINT32 GetType();
-        STRING GetStrType();
+        uint32_t GetType();
+        char * GetStrType();
 
-        SINT32 ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk=false);
-        SINT32 Unload();
-        SINT32 WriteRecord(FileWriter &writer);
+        int32_t ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk=false);
+        int32_t Unload();
+        int32_t WriteRecord(FileWriter &writer);
 
         bool operator ==(const PACKRecord &other) const;
         bool operator !=(const PACKRecord &other) const;

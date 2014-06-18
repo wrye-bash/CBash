@@ -183,13 +183,13 @@ void MSETRecord::IsNightInner(bool value)
     SETBIT(PNAM.value, fIsNightInner, value);
     }
 
-bool MSETRecord::IsFlagMask(UINT8 Mask, bool Exact)
+bool MSETRecord::IsFlagMask(uint8_t Mask, bool Exact)
     {
     if (!PNAM.IsLoaded()) return false;
     return Exact ? ((PNAM.value & Mask) == Mask) : ((PNAM.value & Mask) != 0);
     }
 
-void MSETRecord::SetFlagMask(UINT8 Mask)
+void MSETRecord::SetFlagMask(uint8_t Mask)
     {
     PNAM.Load();
     PNAM.value = Mask;
@@ -225,46 +225,46 @@ bool MSETRecord::IsIncidential()
     return (NAM1.value == eIncidential);
     }
 
-bool MSETRecord::IsType(UINT32 Type)
+bool MSETRecord::IsType(uint32_t Type)
     {
     if (!NAM1.IsLoaded()) return false;
     return NAM1.value == Type;
     }
 
-void MSETRecord::SetType(UINT32 Type)
+void MSETRecord::SetType(uint32_t Type)
     {
     NAM1.Load();
     NAM1.value = Type;
     }
 
-UINT32 MSETRecord::GetType()
+uint32_t MSETRecord::GetType()
     {
     return REV32(MSET);
     }
 
-STRING MSETRecord::GetStrType()
+char * MSETRecord::GetStrType()
     {
     return "MSET";
     }
 
-SINT32 MSETRecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk)
+int32_t MSETRecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk)
     {
-    UINT32 subType = 0;
-    UINT32 subSize = 0;
+    uint32_t subType = 0;
+    uint32_t subSize = 0;
     while(buffer < end_buffer){
-        subType = *(UINT32 *)buffer;
+        subType = *(uint32_t *)buffer;
         buffer += 4;
         switch(subType)
             {
             case REV32(XXXX):
                 buffer += 2;
-                subSize = *(UINT32 *)buffer;
+                subSize = *(uint32_t *)buffer;
                 buffer += 4;
-                subType = *(UINT32 *)buffer;
+                subType = *(uint32_t *)buffer;
                 buffer += 6;
                 break;
             default:
-                subSize = *(UINT16 *)buffer;
+                subSize = *(uint16_t *)buffer;
                 buffer += 2;
                 break;
             }
@@ -369,7 +369,7 @@ SINT32 MSETRecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer,
     return 0;
     }
 
-SINT32 MSETRecord::Unload()
+int32_t MSETRecord::Unload()
     {
     IsChanged(false);
     IsLoaded(false);
@@ -405,7 +405,7 @@ SINT32 MSETRecord::Unload()
     return 1;
     }
 
-SINT32 MSETRecord::WriteRecord(FileWriter &writer)
+int32_t MSETRecord::WriteRecord(FileWriter &writer)
     {
     WRITE(EDID);
     WRITE(FULL);

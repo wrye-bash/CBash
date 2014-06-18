@@ -44,9 +44,9 @@ class AMEFRecord : public FNVRecord //Ammo Effect
     private:
         struct AMEFDATA
             {
-            UINT32  type; //Type
-            UINT32  op; //Operation
-            FLOAT32 value; //Value
+            uint32_t  type; //Type
+            uint32_t  op; //Operation
+            float value; //Value
 
             AMEFDATA();
             ~AMEFDATA();
@@ -88,26 +88,26 @@ class AMEFRecord : public FNVRecord //Ammo Effect
         bool   IsSpread();
         bool   IsCondition();
         bool   IsFatigue();
-        bool   IsModType(UINT32 Type);
-        void   SetModType(UINT32 Type);
+        bool   IsModType(uint32_t Type);
+        void   SetModType(uint32_t Type);
 
         bool   IsAdd();
         bool   IsMultiply();
         bool   IsSubtract();
-        bool   IsOpType(UINT32 Type);
-        void   SetOpType(UINT32 Type);
+        bool   IsOpType(uint32_t Type);
+        void   SetOpType(uint32_t Type);
 
-        UINT32 GetFieldAttribute(DEFAULTED_FIELD_IDENTIFIERS, UINT32 WhichAttribute=0);
+        uint32_t GetFieldAttribute(DEFAULTED_FIELD_IDENTIFIERS, uint32_t WhichAttribute=0);
         void * GetField(DEFAULTED_FIELD_IDENTIFIERS, void **FieldValues=NULL);
-        bool   SetField(DEFAULTED_FIELD_IDENTIFIERS, void *FieldValue=NULL, UINT32 ArraySize=0);
+        bool   SetField(DEFAULTED_FIELD_IDENTIFIERS, void *FieldValue=NULL, uint32_t ArraySize=0);
         void   DeleteField(DEFAULTED_FIELD_IDENTIFIERS);
 
-        UINT32 GetType();
-        STRING GetStrType();
+        uint32_t GetType();
+        char * GetStrType();
 
-        SINT32 ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk=false);
-        SINT32 Unload();
-        SINT32 WriteRecord(FileWriter &writer);
+        int32_t ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk=false);
+        int32_t Unload();
+        int32_t WriteRecord(FileWriter &writer);
 
         bool operator ==(const AMEFRecord &other) const;
         bool operator !=(const AMEFRecord &other) const;

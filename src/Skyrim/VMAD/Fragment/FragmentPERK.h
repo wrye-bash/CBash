@@ -43,9 +43,9 @@ class FragmentPERK : public Fragments
 public:
     struct Fragment
     {
-        UINT16 index;
-        UINT16 unk1;
-        UINT8 unk2;
+        uint16_t index;
+        uint16_t unk1;
+        uint8_t unk2;
         NonNullStringRecord scriptName;
         NonNullStringRecord fragmentName;
 
@@ -62,7 +62,7 @@ public:
 
     void Read(unsigned char *&buffer, const bool &CompressedOnDisk);
 
-    virtual UINT32 GetSize() const;
+    virtual uint32_t GetSize() const;
     virtual void Write(FileWriter &writer) const;
     virtual bool equals(const Fragments *other) const;
     virtual Fragments * Copy() const;

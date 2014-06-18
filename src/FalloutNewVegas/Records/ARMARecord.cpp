@@ -367,13 +367,13 @@ void ARMARecord::IsBodyAddon3(bool value)
     SETBIT(BMDT->bipedFlags, fIsBodyAddon3, value);
     }
 
-bool ARMARecord::IsFlagMask(UINT32 Mask, bool Exact)
+bool ARMARecord::IsFlagMask(uint32_t Mask, bool Exact)
     {
     if (!BMDT.IsLoaded()) return false;
     return Exact ? ((BMDT->bipedFlags & Mask) == Mask) : ((BMDT->bipedFlags & Mask) != 0);
     }
 
-void ARMARecord::SetFlagMask(UINT32 Mask)
+void ARMARecord::SetFlagMask(uint32_t Mask)
     {
     BMDT.Load();
     BMDT->bipedFlags = Mask;
@@ -475,13 +475,13 @@ void ARMARecord::IsHeavy(bool value)
     SETBIT(BMDT->generalFlags, fIsHeavy, value);
     }
 
-bool ARMARecord::IsExtraFlagMask(UINT8 Mask, bool Exact)
+bool ARMARecord::IsExtraFlagMask(uint8_t Mask, bool Exact)
     {
     if (!BMDT.IsLoaded()) return false;
     return Exact ? ((BMDT->generalFlags & Mask) == Mask) : ((BMDT->generalFlags & Mask) != 0);
     }
 
-void ARMARecord::SetExtraFlagMask(UINT8 Mask)
+void ARMARecord::SetExtraFlagMask(uint8_t Mask)
     {
     BMDT.Load();
     BMDT->generalFlags = Mask;
@@ -577,13 +577,13 @@ bool ARMARecord::IsAlcohol()
     return (ETYP.value == eAlcohol);
     }
 
-bool ARMARecord::IsEquipmentType(SINT32 Type)
+bool ARMARecord::IsEquipmentType(int32_t Type)
     {
     if (!ETYP.IsLoaded()) return false;
     return ETYP.value == Type;
     }
 
-void ARMARecord::SetEquipmentType(SINT32 Type)
+void ARMARecord::SetEquipmentType(int32_t Type)
     {
     ETYP.Load();
     ETYP.value = Type;
@@ -601,46 +601,46 @@ void ARMARecord::IsModulatesVoice(bool value)
     SETBIT(DNAM->flags, fIsModulatesVoice, value);
     }
 
-bool ARMARecord::IsDNAMFlagMask(UINT16 Mask, bool Exact)
+bool ARMARecord::IsDNAMFlagMask(uint16_t Mask, bool Exact)
     {
     if (!DNAM.IsLoaded()) return false;
     return Exact ? ((DNAM->flags & Mask) == Mask) : ((DNAM->flags & Mask) != 0);
     }
 
-void ARMARecord::SetDNAMFlagMask(UINT16 Mask)
+void ARMARecord::SetDNAMFlagMask(uint16_t Mask)
     {
     DNAM.Load();
     DNAM->flags = Mask;
     }
 
-UINT32 ARMARecord::GetType()
+uint32_t ARMARecord::GetType()
     {
     return REV32(ARMA);
     }
 
-STRING ARMARecord::GetStrType()
+char * ARMARecord::GetStrType()
     {
     return "ARMA";
     }
 
-SINT32 ARMARecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk)
+int32_t ARMARecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk)
     {
-    UINT32 subType = 0;
-    UINT32 subSize = 0;
+    uint32_t subType = 0;
+    uint32_t subSize = 0;
     while(buffer < end_buffer){
-        subType = *(UINT32 *)buffer;
+        subType = *(uint32_t *)buffer;
         buffer += 4;
         switch(subType)
             {
             case REV32(XXXX):
                 buffer += 2;
-                subSize = *(UINT32 *)buffer;
+                subSize = *(uint32_t *)buffer;
                 buffer += 4;
-                subType = *(UINT32 *)buffer;
+                subType = *(uint32_t *)buffer;
                 buffer += 6;
                 break;
             default:
-                subSize = *(UINT16 *)buffer;
+                subSize = *(uint16_t *)buffer;
                 buffer += 2;
                 break;
             }
@@ -747,7 +747,7 @@ SINT32 ARMARecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer,
     return 0;
     }
 
-SINT32 ARMARecord::Unload()
+int32_t ARMARecord::Unload()
     {
     IsChanged(false);
     IsLoaded(false);
@@ -769,7 +769,7 @@ SINT32 ARMARecord::Unload()
     return 1;
     }
 
-SINT32 ARMARecord::WriteRecord(FileWriter &writer)
+int32_t ARMARecord::WriteRecord(FileWriter &writer)
     {
     WRITE(EDID);
     WRITE(OBND);

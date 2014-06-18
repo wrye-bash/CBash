@@ -38,7 +38,7 @@
 
 namespace Ob
 {
-UINT32 RACERecord::GetFieldAttribute(FIELD_IDENTIFIERS, UINT32 WhichAttribute)
+uint32_t RACERecord::GetFieldAttribute(FIELD_IDENTIFIERS, uint32_t WhichAttribute)
     {
     switch(FieldID)
         {
@@ -62,7 +62,7 @@ UINT32 RACERecord::GetFieldAttribute(FIELD_IDENTIFIERS, UINT32 WhichAttribute)
                 case 0: //fieldType
                     return FORMID_ARRAY_FIELD;
                 case 1: //fieldSize
-                    return (UINT32)SPLO.value.size();
+                    return (uint32_t)SPLO.value.size();
                 default:
                     return UNKNOWN_FIELD;
                 }
@@ -75,7 +75,7 @@ UINT32 RACERecord::GetFieldAttribute(FIELD_IDENTIFIERS, UINT32 WhichAttribute)
                     case 0: //fieldType
                         return LIST_FIELD;
                     case 1: //fieldSize
-                        return (UINT32)XNAM.value.size();
+                        return (uint32_t)XNAM.value.size();
                     default:
                         return UNKNOWN_FIELD;
                     }
@@ -398,7 +398,7 @@ UINT32 RACERecord::GetFieldAttribute(FIELD_IDENTIFIERS, UINT32 WhichAttribute)
                 case 0: //fieldType
                     return FORMID_ARRAY_FIELD;
                 case 1: //fieldSize
-                    return (UINT32)HNAM.value.size();
+                    return (uint32_t)HNAM.value.size();
                 default:
                     return UNKNOWN_FIELD;
                 }
@@ -409,7 +409,7 @@ UINT32 RACERecord::GetFieldAttribute(FIELD_IDENTIFIERS, UINT32 WhichAttribute)
                 case 0: //fieldType
                     return FORMID_ARRAY_FIELD;
                 case 1: //fieldSize
-                    return (UINT32)ENAM.value.size();
+                    return (uint32_t)ENAM.value.size();
                 default:
                     return UNKNOWN_FIELD;
                 }
@@ -722,28 +722,28 @@ void * RACERecord::GetField(FIELD_IDENTIFIERS, void **FieldValues)
     return NULL;
     }
 
-bool RACERecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
+bool RACERecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, uint32_t ArraySize)
     {
     switch(FieldID)
         {
         case 1: //flags1
-            SetHeaderFlagMask(*(UINT32 *)FieldValue);
+            SetHeaderFlagMask(*(uint32_t *)FieldValue);
             break;
         case 3: //flags2
-            SetHeaderUnknownFlagMask(*(UINT32 *)FieldValue);
+            SetHeaderUnknownFlagMask(*(uint32_t *)FieldValue);
             break;
         case 4: //eid
-            EDID.Copy((STRING)FieldValue);
+            EDID.Copy((char *)FieldValue);
             break;
         case 5: //full
-            FULL.Copy((STRING)FieldValue);
+            FULL.Copy((char *)FieldValue);
             break;
         case 6: //text
-            DESC.Copy((STRING)FieldValue);
+            DESC.Copy((char *)FieldValue);
             break;
         case 7: //spells
             SPLO.resize(ArraySize);
-            for(UINT32 x = 0; x < ArraySize; x++)
+            for(uint32_t x = 0; x < ArraySize; x++)
                 SPLO.value[x] = ((FORMIDARRAY)FieldValue)[x];
             return true;
         case 8: //relations
@@ -762,53 +762,53 @@ bool RACERecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
                     XNAM.value[ListIndex]->faction = *(FORMID *)FieldValue;
                     return true;
                 case 2: //mod
-                    XNAM.value[ListIndex]->mod = *(SINT32 *)FieldValue;
+                    XNAM.value[ListIndex]->mod = *(int32_t *)FieldValue;
                     break;
                 default:
                     break;
                 }
             break;
         case 9: //skill1
-            DATA.value.skills[0].value = *(SINT8 *)FieldValue;
+            DATA.value.skills[0].value = *(int8_t *)FieldValue;
             break;
         case 10: //skill1Boost
-            DATA.value.skills[0].boost = *(SINT8 *)FieldValue;
+            DATA.value.skills[0].boost = *(int8_t *)FieldValue;
             break;
         case 11: //skill2
-            DATA.value.skills[1].value = *(SINT8 *)FieldValue;
+            DATA.value.skills[1].value = *(int8_t *)FieldValue;
             break;
         case 12: //skill2Boost
-            DATA.value.skills[1].boost = *(SINT8 *)FieldValue;
+            DATA.value.skills[1].boost = *(int8_t *)FieldValue;
             break;
         case 13: //skill3
-            DATA.value.skills[2].value = *(SINT8 *)FieldValue;
+            DATA.value.skills[2].value = *(int8_t *)FieldValue;
             break;
         case 14: //skill3Boost
-            DATA.value.skills[2].boost = *(SINT8 *)FieldValue;
+            DATA.value.skills[2].boost = *(int8_t *)FieldValue;
             break;
         case 15: //skill4
-            DATA.value.skills[3].value = *(SINT8 *)FieldValue;
+            DATA.value.skills[3].value = *(int8_t *)FieldValue;
             break;
         case 16: //skill4Boost
-            DATA.value.skills[3].boost = *(SINT8 *)FieldValue;
+            DATA.value.skills[3].boost = *(int8_t *)FieldValue;
             break;
         case 17: //skill5
-            DATA.value.skills[4].value = *(SINT8 *)FieldValue;
+            DATA.value.skills[4].value = *(int8_t *)FieldValue;
             break;
         case 18: //skill5Boost
-            DATA.value.skills[4].boost = *(SINT8 *)FieldValue;
+            DATA.value.skills[4].boost = *(int8_t *)FieldValue;
             break;
         case 19: //skill6
-            DATA.value.skills[5].value = *(SINT8 *)FieldValue;
+            DATA.value.skills[5].value = *(int8_t *)FieldValue;
             break;
         case 20: //skill6Boost
-            DATA.value.skills[5].boost = *(SINT8 *)FieldValue;
+            DATA.value.skills[5].boost = *(int8_t *)FieldValue;
             break;
         case 21: //skill7
-            DATA.value.skills[6].value = *(SINT8 *)FieldValue;
+            DATA.value.skills[6].value = *(int8_t *)FieldValue;
             break;
         case 22: //skill7Boost
-            DATA.value.skills[6].boost = *(SINT8 *)FieldValue;
+            DATA.value.skills[6].boost = *(int8_t *)FieldValue;
             break;
         case 23: //unused1
             if(ArraySize != 2)
@@ -817,19 +817,19 @@ bool RACERecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             DATA.value.unused1[1] = ((UINT8ARRAY)FieldValue)[1];
             break;
         case 24: //maleHeight
-            DATA.value.maleHeight = *(FLOAT32 *)FieldValue;
+            DATA.value.maleHeight = *(float *)FieldValue;
             break;
         case 25: //femaleHeight
-            DATA.value.femaleHeight = *(FLOAT32 *)FieldValue;
+            DATA.value.femaleHeight = *(float *)FieldValue;
             break;
         case 26: //maleWeight
-            DATA.value.maleWeight = *(FLOAT32 *)FieldValue;
+            DATA.value.maleWeight = *(float *)FieldValue;
             break;
         case 27: //femaleWeight
-            DATA.value.femaleWeight = *(FLOAT32 *)FieldValue;
+            DATA.value.femaleWeight = *(float *)FieldValue;
             break;
         case 28: //flags
-            SetFlagMask(*(UINT32 *)FieldValue);
+            SetFlagMask(*(uint32_t *)FieldValue);
             break;
         case 29: //maleVoice
             VNAM.Load();
@@ -850,73 +850,73 @@ bool RACERecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             DNAM.value.defaultHairFemale = *(FORMID *)FieldValue;
             break;
         case 33: //defaultHairColor
-            CNAM.value = *(UINT8 *)FieldValue;
+            CNAM.value = *(uint8_t *)FieldValue;
             break;
         case 34: //mainClamp
-            PNAM.value = *(FLOAT32 *)FieldValue;
+            PNAM.value = *(float *)FieldValue;
             break;
         case 35: //faceClamp
-            UNAM.value = *(FLOAT32 *)FieldValue;
+            UNAM.value = *(float *)FieldValue;
             break;
         case 36: //maleStrength
-            ATTR.value.maleStrength = *(UINT8 *)FieldValue;
+            ATTR.value.maleStrength = *(uint8_t *)FieldValue;
             break;
         case 37: //maleIntelligence
-            ATTR.value.maleIntelligence = *(UINT8 *)FieldValue;
+            ATTR.value.maleIntelligence = *(uint8_t *)FieldValue;
             break;
         case 38: //maleWillpower
-            ATTR.value.maleWillpower = *(UINT8 *)FieldValue;
+            ATTR.value.maleWillpower = *(uint8_t *)FieldValue;
             break;
         case 39: //maleAgility
-            ATTR.value.maleAgility = *(UINT8 *)FieldValue;
+            ATTR.value.maleAgility = *(uint8_t *)FieldValue;
             break;
         case 40: //maleSpeed
-            ATTR.value.maleSpeed = *(UINT8 *)FieldValue;
+            ATTR.value.maleSpeed = *(uint8_t *)FieldValue;
             break;
         case 41: //maleEndurance
-            ATTR.value.maleEndurance = *(UINT8 *)FieldValue;
+            ATTR.value.maleEndurance = *(uint8_t *)FieldValue;
             break;
         case 42: //malePersonality
-            ATTR.value.malePersonality = *(UINT8 *)FieldValue;
+            ATTR.value.malePersonality = *(uint8_t *)FieldValue;
             break;
         case 43: //maleLuck
-            ATTR.value.maleLuck = *(UINT8 *)FieldValue;
+            ATTR.value.maleLuck = *(uint8_t *)FieldValue;
             break;
         case 44: //femaleStrength
-            ATTR.value.femaleStrength = *(UINT8 *)FieldValue;
+            ATTR.value.femaleStrength = *(uint8_t *)FieldValue;
             break;
         case 45: //femaleIntelligence
-            ATTR.value.femaleIntelligence = *(UINT8 *)FieldValue;
+            ATTR.value.femaleIntelligence = *(uint8_t *)FieldValue;
             break;
         case 46: //femaleWillpower
-            ATTR.value.femaleWillpower = *(UINT8 *)FieldValue;
+            ATTR.value.femaleWillpower = *(uint8_t *)FieldValue;
             break;
         case 47: //femaleAgility
-            ATTR.value.femaleAgility = *(UINT8 *)FieldValue;
+            ATTR.value.femaleAgility = *(uint8_t *)FieldValue;
             break;
         case 48: //femaleSpeed
-            ATTR.value.femaleSpeed = *(UINT8 *)FieldValue;
+            ATTR.value.femaleSpeed = *(uint8_t *)FieldValue;
             break;
         case 49: //femaleEndurance
-            ATTR.value.femaleEndurance = *(UINT8 *)FieldValue;
+            ATTR.value.femaleEndurance = *(uint8_t *)FieldValue;
             break;
         case 50: //femalePersonality
-            ATTR.value.femalePersonality = *(UINT8 *)FieldValue;
+            ATTR.value.femalePersonality = *(uint8_t *)FieldValue;
             break;
         case 51: //femaleLuck
-            ATTR.value.femaleLuck = *(UINT8 *)FieldValue;
+            ATTR.value.femaleLuck = *(uint8_t *)FieldValue;
             break;
         case 52: //head_modPath
             MOD0.Load();
-            MOD0->MODL.Copy((STRING)FieldValue);
+            MOD0->MODL.Copy((char *)FieldValue);
             break;
         case 53: //head_modb
             MOD0.Load();
-            MOD0->MODB.value = *(FLOAT32 *)FieldValue;
+            MOD0->MODB.value = *(float *)FieldValue;
             break;
         case 54: //head_iconPath
             MOD0.Load();
-            MOD0->ICON.Copy((STRING)FieldValue);
+            MOD0->ICON.Copy((char *)FieldValue);
             break;
         case 55: //head_modt_p
             MOD0.Load();
@@ -924,15 +924,15 @@ bool RACERecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             break;
         case 56: //maleEars_modPath
             MOD1.Load();
-            MOD1->MODL.Copy((STRING)FieldValue);
+            MOD1->MODL.Copy((char *)FieldValue);
             break;
         case 57: //maleEars_modb
             MOD1.Load();
-            MOD1->MODB.value = *(FLOAT32 *)FieldValue;
+            MOD1->MODB.value = *(float *)FieldValue;
             break;
         case 58: //maleEars_iconPath
             MOD1.Load();
-            MOD1->ICON.Copy((STRING)FieldValue);
+            MOD1->ICON.Copy((char *)FieldValue);
             break;
         case 59: //maleEars_modt_p
             MOD1.Load();
@@ -940,15 +940,15 @@ bool RACERecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             break;
         case 60: //femaleEars_modPath
             MOD2.Load();
-            MOD2->MODL.Copy((STRING)FieldValue);
+            MOD2->MODL.Copy((char *)FieldValue);
             break;
         case 61: //femaleEars_modb
             MOD2.Load();
-            MOD2->MODB.value = *(FLOAT32 *)FieldValue;
+            MOD2->MODB.value = *(float *)FieldValue;
             break;
         case 62: //femaleEars_iconPath
             MOD2.Load();
-            MOD2->ICON.Copy((STRING)FieldValue);
+            MOD2->ICON.Copy((char *)FieldValue);
             break;
         case 63: //femaleEars_modt_p
             MOD2.Load();
@@ -956,15 +956,15 @@ bool RACERecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             break;
         case 64: //mouth_modPath
             MOD3.Load();
-            MOD3->MODL.Copy((STRING)FieldValue);
+            MOD3->MODL.Copy((char *)FieldValue);
             break;
         case 65: //mouth_modb
             MOD3.Load();
-            MOD3->MODB.value = *(FLOAT32 *)FieldValue;
+            MOD3->MODB.value = *(float *)FieldValue;
             break;
         case 66: //mouth_iconPath
             MOD3.Load();
-            MOD3->ICON.Copy((STRING)FieldValue);
+            MOD3->ICON.Copy((char *)FieldValue);
             break;
         case 67: //mouth_modt_p
             MOD3.Load();
@@ -972,15 +972,15 @@ bool RACERecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             break;
         case 68: //teethLower_modPath
             MOD4.Load();
-            MOD4->MODL.Copy((STRING)FieldValue);
+            MOD4->MODL.Copy((char *)FieldValue);
             break;
         case 69: //teethLower_modb
             MOD4.Load();
-            MOD4->MODB.value = *(FLOAT32 *)FieldValue;
+            MOD4->MODB.value = *(float *)FieldValue;
             break;
         case 70: //teethLower_iconPath
             MOD4.Load();
-            MOD4->ICON.Copy((STRING)FieldValue);
+            MOD4->ICON.Copy((char *)FieldValue);
             break;
         case 71: //teethLower_modt_p
             MOD4.Load();
@@ -988,15 +988,15 @@ bool RACERecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             break;
         case 72: //teethUpper_modPath
             MOD5.Load();
-            MOD5->MODL.Copy((STRING)FieldValue);
+            MOD5->MODL.Copy((char *)FieldValue);
             break;
         case 73: //teethUpper_modb
             MOD5.Load();
-            MOD5->MODB.value = *(FLOAT32 *)FieldValue;
+            MOD5->MODB.value = *(float *)FieldValue;
             break;
         case 74: //teethUpper_iconPath
             MOD5.Load();
-            MOD5->ICON.Copy((STRING)FieldValue);
+            MOD5->ICON.Copy((char *)FieldValue);
             break;
         case 75: //teethUpper_modt_p
             MOD5.Load();
@@ -1004,15 +1004,15 @@ bool RACERecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             break;
         case 76: //tongue_modPath
             MOD6.Load();
-            MOD6->MODL.Copy((STRING)FieldValue);
+            MOD6->MODL.Copy((char *)FieldValue);
             break;
         case 77: //tongue_modb
             MOD6.Load();
-            MOD6->MODB.value = *(FLOAT32 *)FieldValue;
+            MOD6->MODB.value = *(float *)FieldValue;
             break;
         case 78: //tongue_iconPath
             MOD6.Load();
-            MOD6->ICON.Copy((STRING)FieldValue);
+            MOD6->ICON.Copy((char *)FieldValue);
             break;
         case 79: //tongue_modt_p
             MOD6.Load();
@@ -1020,15 +1020,15 @@ bool RACERecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             break;
         case 80: //leftEye_modPath
             MOD7.Load();
-            MOD7->MODL.Copy((STRING)FieldValue);
+            MOD7->MODL.Copy((char *)FieldValue);
             break;
         case 81: //leftEye_modb
             MOD7.Load();
-            MOD7->MODB.value = *(FLOAT32 *)FieldValue;
+            MOD7->MODB.value = *(float *)FieldValue;
             break;
         case 82: //leftEye_iconPath
             MOD7.Load();
-            MOD7->ICON.Copy((STRING)FieldValue);
+            MOD7->ICON.Copy((char *)FieldValue);
             break;
         case 83: //leftEye_modt_p
             MOD7.Load();
@@ -1036,15 +1036,15 @@ bool RACERecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             break;
         case 84: //rightEye_modPath
             MOD8.Load();
-            MOD8->MODL.Copy((STRING)FieldValue);
+            MOD8->MODL.Copy((char *)FieldValue);
             break;
         case 85: //rightEye_modb
             MOD8.Load();
-            MOD8->MODB.value = *(FLOAT32 *)FieldValue;
+            MOD8->MODB.value = *(float *)FieldValue;
             break;
         case 86: //rightEye_iconPath
             MOD8.Load();
-            MOD8->ICON.Copy((STRING)FieldValue);
+            MOD8->ICON.Copy((char *)FieldValue);
             break;
         case 87: //rightEye_modt_p
             MOD8.Load();
@@ -1052,66 +1052,66 @@ bool RACERecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             break;
         case 88: //maleTail_modPath
             MMODL.Load();
-            MMODL->MODL.Copy((STRING)(STRING)FieldValue);
+            MMODL->MODL.Copy((char *)(char *)FieldValue);
             break;
         case 89: //maleTail_modb
             MMODL.Load();
-            MMODL->MODB.value = *(FLOAT32 *)FieldValue;
+            MMODL->MODB.value = *(float *)FieldValue;
             break;
         case 90: //maleTail_modt_p
             MMODL.Load();
             MMODL->MODT.Copy((UINT8ARRAY)FieldValue, ArraySize);
             break;
         case 91: //maleUpperBodyPath
-            MICON0.Copy((STRING)FieldValue);
+            MICON0.Copy((char *)FieldValue);
             break;
         case 92: //maleLowerBodyPath
-            MICON1.Copy((STRING)FieldValue);
+            MICON1.Copy((char *)FieldValue);
             break;
         case 93: //maleHandPath
-            MICON2.Copy((STRING)FieldValue);
+            MICON2.Copy((char *)FieldValue);
             break;
         case 94: //maleFootPath
-            MICON3.Copy((STRING)FieldValue);
+            MICON3.Copy((char *)FieldValue);
             break;
         case 95: //maleTailPath
-            MICON4.Copy((STRING)FieldValue);
+            MICON4.Copy((char *)FieldValue);
             break;
         case 96: //femaleTail_modPath
             FMODL.Load();
-            FMODL->MODL.Copy((STRING)(STRING)FieldValue);
+            FMODL->MODL.Copy((char *)(char *)FieldValue);
             break;
         case 97: //femaleTail_modb
             FMODL.Load();
-            FMODL->MODB.value = *(FLOAT32 *)FieldValue;
+            FMODL->MODB.value = *(float *)FieldValue;
             break;
         case 98: //femaleTail_modt_p
             FMODL.Load();
             FMODL->MODT.Copy((UINT8ARRAY)FieldValue, ArraySize);
             break;
         case 99: //femaleUpperBodyPath
-            FICON0.Copy((STRING)FieldValue);
+            FICON0.Copy((char *)FieldValue);
             break;
         case 100: //femaleLowerBodyPath
-            FICON1.Copy((STRING)FieldValue);
+            FICON1.Copy((char *)FieldValue);
             break;
         case 101: //femaleHandPath
-            FICON2.Copy((STRING)FieldValue);
+            FICON2.Copy((char *)FieldValue);
             break;
         case 102: //femaleFootPath
-            FICON3.Copy((STRING)FieldValue);
+            FICON3.Copy((char *)FieldValue);
             break;
         case 103: //femaleTailPath
-            FICON4.Copy((STRING)FieldValue);
+            FICON4.Copy((char *)FieldValue);
             break;
         case 104: //hairs
             HNAM.resize(ArraySize);
-            for(UINT32 x = 0; x < ArraySize; x++)
+            for(uint32_t x = 0; x < ArraySize; x++)
                 HNAM.value[x] = ((FORMIDARRAY)FieldValue)[x];
             return true;
         case 105: //eyes
             ENAM.resize(ArraySize);
-            for(UINT32 x = 0; x < ArraySize; x++)
+            for(uint32_t x = 0; x < ArraySize; x++)
                 ENAM.value[x] = ((FORMIDARRAY)FieldValue)[x];
             return true;
         case 106: //fggs_p

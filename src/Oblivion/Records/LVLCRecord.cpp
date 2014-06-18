@@ -81,7 +81,7 @@ bool LVLCRecord::VisitFormIDs(FormIDOp &op)
         op.Accept(SCRI.value);
     if(TNAM.IsLoaded())
         op.Accept(TNAM.value);
-    for(UINT32 ListIndex = 0; ListIndex < Entries.value.size(); ListIndex++)
+    for(uint32_t ListIndex = 0; ListIndex < Entries.value.size(); ListIndex++)
         op.Accept(Entries.value[ListIndex]->listId);
 
     return op.Stop();
@@ -120,46 +120,46 @@ void LVLCRecord::IsUseAllSpells(bool value)
     *LVLF.value = value ? (*LVLF.value | fUseAllSpells) : (*LVLF.value & ~fUseAllSpells);
     }
 
-bool LVLCRecord::IsFlagMask(UINT8 Mask, bool Exact)
+bool LVLCRecord::IsFlagMask(uint8_t Mask, bool Exact)
     {
     LVLF.Load();
     return Exact ? ((*LVLF.value & Mask) == Mask) : ((*LVLF.value & Mask) != 0);
     }
 
-void LVLCRecord::SetFlagMask(UINT8 Mask)
+void LVLCRecord::SetFlagMask(uint8_t Mask)
     {
     LVLF.Load();
     *LVLF.value = Mask;
     }
 
-UINT32 LVLCRecord::GetType()
+uint32_t LVLCRecord::GetType()
     {
     return REV32(LVLC);
     }
 
-STRING LVLCRecord::GetStrType()
+char * LVLCRecord::GetStrType()
     {
     return "LVLC";
     }
 
-SINT32 LVLCRecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk)
+int32_t LVLCRecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk)
     {
-    UINT32 subType = 0;
-    UINT32 subSize = 0;
+    uint32_t subType = 0;
+    uint32_t subSize = 0;
     while(buffer < end_buffer){
-        subType = *(UINT32 *)buffer;
+        subType = *(uint32_t *)buffer;
         buffer += 4;
         switch(subType)
             {
             case REV32(XXXX):
                 buffer += 2;
-                subSize = *(UINT32 *)buffer;
+                subSize = *(uint32_t *)buffer;
                 buffer += 4;
-                subType = *(UINT32 *)buffer;
+                subType = *(uint32_t *)buffer;
                 buffer += 6;
                 break;
             default:
-                subSize = *(UINT16 *)buffer;
+                subSize = *(uint16_t *)buffer;
                 buffer += 2;
                 break;
             }
@@ -201,7 +201,7 @@ SINT32 LVLCRecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer,
     return 0;
     }
 
-SINT32 LVLCRecord::Unload()
+int32_t LVLCRecord::Unload()
     {
     IsChanged(false);
     IsLoaded(false);
@@ -214,7 +214,7 @@ SINT32 LVLCRecord::Unload()
     return 1;
     }
 
-SINT32 LVLCRecord::WriteRecord(FileWriter &writer)
+int32_t LVLCRecord::WriteRecord(FileWriter &writer)
     {
     WRITE(EDID);
     WRITE(LVLD);

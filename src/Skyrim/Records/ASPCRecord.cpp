@@ -79,35 +79,35 @@ bool ASPCRecord::VisitFormIDs(FormIDOp &op)
     }
 
 
-UINT32 ASPCRecord::GetType()
+uint32_t ASPCRecord::GetType()
     {
         return REV32(ASPC);
     }
 
-STRING ASPCRecord::GetStrType()
+char * ASPCRecord::GetStrType()
     {
         return "ASPC";
     }
 
-SINT32 ASPCRecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk)
+int32_t ASPCRecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk)
     {
-        UINT32 subType = 0;
-        UINT32 subSize = 0;
+        uint32_t subType = 0;
+        uint32_t subSize = 0;
         while(buffer < end_buffer)
         {
-            subType = *(UINT32 *)buffer;
+            subType = *(uint32_t *)buffer;
             buffer += 4;
             switch(subType)
             {
                 case REV32(XXXX):
                     buffer += 2;
-                    subSize = *(UINT32 *)buffer;
+                    subSize = *(uint32_t *)buffer;
                     buffer += 4;
-                    subType = *(UINT32 *)buffer;
+                    subType = *(uint32_t *)buffer;
                     buffer += 6;
                     break;
                 default:
-                    subSize = *(UINT16 *)buffer;
+                    subSize = *(uint16_t *)buffer;
                     buffer += 2;
                     break;
             }
@@ -141,7 +141,7 @@ SINT32 ASPCRecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer,
         return 0;
     }
 
-SINT32 ASPCRecord::Unload()
+int32_t ASPCRecord::Unload()
     {
         IsLoaded(false);
         IsChanged(false);
@@ -153,7 +153,7 @@ SINT32 ASPCRecord::Unload()
         return 1;
     }
 
-SINT32 ASPCRecord::WriteRecord(FileWriter &writer)
+int32_t ASPCRecord::WriteRecord(FileWriter &writer)
     {
         WRITE(EDID);
         WRITE(OBND);

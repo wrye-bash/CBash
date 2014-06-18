@@ -44,13 +44,13 @@ class EXPLRecord : public FNVRecord //Explosion
     private:
         struct EXPLDATA
             {
-            FLOAT32 force, damage, radius;
+            float force, damage, radius;
             FORMID  light, sound1;
-            UINT32  flags;
-            FLOAT32 ISRadius;
+            uint32_t  flags;
+            float ISRadius;
             FORMID  impactDataSet, sound2;
-            FLOAT32 radLevel, radTime, radRadius;
-            UINT32  soundLevel;
+            float radLevel, radTime, radRadius;
+            uint32_t  soundLevel;
 
             EXPLDATA();
             ~EXPLDATA();
@@ -107,8 +107,8 @@ class EXPLRecord : public FNVRecord //Explosion
         void   IsPushExplosionSourceRefOnly(bool value);
         bool   IsIgnoreImageSpaceSwap();
         void   IsIgnoreImageSpaceSwap(bool value);
-        bool   IsFlagMask(UINT32 Mask, bool Exact=false);
-        void   SetFlagMask(UINT32 Mask);
+        bool   IsFlagMask(uint32_t Mask, bool Exact=false);
+        void   SetFlagMask(uint32_t Mask);
 
         bool   IsLoud();
         void   IsLoud(bool value);
@@ -116,20 +116,20 @@ class EXPLRecord : public FNVRecord //Explosion
         void   IsNormal(bool value);
         bool   IsSilent();
         void   IsSilent(bool value);
-        bool   IsSoundLevelType(UINT8 Type);
-        void   SetSoundLevelType(UINT8 Type);
+        bool   IsSoundLevelType(uint8_t Type);
+        void   SetSoundLevelType(uint8_t Type);
 
-        UINT32 GetFieldAttribute(DEFAULTED_FIELD_IDENTIFIERS, UINT32 WhichAttribute=0);
+        uint32_t GetFieldAttribute(DEFAULTED_FIELD_IDENTIFIERS, uint32_t WhichAttribute=0);
         void * GetField(DEFAULTED_FIELD_IDENTIFIERS, void **FieldValues=NULL);
-        bool   SetField(DEFAULTED_FIELD_IDENTIFIERS, void *FieldValue=NULL, UINT32 ArraySize=0);
+        bool   SetField(DEFAULTED_FIELD_IDENTIFIERS, void *FieldValue=NULL, uint32_t ArraySize=0);
         void   DeleteField(DEFAULTED_FIELD_IDENTIFIERS);
 
-        UINT32 GetType();
-        STRING GetStrType();
+        uint32_t GetType();
+        char * GetStrType();
 
-        SINT32 ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk=false);
-        SINT32 Unload();
-        SINT32 WriteRecord(FileWriter &writer);
+        int32_t ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk=false);
+        int32_t Unload();
+        int32_t WriteRecord(FileWriter &writer);
 
         bool operator ==(const EXPLRecord &other) const;
         bool operator !=(const EXPLRecord &other) const;

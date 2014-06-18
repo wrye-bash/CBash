@@ -103,7 +103,7 @@ bool ENCHRecord::VisitFormIDs(FormIDOp &op)
     if(!IsLoaded())
         return false;
 
-    for(UINT32 ListIndex = 0; ListIndex < Effects.value.size(); ListIndex++)
+    for(uint32_t ListIndex = 0; ListIndex < Effects.value.size(); ListIndex++)
         Effects.value[ListIndex]->VisitFormIDs(op);
 
     return op.Stop();
@@ -119,12 +119,12 @@ void ENCHRecord::IsNoAutoCalc(bool value)
     SETBIT(ENIT.value.flags, fIsNoAutoCalc, value);
     }
 
-bool ENCHRecord::IsFlagMask(UINT8 Mask, bool Exact)
+bool ENCHRecord::IsFlagMask(uint8_t Mask, bool Exact)
     {
     return Exact ? ((ENIT.value.flags & Mask) == Mask) : ((ENIT.value.flags & Mask) != 0);
     }
 
-void ENCHRecord::SetFlagMask(UINT8 Mask)
+void ENCHRecord::SetFlagMask(uint8_t Mask)
     {
     ENIT.value.flags = Mask;
     }
@@ -169,45 +169,45 @@ void ENCHRecord::IsApparel(bool value)
     ENIT.value.itemType = value ? eApparel : eScroll;
     }
 
-bool ENCHRecord::IsType(UINT32 Type)
+bool ENCHRecord::IsType(uint32_t Type)
     {
     return (ENIT.value.itemType == Type);
     }
 
-void ENCHRecord::SetType(UINT32 Type)
+void ENCHRecord::SetType(uint32_t Type)
     {
     ENIT.value.itemType = Type;
     }
 
-UINT32 ENCHRecord::GetType()
+uint32_t ENCHRecord::GetType()
     {
     return REV32(ENCH);
     }
 
-STRING ENCHRecord::GetStrType()
+char * ENCHRecord::GetStrType()
     {
     return "ENCH";
     }
 
-SINT32 ENCHRecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk)
+int32_t ENCHRecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk)
     {
-    UINT32 subType = 0;
-    UINT32 subSize = 0;
+    uint32_t subType = 0;
+    uint32_t subSize = 0;
     bool bNoOBME = true;
     while(buffer < end_buffer){
-        subType = *(UINT32 *)buffer;
+        subType = *(uint32_t *)buffer;
         buffer += 4;
         switch(subType)
             {
             case REV32(XXXX):
                 buffer += 2;
-                subSize = *(UINT32 *)buffer;
+                subSize = *(uint32_t *)buffer;
                 buffer += 4;
-                subType = *(UINT32 *)buffer;
+                subType = *(uint32_t *)buffer;
                 buffer += 6;
                 break;
             default:
-                subSize = *(UINT16 *)buffer;
+                subSize = *(uint16_t *)buffer;
                 buffer += 2;
                 break;
             }
@@ -283,7 +283,7 @@ SINT32 ENCHRecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer,
     return 0;
     }
 
-SINT32 ENCHRecord::Unload()
+int32_t ENCHRecord::Unload()
     {
     IsChanged(false);
     IsLoaded(false);
@@ -295,7 +295,7 @@ SINT32 ENCHRecord::Unload()
     return 1;
     }
 
-SINT32 ENCHRecord::WriteRecord(FileWriter &writer)
+int32_t ENCHRecord::WriteRecord(FileWriter &writer)
     {
     WRITE(EDID);
     if(OBME.IsLoaded())

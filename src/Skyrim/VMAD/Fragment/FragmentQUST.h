@@ -45,10 +45,10 @@ class FragmentQUST : public Fragments
 public:
     struct Fragment
     {
-        UINT16 stage;
-        UINT16 unk1; // always 0
-        SINT32 stageIndex;
-        UINT8 unk2; // always 1
+        uint16_t stage;
+        uint16_t unk1; // always 0
+        int32_t stageIndex;
+        uint8_t unk2; // always 1
         NonNullStringRecord scriptName;
         NonNullStringRecord fragmentName;
 
@@ -64,10 +64,10 @@ public:
     FragmentQUST();
     virtual ~FragmentQUST();
 
-    void Read(unsigned char *&buffer, const SINT16 &version, const SINT16 &objFormat, const bool &CompressedOnDisk);
+    void Read(unsigned char *&buffer, const int16_t &version, const int16_t &objFormat, const bool &CompressedOnDisk);
 
     virtual void VisitFormIDs(FormIDOp &op);
-    virtual UINT32 GetSize() const;
+    virtual uint32_t GetSize() const;
     virtual void Write(FileWriter &writer) const;
     virtual bool equals(const Fragments *other) const;
     virtual Fragments * Copy() const;

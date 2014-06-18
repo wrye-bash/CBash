@@ -38,7 +38,7 @@
 
 namespace FNV
 {
-UINT32 QUSTRecord::GetFieldAttribute(FIELD_IDENTIFIERS, UINT32 WhichAttribute)
+uint32_t QUSTRecord::GetFieldAttribute(FIELD_IDENTIFIERS, uint32_t WhichAttribute)
     {
     switch(FieldID)
         {
@@ -107,7 +107,7 @@ UINT32 QUSTRecord::GetFieldAttribute(FIELD_IDENTIFIERS, UINT32 WhichAttribute)
                     case 0: //fieldType
                         return LIST_FIELD;
                     case 1: //fieldSize
-                        return (UINT32)CTDA.value.size();
+                        return (uint32_t)CTDA.value.size();
                     default:
                         return UNKNOWN_FIELD;
                     }
@@ -239,7 +239,7 @@ UINT32 QUSTRecord::GetFieldAttribute(FIELD_IDENTIFIERS, UINT32 WhichAttribute)
                     case 0: //fieldType
                         return LIST_FIELD;
                     case 1: //fieldSize
-                        return (UINT32)Stages.value.size();
+                        return (uint32_t)Stages.value.size();
                     default:
                         return UNKNOWN_FIELD;
                     }
@@ -261,7 +261,7 @@ UINT32 QUSTRecord::GetFieldAttribute(FIELD_IDENTIFIERS, UINT32 WhichAttribute)
                             case 0: //fieldType
                                 return LIST_FIELD;
                             case 1: //fieldSize
-                                return (UINT32)Stages.value[ListIndex]->Entries.value.size();
+                                return (uint32_t)Stages.value[ListIndex]->Entries.value.size();
                             default:
                                 return UNKNOWN_FIELD;
                             }
@@ -283,7 +283,7 @@ UINT32 QUSTRecord::GetFieldAttribute(FIELD_IDENTIFIERS, UINT32 WhichAttribute)
                                     case 0: //fieldType
                                         return LIST_FIELD;
                                     case 1: //fieldSize
-                                        return (UINT32)Stages.value[ListIndex]->Entries.value[ListX2Index]->CTDA.value.size();
+                                        return (uint32_t)Stages.value[ListIndex]->Entries.value[ListX2Index]->CTDA.value.size();
                                     default:
                                         return UNKNOWN_FIELD;
                                     }
@@ -451,7 +451,7 @@ UINT32 QUSTRecord::GetFieldAttribute(FIELD_IDENTIFIERS, UINT32 WhichAttribute)
                                     case 0: //fieldType
                                         return LIST_FIELD;
                                     case 1: //fieldSize
-                                        return (UINT32)Stages.value[ListIndex]->Entries.value[ListX2Index]->VARS.value.size();
+                                        return (uint32_t)Stages.value[ListIndex]->Entries.value[ListX2Index]->VARS.value.size();
                                     default:
                                         return UNKNOWN_FIELD;
                                     }
@@ -500,7 +500,7 @@ UINT32 QUSTRecord::GetFieldAttribute(FIELD_IDENTIFIERS, UINT32 WhichAttribute)
                                     case 0: //fieldType
                                         return FORMID_OR_UINT32_ARRAY_FIELD;
                                     case 1: //fieldSize
-                                        return (UINT32)Stages.value[ListIndex]->Entries.value[ListX2Index]->SCR_.value.size();
+                                        return (uint32_t)Stages.value[ListIndex]->Entries.value[ListX2Index]->SCR_.value.size();
                                     default:
                                         return UNKNOWN_FIELD;
                                     }
@@ -545,7 +545,7 @@ UINT32 QUSTRecord::GetFieldAttribute(FIELD_IDENTIFIERS, UINT32 WhichAttribute)
                     case 0: //fieldType
                         return LIST_FIELD;
                     case 1: //fieldSize
-                        return (UINT32)Objectives.value.size();
+                        return (uint32_t)Objectives.value.size();
                     default:
                         return UNKNOWN_FIELD;
                     }
@@ -569,7 +569,7 @@ UINT32 QUSTRecord::GetFieldAttribute(FIELD_IDENTIFIERS, UINT32 WhichAttribute)
                             case 0: //fieldType
                                 return LIST_FIELD;
                             case 1: //fieldSize
-                                return (UINT32)Objectives.value[ListIndex]->Targets.value.size();
+                                return (uint32_t)Objectives.value[ListIndex]->Targets.value.size();
                             default:
                                 return UNKNOWN_FIELD;
                             }
@@ -604,7 +604,7 @@ UINT32 QUSTRecord::GetFieldAttribute(FIELD_IDENTIFIERS, UINT32 WhichAttribute)
                                     case 0: //fieldType
                                         return LIST_FIELD;
                                     case 1: //fieldSize
-                                        return (UINT32)Objectives.value[ListIndex]->Targets.value[ListX2Index]->CTDA.value.size();
+                                        return (uint32_t)Objectives.value[ListIndex]->Targets.value[ListX2Index]->CTDA.value.size();
                                     default:
                                         return UNKNOWN_FIELD;
                                     }
@@ -890,7 +890,7 @@ void * QUSTRecord::GetField(FIELD_IDENTIFIERS, void **FieldValues)
                                 }
                             return NULL;
                         case 13: //references
-                            for(UINT32 x = 0; x < Stages.value[ListIndex]->Entries.value[ListX2Index]->SCR_.value.size(); ++x)
+                            for(uint32_t x = 0; x < Stages.value[ListIndex]->Entries.value[ListX2Index]->SCR_.value.size(); ++x)
                                 ((FORMIDARRAY)FieldValues)[x] = Stages.value[ListIndex]->Entries.value[ListX2Index]->SCR_.value[x]->reference;
                             return NULL;
                         case 14: //nextQuest
@@ -967,12 +967,12 @@ void * QUSTRecord::GetField(FIELD_IDENTIFIERS, void **FieldValues)
     return NULL;
     }
 
-bool QUSTRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
+bool QUSTRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, uint32_t ArraySize)
     {
     switch(FieldID)
         {
         case 1: //flags1
-            SetHeaderFlagMask(*(UINT32 *)FieldValue);
+            SetHeaderFlagMask(*(uint32_t *)FieldValue);
             break;
         case 3: //versionControl1
             if(ArraySize != 4)
@@ -983,10 +983,10 @@ bool QUSTRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             ((UINT8ARRAY)&flagsUnk)[3] = ((UINT8ARRAY)FieldValue)[3];
             break;
         case 4: //eid
-            EDID.Copy((STRING)FieldValue);
+            EDID.Copy((char *)FieldValue);
             break;
         case 5: //formVersion
-            formVersion = *(UINT16 *)FieldValue;
+            formVersion = *(uint16_t *)FieldValue;
             break;
         case 6: //versionControl2
             if(ArraySize != 2)
@@ -998,19 +998,19 @@ bool QUSTRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             SCRI.value = *(FORMID *)FieldValue;
             return true;
         case 8: //full
-            FULL.Copy((STRING)FieldValue);
+            FULL.Copy((char *)FieldValue);
             break;
         case 9: //iconPath
-            ICON.Copy((STRING)FieldValue);
+            ICON.Copy((char *)FieldValue);
             break;
         case 10: //smallIconPath
-            MICO.Copy((STRING)FieldValue);
+            MICO.Copy((char *)FieldValue);
             break;
         case 11: //flags
-            SetFlagMask(*(UINT8 *)FieldValue);
+            SetFlagMask(*(uint8_t *)FieldValue);
             break;
         case 12: //priority
-            DATA.value.priority = *(UINT8 *)FieldValue;
+            DATA.value.priority = *(uint8_t *)FieldValue;
             break;
         case 13: //unused1
             if(ArraySize != 2)
@@ -1019,7 +1019,7 @@ bool QUSTRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             DATA.value.unused1[1] = ((UINT8ARRAY)FieldValue)[1];
             break;
         case 14: //delay
-            DATA.value.delay = *(FLOAT32 *)FieldValue;
+            DATA.value.delay = *(float *)FieldValue;
             break;
         case 15: //conditions
             if(ListFieldID == 0) //conditionsSize
@@ -1034,7 +1034,7 @@ bool QUSTRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             switch(ListFieldID)
                 {
                 case 1: //operType
-                    CTDA.value[ListIndex]->operType = *(UINT8 *)FieldValue;
+                    CTDA.value[ListIndex]->operType = *(uint8_t *)FieldValue;
                     break;
                 case 2: //unused1
                     if(ArraySize != 3)
@@ -1047,19 +1047,19 @@ bool QUSTRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
                     CTDA.value[ListIndex]->compValue = *(FORMID_OR_FLOAT32 *)FieldValue;
                     return true;
                 case 4: //ifunc
-                    CTDA.value[ListIndex]->ifunc = *(UINT32 *)FieldValue;
+                    CTDA.value[ListIndex]->ifunc = *(uint32_t *)FieldValue;
                     return true;
                 case 5: //param1
-                    CTDA.value[ListIndex]->param1 = *(UINT32 *)FieldValue;
+                    CTDA.value[ListIndex]->param1 = *(uint32_t *)FieldValue;
                     return true;
                 case 6: //param2
-                    CTDA.value[ListIndex]->param2 = *(UINT32 *)FieldValue;
+                    CTDA.value[ListIndex]->param2 = *(uint32_t *)FieldValue;
                     return true;
                 case 7: //runOnType
-                    CTDA.value[ListIndex]->runOnType = *(UINT32 *)FieldValue;
+                    CTDA.value[ListIndex]->runOnType = *(uint32_t *)FieldValue;
                     return true;
                 case 8: //reference
-                    CTDA.value[ListIndex]->reference = *(UINT32 *)FieldValue;
+                    CTDA.value[ListIndex]->reference = *(uint32_t *)FieldValue;
                     return true;
                 default:
                     break;
@@ -1078,7 +1078,7 @@ bool QUSTRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             switch(ListFieldID)
                 {
                 case 1: //stage
-                    Stages.value[ListIndex]->INDX.value = *(SINT16 *)FieldValue;
+                    Stages.value[ListIndex]->INDX.value = *(int16_t *)FieldValue;
                     break;
                 case 2: //entries
                     if(ListX2FieldID == 0) //entriesSize
@@ -1093,7 +1093,7 @@ bool QUSTRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
                     switch(ListX2FieldID)
                         {
                         case 1: //flags
-                            Stages.value[ListIndex]->Entries.value[ListX2Index]->QSDT.value = *(UINT8 *)FieldValue;
+                            Stages.value[ListIndex]->Entries.value[ListX2Index]->QSDT.value = *(uint8_t *)FieldValue;
                             break;
                         case 2: //conditions
                             if(ListX3FieldID == 0) //conditionsSize
@@ -1108,7 +1108,7 @@ bool QUSTRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
                             switch(ListX3FieldID)
                                 {
                                 case 1: //operType
-                                    Stages.value[ListIndex]->Entries.value[ListX2Index]->CTDA.value[ListX3Index]->operType = *(UINT8 *)FieldValue;
+                                    Stages.value[ListIndex]->Entries.value[ListX2Index]->CTDA.value[ListX3Index]->operType = *(uint8_t *)FieldValue;
                                     break;
                                 case 2: //unused1
                                     if(ArraySize != 3)
@@ -1121,26 +1121,26 @@ bool QUSTRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
                                     Stages.value[ListIndex]->Entries.value[ListX2Index]->CTDA.value[ListX3Index]->compValue = *(FORMID_OR_FLOAT32 *)FieldValue;
                                     return true;
                                 case 4: //ifunc
-                                    Stages.value[ListIndex]->Entries.value[ListX2Index]->CTDA.value[ListX3Index]->ifunc = *(UINT32 *)FieldValue;
+                                    Stages.value[ListIndex]->Entries.value[ListX2Index]->CTDA.value[ListX3Index]->ifunc = *(uint32_t *)FieldValue;
                                     return true;
                                 case 5: //param1
-                                    Stages.value[ListIndex]->Entries.value[ListX2Index]->CTDA.value[ListX3Index]->param1 = *(UINT32 *)FieldValue;
+                                    Stages.value[ListIndex]->Entries.value[ListX2Index]->CTDA.value[ListX3Index]->param1 = *(uint32_t *)FieldValue;
                                     return true;
                                 case 6: //param2
-                                    Stages.value[ListIndex]->Entries.value[ListX2Index]->CTDA.value[ListX3Index]->param2 = *(UINT32 *)FieldValue;
+                                    Stages.value[ListIndex]->Entries.value[ListX2Index]->CTDA.value[ListX3Index]->param2 = *(uint32_t *)FieldValue;
                                     return true;
                                 case 7: //runOnType
-                                    Stages.value[ListIndex]->Entries.value[ListX2Index]->CTDA.value[ListX3Index]->runOnType = *(UINT32 *)FieldValue;
+                                    Stages.value[ListIndex]->Entries.value[ListX2Index]->CTDA.value[ListX3Index]->runOnType = *(uint32_t *)FieldValue;
                                     return true;
                                 case 8: //reference
-                                    Stages.value[ListIndex]->Entries.value[ListX2Index]->CTDA.value[ListX3Index]->reference = *(UINT32 *)FieldValue;
+                                    Stages.value[ListIndex]->Entries.value[ListX2Index]->CTDA.value[ListX3Index]->reference = *(uint32_t *)FieldValue;
                                     return true;
                                 default:
                                     break;
                                 }
                             break;
                         case 3: //text
-                            Stages.value[ListIndex]->Entries.value[ListX2Index]->CNAM.Copy((STRING)FieldValue);
+                            Stages.value[ListIndex]->Entries.value[ListX2Index]->CNAM.Copy((char *)FieldValue);
                             break;
                         case 4: //unused1
                             if(ArraySize != 4)
@@ -1151,25 +1151,25 @@ bool QUSTRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
                             Stages.value[ListIndex]->Entries.value[ListX2Index]->SCHR.value.unused1[3] = ((UINT8ARRAY)FieldValue)[3];
                             break;
                         case 5: //numRefs
-                            Stages.value[ListIndex]->Entries.value[ListX2Index]->SCHR.value.numRefs = *(UINT32 *)FieldValue;
+                            Stages.value[ListIndex]->Entries.value[ListX2Index]->SCHR.value.numRefs = *(uint32_t *)FieldValue;
                             break;
                         case 6: //compiledSize
-                            Stages.value[ListIndex]->Entries.value[ListX2Index]->SCHR.value.compiledSize = *(UINT32 *)FieldValue;
+                            Stages.value[ListIndex]->Entries.value[ListX2Index]->SCHR.value.compiledSize = *(uint32_t *)FieldValue;
                             break;
                         case 7: //lastIndex
-                            Stages.value[ListIndex]->Entries.value[ListX2Index]->SCHR.value.lastIndex = *(UINT32 *)FieldValue;
+                            Stages.value[ListIndex]->Entries.value[ListX2Index]->SCHR.value.lastIndex = *(uint32_t *)FieldValue;
                             break;
                         case 8: //scriptType
-                            Stages.value[ListIndex]->Entries.value[ListX2Index]->SCHR.value.scriptType = *(UINT16 *)FieldValue;
+                            Stages.value[ListIndex]->Entries.value[ListX2Index]->SCHR.value.scriptType = *(uint16_t *)FieldValue;
                             break;
                         case 9: //scriptFlags
-                            Stages.value[ListIndex]->Entries.value[ListX2Index]->SCHR.value.flags = *(UINT16 *)FieldValue;
+                            Stages.value[ListIndex]->Entries.value[ListX2Index]->SCHR.value.flags = *(uint16_t *)FieldValue;
                             break;
                         case 10: //compiled_p
                             Stages.value[ListIndex]->Entries.value[ListX2Index]->SCDA.Copy((UINT8ARRAY)FieldValue, ArraySize);
                             break;
                         case 11: //scriptText
-                            Stages.value[ListIndex]->Entries.value[ListX2Index]->SCTX.Copy((STRING)FieldValue);
+                            Stages.value[ListIndex]->Entries.value[ListX2Index]->SCTX.Copy((char *)FieldValue);
                             break;
                         case 12: //vars
                             if(ListX3FieldID == 0) //varsSize
@@ -1184,7 +1184,7 @@ bool QUSTRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
                             switch(ListX3FieldID)
                                 {
                                 case 1: //index
-                                    Stages.value[ListIndex]->Entries.value[ListX2Index]->VARS.value[ListX3Index]->SLSD.value.index = *(UINT32 *)FieldValue;
+                                    Stages.value[ListIndex]->Entries.value[ListX2Index]->VARS.value[ListX3Index]->SLSD.value.index = *(uint32_t *)FieldValue;
                                     break;
                                 case 2: //unused1
                                     if(ArraySize != 12)
@@ -1203,7 +1203,7 @@ bool QUSTRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
                                     Stages.value[ListIndex]->Entries.value[ListX2Index]->VARS.value[ListX3Index]->SLSD.value.unused1[11] = ((UINT8ARRAY)FieldValue)[11];
                                     break;
                                 case 3: //flags
-                                    Stages.value[ListIndex]->Entries.value[ListX2Index]->VARS.value[ListX3Index]->SetFlagMask(*(UINT8 *)FieldValue);
+                                    Stages.value[ListIndex]->Entries.value[ListX2Index]->VARS.value[ListX3Index]->SetFlagMask(*(uint8_t *)FieldValue);
                                     break;
                                 case 4: //unused2
                                     if(ArraySize != 7)
@@ -1217,7 +1217,7 @@ bool QUSTRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
                                     Stages.value[ListIndex]->Entries.value[ListX2Index]->VARS.value[ListX3Index]->SLSD.value.unused2[6] = ((UINT8ARRAY)FieldValue)[6];
                                     break;
                                 case 5: //name
-                                    Stages.value[ListIndex]->Entries.value[ListX2Index]->VARS.value[ListX3Index]->SCVR.Copy((STRING)FieldValue);
+                                    Stages.value[ListIndex]->Entries.value[ListX2Index]->VARS.value[ListX3Index]->SCVR.Copy((char *)FieldValue);
                                     break;
                                 default:
                                     break;
@@ -1237,7 +1237,7 @@ bool QUSTRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
                                 {
                                 case 1: //reference
                                     //Borrowing ArraySize to flag if the new value is a formID
-                                    Stages.value[ListIndex]->Entries.value[ListX2Index]->SCR_.value[ListX3Index]->reference = *(UINT32 *)FieldValue;
+                                    Stages.value[ListIndex]->Entries.value[ListX2Index]->SCR_.value[ListX3Index]->reference = *(uint32_t *)FieldValue;
                                     Stages.value[ListIndex]->Entries.value[ListX2Index]->SCR_.value[ListX3Index]->isSCRO = ArraySize ? true : false;
                                     return ArraySize != 0;
                                 default:
@@ -1265,10 +1265,10 @@ bool QUSTRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             switch(ListFieldID)
                 {
                 case 1: //objective
-                    Objectives.value[ListIndex]->QOBJ.value = *(SINT32 *)FieldValue;
+                    Objectives.value[ListIndex]->QOBJ.value = *(int32_t *)FieldValue;
                     break;
                 case 2: //text
-                    Objectives.value[ListIndex]->NNAM.Copy((STRING)FieldValue);
+                    Objectives.value[ListIndex]->NNAM.Copy((char *)FieldValue);
                     break;
                 case 3: //targets
                     if(ListX2FieldID == 0) //targetsSize
@@ -1286,7 +1286,7 @@ bool QUSTRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
                             Objectives.value[ListIndex]->Targets.value[ListX2Index]->QSTA.value.targetId = *(FORMID *)FieldValue;
                             return true;
                         case 2: //flags
-                            Objectives.value[ListIndex]->Targets.value[ListX2Index]->SetFlagMask(*(UINT8 *)FieldValue);
+                            Objectives.value[ListIndex]->Targets.value[ListX2Index]->SetFlagMask(*(uint8_t *)FieldValue);
                             break;
                         case 3: //unused1
                             if(ArraySize != 3)
@@ -1308,7 +1308,7 @@ bool QUSTRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
                             switch(ListX3FieldID)
                                 {
                                 case 1: //operType
-                                    Objectives.value[ListIndex]->Targets.value[ListX2Index]->CTDA.value[ListX3Index]->operType = *(UINT8 *)FieldValue;
+                                    Objectives.value[ListIndex]->Targets.value[ListX2Index]->CTDA.value[ListX3Index]->operType = *(uint8_t *)FieldValue;
                                     break;
                                 case 2: //unused1
                                     if(ArraySize != 3)
@@ -1321,19 +1321,19 @@ bool QUSTRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
                                     Objectives.value[ListIndex]->Targets.value[ListX2Index]->CTDA.value[ListX3Index]->compValue = *(FORMID_OR_FLOAT32 *)FieldValue;
                                     return true;
                                 case 4: //ifunc
-                                    Objectives.value[ListIndex]->Targets.value[ListX2Index]->CTDA.value[ListX3Index]->ifunc = *(UINT32 *)FieldValue;
+                                    Objectives.value[ListIndex]->Targets.value[ListX2Index]->CTDA.value[ListX3Index]->ifunc = *(uint32_t *)FieldValue;
                                     return true;
                                 case 5: //param1
-                                    Objectives.value[ListIndex]->Targets.value[ListX2Index]->CTDA.value[ListX3Index]->param1 = *(UINT32 *)FieldValue;
+                                    Objectives.value[ListIndex]->Targets.value[ListX2Index]->CTDA.value[ListX3Index]->param1 = *(uint32_t *)FieldValue;
                                     return true;
                                 case 6: //param2
-                                    Objectives.value[ListIndex]->Targets.value[ListX2Index]->CTDA.value[ListX3Index]->param2 = *(UINT32 *)FieldValue;
+                                    Objectives.value[ListIndex]->Targets.value[ListX2Index]->CTDA.value[ListX3Index]->param2 = *(uint32_t *)FieldValue;
                                     return true;
                                 case 7: //runOnType
-                                    Objectives.value[ListIndex]->Targets.value[ListX2Index]->CTDA.value[ListX3Index]->runOnType = *(UINT32 *)FieldValue;
+                                    Objectives.value[ListIndex]->Targets.value[ListX2Index]->CTDA.value[ListX3Index]->runOnType = *(uint32_t *)FieldValue;
                                     return true;
                                 case 8: //reference
-                                    Objectives.value[ListIndex]->Targets.value[ListX2Index]->CTDA.value[ListX3Index]->reference = *(UINT32 *)FieldValue;
+                                    Objectives.value[ListIndex]->Targets.value[ListX2Index]->CTDA.value[ListX3Index]->reference = *(uint32_t *)FieldValue;
                                     return true;
                                 default:
                                     break;

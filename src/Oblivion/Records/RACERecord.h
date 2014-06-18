@@ -44,10 +44,10 @@ class RACERecord : public Record //Race
     private:
         struct RACEATTR
             {
-            UINT8   maleStrength, maleIntelligence, maleWillpower,
+            uint8_t   maleStrength, maleIntelligence, maleWillpower,
                     maleAgility, maleSpeed, maleEndurance,
                     malePersonality, maleLuck;
-            UINT8   femaleStrength, femaleIntelligence, femaleWillpower,
+            uint8_t   femaleStrength, femaleIntelligence, femaleWillpower,
                     femaleAgility, femaleSpeed, femaleEndurance,
                     femalePersonality, femaleLuck;
 
@@ -85,7 +85,7 @@ class RACERecord : public Record //Race
         ReqSubRecord<RACEDATA> DATA; //Data
         SubRecord<RACEVNAM> VNAM; //Voices
         SubRecord<RACEDNAM> DNAM; //Default Hair Styles
-        ReqSimpleSubRecord<UINT8> CNAM; //Default Hair Color
+        ReqSimpleSubRecord<uint8_t> CNAM; //Default Hair Color
         OptSimpleFloatSubRecord<flt_0> PNAM; //FaceGen - Main clamp
         OptSimpleFloatSubRecord<flt_0> UNAM; //FaceGen - Face clamp
         ReqSubRecord<RACEATTR> ATTR; //Base Attributes
@@ -125,20 +125,20 @@ class RACERecord : public Record //Race
 
         bool   IsPlayable();
         void   IsPlayable(bool value);
-        bool   IsFlagMask(UINT32 Mask, bool Exact=false);
-        void   SetFlagMask(UINT32 Mask);
+        bool   IsFlagMask(uint32_t Mask, bool Exact=false);
+        void   SetFlagMask(uint32_t Mask);
 
-        UINT32 GetFieldAttribute(DEFAULTED_FIELD_IDENTIFIERS, UINT32 WhichAttribute=0);
+        uint32_t GetFieldAttribute(DEFAULTED_FIELD_IDENTIFIERS, uint32_t WhichAttribute=0);
         void * GetField(DEFAULTED_FIELD_IDENTIFIERS, void **FieldValues=NULL);
-        bool   SetField(DEFAULTED_FIELD_IDENTIFIERS, void *FieldValue=NULL, UINT32 ArraySize=0);
+        bool   SetField(DEFAULTED_FIELD_IDENTIFIERS, void *FieldValue=NULL, uint32_t ArraySize=0);
         void   DeleteField(DEFAULTED_FIELD_IDENTIFIERS);
 
-        UINT32 GetType();
-        STRING GetStrType();
+        uint32_t GetType();
+        char * GetStrType();
 
-        SINT32 ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk=false);
-        SINT32 Unload();
-        SINT32 WriteRecord(FileWriter &writer);
+        int32_t ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk=false);
+        int32_t Unload();
+        int32_t WriteRecord(FileWriter &writer);
 
         bool operator ==(const RACERecord &other) const;
         bool operator !=(const RACERecord &other) const;

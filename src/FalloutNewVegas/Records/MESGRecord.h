@@ -71,8 +71,8 @@ class MESGRecord : public FNVRecord //Message
         //OptSubRecord<GENNAM7> NAM7; //Unused (Empty)
         //OptSubRecord<GENNAM8> NAM8; //Unused (Empty)
         //OptSubRecord<GENNAM> NAM9; //Unused (Empty)
-        OptSimpleSubRecord<UINT32> DNAM; //Flags
-        OptSimpleSubRecord<UINT32> TNAM; //Display Time
+        OptSimpleSubRecord<uint32_t> DNAM; //Flags
+        OptSimpleSubRecord<uint32_t> TNAM; //Display Time
         std::vector<MESGButton> Buttons; //Menu Buttons
 
         MESGRecord(unsigned char *_recData=NULL);
@@ -81,17 +81,17 @@ class MESGRecord : public FNVRecord //Message
 
         bool   VisitFormIDs(FormIDOp &op);
 
-        UINT32 GetFieldAttribute(DEFAULTED_FIELD_IDENTIFIERS, UINT32 WhichAttribute=0);
+        uint32_t GetFieldAttribute(DEFAULTED_FIELD_IDENTIFIERS, uint32_t WhichAttribute=0);
         void * GetField(DEFAULTED_FIELD_IDENTIFIERS, void **FieldValues=NULL);
-        bool   SetField(DEFAULTED_FIELD_IDENTIFIERS, void *FieldValue=NULL, UINT32 ArraySize=0);
+        bool   SetField(DEFAULTED_FIELD_IDENTIFIERS, void *FieldValue=NULL, uint32_t ArraySize=0);
         void   DeleteField(DEFAULTED_FIELD_IDENTIFIERS);
 
-        UINT32 GetType();
-        STRING GetStrType();
+        uint32_t GetType();
+        char * GetStrType();
 
-        SINT32 ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk=false);
-        SINT32 Unload();
-        SINT32 WriteRecord(FileWriter &writer);
+        int32_t ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk=false);
+        int32_t Unload();
+        int32_t WriteRecord(FileWriter &writer);
 
         bool operator ==(const MESGRecord &other) const;
         bool operator !=(const MESGRecord &other) const;

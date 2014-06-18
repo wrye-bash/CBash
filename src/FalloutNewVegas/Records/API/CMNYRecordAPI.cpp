@@ -38,7 +38,7 @@
 
 namespace FNV
 {
-UINT32 CMNYRecord::GetFieldAttribute(FIELD_IDENTIFIERS, UINT32 WhichAttribute)
+uint32_t CMNYRecord::GetFieldAttribute(FIELD_IDENTIFIERS, uint32_t WhichAttribute)
     {
     switch(FieldID)
         {
@@ -207,12 +207,12 @@ void * CMNYRecord::GetField(FIELD_IDENTIFIERS, void **FieldValues)
     return NULL;
     }
 
-bool CMNYRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
+bool CMNYRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, uint32_t ArraySize)
     {
     switch(FieldID)
         {
         case 1: //flags1
-            SetHeaderFlagMask(*(UINT32 *)FieldValue);
+            SetHeaderFlagMask(*(uint32_t *)FieldValue);
             break;
         case 3: //versionControl1
             if(ArraySize != 4)
@@ -223,10 +223,10 @@ bool CMNYRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             ((UINT8ARRAY)&flagsUnk)[3] = ((UINT8ARRAY)FieldValue)[3];
             break;
         case 4: //eid
-            EDID.Copy((STRING)FieldValue);
+            EDID.Copy((char *)FieldValue);
             break;
         case 5: //formVersion
-            formVersion = *(UINT16 *)FieldValue;
+            formVersion = *(uint16_t *)FieldValue;
             break;
         case 6: //versionControl2
             if(ArraySize != 2)
@@ -236,26 +236,26 @@ bool CMNYRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             break;
         case 7: //boundX
             OBND.Load();
-            OBND->x1 = *(SINT16 *)FieldValue;
+            OBND->x1 = *(int16_t *)FieldValue;
             break;
         case 8: //boundY
             OBND.Load();
-            OBND->y1 = *(SINT16 *)FieldValue;
+            OBND->y1 = *(int16_t *)FieldValue;
             break;
         case 9: //boundZ
             OBND.Load();
-            OBND->z1 = *(SINT16 *)FieldValue;
+            OBND->z1 = *(int16_t *)FieldValue;
             break;
         case 10: //full
-            FULL.Copy((STRING)FieldValue);
+            FULL.Copy((char *)FieldValue);
             break;
         case 11: //modPath
             MODL.Load();
-            MODL->MODL.Copy((STRING)FieldValue);
+            MODL->MODL.Copy((char *)FieldValue);
             break;
         case 12: //modb
             MODL.Load();
-            MODL->MODB.value = *(FLOAT32 *)FieldValue;
+            MODL->MODB.value = *(float *)FieldValue;
             break;
         case 13: //modt_p
             MODL.Load();
@@ -263,7 +263,7 @@ bool CMNYRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             break;
         case 14: //mods Alternate Textures
             MODL.Load();
-            //MODL->Textures.MODS.Copy((STRING)FieldValue);
+            //MODL->Textures.MODS.Copy((char *)FieldValue);
             break;
         case 15: //mods Alternate Textures
             MODL.Load();
@@ -273,18 +273,18 @@ bool CMNYRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
         case 16: //mods Alternate Textures
             MODL.Load();
             //MODL->Texturess.MODS.Load();
-            //MODL->Textures.MODS->value16 = *(SINT32 *)FieldValue;
+            //MODL->Textures.MODS->value16 = *(int32_t *)FieldValue;
             break;
         case 17: //modelFlags
             MODL.Load();
             MODL->MODD.Load();
-            MODL->MODD.value = *(UINT8 *)FieldValue;
+            MODL->MODD.value = *(uint8_t *)FieldValue;
             break;
         case 18: //iconPath
-            ICON.Copy((STRING)FieldValue);
+            ICON.Copy((char *)FieldValue);
             break;
         case 19: //smallIconPath
-            MICO.Copy((STRING)FieldValue);
+            MICO.Copy((char *)FieldValue);
             break;
         case 20: //ynam Sound - Pick Up
             YNAM.Load();
@@ -296,7 +296,7 @@ bool CMNYRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             return true;
         case 22: //data Absolute Value
             DATA.Load();
-            DATA.value = *(UINT32 *)FieldValue;
+            DATA.value = *(uint32_t *)FieldValue;
             break;
         default:
             break;

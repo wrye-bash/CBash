@@ -38,7 +38,7 @@
 #include "Skyrim\SkyrimCommon.h" // StringLookups
 #include "zlib.h"
 
-TES4Record::TES4HEDR::TES4HEDR(FLOAT32 _version, UINT32 _numRecords, UINT32 _nextObject):
+TES4Record::TES4HEDR::TES4HEDR(float _version, uint32_t _numRecords, uint32_t _nextObject):
     version(_version),
     numRecords(_numRecords),
     nextObject(_nextObject)
@@ -96,9 +96,9 @@ TES4Record::TES4Record(TES4Record *srcRecord):
     CNAM = srcRecord->CNAM;
     SNAM = srcRecord->SNAM;
     MAST.resize(srcRecord->MAST.size());
-    for(UINT32 x = 0; x < srcRecord->MAST.size();++x)
+    for(uint32_t x = 0; x < srcRecord->MAST.size();++x)
     {
-        UINT32 size = (UINT32)strlen(srcRecord->MAST[x]) + 1;
+        uint32_t size = (uint32_t)strlen(srcRecord->MAST[x]) + 1;
         MAST[x] = new char[size];
         memcpy(MAST[x], srcRecord->MAST[x], size);
     }
@@ -118,7 +118,7 @@ bool TES4Record::VisitFormIDs(FormIDOp &op)
     if(!IsLoaded())
         return false;
 
-    for(UINT32 x = 0; x < ONAM.value.size(); x++)
+    for(uint32_t x = 0; x < ONAM.value.size(); x++)
         op.Accept(ONAM.value[x]);
 
     return op.Stop();
@@ -147,7 +147,7 @@ void TES4Record::IsLookupStrings(bool value)
     SETBIT(flags, fIsTurnOffFire, value);
 }
 
-void TES4Record::LoadStringLookups(STRING FileName)
+void TES4Record::LoadStringLookups(char * FileName)
 {
     if (LookupStrings != NULL)
         return;
@@ -156,35 +156,35 @@ void TES4Record::LoadStringLookups(STRING FileName)
     LookupStrings->Open(FileName);
 }
 
-UINT32 TES4Record::GetType()
+uint32_t TES4Record::GetType()
 {
     return REV32(TES4);
 }
 
-STRING TES4Record::GetStrType()
+char * TES4Record::GetStrType()
 {
     return "TES4";
 }
 
-SINT32 TES4Record::ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk)
+int32_t TES4Record::ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk)
 {
-    UINT32 subType = 0;
-    UINT32 subSize = 0;
+    uint32_t subType = 0;
+    uint32_t subSize = 0;
     while(buffer < end_buffer)
     {
-        subType = *(UINT32 *)buffer;
+        subType = *(uint32_t *)buffer;
         buffer += 4;
         switch(subType)
         {
         case REV32(XXXX):
             buffer += 2;
-            subSize = *(UINT32 *)buffer;
+            subSize = *(uint32_t *)buffer;
             buffer += 4;
-            subType = *(UINT32 *)buffer;
+            subType = *(uint32_t *)buffer;
             buffer += 6;
             break;
         default:
-            subSize = *(UINT16 *)buffer;
+            subSize = *(uint16_t *)buffer;
             buffer += 2;
             break;
         }
@@ -240,15 +240,15 @@ SINT32 TES4Record::ParseRecord(unsigned char *buffer, unsigned char *end_buffer,
     return 0;
 }
 
-SINT32 TES4Record::Unload()
+int32_t TES4Record::Unload()
 {
     //TES4 should never be unloaded, so do nothing
     return 1;
 }
 
-SINT32 TES4Record::WriteRecord(FileWriter &writer)
+int32_t TES4Record::WriteRecord(FileWriter &writer)
 {
-    UINT8 DATA[8] = {0};
+    uint8_t DATA[8] = {0};
     switch(whichGame)
     {
     case eIsOblivion:
@@ -257,9 +257,9 @@ SINT32 TES4Record::WriteRecord(FileWriter &writer)
         WRITE(DELE);
         WRITE(CNAM);
         WRITE(SNAM);
-        for(UINT32 p = 0; p < MAST.size(); p++)
+        for(uint32_t p = 0; p < MAST.size(); p++)
         {
-            writer.record_write_subrecord(REV32(MAST), MAST[p], (UINT32)strlen(MAST[p]) + 1);
+            writer.record_write_subrecord(REV32(MAST), MAST[p], (uint32_t)strlen(MAST[p]) + 1);
             writer.record_write_subrecord(REV32(DATA), &DATA[0], sizeof(DATA));
         }
         break;
@@ -272,9 +272,9 @@ SINT32 TES4Record::WriteRecord(FileWriter &writer)
         WRITE(DELE);
         WRITE(CNAM);
         WRITE(SNAM);
-        for(UINT32 p = 0; p < MAST.size(); p++)
+        for(uint32_t p = 0; p < MAST.size(); p++)
         {
-            writer.record_write_subrecord(REV32(MAST), MAST[p], (UINT32)strlen(MAST[p]) + 1);
+            writer.record_write_subrecord(REV32(MAST), MAST[p], (uint32_t)strlen(MAST[p]) + 1);
             writer.record_write_subrecord(REV32(DATA), &DATA[0], sizeof(DATA));
         }
         WRITE(ONAM);
@@ -286,9 +286,9 @@ SINT32 TES4Record::WriteRecord(FileWriter &writer)
         WRITE(DELE);
         WRITE(CNAM);
         WRITE(SNAM);
-        for(UINT32 p = 0; p < MAST.size(); p++)
+        for(uint32_t p = 0; p < MAST.size(); p++)
         {
-            writer.record_write_subrecord(REV32(MAST), MAST[p], (UINT32)strlen(MAST[p]) + 1);
+            writer.record_write_subrecord(REV32(MAST), MAST[p], (uint32_t)strlen(MAST[p]) + 1);
             writer.record_write_subrecord(REV32(DATA), &DATA[0], sizeof(DATA));
         }
         WRITE(ONAM);
@@ -301,11 +301,11 @@ SINT32 TES4Record::WriteRecord(FileWriter &writer)
     return -1;
 }
 
-UINT32 TES4Record::Write(FileWriter &writer, const bool &bMastersChanged, FormIDResolver &expander, FormIDResolver &collapser, std::vector<FormIDResolver *> &Expanders)
+uint32_t TES4Record::Write(FileWriter &writer, const bool &bMastersChanged, FormIDResolver &expander, FormIDResolver &collapser, std::vector<FormIDResolver *> &Expanders)
 {
     IsCompressed(false);
-    UINT32 recSize = 0;
-    UINT32 recType = GetType();
+    uint32_t recSize = 0;
+    uint32_t recType = GetType();
 
     collapser.Accept(formID);
 
@@ -366,7 +366,7 @@ bool TES4Record::operator ==(const TES4Record &other) const
         //If both records have the same masters in the same orders, the formIDs will have the same master indexing
         //If both records have the same masters in different orders, the formIDs will have different indexing but be logically equivalent
         //The ordering has no effect on load order in game or in the editor
-        for(UINT32 x = 0; x < MAST.size(); ++x)
+        for(uint32_t x = 0; x < MAST.size(); ++x)
             if(icmps(MAST[x], other.MAST[x]) != 0)
                 return false;
         return true;

@@ -192,34 +192,34 @@ void SOUNRecord::SetFlagMask(unsigned short Mask)
     SNDX.value.flags = Mask;
     }
 
-UINT32 SOUNRecord::GetType()
+uint32_t SOUNRecord::GetType()
     {
     return REV32(SOUN);
     }
 
-STRING SOUNRecord::GetStrType()
+char * SOUNRecord::GetStrType()
     {
     return "SOUN";
     }
 
-SINT32 SOUNRecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk)
+int32_t SOUNRecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk)
     {
-    UINT32 subType = 0;
-    UINT32 subSize = 0;
+    uint32_t subType = 0;
+    uint32_t subSize = 0;
     while(buffer < end_buffer){
-        subType = *(UINT32 *)buffer;
+        subType = *(uint32_t *)buffer;
         buffer += 4;
         switch(subType)
             {
             case REV32(XXXX):
                 buffer += 2;
-                subSize = *(UINT32 *)buffer;
+                subSize = *(uint32_t *)buffer;
                 buffer += 4;
-                subType = *(UINT32 *)buffer;
+                subType = *(uint32_t *)buffer;
                 buffer += 6;
                 break;
             default:
-                subSize = *(UINT16 *)buffer;
+                subSize = *(uint16_t *)buffer;
                 buffer += 2;
                 break;
             }
@@ -248,7 +248,7 @@ SINT32 SOUNRecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer,
     return 0;
     }
 
-SINT32 SOUNRecord::Unload()
+int32_t SOUNRecord::Unload()
     {
     IsChanged(false);
     IsLoaded(false);
@@ -258,7 +258,7 @@ SINT32 SOUNRecord::Unload()
     return 1;
     }
 
-SINT32 SOUNRecord::WriteRecord(FileWriter &writer)
+int32_t SOUNRecord::WriteRecord(FileWriter &writer)
     {
     WRITE(EDID);
     WRITE(FNAM);

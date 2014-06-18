@@ -76,7 +76,7 @@ bool SCPTRecord::VisitFormIDs(FormIDOp &op)
     if(!IsLoaded())
         return false;
 
-    for(UINT32 ListIndex = 0; ListIndex < SCR_.value.size(); ListIndex++)
+    for(uint32_t ListIndex = 0; ListIndex < SCR_.value.size(); ListIndex++)
         if(SCR_.value[ListIndex]->isSCRO)
             op.Accept(SCR_.value[ListIndex]->reference);
 
@@ -113,45 +113,45 @@ void SCPTRecord::IsMagicEffect(bool value)
     SCHR.value.scriptType = value ? eMagicEffect : eObject;
     }
 
-bool SCPTRecord::IsType(UINT32 Type)
+bool SCPTRecord::IsType(uint32_t Type)
     {
     return SCHR.value.scriptType == Type;
     }
 
-void SCPTRecord::SetType(UINT32 Type)
+void SCPTRecord::SetType(uint32_t Type)
     {
     SCHR.value.scriptType = Type;
     }
 
-UINT32 SCPTRecord::GetType()
+uint32_t SCPTRecord::GetType()
     {
     return REV32(SCPT);
     }
 
-STRING SCPTRecord::GetStrType()
+char * SCPTRecord::GetStrType()
     {
     return "SCPT";
     }
 
-SINT32 SCPTRecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk)
+int32_t SCPTRecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk)
     {
-    UINT32 subType = 0;
-    UINT32 subSize = 0;
+    uint32_t subType = 0;
+    uint32_t subSize = 0;
 
     while(buffer < end_buffer){
-        subType = *(UINT32 *)buffer;
+        subType = *(uint32_t *)buffer;
         buffer += 4;
         switch(subType)
             {
             case REV32(XXXX):
                 buffer += 2;
-                subSize = *(UINT32 *)buffer;
+                subSize = *(uint32_t *)buffer;
                 buffer += 4;
-                subType = *(UINT32 *)buffer;
+                subType = *(uint32_t *)buffer;
                 buffer += 6;
                 break;
             default:
-                subSize = *(UINT16 *)buffer;
+                subSize = *(uint16_t *)buffer;
                 buffer += 2;
                 break;
             }
@@ -199,7 +199,7 @@ SINT32 SCPTRecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer,
     return 0;
     }
 
-SINT32 SCPTRecord::Unload()
+int32_t SCPTRecord::Unload()
     {
     IsChanged(false);
     IsLoaded(false);
@@ -212,12 +212,12 @@ SINT32 SCPTRecord::Unload()
     return 1;
     }
 
-SINT32 SCPTRecord::WriteRecord(FileWriter &writer)
+int32_t SCPTRecord::WriteRecord(FileWriter &writer)
     {
     WRITE(EDID);
-    SCHR.value.numRefs = (UINT32)SCR_.value.size(); //Just to ensure that the value is correct
+    SCHR.value.numRefs = (uint32_t)SCR_.value.size(); //Just to ensure that the value is correct
     SCHR.value.compiledSize = SCDA.GetSize(); //Just to ensure that the value is correct
-    //for(UINT32 x = 0; x < VARS.value.size(); ++x) //Just to ensure that the value is correct
+    //for(uint32_t x = 0; x < VARS.value.size(); ++x) //Just to ensure that the value is correct
     //    SCHR.value.lastIndex = (SCHR.value.lastIndex > VARS.value[x]->SLSD.value.index) ? SCHR.value.lastIndex : VARS.value[x]->SLSD.value.index;
     WRITE(SCHR);
     WRITE(SCDA);

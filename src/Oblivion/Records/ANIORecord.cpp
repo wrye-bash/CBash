@@ -80,34 +80,34 @@ bool ANIORecord::VisitFormIDs(FormIDOp &op)
     return op.Stop();
     }
 
-UINT32 ANIORecord::GetType()
+uint32_t ANIORecord::GetType()
     {
     return REV32(ANIO);
     }
 
-STRING ANIORecord::GetStrType()
+char * ANIORecord::GetStrType()
     {
     return "ANIO";
     }
 
-SINT32 ANIORecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk)
+int32_t ANIORecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk)
     {
-    UINT32 subType = 0;
-    UINT32 subSize = 0;
+    uint32_t subType = 0;
+    uint32_t subSize = 0;
     while(buffer < end_buffer){
-        subType = *(UINT32 *)buffer;
+        subType = *(uint32_t *)buffer;
         buffer += 4;
         switch(subType)
             {
             case REV32(XXXX):
                 buffer += 2;
-                subSize = *(UINT32 *)buffer;
+                subSize = *(uint32_t *)buffer;
                 buffer += 4;
-                subType = *(UINT32 *)buffer;
+                subType = *(uint32_t *)buffer;
                 buffer += 6;
                 break;
             default:
-                subSize = *(UINT16 *)buffer;
+                subSize = *(uint16_t *)buffer;
                 buffer += 2;
                 break;
             }
@@ -144,7 +144,7 @@ SINT32 ANIORecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer,
     return 0;
     }
 
-SINT32 ANIORecord::Unload()
+int32_t ANIORecord::Unload()
     {
     IsChanged(false);
     IsLoaded(false);
@@ -154,7 +154,7 @@ SINT32 ANIORecord::Unload()
     return 1;
     }
 
-SINT32 ANIORecord::WriteRecord(FileWriter &writer)
+int32_t ANIORecord::WriteRecord(FileWriter &writer)
     {
     WRITE(EDID);
     MODL.Write(writer);

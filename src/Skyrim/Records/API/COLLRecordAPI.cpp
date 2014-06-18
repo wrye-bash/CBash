@@ -37,7 +37,7 @@
 
 namespace Sk {
 
-UINT32 COLLRecord::GetFieldAttribute(FIELD_IDENTIFIERS, UINT32 WhichAttribute)
+uint32_t COLLRecord::GetFieldAttribute(FIELD_IDENTIFIERS, uint32_t WhichAttribute)
 {
     switch(FieldID)
     {
@@ -95,7 +95,7 @@ UINT32 COLLRecord::GetFieldAttribute(FIELD_IDENTIFIERS, UINT32 WhichAttribute)
         case 0: //fieldType
             return FORMID_ARRAY_FIELD;
         case 1: //fieldSize
-            return (UINT32)CNAM.value.size();
+            return (uint32_t)CNAM.value.size();
         default:
             return UNKNOWN_FIELD;
         }
@@ -149,12 +149,12 @@ void * COLLRecord::GetField(FIELD_IDENTIFIERS, void **FieldValues)
     return NULL;
 }
 
-bool COLLRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
+bool COLLRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, uint32_t ArraySize)
 {
     switch(FieldID)
     {
     case 1: //flags1
-        SetHeaderFlagMask(*(UINT32 *)FieldValue);
+        SetHeaderFlagMask(*(uint32_t *)FieldValue);
         break;
     case 3: //versionControl1
         if(ArraySize != 4)
@@ -165,10 +165,10 @@ bool COLLRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
         ((UINT8ARRAY)&flagsUnk)[3] = ((UINT8ARRAY)FieldValue)[3];
         break;
     case 4: //eid
-        EDID.Copy((STRING)FieldValue);
+        EDID.Copy((char *)FieldValue);
         break;
     case 5: //formVersion
-        formVersion = *(UINT16 *)FieldValue;
+        formVersion = *(uint16_t *)FieldValue;
         break;
     case 6: //versionControl2
         if(ArraySize != 2)
@@ -177,32 +177,32 @@ bool COLLRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
         versionControl2[1] = ((UINT8ARRAY)FieldValue)[1];
         break;
     case 7: //description
-        DESC.Copy((STRING)FieldValue);
+        DESC.Copy((char *)FieldValue);
         break;
     case 8: //id
-        BNAM.value = *(UINT32 *)FieldValue;
+        BNAM.value = *(uint32_t *)FieldValue;
         break;
     case 9: //debugColor.red
-        FNAM->red = *(UINT8 *)FieldValue;
+        FNAM->red = *(uint8_t *)FieldValue;
         break;
     case 10: //debugColor.green
-        FNAM->green = *(UINT8 *)FieldValue;
+        FNAM->green = *(uint8_t *)FieldValue;
         break;
     case 11: //debucColor.blue
-        FNAM->blue = *(UINT8 *)FieldValue;
+        FNAM->blue = *(uint8_t *)FieldValue;
         break;
     case 12: //debugColor.unkown
-        FNAM->unk1 = *(UINT8 *)FieldValue;
+        FNAM->unk1 = *(uint8_t *)FieldValue;
         break;
     case 13: //flags
-        SetFlagMask(*(UINT32 *)FieldValue);
+        SetFlagMask(*(uint32_t *)FieldValue);
         break;
     case 14: //name
-        MNAM.Copy((STRING)FieldValue);
+        MNAM.Copy((char *)FieldValue);
         break;
     case 15: //collidesWith
         CNAM.value.resize(ArraySize);
-        for (UINT32 i = 0; i < ArraySize; ++i)
+        for (uint32_t i = 0; i < ArraySize; ++i)
             CNAM.value[i] = ((FORMIDARRAY)FieldValue)[i];
         return true;
     default:

@@ -119,14 +119,14 @@ bool ALCHRecord::VisitFormIDs(FormIDOp &op)
 
     if(MODL.IsLoaded())
         {
-        for(UINT32 x = 0; x < MODL->Textures.MODS.size(); x++)
+        for(uint32_t x = 0; x < MODL->Textures.MODS.size(); x++)
             op.Accept(MODL->Textures.MODS[x]->texture);
         }
     if(SCRI.IsLoaded())
         op.Accept(SCRI.value);
     if(Destructable.IsLoaded())
         {
-        for(UINT32 x = 0; x < Destructable->Stages.value.size(); ++x)
+        for(uint32_t x = 0; x < Destructable->Stages.value.size(); ++x)
             {
             op.Accept(Destructable->Stages.value[x]->DSTD.value.explosion);
             op.Accept(Destructable->Stages.value[x]->DSTD.value.debris);
@@ -136,7 +136,7 @@ bool ALCHRecord::VisitFormIDs(FormIDOp &op)
         op.Accept(YNAM.value);
     if(ZNAM.IsLoaded())
         op.Accept(ZNAM.value);
-    for(UINT32 x = 0; x < Effects.value.size(); x++)
+    for(uint32_t x = 0; x < Effects.value.size(); x++)
         Effects.value[x]->VisitFormIDs(op);
 
     return op.Stop();
@@ -172,12 +172,12 @@ void ALCHRecord::IsMedicine(bool value)
     SETBIT(ENIT.value.flags, fIsMedicine, value);
     }
 
-bool ALCHRecord::IsFlagMask(UINT8 Mask, bool Exact)
+bool ALCHRecord::IsFlagMask(uint8_t Mask, bool Exact)
     {
     return Exact ? ((ENIT.value.flags & Mask) == Mask) : ((ENIT.value.flags & Mask) != 0);
     }
 
-void ALCHRecord::SetFlagMask(UINT8 Mask)
+void ALCHRecord::SetFlagMask(uint8_t Mask)
     {
     ENIT.value.flags = Mask;
     }
@@ -332,44 +332,44 @@ void ALCHRecord::IsAlcohol(bool value)
     ETYP.value = value ? eAlcohol : eNone;
     }
 
-bool ALCHRecord::IsEquipmentType(SINT32 Type)
+bool ALCHRecord::IsEquipmentType(int32_t Type)
     {
     return ETYP.value == Type;
     }
 
-void ALCHRecord::SetEquipmentType(SINT32 Type)
+void ALCHRecord::SetEquipmentType(int32_t Type)
     {
     ETYP.value = Type;
     }
 
-UINT32 ALCHRecord::GetType()
+uint32_t ALCHRecord::GetType()
     {
     return REV32(ALCH);
     }
 
-STRING ALCHRecord::GetStrType()
+char * ALCHRecord::GetStrType()
     {
     return "ALCH";
     }
 
-SINT32 ALCHRecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk)
+int32_t ALCHRecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk)
     {
-    UINT32 subType = 0;
-    UINT32 subSize = 0;
+    uint32_t subType = 0;
+    uint32_t subSize = 0;
     while(buffer < end_buffer){
-        subType = *(UINT32 *)buffer;
+        subType = *(uint32_t *)buffer;
         buffer += 4;
         switch(subType)
             {
             case REV32(XXXX):
                 buffer += 2;
-                subSize = *(UINT32 *)buffer;
+                subSize = *(uint32_t *)buffer;
                 buffer += 4;
-                subType = *(UINT32 *)buffer;
+                subType = *(uint32_t *)buffer;
                 buffer += 6;
                 break;
             default:
-                subSize = *(UINT16 *)buffer;
+                subSize = *(uint16_t *)buffer;
                 buffer += 2;
                 break;
             }
@@ -479,7 +479,7 @@ SINT32 ALCHRecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer,
     return 0;
     }
 
-SINT32 ALCHRecord::Unload()
+int32_t ALCHRecord::Unload()
     {
     IsChanged(false);
     IsLoaded(false);
@@ -500,7 +500,7 @@ SINT32 ALCHRecord::Unload()
     return 1;
     }
 
-SINT32 ALCHRecord::WriteRecord(FileWriter &writer)
+int32_t ALCHRecord::WriteRecord(FileWriter &writer)
     {
     WRITE(EDID);
     WRITE(OBND);

@@ -38,7 +38,7 @@
 
 namespace FNV
 {
-UINT32 WTHRRecord::GetFieldAttribute(FIELD_IDENTIFIERS, UINT32 WhichAttribute)
+uint32_t WTHRRecord::GetFieldAttribute(FIELD_IDENTIFIERS, uint32_t WhichAttribute)
     {
     switch(FieldID)
         {
@@ -120,7 +120,7 @@ UINT32 WTHRRecord::GetFieldAttribute(FIELD_IDENTIFIERS, UINT32 WhichAttribute)
                     case 0: //fieldType
                         return LIST_FIELD;
                     case 1: //fieldSize
-                        return (UINT32)MODL->Textures.MODS.size();
+                        return (uint32_t)MODL->Textures.MODS.size();
                     default:
                         return UNKNOWN_FIELD;
                     }
@@ -1252,7 +1252,7 @@ UINT32 WTHRRecord::GetFieldAttribute(FIELD_IDENTIFIERS, UINT32 WhichAttribute)
                     case 0: //fieldType
                         return LIST_FIELD;
                     case 1: //fieldSize
-                        return (UINT32)Sounds.value.size();
+                        return (uint32_t)Sounds.value.size();
                     default:
                         return UNKNOWN_FIELD;
                     }
@@ -1962,12 +1962,12 @@ void * WTHRRecord::GetField(FIELD_IDENTIFIERS, void **FieldValues)
     return NULL;
     }
 
-bool WTHRRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
+bool WTHRRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, uint32_t ArraySize)
     {
     switch(FieldID)
         {
         case 1: //flags1
-            SetHeaderFlagMask(*(UINT32 *)FieldValue);
+            SetHeaderFlagMask(*(uint32_t *)FieldValue);
             break;
         case 3: //versionControl1
             if(ArraySize != 4)
@@ -1978,10 +1978,10 @@ bool WTHRRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             ((UINT8ARRAY)&flagsUnk)[3] = ((UINT8ARRAY)FieldValue)[3];
             break;
         case 4: //eid
-            EDID.Copy((STRING)FieldValue);
+            EDID.Copy((char *)FieldValue);
             break;
         case 5: //formVersion
-            formVersion = *(UINT16 *)FieldValue;
+            formVersion = *(uint16_t *)FieldValue;
             break;
         case 6: //versionControl2
             if(ArraySize != 2)
@@ -2008,24 +2008,24 @@ bool WTHRRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             _5IAD.value = *(FORMID *)FieldValue;
             return true;
         case 13: //cloudLayer0Path
-            DNAM.Copy((STRING)FieldValue);
+            DNAM.Copy((char *)FieldValue);
             break;
         case 14: //cloudLayer1Path
-            CNAM.Copy((STRING)FieldValue);
+            CNAM.Copy((char *)FieldValue);
             break;
         case 15: //cloudLayer2Path
-            ANAM.Copy((STRING)FieldValue);
+            ANAM.Copy((char *)FieldValue);
             break;
         case 16: //cloudLayer3Path
-            BNAM.Copy((STRING)FieldValue);
+            BNAM.Copy((char *)FieldValue);
             break;
         case 17: //modPath
             MODL.Load();
-            MODL->MODL.Copy((STRING)FieldValue);
+            MODL->MODL.Copy((char *)FieldValue);
             break;
         case 18: //modb
             MODL.Load();
-            MODL->MODB.value = *(FLOAT32 *)FieldValue;
+            MODL->MODB.value = *(float *)FieldValue;
             break;
         case 19: //modt_p
             MODL.Load();
@@ -2049,16 +2049,16 @@ bool WTHRRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
                     MODL->Textures.MODS[ListIndex]->name = NULL;
                     if(FieldValue != NULL)
                         {
-                        ArraySize = (UINT32)strlen((STRING)FieldValue) + 1;
+                        ArraySize = (uint32_t)strlen((char *)FieldValue) + 1;
                         MODL->Textures.MODS[ListIndex]->name = new char[ArraySize];
-                        strcpy_s(MODL->Textures.MODS[ListIndex]->name, ArraySize, (STRING)FieldValue);
+                        strcpy_s(MODL->Textures.MODS[ListIndex]->name, ArraySize, (char *)FieldValue);
                         }
                     break;
                 case 2: //texture
                     MODL->Textures.MODS[ListIndex]->texture = *(FORMID *)FieldValue;
                     return true;
                 case 3: //index
-                    MODL->Textures.MODS[ListIndex]->index = *(SINT32 *)FieldValue;
+                    MODL->Textures.MODS[ListIndex]->index = *(int32_t *)FieldValue;
                     break;
                 default:
                     break;
@@ -2066,38 +2066,38 @@ bool WTHRRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             break;
         case 21: //modelFlags
             MODL.Load();
-            MODL->SetFlagMask(*(UINT8 *)FieldValue);
+            MODL->SetFlagMask(*(uint8_t *)FieldValue);
             break;
         case 22: //unknown1
-            LNAM.value = *(UINT32 *)FieldValue;
+            LNAM.value = *(uint32_t *)FieldValue;
             break;
         case 23: //layer0Speed
             ONAM.Load();
-            ONAM->layer0Speed = *(UINT8 *)FieldValue;
+            ONAM->layer0Speed = *(uint8_t *)FieldValue;
             break;
         case 24: //layer1Speed
             ONAM.Load();
-            ONAM->layer1Speed = *(UINT8 *)FieldValue;
+            ONAM->layer1Speed = *(uint8_t *)FieldValue;
             break;
         case 25: //layer2Speed
             ONAM.Load();
-            ONAM->layer2Speed = *(UINT8 *)FieldValue;
+            ONAM->layer2Speed = *(uint8_t *)FieldValue;
             break;
         case 26: //layer3Speed
             ONAM.Load();
-            ONAM->layer3Speed = *(UINT8 *)FieldValue;
+            ONAM->layer3Speed = *(uint8_t *)FieldValue;
             break;
         case 27: //PNAM
             PNAM.Copy((UINT8ARRAY)FieldValue, ArraySize);
             break;
         case 28: //upperSky.rise.red
-            NAM0.value.upperSky.rise.red = *(UINT8 *)FieldValue;
+            NAM0.value.upperSky.rise.red = *(uint8_t *)FieldValue;
             break;
         case 29: //upperSky.rise.green
-            NAM0.value.upperSky.rise.green = *(UINT8 *)FieldValue;
+            NAM0.value.upperSky.rise.green = *(uint8_t *)FieldValue;
             break;
         case 30: //upperSky.rise.blue
-            NAM0.value.upperSky.rise.blue = *(UINT8 *)FieldValue;
+            NAM0.value.upperSky.rise.blue = *(uint8_t *)FieldValue;
             break;
         case 31: //upperSky.rise.unused1
             if(ArraySize != 1)
@@ -2105,13 +2105,13 @@ bool WTHRRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             NAM0.value.upperSky.rise.unused1 = ((UINT8ARRAY)FieldValue)[0];
             break;
         case 32: //upperSky.day.red
-            NAM0.value.upperSky.day.red = *(UINT8 *)FieldValue;
+            NAM0.value.upperSky.day.red = *(uint8_t *)FieldValue;
             break;
         case 33: //upperSky.day.green
-            NAM0.value.upperSky.day.green = *(UINT8 *)FieldValue;
+            NAM0.value.upperSky.day.green = *(uint8_t *)FieldValue;
             break;
         case 34: //upperSky.day.blue
-            NAM0.value.upperSky.day.blue = *(UINT8 *)FieldValue;
+            NAM0.value.upperSky.day.blue = *(uint8_t *)FieldValue;
             break;
         case 35: //upperSky.day.unused1
             if(ArraySize != 1)
@@ -2119,13 +2119,13 @@ bool WTHRRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             NAM0.value.upperSky.day.unused1 = ((UINT8ARRAY)FieldValue)[0];
             break;
         case 36: //upperSky.set.red
-            NAM0.value.upperSky.set.red = *(UINT8 *)FieldValue;
+            NAM0.value.upperSky.set.red = *(uint8_t *)FieldValue;
             break;
         case 37: //upperSky.set.green
-            NAM0.value.upperSky.set.green = *(UINT8 *)FieldValue;
+            NAM0.value.upperSky.set.green = *(uint8_t *)FieldValue;
             break;
         case 38: //upperSky.set.blue
-            NAM0.value.upperSky.set.blue = *(UINT8 *)FieldValue;
+            NAM0.value.upperSky.set.blue = *(uint8_t *)FieldValue;
             break;
         case 39: //upperSky.set.unused1
             if(ArraySize != 1)
@@ -2133,13 +2133,13 @@ bool WTHRRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             NAM0.value.upperSky.set.unused1 = ((UINT8ARRAY)FieldValue)[0];
             break;
         case 40: //upperSky.night.red
-            NAM0.value.upperSky.night.red = *(UINT8 *)FieldValue;
+            NAM0.value.upperSky.night.red = *(uint8_t *)FieldValue;
             break;
         case 41: //upperSky.night.green
-            NAM0.value.upperSky.night.green = *(UINT8 *)FieldValue;
+            NAM0.value.upperSky.night.green = *(uint8_t *)FieldValue;
             break;
         case 42: //upperSky.night.blue
-            NAM0.value.upperSky.night.blue = *(UINT8 *)FieldValue;
+            NAM0.value.upperSky.night.blue = *(uint8_t *)FieldValue;
             break;
         case 43: //upperSky.night.unused1
             if(ArraySize != 1)
@@ -2147,13 +2147,13 @@ bool WTHRRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             NAM0.value.upperSky.night.unused1 = ((UINT8ARRAY)FieldValue)[0];
             break;
         case 44: //upperSky.noon.red
-            NAM0.value.upperSky.noon.red = *(UINT8 *)FieldValue;
+            NAM0.value.upperSky.noon.red = *(uint8_t *)FieldValue;
             break;
         case 45: //upperSky.noon.green
-            NAM0.value.upperSky.noon.green = *(UINT8 *)FieldValue;
+            NAM0.value.upperSky.noon.green = *(uint8_t *)FieldValue;
             break;
         case 46: //upperSky.noon.blue
-            NAM0.value.upperSky.noon.blue = *(UINT8 *)FieldValue;
+            NAM0.value.upperSky.noon.blue = *(uint8_t *)FieldValue;
             break;
         case 47: //upperSky.noon.unused1
             if(ArraySize != 1)
@@ -2161,13 +2161,13 @@ bool WTHRRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             NAM0.value.upperSky.noon.unused1 = ((UINT8ARRAY)FieldValue)[0];
             break;
         case 48: //upperSky.midnight.red
-            NAM0.value.upperSky.midnight.red = *(UINT8 *)FieldValue;
+            NAM0.value.upperSky.midnight.red = *(uint8_t *)FieldValue;
             break;
         case 49: //upperSky.midnight.green
-            NAM0.value.upperSky.midnight.green = *(UINT8 *)FieldValue;
+            NAM0.value.upperSky.midnight.green = *(uint8_t *)FieldValue;
             break;
         case 50: //upperSky.midnight.blue
-            NAM0.value.upperSky.midnight.blue = *(UINT8 *)FieldValue;
+            NAM0.value.upperSky.midnight.blue = *(uint8_t *)FieldValue;
             break;
         case 51: //upperSky.midnight.unused1
             if(ArraySize != 1)
@@ -2175,13 +2175,13 @@ bool WTHRRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             NAM0.value.upperSky.midnight.unused1 = ((UINT8ARRAY)FieldValue)[0];
             break;
         case 52: //fog.rise.red
-            NAM0.value.fog.rise.red = *(UINT8 *)FieldValue;
+            NAM0.value.fog.rise.red = *(uint8_t *)FieldValue;
             break;
         case 53: //fog.rise.green
-            NAM0.value.fog.rise.green = *(UINT8 *)FieldValue;
+            NAM0.value.fog.rise.green = *(uint8_t *)FieldValue;
             break;
         case 54: //fog.rise.blue
-            NAM0.value.fog.rise.blue = *(UINT8 *)FieldValue;
+            NAM0.value.fog.rise.blue = *(uint8_t *)FieldValue;
             break;
         case 55: //fog.rise.unused1
             if(ArraySize != 1)
@@ -2189,13 +2189,13 @@ bool WTHRRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             NAM0.value.fog.rise.unused1 = ((UINT8ARRAY)FieldValue)[0];
             break;
         case 56: //fog.day.red
-            NAM0.value.fog.day.red = *(UINT8 *)FieldValue;
+            NAM0.value.fog.day.red = *(uint8_t *)FieldValue;
             break;
         case 57: //fog.day.green
-            NAM0.value.fog.day.green = *(UINT8 *)FieldValue;
+            NAM0.value.fog.day.green = *(uint8_t *)FieldValue;
             break;
         case 58: //fog.day.blue
-            NAM0.value.fog.day.blue = *(UINT8 *)FieldValue;
+            NAM0.value.fog.day.blue = *(uint8_t *)FieldValue;
             break;
         case 59: //fog.day.unused1
             if(ArraySize != 1)
@@ -2203,13 +2203,13 @@ bool WTHRRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             NAM0.value.fog.day.unused1 = ((UINT8ARRAY)FieldValue)[0];
             break;
         case 60: //fog.set.red
-            NAM0.value.fog.set.red = *(UINT8 *)FieldValue;
+            NAM0.value.fog.set.red = *(uint8_t *)FieldValue;
             break;
         case 61: //fog.set.green
-            NAM0.value.fog.set.green = *(UINT8 *)FieldValue;
+            NAM0.value.fog.set.green = *(uint8_t *)FieldValue;
             break;
         case 62: //fog.set.blue
-            NAM0.value.fog.set.blue = *(UINT8 *)FieldValue;
+            NAM0.value.fog.set.blue = *(uint8_t *)FieldValue;
             break;
         case 63: //fog.set.unused1
             if(ArraySize != 1)
@@ -2217,13 +2217,13 @@ bool WTHRRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             NAM0.value.fog.set.unused1 = ((UINT8ARRAY)FieldValue)[0];
             break;
         case 64: //fog.night.red
-            NAM0.value.fog.night.red = *(UINT8 *)FieldValue;
+            NAM0.value.fog.night.red = *(uint8_t *)FieldValue;
             break;
         case 65: //fog.night.green
-            NAM0.value.fog.night.green = *(UINT8 *)FieldValue;
+            NAM0.value.fog.night.green = *(uint8_t *)FieldValue;
             break;
         case 66: //fog.night.blue
-            NAM0.value.fog.night.blue = *(UINT8 *)FieldValue;
+            NAM0.value.fog.night.blue = *(uint8_t *)FieldValue;
             break;
         case 67: //fog.night.unused1
             if(ArraySize != 1)
@@ -2231,13 +2231,13 @@ bool WTHRRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             NAM0.value.fog.night.unused1 = ((UINT8ARRAY)FieldValue)[0];
             break;
         case 68: //fog.noon.red
-            NAM0.value.fog.noon.red = *(UINT8 *)FieldValue;
+            NAM0.value.fog.noon.red = *(uint8_t *)FieldValue;
             break;
         case 69: //fog.noon.green
-            NAM0.value.fog.noon.green = *(UINT8 *)FieldValue;
+            NAM0.value.fog.noon.green = *(uint8_t *)FieldValue;
             break;
         case 70: //fog.noon.blue
-            NAM0.value.fog.noon.blue = *(UINT8 *)FieldValue;
+            NAM0.value.fog.noon.blue = *(uint8_t *)FieldValue;
             break;
         case 71: //fog.noon.unused1
             if(ArraySize != 1)
@@ -2245,13 +2245,13 @@ bool WTHRRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             NAM0.value.fog.noon.unused1 = ((UINT8ARRAY)FieldValue)[0];
             break;
         case 72: //fog.midnight.red
-            NAM0.value.fog.midnight.red = *(UINT8 *)FieldValue;
+            NAM0.value.fog.midnight.red = *(uint8_t *)FieldValue;
             break;
         case 73: //fog.midnight.green
-            NAM0.value.fog.midnight.green = *(UINT8 *)FieldValue;
+            NAM0.value.fog.midnight.green = *(uint8_t *)FieldValue;
             break;
         case 74: //fog.midnight.blue
-            NAM0.value.fog.midnight.blue = *(UINT8 *)FieldValue;
+            NAM0.value.fog.midnight.blue = *(uint8_t *)FieldValue;
             break;
         case 75: //fog.midnight.unused1
             if(ArraySize != 1)
@@ -2259,13 +2259,13 @@ bool WTHRRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             NAM0.value.fog.midnight.unused1 = ((UINT8ARRAY)FieldValue)[0];
             break;
         case 76: //lowerClouds.rise.red
-            NAM0.value.lowerClouds.rise.red = *(UINT8 *)FieldValue;
+            NAM0.value.lowerClouds.rise.red = *(uint8_t *)FieldValue;
             break;
         case 77: //lowerClouds.rise.green
-            NAM0.value.lowerClouds.rise.green = *(UINT8 *)FieldValue;
+            NAM0.value.lowerClouds.rise.green = *(uint8_t *)FieldValue;
             break;
         case 78: //lowerClouds.rise.blue
-            NAM0.value.lowerClouds.rise.blue = *(UINT8 *)FieldValue;
+            NAM0.value.lowerClouds.rise.blue = *(uint8_t *)FieldValue;
             break;
         case 79: //lowerClouds.rise.unused1
             if(ArraySize != 1)
@@ -2273,13 +2273,13 @@ bool WTHRRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             NAM0.value.lowerClouds.rise.unused1 = ((UINT8ARRAY)FieldValue)[0];
             break;
         case 80: //lowerClouds.day.red
-            NAM0.value.lowerClouds.day.red = *(UINT8 *)FieldValue;
+            NAM0.value.lowerClouds.day.red = *(uint8_t *)FieldValue;
             break;
         case 81: //lowerClouds.day.green
-            NAM0.value.lowerClouds.day.green = *(UINT8 *)FieldValue;
+            NAM0.value.lowerClouds.day.green = *(uint8_t *)FieldValue;
             break;
         case 82: //lowerClouds.day.blue
-            NAM0.value.lowerClouds.day.blue = *(UINT8 *)FieldValue;
+            NAM0.value.lowerClouds.day.blue = *(uint8_t *)FieldValue;
             break;
         case 83: //lowerClouds.day.unused1
             if(ArraySize != 1)
@@ -2287,13 +2287,13 @@ bool WTHRRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             NAM0.value.lowerClouds.day.unused1 = ((UINT8ARRAY)FieldValue)[0];
             break;
         case 84: //lowerClouds.set.red
-            NAM0.value.lowerClouds.set.red = *(UINT8 *)FieldValue;
+            NAM0.value.lowerClouds.set.red = *(uint8_t *)FieldValue;
             break;
         case 85: //lowerClouds.set.green
-            NAM0.value.lowerClouds.set.green = *(UINT8 *)FieldValue;
+            NAM0.value.lowerClouds.set.green = *(uint8_t *)FieldValue;
             break;
         case 86: //lowerClouds.set.blue
-            NAM0.value.lowerClouds.set.blue = *(UINT8 *)FieldValue;
+            NAM0.value.lowerClouds.set.blue = *(uint8_t *)FieldValue;
             break;
         case 87: //lowerClouds.set.unused1
             if(ArraySize != 1)
@@ -2301,13 +2301,13 @@ bool WTHRRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             NAM0.value.lowerClouds.set.unused1 = ((UINT8ARRAY)FieldValue)[0];
             break;
         case 88: //lowerClouds.night.red
-            NAM0.value.lowerClouds.night.red = *(UINT8 *)FieldValue;
+            NAM0.value.lowerClouds.night.red = *(uint8_t *)FieldValue;
             break;
         case 89: //lowerClouds.night.green
-            NAM0.value.lowerClouds.night.green = *(UINT8 *)FieldValue;
+            NAM0.value.lowerClouds.night.green = *(uint8_t *)FieldValue;
             break;
         case 90: //lowerClouds.night.blue
-            NAM0.value.lowerClouds.night.blue = *(UINT8 *)FieldValue;
+            NAM0.value.lowerClouds.night.blue = *(uint8_t *)FieldValue;
             break;
         case 91: //lowerClouds.night.unused1
             if(ArraySize != 1)
@@ -2315,13 +2315,13 @@ bool WTHRRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             NAM0.value.lowerClouds.night.unused1 = ((UINT8ARRAY)FieldValue)[0];
             break;
         case 92: //lowerClouds.noon.red
-            NAM0.value.lowerClouds.noon.red = *(UINT8 *)FieldValue;
+            NAM0.value.lowerClouds.noon.red = *(uint8_t *)FieldValue;
             break;
         case 93: //lowerClouds.noon.green
-            NAM0.value.lowerClouds.noon.green = *(UINT8 *)FieldValue;
+            NAM0.value.lowerClouds.noon.green = *(uint8_t *)FieldValue;
             break;
         case 94: //lowerClouds.noon.blue
-            NAM0.value.lowerClouds.noon.blue = *(UINT8 *)FieldValue;
+            NAM0.value.lowerClouds.noon.blue = *(uint8_t *)FieldValue;
             break;
         case 95: //lowerClouds.noon.unused1
             if(ArraySize != 1)
@@ -2329,13 +2329,13 @@ bool WTHRRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             NAM0.value.lowerClouds.noon.unused1 = ((UINT8ARRAY)FieldValue)[0];
             break;
         case 96: //lowerClouds.midnight.red
-            NAM0.value.lowerClouds.midnight.red = *(UINT8 *)FieldValue;
+            NAM0.value.lowerClouds.midnight.red = *(uint8_t *)FieldValue;
             break;
         case 97: //lowerClouds.midnight.green
-            NAM0.value.lowerClouds.midnight.green = *(UINT8 *)FieldValue;
+            NAM0.value.lowerClouds.midnight.green = *(uint8_t *)FieldValue;
             break;
         case 98: //lowerClouds.midnight.blue
-            NAM0.value.lowerClouds.midnight.blue = *(UINT8 *)FieldValue;
+            NAM0.value.lowerClouds.midnight.blue = *(uint8_t *)FieldValue;
             break;
         case 99: //lowerClouds.midnight.unused1
             if(ArraySize != 1)
@@ -2343,13 +2343,13 @@ bool WTHRRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             NAM0.value.lowerClouds.midnight.unused1 = ((UINT8ARRAY)FieldValue)[0];
             break;
         case 100: //ambient.rise.red
-            NAM0.value.ambient.rise.red = *(UINT8 *)FieldValue;
+            NAM0.value.ambient.rise.red = *(uint8_t *)FieldValue;
             break;
         case 101: //ambient.rise.green
-            NAM0.value.ambient.rise.green = *(UINT8 *)FieldValue;
+            NAM0.value.ambient.rise.green = *(uint8_t *)FieldValue;
             break;
         case 102: //ambient.rise.blue
-            NAM0.value.ambient.rise.blue = *(UINT8 *)FieldValue;
+            NAM0.value.ambient.rise.blue = *(uint8_t *)FieldValue;
             break;
         case 103: //ambient.rise.unused1
             if(ArraySize != 1)
@@ -2357,13 +2357,13 @@ bool WTHRRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             NAM0.value.ambient.rise.unused1 = ((UINT8ARRAY)FieldValue)[0];
             break;
         case 104: //ambient.day.red
-            NAM0.value.ambient.day.red = *(UINT8 *)FieldValue;
+            NAM0.value.ambient.day.red = *(uint8_t *)FieldValue;
             break;
         case 105: //ambient.day.green
-            NAM0.value.ambient.day.green = *(UINT8 *)FieldValue;
+            NAM0.value.ambient.day.green = *(uint8_t *)FieldValue;
             break;
         case 106: //ambient.day.blue
-            NAM0.value.ambient.day.blue = *(UINT8 *)FieldValue;
+            NAM0.value.ambient.day.blue = *(uint8_t *)FieldValue;
             break;
         case 107: //ambient.day.unused1
             if(ArraySize != 1)
@@ -2371,13 +2371,13 @@ bool WTHRRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             NAM0.value.ambient.day.unused1 = ((UINT8ARRAY)FieldValue)[0];
             break;
         case 108: //ambient.set.red
-            NAM0.value.ambient.set.red = *(UINT8 *)FieldValue;
+            NAM0.value.ambient.set.red = *(uint8_t *)FieldValue;
             break;
         case 109: //ambient.set.green
-            NAM0.value.ambient.set.green = *(UINT8 *)FieldValue;
+            NAM0.value.ambient.set.green = *(uint8_t *)FieldValue;
             break;
         case 110: //ambient.set.blue
-            NAM0.value.ambient.set.blue = *(UINT8 *)FieldValue;
+            NAM0.value.ambient.set.blue = *(uint8_t *)FieldValue;
             break;
         case 111: //ambient.set.unused1
             if(ArraySize != 1)
@@ -2385,13 +2385,13 @@ bool WTHRRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             NAM0.value.ambient.set.unused1 = ((UINT8ARRAY)FieldValue)[0];
             break;
         case 112: //ambient.night.red
-            NAM0.value.ambient.night.red = *(UINT8 *)FieldValue;
+            NAM0.value.ambient.night.red = *(uint8_t *)FieldValue;
             break;
         case 113: //ambient.night.green
-            NAM0.value.ambient.night.green = *(UINT8 *)FieldValue;
+            NAM0.value.ambient.night.green = *(uint8_t *)FieldValue;
             break;
         case 114: //ambient.night.blue
-            NAM0.value.ambient.night.blue = *(UINT8 *)FieldValue;
+            NAM0.value.ambient.night.blue = *(uint8_t *)FieldValue;
             break;
         case 115: //ambient.night.unused1
             if(ArraySize != 1)
@@ -2399,13 +2399,13 @@ bool WTHRRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             NAM0.value.ambient.night.unused1 = ((UINT8ARRAY)FieldValue)[0];
             break;
         case 116: //ambient.noon.red
-            NAM0.value.ambient.noon.red = *(UINT8 *)FieldValue;
+            NAM0.value.ambient.noon.red = *(uint8_t *)FieldValue;
             break;
         case 117: //ambient.noon.green
-            NAM0.value.ambient.noon.green = *(UINT8 *)FieldValue;
+            NAM0.value.ambient.noon.green = *(uint8_t *)FieldValue;
             break;
         case 118: //ambient.noon.blue
-            NAM0.value.ambient.noon.blue = *(UINT8 *)FieldValue;
+            NAM0.value.ambient.noon.blue = *(uint8_t *)FieldValue;
             break;
         case 119: //ambient.noon.unused1
             if(ArraySize != 1)
@@ -2413,13 +2413,13 @@ bool WTHRRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             NAM0.value.ambient.noon.unused1 = ((UINT8ARRAY)FieldValue)[0];
             break;
         case 120: //ambient.midnight.red
-            NAM0.value.ambient.midnight.red = *(UINT8 *)FieldValue;
+            NAM0.value.ambient.midnight.red = *(uint8_t *)FieldValue;
             break;
         case 121: //ambient.midnight.green
-            NAM0.value.ambient.midnight.green = *(UINT8 *)FieldValue;
+            NAM0.value.ambient.midnight.green = *(uint8_t *)FieldValue;
             break;
         case 122: //ambient.midnight.blue
-            NAM0.value.ambient.midnight.blue = *(UINT8 *)FieldValue;
+            NAM0.value.ambient.midnight.blue = *(uint8_t *)FieldValue;
             break;
         case 123: //ambient.midnight.unused1
             if(ArraySize != 1)
@@ -2427,13 +2427,13 @@ bool WTHRRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             NAM0.value.ambient.midnight.unused1 = ((UINT8ARRAY)FieldValue)[0];
             break;
         case 124: //sunlight.rise.red
-            NAM0.value.sunlight.rise.red = *(UINT8 *)FieldValue;
+            NAM0.value.sunlight.rise.red = *(uint8_t *)FieldValue;
             break;
         case 125: //sunlight.rise.green
-            NAM0.value.sunlight.rise.green = *(UINT8 *)FieldValue;
+            NAM0.value.sunlight.rise.green = *(uint8_t *)FieldValue;
             break;
         case 126: //sunlight.rise.blue
-            NAM0.value.sunlight.rise.blue = *(UINT8 *)FieldValue;
+            NAM0.value.sunlight.rise.blue = *(uint8_t *)FieldValue;
             break;
         case 127: //sunlight.rise.unused1
             if(ArraySize != 1)
@@ -2441,13 +2441,13 @@ bool WTHRRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             NAM0.value.sunlight.rise.unused1 = ((UINT8ARRAY)FieldValue)[0];
             break;
         case 128: //sunlight.day.red
-            NAM0.value.sunlight.day.red = *(UINT8 *)FieldValue;
+            NAM0.value.sunlight.day.red = *(uint8_t *)FieldValue;
             break;
         case 129: //sunlight.day.green
-            NAM0.value.sunlight.day.green = *(UINT8 *)FieldValue;
+            NAM0.value.sunlight.day.green = *(uint8_t *)FieldValue;
             break;
         case 130: //sunlight.day.blue
-            NAM0.value.sunlight.day.blue = *(UINT8 *)FieldValue;
+            NAM0.value.sunlight.day.blue = *(uint8_t *)FieldValue;
             break;
         case 131: //sunlight.day.unused1
             if(ArraySize != 1)
@@ -2455,13 +2455,13 @@ bool WTHRRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             NAM0.value.sunlight.day.unused1 = ((UINT8ARRAY)FieldValue)[0];
             break;
         case 132: //sunlight.set.red
-            NAM0.value.sunlight.set.red = *(UINT8 *)FieldValue;
+            NAM0.value.sunlight.set.red = *(uint8_t *)FieldValue;
             break;
         case 133: //sunlight.set.green
-            NAM0.value.sunlight.set.green = *(UINT8 *)FieldValue;
+            NAM0.value.sunlight.set.green = *(uint8_t *)FieldValue;
             break;
         case 134: //sunlight.set.blue
-            NAM0.value.sunlight.set.blue = *(UINT8 *)FieldValue;
+            NAM0.value.sunlight.set.blue = *(uint8_t *)FieldValue;
             break;
         case 135: //sunlight.set.unused1
             if(ArraySize != 1)
@@ -2469,13 +2469,13 @@ bool WTHRRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             NAM0.value.sunlight.set.unused1 = ((UINT8ARRAY)FieldValue)[0];
             break;
         case 136: //sunlight.night.red
-            NAM0.value.sunlight.night.red = *(UINT8 *)FieldValue;
+            NAM0.value.sunlight.night.red = *(uint8_t *)FieldValue;
             break;
         case 137: //sunlight.night.green
-            NAM0.value.sunlight.night.green = *(UINT8 *)FieldValue;
+            NAM0.value.sunlight.night.green = *(uint8_t *)FieldValue;
             break;
         case 138: //sunlight.night.blue
-            NAM0.value.sunlight.night.blue = *(UINT8 *)FieldValue;
+            NAM0.value.sunlight.night.blue = *(uint8_t *)FieldValue;
             break;
         case 139: //sunlight.night.unused1
             if(ArraySize != 1)
@@ -2483,13 +2483,13 @@ bool WTHRRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             NAM0.value.sunlight.night.unused1 = ((UINT8ARRAY)FieldValue)[0];
             break;
         case 140: //sunlight.noon.red
-            NAM0.value.sunlight.noon.red = *(UINT8 *)FieldValue;
+            NAM0.value.sunlight.noon.red = *(uint8_t *)FieldValue;
             break;
         case 141: //sunlight.noon.green
-            NAM0.value.sunlight.noon.green = *(UINT8 *)FieldValue;
+            NAM0.value.sunlight.noon.green = *(uint8_t *)FieldValue;
             break;
         case 142: //sunlight.noon.blue
-            NAM0.value.sunlight.noon.blue = *(UINT8 *)FieldValue;
+            NAM0.value.sunlight.noon.blue = *(uint8_t *)FieldValue;
             break;
         case 143: //sunlight.noon.unused1
             if(ArraySize != 1)
@@ -2497,13 +2497,13 @@ bool WTHRRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             NAM0.value.sunlight.noon.unused1 = ((UINT8ARRAY)FieldValue)[0];
             break;
         case 144: //sunlight.midnight.red
-            NAM0.value.sunlight.midnight.red = *(UINT8 *)FieldValue;
+            NAM0.value.sunlight.midnight.red = *(uint8_t *)FieldValue;
             break;
         case 145: //sunlight.midnight.green
-            NAM0.value.sunlight.midnight.green = *(UINT8 *)FieldValue;
+            NAM0.value.sunlight.midnight.green = *(uint8_t *)FieldValue;
             break;
         case 146: //sunlight.midnight.blue
-            NAM0.value.sunlight.midnight.blue = *(UINT8 *)FieldValue;
+            NAM0.value.sunlight.midnight.blue = *(uint8_t *)FieldValue;
             break;
         case 147: //sunlight.midnight.unused1
             if(ArraySize != 1)
@@ -2511,13 +2511,13 @@ bool WTHRRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             NAM0.value.sunlight.midnight.unused1 = ((UINT8ARRAY)FieldValue)[0];
             break;
         case 148: //sun.rise.red
-            NAM0.value.sun.rise.red = *(UINT8 *)FieldValue;
+            NAM0.value.sun.rise.red = *(uint8_t *)FieldValue;
             break;
         case 149: //sun.rise.green
-            NAM0.value.sun.rise.green = *(UINT8 *)FieldValue;
+            NAM0.value.sun.rise.green = *(uint8_t *)FieldValue;
             break;
         case 150: //sun.rise.blue
-            NAM0.value.sun.rise.blue = *(UINT8 *)FieldValue;
+            NAM0.value.sun.rise.blue = *(uint8_t *)FieldValue;
             break;
         case 151: //sun.rise.unused1
             if(ArraySize != 1)
@@ -2525,13 +2525,13 @@ bool WTHRRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             NAM0.value.sun.rise.unused1 = ((UINT8ARRAY)FieldValue)[0];
             break;
         case 152: //sun.day.red
-            NAM0.value.sun.day.red = *(UINT8 *)FieldValue;
+            NAM0.value.sun.day.red = *(uint8_t *)FieldValue;
             break;
         case 153: //sun.day.green
-            NAM0.value.sun.day.green = *(UINT8 *)FieldValue;
+            NAM0.value.sun.day.green = *(uint8_t *)FieldValue;
             break;
         case 154: //sun.day.blue
-            NAM0.value.sun.day.blue = *(UINT8 *)FieldValue;
+            NAM0.value.sun.day.blue = *(uint8_t *)FieldValue;
             break;
         case 155: //sun.day.unused1
             if(ArraySize != 1)
@@ -2539,13 +2539,13 @@ bool WTHRRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             NAM0.value.sun.day.unused1 = ((UINT8ARRAY)FieldValue)[0];
             break;
         case 156: //sun.set.red
-            NAM0.value.sun.set.red = *(UINT8 *)FieldValue;
+            NAM0.value.sun.set.red = *(uint8_t *)FieldValue;
             break;
         case 157: //sun.set.green
-            NAM0.value.sun.set.green = *(UINT8 *)FieldValue;
+            NAM0.value.sun.set.green = *(uint8_t *)FieldValue;
             break;
         case 158: //sun.set.blue
-            NAM0.value.sun.set.blue = *(UINT8 *)FieldValue;
+            NAM0.value.sun.set.blue = *(uint8_t *)FieldValue;
             break;
         case 159: //sun.set.unused1
             if(ArraySize != 1)
@@ -2553,13 +2553,13 @@ bool WTHRRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             NAM0.value.sun.set.unused1 = ((UINT8ARRAY)FieldValue)[0];
             break;
         case 160: //sun.night.red
-            NAM0.value.sun.night.red = *(UINT8 *)FieldValue;
+            NAM0.value.sun.night.red = *(uint8_t *)FieldValue;
             break;
         case 161: //sun.night.green
-            NAM0.value.sun.night.green = *(UINT8 *)FieldValue;
+            NAM0.value.sun.night.green = *(uint8_t *)FieldValue;
             break;
         case 162: //sun.night.blue
-            NAM0.value.sun.night.blue = *(UINT8 *)FieldValue;
+            NAM0.value.sun.night.blue = *(uint8_t *)FieldValue;
             break;
         case 163: //sun.night.unused1
             if(ArraySize != 1)
@@ -2567,13 +2567,13 @@ bool WTHRRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             NAM0.value.sun.night.unused1 = ((UINT8ARRAY)FieldValue)[0];
             break;
         case 164: //sun.noon.red
-            NAM0.value.sun.noon.red = *(UINT8 *)FieldValue;
+            NAM0.value.sun.noon.red = *(uint8_t *)FieldValue;
             break;
         case 165: //sun.noon.green
-            NAM0.value.sun.noon.green = *(UINT8 *)FieldValue;
+            NAM0.value.sun.noon.green = *(uint8_t *)FieldValue;
             break;
         case 166: //sun.noon.blue
-            NAM0.value.sun.noon.blue = *(UINT8 *)FieldValue;
+            NAM0.value.sun.noon.blue = *(uint8_t *)FieldValue;
             break;
         case 167: //sun.noon.unused1
             if(ArraySize != 1)
@@ -2581,13 +2581,13 @@ bool WTHRRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             NAM0.value.sun.noon.unused1 = ((UINT8ARRAY)FieldValue)[0];
             break;
         case 168: //sun.midnight.red
-            NAM0.value.sun.midnight.red = *(UINT8 *)FieldValue;
+            NAM0.value.sun.midnight.red = *(uint8_t *)FieldValue;
             break;
         case 169: //sun.midnight.green
-            NAM0.value.sun.midnight.green = *(UINT8 *)FieldValue;
+            NAM0.value.sun.midnight.green = *(uint8_t *)FieldValue;
             break;
         case 170: //sun.midnight.blue
-            NAM0.value.sun.midnight.blue = *(UINT8 *)FieldValue;
+            NAM0.value.sun.midnight.blue = *(uint8_t *)FieldValue;
             break;
         case 171: //sun.midnight.unused1
             if(ArraySize != 1)
@@ -2595,13 +2595,13 @@ bool WTHRRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             NAM0.value.sun.midnight.unused1 = ((UINT8ARRAY)FieldValue)[0];
             break;
         case 172: //stars.rise.red
-            NAM0.value.stars.rise.red = *(UINT8 *)FieldValue;
+            NAM0.value.stars.rise.red = *(uint8_t *)FieldValue;
             break;
         case 173: //stars.rise.green
-            NAM0.value.stars.rise.green = *(UINT8 *)FieldValue;
+            NAM0.value.stars.rise.green = *(uint8_t *)FieldValue;
             break;
         case 174: //stars.rise.blue
-            NAM0.value.stars.rise.blue = *(UINT8 *)FieldValue;
+            NAM0.value.stars.rise.blue = *(uint8_t *)FieldValue;
             break;
         case 175: //stars.rise.unused1
             if(ArraySize != 1)
@@ -2609,13 +2609,13 @@ bool WTHRRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             NAM0.value.stars.rise.unused1 = ((UINT8ARRAY)FieldValue)[0];
             break;
         case 176: //stars.day.red
-            NAM0.value.stars.day.red = *(UINT8 *)FieldValue;
+            NAM0.value.stars.day.red = *(uint8_t *)FieldValue;
             break;
         case 177: //stars.day.green
-            NAM0.value.stars.day.green = *(UINT8 *)FieldValue;
+            NAM0.value.stars.day.green = *(uint8_t *)FieldValue;
             break;
         case 178: //stars.day.blue
-            NAM0.value.stars.day.blue = *(UINT8 *)FieldValue;
+            NAM0.value.stars.day.blue = *(uint8_t *)FieldValue;
             break;
         case 179: //stars.day.unused1
             if(ArraySize != 1)
@@ -2623,13 +2623,13 @@ bool WTHRRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             NAM0.value.stars.day.unused1 = ((UINT8ARRAY)FieldValue)[0];
             break;
         case 180: //stars.set.red
-            NAM0.value.stars.set.red = *(UINT8 *)FieldValue;
+            NAM0.value.stars.set.red = *(uint8_t *)FieldValue;
             break;
         case 181: //stars.set.green
-            NAM0.value.stars.set.green = *(UINT8 *)FieldValue;
+            NAM0.value.stars.set.green = *(uint8_t *)FieldValue;
             break;
         case 182: //stars.set.blue
-            NAM0.value.stars.set.blue = *(UINT8 *)FieldValue;
+            NAM0.value.stars.set.blue = *(uint8_t *)FieldValue;
             break;
         case 183: //stars.set.unused1
             if(ArraySize != 1)
@@ -2637,13 +2637,13 @@ bool WTHRRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             NAM0.value.stars.set.unused1 = ((UINT8ARRAY)FieldValue)[0];
             break;
         case 184: //stars.night.red
-            NAM0.value.stars.night.red = *(UINT8 *)FieldValue;
+            NAM0.value.stars.night.red = *(uint8_t *)FieldValue;
             break;
         case 185: //stars.night.green
-            NAM0.value.stars.night.green = *(UINT8 *)FieldValue;
+            NAM0.value.stars.night.green = *(uint8_t *)FieldValue;
             break;
         case 186: //stars.night.blue
-            NAM0.value.stars.night.blue = *(UINT8 *)FieldValue;
+            NAM0.value.stars.night.blue = *(uint8_t *)FieldValue;
             break;
         case 187: //stars.night.unused1
             if(ArraySize != 1)
@@ -2651,13 +2651,13 @@ bool WTHRRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             NAM0.value.stars.night.unused1 = ((UINT8ARRAY)FieldValue)[0];
             break;
         case 188: //stars.noon.red
-            NAM0.value.stars.noon.red = *(UINT8 *)FieldValue;
+            NAM0.value.stars.noon.red = *(uint8_t *)FieldValue;
             break;
         case 189: //stars.noon.green
-            NAM0.value.stars.noon.green = *(UINT8 *)FieldValue;
+            NAM0.value.stars.noon.green = *(uint8_t *)FieldValue;
             break;
         case 190: //stars.noon.blue
-            NAM0.value.stars.noon.blue = *(UINT8 *)FieldValue;
+            NAM0.value.stars.noon.blue = *(uint8_t *)FieldValue;
             break;
         case 191: //stars.noon.unused1
             if(ArraySize != 1)
@@ -2665,13 +2665,13 @@ bool WTHRRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             NAM0.value.stars.noon.unused1 = ((UINT8ARRAY)FieldValue)[0];
             break;
         case 192: //stars.midnight.red
-            NAM0.value.stars.midnight.red = *(UINT8 *)FieldValue;
+            NAM0.value.stars.midnight.red = *(uint8_t *)FieldValue;
             break;
         case 193: //stars.midnight.green
-            NAM0.value.stars.midnight.green = *(UINT8 *)FieldValue;
+            NAM0.value.stars.midnight.green = *(uint8_t *)FieldValue;
             break;
         case 194: //stars.midnight.blue
-            NAM0.value.stars.midnight.blue = *(UINT8 *)FieldValue;
+            NAM0.value.stars.midnight.blue = *(uint8_t *)FieldValue;
             break;
         case 195: //stars.midnight.unused1
             if(ArraySize != 1)
@@ -2679,13 +2679,13 @@ bool WTHRRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             NAM0.value.stars.midnight.unused1 = ((UINT8ARRAY)FieldValue)[0];
             break;
         case 196: //lowerSky.rise.red
-            NAM0.value.lowerSky.rise.red = *(UINT8 *)FieldValue;
+            NAM0.value.lowerSky.rise.red = *(uint8_t *)FieldValue;
             break;
         case 197: //lowerSky.rise.green
-            NAM0.value.lowerSky.rise.green = *(UINT8 *)FieldValue;
+            NAM0.value.lowerSky.rise.green = *(uint8_t *)FieldValue;
             break;
         case 198: //lowerSky.rise.blue
-            NAM0.value.lowerSky.rise.blue = *(UINT8 *)FieldValue;
+            NAM0.value.lowerSky.rise.blue = *(uint8_t *)FieldValue;
             break;
         case 199: //lowerSky.rise.unused1
             if(ArraySize != 1)
@@ -2693,13 +2693,13 @@ bool WTHRRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             NAM0.value.lowerSky.rise.unused1 = ((UINT8ARRAY)FieldValue)[0];
             break;
         case 200: //lowerSky.day.red
-            NAM0.value.lowerSky.day.red = *(UINT8 *)FieldValue;
+            NAM0.value.lowerSky.day.red = *(uint8_t *)FieldValue;
             break;
         case 201: //lowerSky.day.green
-            NAM0.value.lowerSky.day.green = *(UINT8 *)FieldValue;
+            NAM0.value.lowerSky.day.green = *(uint8_t *)FieldValue;
             break;
         case 202: //lowerSky.day.blue
-            NAM0.value.lowerSky.day.blue = *(UINT8 *)FieldValue;
+            NAM0.value.lowerSky.day.blue = *(uint8_t *)FieldValue;
             break;
         case 203: //lowerSky.day.unused1
             if(ArraySize != 1)
@@ -2707,13 +2707,13 @@ bool WTHRRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             NAM0.value.lowerSky.day.unused1 = ((UINT8ARRAY)FieldValue)[0];
             break;
         case 204: //lowerSky.set.red
-            NAM0.value.lowerSky.set.red = *(UINT8 *)FieldValue;
+            NAM0.value.lowerSky.set.red = *(uint8_t *)FieldValue;
             break;
         case 205: //lowerSky.set.green
-            NAM0.value.lowerSky.set.green = *(UINT8 *)FieldValue;
+            NAM0.value.lowerSky.set.green = *(uint8_t *)FieldValue;
             break;
         case 206: //lowerSky.set.blue
-            NAM0.value.lowerSky.set.blue = *(UINT8 *)FieldValue;
+            NAM0.value.lowerSky.set.blue = *(uint8_t *)FieldValue;
             break;
         case 207: //lowerSky.set.unused1
             if(ArraySize != 1)
@@ -2721,13 +2721,13 @@ bool WTHRRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             NAM0.value.lowerSky.set.unused1 = ((UINT8ARRAY)FieldValue)[0];
             break;
         case 208: //lowerSky.night.red
-            NAM0.value.lowerSky.night.red = *(UINT8 *)FieldValue;
+            NAM0.value.lowerSky.night.red = *(uint8_t *)FieldValue;
             break;
         case 209: //lowerSky.night.green
-            NAM0.value.lowerSky.night.green = *(UINT8 *)FieldValue;
+            NAM0.value.lowerSky.night.green = *(uint8_t *)FieldValue;
             break;
         case 210: //lowerSky.night.blue
-            NAM0.value.lowerSky.night.blue = *(UINT8 *)FieldValue;
+            NAM0.value.lowerSky.night.blue = *(uint8_t *)FieldValue;
             break;
         case 211: //lowerSky.night.unused1
             if(ArraySize != 1)
@@ -2735,13 +2735,13 @@ bool WTHRRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             NAM0.value.lowerSky.night.unused1 = ((UINT8ARRAY)FieldValue)[0];
             break;
         case 212: //lowerSky.noon.red
-            NAM0.value.lowerSky.noon.red = *(UINT8 *)FieldValue;
+            NAM0.value.lowerSky.noon.red = *(uint8_t *)FieldValue;
             break;
         case 213: //lowerSky.noon.green
-            NAM0.value.lowerSky.noon.green = *(UINT8 *)FieldValue;
+            NAM0.value.lowerSky.noon.green = *(uint8_t *)FieldValue;
             break;
         case 214: //lowerSky.noon.blue
-            NAM0.value.lowerSky.noon.blue = *(UINT8 *)FieldValue;
+            NAM0.value.lowerSky.noon.blue = *(uint8_t *)FieldValue;
             break;
         case 215: //lowerSky.noon.unused1
             if(ArraySize != 1)
@@ -2749,13 +2749,13 @@ bool WTHRRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             NAM0.value.lowerSky.noon.unused1 = ((UINT8ARRAY)FieldValue)[0];
             break;
         case 216: //lowerSky.midnight.red
-            NAM0.value.lowerSky.midnight.red = *(UINT8 *)FieldValue;
+            NAM0.value.lowerSky.midnight.red = *(uint8_t *)FieldValue;
             break;
         case 217: //lowerSky.midnight.green
-            NAM0.value.lowerSky.midnight.green = *(UINT8 *)FieldValue;
+            NAM0.value.lowerSky.midnight.green = *(uint8_t *)FieldValue;
             break;
         case 218: //lowerSky.midnight.blue
-            NAM0.value.lowerSky.midnight.blue = *(UINT8 *)FieldValue;
+            NAM0.value.lowerSky.midnight.blue = *(uint8_t *)FieldValue;
             break;
         case 219: //lowerSky.midnight.unused1
             if(ArraySize != 1)
@@ -2763,13 +2763,13 @@ bool WTHRRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             NAM0.value.lowerSky.midnight.unused1 = ((UINT8ARRAY)FieldValue)[0];
             break;
         case 220: //horizon.rise.red
-            NAM0.value.horizon.rise.red = *(UINT8 *)FieldValue;
+            NAM0.value.horizon.rise.red = *(uint8_t *)FieldValue;
             break;
         case 221: //horizon.rise.green
-            NAM0.value.horizon.rise.green = *(UINT8 *)FieldValue;
+            NAM0.value.horizon.rise.green = *(uint8_t *)FieldValue;
             break;
         case 222: //horizon.rise.blue
-            NAM0.value.horizon.rise.blue = *(UINT8 *)FieldValue;
+            NAM0.value.horizon.rise.blue = *(uint8_t *)FieldValue;
             break;
         case 223: //horizon.rise.unused1
             if(ArraySize != 1)
@@ -2777,13 +2777,13 @@ bool WTHRRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             NAM0.value.horizon.rise.unused1 = ((UINT8ARRAY)FieldValue)[0];
             break;
         case 224: //horizon.day.red
-            NAM0.value.horizon.day.red = *(UINT8 *)FieldValue;
+            NAM0.value.horizon.day.red = *(uint8_t *)FieldValue;
             break;
         case 225: //horizon.day.green
-            NAM0.value.horizon.day.green = *(UINT8 *)FieldValue;
+            NAM0.value.horizon.day.green = *(uint8_t *)FieldValue;
             break;
         case 226: //horizon.day.blue
-            NAM0.value.horizon.day.blue = *(UINT8 *)FieldValue;
+            NAM0.value.horizon.day.blue = *(uint8_t *)FieldValue;
             break;
         case 227: //horizon.day.unused1
             if(ArraySize != 1)
@@ -2791,13 +2791,13 @@ bool WTHRRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             NAM0.value.horizon.day.unused1 = ((UINT8ARRAY)FieldValue)[0];
             break;
         case 228: //horizon.set.red
-            NAM0.value.horizon.set.red = *(UINT8 *)FieldValue;
+            NAM0.value.horizon.set.red = *(uint8_t *)FieldValue;
             break;
         case 229: //horizon.set.green
-            NAM0.value.horizon.set.green = *(UINT8 *)FieldValue;
+            NAM0.value.horizon.set.green = *(uint8_t *)FieldValue;
             break;
         case 230: //horizon.set.blue
-            NAM0.value.horizon.set.blue = *(UINT8 *)FieldValue;
+            NAM0.value.horizon.set.blue = *(uint8_t *)FieldValue;
             break;
         case 231: //horizon.set.unused1
             if(ArraySize != 1)
@@ -2805,13 +2805,13 @@ bool WTHRRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             NAM0.value.horizon.set.unused1 = ((UINT8ARRAY)FieldValue)[0];
             break;
         case 232: //horizon.night.red
-            NAM0.value.horizon.night.red = *(UINT8 *)FieldValue;
+            NAM0.value.horizon.night.red = *(uint8_t *)FieldValue;
             break;
         case 233: //horizon.night.green
-            NAM0.value.horizon.night.green = *(UINT8 *)FieldValue;
+            NAM0.value.horizon.night.green = *(uint8_t *)FieldValue;
             break;
         case 234: //horizon.night.blue
-            NAM0.value.horizon.night.blue = *(UINT8 *)FieldValue;
+            NAM0.value.horizon.night.blue = *(uint8_t *)FieldValue;
             break;
         case 235: //horizon.night.unused1
             if(ArraySize != 1)
@@ -2819,13 +2819,13 @@ bool WTHRRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             NAM0.value.horizon.night.unused1 = ((UINT8ARRAY)FieldValue)[0];
             break;
         case 236: //horizon.noon.red
-            NAM0.value.horizon.noon.red = *(UINT8 *)FieldValue;
+            NAM0.value.horizon.noon.red = *(uint8_t *)FieldValue;
             break;
         case 237: //horizon.noon.green
-            NAM0.value.horizon.noon.green = *(UINT8 *)FieldValue;
+            NAM0.value.horizon.noon.green = *(uint8_t *)FieldValue;
             break;
         case 238: //horizon.noon.blue
-            NAM0.value.horizon.noon.blue = *(UINT8 *)FieldValue;
+            NAM0.value.horizon.noon.blue = *(uint8_t *)FieldValue;
             break;
         case 239: //horizon.noon.unused1
             if(ArraySize != 1)
@@ -2833,13 +2833,13 @@ bool WTHRRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             NAM0.value.horizon.noon.unused1 = ((UINT8ARRAY)FieldValue)[0];
             break;
         case 240: //horizon.midnight.red
-            NAM0.value.horizon.midnight.red = *(UINT8 *)FieldValue;
+            NAM0.value.horizon.midnight.red = *(uint8_t *)FieldValue;
             break;
         case 241: //horizon.midnight.green
-            NAM0.value.horizon.midnight.green = *(UINT8 *)FieldValue;
+            NAM0.value.horizon.midnight.green = *(uint8_t *)FieldValue;
             break;
         case 242: //horizon.midnight.blue
-            NAM0.value.horizon.midnight.blue = *(UINT8 *)FieldValue;
+            NAM0.value.horizon.midnight.blue = *(uint8_t *)FieldValue;
             break;
         case 243: //horizon.midnight.unused1
             if(ArraySize != 1)
@@ -2847,13 +2847,13 @@ bool WTHRRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             NAM0.value.horizon.midnight.unused1 = ((UINT8ARRAY)FieldValue)[0];
             break;
         case 244: //upperClouds.rise.red
-            NAM0.value.upperClouds.rise.red = *(UINT8 *)FieldValue;
+            NAM0.value.upperClouds.rise.red = *(uint8_t *)FieldValue;
             break;
         case 245: //upperClouds.rise.green
-            NAM0.value.upperClouds.rise.green = *(UINT8 *)FieldValue;
+            NAM0.value.upperClouds.rise.green = *(uint8_t *)FieldValue;
             break;
         case 246: //upperClouds.rise.blue
-            NAM0.value.upperClouds.rise.blue = *(UINT8 *)FieldValue;
+            NAM0.value.upperClouds.rise.blue = *(uint8_t *)FieldValue;
             break;
         case 247: //upperClouds.rise.unused1
             if(ArraySize != 1)
@@ -2861,13 +2861,13 @@ bool WTHRRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             NAM0.value.upperClouds.rise.unused1 = ((UINT8ARRAY)FieldValue)[0];
             break;
         case 248: //upperClouds.day.red
-            NAM0.value.upperClouds.day.red = *(UINT8 *)FieldValue;
+            NAM0.value.upperClouds.day.red = *(uint8_t *)FieldValue;
             break;
         case 249: //upperClouds.day.green
-            NAM0.value.upperClouds.day.green = *(UINT8 *)FieldValue;
+            NAM0.value.upperClouds.day.green = *(uint8_t *)FieldValue;
             break;
         case 250: //upperClouds.day.blue
-            NAM0.value.upperClouds.day.blue = *(UINT8 *)FieldValue;
+            NAM0.value.upperClouds.day.blue = *(uint8_t *)FieldValue;
             break;
         case 251: //upperClouds.day.unused1
             if(ArraySize != 1)
@@ -2875,13 +2875,13 @@ bool WTHRRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             NAM0.value.upperClouds.day.unused1 = ((UINT8ARRAY)FieldValue)[0];
             break;
         case 252: //upperClouds.set.red
-            NAM0.value.upperClouds.set.red = *(UINT8 *)FieldValue;
+            NAM0.value.upperClouds.set.red = *(uint8_t *)FieldValue;
             break;
         case 253: //upperClouds.set.green
-            NAM0.value.upperClouds.set.green = *(UINT8 *)FieldValue;
+            NAM0.value.upperClouds.set.green = *(uint8_t *)FieldValue;
             break;
         case 254: //upperClouds.set.blue
-            NAM0.value.upperClouds.set.blue = *(UINT8 *)FieldValue;
+            NAM0.value.upperClouds.set.blue = *(uint8_t *)FieldValue;
             break;
         case 255: //upperClouds.set.unused1
             if(ArraySize != 1)
@@ -2889,13 +2889,13 @@ bool WTHRRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             NAM0.value.upperClouds.set.unused1 = ((UINT8ARRAY)FieldValue)[0];
             break;
         case 256: //upperClouds.night.red
-            NAM0.value.upperClouds.night.red = *(UINT8 *)FieldValue;
+            NAM0.value.upperClouds.night.red = *(uint8_t *)FieldValue;
             break;
         case 257: //upperClouds.night.green
-            NAM0.value.upperClouds.night.green = *(UINT8 *)FieldValue;
+            NAM0.value.upperClouds.night.green = *(uint8_t *)FieldValue;
             break;
         case 258: //upperClouds.night.blue
-            NAM0.value.upperClouds.night.blue = *(UINT8 *)FieldValue;
+            NAM0.value.upperClouds.night.blue = *(uint8_t *)FieldValue;
             break;
         case 259: //upperClouds.night.unused1
             if(ArraySize != 1)
@@ -2903,13 +2903,13 @@ bool WTHRRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             NAM0.value.upperClouds.night.unused1 = ((UINT8ARRAY)FieldValue)[0];
             break;
         case 260: //upperClouds.noon.red
-            NAM0.value.upperClouds.noon.red = *(UINT8 *)FieldValue;
+            NAM0.value.upperClouds.noon.red = *(uint8_t *)FieldValue;
             break;
         case 261: //upperClouds.noon.green
-            NAM0.value.upperClouds.noon.green = *(UINT8 *)FieldValue;
+            NAM0.value.upperClouds.noon.green = *(uint8_t *)FieldValue;
             break;
         case 262: //upperClouds.noon.blue
-            NAM0.value.upperClouds.noon.blue = *(UINT8 *)FieldValue;
+            NAM0.value.upperClouds.noon.blue = *(uint8_t *)FieldValue;
             break;
         case 263: //upperClouds.noon.unused1
             if(ArraySize != 1)
@@ -2917,13 +2917,13 @@ bool WTHRRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             NAM0.value.upperClouds.noon.unused1 = ((UINT8ARRAY)FieldValue)[0];
             break;
         case 264: //upperClouds.midnight.red
-            NAM0.value.upperClouds.midnight.red = *(UINT8 *)FieldValue;
+            NAM0.value.upperClouds.midnight.red = *(uint8_t *)FieldValue;
             break;
         case 265: //upperClouds.midnight.green
-            NAM0.value.upperClouds.midnight.green = *(UINT8 *)FieldValue;
+            NAM0.value.upperClouds.midnight.green = *(uint8_t *)FieldValue;
             break;
         case 266: //upperClouds.midnight.blue
-            NAM0.value.upperClouds.midnight.blue = *(UINT8 *)FieldValue;
+            NAM0.value.upperClouds.midnight.blue = *(uint8_t *)FieldValue;
             break;
         case 267: //upperClouds.midnight.unused1
             if(ArraySize != 1)
@@ -2931,70 +2931,70 @@ bool WTHRRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             NAM0.value.upperClouds.midnight.unused1 = ((UINT8ARRAY)FieldValue)[0];
             break;
         case 268: //fogDayNear
-            FNAM.value.fogDayNear = *(FLOAT32 *)FieldValue;
+            FNAM.value.fogDayNear = *(float *)FieldValue;
             break;
         case 269: //fogDayFar
-            FNAM.value.fogDayFar = *(FLOAT32 *)FieldValue;
+            FNAM.value.fogDayFar = *(float *)FieldValue;
             break;
         case 270: //fogNightNear
-            FNAM.value.fogNightNear = *(FLOAT32 *)FieldValue;
+            FNAM.value.fogNightNear = *(float *)FieldValue;
             break;
         case 271: //fogNightFar
-            FNAM.value.fogNightFar = *(FLOAT32 *)FieldValue;
+            FNAM.value.fogNightFar = *(float *)FieldValue;
             break;
         case 272: //fogDayPower
-            FNAM.value.fogDayPower = *(FLOAT32 *)FieldValue;
+            FNAM.value.fogDayPower = *(float *)FieldValue;
             break;
         case 273: //fogNightPower
-            FNAM.value.fogNightPower = *(FLOAT32 *)FieldValue;
+            FNAM.value.fogNightPower = *(float *)FieldValue;
             break;
         case 274: //INAM
             INAM.Copy((UINT8ARRAY)FieldValue, ArraySize);
             break;
         case 275: //windSpeed
-            DATA.value.windSpeed = *(UINT8 *)FieldValue;
+            DATA.value.windSpeed = *(uint8_t *)FieldValue;
             break;
         case 276: //lowerCloudSpeed
-            DATA.value.lowerCloudSpeed = *(UINT8 *)FieldValue;
+            DATA.value.lowerCloudSpeed = *(uint8_t *)FieldValue;
             break;
         case 277: //upperCloudSpeed
-            DATA.value.upperCloudSpeed = *(UINT8 *)FieldValue;
+            DATA.value.upperCloudSpeed = *(uint8_t *)FieldValue;
             break;
         case 278: //transDelta
-            DATA.value.transDelta = *(UINT8 *)FieldValue;
+            DATA.value.transDelta = *(uint8_t *)FieldValue;
             break;
         case 279: //sunGlare
-            DATA.value.sunGlare = *(UINT8 *)FieldValue;
+            DATA.value.sunGlare = *(uint8_t *)FieldValue;
             break;
         case 280: //sunDamage
-            DATA.value.sunDamage = *(UINT8 *)FieldValue;
+            DATA.value.sunDamage = *(uint8_t *)FieldValue;
             break;
         case 281: //rainFadeIn
-            DATA.value.rainFadeIn = *(UINT8 *)FieldValue;
+            DATA.value.rainFadeIn = *(uint8_t *)FieldValue;
             break;
         case 282: //rainFadeOut
-            DATA.value.rainFadeOut = *(UINT8 *)FieldValue;
+            DATA.value.rainFadeOut = *(uint8_t *)FieldValue;
             break;
         case 283: //boltFadeIn
-            DATA.value.boltFadeIn = *(UINT8 *)FieldValue;
+            DATA.value.boltFadeIn = *(uint8_t *)FieldValue;
             break;
         case 284: //boltFadeOut
-            DATA.value.boltFadeOut = *(UINT8 *)FieldValue;
+            DATA.value.boltFadeOut = *(uint8_t *)FieldValue;
             break;
         case 285: //boltFrequency
-            DATA.value.boltFrequency = *(UINT8 *)FieldValue;
+            DATA.value.boltFrequency = *(uint8_t *)FieldValue;
             break;
         case 286: //weatherType
-            DATA.value.weatherType = *(UINT8 *)FieldValue;
+            DATA.value.weatherType = *(uint8_t *)FieldValue;
             break;
         case 287: //boltRed
-            DATA.value.boltRed = *(UINT8 *)FieldValue;
+            DATA.value.boltRed = *(uint8_t *)FieldValue;
             break;
         case 288: //boltGreen
-            DATA.value.boltGreen = *(UINT8 *)FieldValue;
+            DATA.value.boltGreen = *(uint8_t *)FieldValue;
             break;
         case 289: //boltBlue
-            DATA.value.boltBlue = *(UINT8 *)FieldValue;
+            DATA.value.boltBlue = *(uint8_t *)FieldValue;
             break;
         case 290: //sounds
             if(ListFieldID == 0) //soundsSize
@@ -3012,7 +3012,7 @@ bool WTHRRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
                     Sounds.value[ListIndex]->sound = *(FORMID *)FieldValue;
                     return true;
                 case 2: //type
-                    Sounds.value[ListIndex]->SetType(*(UINT32 *)FieldValue);
+                    Sounds.value[ListIndex]->SetType(*(uint32_t *)FieldValue);
                     break;
                 default:
                     break;

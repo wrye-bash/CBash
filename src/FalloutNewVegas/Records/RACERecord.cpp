@@ -38,7 +38,7 @@
 
 namespace FNV
 {
-void RACERecord::RACEPart::Write(UINT32 index, FileWriter &writer)
+void RACERecord::RACEPart::Write(uint32_t index, FileWriter &writer)
     {
     writer.record_write_subrecord(REV32(INDX), &index, 4);
     MODL.Write(writer);
@@ -46,7 +46,7 @@ void RACERecord::RACEPart::Write(UINT32 index, FileWriter &writer)
     WRITE(MICO);
     }
 
-void RACERecord::RACEPart::WriteIconsFirst(UINT32 index, FileWriter &writer)
+void RACERecord::RACEPart::WriteIconsFirst(uint32_t index, FileWriter &writer)
     {
     writer.record_write_subrecord(REV32(INDX), &index, 4);
     WRITE(ICON);
@@ -156,7 +156,7 @@ bool RACERecord::VisitFormIDs(FormIDOp &op)
     if(!IsLoaded())
         return false;
 
-    for(UINT32 ListIndex = 0; ListIndex < XNAM.value.size(); ListIndex++)
+    for(uint32_t ListIndex = 0; ListIndex < XNAM.value.size(); ListIndex++)
         op.Accept(XNAM.value[ListIndex]->faction);
     if(ONAM.IsLoaded())
         op.Accept(ONAM.value);
@@ -175,151 +175,151 @@ bool RACERecord::VisitFormIDs(FormIDOp &op)
 
     if(MHMOD0.MODL.IsLoaded())
         {
-        for(UINT32 ListIndex = 0; ListIndex < MHMOD0.MODL->Textures.MODS.size(); ListIndex++)
+        for(uint32_t ListIndex = 0; ListIndex < MHMOD0.MODL->Textures.MODS.size(); ListIndex++)
             op.Accept(MHMOD0.MODL->Textures.MODS[ListIndex]->texture);
         }
 
     if(MHMOD1.MODL.IsLoaded())
         {
-        for(UINT32 ListIndex = 0; ListIndex < MHMOD1.MODL->Textures.MODS.size(); ListIndex++)
+        for(uint32_t ListIndex = 0; ListIndex < MHMOD1.MODL->Textures.MODS.size(); ListIndex++)
             op.Accept(MHMOD1.MODL->Textures.MODS[ListIndex]->texture);
         }
 
     if(MHMOD2.MODL.IsLoaded())
         {
-        for(UINT32 ListIndex = 0; ListIndex < MHMOD2.MODL->Textures.MODS.size(); ListIndex++)
+        for(uint32_t ListIndex = 0; ListIndex < MHMOD2.MODL->Textures.MODS.size(); ListIndex++)
             op.Accept(MHMOD2.MODL->Textures.MODS[ListIndex]->texture);
         }
 
     if(MHMOD3.MODL.IsLoaded())
         {
-        for(UINT32 ListIndex = 0; ListIndex < MHMOD3.MODL->Textures.MODS.size(); ListIndex++)
+        for(uint32_t ListIndex = 0; ListIndex < MHMOD3.MODL->Textures.MODS.size(); ListIndex++)
             op.Accept(MHMOD3.MODL->Textures.MODS[ListIndex]->texture);
         }
 
     if(MHMOD4.MODL.IsLoaded())
         {
-        for(UINT32 ListIndex = 0; ListIndex < MHMOD4.MODL->Textures.MODS.size(); ListIndex++)
+        for(uint32_t ListIndex = 0; ListIndex < MHMOD4.MODL->Textures.MODS.size(); ListIndex++)
             op.Accept(MHMOD4.MODL->Textures.MODS[ListIndex]->texture);
         }
 
     if(MHMOD5.MODL.IsLoaded())
         {
-        for(UINT32 ListIndex = 0; ListIndex < MHMOD5.MODL->Textures.MODS.size(); ListIndex++)
+        for(uint32_t ListIndex = 0; ListIndex < MHMOD5.MODL->Textures.MODS.size(); ListIndex++)
             op.Accept(MHMOD5.MODL->Textures.MODS[ListIndex]->texture);
         }
 
     if(MHMOD6.MODL.IsLoaded())
         {
-        for(UINT32 ListIndex = 0; ListIndex < MHMOD6.MODL->Textures.MODS.size(); ListIndex++)
+        for(uint32_t ListIndex = 0; ListIndex < MHMOD6.MODL->Textures.MODS.size(); ListIndex++)
             op.Accept(MHMOD6.MODL->Textures.MODS[ListIndex]->texture);
         }
 
     if(MHMOD7.MODL.IsLoaded())
         {
-        for(UINT32 ListIndex = 0; ListIndex < MHMOD7.MODL->Textures.MODS.size(); ListIndex++)
+        for(uint32_t ListIndex = 0; ListIndex < MHMOD7.MODL->Textures.MODS.size(); ListIndex++)
             op.Accept(MHMOD7.MODL->Textures.MODS[ListIndex]->texture);
         }
 
     if(FHMOD0.MODL.IsLoaded())
         {
-        for(UINT32 ListIndex = 0; ListIndex < FHMOD0.MODL->Textures.MODS.size(); ListIndex++)
+        for(uint32_t ListIndex = 0; ListIndex < FHMOD0.MODL->Textures.MODS.size(); ListIndex++)
             op.Accept(FHMOD0.MODL->Textures.MODS[ListIndex]->texture);
         }
 
     if(FHMOD1.MODL.IsLoaded())
         {
-        for(UINT32 ListIndex = 0; ListIndex < FHMOD1.MODL->Textures.MODS.size(); ListIndex++)
+        for(uint32_t ListIndex = 0; ListIndex < FHMOD1.MODL->Textures.MODS.size(); ListIndex++)
             op.Accept(FHMOD1.MODL->Textures.MODS[ListIndex]->texture);
         }
 
     if(FHMOD2.MODL.IsLoaded())
         {
-        for(UINT32 ListIndex = 0; ListIndex < FHMOD2.MODL->Textures.MODS.size(); ListIndex++)
+        for(uint32_t ListIndex = 0; ListIndex < FHMOD2.MODL->Textures.MODS.size(); ListIndex++)
             op.Accept(FHMOD2.MODL->Textures.MODS[ListIndex]->texture);
         }
 
     if(FHMOD3.MODL.IsLoaded())
         {
-        for(UINT32 ListIndex = 0; ListIndex < FHMOD3.MODL->Textures.MODS.size(); ListIndex++)
+        for(uint32_t ListIndex = 0; ListIndex < FHMOD3.MODL->Textures.MODS.size(); ListIndex++)
             op.Accept(FHMOD3.MODL->Textures.MODS[ListIndex]->texture);
         }
 
     if(FHMOD4.MODL.IsLoaded())
         {
-        for(UINT32 ListIndex = 0; ListIndex < FHMOD4.MODL->Textures.MODS.size(); ListIndex++)
+        for(uint32_t ListIndex = 0; ListIndex < FHMOD4.MODL->Textures.MODS.size(); ListIndex++)
             op.Accept(FHMOD4.MODL->Textures.MODS[ListIndex]->texture);
         }
 
     if(FHMOD5.MODL.IsLoaded())
         {
-        for(UINT32 ListIndex = 0; ListIndex < FHMOD5.MODL->Textures.MODS.size(); ListIndex++)
+        for(uint32_t ListIndex = 0; ListIndex < FHMOD5.MODL->Textures.MODS.size(); ListIndex++)
             op.Accept(FHMOD5.MODL->Textures.MODS[ListIndex]->texture);
         }
 
     if(FHMOD6.MODL.IsLoaded())
         {
-        for(UINT32 ListIndex = 0; ListIndex < FHMOD6.MODL->Textures.MODS.size(); ListIndex++)
+        for(uint32_t ListIndex = 0; ListIndex < FHMOD6.MODL->Textures.MODS.size(); ListIndex++)
             op.Accept(FHMOD6.MODL->Textures.MODS[ListIndex]->texture);
         }
 
     if(FHMOD7.MODL.IsLoaded())
         {
-        for(UINT32 ListIndex = 0; ListIndex < FHMOD7.MODL->Textures.MODS.size(); ListIndex++)
+        for(uint32_t ListIndex = 0; ListIndex < FHMOD7.MODL->Textures.MODS.size(); ListIndex++)
             op.Accept(FHMOD7.MODL->Textures.MODS[ListIndex]->texture);
         }
 
     if(MBMOD0.MODL.IsLoaded())
         {
-        for(UINT32 ListIndex = 0; ListIndex < MBMOD0.MODL->Textures.MODS.size(); ListIndex++)
+        for(uint32_t ListIndex = 0; ListIndex < MBMOD0.MODL->Textures.MODS.size(); ListIndex++)
             op.Accept(MBMOD0.MODL->Textures.MODS[ListIndex]->texture);
         }
 
     if(MBMOD1.MODL.IsLoaded())
         {
-        for(UINT32 ListIndex = 0; ListIndex < MBMOD1.MODL->Textures.MODS.size(); ListIndex++)
+        for(uint32_t ListIndex = 0; ListIndex < MBMOD1.MODL->Textures.MODS.size(); ListIndex++)
             op.Accept(MBMOD1.MODL->Textures.MODS[ListIndex]->texture);
         }
 
     if(MBMOD2.MODL.IsLoaded())
         {
-        for(UINT32 ListIndex = 0; ListIndex < MBMOD2.MODL->Textures.MODS.size(); ListIndex++)
+        for(uint32_t ListIndex = 0; ListIndex < MBMOD2.MODL->Textures.MODS.size(); ListIndex++)
             op.Accept(MBMOD2.MODL->Textures.MODS[ListIndex]->texture);
         }
 
     if(MBMOD3.MODL.IsLoaded())
         {
-        for(UINT32 ListIndex = 0; ListIndex < MBMOD3.MODL->Textures.MODS.size(); ListIndex++)
+        for(uint32_t ListIndex = 0; ListIndex < MBMOD3.MODL->Textures.MODS.size(); ListIndex++)
             op.Accept(MBMOD3.MODL->Textures.MODS[ListIndex]->texture);
         }
 
     if(FBMOD0.MODL.IsLoaded())
         {
-        for(UINT32 ListIndex = 0; ListIndex < FBMOD0.MODL->Textures.MODS.size(); ListIndex++)
+        for(uint32_t ListIndex = 0; ListIndex < FBMOD0.MODL->Textures.MODS.size(); ListIndex++)
             op.Accept(FBMOD0.MODL->Textures.MODS[ListIndex]->texture);
         }
 
     if(FBMOD1.MODL.IsLoaded())
         {
-        for(UINT32 ListIndex = 0; ListIndex < FBMOD1.MODL->Textures.MODS.size(); ListIndex++)
+        for(uint32_t ListIndex = 0; ListIndex < FBMOD1.MODL->Textures.MODS.size(); ListIndex++)
             op.Accept(FBMOD1.MODL->Textures.MODS[ListIndex]->texture);
         }
 
     if(FBMOD2.MODL.IsLoaded())
         {
-        for(UINT32 ListIndex = 0; ListIndex < FBMOD2.MODL->Textures.MODS.size(); ListIndex++)
+        for(uint32_t ListIndex = 0; ListIndex < FBMOD2.MODL->Textures.MODS.size(); ListIndex++)
             op.Accept(FBMOD2.MODL->Textures.MODS[ListIndex]->texture);
         }
 
     if(FBMOD3.MODL.IsLoaded())
         {
-        for(UINT32 ListIndex = 0; ListIndex < FBMOD3.MODL->Textures.MODS.size(); ListIndex++)
+        for(uint32_t ListIndex = 0; ListIndex < FBMOD3.MODL->Textures.MODS.size(); ListIndex++)
             op.Accept(FBMOD3.MODL->Textures.MODS[ListIndex]->texture);
         }
 
-    for(UINT32 ListIndex = 0; ListIndex < HNAM.value.size(); ListIndex++)
+    for(uint32_t ListIndex = 0; ListIndex < HNAM.value.size(); ListIndex++)
         op.Accept(HNAM.value[ListIndex]);
-    for(UINT32 ListIndex = 0; ListIndex < ENAM.value.size(); ListIndex++)
+    for(uint32_t ListIndex = 0; ListIndex < ENAM.value.size(); ListIndex++)
         op.Accept(ENAM.value[ListIndex]);
 
     return op.Stop();
@@ -345,27 +345,27 @@ void RACERecord::IsChild(bool value)
     SETBIT(DATA.value.flags, fIsChild, value);
     }
 
-bool RACERecord::IsFlagMask(UINT32 Mask, bool Exact)
+bool RACERecord::IsFlagMask(uint32_t Mask, bool Exact)
     {
     return Exact ? ((DATA.value.flags & Mask) == Mask) : ((DATA.value.flags & Mask) != 0);
     }
 
-void RACERecord::SetFlagMask(UINT32 Mask)
+void RACERecord::SetFlagMask(uint32_t Mask)
     {
     DATA.value.flags = Mask;
     }
 
-UINT32 RACERecord::GetType()
+uint32_t RACERecord::GetType()
     {
     return REV32(RACE);
     }
 
-STRING RACERecord::GetStrType()
+char * RACERecord::GetStrType()
     {
     return "RACE";
     }
 
-SINT32 RACERecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk)
+int32_t RACERecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk)
     {
     enum namFlags
         {
@@ -395,24 +395,24 @@ SINT32 RACERecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer,
         eUpperBodyTexture
         };
 
-    UINT32 subType = 0;
-    UINT32 subSize = 0;
-    UINT32 part_id = 0;
-    UINT32 temp_id = 0;
+    uint32_t subType = 0;
+    uint32_t subSize = 0;
+    uint32_t part_id = 0;
+    uint32_t temp_id = 0;
     while(buffer < end_buffer){
-        subType = *(UINT32 *)buffer;
+        subType = *(uint32_t *)buffer;
         buffer += 4;
         switch(subType)
             {
             case REV32(XXXX):
                 buffer += 2;
-                subSize = *(UINT32 *)buffer;
+                subSize = *(uint32_t *)buffer;
                 buffer += 4;
-                subType = *(UINT32 *)buffer;
+                subType = *(uint32_t *)buffer;
                 buffer += 6;
                 break;
             default:
-                subSize = *(UINT16 *)buffer;
+                subSize = *(uint16_t *)buffer;
                 buffer += 2;
                 break;
             }
@@ -472,7 +472,7 @@ SINT32 RACERecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer,
                 part_id = (part_id & ~fIsMale) | fIsFemale;
                 break;
             case REV32(INDX):
-                temp_id = *(UINT32 *)buffer;
+                temp_id = *(uint32_t *)buffer;
                 buffer += 4;
                 part_id = (part_id & 0xFF000000) | temp_id;
                 break;
@@ -1318,7 +1318,7 @@ SINT32 RACERecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer,
     return 0;
     }
 
-SINT32 RACERecord::Unload()
+int32_t RACERecord::Unload()
     {
     IsChanged(false);
     IsLoaded(false);
@@ -1427,7 +1427,7 @@ SINT32 RACERecord::Unload()
     return 1;
     }
 
-SINT32 RACERecord::WriteRecord(FileWriter &writer)
+int32_t RACERecord::WriteRecord(FileWriter &writer)
     {
     WRITE(EDID);
     WRITE(FULL);
@@ -1447,7 +1447,7 @@ SINT32 RACERecord::WriteRecord(FileWriter &writer)
 
     WRITEEMPTY(NAM0);
     WRITEEMPTY(MNAM);
-    UINT32 curINDX = 0;
+    uint32_t curINDX = 0;
     MHMOD0.Write(curINDX++, writer);
     MHMOD1.Write(curINDX++, writer);
     MHMOD2.Write(curINDX++, writer);

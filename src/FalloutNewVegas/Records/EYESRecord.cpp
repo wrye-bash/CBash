@@ -123,44 +123,44 @@ void EYESRecord::IsFemale(bool value)
     IsNotFemale(!value);
     }
 
-bool EYESRecord::IsFlagMask(UINT8 Mask, bool Exact)
+bool EYESRecord::IsFlagMask(uint8_t Mask, bool Exact)
     {
     return Exact ? ((DATA.value & Mask) == Mask) : ((DATA.value & Mask) != 0);
     }
 
-void EYESRecord::SetFlagMask(UINT8 Mask)
+void EYESRecord::SetFlagMask(uint8_t Mask)
     {
     DATA.value = Mask;
     }
 
-UINT32 EYESRecord::GetType()
+uint32_t EYESRecord::GetType()
     {
     return REV32(EYES);
     }
 
-STRING EYESRecord::GetStrType()
+char * EYESRecord::GetStrType()
     {
     return "EYES";
     }
 
-SINT32 EYESRecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk)
+int32_t EYESRecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk)
     {
-    UINT32 subType = 0;
-    UINT32 subSize = 0;
+    uint32_t subType = 0;
+    uint32_t subSize = 0;
     while(buffer < end_buffer){
-        subType = *(UINT32 *)buffer;
+        subType = *(uint32_t *)buffer;
         buffer += 4;
         switch(subType)
             {
             case REV32(XXXX):
                 buffer += 2;
-                subSize = *(UINT32 *)buffer;
+                subSize = *(uint32_t *)buffer;
                 buffer += 4;
-                subType = *(UINT32 *)buffer;
+                subType = *(uint32_t *)buffer;
                 buffer += 6;
                 break;
             default:
-                subSize = *(UINT16 *)buffer;
+                subSize = *(uint16_t *)buffer;
                 buffer += 2;
                 break;
             }
@@ -191,7 +191,7 @@ SINT32 EYESRecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer,
     return 0;
     }
 
-SINT32 EYESRecord::Unload()
+int32_t EYESRecord::Unload()
     {
     IsChanged(false);
     IsLoaded(false);
@@ -202,7 +202,7 @@ SINT32 EYESRecord::Unload()
     return 1;
     }
 
-SINT32 EYESRecord::WriteRecord(FileWriter &writer)
+int32_t EYESRecord::WriteRecord(FileWriter &writer)
     {
     WRITE(EDID);
     WRITE(FULL);

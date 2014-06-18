@@ -44,19 +44,19 @@ class MGEFRecord : public FNVRecord //Base Effect
     private:
         struct MGEFDATA
             {
-            UINT32  flags;
-            FLOAT32 baseCost; //Unused
+            uint32_t  flags;
+            float baseCost; //Unused
             FORMID  associated;
-            UINT32  schoolType; //Unused
-            SINT32  resistType;
-            UINT16  numCounters; //According to OBME
-            UINT8   unused1[2];
+            uint32_t  schoolType; //Unused
+            int32_t  resistType;
+            uint16_t  numCounters; //According to OBME
+            uint8_t   unused1[2];
             FORMID  light;
-            FLOAT32 projectileSpeed;
+            float projectileSpeed;
             FORMID  effectShader, displayShader, effectSound, boltSound, hitSound, areaSound;
-            FLOAT32 cefEnchantment, cefBarter; //Unused, Unused
-            UINT32  archType;
-            SINT32  actorValue;
+            float cefEnchantment, cefBarter; //Unused, Unused
+            uint32_t  archType;
+            int32_t  actorValue;
 
             MGEFDATA();
             ~MGEFDATA();
@@ -194,8 +194,8 @@ class MGEFRecord : public FNVRecord //Base Effect
         void   IsPersistOnDeath(bool value);
         bool   IsUnknown1();
         void   IsUnknown1(bool value);
-        bool   IsFlagMask(UINT32 Mask, bool Exact=false);
-        void   SetFlagMask(UINT32 Mask);
+        bool   IsFlagMask(uint32_t Mask, bool Exact=false);
+        void   SetFlagMask(uint32_t Mask);
 
         bool   IsValueModifier();
         void   IsValueModifier(bool value);
@@ -235,8 +235,8 @@ class MGEFRecord : public FNVRecord //Base Effect
         void   IsLimbCondition(bool value);
         bool   IsTurbo();
         void   IsTurbo(bool value);
-        bool   IsType(UINT32 Type);
-        void   SetType(UINT32 Type);
+        bool   IsType(uint32_t Type);
+        void   SetType(uint32_t Type);
 
         bool   IsSchoolAlteration();
         void   IsSchoolAlteration(bool value);
@@ -250,20 +250,20 @@ class MGEFRecord : public FNVRecord //Base Effect
         void   IsSchoolMysticism(bool value);
         bool   IsSchoolRestoration();
         void   IsSchoolRestoration(bool value);
-        bool   IsSchool(UINT32 Type);
-        void   SetSchool(UINT32 Type);
+        bool   IsSchool(uint32_t Type);
+        void   SetSchool(uint32_t Type);
 
-        UINT32 GetFieldAttribute(DEFAULTED_FIELD_IDENTIFIERS, UINT32 WhichAttribute=0);
+        uint32_t GetFieldAttribute(DEFAULTED_FIELD_IDENTIFIERS, uint32_t WhichAttribute=0);
         void * GetField(DEFAULTED_FIELD_IDENTIFIERS, void **FieldValues=NULL);
-        bool   SetField(DEFAULTED_FIELD_IDENTIFIERS, void *FieldValue=NULL, UINT32 ArraySize=0);
+        bool   SetField(DEFAULTED_FIELD_IDENTIFIERS, void *FieldValue=NULL, uint32_t ArraySize=0);
         void   DeleteField(DEFAULTED_FIELD_IDENTIFIERS);
 
-        UINT32 GetType();
-        STRING GetStrType();
+        uint32_t GetType();
+        char * GetStrType();
 
-        SINT32 ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk=false);
-        SINT32 Unload();
-        SINT32 WriteRecord(FileWriter &writer);
+        int32_t ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk=false);
+        int32_t Unload();
+        int32_t WriteRecord(FileWriter &writer);
 
         bool operator ==(const MGEFRecord &other) const;
         bool operator !=(const MGEFRecord &other) const;

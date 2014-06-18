@@ -44,10 +44,10 @@ struct sortRNAM;
 class FACTRecord : public FNVRecord //Faction
     {
     private:
-        struct FACTDATA //older format is a single UINT8 flag. It updates itself without any special action
+        struct FACTDATA //older format is a single uint8_t flag. It updates itself without any special action
             {
-            UINT16  flags;
-            UINT8   unused1[2];
+            uint16_t  flags;
+            uint8_t   unused1[2];
 
             FACTDATA();
             ~FACTDATA();
@@ -58,7 +58,7 @@ class FACTRecord : public FNVRecord //Faction
 
         struct FACTRNAM //Rank
             {
-            ReqSimpleSubRecord<SINT32> RNAM; //Rank#
+            ReqSimpleSubRecord<int32_t> RNAM; //Rank#
             StringRecord MNAM, FNAM, INAM; //Male, Female, Insignia (Unused)
 
             void Write(FileWriter &writer);
@@ -103,20 +103,20 @@ class FACTRecord : public FNVRecord //Faction
         void   IsTrackCrime(bool value);
         bool   IsAllowSell();
         void   IsAllowSell(bool value);
-        bool   IsFlagMask(UINT16 Mask, bool Exact=false);
-        void   SetFlagMask(UINT16 Mask);
+        bool   IsFlagMask(uint16_t Mask, bool Exact=false);
+        void   SetFlagMask(uint16_t Mask);
 
-        UINT32 GetFieldAttribute(DEFAULTED_FIELD_IDENTIFIERS, UINT32 WhichAttribute=0);
+        uint32_t GetFieldAttribute(DEFAULTED_FIELD_IDENTIFIERS, uint32_t WhichAttribute=0);
         void * GetField(DEFAULTED_FIELD_IDENTIFIERS, void **FieldValues=NULL);
-        bool   SetField(DEFAULTED_FIELD_IDENTIFIERS, void *FieldValue=NULL, UINT32 ArraySize=0);
+        bool   SetField(DEFAULTED_FIELD_IDENTIFIERS, void *FieldValue=NULL, uint32_t ArraySize=0);
         void   DeleteField(DEFAULTED_FIELD_IDENTIFIERS);
 
-        UINT32 GetType();
-        STRING GetStrType();
+        uint32_t GetType();
+        char * GetStrType();
 
-        SINT32 ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk=false);
-        SINT32 Unload();
-        SINT32 WriteRecord(FileWriter &writer);
+        int32_t ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk=false);
+        int32_t Unload();
+        int32_t WriteRecord(FileWriter &writer);
 
         bool operator ==(const FACTRecord &other) const;
         bool operator !=(const FACTRecord &other) const;

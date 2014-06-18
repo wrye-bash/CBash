@@ -38,21 +38,21 @@
 
 namespace Ob
 {
-GMSTRecord::GMSTDATA::GMSTDATA(STRING _DATA):
+GMSTRecord::GMSTDATA::GMSTDATA(char * _DATA):
     format('s'),
     s(_DATA)
     {
     //
     }
 
-GMSTRecord::GMSTDATA::GMSTDATA(SINT32 _DATA):
+GMSTRecord::GMSTDATA::GMSTDATA(int32_t _DATA):
     format('i'),
     i(_DATA)
     {
     //
     }
 
-GMSTRecord::GMSTDATA::GMSTDATA(FLOAT32 _DATA):
+GMSTRecord::GMSTDATA::GMSTDATA(float _DATA):
     format('f'),
     f(_DATA)
     {
@@ -117,7 +117,7 @@ GMSTRecord::GMSTRecord(GMSTRecord *srcRecord):
         return;
 
     DATA.format = srcRecord->DATA.format;
-    UINT32 vSize;
+    uint32_t vSize;
     switch(DATA.format)
         {
         case 'f':
@@ -129,7 +129,7 @@ GMSTRecord::GMSTRecord(GMSTRecord *srcRecord):
         case 's':
             if(srcRecord->DATA.s != NULL)
                 {
-                vSize = (UINT32)strlen(srcRecord->DATA.s) + 1;
+                vSize = (uint32_t)strlen(srcRecord->DATA.s) + 1;
                 DATA.s = new char [vSize];
                 strcpy_s(DATA.s, vSize, srcRecord->DATA.s);
                 }
@@ -145,12 +145,12 @@ GMSTRecord::~GMSTRecord()
     //
     }
 
-UINT32 GMSTRecord::GetType()
+uint32_t GMSTRecord::GetType()
     {
     return REV32(GMST);
     }
 
-STRING GMSTRecord::GetStrType()
+char * GMSTRecord::GetStrType()
     {
     return "GMST";
     }
@@ -160,24 +160,24 @@ bool GMSTRecord::IsKeyedByEditorID()
     return true;
     }
 
-SINT32 GMSTRecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk)
+int32_t GMSTRecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk)
     {
-    UINT32 subType = 0;
-    UINT32 subSize = 0;
+    uint32_t subType = 0;
+    uint32_t subSize = 0;
     while(buffer < end_buffer){
-        subType = *(UINT32 *)buffer;
+        subType = *(uint32_t *)buffer;
         buffer += 4;
         switch(subType)
             {
             case REV32(XXXX):
                 buffer += 2;
-                subSize = *(UINT32 *)buffer;
+                subSize = *(uint32_t *)buffer;
                 buffer += 4;
-                subType = *(UINT32 *)buffer;
+                subType = *(uint32_t *)buffer;
                 buffer += 6;
                 break;
             default:
-                subSize = *(UINT16 *)buffer;
+                subSize = *(uint16_t *)buffer;
                 buffer += 2;
                 break;
             }
@@ -224,7 +224,7 @@ SINT32 GMSTRecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer,
     return 0;
     }
 
-SINT32 GMSTRecord::Unload()
+int32_t GMSTRecord::Unload()
     {
     IsChanged(false);
     IsLoaded(false);
@@ -236,12 +236,12 @@ SINT32 GMSTRecord::Unload()
     return 1;
     }
 
-SINT32 GMSTRecord::WriteRecord(FileWriter &writer)
+int32_t GMSTRecord::WriteRecord(FileWriter &writer)
     {
     if(EDID.IsLoaded()) //Should only be false if the record was marked deleted
         {
         WRITE(EDID);
-        UINT8 null = 0;
+        uint8_t null = 0;
         switch(DATA.format)
             {
             case 'i':
@@ -252,7 +252,7 @@ SINT32 GMSTRecord::WriteRecord(FileWriter &writer)
                 break;
             case 's':
                 if(DATA.s != NULL)
-                    writer.record_write_subrecord(REV32(DATA), DATA.s, (UINT32)strlen(DATA.s) + 1);
+                    writer.record_write_subrecord(REV32(DATA), DATA.s, (uint32_t)strlen(DATA.s) + 1);
                 else
                     writer.record_write_subrecord(REV32(DATA), &null, 1);
                 break;

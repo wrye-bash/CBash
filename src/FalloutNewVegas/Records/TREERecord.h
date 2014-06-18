@@ -44,9 +44,9 @@ class TREERecord : public FNVRecord //Tree
     private:
         struct TREECNAM
             {
-            FLOAT32 curvature, minAngle, maxAngle, branchDim, leafDim;
-            SINT32  shadowRadius;
-            FLOAT32 rockSpeed, rustleSpeed;
+            float curvature, minAngle, maxAngle, branchDim, leafDim;
+            int32_t  shadowRadius;
+            float rockSpeed, rustleSpeed;
 
             TREECNAM();
             ~TREECNAM();
@@ -57,7 +57,7 @@ class TREERecord : public FNVRecord //Tree
 
         struct TREEBNAM
             {
-            FLOAT32 widthBill, heightBill;
+            float widthBill, heightBill;
 
             TREEBNAM();
             ~TREEBNAM();
@@ -72,7 +72,7 @@ class TREERecord : public FNVRecord //Tree
         OptSubRecord<FNVMODEL> MODL; //Model
         StringRecord ICON; //Large Icon Filename
         StringRecord MICO; //Small Icon Filename
-        UnorderedPackedArray<UINT32> SNAM; //SpeedTree Seeds
+        UnorderedPackedArray<uint32_t> SNAM; //SpeedTree Seeds
         ReqSubRecord<TREECNAM> CNAM; //Tree Data
         ReqSubRecord<TREEBNAM> BNAM; //Billboard Dimensions
 
@@ -82,17 +82,17 @@ class TREERecord : public FNVRecord //Tree
 
         bool   VisitFormIDs(FormIDOp &op);
 
-        UINT32 GetFieldAttribute(DEFAULTED_FIELD_IDENTIFIERS, UINT32 WhichAttribute=0);
+        uint32_t GetFieldAttribute(DEFAULTED_FIELD_IDENTIFIERS, uint32_t WhichAttribute=0);
         void * GetField(DEFAULTED_FIELD_IDENTIFIERS, void **FieldValues=NULL);
-        bool   SetField(DEFAULTED_FIELD_IDENTIFIERS, void *FieldValue=NULL, UINT32 ArraySize=0);
+        bool   SetField(DEFAULTED_FIELD_IDENTIFIERS, void *FieldValue=NULL, uint32_t ArraySize=0);
         void   DeleteField(DEFAULTED_FIELD_IDENTIFIERS);
 
-        UINT32 GetType();
-        STRING GetStrType();
+        uint32_t GetType();
+        char * GetStrType();
 
-        SINT32 ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk=false);
-        SINT32 Unload();
-        SINT32 WriteRecord(FileWriter &writer);
+        int32_t ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk=false);
+        int32_t Unload();
+        int32_t WriteRecord(FileWriter &writer);
 
         bool operator ==(const TREERecord &other) const;
         bool operator !=(const TREERecord &other) const;

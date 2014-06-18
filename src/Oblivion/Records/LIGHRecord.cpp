@@ -231,44 +231,44 @@ void LIGHRecord::IsSpotShadow(bool value)
     SETBIT(DATA.value.flags, fIsSpotShadow, value);
     }
 
-bool LIGHRecord::IsFlagMask(UINT32 Mask, bool Exact)
+bool LIGHRecord::IsFlagMask(uint32_t Mask, bool Exact)
     {
     return Exact ? ((DATA.value.flags & Mask) == Mask) : ((DATA.value.flags & Mask) != 0);
     }
 
-void LIGHRecord::SetFlagMask(UINT32 Mask)
+void LIGHRecord::SetFlagMask(uint32_t Mask)
     {
     DATA.value.flags = Mask;
     }
 
-UINT32 LIGHRecord::GetType()
+uint32_t LIGHRecord::GetType()
     {
     return REV32(LIGH);
     }
 
-STRING LIGHRecord::GetStrType()
+char * LIGHRecord::GetStrType()
     {
     return "LIGH";
     }
 
-SINT32 LIGHRecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk)
+int32_t LIGHRecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk)
     {
-    UINT32 subType = 0;
-    UINT32 subSize = 0;
+    uint32_t subType = 0;
+    uint32_t subSize = 0;
     while(buffer < end_buffer){
-        subType = *(UINT32 *)buffer;
+        subType = *(uint32_t *)buffer;
         buffer += 4;
         switch(subType)
             {
             case REV32(XXXX):
                 buffer += 2;
-                subSize = *(UINT32 *)buffer;
+                subSize = *(uint32_t *)buffer;
                 buffer += 4;
-                subType = *(UINT32 *)buffer;
+                subType = *(uint32_t *)buffer;
                 buffer += 6;
                 break;
             default:
-                subSize = *(UINT16 *)buffer;
+                subSize = *(uint16_t *)buffer;
                 buffer += 2;
                 break;
             }
@@ -320,7 +320,7 @@ SINT32 LIGHRecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer,
     return 0;
     }
 
-SINT32 LIGHRecord::Unload()
+int32_t LIGHRecord::Unload()
     {
     IsChanged(false);
     IsLoaded(false);
@@ -335,7 +335,7 @@ SINT32 LIGHRecord::Unload()
     return 1;
     }
 
-SINT32 LIGHRecord::WriteRecord(FileWriter &writer)
+int32_t LIGHRecord::WriteRecord(FileWriter &writer)
     {
     WRITE(EDID);
     MODL.Write(writer);

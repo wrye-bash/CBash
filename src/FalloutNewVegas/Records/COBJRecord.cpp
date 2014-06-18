@@ -86,7 +86,7 @@ bool COBJRecord::VisitFormIDs(FormIDOp &op)
 
     if(MODL.IsLoaded())
         {
-        for(UINT32 x = 0; x < MODL->Textures.MODS.size(); x++)
+        for(uint32_t x = 0; x < MODL->Textures.MODS.size(); x++)
             op.Accept(MODL->Textures.MODS[x]->texture);
         }
     if(SCRI.IsLoaded())
@@ -98,34 +98,34 @@ bool COBJRecord::VisitFormIDs(FormIDOp &op)
     return op.Stop();
     }
 
-UINT32 COBJRecord::GetType()
+uint32_t COBJRecord::GetType()
     {
     return REV32(MISC);
     }
 
-STRING COBJRecord::GetStrType()
+char * COBJRecord::GetStrType()
     {
     return "COBJ";
     }
 
-SINT32 COBJRecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk)
+int32_t COBJRecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk)
     {
-    UINT32 subType = 0;
-    UINT32 subSize = 0;
+    uint32_t subType = 0;
+    uint32_t subSize = 0;
     while(buffer < end_buffer){
-        subType = *(UINT32 *)buffer;
+        subType = *(uint32_t *)buffer;
         buffer += 4;
         switch(subType)
             {
             case REV32(XXXX):
                 buffer += 2;
-                subSize = *(UINT32 *)buffer;
+                subSize = *(uint32_t *)buffer;
                 buffer += 4;
-                subType = *(UINT32 *)buffer;
+                subType = *(uint32_t *)buffer;
                 buffer += 6;
                 break;
             default:
-                subSize = *(UINT16 *)buffer;
+                subSize = *(uint16_t *)buffer;
                 buffer += 2;
                 break;
             }
@@ -191,7 +191,7 @@ SINT32 COBJRecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer,
     return 0;
     }
 
-SINT32 COBJRecord::Unload()
+int32_t COBJRecord::Unload()
     {
     IsChanged(false);
     IsLoaded(false);
@@ -208,7 +208,7 @@ SINT32 COBJRecord::Unload()
     return 1;
     }
 
-SINT32 COBJRecord::WriteRecord(FileWriter &writer)
+int32_t COBJRecord::WriteRecord(FileWriter &writer)
     {
     WRITE(EDID);
     WRITE(OBND);

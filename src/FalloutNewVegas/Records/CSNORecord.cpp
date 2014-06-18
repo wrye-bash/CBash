@@ -168,46 +168,46 @@ void CSNORecord::IsDealerStayOnSoft17(bool value)
     SETBIT(DATA->flags, fIsDealerStayOnSoft17, value);
     }
 
-bool CSNORecord::IsFlagMask(UINT32 Mask, bool Exact)
+bool CSNORecord::IsFlagMask(uint32_t Mask, bool Exact)
     {
     if (!DATA.IsLoaded()) return false;
     return Exact ? ((DATA->flags & Mask) == Mask) : (DATA->flags & Mask) != 0;
     }
 
-void CSNORecord::SetFlagMask(UINT32 Mask)
+void CSNORecord::SetFlagMask(uint32_t Mask)
     {
     DATA.Load();
     DATA->flags = Mask;
     }
 
-UINT32 CSNORecord::GetType()
+uint32_t CSNORecord::GetType()
     {
     return REV32(CSNO);
     }
 
-STRING CSNORecord::GetStrType()
+char * CSNORecord::GetStrType()
     {
     return "CSNO";
     }
 
-SINT32 CSNORecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk)
+int32_t CSNORecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk)
     {
-    UINT32 subType = 0;
-    UINT32 subSize = 0;
+    uint32_t subType = 0;
+    uint32_t subSize = 0;
     while(buffer < end_buffer){
-        subType = *(UINT32 *)buffer;
+        subType = *(uint32_t *)buffer;
         buffer += 4;
         switch(subType)
             {
             case REV32(XXXX):
                 buffer += 2;
-                subSize = *(UINT32 *)buffer;
+                subSize = *(uint32_t *)buffer;
                 buffer += 4;
-                subType = *(UINT32 *)buffer;
+                subType = *(uint32_t *)buffer;
                 buffer += 6;
                 break;
             default:
-                subSize = *(UINT16 *)buffer;
+                subSize = *(uint16_t *)buffer;
                 buffer += 2;
                 break;
             }
@@ -260,7 +260,7 @@ SINT32 CSNORecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer,
     return 0;
     }
 
-SINT32 CSNORecord::Unload()
+int32_t CSNORecord::Unload()
     {
     IsChanged(false);
     IsLoaded(false);
@@ -291,7 +291,7 @@ SINT32 CSNORecord::Unload()
     return 1;
     }
 
-SINT32 CSNORecord::WriteRecord(FileWriter &writer)
+int32_t CSNORecord::WriteRecord(FileWriter &writer)
     {
     WRITE(EDID);
     WRITE(FULL);
