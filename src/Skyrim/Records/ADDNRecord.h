@@ -46,8 +46,8 @@ class ADDNRecord : public TES5Record //Leveled Item
     private:
         struct ADDNDNAM
         {
-            SINT16 masterParticleSystemCap;
-            UINT16 flags;
+            int16_t masterParticleSystemCap;
+            uint16_t flags;
 
             ADDNDNAM();
             ~ADDNDNAM();
@@ -67,7 +67,7 @@ class ADDNRecord : public TES5Record //Leveled Item
         StringRecord EDID; //Editor ID
         ReqSubRecord<GENOBND> OBND; //Object bounds
         ReqSubRecord<FNVWORLDMODEL> MODL; // Model - MODL/MODT (MODS unused)
-        ReqSimpleSubRecord<SINT32> DATA; // Node Index
+        ReqSimpleSubRecord<int32_t> DATA; // Node Index
         OptSimpleSubRecord<FORMID> SNAM; // Sound
         ReqSubRecord<ADDNDNAM> DNAM; // Data
 
@@ -81,20 +81,20 @@ class ADDNRecord : public TES5Record //Leveled Item
         void IsUnknown(bool value);
         bool IsAlwaysLoaded() const;
         void IsAlwaysLoaded(bool value);
-        bool IsFlagMask(UINT16 Mask, bool Exact=false);
-        void SetFlagMask(UINT16 Mask);
+        bool IsFlagMask(uint16_t Mask, bool Exact=false);
+        void SetFlagMask(uint16_t Mask);
 
-        UINT32 GetFieldAttribute(DEFAULTED_FIELD_IDENTIFIERS, UINT32 WhichAttribute=0);
+        uint32_t GetFieldAttribute(DEFAULTED_FIELD_IDENTIFIERS, uint32_t WhichAttribute=0);
         void * GetField(DEFAULTED_FIELD_IDENTIFIERS, void **FieldValues=NULL);
-        bool   SetField(DEFAULTED_FIELD_IDENTIFIERS, void *FieldValue=NULL, UINT32 ArraySize=0);
+        bool   SetField(DEFAULTED_FIELD_IDENTIFIERS, void *FieldValue=NULL, uint32_t ArraySize=0);
         void   DeleteField(DEFAULTED_FIELD_IDENTIFIERS);
 
-        UINT32 GetType();
-        STRING GetStrType();
+        uint32_t GetType();
+        char * GetStrType();
 
-        SINT32 ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk=false);
-        SINT32 Unload();
-        SINT32 WriteRecord(FileWriter &writer);
+        int32_t ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk=false);
+        int32_t Unload();
+        int32_t WriteRecord(FileWriter &writer);
 
         bool operator ==(const ADDNRecord &other) const;
         bool operator !=(const ADDNRecord &other) const;

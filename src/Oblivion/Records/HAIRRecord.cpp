@@ -130,44 +130,44 @@ void HAIRRecord::IsFixedColor(bool value)
     SETBIT(DATA.value, fIsFixedColor, value);
     }
 
-bool HAIRRecord::IsFlagMask(UINT8 Mask, bool Exact)
+bool HAIRRecord::IsFlagMask(uint8_t Mask, bool Exact)
     {
     return Exact ? ((DATA.value & Mask) == Mask) : ((DATA.value & Mask) != 0);
     }
 
-void HAIRRecord::SetFlagMask(UINT8 Mask)
+void HAIRRecord::SetFlagMask(uint8_t Mask)
     {
     DATA.value = Mask;
     }
 
-UINT32 HAIRRecord::GetType()
+uint32_t HAIRRecord::GetType()
     {
     return REV32(HAIR);
     }
 
-STRING HAIRRecord::GetStrType()
+char * HAIRRecord::GetStrType()
     {
     return "HAIR";
     }
 
-SINT32 HAIRRecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk)
+int32_t HAIRRecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk)
     {
-    UINT32 subType = 0;
-    UINT32 subSize = 0;
+    uint32_t subType = 0;
+    uint32_t subSize = 0;
     while(buffer < end_buffer){
-        subType = *(UINT32 *)buffer;
+        subType = *(uint32_t *)buffer;
         buffer += 4;
         switch(subType)
             {
             case REV32(XXXX):
                 buffer += 2;
-                subSize = *(UINT32 *)buffer;
+                subSize = *(uint32_t *)buffer;
                 buffer += 4;
-                subType = *(UINT32 *)buffer;
+                subType = *(uint32_t *)buffer;
                 buffer += 6;
                 break;
             default:
-                subSize = *(UINT16 *)buffer;
+                subSize = *(uint16_t *)buffer;
                 buffer += 2;
                 break;
             }
@@ -209,7 +209,7 @@ SINT32 HAIRRecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer,
     return 0;
     }
 
-SINT32 HAIRRecord::Unload()
+int32_t HAIRRecord::Unload()
     {
     IsChanged(false);
     IsLoaded(false);
@@ -221,7 +221,7 @@ SINT32 HAIRRecord::Unload()
     return 1;
     }
 
-SINT32 HAIRRecord::WriteRecord(FileWriter &writer)
+int32_t HAIRRecord::WriteRecord(FileWriter &writer)
     {
     WRITE(EDID);
     WRITE(FULL);

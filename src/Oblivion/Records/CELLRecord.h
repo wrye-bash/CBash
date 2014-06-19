@@ -55,9 +55,9 @@ class CELLRecord : public Record
             GENCLR  ambient;
             GENCLR  directional;
             GENCLR  fog;
-            FLOAT32 fogNear, fogFar;
-            SINT32  directionalXY, directionalZ;
-            FLOAT32 directionalFade, fogClip;
+            float fogNear, fogFar;
+            int32_t  directionalXY, directionalZ;
+            float directionalFade, fogClip;
 
             CELLXCLL();
             ~CELLXCLL();
@@ -68,7 +68,7 @@ class CELLRecord : public Record
 
         struct CELLXCLC
             {
-            SINT32  posX, posY;
+            int32_t  posX, posY;
 
             CELLXCLC();
             ~CELLXCLC();
@@ -99,9 +99,9 @@ class CELLRecord : public Record
     public:
         StringRecord EDID; //Editor ID
         StringRecord FULL; //Name
-        ReqSimpleSubRecord<UINT8> DATA; //Flags
+        ReqSimpleSubRecord<uint8_t> DATA; //Flags
         SemiOptSubRecord<CELLXCLL> XCLL; //Lighting
-        SimpleSubRecord<UINT8> XCMT;
+        SimpleSubRecord<uint8_t> XCMT;
         OptSubRecord<GENXOWN> Ownership; //Owner
         SimpleSubRecord<FORMID> XCCM; //Climate
         SimpleFloatSubRecord<flt_n2147483648> XCLW; //waterHeight
@@ -135,8 +135,8 @@ class CELLRecord : public Record
         void   IsHandChanged(bool value);
         bool   IsBehaveLikeExterior();
         void   IsBehaveLikeExterior(bool value);
-        bool   IsFlagMask(UINT8 Mask, bool Exact=false);
-        void   SetFlagMask(UINT8 Mask);
+        bool   IsFlagMask(uint8_t Mask, bool Exact=false);
+        void   SetFlagMask(uint8_t Mask);
 
         bool   IsDefaultMusic();
         void   IsDefaultMusic(bool value);
@@ -144,20 +144,20 @@ class CELLRecord : public Record
         void   IsPublicMusic(bool value);
         bool   IsDungeonMusic();
         void   IsDungeonMusic(bool value);
-        bool   IsMusicType(UINT8 Type);
-        void   SetMusicType(UINT8 Type);
+        bool   IsMusicType(uint8_t Type);
+        void   SetMusicType(uint8_t Type);
 
-        UINT32 GetFieldAttribute(DEFAULTED_FIELD_IDENTIFIERS, UINT32 WhichAttribute=0);
+        uint32_t GetFieldAttribute(DEFAULTED_FIELD_IDENTIFIERS, uint32_t WhichAttribute=0);
         void * GetField(DEFAULTED_FIELD_IDENTIFIERS, void **FieldValues=NULL);
-        bool   SetField(DEFAULTED_FIELD_IDENTIFIERS, void *FieldValue=NULL, UINT32 ArraySize=0);
+        bool   SetField(DEFAULTED_FIELD_IDENTIFIERS, void *FieldValue=NULL, uint32_t ArraySize=0);
         void   DeleteField(DEFAULTED_FIELD_IDENTIFIERS);
 
-        UINT32 GetType();
-        STRING GetStrType();
+        uint32_t GetType();
+        char * GetStrType();
 
-        SINT32 ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk=false);
-        SINT32 Unload();
-        SINT32 WriteRecord(FileWriter &writer);
+        int32_t ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk=false);
+        int32_t Unload();
+        int32_t WriteRecord(FileWriter &writer);
 
         bool operator ==(const CELLRecord &other) const;
         bool operator !=(const CELLRecord &other) const;

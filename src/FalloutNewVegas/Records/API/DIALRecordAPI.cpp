@@ -38,7 +38,7 @@
 
 namespace FNV
 {
-UINT32 DIALRecord::GetFieldAttribute(FIELD_IDENTIFIERS, UINT32 WhichAttribute)
+uint32_t DIALRecord::GetFieldAttribute(FIELD_IDENTIFIERS, uint32_t WhichAttribute)
     {
     switch(FieldID)
         {
@@ -82,7 +82,7 @@ UINT32 DIALRecord::GetFieldAttribute(FIELD_IDENTIFIERS, UINT32 WhichAttribute)
                     case 0: //fieldType
                         return LIST_FIELD;
                     case 1: //fieldSize
-                        return (UINT32)QSTI.value.size();
+                        return (uint32_t)QSTI.value.size();
                     default:
                         return UNKNOWN_FIELD;
                     }
@@ -104,7 +104,7 @@ UINT32 DIALRecord::GetFieldAttribute(FIELD_IDENTIFIERS, UINT32 WhichAttribute)
                             case 0: //fieldType
                                 return LIST_FIELD;
                             case 1: //fieldSize
-                                return (UINT32)QSTI.value[ListIndex]->Unknown.value.size();
+                                return (uint32_t)QSTI.value[ListIndex]->Unknown.value.size();
                             default:
                                 return UNKNOWN_FIELD;
                             }
@@ -136,7 +136,7 @@ UINT32 DIALRecord::GetFieldAttribute(FIELD_IDENTIFIERS, UINT32 WhichAttribute)
                     case 0: //fieldType
                         return LIST_FIELD;
                     case 1: //fieldSize
-                        return (UINT32)QSTR.value.size();
+                        return (uint32_t)QSTR.value.size();
                     default:
                         return UNKNOWN_FIELD;
                     }
@@ -158,7 +158,7 @@ UINT32 DIALRecord::GetFieldAttribute(FIELD_IDENTIFIERS, UINT32 WhichAttribute)
                             case 0: //fieldType
                                 return LIST_FIELD;
                             case 1: //fieldSize
-                                return (UINT32)QSTR.value[ListIndex]->Unknown.value.size();
+                                return (uint32_t)QSTR.value[ListIndex]->Unknown.value.size();
                             default:
                                 return UNKNOWN_FIELD;
                             }
@@ -198,7 +198,7 @@ UINT32 DIALRecord::GetFieldAttribute(FIELD_IDENTIFIERS, UINT32 WhichAttribute)
                 case 0: //fieldType
                     return SUBRECORD_ARRAY_FIELD;
                 case 1: //fieldSize
-                    return (UINT32)INFO.size();
+                    return (uint32_t)INFO.size();
                 default:
                     return UNKNOWN_FIELD;
                 }
@@ -290,7 +290,7 @@ void * DIALRecord::GetField(FIELD_IDENTIFIERS, void **FieldValues)
         case 13: //flags
             return &DATA.value.flags;
         case 14: //INFO
-            for(UINT32 p = 0;p < (UINT32)INFO.size();++p)
+            for(uint32_t p = 0;p < (uint32_t)INFO.size();++p)
                 ((RECORDIDARRAY)FieldValues)[p] = INFO[p];
             return NULL;
         default:
@@ -299,12 +299,12 @@ void * DIALRecord::GetField(FIELD_IDENTIFIERS, void **FieldValues)
     return NULL;
     }
 
-bool DIALRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
+bool DIALRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, uint32_t ArraySize)
     {
     switch(FieldID)
         {
         case 1: //flags1
-            SetHeaderFlagMask(*(UINT32 *)FieldValue);
+            SetHeaderFlagMask(*(uint32_t *)FieldValue);
             break;
         case 3: //versionControl1
             if(ArraySize != 4)
@@ -315,10 +315,10 @@ bool DIALRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             ((UINT8ARRAY)&flagsUnk)[3] = ((UINT8ARRAY)FieldValue)[3];
             break;
         case 4: //eid
-            EDID.Copy((STRING)FieldValue);
+            EDID.Copy((char *)FieldValue);
             break;
         case 5: //formVersion
-            formVersion = *(UINT16 *)FieldValue;
+            formVersion = *(uint16_t *)FieldValue;
             break;
         case 6: //versionControl2
             if(ArraySize != 2)
@@ -358,7 +358,7 @@ bool DIALRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
                             return true;
                         case 2: //unknown
                             QSTI.value[ListIndex]->Unknown.value[ListX2Index]->INFX.Load();
-                            *QSTI.value[ListIndex]->Unknown.value[ListX2Index]->INFX.value = *(SINT32 *)FieldValue;
+                            *QSTI.value[ListIndex]->Unknown.value[ListX2Index]->INFX.value = *(int32_t *)FieldValue;
                             break;
                         default:
                             break;
@@ -400,7 +400,7 @@ bool DIALRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
                             return true;
                         case 2: //unknown
                             QSTR.value[ListIndex]->Unknown.value[ListX2Index]->INFX.Load();
-                            *QSTR.value[ListIndex]->Unknown.value[ListX2Index]->INFX.value = *(SINT32 *)FieldValue;
+                            *QSTR.value[ListIndex]->Unknown.value[ListX2Index]->INFX.value = *(int32_t *)FieldValue;
                             break;
                         default:
                             break;
@@ -411,19 +411,19 @@ bool DIALRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
                 }
             break;
         case 9: //full
-            FULL.Copy((STRING)FieldValue);
+            FULL.Copy((char *)FieldValue);
             break;
         case 10: //priority
-            PNAM.value = *(FLOAT32 *)FieldValue;
+            PNAM.value = *(float *)FieldValue;
             break;
         case 11: //unknown
-            TDUM.Copy((STRING)FieldValue);
+            TDUM.Copy((char *)FieldValue);
             break;
         case 12: //dialType
-            SetType(*(UINT8 *)FieldValue);
+            SetType(*(uint8_t *)FieldValue);
             break;
         case 13: //flags
-            SetFlagMask(*(UINT8 *)FieldValue);
+            SetFlagMask(*(uint8_t *)FieldValue);
             break;
         default:
             break;

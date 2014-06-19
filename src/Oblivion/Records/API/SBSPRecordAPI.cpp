@@ -38,7 +38,7 @@
 
 namespace Ob
 {
-UINT32 SBSPRecord::GetFieldAttribute(FIELD_IDENTIFIERS, UINT32 WhichAttribute)
+uint32_t SBSPRecord::GetFieldAttribute(FIELD_IDENTIFIERS, uint32_t WhichAttribute)
     {
     switch(FieldID)
         {
@@ -88,27 +88,27 @@ void * SBSPRecord::GetField(FIELD_IDENTIFIERS, void **FieldValues)
     return NULL;
     }
 
-bool SBSPRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
+bool SBSPRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, uint32_t ArraySize)
     {
     switch(FieldID)
         {
         case 1: //flags1
-            SetHeaderFlagMask(*(UINT32 *)FieldValue);
+            SetHeaderFlagMask(*(uint32_t *)FieldValue);
             break;
         case 3: //flags2
-            SetHeaderUnknownFlagMask(*(UINT32 *)FieldValue);
+            SetHeaderUnknownFlagMask(*(uint32_t *)FieldValue);
             break;
         case 4: //eid
-            EDID.Copy((STRING)FieldValue);
+            EDID.Copy((char *)FieldValue);
             break;
         case 5: //sizeX
-            DNAM.value.sizeX = *(FLOAT32 *)FieldValue;
+            DNAM.value.sizeX = *(float *)FieldValue;
             break;
         case 6: //sizeY
-            DNAM.value.sizeY = *(FLOAT32 *)FieldValue;
+            DNAM.value.sizeY = *(float *)FieldValue;
             break;
         case 7: //sizeZ
-            DNAM.value.sizeZ = *(FLOAT32 *)FieldValue;
+            DNAM.value.sizeZ = *(float *)FieldValue;
             break;
         default:
             break;

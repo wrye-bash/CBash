@@ -41,7 +41,7 @@
 class FormIDOp
     {
     protected:
-        UINT32 count;
+        uint32_t count;
         bool stop;
 
     public:
@@ -50,10 +50,10 @@ class FormIDOp
         FormIDOp();
         virtual ~FormIDOp();
 
-        virtual bool Accept(UINT32 &curFormID) abstract {};
-        virtual bool AcceptMGEF(UINT32 &curMgefCode) abstract {};
+        virtual bool Accept(uint32_t &curFormID) abstract {};
+        virtual bool AcceptMGEF(uint32_t &curMgefCode) abstract {};
 
-        UINT32 GetCount();
+        uint32_t GetCount();
         void ResetCount();
         bool Stop();
     };
@@ -61,24 +61,24 @@ class FormIDOp
 class FormIDResolver : public FormIDOp
     {
     private:
-        const UINT8 (&ResolveTable)[256];
-        //UINT8 ModIndex;
+        const uint8_t (&ResolveTable)[256];
+        //uint8_t ModIndex;
 
     public:
         const unsigned char * const FileStart;
         const unsigned char * const FileEnd;
 
-        FormIDResolver(const UINT8 (&_ResolveTable)[256], const unsigned char * const _FileStart, const unsigned char * const _FileEnd);
+        FormIDResolver(const uint8_t (&_ResolveTable)[256], const unsigned char * const _FileStart, const unsigned char * const _FileEnd);
         ~FormIDResolver();
 
-        bool Accept(UINT32 &curFormID);
-        bool AcceptMGEF(UINT32 &curMgefCode);
+        bool Accept(uint32_t &curFormID);
+        bool AcceptMGEF(uint32_t &curMgefCode);
     };
 
 struct GENXNAM
     {
     FORMID  faction;
-    SINT32  mod;
+    int32_t  mod;
 
     GENXNAM();
     ~GENXNAM();
@@ -89,8 +89,8 @@ struct GENXNAM
 
 struct GENSCHR
     {
-    UINT8   unused1[4];
-    UINT32  numRefs, compiledSize, lastIndex, scriptType;
+    uint8_t   unused1[4];
+    uint32_t  numRefs, compiledSize, lastIndex, scriptType;
 
     GENSCHR();
     ~GENSCHR();
@@ -115,8 +115,8 @@ struct GENSCR_
 
 struct GENSLSD
     {
-    UINT32  index;
-    UINT8   unused1[12], flags, unused2[7];
+    uint32_t  index;
+    uint8_t   unused1[12], flags, unused2[7];
 
     GENSLSD();
     ~GENSLSD();
@@ -137,8 +137,8 @@ struct GENVARS
 
     bool   IsLongOrShort();
     void   IsLongOrShort(bool value);
-    bool   IsFlagMask(UINT8 Mask, bool Exact=false);
-    void   SetFlagMask(UINT8 Mask);
+    bool   IsFlagMask(uint8_t Mask, bool Exact=false);
+    void   SetFlagMask(uint8_t Mask);
 
     void Write(FileWriter &writer);
 
@@ -153,9 +153,9 @@ struct sortVARS
 
 struct FNVSCHR
     {
-    UINT8   unused1[4];
-    UINT32  numRefs, compiledSize, lastIndex;
-    UINT16  scriptType, flags;
+    uint8_t   unused1[4];
+    uint32_t  numRefs, compiledSize, lastIndex;
+    uint16_t  scriptType, flags;
 
     FNVSCHR();
     ~FNVSCHR();
@@ -167,7 +167,7 @@ struct FNVSCHR
 struct GENEFIT
     {
     MGEFCODE_OR_UINT32 name;
-    UINT32  magnitude, area, duration, rangeType;
+    uint32_t  magnitude, area, duration, rangeType;
     FORMID_OR_MGEFCODE_OR_ACTORVALUE_OR_UINT32 actorValue;
 
     GENEFIT();
@@ -180,9 +180,9 @@ struct GENEFIT
 struct GENSCIT
     {
     FORMID_OR_MGEFCODE_OR_ACTORVALUE_OR_UINT32 script;
-    UINT32  schoolType;
+    uint32_t  schoolType;
     MGEFCODE_OR_UINT32 visual;
-    UINT8   flags, unused1[3];
+    uint8_t   flags, unused1[3];
 
     GENSCIT();
     ~GENSCIT();
@@ -193,10 +193,10 @@ struct GENSCIT
 
 struct OBMEEFME
     {
-    UINT8   recordVersion, betaVersion, minorVersion, majorVersion;
-    UINT8   efitParamInfo;
-    UINT8   efixParamInfo;
-    UINT8   reserved[0xA];
+    uint8_t   recordVersion, betaVersion, minorVersion, majorVersion;
+    uint8_t   efitParamInfo;
+    uint8_t   efixParamInfo;
+    uint8_t   reserved[0xA];
 
     OBMEEFME();
     ~OBMEEFME();
@@ -207,11 +207,11 @@ struct OBMEEFME
 
 struct OBMEEFIX
     {
-    UINT32  efixOverrides;
-    UINT32  efixFlags;
-    FLOAT32 baseCost;
+    uint32_t  efixOverrides;
+    uint32_t  efixFlags;
+    float baseCost;
     ACTORVALUE resistAV;
-    UINT8   reserved[0x10];
+    uint8_t   reserved[0x10];
 
     OBMEEFIX();
     ~OBMEEFIX();
@@ -232,7 +232,7 @@ struct OBMEEffect
 
 struct GENEffect
     {
-    ReqSimpleSubRecord<UINT32> EFID; //Effect ID
+    ReqSimpleSubRecord<uint32_t> EFID; //Effect ID
     ReqSubRecord<GENEFIT> EFIT; //Effect Data
     OptSubRecord<GENSCIT> SCIT; //Script Effect
     StringRecord FULL; //Effect Name
@@ -272,8 +272,8 @@ struct GENEffect
     void IsSchoolMysticism(bool value);
     bool IsSchoolRestoration();
     void IsSchoolRestoration(bool value);
-    bool IsSchool(UINT32 Type);
-    void SetSchool(UINT32 Type);
+    bool IsSchool(uint32_t Type);
+    void SetSchool(uint32_t Type);
 
     enum OBMEOverrideFlags
         {
@@ -331,8 +331,8 @@ struct GENEffect
 
     bool IsHostile();
     void IsHostile(bool value);
-    bool IsFlagMask(UINT8 Mask, bool Exact=false);
-    void SetFlagMask(UINT8 Mask);
+    bool IsFlagMask(uint8_t Mask, bool Exact=false);
+    void SetFlagMask(uint8_t Mask);
 
     bool IsRangeSelf();
     void IsRangeSelf(bool value);
@@ -340,8 +340,8 @@ struct GENEffect
     void IsRangeTouch(bool value);
     bool IsRangeTarget();
     void IsRangeTarget(bool value);
-    bool IsRange(UINT32 Type);
-    void SetRange(UINT32 Type);
+    bool IsRange(uint32_t Type);
+    void SetRange(uint32_t Type);
 
     bool OBME_IsUsingHostileOverride();
     void OBME_IsUsingHostileOverride(bool value);
@@ -396,8 +396,8 @@ struct GENEffect
     bool OBME_IsUsingHiddenOverride();
     void OBME_IsUsingHiddenOverride(bool value);
 
-    bool OBME_IsOverrideFlagMask(UINT32 Mask, bool Exact=false);
-    void OBME_SetOverrideFlagMask(UINT32 Mask);
+    bool OBME_IsOverrideFlagMask(uint32_t Mask, bool Exact=false);
+    void OBME_SetOverrideFlagMask(uint32_t Mask);
 
     bool OBME_IsHostile();
     void OBME_IsHostile(bool value);
@@ -436,8 +436,8 @@ struct GENEffect
     bool OBME_IsHidden();
     void OBME_IsHidden(bool value);
 
-    bool OBME_IsFlagMask(UINT32 Mask, bool Exact=false);
-    void OBME_SetFlagMask(UINT32 Mask);
+    bool OBME_IsFlagMask(uint32_t Mask, bool Exact=false);
+    void OBME_SetFlagMask(uint32_t Mask);
 
     bool VisitFormIDs(FormIDOp &op);
     void Write(FileWriter &writer);
@@ -448,9 +448,9 @@ struct GENEffect
 
 struct GENENIT
     {
-    SINT32  value;
-    UINT8   flags;
-    UINT8   unused1[3];
+    int32_t  value;
+    uint8_t   flags;
+    uint8_t   unused1[3];
 
     GENENIT();
     ~GENENIT();
@@ -461,8 +461,8 @@ struct GENENIT
 
 struct GENVALUEWEIGHT
     {
-    UINT32  value;
-    FLOAT32 weight;
+    uint32_t  value;
+    float weight;
 
     GENVALUEWEIGHT();
     ~GENVALUEWEIGHT();
@@ -474,7 +474,7 @@ struct GENVALUEWEIGHT
 struct GENCNTO
     {
     FORMID  item;
-    SINT32  count;
+    int32_t  count;
 
     GENCNTO();
     ~GENCNTO();
@@ -485,10 +485,10 @@ struct GENCNTO
 
 struct GENACBS
     {
-    UINT32  flags;
-    UINT16  baseSpell, fatigue, barterGold;
-    SINT16  level;
-    UINT16  calcMin, calcMax;
+    uint32_t  flags;
+    uint16_t  baseSpell, fatigue, barterGold;
+    int16_t  level;
+    uint16_t  calcMin, calcMax;
 
     enum flagsFlags //Used by both npc_ and crea
         {
@@ -535,7 +535,7 @@ struct GENACBS
 struct GENSNAM
     {
     FORMID  faction;
-    UINT8   rank, unused1[3];
+    uint8_t   rank, unused1[3];
 
     GENSNAM();
     ~GENSNAM();
@@ -546,10 +546,10 @@ struct GENSNAM
 
 struct GENAIDT
     {
-    UINT8   aggression, confidence, energyLevel, responsibility;
-    UINT32  flags;
-    SINT8   trainSkill;
-    UINT8   trainLevel, unused1[2];
+    uint8_t   aggression, confidence, energyLevel, responsibility;
+    uint32_t  flags;
+    int8_t   trainSkill;
+    uint8_t   trainLevel, unused1[2];
 
     GENAIDT();
     ~GENAIDT();
@@ -560,11 +560,11 @@ struct GENAIDT
 
 struct GENCTDA
     {
-    UINT8   operType, unused1[3];
+    uint8_t   operType, unused1[3];
     FORMID_OR_FLOAT32 compValue;
-    UINT32  ifunc;
+    uint32_t  ifunc;
     FORMID_OR_UINT32 param1, param2;
-    UINT8   unused2[4];
+    uint8_t   unused2[4];
 
     enum operTypeType
         {
@@ -598,8 +598,8 @@ struct GENCTDA
     void IsLess(bool value);
     bool IsLessOrEqual();
     void IsLessOrEqual(bool value);
-    bool IsType(UINT8 Type);
-    void SetType(UINT8 Type);
+    bool IsType(uint8_t Type);
+    void SetType(uint8_t Type);
 
     bool IsNone();
     void IsNone(bool value);
@@ -609,8 +609,8 @@ struct GENCTDA
     void IsRunOnTarget(bool value);
     bool IsUseGlobal() const;
     void IsUseGlobal(bool value);
-    bool IsFlagMask(UINT8 Mask, bool Exact=false);
-    void SetFlagMask(UINT8 Mask);
+    bool IsFlagMask(uint8_t Mask, bool Exact=false);
+    void SetFlagMask(uint8_t Mask);
 
     bool VisitFormIDs(FormIDOp &op);
     void Write(FileWriter &writer);
@@ -621,9 +621,9 @@ struct GENCTDA
 
 struct GENCLR
     {
-    UINT8   red, green, blue, unused1;
+    uint8_t   red, green, blue, unused1;
 
-    GENCLR(UINT8 _red=0, UINT8 _green=0, UINT8 _blue=0, UINT8 _unused1=0);
+    GENCLR(uint8_t _red=0, uint8_t _green=0, uint8_t _blue=0, uint8_t _unused1=0);
     ~GENCLR();
 
     bool operator ==(const GENCLR &other) const;
@@ -645,7 +645,7 @@ struct GENMODEL
 struct GENXOWN
     {
     ReqSimpleSubRecord<FORMID> XOWN;
-    SemiOptSimpleSubRecord<SINT32> XRNK;
+    SemiOptSimpleSubRecord<int32_t> XRNK;
     OptSimpleSubRecord<FORMID> XGLB;
 
     void Write(FileWriter &writer);
@@ -667,7 +667,7 @@ struct GENXPCI
 
 struct GENXLOD
     {
-    FLOAT32 lod1, lod2, lod3;
+    float lod1, lod2, lod3;
 
     GENXLOD();
     ~GENXLOD();
@@ -679,7 +679,7 @@ struct GENXLOD
 struct GENXESP
     {
     FORMID  parent;
-    UINT8   flags, unused1[3];
+    uint8_t   flags, unused1[3];
 
     GENXESP();
     ~GENXESP();
@@ -690,7 +690,7 @@ struct GENXESP
 
 struct GENPOSDATA
     {
-    FLOAT32 posX, posY, posZ, rotX, rotY, rotZ;
+    float posX, posY, posZ, rotX, rotY, rotZ;
 
     GENPOSDATA();
     ~GENPOSDATA();
@@ -701,9 +701,9 @@ struct GENPOSDATA
 
 struct GENPGRP
     {
-    FLOAT32 x, y, z;
-    UINT8   connections;
-    UINT8   unused1[3];
+    float x, y, z;
+    uint8_t   connections;
+    uint8_t   unused1[3];
 
     GENPGRP();
     ~GENPGRP();
@@ -714,11 +714,11 @@ struct GENPGRP
 
 struct LVLLVLO
     {
-    SINT16  level;
-    UINT8   unused1[2];
+    int16_t  level;
+    uint8_t   unused1[2];
     FORMID  listId;
-    SINT16  count;
-    UINT8   unused2[2];
+    int16_t  count;
+    uint8_t   unused2[2];
 
     LVLLVLO();
     ~LVLLVLO();
@@ -729,8 +729,8 @@ struct LVLLVLO
 
 struct MAGICOBME
     {
-    UINT8   recordVersion, betaVersion, minorVersion, majorVersion;
-    UINT8   reserved[0x1C];
+    uint8_t   recordVersion, betaVersion, minorVersion, majorVersion;
+    uint8_t   reserved[0x1C];
 
     MAGICOBME();
     ~MAGICOBME();
@@ -750,8 +750,8 @@ struct OBMEMAGIC
 
 struct GENMNAM
     {
-    SINT32  dimX, dimY;
-    SINT16  NWCellX, NWCellY, SECellX, SECellY;
+    int32_t  dimX, dimY;
+    int16_t  NWCellX, NWCellY, SECellX, SECellY;
 
     GENMNAM();
     ~GENMNAM();
@@ -762,7 +762,7 @@ struct GENMNAM
 
 struct GENNAM0
     {
-    FLOAT32 x, y;
+    float x, y;
 
     GENNAM0();
     ~GENNAM0();
@@ -773,7 +773,7 @@ struct GENNAM0
 
 struct GENNAM9
     {
-    FLOAT32 x, y;
+    float x, y;
 
     GENNAM9();
     ~GENNAM9();
@@ -784,7 +784,7 @@ struct GENNAM9
 
 struct GENTNAM
     {
-    UINT8   markerType, unused1;
+    uint8_t   markerType, unused1;
 
     GENTNAM();
     ~GENTNAM();
@@ -795,7 +795,7 @@ struct GENTNAM
 
 struct RACESKILL
     {
-    SINT8   value, boost;
+    int8_t   value, boost;
 
     RACESKILL();
     ~RACESKILL();
@@ -807,9 +807,9 @@ struct RACESKILL
 struct RACEDATA
     {
     RACESKILL skills[7];
-    UINT8   unused1[2];
-    FLOAT32 maleHeight, femaleHeight, maleWeight, femaleWeight;
-    UINT32  flags;
+    uint8_t   unused1[2];
+    float maleHeight, femaleHeight, maleWeight, femaleWeight;
+    uint32_t  flags;
 
     RACEDATA();
     ~RACEDATA();
@@ -820,7 +820,7 @@ struct RACEDATA
 
 struct RACESNAM
     {
-    UINT8   SNAM[2];
+    uint8_t   SNAM[2];
 
     RACESNAM();
     ~RACESNAM();
@@ -853,7 +853,7 @@ struct RACEDNAM
 
 struct RACECNAM
     {
-    UINT8  defaultHairMale, defaultHairFemale;
+    uint8_t  defaultHairMale, defaultHairFemale;
 
     RACECNAM();
     ~RACECNAM();
@@ -865,7 +865,7 @@ struct RACECNAM
 //Fallout New Vegas Chunks
 struct GENOBND
     {
-    SINT16   x1, y1, z1, x2, y2, z2;
+    int16_t   x1, y1, z1, x2, y2, z2;
 
     GENOBND();
     ~GENOBND();
@@ -876,9 +876,9 @@ struct GENOBND
 
 struct GENDODT
     {
-    FLOAT32 minWidth, maxWidth, minHeight, maxHeight,
+    float minWidth, maxWidth, minHeight, maxHeight,
             depth, shininess, scale;
-    UINT8   passes, flags, unused1[2], red, green, blue, unused2;
+    uint8_t   passes, flags, unused1[2], red, green, blue, unused2;
 
     GENDODT();
     ~GENDODT();
@@ -913,8 +913,8 @@ struct GENPATROL
 
     bool IsScriptEnabled();
     void IsScriptEnabled(bool value);
-    bool IsScriptFlagMask(UINT16 Mask, bool Exact=false);
-    void SetScriptFlagMask(UINT16 Mask);
+    bool IsScriptFlagMask(uint16_t Mask, bool Exact=false);
+    void SetScriptFlagMask(uint16_t Mask);
 
     bool IsObject();
     void IsObject(bool value);
@@ -922,8 +922,8 @@ struct GENPATROL
     void IsQuest(bool value);
     bool IsEffect();
     void IsEffect(bool value);
-    bool IsType(UINT16 Type);
-    void SetType(UINT16 Type);
+    bool IsType(uint16_t Type);
+    void SetType(uint16_t Type);
 
     void Write(FileWriter &writer);
 
@@ -934,8 +934,8 @@ struct GENPATROL
 struct FNVXNAM
     {
     FORMID  faction;
-    SINT32  mod;
-    UINT32  groupReactionType;
+    int32_t  mod;
+    uint32_t  groupReactionType;
 
     enum groupReactionTypes
         {
@@ -956,8 +956,8 @@ struct FNVXNAM
     void   IsAlly(bool value);
     bool   IsFriend();
     void   IsFriend(bool value);
-    bool   IsType(UINT32 Type);
-    void   SetType(UINT32 Type);
+    bool   IsType(uint32_t Type);
+    void   SetType(uint32_t Type);
 
     bool operator ==(const FNVXNAM &other) const;
     bool operator !=(const FNVXNAM &other) const;
@@ -965,9 +965,9 @@ struct FNVXNAM
 
 struct FNVMODS //Alternate Texture
     {
-    STRING  name; //3D Name
+    char *  name; //3D Name
     FORMID  texture; //New Texture
-    SINT32  index; //3D Index
+    int32_t  index; //3D Index
 
     FNVMODS();
     ~FNVMODS();
@@ -986,17 +986,17 @@ struct FNVAlternateTextures
     FNVAlternateTextures();
     ~FNVAlternateTextures();
 
-    UINT32 GetSize() const;
+    uint32_t GetSize() const;
 
     bool IsLoaded() const;
     void Load();
     void Unload();
 
-    void resize(UINT32 newSize);
+    void resize(uint32_t newSize);
 
-    bool Read(unsigned char *&buffer, const UINT32 &subSize);
+    bool Read(unsigned char *&buffer, const uint32_t &subSize);
     void Write(FileWriter &writer);
-    void Write(UINT32 _Type, FileWriter &writer);
+    void Write(uint32_t _Type, FileWriter &writer);
 
     void VisitFormIDs(FormIDOp &op);
 
@@ -1011,7 +1011,7 @@ struct FNVMODEL
     OptSimpleFloatSubRecord<flt_0> MODB; //Bound Radius (Unknown?)
     RawRecord MODT; //Texture Files Hashes
     FNVAlternateTextures Textures; //Alternate Textures
-    OptSimpleSubRecord<UINT8> MODD; //FaceGen Model Flags
+    OptSimpleSubRecord<uint8_t> MODD; //FaceGen Model Flags
 
     enum moddFlags
         {
@@ -1032,8 +1032,8 @@ struct FNVMODEL
     void   IsRightHand(bool value);
     bool   IsLeftHand();
     void   IsLeftHand(bool value);
-    bool   IsFlagMask(UINT8 Mask, bool Exact=false);
-    void   SetFlagMask(UINT8 Mask);
+    bool   IsFlagMask(uint8_t Mask, bool Exact=false);
+    void   SetFlagMask(uint8_t Mask);
 
     void   Write(FileWriter &writer);
 
@@ -1046,7 +1046,7 @@ struct FNVBIPEDMODEL
     StringRecord MODL; //Model Filename
     RawRecord MODT; //Texture Files Hashes
     FNVAlternateTextures Textures; //Alternate Textures
-    OptSimpleSubRecord<UINT8> MODD; //FaceGen Model Flags
+    OptSimpleSubRecord<uint8_t> MODD; //FaceGen Model Flags
 
     enum moddFlags
         {
@@ -1064,8 +1064,8 @@ struct FNVBIPEDMODEL
     void   IsRightHand(bool value);
     bool   IsLeftHand();
     void   IsLeftHand(bool value);
-    bool   IsFlagMask(UINT8 Mask, bool Exact=false);
-    void   SetFlagMask(UINT8 Mask);
+    bool   IsFlagMask(uint8_t Mask, bool Exact=false);
+    void   SetFlagMask(uint8_t Mask);
 
     void Write(FileWriter &writer);
 
@@ -1087,12 +1087,12 @@ struct FNVWORLDMODEL
 
 struct FNVCTDA //Condition
     {
-    UINT8   operType, unused1[3]; //Type, Unused
+    uint8_t   operType, unused1[3]; //Type, Unused
     FORMID_OR_FLOAT32 compValue; //Float or Global (if fIsUseGlobal is true)
-    UINT32  ifunc;
+    uint32_t  ifunc;
     FORMID_OR_UINT32 param1, param2;
     //Below are not always present on chunk...
-    UINT32  runOnType; //Run On
+    uint32_t  runOnType; //Run On
     FORMID_OR_UINT32 reference; //Reference (if runOn == 2) or Unused
 
     enum operTypeType
@@ -1143,8 +1143,8 @@ struct FNVCTDA //Condition
     void IsLess(bool value);
     bool IsLessOrEqual();
     void IsLessOrEqual(bool value);
-    bool IsType(UINT8 Type);
-    void SetType(UINT8 Type);
+    bool IsType(uint8_t Type);
+    void SetType(uint8_t Type);
 
     bool IsNone();
     void IsNone(bool value);
@@ -1154,8 +1154,8 @@ struct FNVCTDA //Condition
     void IsRunOnTarget(bool value);
     bool IsUseGlobal() const;
     void IsUseGlobal(bool value);
-    bool IsFlagMask(UINT8 Mask, bool Exact=false);
-    void SetFlagMask(UINT8 Mask);
+    bool IsFlagMask(uint8_t Mask, bool Exact=false);
+    void SetFlagMask(uint8_t Mask);
 
     bool IsResultOnSubject();
     void IsResultOnSubject(bool value);
@@ -1167,14 +1167,14 @@ struct FNVCTDA //Condition
     void IsResultOnCombatTarget(bool value);
     bool IsResultOnLinkedReference();
     void IsResultOnLinkedReference(bool value);
-    bool IsResultOnType(UINT32 Type);
-    void SetResultOnType(UINT32 Type);
+    bool IsResultOnType(uint32_t Type);
+    void SetResultOnType(uint32_t Type);
     };
 
 struct FNVEFIT
     {
-    UINT32  magnitude, area, duration, rangeType;
-    SINT32  actorValue;
+    uint32_t  magnitude, area, duration, rangeType;
+    int32_t  actorValue;
 
     FNVEFIT();
     ~FNVEFIT();
@@ -1205,8 +1205,8 @@ struct FNVEffect
     void IsRangeTouch(bool value);
     bool IsRangeTarget();
     void IsRangeTarget(bool value);
-    bool IsRange(UINT32 Mask);
-    void SetRange(UINT32 Mask);
+    bool IsRange(uint32_t Mask);
+    void SetRange(uint32_t Mask);
 
     bool operator ==(const FNVEffect &other) const;
     bool operator !=(const FNVEffect &other) const;
@@ -1214,10 +1214,10 @@ struct FNVEffect
 
 struct DESTDSTD //Destruction Stage Data
     {
-    UINT8   health, index, stage, flags; //Health, Index, Damage Stage, Flags
-    SINT32  dps; //Self Damage per Second
+    uint8_t   health, index, stage, flags; //Health, Index, Damage Stage, Flags
+    int32_t  dps; //Self Damage per Second
     FORMID  explosion, debris;
-    SINT32  debrisCount;
+    int32_t  debrisCount;
 
     DESTDSTD();
     ~DESTDSTD();
@@ -1247,8 +1247,8 @@ struct DESTSTAGE //Destructable Stage
     void   IsDisable(bool value);
     bool   IsDestroy();
     void   IsDestroy(bool value);
-    bool   IsFlagMask(UINT8 Mask, bool Exact=false);
-    void   SetFlagMask(UINT8 Mask);
+    bool   IsFlagMask(uint8_t Mask, bool Exact=false);
+    void   SetFlagMask(uint8_t Mask);
 
     bool operator ==(const DESTSTAGE &other) const;
     bool operator !=(const DESTSTAGE &other) const;
@@ -1261,10 +1261,10 @@ struct sortDESTStages
 
 struct GENDEST //Destructable Header
     {
-    SINT32  health; //Health
-    UINT8   count; //Count
-    UINT8   flags; //Flags
-    UINT8   unused1[2]; //Unused
+    int32_t  health; //Health
+    uint8_t   count; //Count
+    uint8_t   flags; //Flags
+    uint8_t   unused1[2]; //Unused
 
     GENDEST();
     ~GENDEST();
@@ -1287,8 +1287,8 @@ struct GENDESTRUCT //Destructable
 
     bool   IsVATSTargetable();
     void   IsVATSTargetable(bool value);
-    bool   IsFlagMask(UINT8 Mask, bool Exact=false);
-    void   SetFlagMask(UINT8 Mask);
+    bool   IsFlagMask(uint8_t Mask, bool Exact=false);
+    void   SetFlagMask(uint8_t Mask);
 
     bool operator ==(const GENDESTRUCT &other) const;
     bool operator !=(const GENDESTRUCT &other) const;
@@ -1296,8 +1296,8 @@ struct GENDESTRUCT //Destructable
 
 struct GENBMDT
     {
-    UINT32  bipedFlags; //Type
-    UINT8   generalFlags, unused1[3]; //Flags, Unused
+    uint32_t  bipedFlags; //Type
+    uint8_t   generalFlags, unused1[3]; //Flags, Unused
 
     GENBMDT();
     ~GENBMDT();
@@ -1308,8 +1308,8 @@ struct GENBMDT
 
 struct FNVEQUIPDATA
     {
-    SINT32  value, health; //Value, Health
-    FLOAT32 weight; //Weight
+    int32_t  value, health; //Value, Health
+    float weight; //Weight
 
     FNVEQUIPDATA();
     ~FNVEQUIPDATA();
@@ -1320,11 +1320,11 @@ struct FNVEQUIPDATA
 
 struct FNVEQUIPDNAM
     {
-    SINT16  AR; //Armor Resistance
-    UINT16  flags; //Flags
+    int16_t  AR; //Armor Resistance
+    uint16_t  flags; //Flags
     //Below are not always present in chunk
-    FLOAT32 DT; //Damage Threshold
-    UINT8   unknown[4]; //Unknown ?
+    float DT; //Damage Threshold
+    uint8_t   unknown[4]; //Unknown ?
 
     FNVEQUIPDNAM();
     ~FNVEQUIPDNAM();
@@ -1337,7 +1337,7 @@ struct GENCOED // Extra Data
     {
     FORMID  owner; // Owner
     FORMID_OR_UINT32 globalOrRank; // Global Variable / Required Rank (global if owner is NPC_, rank if owner is FACT)
-    FLOAT32 condition; // Item Condition
+    float condition; // Item Condition
 
     GENCOED();
     ~GENCOED();
@@ -1366,7 +1366,7 @@ struct FNVCNTO
 
 struct GENDNAM
     {
-    FLOAT32  defaultLandHeight, defaultWaterHeight;
+    float  defaultLandHeight, defaultWaterHeight;
 
     GENDNAM();
     ~GENDNAM();
@@ -1377,7 +1377,7 @@ struct GENDNAM
 
 struct GENONAM
     {
-    FLOAT32  mapScale, xCellOffset, yCellOffset;
+    float  mapScale, xCellOffset, yCellOffset;
 
     GENONAM();
     ~GENONAM();
@@ -1388,7 +1388,7 @@ struct GENONAM
 
 struct GENIMPS
     {
-    UINT32   material;
+    uint32_t   material;
     FORMID   oldImpact, newImpact;
 
     GENIMPS();
@@ -1400,9 +1400,9 @@ struct GENIMPS
 
 struct GENXPRM
     {
-    FLOAT32  xBound, yBound, zBound;
-    FLOAT32  red, green, blue, unknown;
-    UINT32   type;
+    float  xBound, yBound, zBound;
+    float  red, green, blue, unknown;
+    uint32_t   type;
 
     GENXPRM();
     ~GENXPRM();
@@ -1413,7 +1413,7 @@ struct GENXPRM
 
 struct GENXMBO
     {
-    FLOAT32  x, y, z;
+    float  x, y, z;
 
     GENXMBO();
     ~GENXMBO();
@@ -1426,7 +1426,7 @@ struct GENXTEL
     {
     FORMID  destinationFid;
     GENPOSDATA destination;
-    UINT32  flags;
+    uint32_t  flags;
 
     GENXTEL();
     ~GENXTEL();
@@ -1438,7 +1438,7 @@ struct GENXTEL
 struct GENMAPDATA
     {
     //XMRK; //Map Data Marker (Empty)
-    ReqSimpleSubRecord<UINT8> FNAM; //Flags
+    ReqSimpleSubRecord<uint8_t> FNAM; //Flags
     StringRecord FULL; //Name
     ReqSubRecord<GENTNAM> TNAM; //Type
     OptSimpleSubRecord<FORMID> WMI1; //Reputation
@@ -1466,9 +1466,9 @@ struct GENAUDIODATA
 
 struct GENXRDO
     {
-    FLOAT32  rangeRadius;
-    UINT32   rangeType;
-    FLOAT32  staticPercentage;
+    float  rangeRadius;
+    uint32_t   rangeType;
+    float  staticPercentage;
     FORMID   positionReference;
 
     GENXRDO();
@@ -1481,7 +1481,7 @@ struct GENXRDO
 struct GENAMMO
     {
     OptSimpleSubRecord<FORMID> XAMT; //Type
-    OptSimpleSubRecord<SINT32> XAMC; //Count
+    OptSimpleSubRecord<int32_t> XAMC; //Count
 
     void Write(FileWriter &writer);
 
@@ -1492,7 +1492,7 @@ struct GENAMMO
 struct GENXPWR
     {
     FORMID reference; //reference
-    UINT32 type; //type
+    uint32_t type; //type
 
     enum xpwrTypes
         {
@@ -1507,8 +1507,8 @@ struct GENXPWR
     void IsReflection(bool value);
     bool IsRefraction();
     void IsRefraction(bool value);
-    bool IsType(UINT32 Type);
-    void SetType(UINT32 Type);
+    bool IsType(uint32_t Type);
+    void SetType(uint32_t Type);
 
     bool operator ==(const GENXPWR &other) const;
     bool operator !=(const GENXPWR &other) const;
@@ -1517,7 +1517,7 @@ struct GENXPWR
 struct GENXDCR //Linked Decal (almost entirely unused, possibly not fully implemented by Bethesda)
     {
     FORMID reference; //Reference
-    UINT8  unknown1[24]; //Unknown (zero filled)
+    uint8_t  unknown1[24]; //Unknown (zero filled)
 
     GENXDCR();
     ~GENXDCR();
@@ -1538,7 +1538,7 @@ struct GENXCLP
 struct GENXAPR
     {
     FORMID reference; //Reference
-    FLOAT32 delay; //Delay
+    float delay; //Delay
 
     GENXAPR();
     ~GENXAPR();
@@ -1549,7 +1549,7 @@ struct GENXAPR
 
 struct GENACTPARENT
     {
-    ReqSimpleSubRecord<UINT8> XAPD; //Flags
+    ReqSimpleSubRecord<uint8_t> XAPD; //Flags
     UnorderedSparseArray<GENXAPR *> XAPR; //Activate Parent Refs
 
     enum flagsFlags
@@ -1559,8 +1559,8 @@ struct GENACTPARENT
 
     bool IsParentActivateOnly();
     void IsParentActivateOnly(bool value);
-    bool IsFlagMask(UINT8 Mask, bool Exact=false);
-    void SetFlagMask(UINT8 Mask);
+    bool IsFlagMask(uint8_t Mask, bool Exact=false);
+    void SetFlagMask(uint8_t Mask);
 
     void Write(FileWriter &writer);
 
@@ -1571,8 +1571,8 @@ struct GENACTPARENT
 struct GENXNDP
     {
     FORMID navMesh; //Navigation Mesh
-    UINT16 unknown1; //Unknown
-    UINT8  unused1[2]; //Unused
+    uint16_t unknown1; //Unknown
+    uint8_t  unused1[2]; //Unused
 
     GENXNDP();
     ~GENXNDP();
@@ -1583,7 +1583,7 @@ struct GENXNDP
 
 struct GENPOSITION
     {
-    FLOAT32 width, height, //Size
+    float width, height, //Size
             xPos, yPos, zPos, //Position
             q1, q2, q3, q4; //Rotation (Quaternion?)
 
@@ -1596,8 +1596,8 @@ struct GENPOSITION
 
 struct GENXRMR
     {
-    UINT16  count; //Linked Rooms Count
-    UINT8   unknown1[2]; //Unknown
+    uint16_t  count; //Linked Rooms Count
+    uint8_t   unknown1[2]; //Unknown
 
     GENXRMR();
     ~GENXRMR();
@@ -1620,7 +1620,7 @@ struct GENROOM
 struct FNVXOWN
     {
     ReqSimpleSubRecord<FORMID> XOWN;
-    SemiOptSimpleSubRecord<SINT32> XRNK; //Faction Rank
+    SemiOptSimpleSubRecord<int32_t> XRNK; //Faction Rank
 
     void Write(FileWriter &writer);
 
@@ -1630,9 +1630,9 @@ struct FNVXOWN
 
 struct FNVXLOC
     {
-    UINT8   level, unused1[3];
+    uint8_t   level, unused1[3];
     FORMID  key;
-    UINT8   flags, unused2[3], unknown[8]; //unknown[8] not always present on chunk...
+    uint8_t   flags, unused2[3], unknown[8]; //unknown[8] not always present on chunk...
 
     FNVXLOC();
     ~FNVXLOC();
@@ -1643,11 +1643,11 @@ struct FNVXLOC
 
 struct FNVAIDT
     {
-    UINT8   aggression, confidence, energyLevel, responsibility, mood, unused1[3];
-    UINT32  flags;
-    SINT8   trainSkill;
-    UINT8   trainLevel, assistance, aggroFlags;
-    SINT32  aggroRadius;
+    uint8_t   aggression, confidence, energyLevel, responsibility, mood, unused1[3];
+    uint32_t  flags;
+    int8_t   trainSkill;
+    uint8_t   trainLevel, assistance, aggroFlags;
+    int32_t  aggroRadius;
 
     enum aggressionTypes
         {
@@ -1699,13 +1699,13 @@ struct FNVAIDT
 
 struct FNVACBS // Configuration
     {
-    UINT32  flags; // Flags
-    UINT16  fatigue, barterGold; // Fatigue, Barter gold
-    SINT16  level; // Level or Level Multiplier
-    UINT16  calcMin, calcMax, speedMult; // Calc min, Calc max, Speed Multiplier
-    FLOAT32 karma; // Karma (Alignment)
-    SINT16  dispBase; // Disposition Base
-    UINT16  templateFlags; // Template Flags
+    uint32_t  flags; // Flags
+    uint16_t  fatigue, barterGold; // Fatigue, Barter gold
+    int16_t  level; // Level or Level Multiplier
+    uint16_t  calcMin, calcMax, speedMult; // Calc min, Calc max, Speed Multiplier
+    float karma; // Karma (Alignment)
+    int16_t  dispBase; // Disposition Base
+    uint16_t  templateFlags; // Template Flags
 
     FNVACBS();
     ~FNVACBS();
@@ -1730,7 +1730,7 @@ struct FNVLVLO
 
 struct SURVDATA // Data
     {
-    UINT32  threshold; // Trigger Threshold
+    uint32_t  threshold; // Trigger Threshold
     FORMID  actorEffect; // Actor Effect
 
     SURVDATA();
@@ -1745,9 +1745,9 @@ struct FNVLIGHT
     GENCLR  ambient; //Ambient Color
     GENCLR  directional; //Directional Color
     GENCLR  fog; //Fog Color
-    FLOAT32 fogNear, fogFar; //Fog Near, Fog Far
-    SINT32  directionalXY, directionalZ; //Directional Rotation XY, Directional Rotation Z
-    FLOAT32 directionalFade, fogClip, fogPower; //Directional Fade, Fog Clip Dist, Fog Power
+    float fogNear, fogFar; //Fog Near, Fog Far
+    int32_t  directionalXY, directionalZ; //Directional Rotation XY, Directional Rotation Z
+    float directionalFade, fogClip, fogPower; //Directional Fade, Fog Clip Dist, Fog Power
 
     FNVLIGHT();
     ~FNVLIGHT();

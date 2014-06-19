@@ -38,7 +38,7 @@
 
 namespace Ob
 {
-UINT32 MGEFRecord::GetFieldAttribute(FIELD_IDENTIFIERS, UINT32 WhichAttribute)
+uint32_t MGEFRecord::GetFieldAttribute(FIELD_IDENTIFIERS, uint32_t WhichAttribute)
     {
     switch(FieldID)
         {
@@ -124,7 +124,7 @@ UINT32 MGEFRecord::GetFieldAttribute(FIELD_IDENTIFIERS, UINT32 WhichAttribute)
                     case 0: //fieldType
                         return MGEFCODE_OR_UINT32_ARRAY_FIELD;
                     case 1: //fieldSize
-                        return (UINT32)ESCE.value.size();
+                        return (uint32_t)ESCE.value.size();
                     default:
                         return UNKNOWN_FIELD;
                     }
@@ -327,61 +327,61 @@ void * MGEFRecord::GetField(FIELD_IDENTIFIERS, void **FieldValues)
     return NULL;
     }
 
-bool MGEFRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
+bool MGEFRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, uint32_t ArraySize)
     {
     switch(FieldID)
         {
         case 1: //flags1
-            SetHeaderFlagMask(*(UINT32 *)FieldValue);
+            SetHeaderFlagMask(*(uint32_t *)FieldValue);
             break;
         case 2: //fid
             formID = *(FORMID *)FieldValue;
             break;
         case 3: //flags2
-            SetHeaderUnknownFlagMask(*(UINT32 *)FieldValue);
+            SetHeaderUnknownFlagMask(*(uint32_t *)FieldValue);
             break;
         case 4: //eid
-            EDID.Copy((STRING)FieldValue);
+            EDID.Copy((char *)FieldValue);
             break;
         case 5: //full
-            FULL.Copy((STRING)FieldValue);
+            FULL.Copy((char *)FieldValue);
             break;
         case 6: //text
-            DESC.Copy((STRING)FieldValue);
+            DESC.Copy((char *)FieldValue);
             break;
         case 7: //iconPath
-            ICON.Copy((STRING)FieldValue);
+            ICON.Copy((char *)FieldValue);
             break;
         case 8: //modPath
             MODL.Load();
-            MODL->MODL.Copy((STRING)FieldValue);
+            MODL->MODL.Copy((char *)FieldValue);
             break;
         case 9: //modb
             MODL.Load();
-            MODL->MODB.value = *(FLOAT32 *)FieldValue;
+            MODL->MODB.value = *(float *)FieldValue;
             break;
         case 10: //modt_p
             MODL.Load();
             MODL->MODT.Copy((UINT8ARRAY)FieldValue, ArraySize);
             break;
         case 11: //flags
-            SetFlagMask(*(UINT32 *)FieldValue);
+            SetFlagMask(*(uint32_t *)FieldValue);
             break;
         case 12: //baseCost
-            DATA.value.baseCost = *(FLOAT32 *)FieldValue;
+            DATA.value.baseCost = *(float *)FieldValue;
             break;
         case 13: //associated
             DATA.value.associated = *(FORMID_OR_MGEFCODE_OR_ACTORVALUE_OR_UINT32 *)FieldValue;
             return true;
         case 14: //school
-            DATA.value.schoolType = *(UINT32 *)FieldValue;
+            DATA.value.schoolType = *(uint32_t *)FieldValue;
             break;
         case 15: //resistValue
             DATA.value.resistValue = *(FORMID *)FieldValue;
             return true;
         case 16: //numCounters
-            DATA.value.numCounters = *(UINT16 *)FieldValue;
-            ESCE.value.resize(*(UINT16 *)FieldValue);
+            DATA.value.numCounters = *(uint16_t *)FieldValue;
+            ESCE.value.resize(*(uint16_t *)FieldValue);
             break;
         case 17: //unused1
             if(ArraySize != 2)
@@ -393,7 +393,7 @@ bool MGEFRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             DATA.value.light = *(FORMID *)FieldValue;
             return true;
         case 19: //projectileSpeed
-            DATA.value.projectileSpeed = *(FLOAT32 *)FieldValue;
+            DATA.value.projectileSpeed = *(float *)FieldValue;
             break;
         case 20: //effectShader
             DATA.value.effectShader = *(FORMID *)FieldValue;
@@ -414,40 +414,40 @@ bool MGEFRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             DATA.value.areaSound = *(FORMID *)FieldValue;
             return true;
         case 26: //cefEnchantment
-            DATA.value.cefEnchantment = *(FLOAT32 *)FieldValue;
+            DATA.value.cefEnchantment = *(float *)FieldValue;
             break;
         case 27: //cefBarter
-            DATA.value.cefBarter = *(FLOAT32 *)FieldValue;
+            DATA.value.cefBarter = *(float *)FieldValue;
             break;
         case 28: //counterEffects
             ESCE.resize(ArraySize);
-            for(UINT32 x = 0; x < ArraySize; x++)
+            for(uint32_t x = 0; x < ArraySize; x++)
                 ESCE.value[x] = ((MGEFCODEARRAY)FieldValue)[x];
             return true;
         //OBME Fields
         case 29: //recordVersion
             OBME.Load();
-            OBME->OBME.value.recordVersion = *(UINT8 *)FieldValue;
+            OBME->OBME.value.recordVersion = *(uint8_t *)FieldValue;
             break;
         case 30: //betaVersion
             OBME.Load();
-            OBME->OBME.value.betaVersion = *(UINT8 *)FieldValue;
+            OBME->OBME.value.betaVersion = *(uint8_t *)FieldValue;
             break;
         case 31: //minorVersion
             OBME.Load();
-            OBME->OBME.value.minorVersion = *(UINT8 *)FieldValue;
+            OBME->OBME.value.minorVersion = *(uint8_t *)FieldValue;
             break;
         case 32: //majorVersion
             OBME.Load();
-            OBME->OBME.value.majorVersion = *(UINT8 *)FieldValue;
+            OBME->OBME.value.majorVersion = *(uint8_t *)FieldValue;
             break;
         case 33: //mgefParamAInfo
             OBME.Load();
-            OBME->OBME.value.mgefParamAInfo = *(UINT8 *)FieldValue;
+            OBME->OBME.value.mgefParamAInfo = *(uint8_t *)FieldValue;
             return true;
         case 34: //mgefParamBInfo
             OBME.Load();
-            OBME->OBME.value.mgefParamBInfo = *(UINT8 *)FieldValue;
+            OBME->OBME.value.mgefParamBInfo = *(uint8_t *)FieldValue;
             return true;
         case 35: //reserved1
             if(ArraySize != 0x2)
@@ -458,10 +458,10 @@ bool MGEFRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             break;
         case 36: //handlerCode
             OBME.Load();
-            OBME->OBME.value.handlerCode = *(UINT32 *)FieldValue;
+            OBME->OBME.value.handlerCode = *(uint32_t *)FieldValue;
             break;
         case 37: //OBMEFlags
-            SetOBMEFlagMask(*(UINT32 *)FieldValue);
+            SetOBMEFlagMask(*(uint32_t *)FieldValue);
             break;
         case 38: //mgefParamB
             OBME.Load();

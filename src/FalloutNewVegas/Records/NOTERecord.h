@@ -58,7 +58,7 @@ class NOTERecord : public FNVRecord //Note
         StringRecord MICO; //Small Icon Filename
         OptSimpleSubRecord<FORMID> YNAM; //Sound - Pick Up
         OptSimpleSubRecord<FORMID> ZNAM; //Sound - Drop
-        ReqSimpleSubRecord<UINT8> DATA; //Type
+        ReqSimpleSubRecord<uint8_t> DATA; //Type
         UnorderedSparseArray<FORMID> ONAM; //Quests
         StringRecord XNAM; //Texture
         StringRecord TNAM; //Text if DATA.value != eVoice
@@ -79,20 +79,20 @@ class NOTERecord : public FNVRecord //Note
         void   IsImage(bool value);
         bool   IsVoice();
         void   IsVoice(bool value);
-        bool   IsType(UINT8 Type);
-        void   SetType(UINT8 Type);
+        bool   IsType(uint8_t Type);
+        void   SetType(uint8_t Type);
 
-        UINT32 GetFieldAttribute(DEFAULTED_FIELD_IDENTIFIERS, UINT32 WhichAttribute=0);
+        uint32_t GetFieldAttribute(DEFAULTED_FIELD_IDENTIFIERS, uint32_t WhichAttribute=0);
         void * GetField(DEFAULTED_FIELD_IDENTIFIERS, void **FieldValues=NULL);
-        bool   SetField(DEFAULTED_FIELD_IDENTIFIERS, void *FieldValue=NULL, UINT32 ArraySize=0);
+        bool   SetField(DEFAULTED_FIELD_IDENTIFIERS, void *FieldValue=NULL, uint32_t ArraySize=0);
         void   DeleteField(DEFAULTED_FIELD_IDENTIFIERS);
 
-        UINT32 GetType();
-        STRING GetStrType();
+        uint32_t GetType();
+        char * GetStrType();
 
-        SINT32 ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk=false);
-        SINT32 Unload();
-        SINT32 WriteRecord(FileWriter &writer);
+        int32_t ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk=false);
+        int32_t Unload();
+        int32_t WriteRecord(FileWriter &writer);
 
         bool operator ==(const NOTERecord &other) const;
         bool operator !=(const NOTERecord &other) const;

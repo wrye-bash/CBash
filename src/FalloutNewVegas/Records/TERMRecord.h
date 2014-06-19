@@ -44,7 +44,7 @@ class TERMRecord : public FNVRecord //Terminal
     private:
         struct TERMDNAM
             {
-            UINT8   difficultyType, flags, serverType, unused1; //unused1 not always present
+            uint8_t   difficultyType, flags, serverType, unused1; //unused1 not always present
 
             TERMDNAM();
             ~TERMDNAM();
@@ -57,7 +57,7 @@ class TERMRecord : public FNVRecord //Terminal
             {
             StringRecord ITXT; //Text
             StringRecord RNAM; //Result Text
-            ReqSimpleSubRecord<UINT8> ANAM; //Flags
+            ReqSimpleSubRecord<uint8_t> ANAM; //Flags
             OptSimpleSubRecord<FORMID> INAM; //Display Note
             OptSimpleSubRecord<FORMID> TNAM; //Sub Menu
             ReqSubRecord<FNVSCHR> SCHR;
@@ -91,13 +91,13 @@ class TERMRecord : public FNVRecord //Terminal
             void IsAddNote(bool value);
             bool IsForceRedraw();
             void IsForceRedraw(bool value);
-            bool IsFlagMask(UINT8 Mask, bool Exact=false);
-            void SetFlagMask(UINT8 Mask);
+            bool IsFlagMask(uint8_t Mask, bool Exact=false);
+            void SetFlagMask(uint8_t Mask);
 
             bool IsScriptEnabled();
             void IsScriptEnabled(bool value);
-            bool IsScriptFlagMask(UINT16 Mask, bool Exact=false);
-            void SetScriptFlagMask(UINT16 Mask);
+            bool IsScriptFlagMask(uint16_t Mask, bool Exact=false);
+            void SetScriptFlagMask(uint16_t Mask);
 
             bool IsObject();
             void IsObject(bool value);
@@ -105,8 +105,8 @@ class TERMRecord : public FNVRecord //Terminal
             void IsQuest(bool value);
             bool IsEffect();
             void IsEffect(bool value);
-            bool IsType(UINT16 Type);
-            void SetType(UINT16 Type);
+            bool IsType(uint16_t Type);
+            void SetType(uint16_t Type);
 
             bool operator ==(const TERMMenu &other) const;
             bool operator !=(const TERMMenu &other) const;
@@ -171,8 +171,8 @@ class TERMRecord : public FNVRecord //Terminal
         void   IsAlternateColors(bool value);
         bool   IsHideWelcomeTextWhenDisplayingImage();
         void   IsHideWelcomeTextWhenDisplayingImage(bool value);
-        bool   IsFlagMask(UINT8 Mask, bool Exact=false);
-        void   SetFlagMask(UINT8 Mask);
+        bool   IsFlagMask(uint8_t Mask, bool Exact=false);
+        void   SetFlagMask(uint8_t Mask);
 
         bool   IsVeryEasy();
         void   IsVeryEasy(bool value);
@@ -186,8 +186,8 @@ class TERMRecord : public FNVRecord //Terminal
         void   IsVeryHard(bool value);
         bool   IsRequiresKey();
         void   IsRequiresKey(bool value);
-        bool   IsLockType(UINT8 Type);
-        void   SetLockType(UINT8 Type);
+        bool   IsLockType(uint8_t Type);
+        void   SetLockType(uint8_t Type);
 
         bool   IsServer1();
         void   IsServer1(bool value);
@@ -209,20 +209,20 @@ class TERMRecord : public FNVRecord //Terminal
         void   IsServer9(bool value);
         bool   IsServer10();
         void   IsServer10(bool value);
-        bool   IsServerType(UINT8 Type);
-        void   SetServerType(UINT8 Type);
+        bool   IsServerType(uint8_t Type);
+        void   SetServerType(uint8_t Type);
 
-        UINT32 GetFieldAttribute(DEFAULTED_FIELD_IDENTIFIERS, UINT32 WhichAttribute=0);
+        uint32_t GetFieldAttribute(DEFAULTED_FIELD_IDENTIFIERS, uint32_t WhichAttribute=0);
         void * GetField(DEFAULTED_FIELD_IDENTIFIERS, void **FieldValues=NULL);
-        bool   SetField(DEFAULTED_FIELD_IDENTIFIERS, void *FieldValue=NULL, UINT32 ArraySize=0);
+        bool   SetField(DEFAULTED_FIELD_IDENTIFIERS, void *FieldValue=NULL, uint32_t ArraySize=0);
         void   DeleteField(DEFAULTED_FIELD_IDENTIFIERS);
 
-        UINT32 GetType();
-        STRING GetStrType();
+        uint32_t GetType();
+        char * GetStrType();
 
-        SINT32 ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk=false);
-        SINT32 Unload();
-        SINT32 WriteRecord(FileWriter &writer);
+        int32_t ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk=false);
+        int32_t Unload();
+        int32_t WriteRecord(FileWriter &writer);
 
         bool operator ==(const TERMRecord &other) const;
         bool operator !=(const TERMRecord &other) const;

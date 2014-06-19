@@ -160,12 +160,12 @@ void WEAPRecord::IsNormal(bool value)
     DATA.value.flags = value ? DATA.value.flags & ~fIsNotNormalWeapon : DATA.value.flags | fIsNotNormalWeapon;
     }
 
-bool WEAPRecord::IsFlagMask(UINT32 Mask, bool Exact)
+bool WEAPRecord::IsFlagMask(uint32_t Mask, bool Exact)
     {
     return Exact ? ((DATA.value.flags & Mask) == Mask) : ((DATA.value.flags & Mask) != 0);
     }
 
-void WEAPRecord::SetFlagMask(UINT32 Mask)
+void WEAPRecord::SetFlagMask(uint32_t Mask)
     {
     DATA.value.flags = Mask;
     }
@@ -248,44 +248,44 @@ void WEAPRecord::IsBow(bool value)
         DATA.value.weaponType = eBlade1Hand;
     }
 
-bool WEAPRecord::IsType(UINT32 Type)
+bool WEAPRecord::IsType(uint32_t Type)
     {
     return (DATA.value.weaponType == Type);
     }
 
-void WEAPRecord::SetType(UINT32 Type)
+void WEAPRecord::SetType(uint32_t Type)
     {
     DATA.value.weaponType = Type;
     }
 
-UINT32 WEAPRecord::GetType()
+uint32_t WEAPRecord::GetType()
     {
     return REV32(WEAP);
     }
 
-STRING WEAPRecord::GetStrType()
+char * WEAPRecord::GetStrType()
     {
     return "WEAP";
     }
 
-SINT32 WEAPRecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk)
+int32_t WEAPRecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk)
     {
-    UINT32 subType = 0;
-    UINT32 subSize = 0;
+    uint32_t subType = 0;
+    uint32_t subSize = 0;
     while(buffer < end_buffer){
-        subType = *(UINT32 *)buffer;
+        subType = *(uint32_t *)buffer;
         buffer += 4;
         switch(subType)
             {
             case REV32(XXXX):
                 buffer += 2;
-                subSize = *(UINT32 *)buffer;
+                subSize = *(uint32_t *)buffer;
                 buffer += 4;
-                subType = *(UINT32 *)buffer;
+                subType = *(uint32_t *)buffer;
                 buffer += 6;
                 break;
             default:
-                subSize = *(UINT16 *)buffer;
+                subSize = *(uint16_t *)buffer;
                 buffer += 2;
                 break;
             }
@@ -337,7 +337,7 @@ SINT32 WEAPRecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer,
     return 0;
     }
 
-SINT32 WEAPRecord::Unload()
+int32_t WEAPRecord::Unload()
     {
     IsChanged(false);
     IsLoaded(false);
@@ -352,7 +352,7 @@ SINT32 WEAPRecord::Unload()
     return 1;
     }
 
-SINT32 WEAPRecord::WriteRecord(FileWriter &writer)
+int32_t WEAPRecord::WriteRecord(FileWriter &writer)
     {
     WRITE(EDID);
     WRITE(FULL);

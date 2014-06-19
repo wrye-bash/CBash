@@ -44,7 +44,7 @@ class REGNRecord : public Record //Region
     private:
         struct REGNRPLD //Point
             {
-            FLOAT32 posX, posY;
+            float posX, posY;
 
             REGNRPLD();
             ~REGNRPLD();
@@ -55,7 +55,7 @@ class REGNRecord : public Record //Region
 
         struct REGNArea
             {
-            ReqSimpleSubRecord<UINT32> RPLI; //Edge Fall-off
+            ReqSimpleSubRecord<uint32_t> RPLI; //Edge Fall-off
             UnorderedPackedArray<REGNRPLD> RPLD; //Region Point List Data
 
             void Write(FileWriter &writer);
@@ -67,7 +67,7 @@ class REGNRecord : public Record //Region
         struct REGNRDWT //Weather Type
             {
             FORMID  weather;
-            UINT32  chance;
+            uint32_t  chance;
 
             REGNRDWT();
             ~REGNRDWT();
@@ -79,7 +79,7 @@ class REGNRecord : public Record //Region
         struct REGNRDSD //Sound
             {
             FORMID  sound;
-            UINT32  flags, chance;
+            uint32_t  flags, chance;
 
             enum RDSDFlags
                 {
@@ -100,8 +100,8 @@ class REGNRecord : public Record //Region
             void IsRainy(bool value);
             bool IsSnowy();
             void IsSnowy(bool value);
-            bool IsFlagMask(UINT32 Mask, bool Exact=false);
-            void SetFlagMask(UINT32 Mask);
+            bool IsFlagMask(uint32_t Mask, bool Exact=false);
+            void SetFlagMask(uint32_t Mask);
 
             bool operator ==(const REGNRDSD &other) const;
             bool operator !=(const REGNRDSD &other) const;
@@ -110,7 +110,7 @@ class REGNRecord : public Record //Region
         struct REGNRDGS //Grass
             {
             FORMID  grass;
-            UINT8   unused1[4];
+            uint8_t   unused1[4];
 
             REGNRDGS();
             ~REGNRDGS();
@@ -122,15 +122,15 @@ class REGNRecord : public Record //Region
         struct REGNRDOT //Object
             {
             FORMID  objectId;
-            UINT16  parentIndex;
-            UINT8   unused1[2];
-            FLOAT32 density;
-            UINT8   clustering, minSlope, maxSlope, flags;
-            UINT16  radiusWRTParent, radius;
-            UINT8   unk1[4];
-            FLOAT32 maxHeight, sink, sinkVar, sizeVar;
-            UINT16  angleVarX, angleVarY, angleVarZ;
-            UINT8   unused2[2], unk2[4];
+            uint16_t  parentIndex;
+            uint8_t   unused1[2];
+            float density;
+            uint8_t   clustering, minSlope, maxSlope, flags;
+            uint16_t  radiusWRTParent, radius;
+            uint8_t   unk1[4];
+            float maxHeight, sink, sinkVar, sizeVar;
+            uint16_t  angleVarX, angleVarY, angleVarZ;
+            uint8_t   unused2[2], unk2[4];
 
             enum RDOTFlags
                 {
@@ -163,8 +163,8 @@ class REGNRecord : public Record //Region
             void IsTree(bool value);
             bool IsHugeRock();
             void IsHugeRock(bool value);
-            bool IsFlagMask(UINT8 Mask, bool Exact=false);
-            void SetFlagMask(UINT8 Mask);
+            bool IsFlagMask(uint8_t Mask, bool Exact=false);
+            void SetFlagMask(uint8_t Mask);
 
             bool operator ==(const REGNRDOT &other) const;
             bool operator !=(const REGNRDOT &other) const;
@@ -172,8 +172,8 @@ class REGNRecord : public Record //Region
 
         struct REGNRDAT //Data Header
             {
-            UINT32  entryType;
-            UINT8   flags, priority, unused1[2];
+            uint32_t  entryType;
+            uint8_t   flags, priority, unused1[2];
 
             REGNRDAT();
             ~REGNRDAT();
@@ -189,7 +189,7 @@ class REGNRecord : public Record //Region
             StringRecord RDMP; //Map Name
             StringRecord ICON; //Unknown
             UnorderedPackedArray<REGNRDGS> RDGS; //Grasses
-            SemiOptSimpleSubRecord<UINT32> RDMD; //Music Type
+            SemiOptSimpleSubRecord<uint32_t> RDMD; //Music Type
             UnorderedPackedArray<REGNRDSD> RDSD; //Sounds
             UnorderedPackedArray<REGNRDWT> RDWT; //Weather Types
 
@@ -217,8 +217,8 @@ class REGNRecord : public Record //Region
 
             bool IsOverride();
             void IsOverride(bool value);
-            bool IsFlagMask(UINT8 Mask, bool Exact=false);
-            void SetFlagMask(UINT8 Mask);
+            bool IsFlagMask(uint8_t Mask, bool Exact=false);
+            void SetFlagMask(uint8_t Mask);
 
             bool IsObject();
             void IsObject(bool value);
@@ -232,8 +232,8 @@ class REGNRecord : public Record //Region
             void IsGrass(bool value);
             bool IsSound();
             void IsSound(bool value);
-            bool IsType(UINT32 Type);
-            void SetType(UINT32 Type);
+            bool IsType(uint32_t Type);
+            void SetType(uint32_t Type);
 
             bool IsDefaultMusic();
             void IsDefaultMusic(bool value);
@@ -241,8 +241,8 @@ class REGNRecord : public Record //Region
             void IsPublicMusic(bool value);
             bool IsDungeonMusic();
             void IsDungeonMusic(bool value);
-            bool IsMusicType(UINT32 Type);
-            void SetMusicType(UINT32 Type);
+            bool IsMusicType(uint32_t Type);
+            void SetMusicType(uint32_t Type);
 
             void Write(FileWriter &writer);
 
@@ -264,17 +264,17 @@ class REGNRecord : public Record //Region
 
         bool   VisitFormIDs(FormIDOp &op);
 
-        UINT32 GetFieldAttribute(DEFAULTED_FIELD_IDENTIFIERS, UINT32 WhichAttribute=0);
+        uint32_t GetFieldAttribute(DEFAULTED_FIELD_IDENTIFIERS, uint32_t WhichAttribute=0);
         void * GetField(DEFAULTED_FIELD_IDENTIFIERS, void **FieldValues=NULL);
-        bool   SetField(DEFAULTED_FIELD_IDENTIFIERS, void *FieldValue=NULL, UINT32 ArraySize=0);
+        bool   SetField(DEFAULTED_FIELD_IDENTIFIERS, void *FieldValue=NULL, uint32_t ArraySize=0);
         void   DeleteField(DEFAULTED_FIELD_IDENTIFIERS);
 
-        UINT32 GetType();
-        STRING GetStrType();
+        uint32_t GetType();
+        char * GetStrType();
 
-        SINT32 ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk=false);
-        SINT32 Unload();
-        SINT32 WriteRecord(FileWriter &writer);
+        int32_t ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk=false);
+        int32_t Unload();
+        int32_t WriteRecord(FileWriter &writer);
 
         bool operator ==(const REGNRecord &other) const;
         bool operator !=(const REGNRecord &other) const;

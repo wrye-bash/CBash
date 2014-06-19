@@ -44,19 +44,19 @@ class LSCTRecord : public FNVRecord //Load Screen Type
     private:
         struct LSCTDATA
             {
-            UINT32  screenType; //Type
+            uint32_t  screenType; //Type
             //Data 1
-            UINT32  x, y, width, height;
-            FLOAT32 orientation;
-            UINT32  font1;
-            FLOAT32 font1Red, font1Green, font1Blue;
-            UINT32  alignmentType;
-            UINT8   unknown1[20];
+            uint32_t  x, y, width, height;
+            float orientation;
+            uint32_t  font1;
+            float font1Red, font1Green, font1Blue;
+            uint32_t  alignmentType;
+            uint8_t   unknown1[20];
             //Data 2
-            UINT32  font2;
-            FLOAT32 font2Red, font2Green, font2Blue;
-            UINT8   unknown2[4];
-            UINT32  stats;
+            uint32_t  font2;
+            float font2Red, font2Green, font2Blue;
+            uint8_t   unknown2[4];
+            uint32_t  stats;
 
             LSCTDATA();
             ~LSCTDATA();
@@ -88,20 +88,20 @@ class LSCTRecord : public FNVRecord //Load Screen Type
         bool   IsObjective();
         bool   IsTip();
         bool   IsStats();
-        bool   IsType(UINT32 Type);
-        void   SetType(UINT32 Type);
+        bool   IsType(uint32_t Type);
+        void   SetType(uint32_t Type);
 
-        UINT32 GetFieldAttribute(DEFAULTED_FIELD_IDENTIFIERS, UINT32 WhichAttribute=0);
+        uint32_t GetFieldAttribute(DEFAULTED_FIELD_IDENTIFIERS, uint32_t WhichAttribute=0);
         void * GetField(DEFAULTED_FIELD_IDENTIFIERS, void **FieldValues=NULL);
-        bool   SetField(DEFAULTED_FIELD_IDENTIFIERS, void *FieldValue=NULL, UINT32 ArraySize=0);
+        bool   SetField(DEFAULTED_FIELD_IDENTIFIERS, void *FieldValue=NULL, uint32_t ArraySize=0);
         void   DeleteField(DEFAULTED_FIELD_IDENTIFIERS);
 
-        UINT32 GetType();
-        STRING GetStrType();
+        uint32_t GetType();
+        char * GetStrType();
 
-        SINT32 ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk=false);
-        SINT32 Unload();
-        SINT32 WriteRecord(FileWriter &writer);
+        int32_t ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk=false);
+        int32_t Unload();
+        int32_t WriteRecord(FileWriter &writer);
 
         bool operator ==(const LSCTRecord &other) const;
         bool operator !=(const LSCTRecord &other) const;

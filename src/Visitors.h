@@ -41,14 +41,14 @@
 class FormIDMatchCounter : public FormIDOp
     {
     private:
-        const UINT32 &FormIDToMatch;
+        const uint32_t &FormIDToMatch;
 
     public:
-        FormIDMatchCounter(const UINT32 &_FormIDToMatch);
+        FormIDMatchCounter(const uint32_t &_FormIDToMatch);
         ~FormIDMatchCounter();
 
-        bool Accept(UINT32 &curFormID);
-        bool AcceptMGEF(UINT32 &curMgefCode);
+        bool Accept(uint32_t &curFormID);
+        bool AcceptMGEF(uint32_t &curMgefCode);
     };
 
 class RecordUnloader : public RecordOp
@@ -75,16 +75,16 @@ class RecordIDRetriever : public RecordOp
 class FormIDSwapper : public FormIDOp
     {
     private:
-        const UINT32 &FormIDToMatch;
-        const UINT32 &FormIDToSwap;
+        const uint32_t &FormIDToMatch;
+        const uint32_t &FormIDToSwap;
         FormIDMasterUpdater checker;
 
     public:
-        FormIDSwapper(const UINT32 &_FormIDToMatch, const UINT32 &_FormIDToSwap, FormIDHandlerClass &_FormIDHandler);
+        FormIDSwapper(const uint32_t &_FormIDToMatch, const uint32_t &_FormIDToSwap, FormIDHandlerClass &_FormIDHandler);
         ~FormIDSwapper();
 
-        bool Accept(UINT32 &curFormID);
-        bool AcceptMGEF(UINT32 &curMgefCode);
+        bool Accept(uint32_t &curFormID);
+        bool AcceptMGEF(uint32_t &curMgefCode);
     };
 
 class RecordIndexer : public RecordOp

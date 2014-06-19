@@ -46,11 +46,11 @@ class CREARecord : public FNVRecord //Creature
         #pragma pack(1)
         struct CREADATA
             {
-            UINT8   creatureType, combat, magic, stealth;
-            UINT16  health;
-            UINT8   unused1[2];
-            SINT16  attackDamage;
-            UINT8   strength, perception, endurance, charisma, intelligence, agility, luck;
+            uint8_t   creatureType, combat, magic, stealth;
+            uint16_t  health;
+            uint8_t   unused1[2];
+            int16_t  attackDamage;
+            uint8_t   strength, perception, endurance, charisma, intelligence, agility, luck;
 
             CREADATA();
             ~CREADATA();
@@ -63,7 +63,7 @@ class CREARecord : public FNVRecord //Creature
         struct CREASound //Sound
             {
             ReqSimpleSubRecord<FORMID> CSDI; //Sound
-            ReqSimpleSubRecord<UINT8>  CSDC; //Sound Chance
+            ReqSimpleSubRecord<uint8_t>  CSDC; //Sound Chance
 
             void Write(FileWriter &writer);
 
@@ -73,7 +73,7 @@ class CREARecord : public FNVRecord //Creature
 
         struct CREASoundType //Sound Type
             {
-            ReqSimpleSubRecord<UINT32> CSDT; //Type
+            ReqSimpleSubRecord<uint32_t> CSDT; //Type
             UnorderedSparseArray<CREASound *> Sounds; //Sounds
 
             enum eSoundType
@@ -146,8 +146,8 @@ class CREARecord : public FNVRecord //Creature
             void   IsJump(bool value);
             bool   IsPlayRandomLoop();
             void   IsPlayRandomLoop(bool value);
-            bool   IsType(UINT32 Type);
-            void   SetType(UINT32 Type);
+            bool   IsType(uint32_t Type);
+            void   SetType(uint32_t Type);
 
             void Write(FileWriter &writer);
 
@@ -423,7 +423,7 @@ class CREARecord : public FNVRecord //Creature
         OptSubRecord<FNVMODEL> MODL; //Model
         UnorderedSparseArray<FORMID> SPLO; //Actor Effects
         OptSimpleSubRecord<FORMID> EITM; //Unarmed Attack Effect
-        OptSimpleSubRecord<UINT16> EAMT; //Unarmed Attack Animation
+        OptSimpleSubRecord<uint16_t> EAMT; //Unarmed Attack Animation
         UnorderedPackedStrings NIFZ; //Model List
         RawRecord NIFT; //Texture Files Hashes
         ReqSubRecord<FNVACBS> ACBS; //Configuration
@@ -438,14 +438,14 @@ class CREARecord : public FNVRecord //Creature
         OrderedSparseArray<FORMID> PKID; //Packages
         UnorderedPackedStrings KFFZ; //Animations
         ReqSubRecord<CREADATA> DATA; //Data
-        OptSimpleSubRecord<UINT8, 32> RNAM; //Attack reach
+        OptSimpleSubRecord<uint8_t, 32> RNAM; //Attack reach
         OptSimpleSubRecord<FORMID> ZNAM; //Combat Style
         OptSimpleSubRecord<FORMID> PNAM; //Body Part Data
         SemiOptSimpleFloatSubRecord<flt_0> TNAM; //Turning Speed
         SemiOptSimpleFloatSubRecord<flt_1> BNAM; //Base Scale
         OptSimpleFloatSubRecord<flt_3> WNAM; //Foot Weight
-        OptSimpleSubRecord<UINT32> NAM4; //Impact Material Type
-        OptSimpleSubRecord<UINT32> NAM5; //Sound Level
+        OptSimpleSubRecord<uint32_t> NAM4; //Impact Material Type
+        OptSimpleSubRecord<uint32_t> NAM5; //Sound Level
         OptSimpleSubRecord<FORMID> CSCR; //Inherits Sounds from
         UnorderedSparseArray<CREASoundType *> Types; //Sound Types
         OptSimpleSubRecord<FORMID> CNAM; //Impact Dataset
@@ -515,8 +515,8 @@ class CREARecord : public FNVRecord //Creature
         void   IsNoHeadTracking(bool value);
         bool   IsInvulnerable();
         void   IsInvulnerable(bool value);
-        bool   IsFlagMask(UINT32 Mask, bool Exact=false);
-        void   SetFlagMask(UINT32 Mask);
+        bool   IsFlagMask(uint32_t Mask, bool Exact=false);
+        void   SetFlagMask(uint32_t Mask);
 
         bool   IsUseTraits();
         void   IsUseTraits(bool value);
@@ -538,13 +538,13 @@ class CREARecord : public FNVRecord //Creature
         void   IsUseInventory(bool value);
         bool   IsUseScript();
         void   IsUseScript(bool value);
-        bool   IsTemplateFlagMask(UINT16 Mask, bool Exact=false);
-        void   SetTemplateFlagMask(UINT16 Mask);
+        bool   IsTemplateFlagMask(uint16_t Mask, bool Exact=false);
+        void   SetTemplateFlagMask(uint16_t Mask);
 
         bool   IsAggroRadiusBehavior();
         void   IsAggroRadiusBehavior(bool value);
-        bool   IsAggroFlagMask(UINT8 Mask, bool Exact=false);
-        void   SetAggroFlagMask(UINT8 Mask);
+        bool   IsAggroFlagMask(uint8_t Mask, bool Exact=false);
+        void   SetAggroFlagMask(uint8_t Mask);
 
         bool   IsServicesWeapons();
         void   IsServicesWeapons(bool value);
@@ -572,8 +572,8 @@ class CREARecord : public FNVRecord //Creature
         void   IsServicesRecharge(bool value);
         bool   IsServicesRepair();
         void   IsServicesRepair(bool value);
-        bool   IsServicesFlagMask(UINT32 Mask, bool Exact=false);
-        void   SetServicesFlagMask(UINT32 Mask);
+        bool   IsServicesFlagMask(uint32_t Mask, bool Exact=false);
+        void   SetServicesFlagMask(uint32_t Mask);
 
         bool   IsAnimal();
         void   IsAnimal(bool value);
@@ -591,8 +591,8 @@ class CREARecord : public FNVRecord //Creature
         void   IsRobot(bool value);
         bool   IsGiant();
         void   IsGiant(bool value);
-        bool   IsType(UINT8 Type);
-        void   SetType(UINT8 Type);
+        bool   IsType(uint8_t Type);
+        void   SetType(uint8_t Type);
 
         bool   IsAttackLeft();
         void   IsAttackLeft(bool value);
@@ -826,8 +826,8 @@ class CREARecord : public FNVRecord //Creature
         void   IsPipBoyChild(bool value);
         bool   IsANY();
         void   IsANY(bool value);
-        bool   IsAttackAnimType(UINT16 Type);
-        void   SetAttackAnimType(UINT16 Type);
+        bool   IsAttackAnimType(uint16_t Type);
+        void   SetAttackAnimType(uint16_t Type);
 
         bool   IsLoud();
         void   IsLoud(bool value);
@@ -835,8 +835,8 @@ class CREARecord : public FNVRecord //Creature
         void   IsNormal(bool value);
         bool   IsSilent();
         void   IsSilent(bool value);
-        bool   IsSoundLevelType(UINT32 Type);
-        void   SetSoundLevelType(UINT32 Type);
+        bool   IsSoundLevelType(uint32_t Type);
+        void   SetSoundLevelType(uint32_t Type);
 
         bool   IsUnaggressive();
         void   IsUnaggressive(bool value);
@@ -846,8 +846,8 @@ class CREARecord : public FNVRecord //Creature
         void   IsVeryAggressive(bool value);
         bool   IsFrenzied();
         void   IsFrenzied(bool value);
-        bool   IsAggressionType(UINT8 Type);
-        void   SetAggressionType(UINT8 Type);
+        bool   IsAggressionType(uint8_t Type);
+        void   SetAggressionType(uint8_t Type);
 
         bool   IsCowardly();
         void   IsCowardly(bool value);
@@ -859,8 +859,8 @@ class CREARecord : public FNVRecord //Creature
         void   IsBrave(bool value);
         bool   IsFoolhardy();
         void   IsFoolhardy(bool value);
-        bool   IsConfidenceType(UINT8 Type);
-        void   SetConfidenceType(UINT8 Type);
+        bool   IsConfidenceType(uint8_t Type);
+        void   SetConfidenceType(uint8_t Type);
 
         bool   IsNeutral();
         void   IsNeutral(bool value);
@@ -878,8 +878,8 @@ class CREARecord : public FNVRecord //Creature
         void   IsAngry(bool value);
         bool   IsSad();
         void   IsSad(bool value);
-        bool   IsMoodType(UINT8 Type);
-        void   SetMoodType(UINT8 Type);
+        bool   IsMoodType(uint8_t Type);
+        void   SetMoodType(uint8_t Type);
 
         bool   IsHelpsNobody();
         void   IsHelpsNobody(bool value);
@@ -887,8 +887,8 @@ class CREARecord : public FNVRecord //Creature
         void   IsHelpsAllies(bool value);
         bool   IsHelpsFriendsAndAllies();
         void   IsHelpsFriendsAndAllies(bool value);
-        bool   IsAssistanceType(UINT8 Type);
-        void   SetAssistanceType(UINT8 Type);
+        bool   IsAssistanceType(uint8_t Type);
+        void   SetAssistanceType(uint8_t Type);
 
         bool   IsStone();
         void   IsStone(bool value);
@@ -914,20 +914,20 @@ class CREARecord : public FNVRecord //Creature
         void   IsOrganicBug(bool value);
         bool   IsOrganicGlow();
         void   IsOrganicGlow(bool value);
-        bool   IsImpactType(UINT32 Type);
-        void   SetImpactType(UINT32 Type);
+        bool   IsImpactType(uint32_t Type);
+        void   SetImpactType(uint32_t Type);
 
-        UINT32 GetFieldAttribute(DEFAULTED_FIELD_IDENTIFIERS, UINT32 WhichAttribute=0);
+        uint32_t GetFieldAttribute(DEFAULTED_FIELD_IDENTIFIERS, uint32_t WhichAttribute=0);
         void * GetField(DEFAULTED_FIELD_IDENTIFIERS, void **FieldValues=NULL);
-        bool   SetField(DEFAULTED_FIELD_IDENTIFIERS, void *FieldValue=NULL, UINT32 ArraySize=0);
+        bool   SetField(DEFAULTED_FIELD_IDENTIFIERS, void *FieldValue=NULL, uint32_t ArraySize=0);
         void   DeleteField(DEFAULTED_FIELD_IDENTIFIERS);
 
-        UINT32 GetType();
-        STRING GetStrType();
+        uint32_t GetType();
+        char * GetStrType();
 
-        SINT32 ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk=false);
-        SINT32 Unload();
-        SINT32 WriteRecord(FileWriter &writer);
+        int32_t ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk=false);
+        int32_t Unload();
+        int32_t WriteRecord(FileWriter &writer);
 
         bool operator ==(const CREARecord &other) const;
         bool operator !=(const CREARecord &other) const;

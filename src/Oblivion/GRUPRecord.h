@@ -44,13 +44,13 @@
 #include "Records/ROADRecord.h"
 #include "Records/LANDRecord.h"
 
-template<UINT32 RecType, UINT32 AllocUnit, bool IsKeyedByEditorID>
+template<uint32_t RecType, uint32_t AllocUnit, bool IsKeyedByEditorID>
 class GRUPRecords<Ob::DIALRecord, RecType, AllocUnit, IsKeyedByEditorID>
     {
     public:
         RecordPoolAllocator<Ob::DIALRecord, RecType, AllocUnit> dial_pool;
         RecordPoolAllocator<Ob::INFORecord, REV32(INFO), 20> info_pool;
-        UINT32 stamp;
+        uint32_t stamp;
 
         GRUPRecords():
             stamp(134671)
@@ -63,9 +63,9 @@ class GRUPRecords<Ob::DIALRecord, RecType, AllocUnit, IsKeyedByEditorID>
             //
             }
 
-        bool Read(unsigned char *&buffer_start, unsigned char *&buffer_position, unsigned char *&group_buffer_end, RecordOp &indexer, RecordOp &parser, std::vector<Record *> &DeletedRecords, RecordProcessor &processor, STRING &FileName)
+        bool Read(unsigned char *&buffer_start, unsigned char *&buffer_position, unsigned char *&group_buffer_end, RecordOp &indexer, RecordOp &parser, std::vector<Record *> &DeletedRecords, RecordProcessor &processor, char * &FileName)
             {
-            stamp = *(UINT32 *)buffer_position;
+            stamp = *(uint32_t *)buffer_position;
             buffer_position += 4;
             if(group_buffer_end <= buffer_position)
                 {
@@ -77,14 +77,14 @@ class GRUPRecords<Ob::DIALRecord, RecType, AllocUnit, IsKeyedByEditorID>
                 }
 
             Record * curRecord = NULL;
-            UINT32 recordSize = 0;
+            uint32_t recordSize = 0;
             RecordHeader header;
 
             Ob::DIALRecord *last_record = NULL, *orphaned_records = NULL;
-            UINT32 numDIAL = 0, numINFO = 0;
+            uint32_t numDIAL = 0, numINFO = 0;
 
             std::vector<RecordHeader> records;
-            records.reserve((UINT32)(group_buffer_end - buffer_position) / sizeof(Ob::DIALRecord)); //gross overestimation, but good enough
+            records.reserve((uint32_t)(group_buffer_end - buffer_position) / sizeof(Ob::DIALRecord)); //gross overestimation, but good enough
             while(buffer_position < group_buffer_end){
                 if((processor.IsSkipAllRecords && processor.IsTrackNewTypes) &&
                     processor.NewTypes.count(REV32(DIAL)) > 0 &&
@@ -95,9 +95,9 @@ class GRUPRecords<Ob::DIALRecord, RecType, AllocUnit, IsKeyedByEditorID>
                     }
 
                 //Assumes that all records in a generic group are of the same type
-                header.type = *(UINT32 *)buffer_position;
+                header.type = *(uint32_t *)buffer_position;
                 buffer_position += 4;
-                recordSize = *(UINT32 *)buffer_position;
+                recordSize = *(uint32_t *)buffer_position;
                 buffer_position += 4;
 
                 if(header.type == REV32(GRUP)) //All GRUPs will be recreated from scratch on write (saves memory)
@@ -108,11 +108,11 @@ class GRUPRecords<Ob::DIALRecord, RecType, AllocUnit, IsKeyedByEditorID>
                     continue;
                     }
 
-                header.flags = *(UINT32 *)buffer_position;
+                header.flags = *(uint32_t *)buffer_position;
                 buffer_position += 4;
                 header.formID = *(FORMID *)buffer_position;
                 buffer_position += 4;
-                header.flagsUnk = *(UINT32 *)buffer_position;
+                header.flagsUnk = *(uint32_t *)buffer_position;
                 buffer_position += 4;
 
                 if(processor.Accept(header))
@@ -129,7 +129,7 @@ class GRUPRecords<Ob::DIALRecord, RecType, AllocUnit, IsKeyedByEditorID>
                             numINFO++;
                             break;
                         default:
-                            printer("GRUPRecords<Ob::DIALRecord>::Read: Warning - Parsing error. Unexpected record type (%c%c%c%c) in file \"%s\".\n", ((STRING)&header.type)[0], ((STRING)&header.type)[1], ((STRING)&header.type)[2], ((STRING)&header.type)[3], FileName);
+                            printer("GRUPRecords<Ob::DIALRecord>::Read: Warning - Parsing error. Unexpected record type (%c%c%c%c) in file \"%s\".\n", ((char *)&header.type)[0], ((char *)&header.type)[1], ((char *)&header.type)[2], ((char *)&header.type)[3], FileName);
                             #ifdef CBASH_DEBUG_CHUNK
                                 peek_around(buffer_position, PEEK_SIZE);
                             #endif
@@ -166,7 +166,7 @@ class GRUPRecords<Ob::DIALRecord, RecType, AllocUnit, IsKeyedByEditorID>
                 last_record = orphaned_records = new Ob::DIALRecord();
 
                 //Construct the records
-                for(UINT32 x = 0; x < records.size();++x)
+                for(uint32_t x = 0; x < records.size();++x)
                     {
                     header = records[x];
 
@@ -184,7 +184,7 @@ class GRUPRecords<Ob::DIALRecord, RecType, AllocUnit, IsKeyedByEditorID>
                             last_record->INFO.push_back(curRecord);
                             break;
                         default:
-                            printer("GRUPRecords<Ob::DIALRecord>::Read: Warning - Parsing error. Unexpected record type (%c%c%c%c) in file \"%s\".\n", ((STRING)&header.type)[0], ((STRING)&header.type)[1], ((STRING)&header.type)[2], ((STRING)&header.type)[3], FileName);
+                            printer("GRUPRecords<Ob::DIALRecord>::Read: Warning - Parsing error. Unexpected record type (%c%c%c%c) in file \"%s\".\n", ((char *)&header.type)[0], ((char *)&header.type)[1], ((char *)&header.type)[2], ((char *)&header.type)[3], FileName);
                             #ifdef CBASH_DEBUG_CHUNK
                                 peek_around(header.data, PEEK_SIZE);
                             #endif
@@ -210,7 +210,7 @@ class GRUPRecords<Ob::DIALRecord, RecType, AllocUnit, IsKeyedByEditorID>
 
                 records.clear();
 
-                for(UINT32 x = 0; x < orphaned_records->INFO.size(); ++x)
+                for(uint32_t x = 0; x < orphaned_records->INFO.size(); ++x)
                     {
                     curRecord = orphaned_records->INFO[x];
                     processor.OrphanedRecords.push_back(curRecord->formID);
@@ -226,27 +226,27 @@ class GRUPRecords<Ob::DIALRecord, RecType, AllocUnit, IsKeyedByEditorID>
             return true;
             }
 
-        UINT32 Write(FileWriter &writer, std::vector<FormIDResolver *> &Expanders, FormIDResolver &expander, FormIDResolver &collapser, const bool &bMastersChanged, bool CloseMod)
+        uint32_t Write(FileWriter &writer, std::vector<FormIDResolver *> &Expanders, FormIDResolver &expander, FormIDResolver &collapser, const bool &bMastersChanged, bool CloseMod)
             {
             std::vector<Record *> Records;
             dial_pool.MakeRecordsVector(Records);
-            UINT32 numDIALRecords = (UINT32)Records.size(); //Parent Records
+            uint32_t numDIALRecords = (uint32_t)Records.size(); //Parent Records
             if(numDIALRecords == 0)
                 return 0;
 
-            UINT32 type = REV32(GRUP);
-            UINT32 gType = eTop;
-            UINT32 TopSize =0;
-            UINT32 ChildrenSize =0;
-            UINT32 formCount = 0;
-            UINT32 TopLabel = REV32(DIAL);
-            UINT32 numINFORecords = 0;
-            UINT32 parentFormID = 0;
+            uint32_t type = REV32(GRUP);
+            uint32_t gType = eTop;
+            uint32_t TopSize =0;
+            uint32_t ChildrenSize =0;
+            uint32_t formCount = 0;
+            uint32_t TopLabel = REV32(DIAL);
+            uint32_t numINFORecords = 0;
+            uint32_t parentFormID = 0;
             Ob::DIALRecord *curRecord = NULL;
 
             //Top GRUP Header
             writer.file_write(&type, 4);
-            UINT32 TopSizePos = writer.file_tell();
+            uint32_t TopSizePos = writer.file_tell();
             writer.file_write(&TopSize, 4); //Placeholder: will be overwritten with correct value later.
             writer.file_write(&TopLabel, 4);
             writer.file_write(&gType, 4);
@@ -256,18 +256,18 @@ class GRUPRecords<Ob::DIALRecord, RecType, AllocUnit, IsKeyedByEditorID>
 
             gType = eTopicChildren;
             formCount += numDIALRecords;
-            for(UINT32 p = 0; p < numDIALRecords; ++p)
+            for(uint32_t p = 0; p < numDIALRecords; ++p)
                 {
                 curRecord = (Ob::DIALRecord *)Records[p];
                 parentFormID = curRecord->formID;
                 collapser.Accept(parentFormID);
                 TopSize += curRecord->Write(writer, bMastersChanged, expander, collapser, Expanders);
 
-                numINFORecords = (UINT32)curRecord->INFO.size();
+                numINFORecords = (uint32_t)curRecord->INFO.size();
                 if(numINFORecords)
                     {
                     writer.file_write(&type, 4);
-                    UINT32 ChildrenSizePos = writer.file_tell();
+                    uint32_t ChildrenSizePos = writer.file_tell();
                     writer.file_write(&ChildrenSize, 4); //Placeholder: will be overwritten with correct value later.
                     writer.file_write(&parentFormID, 4);
                     writer.file_write(&gType, 4);
@@ -276,7 +276,7 @@ class GRUPRecords<Ob::DIALRecord, RecType, AllocUnit, IsKeyedByEditorID>
                     ChildrenSize = 20;
 
                     formCount += numINFORecords;
-                    for(UINT32 y = 0; y < numINFORecords; ++y)
+                    for(uint32_t y = 0; y < numINFORecords; ++y)
                         ChildrenSize += curRecord->INFO[y]->Write(writer, bMastersChanged, expander, collapser, Expanders);
                     writer.file_write(ChildrenSizePos, &ChildrenSize, 4);
                     TopSize += ChildrenSize;
@@ -293,7 +293,7 @@ class GRUPRecords<Ob::DIALRecord, RecType, AllocUnit, IsKeyedByEditorID>
 
     };
 
-template<UINT32 RecType, UINT32 AllocUnit, bool IsKeyedByEditorID>
+template<uint32_t RecType, uint32_t AllocUnit, bool IsKeyedByEditorID>
 class GRUPRecords<Ob::CELLRecord, RecType, AllocUnit, IsKeyedByEditorID>
     {
     public:
@@ -302,7 +302,7 @@ class GRUPRecords<Ob::CELLRecord, RecType, AllocUnit, IsKeyedByEditorID>
         RecordPoolAllocator<Ob::ACRERecord, REV32(ACRE), 20> acre_pool;
         RecordPoolAllocator<Ob::REFRRecord, REV32(REFR), 20> refr_pool;
         RecordPoolAllocator<Ob::PGRDRecord, REV32(PGRD), 20> pgrd_pool;
-        UINT32 stamp;
+        uint32_t stamp;
 
         GRUPRecords():
             stamp(134671)
@@ -315,9 +315,9 @@ class GRUPRecords<Ob::CELLRecord, RecType, AllocUnit, IsKeyedByEditorID>
             //
             }
 
-        bool Read(unsigned char *&buffer_start, unsigned char *&buffer_position, unsigned char *&group_buffer_end, RecordOp &indexer, RecordOp &parser, std::vector<Record *> &DeletedRecords, RecordProcessor &processor, STRING &FileName)
+        bool Read(unsigned char *&buffer_start, unsigned char *&buffer_position, unsigned char *&group_buffer_end, RecordOp &indexer, RecordOp &parser, std::vector<Record *> &DeletedRecords, RecordProcessor &processor, char * &FileName)
             {
-            stamp = *(UINT32 *)buffer_position;
+            stamp = *(uint32_t *)buffer_position;
             buffer_position += 4;
             if(group_buffer_end <= buffer_position)
                 {
@@ -329,14 +329,14 @@ class GRUPRecords<Ob::CELLRecord, RecType, AllocUnit, IsKeyedByEditorID>
                 }
 
             Record * curRecord = NULL;
-            UINT32 recordSize = 0;
+            uint32_t recordSize = 0;
             RecordHeader header;
 
             Ob::CELLRecord *last_record = NULL, *orphaned_records = NULL;
-            UINT32 numCELL = 0, numACHR = 0, numACRE = 0, numREFR = 0, numPGRD = 0;
+            uint32_t numCELL = 0, numACHR = 0, numACRE = 0, numREFR = 0, numPGRD = 0;
 
             std::vector<RecordHeader> records;
-            records.reserve((UINT32)(group_buffer_end - buffer_position) / sizeof(Ob::CELLRecord)); //gross overestimation, but good enough
+            records.reserve((uint32_t)(group_buffer_end - buffer_position) / sizeof(Ob::CELLRecord)); //gross overestimation, but good enough
             while(buffer_position < group_buffer_end){
                 if((processor.IsSkipAllRecords && processor.IsTrackNewTypes) &&
                     processor.NewTypes.count(REV32(CELL)) > 0 &&
@@ -350,9 +350,9 @@ class GRUPRecords<Ob::CELLRecord, RecType, AllocUnit, IsKeyedByEditorID>
                     }
 
                 //Assumes that all records in a generic group are of the same type
-                header.type = *(UINT32 *)buffer_position;
+                header.type = *(uint32_t *)buffer_position;
                 buffer_position += 4;
-                recordSize = *(UINT32 *)buffer_position;
+                recordSize = *(uint32_t *)buffer_position;
                 buffer_position += 4;
 
                 if(header.type == REV32(GRUP)) //All GRUPs will be recreated from scratch on write (saves memory)
@@ -363,11 +363,11 @@ class GRUPRecords<Ob::CELLRecord, RecType, AllocUnit, IsKeyedByEditorID>
                     continue;
                     }
 
-                header.flags = *(UINT32 *)buffer_position;
+                header.flags = *(uint32_t *)buffer_position;
                 buffer_position += 4;
                 header.formID = *(FORMID *)buffer_position;
                 buffer_position += 4;
-                header.flagsUnk = *(UINT32 *)buffer_position;
+                header.flagsUnk = *(uint32_t *)buffer_position;
                 buffer_position += 4;
 
                 if(processor.Accept(header))
@@ -393,7 +393,7 @@ class GRUPRecords<Ob::CELLRecord, RecType, AllocUnit, IsKeyedByEditorID>
                             numPGRD++;
                             break;
                         default:
-                            printer("GRUPRecords<Ob::CELLRecord>::Read: Warning - Parsing error. Unexpected record type (%c%c%c%c) in file \"%s\".\n", ((STRING)&header.type)[0], ((STRING)&header.type)[1], ((STRING)&header.type)[2], ((STRING)&header.type)[3], FileName);
+                            printer("GRUPRecords<Ob::CELLRecord>::Read: Warning - Parsing error. Unexpected record type (%c%c%c%c) in file \"%s\".\n", ((char *)&header.type)[0], ((char *)&header.type)[1], ((char *)&header.type)[2], ((char *)&header.type)[3], FileName);
                             #ifdef CBASH_DEBUG_CHUNK
                                 peek_around(buffer_position, PEEK_SIZE);
                             #endif
@@ -458,7 +458,7 @@ class GRUPRecords<Ob::CELLRecord, RecType, AllocUnit, IsKeyedByEditorID>
                 last_record = orphaned_records = new Ob::CELLRecord();
 
                 //Construct the records
-                for(UINT32 x = 0; x < records.size();++x)
+                for(uint32_t x = 0; x < records.size();++x)
                     {
                     header = records[x];
 
@@ -517,7 +517,7 @@ class GRUPRecords<Ob::CELLRecord, RecType, AllocUnit, IsKeyedByEditorID>
                             curRecord->SetParent(last_record, false);
                             break;
                         default:
-                            printer("GRUPRecords<Ob::CELLRecord>::Read: Warning - Parsing error. Unexpected record type (%c%c%c%c) in file \"%s\".\n", ((STRING)&header.type)[0], ((STRING)&header.type)[1], ((STRING)&header.type)[2], ((STRING)&header.type)[3], FileName);
+                            printer("GRUPRecords<Ob::CELLRecord>::Read: Warning - Parsing error. Unexpected record type (%c%c%c%c) in file \"%s\".\n", ((char *)&header.type)[0], ((char *)&header.type)[1], ((char *)&header.type)[2], ((char *)&header.type)[3], FileName);
                             #ifdef CBASH_DEBUG_CHUNK
                                 peek_around(header.data, PEEK_SIZE);
                             #endif
@@ -543,7 +543,7 @@ class GRUPRecords<Ob::CELLRecord, RecType, AllocUnit, IsKeyedByEditorID>
 
                 records.clear();
 
-                for(UINT32 x = 0; x < orphaned_records->ACHR.size(); ++x)
+                for(uint32_t x = 0; x < orphaned_records->ACHR.size(); ++x)
                     {
                     curRecord = orphaned_records->ACHR[x];
                     processor.OrphanedRecords.push_back(curRecord->formID);
@@ -554,7 +554,7 @@ class GRUPRecords<Ob::CELLRecord, RecType, AllocUnit, IsKeyedByEditorID>
                     achr_pool.destroy(curRecord);
                     }
 
-                for(UINT32 x = 0; x < orphaned_records->ACRE.size(); ++x)
+                for(uint32_t x = 0; x < orphaned_records->ACRE.size(); ++x)
                     {
                     curRecord = orphaned_records->ACRE[x];
                     processor.OrphanedRecords.push_back(curRecord->formID);
@@ -565,7 +565,7 @@ class GRUPRecords<Ob::CELLRecord, RecType, AllocUnit, IsKeyedByEditorID>
                     acre_pool.destroy(curRecord);
                     }
 
-                for(UINT32 x = 0; x < orphaned_records->REFR.size(); ++x)
+                for(uint32_t x = 0; x < orphaned_records->REFR.size(); ++x)
                     {
                     curRecord = orphaned_records->REFR[x];
                     processor.OrphanedRecords.push_back(curRecord->formID);
@@ -580,35 +580,35 @@ class GRUPRecords<Ob::CELLRecord, RecType, AllocUnit, IsKeyedByEditorID>
             return true;
             }
 
-        UINT32 Write(FileWriter &writer, std::vector<FormIDResolver *> &Expanders, FormIDResolver &expander, FormIDResolver &collapser, const bool &bMastersChanged, bool CloseMod)
+        uint32_t Write(FileWriter &writer, std::vector<FormIDResolver *> &Expanders, FormIDResolver &expander, FormIDResolver &collapser, const bool &bMastersChanged, bool CloseMod)
             {
             std::vector<Record *> Records;
             cell_pool.MakeRecordsVector(Records);
-            UINT32 numCELLRecords = (UINT32)Records.size();
+            uint32_t numCELLRecords = (uint32_t)Records.size();
             if(numCELLRecords == 0)
                 return 0;
 
-            UINT32 type = REV32(GRUP);
-            UINT32 gType = eTop;
-            UINT32 TopSize = 0;
-            UINT32 TopSizePos = 0;
-            UINT32 blockSize = 0;
-            UINT32 blockSizePos = 0;
-            UINT32 subBlockSize = 0;
-            UINT32 subBlockSizePos = 0;
-            UINT32 childrenSize = 0;
-            UINT32 childrenSizePos = 0;
-            UINT32 childSize = 0;
-            UINT32 childSizePos = 0;
+            uint32_t type = REV32(GRUP);
+            uint32_t gType = eTop;
+            uint32_t TopSize = 0;
+            uint32_t TopSizePos = 0;
+            uint32_t blockSize = 0;
+            uint32_t blockSizePos = 0;
+            uint32_t subBlockSize = 0;
+            uint32_t subBlockSizePos = 0;
+            uint32_t childrenSize = 0;
+            uint32_t childrenSizePos = 0;
+            uint32_t childSize = 0;
+            uint32_t childSizePos = 0;
 
-            UINT32 formCount = 0;
+            uint32_t formCount = 0;
 
-            UINT32 gLabel = RecType;
-            UINT32 numSubBlocks = 0;
-            UINT32 numChildren = 0;
-            UINT32 numChild = 0;
+            uint32_t gLabel = RecType;
+            uint32_t numSubBlocks = 0;
+            uint32_t numChildren = 0;
+            uint32_t numChild = 0;
 
-            UINT32 parentFormID = 0;
+            uint32_t parentFormID = 0;
             Ob::CELLRecord *curRecord = NULL;
             int ObjectID, BlockIndex, SubBlockIndex;
 
@@ -617,7 +617,7 @@ class GRUPRecords<Ob::CELLRecord, RecType, AllocUnit, IsKeyedByEditorID>
             std::vector<Record *> Temporary;
             std::vector<Record *> VWD;
             BlockedRecords.reserve(numCELLRecords);
-            for(UINT32 p = 0; p < numCELLRecords; ++p)
+            for(uint32_t p = 0; p < numCELLRecords; ++p)
                 {
                 curRecord = (Ob::CELLRecord *)Records[p];
 
@@ -639,12 +639,12 @@ class GRUPRecords<Ob::CELLRecord, RecType, AllocUnit, IsKeyedByEditorID>
             TopSize = 20;
 
             formCount += numCELLRecords;
-            for(UINT32 curBlock = 0; curBlock < 10; ++curBlock)
+            for(uint32_t curBlock = 0; curBlock < 10; ++curBlock)
                 {
                 gType = eInteriorBlock;
-                for(UINT32 curSubBlock = 0; curSubBlock < 10; ++curSubBlock)
+                for(uint32_t curSubBlock = 0; curSubBlock < 10; ++curSubBlock)
                     {
-                    numSubBlocks = (UINT32)BlockedRecords[curBlock][curSubBlock].size();
+                    numSubBlocks = (uint32_t)BlockedRecords[curBlock][curSubBlock].size();
                     if(numSubBlocks != 0)
                         {
                         if(gType == eInteriorBlock)
@@ -667,7 +667,7 @@ class GRUPRecords<Ob::CELLRecord, RecType, AllocUnit, IsKeyedByEditorID>
                         writer.file_write(&stamp, 4);
                         ++formCount;
                         subBlockSize = 20;
-                        for(UINT32 p = 0; p < numSubBlocks; ++p)
+                        for(uint32_t p = 0; p < numSubBlocks; ++p)
                             {
                             curRecord = BlockedRecords[curBlock][curSubBlock][p];
                             parentFormID = curRecord->formID;
@@ -677,7 +677,7 @@ class GRUPRecords<Ob::CELLRecord, RecType, AllocUnit, IsKeyedByEditorID>
                             if(curRecord->PGRD != NULL)
                                 Temporary.push_back(curRecord->PGRD);
 
-                            for(UINT32 y = 0; y < curRecord->ACHR.size(); ++y)
+                            for(uint32_t y = 0; y < curRecord->ACHR.size(); ++y)
                                 {
                                 if(curRecord->ACHR[y]->IsPersistent())
                                     Persistent.push_back(curRecord->ACHR[y]);
@@ -687,7 +687,7 @@ class GRUPRecords<Ob::CELLRecord, RecType, AllocUnit, IsKeyedByEditorID>
                                     Temporary.push_back(curRecord->ACHR[y]);
                                 }
 
-                            for(UINT32 y = 0; y < curRecord->ACRE.size(); ++y)
+                            for(uint32_t y = 0; y < curRecord->ACRE.size(); ++y)
                                 {
                                 if(curRecord->ACRE[y]->IsPersistent())
                                     Persistent.push_back(curRecord->ACRE[y]);
@@ -697,7 +697,7 @@ class GRUPRecords<Ob::CELLRecord, RecType, AllocUnit, IsKeyedByEditorID>
                                     Temporary.push_back(curRecord->ACRE[y]);
                                 }
 
-                            for(UINT32 y = 0; y < curRecord->REFR.size(); ++y)
+                            for(uint32_t y = 0; y < curRecord->REFR.size(); ++y)
                                 {
                                 if(curRecord->REFR[y]->IsPersistent())
                                     Persistent.push_back(curRecord->REFR[y]);
@@ -707,7 +707,7 @@ class GRUPRecords<Ob::CELLRecord, RecType, AllocUnit, IsKeyedByEditorID>
                                     Temporary.push_back(curRecord->REFR[y]);
                                 }
 
-                            numChildren = (UINT32)Persistent.size() + (UINT32)VWD.size() + (UINT32)Temporary.size();
+                            numChildren = (uint32_t)Persistent.size() + (uint32_t)VWD.size() + (uint32_t)Temporary.size();
                             if(numChildren)
                                 {
                                 formCount += numChildren;
@@ -721,7 +721,7 @@ class GRUPRecords<Ob::CELLRecord, RecType, AllocUnit, IsKeyedByEditorID>
                                 ++formCount;
                                 childrenSize = 20;
 
-                                numChild = (UINT32)Persistent.size();
+                                numChild = (uint32_t)Persistent.size();
                                 if(numChild)
                                     {
                                     gType = eCellPersistent;
@@ -734,7 +734,7 @@ class GRUPRecords<Ob::CELLRecord, RecType, AllocUnit, IsKeyedByEditorID>
                                     ++formCount;
                                     childSize = 20;
 
-                                    for(UINT32 x = 0; x < numChild; ++x)
+                                    for(uint32_t x = 0; x < numChild; ++x)
                                         childSize += Persistent[x]->Write(writer, bMastersChanged, expander, collapser, Expanders);
 
                                     childrenSize += childSize;
@@ -742,7 +742,7 @@ class GRUPRecords<Ob::CELLRecord, RecType, AllocUnit, IsKeyedByEditorID>
                                     Persistent.clear();
                                     }
 
-                                numChild = (UINT32)VWD.size();
+                                numChild = (uint32_t)VWD.size();
                                 if(numChild)
                                     {
                                     gType = eCellVWD;
@@ -755,7 +755,7 @@ class GRUPRecords<Ob::CELLRecord, RecType, AllocUnit, IsKeyedByEditorID>
                                     ++formCount;
                                     childSize = 20;
 
-                                    for(UINT32 x = 0; x < numChild; ++x)
+                                    for(uint32_t x = 0; x < numChild; ++x)
                                         childSize += VWD[x]->Write(writer, bMastersChanged, expander, collapser, Expanders);
 
                                     childrenSize += childSize;
@@ -763,7 +763,7 @@ class GRUPRecords<Ob::CELLRecord, RecType, AllocUnit, IsKeyedByEditorID>
                                     VWD.clear();
                                     }
 
-                                numChild = (UINT32)Temporary.size();
+                                numChild = (uint32_t)Temporary.size();
                                 if(numChild)
                                     {
                                     gType = eCellTemporary;
@@ -776,7 +776,7 @@ class GRUPRecords<Ob::CELLRecord, RecType, AllocUnit, IsKeyedByEditorID>
                                     ++formCount;
                                     childSize = 20;
 
-                                    for(UINT32 x = 0; x < numChild; ++x)
+                                    for(uint32_t x = 0; x < numChild; ++x)
                                         childSize += Temporary[x]->Write(writer, bMastersChanged, expander, collapser, Expanders);
 
                                     childrenSize += childSize;
@@ -788,13 +788,13 @@ class GRUPRecords<Ob::CELLRecord, RecType, AllocUnit, IsKeyedByEditorID>
                                 }
                             if(CloseMod)
                                 {
-                                for(UINT32 x = 0; x < curRecord->ACHR.size(); ++x)
+                                for(uint32_t x = 0; x < curRecord->ACHR.size(); ++x)
                                     achr_pool.destroy(curRecord->ACHR[x]);
 
-                                for(UINT32 x = 0; x < curRecord->ACRE.size(); ++x)
+                                for(uint32_t x = 0; x < curRecord->ACRE.size(); ++x)
                                     acre_pool.destroy(curRecord->ACRE[x]);
 
-                                for(UINT32 x = 0; x < curRecord->REFR.size(); ++x)
+                                for(uint32_t x = 0; x < curRecord->REFR.size(); ++x)
                                     refr_pool.destroy(curRecord->REFR[x]);
 
                                 pgrd_pool.destroy(curRecord->PGRD);
@@ -822,10 +822,10 @@ class GRUPRecords<Ob::CELLRecord, RecType, AllocUnit, IsKeyedByEditorID>
                 //acre_pool.purge_no_destructors();
                 //refr_pool.purge_no_destructors();
                 //pgrd_pool.purge_no_destructors();
-                //UINT32 freed_achr = achr_pool.try_to_free();
-                //UINT32 freed_acre = acre_pool.try_to_free();
-                //UINT32 freed_refr = refr_pool.try_to_free();
-                //UINT32 freed_pgrd = pgrd_pool.try_to_free();
+                //uint32_t freed_achr = achr_pool.try_to_free();
+                //uint32_t freed_acre = acre_pool.try_to_free();
+                //uint32_t freed_refr = refr_pool.try_to_free();
+                //uint32_t freed_pgrd = pgrd_pool.try_to_free();
                 //DPRINT("freed_achr = %d, freed_acre = %d, freed_refr = %d, freed_pgrd = %d, total = %d", freed_achr, freed_acre, freed_refr, freed_pgrd, freed_achr + freed_acre + freed_refr + freed_pgrd);
                 cell_pool.purge_no_destructors();
                 }
@@ -833,7 +833,7 @@ class GRUPRecords<Ob::CELLRecord, RecType, AllocUnit, IsKeyedByEditorID>
             }
     };
 
-template<UINT32 RecType, UINT32 AllocUnit, bool IsKeyedByEditorID>
+template<uint32_t RecType, uint32_t AllocUnit, bool IsKeyedByEditorID>
 class GRUPRecords<Ob::WRLDRecord, RecType, AllocUnit, IsKeyedByEditorID>
     {
     public:
@@ -842,7 +842,7 @@ class GRUPRecords<Ob::WRLDRecord, RecType, AllocUnit, IsKeyedByEditorID>
         RecordPoolAllocator<Ob::LANDRecord, REV32(LAND), 20> land_pool;
         RecordPoolAllocator<Ob::ROADRecord, REV32(ROAD), 20> road_pool;
 
-        UINT32 stamp;
+        uint32_t stamp;
 
         GRUPRecords():
             stamp(134671)
@@ -856,9 +856,9 @@ class GRUPRecords<Ob::WRLDRecord, RecType, AllocUnit, IsKeyedByEditorID>
             }
 
         template<typename U>
-        bool Read(unsigned char *&buffer_start, unsigned char *&buffer_position, unsigned char *&group_buffer_end, RecordOp &indexer, RecordOp &parser, std::vector<Record *> &DeletedRecords, RecordProcessor &processor, STRING &FileName, RecordOp &read_parser, U &CELL)
+        bool Read(unsigned char *&buffer_start, unsigned char *&buffer_position, unsigned char *&group_buffer_end, RecordOp &indexer, RecordOp &parser, std::vector<Record *> &DeletedRecords, RecordProcessor &processor, char * &FileName, RecordOp &read_parser, U &CELL)
             {
-            stamp = *(UINT32 *)buffer_position;
+            stamp = *(uint32_t *)buffer_position;
             buffer_position += 4;
             if(group_buffer_end <= buffer_position)
                 {
@@ -870,22 +870,22 @@ class GRUPRecords<Ob::WRLDRecord, RecType, AllocUnit, IsKeyedByEditorID>
                 }
 
             Record * curRecord = NULL;
-            UINT32 recordSize = 0;
+            uint32_t recordSize = 0;
             RecordHeader header;
 
             Ob::WRLDRecord *last_wrld_record = NULL, *orphaned_wrld_records = NULL;
             Ob::CELLRecord *last_cell_record = NULL, *orphaned_cell_records = NULL;
-            UINT32 numWRLD = 0, numCELL = 0, numACHR = 0, numACRE = 0, numREFR = 0, numPGRD = 0, numLAND = 0, numROAD = 0;
+            uint32_t numWRLD = 0, numCELL = 0, numACHR = 0, numACRE = 0, numREFR = 0, numPGRD = 0, numLAND = 0, numROAD = 0;
 
-            std::map<SINT32, std::map<SINT32, Ob::LANDRecord *> > GridXY_LAND;
-            std::vector<std::pair<UINT32, unsigned char *> > GRUPs;
-            std::pair<UINT32, unsigned char *> GRUP_End;
+            std::map<int32_t, std::map<int32_t, Ob::LANDRecord *> > GridXY_LAND;
+            std::vector<std::pair<uint32_t, unsigned char *> > GRUPs;
+            std::pair<uint32_t, unsigned char *> GRUP_End;
             GRUP_End.first = eTop;
             GRUP_End.second = group_buffer_end;
             GRUPs.push_back(GRUP_End);
 
             std::vector<RecordHeader> records;
-            records.reserve((UINT32)(group_buffer_end - buffer_position) / sizeof(Ob::WRLDRecord)); //gross overestimation, but good enough
+            records.reserve((uint32_t)(group_buffer_end - buffer_position) / sizeof(Ob::WRLDRecord)); //gross overestimation, but good enough
             while(buffer_position < group_buffer_end){
                 if((processor.IsSkipAllRecords && processor.IsTrackNewTypes) &&
                     processor.NewTypes.count(REV32(WRLD)) > 0 &&
@@ -911,9 +911,9 @@ class GRUPRecords<Ob::WRLDRecord, RecType, AllocUnit, IsKeyedByEditorID>
                     };
 
                 //Assumes that all records in a generic group are of the same type
-                header.type = *(UINT32 *)buffer_position;
+                header.type = *(uint32_t *)buffer_position;
                 buffer_position += 4;
-                recordSize = *(UINT32 *)buffer_position;
+                recordSize = *(uint32_t *)buffer_position;
                 buffer_position += 4;
 
                 if(header.type == REV32(GRUP)) //All GRUPs will be recreated from scratch on write (saves memory)
@@ -929,11 +929,11 @@ class GRUPRecords<Ob::WRLDRecord, RecType, AllocUnit, IsKeyedByEditorID>
                     continue;
                     }
 
-                header.flags = *(UINT32 *)buffer_position;
+                header.flags = *(uint32_t *)buffer_position;
                 buffer_position += 4;
                 header.formID = *(FORMID *)buffer_position;
                 buffer_position += 4;
-                header.flagsUnk = *(UINT32 *)buffer_position;
+                header.flagsUnk = *(uint32_t *)buffer_position;
                 buffer_position += 4;
 
                 if(processor.Accept(header))
@@ -971,7 +971,7 @@ class GRUPRecords<Ob::WRLDRecord, RecType, AllocUnit, IsKeyedByEditorID>
                             numLAND++;
                             break;
                         default:
-                            printer("GRUPRecords<Ob::CELLRecord>::Read: Warning - Parsing error. Unexpected record type (%c%c%c%c) in file \"%s\".\n", ((STRING)&header.type)[0], ((STRING)&header.type)[1], ((STRING)&header.type)[2], ((STRING)&header.type)[3], FileName);
+                            printer("GRUPRecords<Ob::CELLRecord>::Read: Warning - Parsing error. Unexpected record type (%c%c%c%c) in file \"%s\".\n", ((char *)&header.type)[0], ((char *)&header.type)[1], ((char *)&header.type)[2], ((char *)&header.type)[3], FileName);
                             #ifdef CBASH_DEBUG_CHUNK
                                 peek_around(buffer_position, PEEK_SIZE);
                             #endif
@@ -1063,7 +1063,7 @@ class GRUPRecords<Ob::WRLDRecord, RecType, AllocUnit, IsKeyedByEditorID>
                 last_cell_record = orphaned_cell_records = new Ob::CELLRecord();
 
                 //Construct the records
-                for(UINT32 x = 0; x < records.size();++x)
+                for(uint32_t x = 0; x < records.size();++x)
                     {
                     header = records[x];
 
@@ -1223,7 +1223,7 @@ class GRUPRecords<Ob::WRLDRecord, RecType, AllocUnit, IsKeyedByEditorID>
                                 }
                             break;
                         default:
-                            printer("GRUPRecords<Ob::WRLDRecord>::Read: Warning - Parsing error. Unexpected record type (%c%c%c%c) in file \"%s\".\n", ((STRING)&header.type)[0], ((STRING)&header.type)[1], ((STRING)&header.type)[2], ((STRING)&header.type)[3], FileName);
+                            printer("GRUPRecords<Ob::WRLDRecord>::Read: Warning - Parsing error. Unexpected record type (%c%c%c%c) in file \"%s\".\n", ((char *)&header.type)[0], ((char *)&header.type)[1], ((char *)&header.type)[2], ((char *)&header.type)[3], FileName);
                             #ifdef CBASH_DEBUG_CHUNK
                                 peek_around(header.data, PEEK_SIZE);
                             #endif
@@ -1253,18 +1253,18 @@ class GRUPRecords<Ob::WRLDRecord, RecType, AllocUnit, IsKeyedByEditorID>
                 //There might be ACHR, ACRE, or REFR records in the World CELL
                 if(processor.Flags.IsIndexLANDs || processor.Flags.IsFixupPlaceables)
                     {
-                    SINT32 posX = 0, posY = 0;
-                    SINT32 gridX = 0, gridY = 0;
+                    int32_t posX = 0, posY = 0;
+                    int32_t gridX = 0, gridY = 0;
 
                     Ob::CELLRecord *last_wcel_record = NULL;
                     Ob::LANDRecord *last_land_record = NULL;
                     std::vector<Record *> Records;
                     wrld_pool.MakeRecordsVector(Records);
-                    for(UINT32 x = 0; x < Records.size(); ++x)
+                    for(uint32_t x = 0; x < Records.size(); ++x)
                         {
                         last_wrld_record = (Ob::WRLDRecord *)Records[x];
                         last_wcel_record = (Ob::CELLRecord *)last_wrld_record->CELL;
-                        for(UINT32 y = 0; y < last_wrld_record->CELLS.size(); ++y)
+                        for(uint32_t y = 0; y < last_wrld_record->CELLS.size(); ++y)
                             {
                             last_cell_record = (Ob::CELLRecord *)last_wrld_record->CELLS[y];
                             read_parser.Accept((Record *&)last_cell_record);
@@ -1280,14 +1280,14 @@ class GRUPRecords<Ob::WRLDRecord, RecType, AllocUnit, IsKeyedByEditorID>
 
                             if(processor.Flags.IsFixupPlaceables && last_wcel_record != NULL)
                                 {
-                                for(UINT32 x = 0; x < last_wcel_record->ACHR.size();)
+                                for(uint32_t x = 0; x < last_wcel_record->ACHR.size();)
                                     {
                                     //Have to test each record to see if it belongs to the cell. This is determined by its positioning.
                                     curRecord = last_wcel_record->ACHR[x];
                                     read_parser.Accept(curRecord);
 
-                                    gridX = (SINT32)floor(((Ob::ACHRRecord *)curRecord)->DATA.value.posX / 4096.0);
-                                    gridY = (SINT32)floor(((Ob::ACHRRecord *)curRecord)->DATA.value.posY / 4096.0);
+                                    gridX = (int32_t)floor(((Ob::ACHRRecord *)curRecord)->DATA.value.posX / 4096.0);
+                                    gridY = (int32_t)floor(((Ob::ACHRRecord *)curRecord)->DATA.value.posY / 4096.0);
 
                                     if(processor.Flags.IsMinLoad)
                                         curRecord->Unload();
@@ -1302,14 +1302,14 @@ class GRUPRecords<Ob::WRLDRecord, RecType, AllocUnit, IsKeyedByEditorID>
                                     else ++x;
                                     }
 
-                                for(UINT32 x = 0; x < last_wcel_record->ACRE.size();)
+                                for(uint32_t x = 0; x < last_wcel_record->ACRE.size();)
                                     {
                                     //Have to test each record to see if it belongs to the cell. This is determined by its positioning.
                                     curRecord = last_wcel_record->ACRE[x];
                                     read_parser.Accept(curRecord);
 
-                                    gridX = (SINT32)floor(((Ob::ACRERecord *)curRecord)->DATA.value.posX / 4096.0);
-                                    gridY = (SINT32)floor(((Ob::ACRERecord *)curRecord)->DATA.value.posY / 4096.0);
+                                    gridX = (int32_t)floor(((Ob::ACRERecord *)curRecord)->DATA.value.posX / 4096.0);
+                                    gridY = (int32_t)floor(((Ob::ACRERecord *)curRecord)->DATA.value.posY / 4096.0);
 
                                     if(processor.Flags.IsMinLoad)
                                         curRecord->Unload();
@@ -1324,15 +1324,15 @@ class GRUPRecords<Ob::WRLDRecord, RecType, AllocUnit, IsKeyedByEditorID>
                                     else ++x;
                                     }
 
-                                for(UINT32 x = 0; x < last_wcel_record->REFR.size();)
+                                for(uint32_t x = 0; x < last_wcel_record->REFR.size();)
                                     {
                                     //Have to test each record to see if it belongs to the cell. This is determined by its positioning.
                                     curRecord = last_wcel_record->REFR[x];
                                     read_parser.Accept(curRecord);
 
                                     ((Ob::REFRRecord *)curRecord)->Data.Load();
-                                    gridX = (SINT32)floor(((Ob::REFRRecord *)curRecord)->Data->DATA.value.posX / 4096.0);
-                                    gridY = (SINT32)floor(((Ob::REFRRecord *)curRecord)->Data->DATA.value.posY / 4096.0);
+                                    gridX = (int32_t)floor(((Ob::REFRRecord *)curRecord)->Data->DATA.value.posX / 4096.0);
+                                    gridY = (int32_t)floor(((Ob::REFRRecord *)curRecord)->Data->DATA.value.posY / 4096.0);
 
                                     if(processor.Flags.IsMinLoad)
                                         curRecord->Unload();
@@ -1366,7 +1366,7 @@ class GRUPRecords<Ob::WRLDRecord, RecType, AllocUnit, IsKeyedByEditorID>
                         }
                     }
 
-                for(UINT32 x = 0; x < orphaned_cell_records->ACHR.size(); ++x)
+                for(uint32_t x = 0; x < orphaned_cell_records->ACHR.size(); ++x)
                     {
                     curRecord = orphaned_cell_records->ACHR[x];
                     processor.OrphanedRecords.push_back(curRecord->formID);
@@ -1377,7 +1377,7 @@ class GRUPRecords<Ob::WRLDRecord, RecType, AllocUnit, IsKeyedByEditorID>
                     CELL.achr_pool.destroy(curRecord);
                     }
 
-                for(UINT32 x = 0; x < orphaned_cell_records->ACRE.size(); ++x)
+                for(uint32_t x = 0; x < orphaned_cell_records->ACRE.size(); ++x)
                     {
                     curRecord = orphaned_cell_records->ACRE[x];
                     processor.OrphanedRecords.push_back(curRecord->formID);
@@ -1388,7 +1388,7 @@ class GRUPRecords<Ob::WRLDRecord, RecType, AllocUnit, IsKeyedByEditorID>
                     CELL.acre_pool.destroy(curRecord);
                     }
 
-                for(UINT32 x = 0; x < orphaned_cell_records->REFR.size(); ++x)
+                for(uint32_t x = 0; x < orphaned_cell_records->REFR.size(); ++x)
                     {
                     curRecord = orphaned_cell_records->REFR[x];
                     processor.OrphanedRecords.push_back(curRecord->formID);
@@ -1405,46 +1405,46 @@ class GRUPRecords<Ob::WRLDRecord, RecType, AllocUnit, IsKeyedByEditorID>
             }
 
         template<typename U>
-        UINT32 Write(FileWriter &writer, std::vector<FormIDResolver *> &Expanders, FormIDResolver &expander, FormIDResolver &collapser, const bool &bMastersChanged, bool CloseMod, FormIDHandlerClass &FormIDHandler, U &CELL, RecordOp &indexer)
+        uint32_t Write(FileWriter &writer, std::vector<FormIDResolver *> &Expanders, FormIDResolver &expander, FormIDResolver &collapser, const bool &bMastersChanged, bool CloseMod, FormIDHandlerClass &FormIDHandler, U &CELL, RecordOp &indexer)
             {
             std::vector<Record *> Records;
             wrld_pool.MakeRecordsVector(Records);
-            UINT32 numWRLDRecords = (UINT32)Records.size();
+            uint32_t numWRLDRecords = (uint32_t)Records.size();
             if(numWRLDRecords == 0)
                 return 0;
 
-            UINT32 type = REV32(GRUP);
-            UINT32 gType = eTop;
-            UINT32 gLabel = RecType;
-            UINT32 TopSize = 0;
-            UINT32 TopSizePos = 0;
-            UINT32 worldSize = 0;
-            UINT32 worldSizePos = 0;
-            UINT32 blockSize = 0;
-            UINT32 blockSizePos = 0;
-            UINT32 subBlockSize = 0;
-            UINT32 subBlockSizePos = 0;
-            UINT32 childrenSize = 0;
-            UINT32 childrenSizePos = 0;
-            UINT32 childSize = 0;
-            UINT32 childSizePos = 0;
+            uint32_t type = REV32(GRUP);
+            uint32_t gType = eTop;
+            uint32_t gLabel = RecType;
+            uint32_t TopSize = 0;
+            uint32_t TopSizePos = 0;
+            uint32_t worldSize = 0;
+            uint32_t worldSizePos = 0;
+            uint32_t blockSize = 0;
+            uint32_t blockSizePos = 0;
+            uint32_t subBlockSize = 0;
+            uint32_t subBlockSizePos = 0;
+            uint32_t childrenSize = 0;
+            uint32_t childrenSizePos = 0;
+            uint32_t childSize = 0;
+            uint32_t childSizePos = 0;
 
-            UINT32 formCount = 0;
+            uint32_t formCount = 0;
 
-            UINT32 numCELLRecords = 0;
-            UINT32 numSubBlocks = 0;
-            UINT32 numChildren = 0;
-            UINT32 numChild = 0;
+            uint32_t numCELLRecords = 0;
+            uint32_t numSubBlocks = 0;
+            uint32_t numChildren = 0;
+            uint32_t numChild = 0;
 
             Ob::WRLDRecord *curWorld = NULL;
             Ob::CELLRecord *curCell = NULL;
             Ob::CELLRecord *curWorldCell = NULL;
-            UINT32 worldFormID = 0;
-            UINT32 cellFormID = 0;
+            uint32_t worldFormID = 0;
+            uint32_t cellFormID = 0;
             int gridX, gridY;
-            UINT32 BlockIndex, SubBlockIndex;
+            uint32_t BlockIndex, SubBlockIndex;
 
-            std::map<UINT32, std::map<UINT32, std::vector<Ob::CELLRecord *> > > BlockedRecords;
+            std::map<uint32_t, std::map<uint32_t, std::vector<Ob::CELLRecord *> > > BlockedRecords;
             std::vector<Record *> Persistent;
             std::vector<Record *> FixedPersistent;
             std::vector<Record *> Temporary;
@@ -1460,7 +1460,7 @@ class GRUPRecords<Ob::WRLDRecord, RecType, AllocUnit, IsKeyedByEditorID>
             ++formCount;
             TopSize = 20;
             formCount += numWRLDRecords;
-            for(UINT32 x = 0; x < numWRLDRecords; ++x)
+            for(uint32_t x = 0; x < numWRLDRecords; ++x)
                 {
                 curWorld = (Ob::WRLDRecord *)Records[x];
                 worldFormID = curWorld->formID;
@@ -1469,22 +1469,22 @@ class GRUPRecords<Ob::WRLDRecord, RecType, AllocUnit, IsKeyedByEditorID>
 
                 curWorldCell = (Ob::CELLRecord *)curWorld->CELL;
 
-                numCELLRecords = (UINT32)curWorld->CELLS.size();
+                numCELLRecords = (uint32_t)curWorld->CELLS.size();
                 formCount += numCELLRecords;
-                for(UINT32 p = 0; p < numCELLRecords; ++p)
+                for(uint32_t p = 0; p < numCELLRecords; ++p)
                     {
                     curCell = (Ob::CELLRecord *)curWorld->CELLS[p];
 
                     //All persistent references must be moved to the world cell
-                    for(UINT32 y = 0; y < curCell->ACRE.size(); ++y)
+                    for(uint32_t y = 0; y < curCell->ACRE.size(); ++y)
                         if(curCell->ACRE[y]->IsPersistent())
                             FixedPersistent.push_back(curCell->ACRE[y]);
 
-                    for(UINT32 y = 0; y < curCell->ACHR.size(); ++y)
+                    for(uint32_t y = 0; y < curCell->ACHR.size(); ++y)
                         if(curCell->ACHR[y]->IsPersistent())
                             FixedPersistent.push_back(curCell->ACHR[y]);
 
-                    for(UINT32 y = 0; y < curCell->REFR.size(); ++y)
+                    for(uint32_t y = 0; y < curCell->REFR.size(); ++y)
                         if(curCell->REFR[y]->IsPersistent())
                             FixedPersistent.push_back(curCell->REFR[y]);
 
@@ -1551,8 +1551,8 @@ class GRUPRecords<Ob::WRLDRecord, RecType, AllocUnit, IsKeyedByEditorID>
                         if(curCell->PGRD != NULL)
                             Temporary.push_back(curCell->PGRD);
 
-                        UINT32 ignored_count = 0;
-                        for(UINT32 y = 0; y < curCell->ACRE.size(); ++y)
+                        uint32_t ignored_count = 0;
+                        for(uint32_t y = 0; y < curCell->ACRE.size(); ++y)
                             {
                             if(curCell->ACRE[y]->IsPersistent())
                                 Persistent.push_back(curCell->ACRE[y]);
@@ -1560,7 +1560,7 @@ class GRUPRecords<Ob::WRLDRecord, RecType, AllocUnit, IsKeyedByEditorID>
                                 ignored_count++;
                             }
 
-                        for(UINT32 y = 0; y < curCell->ACHR.size(); ++y)
+                        for(uint32_t y = 0; y < curCell->ACHR.size(); ++y)
                             {
                             if(curCell->ACHR[y]->IsPersistent())
                                 Persistent.push_back(curCell->ACHR[y]);
@@ -1568,7 +1568,7 @@ class GRUPRecords<Ob::WRLDRecord, RecType, AllocUnit, IsKeyedByEditorID>
                                 ignored_count++;
                             }
 
-                        for(UINT32 y = 0; y < curCell->REFR.size(); ++y)
+                        for(uint32_t y = 0; y < curCell->REFR.size(); ++y)
                             {
                             if(curCell->REFR[y]->IsPersistent())
                                 Persistent.push_back(curCell->REFR[y]);
@@ -1579,7 +1579,7 @@ class GRUPRecords<Ob::WRLDRecord, RecType, AllocUnit, IsKeyedByEditorID>
                         if(ignored_count)
                             printer("GRUPRecords<Ob::WRLDRecord>::Write: Warning - Information lost. Ignored %u VWD and Temporary records in the world cell: %08X", ignored_count, worldFormID);
 
-                        numChildren = (UINT32)Persistent.size() + (UINT32)FixedPersistent.size();
+                        numChildren = (uint32_t)Persistent.size() + (uint32_t)FixedPersistent.size();
                         if(numChildren)
                             {
                             formCount += numChildren;
@@ -1604,12 +1604,12 @@ class GRUPRecords<Ob::WRLDRecord, RecType, AllocUnit, IsKeyedByEditorID>
                             ++formCount;
                             childSize = 20;
 
-                            numChild = (UINT32)Persistent.size();
-                            for(UINT32 y = 0; y < numChild; ++y)
+                            numChild = (uint32_t)Persistent.size();
+                            for(uint32_t y = 0; y < numChild; ++y)
                                 childSize += Persistent[y]->Write(writer, bMastersChanged, expander, collapser, Expanders);
 
-                            numChild = (UINT32)FixedPersistent.size();
-                            for(UINT32 y = 0; y < numChild; ++y)
+                            numChild = (uint32_t)FixedPersistent.size();
+                            for(uint32_t y = 0; y < numChild; ++y)
                                 childSize += FixedPersistent[y]->Write(writer, bMastersChanged, expander, collapser, Expanders);
 
                             childrenSize += childSize;
@@ -1621,13 +1621,13 @@ class GRUPRecords<Ob::WRLDRecord, RecType, AllocUnit, IsKeyedByEditorID>
                             }
                         if(CloseMod)
                             {
-                            for(UINT32 x = 0; x < curCell->ACHR.size(); ++x)
+                            for(uint32_t x = 0; x < curCell->ACHR.size(); ++x)
                                 CELL.achr_pool.destroy(curCell->ACHR[x]);
 
-                            for(UINT32 x = 0; x < curCell->ACRE.size(); ++x)
+                            for(uint32_t x = 0; x < curCell->ACRE.size(); ++x)
                                 CELL.acre_pool.destroy(curCell->ACRE[x]);
 
-                            for(UINT32 x = 0; x < curCell->REFR.size(); ++x)
+                            for(uint32_t x = 0; x < curCell->REFR.size(); ++x)
                                 CELL.refr_pool.destroy(curCell->REFR[x]);
 
                             CELL.pgrd_pool.destroy(curCell->PGRD);
@@ -1637,7 +1637,7 @@ class GRUPRecords<Ob::WRLDRecord, RecType, AllocUnit, IsKeyedByEditorID>
                             }
                         }
 
-                    for(std::map<UINT32, std::map<UINT32, std::vector<Ob::CELLRecord *> > >::iterator curBlock = BlockedRecords.begin(); curBlock != BlockedRecords.end(); ++curBlock)
+                    for(std::map<uint32_t, std::map<uint32_t, std::vector<Ob::CELLRecord *> > >::iterator curBlock = BlockedRecords.begin(); curBlock != BlockedRecords.end(); ++curBlock)
                         {
                         gType = eExteriorBlock;
                         writer.file_write(&type, 4);
@@ -1649,7 +1649,7 @@ class GRUPRecords<Ob::WRLDRecord, RecType, AllocUnit, IsKeyedByEditorID>
                         ++formCount;
                         blockSize = 20;
 
-                        for(std::map<UINT32, std::vector<Ob::CELLRecord *> >::iterator curSubBlock = curBlock->second.begin(); curSubBlock != curBlock->second.end(); ++curSubBlock)
+                        for(std::map<uint32_t, std::vector<Ob::CELLRecord *> >::iterator curSubBlock = curBlock->second.begin(); curSubBlock != curBlock->second.end(); ++curSubBlock)
                             {
                             gType = eExteriorSubBlock;
                             writer.file_write(&type, 4);
@@ -1661,8 +1661,8 @@ class GRUPRecords<Ob::WRLDRecord, RecType, AllocUnit, IsKeyedByEditorID>
                             ++formCount;
                             subBlockSize = 20;
 
-                            numSubBlocks = (UINT32)curSubBlock->second.size();
-                            for(UINT32 p = 0; p < numSubBlocks; ++p)
+                            numSubBlocks = (uint32_t)curSubBlock->second.size();
+                            for(uint32_t p = 0; p < numSubBlocks; ++p)
                                 {
                                 curCell = curSubBlock->second[p];
                                 cellFormID = curCell->formID;
@@ -1676,7 +1676,7 @@ class GRUPRecords<Ob::WRLDRecord, RecType, AllocUnit, IsKeyedByEditorID>
                                 if(curCell->PGRD != NULL)
                                     Temporary.push_back(curCell->PGRD);
 
-                                for(UINT32 y = 0; y < curCell->ACRE.size(); ++y)
+                                for(uint32_t y = 0; y < curCell->ACRE.size(); ++y)
                                     {
                                     if(curCell->ACRE[y]->IsVWD())
                                         VWD.push_back(curCell->ACRE[y]);
@@ -1684,7 +1684,7 @@ class GRUPRecords<Ob::WRLDRecord, RecType, AllocUnit, IsKeyedByEditorID>
                                         Temporary.push_back(curCell->ACRE[y]);
                                     }
 
-                                for(UINT32 y = 0; y < curCell->ACHR.size(); ++y)
+                                for(uint32_t y = 0; y < curCell->ACHR.size(); ++y)
                                     {
                                     if(curCell->ACHR[y]->IsVWD())
                                         VWD.push_back(curCell->ACHR[y]);
@@ -1692,7 +1692,7 @@ class GRUPRecords<Ob::WRLDRecord, RecType, AllocUnit, IsKeyedByEditorID>
                                         Temporary.push_back(curCell->ACHR[y]);
                                     }
 
-                                for(UINT32 y = 0; y < curCell->REFR.size(); ++y)
+                                for(uint32_t y = 0; y < curCell->REFR.size(); ++y)
                                     {
                                     if(curCell->REFR[y]->IsVWD())
                                         VWD.push_back(curCell->REFR[y]);
@@ -1700,7 +1700,7 @@ class GRUPRecords<Ob::WRLDRecord, RecType, AllocUnit, IsKeyedByEditorID>
                                         Temporary.push_back(curCell->REFR[y]);
                                     }
 
-                                numChildren = (UINT32)VWD.size() + (UINT32)Temporary.size();
+                                numChildren = (uint32_t)VWD.size() + (uint32_t)Temporary.size();
                                 if(numChildren)
                                     {
                                     formCount += numChildren;
@@ -1714,7 +1714,7 @@ class GRUPRecords<Ob::WRLDRecord, RecType, AllocUnit, IsKeyedByEditorID>
                                     ++formCount;
                                     childrenSize = 20;
 
-                                    numChild = (UINT32)VWD.size();
+                                    numChild = (uint32_t)VWD.size();
                                     if(numChild)
                                         {
                                         gType = eCellVWD;
@@ -1727,7 +1727,7 @@ class GRUPRecords<Ob::WRLDRecord, RecType, AllocUnit, IsKeyedByEditorID>
                                         ++formCount;
                                         childSize = 20;
 
-                                        for(UINT32 x = 0; x < numChild; ++x)
+                                        for(uint32_t x = 0; x < numChild; ++x)
                                             childSize += VWD[x]->Write(writer, bMastersChanged, expander, collapser, Expanders);
 
                                         childrenSize += childSize;
@@ -1735,7 +1735,7 @@ class GRUPRecords<Ob::WRLDRecord, RecType, AllocUnit, IsKeyedByEditorID>
                                         VWD.clear();
                                         }
 
-                                    numChild = (UINT32)Temporary.size();
+                                    numChild = (uint32_t)Temporary.size();
                                     if(numChild)
                                         {
                                         gType = eCellTemporary;
@@ -1748,7 +1748,7 @@ class GRUPRecords<Ob::WRLDRecord, RecType, AllocUnit, IsKeyedByEditorID>
                                         ++formCount;
                                         childSize = 20;
 
-                                        for(UINT32 x = 0; x < numChild; ++x)
+                                        for(uint32_t x = 0; x < numChild; ++x)
                                             childSize += Temporary[x]->Write(writer, bMastersChanged, expander, collapser, Expanders);
 
                                         childrenSize += childSize;
@@ -1760,13 +1760,13 @@ class GRUPRecords<Ob::WRLDRecord, RecType, AllocUnit, IsKeyedByEditorID>
                                     }
                                 if(CloseMod)
                                     {
-                                    for(UINT32 x = 0; x < curCell->ACHR.size(); ++x)
+                                    for(uint32_t x = 0; x < curCell->ACHR.size(); ++x)
                                         CELL.achr_pool.destroy(curCell->ACHR[x]);
 
-                                    for(UINT32 x = 0; x < curCell->ACRE.size(); ++x)
+                                    for(uint32_t x = 0; x < curCell->ACRE.size(); ++x)
                                         CELL.acre_pool.destroy(curCell->ACRE[x]);
 
-                                    for(UINT32 x = 0; x < curCell->REFR.size(); ++x)
+                                    for(uint32_t x = 0; x < curCell->REFR.size(); ++x)
                                         CELL.refr_pool.destroy(curCell->REFR[x]);
 
                                     CELL.pgrd_pool.destroy(curCell->PGRD);

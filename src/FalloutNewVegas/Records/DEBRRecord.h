@@ -44,9 +44,9 @@ class DEBRRecord : public FNVRecord //Debris
     private:
         struct DEBRModel
             {
-            UINT8   percentage;
-            STRING  modPath;
-            UINT8   flags;
+            uint8_t   percentage;
+            char *  modPath;
+            uint8_t   flags;
 
             RawRecord MODT;
 
@@ -60,10 +60,10 @@ class DEBRRecord : public FNVRecord //Debris
 
             bool   IsHasCollisionData();
             void   IsHasCollisionData(bool value);
-            bool   IsFlagMask(UINT8 Mask, bool Exact=false);
-            void   SetFlagMask(UINT8 Mask);
+            bool   IsFlagMask(uint8_t Mask, bool Exact=false);
+            void   SetFlagMask(uint8_t Mask);
 
-            bool   Read(unsigned char *&buffer, const UINT32 &subSize);
+            bool   Read(unsigned char *&buffer, const uint32_t &subSize);
             void   Write(FileWriter &writer);
 
             bool   operator ==(const DEBRModel &other) const;
@@ -81,7 +81,7 @@ class DEBRRecord : public FNVRecord //Debris
             void Load();
             void Unload();
 
-            void resize(UINT32 newSize);
+            void resize(uint32_t newSize);
 
             void Write(FileWriter &writer);
 
@@ -98,17 +98,17 @@ class DEBRRecord : public FNVRecord //Debris
         DEBRRecord(DEBRRecord *srcRecord);
         ~DEBRRecord();
 
-        UINT32 GetFieldAttribute(DEFAULTED_FIELD_IDENTIFIERS, UINT32 WhichAttribute=0);
+        uint32_t GetFieldAttribute(DEFAULTED_FIELD_IDENTIFIERS, uint32_t WhichAttribute=0);
         void * GetField(DEFAULTED_FIELD_IDENTIFIERS, void **FieldValues=NULL);
-        bool   SetField(DEFAULTED_FIELD_IDENTIFIERS, void *FieldValue=NULL, UINT32 ArraySize=0);
+        bool   SetField(DEFAULTED_FIELD_IDENTIFIERS, void *FieldValue=NULL, uint32_t ArraySize=0);
         void   DeleteField(DEFAULTED_FIELD_IDENTIFIERS);
 
-        UINT32 GetType();
-        STRING GetStrType();
+        uint32_t GetType();
+        char * GetStrType();
 
-        SINT32 ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk=false);
-        SINT32 Unload();
-        SINT32 WriteRecord(FileWriter &writer);
+        int32_t ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk=false);
+        int32_t Unload();
+        int32_t WriteRecord(FileWriter &writer);
 
         bool operator ==(const DEBRRecord &other) const;
         bool operator !=(const DEBRRecord &other) const;

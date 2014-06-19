@@ -154,12 +154,12 @@ void REGNRecord::REGNRDSD::IsSnowy(bool value)
     SETBIT(flags, fIsSnowy, value);
     }
 
-bool REGNRecord::REGNRDSD::IsFlagMask(UINT32 Mask, bool Exact)
+bool REGNRecord::REGNRDSD::IsFlagMask(uint32_t Mask, bool Exact)
     {
     return Exact ? ((flags & Mask) == Mask) : ((flags & Mask) != 0);
     }
 
-void REGNRecord::REGNRDSD::SetFlagMask(UINT32 Mask)
+void REGNRecord::REGNRDSD::SetFlagMask(uint32_t Mask)
     {
     flags = Mask;
     }
@@ -306,12 +306,12 @@ void REGNRecord::REGNRDOT::IsHugeRock(bool value)
     SETBIT(flags, fIsHugeRock, value);
     }
 
-bool REGNRecord::REGNRDOT::IsFlagMask(UINT8 Mask, bool Exact)
+bool REGNRecord::REGNRDOT::IsFlagMask(uint8_t Mask, bool Exact)
     {
     return Exact ? ((flags & Mask) == Mask) : ((flags & Mask) != 0);
     }
 
-void REGNRecord::REGNRDOT::SetFlagMask(UINT8 Mask)
+void REGNRecord::REGNRDOT::SetFlagMask(uint8_t Mask)
     {
     flags = Mask;
     }
@@ -376,12 +376,12 @@ void REGNRecord::REGNEntry::IsOverride(bool value)
     SETBIT(RDAT.value.flags, fIsOverride, value);
     }
 
-bool REGNRecord::REGNEntry::IsFlagMask(UINT8 Mask, bool Exact)
+bool REGNRecord::REGNEntry::IsFlagMask(uint8_t Mask, bool Exact)
     {
     return Exact ? ((RDAT.value.flags & Mask) == Mask) : ((RDAT.value.flags & Mask) != 0);
     }
 
-void REGNRecord::REGNEntry::SetFlagMask(UINT8 Mask)
+void REGNRecord::REGNEntry::SetFlagMask(uint8_t Mask)
     {
     RDAT.value.flags = Mask;
     }
@@ -464,12 +464,12 @@ void REGNRecord::REGNEntry::IsSound(bool value)
         RDAT.value.entryType = eObject;
     }
 
-bool REGNRecord::REGNEntry::IsType(UINT32 Type)
+bool REGNRecord::REGNEntry::IsType(uint32_t Type)
     {
     return (RDAT.value.entryType == Type);
     }
 
-void REGNRecord::REGNEntry::SetType(UINT32 Type)
+void REGNRecord::REGNEntry::SetType(uint32_t Type)
     {
     RDAT.value.entryType = Type;
     }
@@ -516,12 +516,12 @@ void REGNRecord::REGNEntry::IsDungeonMusic(bool value)
         *RDMD.value = eDefault;
     }
 
-bool REGNRecord::REGNEntry::IsMusicType(UINT32 Type)
+bool REGNRecord::REGNEntry::IsMusicType(uint32_t Type)
     {
     return RDMD.IsLoaded() ? (*RDMD.value == Type) : false;
     }
 
-void REGNRecord::REGNEntry::SetMusicType(UINT32 Type)
+void REGNRecord::REGNEntry::SetMusicType(uint32_t Type)
     {
     RDMD.Load();
     *RDMD.value = Type;
@@ -615,49 +615,49 @@ bool REGNRecord::VisitFormIDs(FormIDOp &op)
 
     if(WNAM.IsLoaded())
         op.Accept(WNAM.value);
-    for(UINT32 ListIndex = 0; ListIndex < Entries.value.size(); ListIndex++)
+    for(uint32_t ListIndex = 0; ListIndex < Entries.value.size(); ListIndex++)
         {
-        for(UINT32 ListX2Index = 0; ListX2Index < Entries.value[ListIndex]->RDOT.value.size(); ListX2Index++)
+        for(uint32_t ListX2Index = 0; ListX2Index < Entries.value[ListIndex]->RDOT.value.size(); ListX2Index++)
             op.Accept(Entries.value[ListIndex]->RDOT.value[ListX2Index].objectId);
-        for(UINT32 ListX2Index = 0; ListX2Index < Entries.value[ListIndex]->RDGS.value.size(); ListX2Index++)
+        for(uint32_t ListX2Index = 0; ListX2Index < Entries.value[ListIndex]->RDGS.value.size(); ListX2Index++)
             op.Accept(Entries.value[ListIndex]->RDGS.value[ListX2Index].grass);
-        for(UINT32 ListX2Index = 0; ListX2Index < Entries.value[ListIndex]->RDSD.value.size(); ListX2Index++)
+        for(uint32_t ListX2Index = 0; ListX2Index < Entries.value[ListIndex]->RDSD.value.size(); ListX2Index++)
             op.Accept(Entries.value[ListIndex]->RDSD.value[ListX2Index].sound);
-        for(UINT32 ListX2Index = 0; ListX2Index < Entries.value[ListIndex]->RDWT.value.size(); ListX2Index++)
+        for(uint32_t ListX2Index = 0; ListX2Index < Entries.value[ListIndex]->RDWT.value.size(); ListX2Index++)
             op.Accept(Entries.value[ListIndex]->RDWT.value[ListX2Index].weather);
         }
 
     return op.Stop();
     }
 
-UINT32 REGNRecord::GetType()
+uint32_t REGNRecord::GetType()
     {
     return REV32(REGN);
     }
 
-STRING REGNRecord::GetStrType()
+char * REGNRecord::GetStrType()
     {
     return "REGN";
     }
 
-SINT32 REGNRecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk)
+int32_t REGNRecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk)
     {
-    UINT32 subType = 0;
-    UINT32 subSize = 0;
+    uint32_t subType = 0;
+    uint32_t subSize = 0;
     while(buffer < end_buffer){
-        subType = *(UINT32 *)buffer;
+        subType = *(uint32_t *)buffer;
         buffer += 4;
         switch(subType)
             {
             case REV32(XXXX):
                 buffer += 2;
-                subSize = *(UINT32 *)buffer;
+                subSize = *(uint32_t *)buffer;
                 buffer += 4;
-                subType = *(UINT32 *)buffer;
+                subType = *(uint32_t *)buffer;
                 buffer += 6;
                 break;
             default:
-                subSize = *(UINT16 *)buffer;
+                subSize = *(uint16_t *)buffer;
                 buffer += 2;
                 break;
             }
@@ -734,7 +734,7 @@ SINT32 REGNRecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer,
     return 0;
     }
 
-SINT32 REGNRecord::Unload()
+int32_t REGNRecord::Unload()
     {
     IsChanged(false);
     IsLoaded(false);
@@ -747,7 +747,7 @@ SINT32 REGNRecord::Unload()
     return 1;
     }
 
-SINT32 REGNRecord::WriteRecord(FileWriter &writer)
+int32_t REGNRecord::WriteRecord(FileWriter &writer)
     {
     WRITE(EDID);
     WRITE(ICON);

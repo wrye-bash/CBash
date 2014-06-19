@@ -39,8 +39,8 @@
 #include <sys/utime.h>
 
 int (*printer)(const char * _Format, ...) = &printf;
-SINT32 (*LoggingCallback)(const STRING) = NULL;
-void (*RaiseCallback)(const STRING) = NULL;
+int32_t (*LoggingCallback)(const char *) = NULL;
+void (*RaiseCallback)(const char *) = NULL;
 
 #ifdef CBASH_DEBUG_VARS
     std::map<unsigned long, unsigned long> uint32_uint32_map1;
@@ -62,27 +62,27 @@ void (*RaiseCallback)(const STRING) = NULL;
     std::map<char *, unsigned long> CallCount;
 #endif
 
-const STRING Ex_NULL::__CLR_OR_THIS_CALL what() const
+const char * Ex_NULL::__CLR_OR_THIS_CALL what() const
     {
     return "NULL Pointer";
     }
 
-const STRING Ex_INVALIDINDEX::__CLR_OR_THIS_CALL what() const
+const char * Ex_INVALIDINDEX::__CLR_OR_THIS_CALL what() const
     {
     return "Invalid Index";
     }
 
-const STRING Ex_INVALIDCOLLECTIONINDEX::__CLR_OR_THIS_CALL what() const
+const char * Ex_INVALIDCOLLECTIONINDEX::__CLR_OR_THIS_CALL what() const
     {
     return "Invalid Collection Index";
     }
 
-const STRING Ex_INVALIDMODINDEX::__CLR_OR_THIS_CALL what() const
+const char * Ex_INVALIDMODINDEX::__CLR_OR_THIS_CALL what() const
     {
     return "Invalid Mod Index";
     }
 
-int icmps(const STRING lhs, const STRING rhs)
+int icmps(const char * lhs, const char * rhs)
     {
     if(lhs == rhs)
         return 0;
@@ -93,7 +93,7 @@ int icmps(const STRING lhs, const STRING rhs)
     return _stricmp(lhs, rhs);
     }
 
-int cmps(const STRING lhs, const STRING rhs)
+int cmps(const char * lhs, const char * rhs)
     {
     if(lhs == rhs)
         return 0;
@@ -104,22 +104,22 @@ int cmps(const STRING lhs, const STRING rhs)
     return strcmp(lhs, rhs);
     }
 
-bool sameStr::operator()( const STRING s1, const STRING s2 ) const
+bool sameStr::operator()( const char * s1, const char * s2 ) const
     {
     return icmps(s1, s2) < 0;
     }
 
 #ifdef CBASH_DEBUG_CHUNK
-    void peek_around(unsigned char *position, UINT32 length)
+    void peek_around(unsigned char *position, uint32_t length)
         {
-        for(SINT32 x = length; x > 0; x--)
+        for(int32_t x = length; x > 0; x--)
             printf("%02X ", (position)[-x]);
-        for(UINT32 x = 0; x < length; x++)
+        for(uint32_t x = 0; x < length; x++)
             printf("%02X ", (position)[x]);
         printf("\n\n");
-        for(SINT32 x = length; x > 0; x--)
+        for(int32_t x = length; x > 0; x--)
             printf("%c", (position)[-x]);
-        for(UINT32 x = 0; x < length; x++)
+        for(uint32_t x = 0; x < length; x++)
             printf("%c", (position)[x]);
         printf("\n");
         }
@@ -135,10 +135,10 @@ GenericOp::~GenericOp()
     //
     }
 
-STRING DeGhostModName(STRING const ModName)
+char * DeGhostModName(char * const ModName)
     {
-    STRING NonGhostName = NULL;
-    UINT32 NameLength = (UINT32)strlen(ModName) + 1;
+    char * NonGhostName = NULL;
+    uint32_t NameLength = (uint32_t)strlen(ModName) + 1;
     if(NameLength > 7)
         {
         if(icmps(".ghost",ModName + NameLength - 7) == 0)
@@ -153,16 +153,16 @@ STRING DeGhostModName(STRING const ModName)
     return NULL;
     }
 
-bool FileExists(STRING const FileName)
+bool FileExists(char * const FileName)
     {
     struct stat statBuffer;
     return (stat(FileName, &statBuffer) >= 0 && statBuffer.st_mode & S_IFREG);
     }
 
-STRING GetTemporaryFileName(STRING FileName, bool IsBackup)
+char * GetTemporaryFileName(char * FileName, bool IsBackup)
     {
-    STRING NonGhostName = DeGhostModName(FileName);
-    STRING const &UsedName = NonGhostName ? NonGhostName : FileName;
+    char * NonGhostName = DeGhostModName(FileName);
+    char * const &UsedName = NonGhostName ? NonGhostName : FileName;
     static time_t last_save = time(NULL);
 
     time_t ltime;
@@ -185,10 +185,10 @@ STRING GetTemporaryFileName(STRING FileName, bool IsBackup)
             return NULL;
         }
 
-    STRING temp_extension = IsBackup ? ".bak.%Y_%m_%d_%H_%M_%S" : ".new.%Y_%m_%d_%H_%M_%S";
-    UINT32 name_size = (UINT32)strlen(UsedName);
-    UINT32 temp_size = name_size + (UINT32)strlen(".XXX.XXXX_XX_XX_XX_XX_XX") + 1;
-    STRING temp_name = new char[temp_size];
+    char * temp_extension = IsBackup ? ".bak.%Y_%m_%d_%H_%M_%S" : ".new.%Y_%m_%d_%H_%M_%S";
+    uint32_t name_size = (uint32_t)strlen(UsedName);
+    uint32_t temp_size = name_size + (uint32_t)strlen(".XXX.XXXX_XX_XX_XX_XX_XX") + 1;
+    char * temp_name = new char[temp_size];
 
     strcpy_s(temp_name, temp_size, UsedName);
     delete []NonGhostName;
@@ -196,7 +196,7 @@ STRING GetTemporaryFileName(STRING FileName, bool IsBackup)
 
     //If the new name already exists, add another minute until a free name is available
     //If 10 tries pass, then give up.
-    UINT32 attempts = 0;
+    uint32_t attempts = 0;
     while(FileExists(temp_name))
         {
         if(attempts > 10)
@@ -210,7 +210,7 @@ STRING GetTemporaryFileName(STRING FileName, bool IsBackup)
     return temp_name;
     }
 
-RenameOp::RenameOp(STRING _original_name, STRING _destination_name):
+RenameOp::RenameOp(char * _original_name, char * _destination_name):
     original_name(_original_name),
     destination_name(_destination_name),
     GenericOp()
@@ -247,7 +247,7 @@ bool RenameOp::perform()
         stat(destination_name, &o_time);
         original_times.actime = o_time.st_atime;
         original_times.modtime = o_time.st_mtime;
-        STRING backup_name = GetTemporaryFileName(destination_name, true);
+        char * backup_name = GetTemporaryFileName(destination_name, true);
 
         switch(rename(destination_name, backup_name))
             {
@@ -300,14 +300,14 @@ bool RenameOp::perform()
     return false;
     }
 
-bool AlmostEqual(FLOAT32 A, FLOAT32 B, SINT32 maxUlps)
+bool AlmostEqual(float A, float B, int32_t maxUlps)
     {
-    SINT32 aInt = *(SINT32*)&A;
+    int32_t aInt = *(int32_t*)&A;
     // Make aInt lexicographically ordered as a twos-complement int
     if (aInt < 0)
         aInt = 0x80000000 - aInt;
     // Make bInt lexicographically ordered as a twos-complement int
-    SINT32 bInt = *(SINT32*)&B;
+    int32_t bInt = *(int32_t*)&B;
     if (bInt < 0)
         bInt = 0x80000000 - bInt;
 
@@ -318,7 +318,7 @@ bool AlmostEqual(FLOAT32 A, FLOAT32 B, SINT32 maxUlps)
     return false;
     }
 
-FileWriter::FileWriter(STRING filename, UINT32 size):
+FileWriter::FileWriter(char * filename, uint32_t size):
     file_buffer(NULL),
     record_buffer(NULL),
     compressed_buffer(NULL),
@@ -346,7 +346,7 @@ FileWriter::~FileWriter()
     delete []compressed_buffer;
     }
 
-SINT32 FileWriter::open()
+int32_t FileWriter::open()
     {
     if(fh != -1 || FileName == NULL)
         return -1;
@@ -380,7 +380,7 @@ SINT32 FileWriter::open()
     return 0;
     }
 
-SINT32 FileWriter::close()
+int32_t FileWriter::close()
     {
     if(fh != -1)
         {
@@ -395,7 +395,7 @@ SINT32 FileWriter::close()
     return 0;
     }
 
-void FileWriter::record_write(const void *source, UINT32 length)
+void FileWriter::record_write(const void *source, uint32_t length)
     {
     if(length == 0)
         return;
@@ -420,7 +420,7 @@ void FileWriter::record_write(const void *source, UINT32 length)
     return;
     }
 
-void FileWriter::record_write_subheader(UINT32 signature, UINT32 length)
+void FileWriter::record_write_subheader(uint32_t signature, uint32_t length)
     {
     if(length <= 65535)
         {
@@ -429,7 +429,7 @@ void FileWriter::record_write_subheader(UINT32 signature, UINT32 length)
         }
     else //Requires XXXX SubRecord
         {
-        UINT32 _Temp = 4;
+        uint32_t _Temp = 4;
         record_write("XXXX", 4);
         record_write(&_Temp, 2);
         record_write(&length, 4);
@@ -440,16 +440,16 @@ void FileWriter::record_write_subheader(UINT32 signature, UINT32 length)
     return;
     }
 
-void FileWriter::record_write_subrecord(UINT32 signature, const void *source, UINT32 length)
+void FileWriter::record_write_subrecord(uint32_t signature, const void *source, uint32_t length)
     {
     record_write_subheader(signature, length);
     record_write(source, length);
     return;
     }
 
-UINT32 FileWriter::record_compress()
+uint32_t FileWriter::record_compress()
     {
-    UINT32 compSize = compressBound(record_buffer_used);
+    uLong compSize = compressBound(record_buffer_used);
     if(compSize + 4 > compressed_buffer_size)
         {
         delete []compressed_buffer;
@@ -466,7 +466,7 @@ UINT32 FileWriter::record_compress()
     return record_buffer_used;
     }
 
-UINT32 FileWriter::record_size()
+uint32_t FileWriter::record_size()
     {
     return record_buffer_used;
     }
@@ -478,12 +478,12 @@ void FileWriter::record_flush()
     return;
     }
 
-UINT32 FileWriter::file_tell()
+uint32_t FileWriter::file_tell()
     {
     return file_buffer_used + _tell(fh);
     }
 
-void FileWriter::file_write(const void *source_buffer, UINT32 source_buffer_used)
+void FileWriter::file_write(const void *source_buffer, uint32_t source_buffer_used)
     {
     if(source_buffer_used == 0)
         return;
@@ -520,7 +520,7 @@ void FileWriter::file_write(const void *source_buffer, UINT32 source_buffer_used
     return;
     }
 
-void FileWriter::file_write(UINT32 position, const void *source_buffer, UINT32 source_buffer_used)
+void FileWriter::file_write(uint32_t position, const void *source_buffer, uint32_t source_buffer_used)
     {
     //Back written data must not advance past the current tell / file_buffer_used
     if(source_buffer_used == 0)
@@ -536,9 +536,9 @@ void FileWriter::file_write(UINT32 position, const void *source_buffer, UINT32 s
         printer("FileWriter::file_write: Error - Unable to write. Source buffer is NULL.\n");
         return;
         }
-    SINT32 curPos = _tell(fh);
+    int32_t curPos = _tell(fh);
 
-    if(position < (UINT32)curPos)
+    if(position < (uint32_t)curPos)
         {
         //It has already been written to disk.
         _lseek(fh, position, SEEK_SET);
@@ -558,7 +558,7 @@ void FileWriter::file_write(UINT32 position, const void *source_buffer, UINT32 s
     return;
     }
 
-FormIDHandlerClass::FormIDHandlerClass(std::vector<STRING> &_MAST, UINT32 &_NextObject):
+FormIDHandlerClass::FormIDHandlerClass(std::vector<char *> &_MAST, uint32_t &_NextObject):
     MAST(_MAST),
     nextObject(_NextObject),
     ExpandedIndex(0),
@@ -577,7 +577,7 @@ FormIDHandlerClass::~FormIDHandlerClass()
     //
     }
 
-void FormIDHandlerClass::SetLoadOrder(std::vector<STRING> &cLoadOrder)
+void FormIDHandlerClass::SetLoadOrder(std::vector<char *> &cLoadOrder)
     {
     if(cLoadOrder.size() > 0xFF)
         {
@@ -589,7 +589,7 @@ void FormIDHandlerClass::SetLoadOrder(std::vector<STRING> &cLoadOrder)
     return;
     }
 
-UINT32 FormIDHandlerClass::NextExpandedFormID()
+uint32_t FormIDHandlerClass::NextExpandedFormID()
     {
     //0x00FFFFFF is the highest formID that can be used.
     if(++nextObject >= 0x01000000)
@@ -608,25 +608,25 @@ void FormIDHandlerClass::UpdateFormIDLookup()
 
     //The Collapsed lookup table has to be updated anytime the mod's masters change.
     //It also sorts the masters based on the load order
-    UINT32 numMods = (UINT32)LoadOrder255.size();
-    STRING curMaster = NULL;
-    CollapsedIndex = (UINT8)MAST.size();
+    uint32_t numMods = (uint32_t)LoadOrder255.size();
+    char * curMaster = NULL;
+    CollapsedIndex = (uint8_t)MAST.size();
     //By default, every in memory modIndex maps to the on disk modIndex of the mod
-    for(UINT16 p = 0; p <= 0xFF; ++p)
-        CollapseTable[(UINT8)p] = CollapsedIndex;
+    for(uint16_t p = 0; p <= 0xFF; ++p)
+        CollapseTable[(uint8_t)p] = CollapsedIndex;
 
     //Go ahead and sort the masters now since it can't otherwise be done without
     // screwing up the CollapseTable
-    std::vector<STRING> sortedMAST;
+    std::vector<char *> sortedMAST;
     sortedMAST.reserve(CollapsedIndex);
-    for(UINT32 x = 0; x < LoadOrder255.size(); ++x)
+    for(uint32_t x = 0; x < LoadOrder255.size(); ++x)
         {
-        curMaster = LoadOrder255[(UINT8)x];
-        for(UINT16 y = 0; y < CollapsedIndex; ++y)
+        curMaster = LoadOrder255[(uint8_t)x];
+        for(uint16_t y = 0; y < CollapsedIndex; ++y)
             {
-            if(icmps(curMaster, MAST[(UINT8)y]) == 0)
+            if(icmps(curMaster, MAST[(uint8_t)y]) == 0)
                 {
-                sortedMAST.push_back(MAST[(UINT8)y]);
+                sortedMAST.push_back(MAST[(uint8_t)y]);
                 break;
                 }
             }
@@ -640,28 +640,28 @@ void FormIDHandlerClass::UpdateFormIDLookup()
     // to the on disk modIndex
     //The CollapseTable is essentially the same for every mod, except for the defaulted
     // fields.
-    for(UINT16 p = 0; p < CollapsedIndex; ++p)
+    for(uint16_t p = 0; p < CollapsedIndex; ++p)
         {
-        curMaster = MAST[(UINT8)p] = sortedMAST[(UINT8)p];
+        curMaster = MAST[(uint8_t)p] = sortedMAST[(uint8_t)p];
         //printer("master %s\n", curMaster);
-        for(UINT32 y = 0; y < numMods; ++y)
-            if(icmps(LoadOrder255[(UINT8)y], curMaster) == 0)
+        for(uint32_t y = 0; y < numMods; ++y)
+            if(icmps(LoadOrder255[(uint8_t)y], curMaster) == 0)
                 {
-                CollapseTable[(UINT8)y] = (UINT8)p;
-                //printer("%02X == %02X\n", (UINT8)y, (UINT8)p);
+                CollapseTable[(uint8_t)y] = (uint8_t)p;
+                //printer("%02X == %02X\n", (uint8_t)y, (uint8_t)p);
                 break;
                 }
         }
     //printer("Collapse table updated.\n");
     //printer("Existing expand table: %02X\n", ExpandedIndex);
-    //for(UINT32 y = 0; y <= 0xFF; ++y)
-    //    printer("%02X == %02X\n", (UINT8)y, ExpandTable[(UINT8)y]);
+    //for(uint32_t y = 0; y <= 0xFF; ++y)
+    //    printer("%02X == %02X\n", (uint8_t)y, ExpandTable[(uint8_t)y]);
     //printer("End expand table.\n");
     sortedMAST.clear();
     return;
     }
 
-void FormIDHandlerClass::CreateFormIDLookup(const UINT8 expandedIndex)
+void FormIDHandlerClass::CreateFormIDLookup(const uint8_t expandedIndex)
     {
     //Each ModFile maintains a formID resolution lookup table of valid modIndexs
     //both when expanded into a load order corrected format
@@ -674,38 +674,38 @@ void FormIDHandlerClass::CreateFormIDLookup(const UINT8 expandedIndex)
     //be set to the proper load order corrected value.
     //This can only be done because the load order is finalized once the mods are loaded.
 
-    UINT32 numMods = (UINT32)LoadOrder255.size();
-    STRING curMaster = NULL;
+    uint32_t numMods = (uint32_t)LoadOrder255.size();
+    char * curMaster = NULL;
 
-    CollapsedIndex = (UINT8)MAST.size();
+    CollapsedIndex = (uint8_t)MAST.size();
     ExpandedIndex = expandedIndex;
 
     //By default, every in memory modIndex maps to the on disk modIndex of the mod
     //By default, every on disk modIndex maps to the in memory modIndex of the mod
-    for(UINT16 p = 0; p <= 0xFF; ++p)
+    for(uint16_t p = 0; p <= 0xFF; ++p)
         {
-        CollapseTable[(UINT8)p] = CollapsedIndex;
-        ExpandTable[(UINT8)p] = ExpandedIndex;
+        CollapseTable[(uint8_t)p] = CollapsedIndex;
+        ExpandTable[(uint8_t)p] = ExpandedIndex;
         }
 
     //Map every on disk modIndex to its in memory modIndex and vice versa
-    for(UINT16 p = 0; p < CollapsedIndex; ++p)
+    for(uint16_t p = 0; p < CollapsedIndex; ++p)
         {
-        curMaster = MAST[(UINT8)p];
-        for(UINT32 y = 0; y < numMods; ++y)
-            if(icmps(LoadOrder255[(UINT8)y], curMaster) == 0)
+        curMaster = MAST[(uint8_t)p];
+        for(uint32_t y = 0; y < numMods; ++y)
+            if(icmps(LoadOrder255[(uint8_t)y], curMaster) == 0)
                 {
-                ExpandTable[(UINT8)p] = (UINT8)y;
-                CollapseTable[(UINT8)y] = (UINT8)p;
+                ExpandTable[(uint8_t)p] = (uint8_t)y;
+                CollapseTable[(uint8_t)y] = (uint8_t)p;
                 break;
                 }
         }
     return;
     }
 
-void FormIDHandlerClass::AddMaster(STRING const curMaster)
+void FormIDHandlerClass::AddMaster(char * const curMaster)
     {
-    UINT32 size = (UINT32)strlen(curMaster) + 1;
+    uint32_t size = (uint32_t)strlen(curMaster) + 1;
     MAST.push_back(new char[size]);
     memcpy(MAST.back(), curMaster, size);
 
@@ -733,7 +733,7 @@ CreationFlags::CreationFlags():
     //
     }
 
-CreationFlags::CreationFlags(UINT32 nFlags):
+CreationFlags::CreationFlags(uint32_t nFlags):
     SetAsOverride((nFlags & fSetAsOverride) != 0),
     CopyWinningParent((nFlags & fCopyWinningParent) != 0),
     ExistingReturned(false)
@@ -746,9 +746,9 @@ CreationFlags::~CreationFlags()
     //
     }
 
-UINT32 CreationFlags::GetFlags()
+uint32_t CreationFlags::GetFlags()
     {
-    UINT32 flags = 0;
+    uint32_t flags = 0;
     if(SetAsOverride)
         flags |= fSetAsOverride;
     if(CopyWinningParent)
@@ -776,7 +776,7 @@ ModFlags::ModFlags():
     //
     }
 
-ModFlags::ModFlags(UINT32 _Flags):
+ModFlags::ModFlags(uint32_t _Flags):
     IsMinLoad((_Flags & fIsMinLoad) != 0 && (_Flags & fIsFullLoad) == 0),
     IsFullLoad((_Flags & fIsFullLoad) != 0),
     IsNoLoad(!(IsMinLoad || IsFullLoad)),
@@ -802,9 +802,9 @@ ModFlags::~ModFlags()
     //
     }
 
-UINT32 ModFlags::GetFlags()
+uint32_t ModFlags::GetFlags()
     {
-    UINT32 flags = 0;
+    uint32_t flags = 0;
     if(IsMinLoad)
         flags |= fIsMinLoad;
     if(IsFullLoad)
@@ -854,7 +854,7 @@ SaveFlags::SaveFlags():
     //
     }
 
-SaveFlags::SaveFlags(UINT32 _Flags):
+SaveFlags::SaveFlags(uint32_t _Flags):
     IsCleanMasters((_Flags & fIsCleanMasters) != 0),
     IsCloseCollection((_Flags & fIsCloseCollection) != 0)
     {
@@ -895,7 +895,7 @@ StringRecord::StringRecord(const StringRecord &p):
         }
     else
         {
-        UINT32 size = p.GetSize();
+        uint32_t size = p.GetSize();
         VAL_NAME = new char[size];
         memcpy(VAL_NAME, p.VAL_NAME, size);
         }
@@ -907,13 +907,13 @@ StringRecord::~StringRecord()
         delete []VAL_NAME;
     }
 
-UINT32 StringRecord::GetSize() const
+uint32_t StringRecord::GetSize() const
     {
-    return VAL_NAME != NULL ? (UINT32)strlen((S_GET_VALUE)) + 1 : 0;
+    return VAL_NAME != NULL ? (uint32_t)strlen((S_GET_VALUE)) + 1 : 0;
     }
 
 #ifndef CBASH_X64_COMPATIBILITY
-    STRING StringRecord::GetString()
+    char * StringRecord::GetString()
         {
         return S_GET_VALUE;
         }
@@ -938,7 +938,7 @@ void StringRecord::Unload()
         }
     }
 
-bool StringRecord::Read(unsigned char *&buffer, const UINT32 &subSize, const bool &CompressedOnDisk)
+bool StringRecord::Read(unsigned char *&buffer, const uint32_t &subSize, const bool &CompressedOnDisk)
     {
     if(IsLoaded())
         {
@@ -960,16 +960,16 @@ bool StringRecord::Read(unsigned char *&buffer, const UINT32 &subSize, const boo
     return true;
     }
 
-void StringRecord::Write(UINT32 _Type, FileWriter &writer)
+void StringRecord::Write(uint32_t _Type, FileWriter &writer)
     {
     if((S_GET_VALUE) != NULL)
-        writer.record_write_subrecord(_Type, (S_GET_VALUE), (UINT32)strlen((S_GET_VALUE)) + 1);
+        writer.record_write_subrecord(_Type, (S_GET_VALUE), (uint32_t)strlen((S_GET_VALUE)) + 1);
     }
 
-void StringRecord::ReqWrite(UINT32 _Type, FileWriter &writer)
+void StringRecord::ReqWrite(uint32_t _Type, FileWriter &writer)
     {
     if((S_GET_VALUE) != NULL)
-        writer.record_write_subrecord(_Type, (S_GET_VALUE), (UINT32)strlen((S_GET_VALUE)) + 1);
+        writer.record_write_subrecord(_Type, (S_GET_VALUE), (uint32_t)strlen((S_GET_VALUE)) + 1);
     else
         {
         char null = 0x00;
@@ -977,25 +977,25 @@ void StringRecord::ReqWrite(UINT32 _Type, FileWriter &writer)
         }
     }
 
-void StringRecord::Copy(STRING FieldValue)
+void StringRecord::Copy(char * FieldValue)
     {
     Unload();
     if(FieldValue != NULL)
         {
         S_SET_ON_DISK(false);
-        UINT32 size = (UINT32)strlen(FieldValue) + 1;
+        uint32_t size = (uint32_t)strlen(FieldValue) + 1;
         VAL_NAME = new char[size];
         memcpy(VAL_NAME, FieldValue, size);
         }
     }
 
-void StringRecord::TruncateCopy(STRING FieldValue, UINT32 MaxSize)
+void StringRecord::TruncateCopy(char * FieldValue, uint32_t MaxSize)
     {
     Unload();
     if(FieldValue != NULL)
         {
         S_SET_ON_DISK(false);
-        UINT32 size = (UINT32)strlen(FieldValue) + 1;
+        uint32_t size = (uint32_t)strlen(FieldValue) + 1;
         if(MaxSize > size)
             size = MaxSize;
         VAL_NAME = new char[size];
@@ -1027,7 +1027,7 @@ StringRecord& StringRecord::operator = (const StringRecord &rhs)
         else if(rhs.VAL_NAME != NULL)
             {
             S_SET_ON_DISK(false);
-            UINT32 size = (UINT32)strlen(rhs.VAL_NAME) + 1;
+            uint32_t size = (uint32_t)strlen(rhs.VAL_NAME) + 1;
             VAL_NAME = new char[size];
             memcpy(VAL_NAME, rhs.VAL_NAME, size);
             }
@@ -1056,7 +1056,7 @@ NonNullStringRecord::NonNullStringRecord(const NonNullStringRecord &p):
         }
     else
         {
-        UINT32 size = p.GetSize();
+        uint32_t size = p.GetSize();
         _value = new char[size];
         memcpy(_value, p._value, size);
         }
@@ -1068,18 +1068,18 @@ NonNullStringRecord::~NonNullStringRecord()
         delete []_value;
     }
 
-UINT32 NonNullStringRecord::GetSize() const
+uint32_t NonNullStringRecord::GetSize() const
     {
-    return _value != NULL ? (DiskSize ? DiskSize : (UINT32)strlen(_value)) : 0;
+    return _value != NULL ? (DiskSize ? DiskSize : (uint32_t)strlen(_value)) : 0;
     }
 
-STRING NonNullStringRecord::GetString()
+char * NonNullStringRecord::GetString()
     {
     if(DiskSize != 0)
         {
         //Have to sanitize the string before letting it be used
         //The string needs a null terminator added, so load it from disk
-        STRING nvalue = new char[DiskSize + 1];
+        char * nvalue = new char[DiskSize + 1];
         nvalue[DiskSize] = 0x00;
         memcpy(nvalue, _value, DiskSize);
         _value = nvalue;
@@ -1107,7 +1107,7 @@ void NonNullStringRecord::Unload()
         }
     }
 
-bool NonNullStringRecord::Read(unsigned char *&buffer, const UINT32 &subSize, const bool &CompressedOnDisk)
+bool NonNullStringRecord::Read(unsigned char *&buffer, const uint32_t &subSize, const bool &CompressedOnDisk)
     {
     if(IsLoaded())
         {
@@ -1129,26 +1129,26 @@ bool NonNullStringRecord::Read(unsigned char *&buffer, const UINT32 &subSize, co
     return true;
     }
 
-void NonNullStringRecord::Write(UINT32 _Type, FileWriter &writer)
+void NonNullStringRecord::Write(uint32_t _Type, FileWriter &writer)
     {
     if(_value != NULL)
-        writer.record_write_subrecord(_Type, _value, DiskSize ? DiskSize : (UINT32)strlen(_value));
+        writer.record_write_subrecord(_Type, _value, DiskSize ? DiskSize : (uint32_t)strlen(_value));
     }
 
 void NonNullStringRecord::Write16(FileWriter &writer) const
     {
     if (_value != NULL)
     {
-        UINT16 size = DiskSize ? (UINT16)DiskSize : (UINT16)strlen(_value);
+        uint16_t size = DiskSize ? (uint16_t)DiskSize : (uint16_t)strlen(_value);
         writer.record_write(&size, sizeof(size));
         writer.record_write(_value, size);
     }
     }
 
-void NonNullStringRecord::ReqWrite(UINT32 _Type, FileWriter &writer)
+void NonNullStringRecord::ReqWrite(uint32_t _Type, FileWriter &writer)
     {
     if(_value != NULL)
-        writer.record_write_subrecord(_Type, _value, DiskSize ? DiskSize : (UINT32)strlen(_value));
+        writer.record_write_subrecord(_Type, _value, DiskSize ? DiskSize : (uint32_t)strlen(_value));
     else
         {
         char null = 0x00;
@@ -1156,13 +1156,13 @@ void NonNullStringRecord::ReqWrite(UINT32 _Type, FileWriter &writer)
         }
     }
 
-void NonNullStringRecord::Copy(STRING FieldValue)
+void NonNullStringRecord::Copy(char * FieldValue)
     {
     Unload();
     if(FieldValue != NULL)
         {
         DiskSize = 0;
-        UINT32 size = (UINT32)strlen(FieldValue) + 1;
+        uint32_t size = (uint32_t)strlen(FieldValue) + 1;
         _value = new char[size];
         memcpy(_value, FieldValue, size);
         }
@@ -1191,7 +1191,7 @@ NonNullStringRecord& NonNullStringRecord::operator = (const NonNullStringRecord 
         else if(rhs._value != NULL)
             {
             DiskSize = 0;
-            UINT32 size = (UINT32)strlen(rhs._value) + 1;
+            uint32_t size = (uint32_t)strlen(rhs._value) + 1;
             _value = new char[size];
             memcpy(_value, rhs._value, size);
             }
@@ -1209,14 +1209,14 @@ UnorderedPackedStrings::~UnorderedPackedStrings()
     Unload();
     }
 
-UINT32 UnorderedPackedStrings::GetSize() const
+uint32_t UnorderedPackedStrings::GetSize() const
     {
     if(value.size())
         {
-        UINT32 cSize = 1; //final null terminator
-        for(UINT32 p = 0; p < value.size(); p++)
+        uint32_t cSize = 1; //final null terminator
+        for(uint32_t p = 0; p < value.size(); p++)
             if(value[p] != NULL)
-                cSize += (UINT32)strlen(value[p]) + 1;
+                cSize += (uint32_t)strlen(value[p]) + 1;
         return cSize == 1 ? 0 : cSize;
         }
     return 0;
@@ -1234,15 +1234,15 @@ void UnorderedPackedStrings::Load()
 
 void UnorderedPackedStrings::Unload()
     {
-    for(UINT32 x = 0; x < value.size(); ++x)
+    for(uint32_t x = 0; x < value.size(); ++x)
         delete value[x];
     value.clear();
     }
 
-void UnorderedPackedStrings::resize(UINT32 newSize)
+void UnorderedPackedStrings::resize(uint32_t newSize)
     {
     //Shrink
-    UINT32 size = (UINT32)value.size();
+    uint32_t size = (uint32_t)value.size();
     for(; size > newSize;)
         delete value[--size];
     value.resize(newSize);
@@ -1251,25 +1251,25 @@ void UnorderedPackedStrings::resize(UINT32 newSize)
         value[size++] = NULL;
     }
 
-bool UnorderedPackedStrings::Read(unsigned char *&buffer, const UINT32 &subSize)
+bool UnorderedPackedStrings::Read(unsigned char *&buffer, const uint32_t &subSize)
     {
     if(value.size() != 0)
         {
         buffer += subSize;
         return false;
         }
-    STRING curString = NULL;
+    char * curString = NULL;
 
     for(unsigned char *end_buffer = buffer + subSize;buffer < (end_buffer - 1);)
         {
-        if(((STRING)buffer)[0] == 0x00)
+        if(((char *)buffer)[0] == 0x00)
             {
             buffer++;
             continue;
             }
-        UINT32 size = (UINT32)strlen((STRING)buffer) + 1;
+        uint32_t size = (uint32_t)strlen((char *)buffer) + 1;
         curString = new char[size];
-        strcpy_s(curString, size, (STRING)buffer);
+        strcpy_s(curString, size, (char *)buffer);
         value.push_back(curString);
         buffer += size;
         }
@@ -1277,28 +1277,28 @@ bool UnorderedPackedStrings::Read(unsigned char *&buffer, const UINT32 &subSize)
     return true;
     }
 
-void UnorderedPackedStrings::Write(UINT32 _Type, FileWriter &writer)
+void UnorderedPackedStrings::Write(uint32_t _Type, FileWriter &writer)
     {
     if(value.size())
         {
         writer.record_write_subheader(_Type, GetSize());
-        for(UINT32 p = 0; p < value.size(); p++)
+        for(uint32_t p = 0; p < value.size(); p++)
             if(value[p] != NULL)
-                writer.record_write(value[p], (UINT32)strlen(value[p]) + 1);
-        UINT8 cSize = 0x00;
+                writer.record_write(value[p], (uint32_t)strlen(value[p]) + 1);
+        uint8_t cSize = 0x00;
         //write final null terminator
         writer.record_write(&cSize, 1);
         }
     }
 
-void UnorderedPackedStrings::Copy(STRINGARRAY FieldValue, UINT32 ArraySize)
+void UnorderedPackedStrings::Copy(STRINGARRAY FieldValue, uint32_t ArraySize)
     {
     resize(ArraySize);
-    for(UINT32 x = 0; x < ArraySize; x++)
+    for(uint32_t x = 0; x < ArraySize; x++)
         {
         if(((STRINGARRAY)FieldValue)[x] != NULL)
             {
-            UINT32 size = (UINT32)strlen(((STRINGARRAY)FieldValue)[x]) + 1;
+            uint32_t size = (uint32_t)strlen(((STRINGARRAY)FieldValue)[x]) + 1;
             value[x] = new char[size];
             memcpy(value[x], ((STRINGARRAY)FieldValue)[x], size);
             }
@@ -1313,12 +1313,12 @@ UnorderedPackedStrings& UnorderedPackedStrings::operator = (const UnorderedPacke
         if(rhs.value.size() != 0)
             {
             value.resize(rhs.value.size());
-            UINT32 size = 0;
-            for(UINT32 p = 0; p < rhs.value.size(); p++)
+            uint32_t size = 0;
+            for(uint32_t p = 0; p < rhs.value.size(); p++)
                 {
                 if(rhs.value[p] != NULL)
                     {
-                    size = (UINT32)strlen(rhs.value[p]) + 1;
+                    size = (uint32_t)strlen(rhs.value[p]) + 1;
                     value[p] = new char[size];
                     strcpy_s(value[p], size, rhs.value[p]);
                     }
@@ -1334,7 +1334,7 @@ bool UnorderedPackedStrings::equals(const UnorderedPackedStrings &other) const
     //Equality testing should use a set or somesuch
     if(value.size() == other.value.size())
         {
-        for(UINT32 x = 0; x < value.size(); ++x)
+        for(uint32_t x = 0; x < value.size(); ++x)
             if(cmps(value[x], other.value[x]) != 0)
                 return false;
         return true;
@@ -1348,7 +1348,7 @@ bool UnorderedPackedStrings::equalsi(const UnorderedPackedStrings &other) const
     //Equality testing should use a set or somesuch
     if(value.size() == other.value.size())
         {
-        for(UINT32 x = 0; x < value.size(); ++x)
+        for(uint32_t x = 0; x < value.size(); ++x)
             if(icmps(value[x], other.value[x]) != 0)
                 return false;
         return true;
@@ -1384,7 +1384,7 @@ RawRecord::~RawRecord()
         delete []value;
     }
 
-UINT32 RawRecord::GetSize() const
+uint32_t RawRecord::GetSize() const
     {
     return size & ~fIsOnDisk;
     }
@@ -1409,7 +1409,7 @@ void RawRecord::Unload()
         }
     }
 
-bool RawRecord::Read(unsigned char *&buffer, const UINT32 &subSize, const bool &CompressedOnDisk)
+bool RawRecord::Read(unsigned char *&buffer, const uint32_t &subSize, const bool &CompressedOnDisk)
     {
     if(IsLoaded())
         {
@@ -1431,13 +1431,13 @@ bool RawRecord::Read(unsigned char *&buffer, const UINT32 &subSize, const bool &
     return true;
     }
 
-void RawRecord::Write(UINT32 _Type, FileWriter &writer)
+void RawRecord::Write(uint32_t _Type, FileWriter &writer)
     {
     if(value != NULL)
         writer.record_write_subrecord(_Type, value, size & ~fIsOnDisk);
     }
 
-void RawRecord::ReqWrite(UINT32 _Type, FileWriter &writer)
+void RawRecord::ReqWrite(uint32_t _Type, FileWriter &writer)
     {
     if(value != NULL)
         writer.record_write_subrecord(_Type, value, size & ~fIsOnDisk);
@@ -1448,7 +1448,7 @@ void RawRecord::ReqWrite(UINT32 _Type, FileWriter &writer)
         }
     }
 
-void RawRecord::Copy(unsigned char *FieldValue, UINT32 nSize)
+void RawRecord::Copy(unsigned char *FieldValue, uint32_t nSize)
     {
     Unload();
     if(FieldValue != NULL)
@@ -1496,7 +1496,7 @@ bool RawRecord::operator !=(const RawRecord &other) const
     return !(*this == other);
     }
 
-bool ReadChunk(unsigned char *&buffer, const UINT32 &buffer_size, void *dest_buffer, const UINT32 &dest_buffer_size, const bool &skip_load)
+bool ReadChunk(unsigned char *&buffer, const uint32_t &buffer_size, void *dest_buffer, const uint32_t &dest_buffer_size, const bool &skip_load)
     {
     if(skip_load)
         {
@@ -1530,7 +1530,7 @@ bool ReadChunk(unsigned char *&buffer, const UINT32 &buffer_size, void *dest_buf
     return true;
     }
 
-const UINT32 VATSFunction_Argument[] =
+const uint32_t VATSFunction_Argument[] =
     {
     eFORMID,
     eFORMID,
@@ -2380,875 +2380,875 @@ Function_ArgumentsType Function_ArgumentsInit[] =
 
 Function_NameType Function_NameInit[] =
     {
-    Function_NameType(731, (STRING)"CanFlyHere"),
-    Function_NameType(153, (STRING)"CanHaveFlames"),
-    Function_NameType(127, (STRING)"CanPayCrimeGold"),
-    Function_NameType(497, (STRING)"CanPayCrimeGold"),
-    Function_NameType(607, (STRING)"ChallengeLocked"),
-    Function_NameType(726, (STRING)"DoesNotExist"),
-    Function_NameType(501, (STRING)"EPAlchemyEffectHasKeyword"),
-    Function_NameType(500, (STRING)"EPAlchemyGetMakingPoison"),
-    Function_NameType(693, (STRING)"EPMagic_SpellHasKeyword"),
-    Function_NameType(696, (STRING)"EPMagic_SpellHasSkill"),
-    Function_NameType(691, (STRING)"EPModSkillUsage_AdvancedObjectHasKeyword"),
-    Function_NameType(692, (STRING)"EPModSkillUsage_IsAdvancedAction"),
-    Function_NameType(681, (STRING)"EPModSkillUsage_IsAdvancedSkill"),
-    Function_NameType(660, (STRING)"EPTemperingItemHasKeyword"),
-    Function_NameType(659, (STRING)"EPTemperingItemIsEnchanted"),
-    Function_NameType(724, (STRING)"EffectWasDualCast"),
-    Function_NameType(414, (STRING)"Exists"),
-    Function_NameType(680, (STRING)"GetActivationHeight"),
-    Function_NameType(118, (STRING)"GetActorAggroRadiusViolated"),
-    Function_NameType(458, (STRING)"GetActorCrimePlayerEnemy"),
-    Function_NameType(460, (STRING)"GetActorFactionPlayerEnemy"),
-    Function_NameType(14, (STRING)"GetActorValue"),
-    Function_NameType(640, (STRING)"GetActorValuePercent"),
-    Function_NameType(554, (STRING)"GetActorsInHigh"),
-    Function_NameType(557, (STRING)"GetActorsInHigh"),
-    Function_NameType(61, (STRING)"GetAlarmed"),
-    Function_NameType(503, (STRING)"GetAllowWorldInteractions"),
-    Function_NameType(190, (STRING)"GetAmountSoldStolen"),
-    Function_NameType(8, (STRING)"GetAngle"),
-    Function_NameType(219, (STRING)"GetAnimAction"),
-    Function_NameType(81, (STRING)"GetArmorRating"),
-    Function_NameType(274, (STRING)"GetArmorRatingUpperBody"),
-    Function_NameType(656, (STRING)"GetArrestedState"),
-    Function_NameType(657, (STRING)"GetArrestingActor"),
-    Function_NameType(574, (STRING)"GetAttackState"),
-    Function_NameType(63, (STRING)"GetAttacked"),
-    Function_NameType(264, (STRING)"GetBarterGold"),
-    Function_NameType(277, (STRING)"GetBaseActorValue"),
-    Function_NameType(654, (STRING)"GetBribeSuccess"),
-    Function_NameType(396, (STRING)"GetCauseofDeath"),
-    Function_NameType(229, (STRING)"GetClassDefaultMatch"),
-    Function_NameType(41, (STRING)"GetClothingValue"),
-    Function_NameType(709, (STRING)"GetCombatGroupMemberCount"),
-    Function_NameType(707, (STRING)"GetCombatTargetHasKeyword"),
-    Function_NameType(488, (STRING)"GetConcussed"),
-    Function_NameType(489, (STRING)"GetConcussed"),
-    Function_NameType(122, (STRING)"GetCrime"),
-    Function_NameType(116, (STRING)"GetCrimeGold"),
-    Function_NameType(459, (STRING)"GetCrimeGold"),
-    Function_NameType(376, (STRING)"GetCrimeGoldNonviolent"),
-    Function_NameType(375, (STRING)"GetCrimeGoldViolent"),
-    Function_NameType(110, (STRING)"GetCurrentAIPackage"),
-    Function_NameType(143, (STRING)"GetCurrentAIProcedure"),
-    Function_NameType(571, (STRING)"GetCurrentCastingType"),
-    Function_NameType(572, (STRING)"GetCurrentDeliveryType"),
-    Function_NameType(676, (STRING)"GetCurrentShoutVariation"),
-    Function_NameType(18, (STRING)"GetCurrentTime"),
-    Function_NameType(148, (STRING)"GetCurrentWeatherPercent"),
-    Function_NameType(170, (STRING)"GetDayOfWeek"),
-    Function_NameType(499, (STRING)"GetDaysInJail"),
-    Function_NameType(46, (STRING)"GetDead"),
-    Function_NameType(84, (STRING)"GetDeadCount"),
-    Function_NameType(203, (STRING)"GetDestroyed"),
-    Function_NameType(470, (STRING)"GetDestructionStage"),
-    Function_NameType(471, (STRING)"GetDestructionStage"),
-    Function_NameType(45, (STRING)"GetDetected"),
-    Function_NameType(180, (STRING)"GetDetectionLevel"),
-    Function_NameType(434, (STRING)"GetDialogEmotion"),
-    Function_NameType(435, (STRING)"GetDialogEmotionValue"),
-    Function_NameType(436, (STRING)"GetDialogueEmotionValue"),
-    Function_NameType(35, (STRING)"GetDisabled"),
-    Function_NameType(39, (STRING)"GetDisease"),
-    Function_NameType(76, (STRING)"GetDisposition"),
-    Function_NameType(1, (STRING)"GetDistance"),
-    Function_NameType(215, (STRING)"GetDoorDefaultOpen"),
-    Function_NameType(182, (STRING)"GetEquipped"),
-    Function_NameType(597, (STRING)"GetEquippedItemType"),
-    Function_NameType(579, (STRING)"GetEquippedShout"),
-    Function_NameType(576, (STRING)"GetEventData"),
-    Function_NameType(410, (STRING)"GetFactionCombatReaction"),
-    Function_NameType(411, (STRING)"GetFactionCombatReaction"),
-    Function_NameType(73, (STRING)"GetFactionRank"),
-    Function_NameType(60, (STRING)"GetFactionRankDifference"),
-    Function_NameType(449, (STRING)"GetFactionRelation"),
-    Function_NameType(128, (STRING)"GetFatiguePercentage"),
-    Function_NameType(633, (STRING)"GetFlyingState"),
-    Function_NameType(288, (STRING)"GetFriendHit"),
-    Function_NameType(160, (STRING)"GetFurnitureMarkerID"),
-    Function_NameType(74, (STRING)"GetGlobalValue"),
-    Function_NameType(48, (STRING)"GetGold"),
-    Function_NameType(447, (STRING)"GetGraphVariableFloat"),
-    Function_NameType(675, (STRING)"GetGraphVariableInt"),
-    Function_NameType(415, (STRING)"GetGroupMemberCount"),
-    Function_NameType(416, (STRING)"GetGroupTargetCount"),
-    Function_NameType(417, (STRING)"GetGroupTargetCount"),
-    Function_NameType(381, (STRING)"GetHasNote"),
-    Function_NameType(382, (STRING)"GetHasNote"),
-    Function_NameType(99, (STRING)"GetHeadingAngle"),
-    Function_NameType(430, (STRING)"GetHealthPercentage"),
-    Function_NameType(431, (STRING)"GetHealthPercentage"),
-    Function_NameType(615, (STRING)"GetHighestRelationshipRank"),
-    Function_NameType(390, (STRING)"GetHitLocation"),
-    Function_NameType(318, (STRING)"GetIdleDoneOnce"),
-    Function_NameType(192, (STRING)"GetIgnoreCrime"),
-    Function_NameType(338, (STRING)"GetIgnoreFriendlyHits"),
-    Function_NameType(67, (STRING)"GetInCell"),
-    Function_NameType(230, (STRING)"GetInCellParam"),
-    Function_NameType(624, (STRING)"GetInContainer"),
-    Function_NameType(359, (STRING)"GetInCurrentLoc"),
-    Function_NameType(360, (STRING)"GetInCurrentLocAlias"),
-    Function_NameType(444, (STRING)"GetInCurrentLocFormList"),
-    Function_NameType(71, (STRING)"GetInFaction"),
-    Function_NameType(32, (STRING)"GetInSameCell"),
-    Function_NameType(652, (STRING)"GetInSharedCrimeFaction"),
-    Function_NameType(310, (STRING)"GetInWorldspace"),
-    Function_NameType(445, (STRING)"GetInZone"),
-    Function_NameType(533, (STRING)"GetInfamy"),
-    Function_NameType(535, (STRING)"GetInfamyNonViolent"),
-    Function_NameType(534, (STRING)"GetInfamyViolent"),
-    Function_NameType(655, (STRING)"GetIntimidateSuccess"),
-    Function_NameType(305, (STRING)"GetInvestmentGold"),
-    Function_NameType(91, (STRING)"GetIsAlerted"),
-    Function_NameType(566, (STRING)"GetIsAliasRef"),
-    Function_NameType(473, (STRING)"GetIsAlignment"),
-    Function_NameType(474, (STRING)"GetIsAlignment"),
-    Function_NameType(68, (STRING)"GetIsClass"),
-    Function_NameType(228, (STRING)"GetIsClassDefault"),
-    Function_NameType(646, (STRING)"GetIsCrashLandRequest"),
-    Function_NameType(64, (STRING)"GetIsCreature"),
-    Function_NameType(437, (STRING)"GetIsCreatureType"),
-    Function_NameType(438, (STRING)"GetIsCreatureType"),
-    Function_NameType(152, (STRING)"GetIsCrimeFaction"),
-    Function_NameType(161, (STRING)"GetIsCurrentPackage"),
-    Function_NameType(149, (STRING)"GetIsCurrentWeather"),
-    Function_NameType(567, (STRING)"GetIsEditorLocAlias"),
-    Function_NameType(565, (STRING)"GetIsEditorLocation"),
-    Function_NameType(594, (STRING)"GetIsFlying"),
-    Function_NameType(237, (STRING)"GetIsGhost"),
-    Function_NameType(647, (STRING)"GetIsHastyLandRequest"),
-    Function_NameType(72, (STRING)"GetIsID"),
-    Function_NameType(645, (STRING)"GetIsInjured"),
-    Function_NameType(519, (STRING)"GetIsLockBroken"),
-    Function_NameType(432, (STRING)"GetIsObjectType"),
-    Function_NameType(433, (STRING)"GetIsObjectType"),
-    Function_NameType(254, (STRING)"GetIsPlayableRace"),
-    Function_NameType(224, (STRING)"GetIsPlayerBirthsign"),
-    Function_NameType(69, (STRING)"GetIsRace"),
-    Function_NameType(136, (STRING)"GetIsReference"),
-    Function_NameType(70, (STRING)"GetIsSex"),
-    Function_NameType(246, (STRING)"GetIsUsedItem"),
-    Function_NameType(479, (STRING)"GetIsUsedItemEquipType"),
-    Function_NameType(247, (STRING)"GetIsUsedItemType"),
-    Function_NameType(426, (STRING)"GetIsVoiceType"),
-    Function_NameType(47, (STRING)"GetItemCount"),
-    Function_NameType(723, (STRING)"GetItemHealthPercent"),
-    Function_NameType(608, (STRING)"GetKeywordDataForAlias"),
-    Function_NameType(651, (STRING)"GetKeywordDataForCurrentLocation"),
-    Function_NameType(606, (STRING)"GetKeywordDataForLocation"),
-    Function_NameType(465, (STRING)"GetKeywordItemCount"),
-    Function_NameType(495, (STRING)"GetKillingBlowLimb"),
-    Function_NameType(496, (STRING)"GetKillingBlowLimb"),
-    Function_NameType(725, (STRING)"GetKnockStateEnum"),
-    Function_NameType(107, (STRING)"GetKnockedState"),
-    Function_NameType(642, (STRING)"GetLastBumpDirection"),
-    Function_NameType(508, (STRING)"GetLastHitCritical"),
-    Function_NameType(510, (STRING)"GetLastHitCritical"),
-    Function_NameType(367, (STRING)"GetLastPlayerAction"),
-    Function_NameType(80, (STRING)"GetLevel"),
-    Function_NameType(711, (STRING)"GetLightLevel"),
-    Function_NameType(27, (STRING)"GetLineOfSight"),
-    Function_NameType(601, (STRING)"GetLocAliasRefTypeAliveCount"),
-    Function_NameType(600, (STRING)"GetLocAliasRefTypeDeadCount"),
-    Function_NameType(598, (STRING)"GetLocationAliasCleared"),
-    Function_NameType(250, (STRING)"GetLocationCleared"),
-    Function_NameType(65, (STRING)"GetLockLevel"),
-    Function_NameType(5, (STRING)"GetLocked"),
-    Function_NameType(616, (STRING)"GetLowestRelationshipRank"),
-    Function_NameType(491, (STRING)"GetMapMarkerVisible"),
-    Function_NameType(492, (STRING)"GetMapMarkerVisible"),
-    Function_NameType(589, (STRING)"GetMovementDirection"),
-    Function_NameType(623, (STRING)"GetMovementSpeed"),
-    Function_NameType(694, (STRING)"GetNoBleedoutRecovery"),
-    Function_NameType(320, (STRING)"GetNoRumors"),
-    Function_NameType(612, (STRING)"GetNumericPackageData"),
-    Function_NameType(420, (STRING)"GetObjectiveCompleted"),
-    Function_NameType(421, (STRING)"GetObjectiveDisplayed"),
-    Function_NameType(255, (STRING)"GetOffersServicesNow"),
-    Function_NameType(157, (STRING)"GetOpenState"),
-    Function_NameType(193, (STRING)"GetPCExpelled"),
-    Function_NameType(199, (STRING)"GetPCFactionAttack"),
-    Function_NameType(195, (STRING)"GetPCFactionMurder"),
-    Function_NameType(197, (STRING)"GetPCFactionSteal"),
-    Function_NameType(201, (STRING)"GetPCFactionSubmitAuthority"),
-    Function_NameType(249, (STRING)"GetPCFame"),
-    Function_NameType(132, (STRING)"GetPCInFaction"),
-    Function_NameType(251, (STRING)"GetPCInfamy"),
-    Function_NameType(129, (STRING)"GetPCIsClass"),
-    Function_NameType(130, (STRING)"GetPCIsRace"),
-    Function_NameType(131, (STRING)"GetPCIsSex"),
-    Function_NameType(312, (STRING)"GetPCMiscStat"),
-    Function_NameType(683, (STRING)"GetPathingCurrentSpeed"),
-    Function_NameType(684, (STRING)"GetPathingCurrentSpeedAngle"),
-    Function_NameType(620, (STRING)"GetPathingTargetAngleOffset"),
-    Function_NameType(619, (STRING)"GetPathingTargetOffset"),
-    Function_NameType(621, (STRING)"GetPathingTargetSpeed"),
-    Function_NameType(622, (STRING)"GetPathingTargetSpeedAngle"),
-    Function_NameType(494, (STRING)"GetPermanentActorValue"),
-    Function_NameType(225, (STRING)"GetPersuasionNumber"),
-    Function_NameType(427, (STRING)"GetPlantedExplosive"),
-    Function_NameType(428, (STRING)"GetPlantedExplosive"),
-    Function_NameType(98, (STRING)"GetPlayerControlsDisabled"),
-    Function_NameType(462, (STRING)"GetPlayerGrabbedRef"),
-    Function_NameType(362, (STRING)"GetPlayerHasLastRiddenHorse"),
-    Function_NameType(365, (STRING)"GetPlayerInSEWorld"),
-    Function_NameType(480, (STRING)"GetPlayerName"),
-    Function_NameType(453, (STRING)"GetPlayerTeammate"),
-    Function_NameType(454, (STRING)"GetPlayerTeammate"),
-    Function_NameType(455, (STRING)"GetPlayerTeammateCount"),
-    Function_NameType(6, (STRING)"GetPos"),
-    Function_NameType(543, (STRING)"GetQuestCompleted"),
-    Function_NameType(546, (STRING)"GetQuestCompleted"),
-    Function_NameType(56, (STRING)"GetQuestRunning"),
-    Function_NameType(79, (STRING)"GetQuestVariable"),
-    Function_NameType(77, (STRING)"GetRandomPercent"),
-    Function_NameType(716, (STRING)"GetRealHoursPassed"),
-    Function_NameType(592, (STRING)"GetRefTypeAliveCount"),
-    Function_NameType(591, (STRING)"GetRefTypeDeadCount"),
-    Function_NameType(403, (STRING)"GetRelationshipRank"),
-    Function_NameType(584, (STRING)"GetRelativeAngle"),
-    Function_NameType(664, (STRING)"GetReplacedItemType"),
-    Function_NameType(573, (STRING)"GetReputation"),
-    Function_NameType(575, (STRING)"GetReputationThreshold"),
-    Function_NameType(244, (STRING)"GetRestrained"),
-    Function_NameType(24, (STRING)"GetScale"),
-    Function_NameType(53, (STRING)"GetScriptVariable"),
-    Function_NameType(12, (STRING)"GetSecondsPassed"),
-    Function_NameType(66, (STRING)"GetShouldAttack"),
-    Function_NameType(705, (STRING)"GetShouldHelp"),
-    Function_NameType(159, (STRING)"GetSitting"),
-    Function_NameType(49, (STRING)"GetSleeping"),
-    Function_NameType(552, (STRING)"GetSpellUsageNum"),
-    Function_NameType(58, (STRING)"GetStage"),
-    Function_NameType(59, (STRING)"GetStageDone"),
-    Function_NameType(11, (STRING)"GetStartingAngle"),
-    Function_NameType(10, (STRING)"GetStartingPos"),
-    Function_NameType(373, (STRING)"GetStolenItemValue"),
-    Function_NameType(366, (STRING)"GetStolenItemValueNoCrime"),
-    Function_NameType(50, (STRING)"GetTalkedToPC"),
-    Function_NameType(172, (STRING)"GetTalkedToPCParam"),
-    Function_NameType(720, (STRING)"GetTargetHeight"),
-    Function_NameType(477, (STRING)"GetThreatRatio"),
-    Function_NameType(478, (STRING)"GetThreatRatio"),
-    Function_NameType(361, (STRING)"GetTimeDead"),
-    Function_NameType(315, (STRING)"GetTotalPersuasionNumber"),
-    Function_NameType(144, (STRING)"GetTrespassWarningLevel"),
-    Function_NameType(242, (STRING)"GetUnconscious"),
-    Function_NameType(259, (STRING)"GetUsedItemActivate"),
-    Function_NameType(258, (STRING)"GetUsedItemLevel"),
-    Function_NameType(517, (STRING)"GetVATSBackAreaFree"),
-    Function_NameType(524, (STRING)"GetVATSBackTargetVisible"),
-    Function_NameType(527, (STRING)"GetVATSBackTargetVisible"),
-    Function_NameType(518, (STRING)"GetVATSFrontAreaFree"),
-    Function_NameType(525, (STRING)"GetVATSFrontTargetVisible"),
-    Function_NameType(516, (STRING)"GetVATSLeftAreaFree"),
-    Function_NameType(523, (STRING)"GetVATSLeftTargetVisible"),
-    Function_NameType(526, (STRING)"GetVATSLeftTargetVisible"),
-    Function_NameType(515, (STRING)"GetVATSRightAreaFree"),
-    Function_NameType(522, (STRING)"GetVATSRightTargetVisible"),
-    Function_NameType(407, (STRING)"GetVATSValue"),
-    Function_NameType(629, (STRING)"GetVMQuestVariable"),
-    Function_NameType(630, (STRING)"GetVMScriptVariable"),
-    Function_NameType(40, (STRING)"GetVampire"),
-    Function_NameType(226, (STRING)"GetVampireFeed"),
-    Function_NameType(235, (STRING)"GetVatsTargetHeight"),
-    Function_NameType(446, (STRING)"GetVelocity"),
-    Function_NameType(142, (STRING)"GetWalkSpeed"),
-    Function_NameType(0, (STRING)"GetWantBlocking"),
-    Function_NameType(108, (STRING)"GetWeaponAnimType"),
-    Function_NameType(109, (STRING)"GetWeaponSkillType"),
-    Function_NameType(147, (STRING)"GetWindSpeed"),
-    Function_NameType(639, (STRING)"GetWithinDistance"),
-    Function_NameType(325, (STRING)"GetWithinPackageLocation"),
-    Function_NameType(530, (STRING)"GetXPForNextLevel"),
-    Function_NameType(617, (STRING)"HasAssociationTypeAny"),
-    Function_NameType(706, (STRING)"HasBoundWeaponEquipped"),
-    Function_NameType(570, (STRING)"HasEquippedSpell"),
-    Function_NameType(618, (STRING)"HasFamilyRelationshipAny"),
-    Function_NameType(154, (STRING)"HasFlames"),
-    Function_NameType(560, (STRING)"HasKeyword"),
-    Function_NameType(555, (STRING)"HasLoaded3D"),
-    Function_NameType(558, (STRING)"HasLoaded3D"),
-    Function_NameType(214, (STRING)"HasMagicEffect"),
-    Function_NameType(699, (STRING)"HasMagicEffectKeyword"),
-    Function_NameType(261, (STRING)"HasParentRelationship"),
-    Function_NameType(448, (STRING)"HasPerk"),
-    Function_NameType(561, (STRING)"HasRefType"),
-    Function_NameType(181, (STRING)"HasSameEditorLocAsRefAlias"),
-    Function_NameType(378, (STRING)"HasShout"),
-    Function_NameType(636, (STRING)"HasTwoHandedWeaponEquipped"),
-    Function_NameType(227, (STRING)"HasVampireFed"),
-    Function_NameType(353, (STRING)"IsActor"),
-    Function_NameType(314, (STRING)"IsActorAVictim"),
-    Function_NameType(313, (STRING)"IsActorEvil"),
-    Function_NameType(306, (STRING)"IsActorUsingATorch"),
-    Function_NameType(698, (STRING)"IsAllowedToFly"),
-    Function_NameType(697, (STRING)"IsAttackType"),
-    Function_NameType(672, (STRING)"IsAttacking"),
-    Function_NameType(714, (STRING)"IsBeingRidden"),
-    Function_NameType(580, (STRING)"IsBleedingOut"),
-    Function_NameType(569, (STRING)"IsBlocking"),
-    Function_NameType(402, (STRING)"IsBribedbyPlayer"),
-    Function_NameType(487, (STRING)"IsCarryable"),
-    Function_NameType(632, (STRING)"IsCasting"),
-    Function_NameType(280, (STRING)"IsCellOwner"),
-    Function_NameType(577, (STRING)"IsCloserToAThanB"),
-    Function_NameType(267, (STRING)"IsCloudy"),
-    Function_NameType(513, (STRING)"IsCombatTarget"),
-    Function_NameType(700, (STRING)"IsCommandedActor"),
-    Function_NameType(150, (STRING)"IsContinuingPackagePCNear"),
-    Function_NameType(163, (STRING)"IsCurrentFurnitureObj"),
-    Function_NameType(162, (STRING)"IsCurrentFurnitureRef"),
-    Function_NameType(595, (STRING)"IsCurrentSpell"),
-    Function_NameType(627, (STRING)"IsDualCasting"),
-    Function_NameType(631, (STRING)"IsEnteringInteractionQuick"),
-    Function_NameType(354, (STRING)"IsEssential"),
-    Function_NameType(637, (STRING)"IsExitingInstant"),
-    Function_NameType(703, (STRING)"IsExitingInteractionQuick"),
-    Function_NameType(106, (STRING)"IsFacingUp"),
-    Function_NameType(733, (STRING)"IsFlyingMountFastTravelling"),
-    Function_NameType(732, (STRING)"IsFlyingMountPatrolQueued"),
-    Function_NameType(613, (STRING)"IsFurnitureAnimType"),
-    Function_NameType(614, (STRING)"IsFurnitureEntryType"),
-    Function_NameType(547, (STRING)"IsGoreDisabled"),
-    Function_NameType(123, (STRING)"IsGreetingPlayer"),
-    Function_NameType(125, (STRING)"IsGuard"),
-    Function_NameType(586, (STRING)"IsHardcore"),
-    Function_NameType(282, (STRING)"IsHorseStolen"),
-    Function_NameType(719, (STRING)"IsHostileToActor"),
-    Function_NameType(112, (STRING)"IsIdlePlaying"),
-    Function_NameType(710, (STRING)"IsIgnoringCombat"),
-    Function_NameType(289, (STRING)"IsInCombat"),
-    Function_NameType(528, (STRING)"IsInCriticalStage"),
-    Function_NameType(531, (STRING)"IsInCriticalStage"),
-    Function_NameType(332, (STRING)"IsInDangerousWater"),
-    Function_NameType(635, (STRING)"IsInFavorState"),
-    Function_NameType(638, (STRING)"IsInFriendStatewithPlayer"),
-    Function_NameType(644, (STRING)"IsInFurnitureState"),
-    Function_NameType(300, (STRING)"IsInInterior"),
-    Function_NameType(372, (STRING)"IsInList"),
-    Function_NameType(146, (STRING)"IsInMyOwnedCell"),
-    Function_NameType(603, (STRING)"IsInSameCurrentLocAsRef"),
-    Function_NameType(604, (STRING)"IsInSameCurrentLocAsRefAlias"),
-    Function_NameType(590, (STRING)"IsInScene"),
-    Function_NameType(408, (STRING)"IsKiller"),
-    Function_NameType(409, (STRING)"IsKillerObject"),
-    Function_NameType(674, (STRING)"IsLastHostileActor"),
-    Function_NameType(450, (STRING)"IsLastIdlePlayed"),
-    Function_NameType(451, (STRING)"IsLastIdlePlayed"),
-    Function_NameType(285, (STRING)"IsLeftUp"),
-    Function_NameType(397, (STRING)"IsLimbGone"),
-    Function_NameType(650, (STRING)"IsLinkedTo"),
-    Function_NameType(626, (STRING)"IsLocAliasLoaded"),
-    Function_NameType(625, (STRING)"IsLocationLoaded"),
-    Function_NameType(25, (STRING)"IsMoving"),
-    Function_NameType(611, (STRING)"IsNullPackageData"),
-    Function_NameType(730, (STRING)"IsOnFlyingMount"),
-    Function_NameType(278, (STRING)"IsOwner"),
-    Function_NameType(391, (STRING)"IsPC1stPerson"),
-    Function_NameType(392, (STRING)"IsPC1stPerson"),
-    Function_NameType(176, (STRING)"IsPCAMurderer"),
-    Function_NameType(175, (STRING)"IsPCSleeping"),
-    Function_NameType(520, (STRING)"IsPS3"),
-    Function_NameType(704, (STRING)"IsPathing"),
-    Function_NameType(368, (STRING)"IsPlayerActionActive"),
-    Function_NameType(463, (STRING)"IsPlayerGrabbedRef"),
-    Function_NameType(464, (STRING)"IsPlayerGrabbedRef"),
-    Function_NameType(171, (STRING)"IsPlayerInJail"),
-    Function_NameType(117, (STRING)"IsPlayerInRegion"),
-    Function_NameType(358, (STRING)"IsPlayerMovingIntoNewSpace"),
-    Function_NameType(339, (STRING)"IsPlayersLastRiddenHorse"),
-    Function_NameType(266, (STRING)"IsPleasant"),
-    Function_NameType(721, (STRING)"IsPoison"),
-    Function_NameType(673, (STRING)"IsPowerAttacking"),
-    Function_NameType(476, (STRING)"IsProtected"),
-    Function_NameType(62, (STRING)"IsRaining"),
-    Function_NameType(702, (STRING)"IsRecoiling"),
-    Function_NameType(327, (STRING)"IsRidingHorse"),
-    Function_NameType(287, (STRING)"IsRunning"),
-    Function_NameType(550, (STRING)"IsSceneActionComplete"),
-    Function_NameType(429, (STRING)"IsScenePackageRunning"),
-    Function_NameType(248, (STRING)"IsScenePlaying"),
-    Function_NameType(103, (STRING)"IsShieldOut"),
-    Function_NameType(286, (STRING)"IsSneaking"),
-    Function_NameType(75, (STRING)"IsSnowing"),
-    Function_NameType(223, (STRING)"IsSpellTarget"),
-    Function_NameType(568, (STRING)"IsSprinting"),
-    Function_NameType(701, (STRING)"IsStaggered"),
-    Function_NameType(185, (STRING)"IsSwimming"),
-    Function_NameType(141, (STRING)"IsTalking"),
-    Function_NameType(370, (STRING)"IsTalkingActivatorActor"),
-    Function_NameType(265, (STRING)"IsTimePassing"),
-    Function_NameType(102, (STRING)"IsTorchOut"),
-    Function_NameType(145, (STRING)"IsTrespassing"),
-    Function_NameType(329, (STRING)"IsTurnArrest"),
-    Function_NameType(26, (STRING)"IsTurning"),
-    Function_NameType(715, (STRING)"IsUndead"),
-    Function_NameType(641, (STRING)"IsUnique"),
-    Function_NameType(718, (STRING)"IsUnlockedDoor"),
-    Function_NameType(111, (STRING)"IsWaiting"),
-    Function_NameType(602, (STRING)"IsWardState"),
-    Function_NameType(262, (STRING)"IsWarningAbout"),
-    Function_NameType(304, (STRING)"IsWaterObject"),
-    Function_NameType(398, (STRING)"IsWeaponInList"),
-    Function_NameType(399, (STRING)"IsWeaponInList"),
-    Function_NameType(101, (STRING)"IsWeaponOut"),
-    Function_NameType(263, (STRING)"IsWeaponOut"),
-    Function_NameType(521, (STRING)"IsWin32"),
-    Function_NameType(309, (STRING)"IsXBox"),
-    Function_NameType(104, (STRING)"IsYielding"),
-    Function_NameType(610, (STRING)"LocAliasHasKeyword"),
-    Function_NameType(605, (STRING)"LocAliasIsLocation"),
-    Function_NameType(562, (STRING)"LocationHasKeyword"),
-    Function_NameType(563, (STRING)"LocationHasRefType"),
-    Function_NameType(36, (STRING)"MenuMode"),
-    Function_NameType(42, (STRING)"SameFaction"),
-    Function_NameType(133, (STRING)"SameFactionAsPC"),
-    Function_NameType(43, (STRING)"SameRace"),
-    Function_NameType(134, (STRING)"SameRaceAsPC"),
-    Function_NameType(44, (STRING)"SameSex"),
-    Function_NameType(135, (STRING)"SameSexAsPC"),
-    Function_NameType(678, (STRING)"ShouldAttackKill"),
-    Function_NameType(713, (STRING)"SpellHasCastingPerk"),
-    Function_NameType(596, (STRING)"SpellHasKeyword"),
-    Function_NameType(323, (STRING)"WhichServiceMenu"),
-    Function_NameType(722, (STRING)"WornApparelHasKeywordCount"),
-    Function_NameType(682, (STRING)"WornHasKeyword"),
+    Function_NameType(731, (char *)"CanFlyHere"),
+    Function_NameType(153, (char *)"CanHaveFlames"),
+    Function_NameType(127, (char *)"CanPayCrimeGold"),
+    Function_NameType(497, (char *)"CanPayCrimeGold"),
+    Function_NameType(607, (char *)"ChallengeLocked"),
+    Function_NameType(726, (char *)"DoesNotExist"),
+    Function_NameType(501, (char *)"EPAlchemyEffectHasKeyword"),
+    Function_NameType(500, (char *)"EPAlchemyGetMakingPoison"),
+    Function_NameType(693, (char *)"EPMagic_SpellHasKeyword"),
+    Function_NameType(696, (char *)"EPMagic_SpellHasSkill"),
+    Function_NameType(691, (char *)"EPModSkillUsage_AdvancedObjectHasKeyword"),
+    Function_NameType(692, (char *)"EPModSkillUsage_IsAdvancedAction"),
+    Function_NameType(681, (char *)"EPModSkillUsage_IsAdvancedSkill"),
+    Function_NameType(660, (char *)"EPTemperingItemHasKeyword"),
+    Function_NameType(659, (char *)"EPTemperingItemIsEnchanted"),
+    Function_NameType(724, (char *)"EffectWasDualCast"),
+    Function_NameType(414, (char *)"Exists"),
+    Function_NameType(680, (char *)"GetActivationHeight"),
+    Function_NameType(118, (char *)"GetActorAggroRadiusViolated"),
+    Function_NameType(458, (char *)"GetActorCrimePlayerEnemy"),
+    Function_NameType(460, (char *)"GetActorFactionPlayerEnemy"),
+    Function_NameType(14, (char *)"GetActorValue"),
+    Function_NameType(640, (char *)"GetActorValuePercent"),
+    Function_NameType(554, (char *)"GetActorsInHigh"),
+    Function_NameType(557, (char *)"GetActorsInHigh"),
+    Function_NameType(61, (char *)"GetAlarmed"),
+    Function_NameType(503, (char *)"GetAllowWorldInteractions"),
+    Function_NameType(190, (char *)"GetAmountSoldStolen"),
+    Function_NameType(8, (char *)"GetAngle"),
+    Function_NameType(219, (char *)"GetAnimAction"),
+    Function_NameType(81, (char *)"GetArmorRating"),
+    Function_NameType(274, (char *)"GetArmorRatingUpperBody"),
+    Function_NameType(656, (char *)"GetArrestedState"),
+    Function_NameType(657, (char *)"GetArrestingActor"),
+    Function_NameType(574, (char *)"GetAttackState"),
+    Function_NameType(63, (char *)"GetAttacked"),
+    Function_NameType(264, (char *)"GetBarterGold"),
+    Function_NameType(277, (char *)"GetBaseActorValue"),
+    Function_NameType(654, (char *)"GetBribeSuccess"),
+    Function_NameType(396, (char *)"GetCauseofDeath"),
+    Function_NameType(229, (char *)"GetClassDefaultMatch"),
+    Function_NameType(41, (char *)"GetClothingValue"),
+    Function_NameType(709, (char *)"GetCombatGroupMemberCount"),
+    Function_NameType(707, (char *)"GetCombatTargetHasKeyword"),
+    Function_NameType(488, (char *)"GetConcussed"),
+    Function_NameType(489, (char *)"GetConcussed"),
+    Function_NameType(122, (char *)"GetCrime"),
+    Function_NameType(116, (char *)"GetCrimeGold"),
+    Function_NameType(459, (char *)"GetCrimeGold"),
+    Function_NameType(376, (char *)"GetCrimeGoldNonviolent"),
+    Function_NameType(375, (char *)"GetCrimeGoldViolent"),
+    Function_NameType(110, (char *)"GetCurrentAIPackage"),
+    Function_NameType(143, (char *)"GetCurrentAIProcedure"),
+    Function_NameType(571, (char *)"GetCurrentCastingType"),
+    Function_NameType(572, (char *)"GetCurrentDeliveryType"),
+    Function_NameType(676, (char *)"GetCurrentShoutVariation"),
+    Function_NameType(18, (char *)"GetCurrentTime"),
+    Function_NameType(148, (char *)"GetCurrentWeatherPercent"),
+    Function_NameType(170, (char *)"GetDayOfWeek"),
+    Function_NameType(499, (char *)"GetDaysInJail"),
+    Function_NameType(46, (char *)"GetDead"),
+    Function_NameType(84, (char *)"GetDeadCount"),
+    Function_NameType(203, (char *)"GetDestroyed"),
+    Function_NameType(470, (char *)"GetDestructionStage"),
+    Function_NameType(471, (char *)"GetDestructionStage"),
+    Function_NameType(45, (char *)"GetDetected"),
+    Function_NameType(180, (char *)"GetDetectionLevel"),
+    Function_NameType(434, (char *)"GetDialogEmotion"),
+    Function_NameType(435, (char *)"GetDialogEmotionValue"),
+    Function_NameType(436, (char *)"GetDialogueEmotionValue"),
+    Function_NameType(35, (char *)"GetDisabled"),
+    Function_NameType(39, (char *)"GetDisease"),
+    Function_NameType(76, (char *)"GetDisposition"),
+    Function_NameType(1, (char *)"GetDistance"),
+    Function_NameType(215, (char *)"GetDoorDefaultOpen"),
+    Function_NameType(182, (char *)"GetEquipped"),
+    Function_NameType(597, (char *)"GetEquippedItemType"),
+    Function_NameType(579, (char *)"GetEquippedShout"),
+    Function_NameType(576, (char *)"GetEventData"),
+    Function_NameType(410, (char *)"GetFactionCombatReaction"),
+    Function_NameType(411, (char *)"GetFactionCombatReaction"),
+    Function_NameType(73, (char *)"GetFactionRank"),
+    Function_NameType(60, (char *)"GetFactionRankDifference"),
+    Function_NameType(449, (char *)"GetFactionRelation"),
+    Function_NameType(128, (char *)"GetFatiguePercentage"),
+    Function_NameType(633, (char *)"GetFlyingState"),
+    Function_NameType(288, (char *)"GetFriendHit"),
+    Function_NameType(160, (char *)"GetFurnitureMarkerID"),
+    Function_NameType(74, (char *)"GetGlobalValue"),
+    Function_NameType(48, (char *)"GetGold"),
+    Function_NameType(447, (char *)"GetGraphVariableFloat"),
+    Function_NameType(675, (char *)"GetGraphVariableInt"),
+    Function_NameType(415, (char *)"GetGroupMemberCount"),
+    Function_NameType(416, (char *)"GetGroupTargetCount"),
+    Function_NameType(417, (char *)"GetGroupTargetCount"),
+    Function_NameType(381, (char *)"GetHasNote"),
+    Function_NameType(382, (char *)"GetHasNote"),
+    Function_NameType(99, (char *)"GetHeadingAngle"),
+    Function_NameType(430, (char *)"GetHealthPercentage"),
+    Function_NameType(431, (char *)"GetHealthPercentage"),
+    Function_NameType(615, (char *)"GetHighestRelationshipRank"),
+    Function_NameType(390, (char *)"GetHitLocation"),
+    Function_NameType(318, (char *)"GetIdleDoneOnce"),
+    Function_NameType(192, (char *)"GetIgnoreCrime"),
+    Function_NameType(338, (char *)"GetIgnoreFriendlyHits"),
+    Function_NameType(67, (char *)"GetInCell"),
+    Function_NameType(230, (char *)"GetInCellParam"),
+    Function_NameType(624, (char *)"GetInContainer"),
+    Function_NameType(359, (char *)"GetInCurrentLoc"),
+    Function_NameType(360, (char *)"GetInCurrentLocAlias"),
+    Function_NameType(444, (char *)"GetInCurrentLocFormList"),
+    Function_NameType(71, (char *)"GetInFaction"),
+    Function_NameType(32, (char *)"GetInSameCell"),
+    Function_NameType(652, (char *)"GetInSharedCrimeFaction"),
+    Function_NameType(310, (char *)"GetInWorldspace"),
+    Function_NameType(445, (char *)"GetInZone"),
+    Function_NameType(533, (char *)"GetInfamy"),
+    Function_NameType(535, (char *)"GetInfamyNonViolent"),
+    Function_NameType(534, (char *)"GetInfamyViolent"),
+    Function_NameType(655, (char *)"GetIntimidateSuccess"),
+    Function_NameType(305, (char *)"GetInvestmentGold"),
+    Function_NameType(91, (char *)"GetIsAlerted"),
+    Function_NameType(566, (char *)"GetIsAliasRef"),
+    Function_NameType(473, (char *)"GetIsAlignment"),
+    Function_NameType(474, (char *)"GetIsAlignment"),
+    Function_NameType(68, (char *)"GetIsClass"),
+    Function_NameType(228, (char *)"GetIsClassDefault"),
+    Function_NameType(646, (char *)"GetIsCrashLandRequest"),
+    Function_NameType(64, (char *)"GetIsCreature"),
+    Function_NameType(437, (char *)"GetIsCreatureType"),
+    Function_NameType(438, (char *)"GetIsCreatureType"),
+    Function_NameType(152, (char *)"GetIsCrimeFaction"),
+    Function_NameType(161, (char *)"GetIsCurrentPackage"),
+    Function_NameType(149, (char *)"GetIsCurrentWeather"),
+    Function_NameType(567, (char *)"GetIsEditorLocAlias"),
+    Function_NameType(565, (char *)"GetIsEditorLocation"),
+    Function_NameType(594, (char *)"GetIsFlying"),
+    Function_NameType(237, (char *)"GetIsGhost"),
+    Function_NameType(647, (char *)"GetIsHastyLandRequest"),
+    Function_NameType(72, (char *)"GetIsID"),
+    Function_NameType(645, (char *)"GetIsInjured"),
+    Function_NameType(519, (char *)"GetIsLockBroken"),
+    Function_NameType(432, (char *)"GetIsObjectType"),
+    Function_NameType(433, (char *)"GetIsObjectType"),
+    Function_NameType(254, (char *)"GetIsPlayableRace"),
+    Function_NameType(224, (char *)"GetIsPlayerBirthsign"),
+    Function_NameType(69, (char *)"GetIsRace"),
+    Function_NameType(136, (char *)"GetIsReference"),
+    Function_NameType(70, (char *)"GetIsSex"),
+    Function_NameType(246, (char *)"GetIsUsedItem"),
+    Function_NameType(479, (char *)"GetIsUsedItemEquipType"),
+    Function_NameType(247, (char *)"GetIsUsedItemType"),
+    Function_NameType(426, (char *)"GetIsVoiceType"),
+    Function_NameType(47, (char *)"GetItemCount"),
+    Function_NameType(723, (char *)"GetItemHealthPercent"),
+    Function_NameType(608, (char *)"GetKeywordDataForAlias"),
+    Function_NameType(651, (char *)"GetKeywordDataForCurrentLocation"),
+    Function_NameType(606, (char *)"GetKeywordDataForLocation"),
+    Function_NameType(465, (char *)"GetKeywordItemCount"),
+    Function_NameType(495, (char *)"GetKillingBlowLimb"),
+    Function_NameType(496, (char *)"GetKillingBlowLimb"),
+    Function_NameType(725, (char *)"GetKnockStateEnum"),
+    Function_NameType(107, (char *)"GetKnockedState"),
+    Function_NameType(642, (char *)"GetLastBumpDirection"),
+    Function_NameType(508, (char *)"GetLastHitCritical"),
+    Function_NameType(510, (char *)"GetLastHitCritical"),
+    Function_NameType(367, (char *)"GetLastPlayerAction"),
+    Function_NameType(80, (char *)"GetLevel"),
+    Function_NameType(711, (char *)"GetLightLevel"),
+    Function_NameType(27, (char *)"GetLineOfSight"),
+    Function_NameType(601, (char *)"GetLocAliasRefTypeAliveCount"),
+    Function_NameType(600, (char *)"GetLocAliasRefTypeDeadCount"),
+    Function_NameType(598, (char *)"GetLocationAliasCleared"),
+    Function_NameType(250, (char *)"GetLocationCleared"),
+    Function_NameType(65, (char *)"GetLockLevel"),
+    Function_NameType(5, (char *)"GetLocked"),
+    Function_NameType(616, (char *)"GetLowestRelationshipRank"),
+    Function_NameType(491, (char *)"GetMapMarkerVisible"),
+    Function_NameType(492, (char *)"GetMapMarkerVisible"),
+    Function_NameType(589, (char *)"GetMovementDirection"),
+    Function_NameType(623, (char *)"GetMovementSpeed"),
+    Function_NameType(694, (char *)"GetNoBleedoutRecovery"),
+    Function_NameType(320, (char *)"GetNoRumors"),
+    Function_NameType(612, (char *)"GetNumericPackageData"),
+    Function_NameType(420, (char *)"GetObjectiveCompleted"),
+    Function_NameType(421, (char *)"GetObjectiveDisplayed"),
+    Function_NameType(255, (char *)"GetOffersServicesNow"),
+    Function_NameType(157, (char *)"GetOpenState"),
+    Function_NameType(193, (char *)"GetPCExpelled"),
+    Function_NameType(199, (char *)"GetPCFactionAttack"),
+    Function_NameType(195, (char *)"GetPCFactionMurder"),
+    Function_NameType(197, (char *)"GetPCFactionSteal"),
+    Function_NameType(201, (char *)"GetPCFactionSubmitAuthority"),
+    Function_NameType(249, (char *)"GetPCFame"),
+    Function_NameType(132, (char *)"GetPCInFaction"),
+    Function_NameType(251, (char *)"GetPCInfamy"),
+    Function_NameType(129, (char *)"GetPCIsClass"),
+    Function_NameType(130, (char *)"GetPCIsRace"),
+    Function_NameType(131, (char *)"GetPCIsSex"),
+    Function_NameType(312, (char *)"GetPCMiscStat"),
+    Function_NameType(683, (char *)"GetPathingCurrentSpeed"),
+    Function_NameType(684, (char *)"GetPathingCurrentSpeedAngle"),
+    Function_NameType(620, (char *)"GetPathingTargetAngleOffset"),
+    Function_NameType(619, (char *)"GetPathingTargetOffset"),
+    Function_NameType(621, (char *)"GetPathingTargetSpeed"),
+    Function_NameType(622, (char *)"GetPathingTargetSpeedAngle"),
+    Function_NameType(494, (char *)"GetPermanentActorValue"),
+    Function_NameType(225, (char *)"GetPersuasionNumber"),
+    Function_NameType(427, (char *)"GetPlantedExplosive"),
+    Function_NameType(428, (char *)"GetPlantedExplosive"),
+    Function_NameType(98, (char *)"GetPlayerControlsDisabled"),
+    Function_NameType(462, (char *)"GetPlayerGrabbedRef"),
+    Function_NameType(362, (char *)"GetPlayerHasLastRiddenHorse"),
+    Function_NameType(365, (char *)"GetPlayerInSEWorld"),
+    Function_NameType(480, (char *)"GetPlayerName"),
+    Function_NameType(453, (char *)"GetPlayerTeammate"),
+    Function_NameType(454, (char *)"GetPlayerTeammate"),
+    Function_NameType(455, (char *)"GetPlayerTeammateCount"),
+    Function_NameType(6, (char *)"GetPos"),
+    Function_NameType(543, (char *)"GetQuestCompleted"),
+    Function_NameType(546, (char *)"GetQuestCompleted"),
+    Function_NameType(56, (char *)"GetQuestRunning"),
+    Function_NameType(79, (char *)"GetQuestVariable"),
+    Function_NameType(77, (char *)"GetRandomPercent"),
+    Function_NameType(716, (char *)"GetRealHoursPassed"),
+    Function_NameType(592, (char *)"GetRefTypeAliveCount"),
+    Function_NameType(591, (char *)"GetRefTypeDeadCount"),
+    Function_NameType(403, (char *)"GetRelationshipRank"),
+    Function_NameType(584, (char *)"GetRelativeAngle"),
+    Function_NameType(664, (char *)"GetReplacedItemType"),
+    Function_NameType(573, (char *)"GetReputation"),
+    Function_NameType(575, (char *)"GetReputationThreshold"),
+    Function_NameType(244, (char *)"GetRestrained"),
+    Function_NameType(24, (char *)"GetScale"),
+    Function_NameType(53, (char *)"GetScriptVariable"),
+    Function_NameType(12, (char *)"GetSecondsPassed"),
+    Function_NameType(66, (char *)"GetShouldAttack"),
+    Function_NameType(705, (char *)"GetShouldHelp"),
+    Function_NameType(159, (char *)"GetSitting"),
+    Function_NameType(49, (char *)"GetSleeping"),
+    Function_NameType(552, (char *)"GetSpellUsageNum"),
+    Function_NameType(58, (char *)"GetStage"),
+    Function_NameType(59, (char *)"GetStageDone"),
+    Function_NameType(11, (char *)"GetStartingAngle"),
+    Function_NameType(10, (char *)"GetStartingPos"),
+    Function_NameType(373, (char *)"GetStolenItemValue"),
+    Function_NameType(366, (char *)"GetStolenItemValueNoCrime"),
+    Function_NameType(50, (char *)"GetTalkedToPC"),
+    Function_NameType(172, (char *)"GetTalkedToPCParam"),
+    Function_NameType(720, (char *)"GetTargetHeight"),
+    Function_NameType(477, (char *)"GetThreatRatio"),
+    Function_NameType(478, (char *)"GetThreatRatio"),
+    Function_NameType(361, (char *)"GetTimeDead"),
+    Function_NameType(315, (char *)"GetTotalPersuasionNumber"),
+    Function_NameType(144, (char *)"GetTrespassWarningLevel"),
+    Function_NameType(242, (char *)"GetUnconscious"),
+    Function_NameType(259, (char *)"GetUsedItemActivate"),
+    Function_NameType(258, (char *)"GetUsedItemLevel"),
+    Function_NameType(517, (char *)"GetVATSBackAreaFree"),
+    Function_NameType(524, (char *)"GetVATSBackTargetVisible"),
+    Function_NameType(527, (char *)"GetVATSBackTargetVisible"),
+    Function_NameType(518, (char *)"GetVATSFrontAreaFree"),
+    Function_NameType(525, (char *)"GetVATSFrontTargetVisible"),
+    Function_NameType(516, (char *)"GetVATSLeftAreaFree"),
+    Function_NameType(523, (char *)"GetVATSLeftTargetVisible"),
+    Function_NameType(526, (char *)"GetVATSLeftTargetVisible"),
+    Function_NameType(515, (char *)"GetVATSRightAreaFree"),
+    Function_NameType(522, (char *)"GetVATSRightTargetVisible"),
+    Function_NameType(407, (char *)"GetVATSValue"),
+    Function_NameType(629, (char *)"GetVMQuestVariable"),
+    Function_NameType(630, (char *)"GetVMScriptVariable"),
+    Function_NameType(40, (char *)"GetVampire"),
+    Function_NameType(226, (char *)"GetVampireFeed"),
+    Function_NameType(235, (char *)"GetVatsTargetHeight"),
+    Function_NameType(446, (char *)"GetVelocity"),
+    Function_NameType(142, (char *)"GetWalkSpeed"),
+    Function_NameType(0, (char *)"GetWantBlocking"),
+    Function_NameType(108, (char *)"GetWeaponAnimType"),
+    Function_NameType(109, (char *)"GetWeaponSkillType"),
+    Function_NameType(147, (char *)"GetWindSpeed"),
+    Function_NameType(639, (char *)"GetWithinDistance"),
+    Function_NameType(325, (char *)"GetWithinPackageLocation"),
+    Function_NameType(530, (char *)"GetXPForNextLevel"),
+    Function_NameType(617, (char *)"HasAssociationTypeAny"),
+    Function_NameType(706, (char *)"HasBoundWeaponEquipped"),
+    Function_NameType(570, (char *)"HasEquippedSpell"),
+    Function_NameType(618, (char *)"HasFamilyRelationshipAny"),
+    Function_NameType(154, (char *)"HasFlames"),
+    Function_NameType(560, (char *)"HasKeyword"),
+    Function_NameType(555, (char *)"HasLoaded3D"),
+    Function_NameType(558, (char *)"HasLoaded3D"),
+    Function_NameType(214, (char *)"HasMagicEffect"),
+    Function_NameType(699, (char *)"HasMagicEffectKeyword"),
+    Function_NameType(261, (char *)"HasParentRelationship"),
+    Function_NameType(448, (char *)"HasPerk"),
+    Function_NameType(561, (char *)"HasRefType"),
+    Function_NameType(181, (char *)"HasSameEditorLocAsRefAlias"),
+    Function_NameType(378, (char *)"HasShout"),
+    Function_NameType(636, (char *)"HasTwoHandedWeaponEquipped"),
+    Function_NameType(227, (char *)"HasVampireFed"),
+    Function_NameType(353, (char *)"IsActor"),
+    Function_NameType(314, (char *)"IsActorAVictim"),
+    Function_NameType(313, (char *)"IsActorEvil"),
+    Function_NameType(306, (char *)"IsActorUsingATorch"),
+    Function_NameType(698, (char *)"IsAllowedToFly"),
+    Function_NameType(697, (char *)"IsAttackType"),
+    Function_NameType(672, (char *)"IsAttacking"),
+    Function_NameType(714, (char *)"IsBeingRidden"),
+    Function_NameType(580, (char *)"IsBleedingOut"),
+    Function_NameType(569, (char *)"IsBlocking"),
+    Function_NameType(402, (char *)"IsBribedbyPlayer"),
+    Function_NameType(487, (char *)"IsCarryable"),
+    Function_NameType(632, (char *)"IsCasting"),
+    Function_NameType(280, (char *)"IsCellOwner"),
+    Function_NameType(577, (char *)"IsCloserToAThanB"),
+    Function_NameType(267, (char *)"IsCloudy"),
+    Function_NameType(513, (char *)"IsCombatTarget"),
+    Function_NameType(700, (char *)"IsCommandedActor"),
+    Function_NameType(150, (char *)"IsContinuingPackagePCNear"),
+    Function_NameType(163, (char *)"IsCurrentFurnitureObj"),
+    Function_NameType(162, (char *)"IsCurrentFurnitureRef"),
+    Function_NameType(595, (char *)"IsCurrentSpell"),
+    Function_NameType(627, (char *)"IsDualCasting"),
+    Function_NameType(631, (char *)"IsEnteringInteractionQuick"),
+    Function_NameType(354, (char *)"IsEssential"),
+    Function_NameType(637, (char *)"IsExitingInstant"),
+    Function_NameType(703, (char *)"IsExitingInteractionQuick"),
+    Function_NameType(106, (char *)"IsFacingUp"),
+    Function_NameType(733, (char *)"IsFlyingMountFastTravelling"),
+    Function_NameType(732, (char *)"IsFlyingMountPatrolQueued"),
+    Function_NameType(613, (char *)"IsFurnitureAnimType"),
+    Function_NameType(614, (char *)"IsFurnitureEntryType"),
+    Function_NameType(547, (char *)"IsGoreDisabled"),
+    Function_NameType(123, (char *)"IsGreetingPlayer"),
+    Function_NameType(125, (char *)"IsGuard"),
+    Function_NameType(586, (char *)"IsHardcore"),
+    Function_NameType(282, (char *)"IsHorseStolen"),
+    Function_NameType(719, (char *)"IsHostileToActor"),
+    Function_NameType(112, (char *)"IsIdlePlaying"),
+    Function_NameType(710, (char *)"IsIgnoringCombat"),
+    Function_NameType(289, (char *)"IsInCombat"),
+    Function_NameType(528, (char *)"IsInCriticalStage"),
+    Function_NameType(531, (char *)"IsInCriticalStage"),
+    Function_NameType(332, (char *)"IsInDangerousWater"),
+    Function_NameType(635, (char *)"IsInFavorState"),
+    Function_NameType(638, (char *)"IsInFriendStatewithPlayer"),
+    Function_NameType(644, (char *)"IsInFurnitureState"),
+    Function_NameType(300, (char *)"IsInInterior"),
+    Function_NameType(372, (char *)"IsInList"),
+    Function_NameType(146, (char *)"IsInMyOwnedCell"),
+    Function_NameType(603, (char *)"IsInSameCurrentLocAsRef"),
+    Function_NameType(604, (char *)"IsInSameCurrentLocAsRefAlias"),
+    Function_NameType(590, (char *)"IsInScene"),
+    Function_NameType(408, (char *)"IsKiller"),
+    Function_NameType(409, (char *)"IsKillerObject"),
+    Function_NameType(674, (char *)"IsLastHostileActor"),
+    Function_NameType(450, (char *)"IsLastIdlePlayed"),
+    Function_NameType(451, (char *)"IsLastIdlePlayed"),
+    Function_NameType(285, (char *)"IsLeftUp"),
+    Function_NameType(397, (char *)"IsLimbGone"),
+    Function_NameType(650, (char *)"IsLinkedTo"),
+    Function_NameType(626, (char *)"IsLocAliasLoaded"),
+    Function_NameType(625, (char *)"IsLocationLoaded"),
+    Function_NameType(25, (char *)"IsMoving"),
+    Function_NameType(611, (char *)"IsNullPackageData"),
+    Function_NameType(730, (char *)"IsOnFlyingMount"),
+    Function_NameType(278, (char *)"IsOwner"),
+    Function_NameType(391, (char *)"IsPC1stPerson"),
+    Function_NameType(392, (char *)"IsPC1stPerson"),
+    Function_NameType(176, (char *)"IsPCAMurderer"),
+    Function_NameType(175, (char *)"IsPCSleeping"),
+    Function_NameType(520, (char *)"IsPS3"),
+    Function_NameType(704, (char *)"IsPathing"),
+    Function_NameType(368, (char *)"IsPlayerActionActive"),
+    Function_NameType(463, (char *)"IsPlayerGrabbedRef"),
+    Function_NameType(464, (char *)"IsPlayerGrabbedRef"),
+    Function_NameType(171, (char *)"IsPlayerInJail"),
+    Function_NameType(117, (char *)"IsPlayerInRegion"),
+    Function_NameType(358, (char *)"IsPlayerMovingIntoNewSpace"),
+    Function_NameType(339, (char *)"IsPlayersLastRiddenHorse"),
+    Function_NameType(266, (char *)"IsPleasant"),
+    Function_NameType(721, (char *)"IsPoison"),
+    Function_NameType(673, (char *)"IsPowerAttacking"),
+    Function_NameType(476, (char *)"IsProtected"),
+    Function_NameType(62, (char *)"IsRaining"),
+    Function_NameType(702, (char *)"IsRecoiling"),
+    Function_NameType(327, (char *)"IsRidingHorse"),
+    Function_NameType(287, (char *)"IsRunning"),
+    Function_NameType(550, (char *)"IsSceneActionComplete"),
+    Function_NameType(429, (char *)"IsScenePackageRunning"),
+    Function_NameType(248, (char *)"IsScenePlaying"),
+    Function_NameType(103, (char *)"IsShieldOut"),
+    Function_NameType(286, (char *)"IsSneaking"),
+    Function_NameType(75, (char *)"IsSnowing"),
+    Function_NameType(223, (char *)"IsSpellTarget"),
+    Function_NameType(568, (char *)"IsSprinting"),
+    Function_NameType(701, (char *)"IsStaggered"),
+    Function_NameType(185, (char *)"IsSwimming"),
+    Function_NameType(141, (char *)"IsTalking"),
+    Function_NameType(370, (char *)"IsTalkingActivatorActor"),
+    Function_NameType(265, (char *)"IsTimePassing"),
+    Function_NameType(102, (char *)"IsTorchOut"),
+    Function_NameType(145, (char *)"IsTrespassing"),
+    Function_NameType(329, (char *)"IsTurnArrest"),
+    Function_NameType(26, (char *)"IsTurning"),
+    Function_NameType(715, (char *)"IsUndead"),
+    Function_NameType(641, (char *)"IsUnique"),
+    Function_NameType(718, (char *)"IsUnlockedDoor"),
+    Function_NameType(111, (char *)"IsWaiting"),
+    Function_NameType(602, (char *)"IsWardState"),
+    Function_NameType(262, (char *)"IsWarningAbout"),
+    Function_NameType(304, (char *)"IsWaterObject"),
+    Function_NameType(398, (char *)"IsWeaponInList"),
+    Function_NameType(399, (char *)"IsWeaponInList"),
+    Function_NameType(101, (char *)"IsWeaponOut"),
+    Function_NameType(263, (char *)"IsWeaponOut"),
+    Function_NameType(521, (char *)"IsWin32"),
+    Function_NameType(309, (char *)"IsXBox"),
+    Function_NameType(104, (char *)"IsYielding"),
+    Function_NameType(610, (char *)"LocAliasHasKeyword"),
+    Function_NameType(605, (char *)"LocAliasIsLocation"),
+    Function_NameType(562, (char *)"LocationHasKeyword"),
+    Function_NameType(563, (char *)"LocationHasRefType"),
+    Function_NameType(36, (char *)"MenuMode"),
+    Function_NameType(42, (char *)"SameFaction"),
+    Function_NameType(133, (char *)"SameFactionAsPC"),
+    Function_NameType(43, (char *)"SameRace"),
+    Function_NameType(134, (char *)"SameRaceAsPC"),
+    Function_NameType(44, (char *)"SameSex"),
+    Function_NameType(135, (char *)"SameSexAsPC"),
+    Function_NameType(678, (char *)"ShouldAttackKill"),
+    Function_NameType(713, (char *)"SpellHasCastingPerk"),
+    Function_NameType(596, (char *)"SpellHasKeyword"),
+    Function_NameType(323, (char *)"WhichServiceMenu"),
+    Function_NameType(722, (char *)"WornApparelHasKeywordCount"),
+    Function_NameType(682, (char *)"WornHasKeyword"),
     };
 
 Function_NameType Comparison_NameInit[] =
     {
-    Function_NameType(0x00,(STRING)"Equal to"),
-    Function_NameType(0x01,(STRING)"Equal to / Or"),
-    Function_NameType(0x02,(STRING)"Equal to / Run on target"),
-    Function_NameType(0x03,(STRING)"Equal to / Or, Run on target"),
-    Function_NameType(0x04,(STRING)"Equal to / Use global"),
-    Function_NameType(0x05,(STRING)"Equal to / Or, Use global"),
-    Function_NameType(0x06,(STRING)"Equal to / Run on target, Use global"),
-    Function_NameType(0x07,(STRING)"Equal to / Or, Run on target, Use global"),
-    Function_NameType(0x20,(STRING)"Not equal to"),
-    Function_NameType(0x21,(STRING)"Not equal to / Or"),
-    Function_NameType(0x22,(STRING)"Not equal to / Run on target"),
-    Function_NameType(0x23,(STRING)"Not equal to / Or, Run on target"),
-    Function_NameType(0x24,(STRING)"Not equal to / Use global"),
-    Function_NameType(0x25,(STRING)"Not equal to / Or, Use global"),
-    Function_NameType(0x26,(STRING)"Not equal to / Run on target, Use global"),
-    Function_NameType(0x27,(STRING)"Not equal to / Or, Run on target, Use global"),
-    Function_NameType(0x40,(STRING)"Greater than"),
-    Function_NameType(0x41,(STRING)"Greater than / Or"),
-    Function_NameType(0x42,(STRING)"Greater than / Run on target"),
-    Function_NameType(0x43,(STRING)"Greater than / Or, Run on target"),
-    Function_NameType(0x44,(STRING)"Greater than / Use global"),
-    Function_NameType(0x45,(STRING)"Greater than / Or, Use global"),
-    Function_NameType(0x46,(STRING)"Greater than / Run on target, Use global"),
-    Function_NameType(0x47,(STRING)"Greater than / Or, Run on target, Use global"),
-    Function_NameType(0x60,(STRING)"Greater than or equal to"),
-    Function_NameType(0x61,(STRING)"Greater than or equal to / Or"),
-    Function_NameType(0x62,(STRING)"Greater than or equal to / Run on target"),
-    Function_NameType(0x63,(STRING)"Greater than or equal to / Or, Run on target"),
-    Function_NameType(0x64,(STRING)"Greater than or equal to / Use global"),
-    Function_NameType(0x65,(STRING)"Greater than or equal to / Or, Use global"),
-    Function_NameType(0x66,(STRING)"Greater than or equal to / Run on target, Use global"),
-    Function_NameType(0x67,(STRING)"Greater than or equal to / Or, Run on target, Use global"),
-    Function_NameType(0x80,(STRING)"Less than"),
-    Function_NameType(0x81,(STRING)"Less than / Or"),
-    Function_NameType(0x82,(STRING)"Less than / Run on target"),
-    Function_NameType(0x83,(STRING)"Less than / Or, Run on target"),
-    Function_NameType(0x84,(STRING)"Less than / Use global"),
-    Function_NameType(0x85,(STRING)"Less than / Or, Use global"),
-    Function_NameType(0x86,(STRING)"Less than / Run on target, Use global"),
-    Function_NameType(0x87,(STRING)"Less than / Or, Run on target, Use global"),
-    Function_NameType(0xA0,(STRING)"Less than or equal to"),
-    Function_NameType(0xA1,(STRING)"Less than or equal to / Or"),
-    Function_NameType(0xA2,(STRING)"Less than or equal to / Run on target"),
-    Function_NameType(0xA3,(STRING)"Less than or equal to / Or, Run on target"),
-    Function_NameType(0xA4,(STRING)"Less than or equal to / Use global"),
-    Function_NameType(0xA5,(STRING)"Less than or equal to / Or, Use global"),
-    Function_NameType(0xA6,(STRING)"Less than or equal to / Run on target, Use global"),
-    Function_NameType(0xA7,(STRING)"Less than or equal to / Or, Run on target, Use global")
+    Function_NameType(0x00,(char *)"Equal to"),
+    Function_NameType(0x01,(char *)"Equal to / Or"),
+    Function_NameType(0x02,(char *)"Equal to / Run on target"),
+    Function_NameType(0x03,(char *)"Equal to / Or, Run on target"),
+    Function_NameType(0x04,(char *)"Equal to / Use global"),
+    Function_NameType(0x05,(char *)"Equal to / Or, Use global"),
+    Function_NameType(0x06,(char *)"Equal to / Run on target, Use global"),
+    Function_NameType(0x07,(char *)"Equal to / Or, Run on target, Use global"),
+    Function_NameType(0x20,(char *)"Not equal to"),
+    Function_NameType(0x21,(char *)"Not equal to / Or"),
+    Function_NameType(0x22,(char *)"Not equal to / Run on target"),
+    Function_NameType(0x23,(char *)"Not equal to / Or, Run on target"),
+    Function_NameType(0x24,(char *)"Not equal to / Use global"),
+    Function_NameType(0x25,(char *)"Not equal to / Or, Use global"),
+    Function_NameType(0x26,(char *)"Not equal to / Run on target, Use global"),
+    Function_NameType(0x27,(char *)"Not equal to / Or, Run on target, Use global"),
+    Function_NameType(0x40,(char *)"Greater than"),
+    Function_NameType(0x41,(char *)"Greater than / Or"),
+    Function_NameType(0x42,(char *)"Greater than / Run on target"),
+    Function_NameType(0x43,(char *)"Greater than / Or, Run on target"),
+    Function_NameType(0x44,(char *)"Greater than / Use global"),
+    Function_NameType(0x45,(char *)"Greater than / Or, Use global"),
+    Function_NameType(0x46,(char *)"Greater than / Run on target, Use global"),
+    Function_NameType(0x47,(char *)"Greater than / Or, Run on target, Use global"),
+    Function_NameType(0x60,(char *)"Greater than or equal to"),
+    Function_NameType(0x61,(char *)"Greater than or equal to / Or"),
+    Function_NameType(0x62,(char *)"Greater than or equal to / Run on target"),
+    Function_NameType(0x63,(char *)"Greater than or equal to / Or, Run on target"),
+    Function_NameType(0x64,(char *)"Greater than or equal to / Use global"),
+    Function_NameType(0x65,(char *)"Greater than or equal to / Or, Use global"),
+    Function_NameType(0x66,(char *)"Greater than or equal to / Run on target, Use global"),
+    Function_NameType(0x67,(char *)"Greater than or equal to / Or, Run on target, Use global"),
+    Function_NameType(0x80,(char *)"Less than"),
+    Function_NameType(0x81,(char *)"Less than / Or"),
+    Function_NameType(0x82,(char *)"Less than / Run on target"),
+    Function_NameType(0x83,(char *)"Less than / Or, Run on target"),
+    Function_NameType(0x84,(char *)"Less than / Use global"),
+    Function_NameType(0x85,(char *)"Less than / Or, Use global"),
+    Function_NameType(0x86,(char *)"Less than / Run on target, Use global"),
+    Function_NameType(0x87,(char *)"Less than / Or, Run on target, Use global"),
+    Function_NameType(0xA0,(char *)"Less than or equal to"),
+    Function_NameType(0xA1,(char *)"Less than or equal to / Or"),
+    Function_NameType(0xA2,(char *)"Less than or equal to / Run on target"),
+    Function_NameType(0xA3,(char *)"Less than or equal to / Or, Run on target"),
+    Function_NameType(0xA4,(char *)"Less than or equal to / Use global"),
+    Function_NameType(0xA5,(char *)"Less than or equal to / Or, Use global"),
+    Function_NameType(0xA6,(char *)"Less than or equal to / Run on target, Use global"),
+    Function_NameType(0xA7,(char *)"Less than or equal to / Or, Run on target, Use global")
     };
 
 Function_NameType IDLEGroup_NameInit[] =
     {
-    Function_NameType(0x80,(STRING)"Lower Body"),
-    Function_NameType(0x00,(STRING)"Lower Body, Must return a file"),
-    Function_NameType(0x81,(STRING)"Left Arm"),
-    Function_NameType(0x01,(STRING)"Left Arm, Must return a file"),
-    Function_NameType(0x82,(STRING)"Left Hand"),
-    Function_NameType(0x02,(STRING)"Left Hand, Must return a file"),
-    Function_NameType(0x83,(STRING)"Right Arm"),
-    Function_NameType(0x03,(STRING)"Right Arm, Must return a file"),
-    Function_NameType(0x84,(STRING)"Special Idle"),
-    Function_NameType(0x04,(STRING)"Special Idle, Must return a file"),
-    Function_NameType(0x85,(STRING)"Whole Body"),
-    Function_NameType(0x05,(STRING)"Whole Body, Must return a file"),
-    Function_NameType(0x86,(STRING)"Upper Body"),
-    Function_NameType(0x06,(STRING)"Upper Body, Must return a file"),
+    Function_NameType(0x80,(char *)"Lower Body"),
+    Function_NameType(0x00,(char *)"Lower Body, Must return a file"),
+    Function_NameType(0x81,(char *)"Left Arm"),
+    Function_NameType(0x01,(char *)"Left Arm, Must return a file"),
+    Function_NameType(0x82,(char *)"Left Hand"),
+    Function_NameType(0x02,(char *)"Left Hand, Must return a file"),
+    Function_NameType(0x83,(char *)"Right Arm"),
+    Function_NameType(0x03,(char *)"Right Arm, Must return a file"),
+    Function_NameType(0x84,(char *)"Special Idle"),
+    Function_NameType(0x04,(char *)"Special Idle, Must return a file"),
+    Function_NameType(0x85,(char *)"Whole Body"),
+    Function_NameType(0x05,(char *)"Whole Body, Must return a file"),
+    Function_NameType(0x86,(char *)"Upper Body"),
+    Function_NameType(0x06,(char *)"Upper Body, Must return a file"),
     };
 
 Function_NameType PACKAIType_NameInit[] =
     {
-    Function_NameType(0,(STRING)"Find"),
-    Function_NameType(1,(STRING)"Follow"),
-    Function_NameType(2,(STRING)"Escort"),
-    Function_NameType(3,(STRING)"Eat"),
-    Function_NameType(4,(STRING)"Sleep"),
-    Function_NameType(5,(STRING)"Wander"),
-    Function_NameType(6,(STRING)"Travel"),
-    Function_NameType(7,(STRING)"Accompany"),
-    Function_NameType(8,(STRING)"Use item at"),
-    Function_NameType(9,(STRING)"Ambush"),
-    Function_NameType(10,(STRING)"Flee not combat"),
-    Function_NameType(11,(STRING)"Cast magic")
+    Function_NameType(0,(char *)"Find"),
+    Function_NameType(1,(char *)"Follow"),
+    Function_NameType(2,(char *)"Escort"),
+    Function_NameType(3,(char *)"Eat"),
+    Function_NameType(4,(char *)"Sleep"),
+    Function_NameType(5,(char *)"Wander"),
+    Function_NameType(6,(char *)"Travel"),
+    Function_NameType(7,(char *)"Accompany"),
+    Function_NameType(8,(char *)"Use item at"),
+    Function_NameType(9,(char *)"Ambush"),
+    Function_NameType(10,(char *)"Flee not combat"),
+    Function_NameType(11,(char *)"Cast magic")
     };
 
 Function_NameType PACKLocType_NameInit[] =
     {
-    Function_NameType(0,(STRING)"Near reference"),
-    Function_NameType(1,(STRING)"In cell"),
-    Function_NameType(2,(STRING)"Near current location"),
-    Function_NameType(3,(STRING)"Near editor location"),
-    Function_NameType(4,(STRING)"Object ID"),
-    Function_NameType(5,(STRING)"Object type")
+    Function_NameType(0,(char *)"Near reference"),
+    Function_NameType(1,(char *)"In cell"),
+    Function_NameType(2,(char *)"Near current location"),
+    Function_NameType(3,(char *)"Near editor location"),
+    Function_NameType(4,(char *)"Object ID"),
+    Function_NameType(5,(char *)"Object type")
     };
 
 Function_NameType PACKTargetType_NameInit[] =
     {
-    Function_NameType(0,(STRING)"Specific reference"),
-    Function_NameType(1,(STRING)"Object ID"),
-    Function_NameType(2,(STRING)"Object type")
+    Function_NameType(0,(char *)"Specific reference"),
+    Function_NameType(1,(char *)"Object ID"),
+    Function_NameType(2,(char *)"Object type")
     };
 
 Function_NameType HardCodedFormID_EditorIDInit[] =
     {
-    Function_NameType(0x0001,(STRING)"DoorMarker"),
-    Function_NameType(0x0002,(STRING)"TravelMarker"),
-    Function_NameType(0x0003,(STRING)"NorthMarker"),
-    Function_NameType(0x0004,(STRING)"PrisonMarker"),
-    Function_NameType(0x0005,(STRING)"DivineMarker"),
-    Function_NameType(0x0006,(STRING)"TempleMarker"),
-    Function_NameType(0x0007,(STRING)"Player"),
-    Function_NameType(0x000A,(STRING)"Lockpick"),
-    Function_NameType(0x000B,(STRING)"SkeletonKey"),
-    Function_NameType(0x000C,(STRING)"RepairHammer"),
-    Function_NameType(0x000E,(STRING)"LootBag"),
-    Function_NameType(0x000F,(STRING)"Gold001"),
-    Function_NameType(0x0010,(STRING)"MapMarker"),
-    Function_NameType(0x0011,(STRING)"StolenGoods"),
-    Function_NameType(0x0012,(STRING)"HorseMarker"),
-    Function_NameType(0x0013,(STRING)"CreatureFaction"),
-    Function_NameType(0x0014,(STRING)"PlayerRef"),
-    Function_NameType(0x0015,(STRING)"JailPants"),
-    Function_NameType(0x0016,(STRING)"JailShoes"),
-    Function_NameType(0x0017,(STRING)"JailShirt"),
-    Function_NameType(0x0018,(STRING)"DefaultWater"),
-    Function_NameType(0x0019,(STRING)"VampireRace"),
-    Function_NameType(0x001A,(STRING)"eyeReanimate"),
-    Function_NameType(0x001E,(STRING)"FlameNode0"),
-    Function_NameType(0x001F,(STRING)"FlameNode1"),
-    Function_NameType(0x0020,(STRING)"FlameNode2"),
-    Function_NameType(0x0021,(STRING)"FlameNode3"),
-    Function_NameType(0x0022,(STRING)"FlameNode4"),
-    Function_NameType(0x0023,(STRING)"FlameNode5"),
-    Function_NameType(0x0024,(STRING)"FlameNode6"),
-    Function_NameType(0x0025,(STRING)"FlameNode7"),
-    Function_NameType(0x0026,(STRING)"FlameNode8"),
-    Function_NameType(0x0027,(STRING)"FlameNode9"),
-    Function_NameType(0x0028,(STRING)"FlameNode10"),
-    Function_NameType(0x0029,(STRING)"FlameNode11"),
-    Function_NameType(0x002A,(STRING)"FlameNode12"),
-    Function_NameType(0x002B,(STRING)"FlameNode13"),
-    Function_NameType(0x002C,(STRING)"FlameNode14"),
-    Function_NameType(0x002D,(STRING)"FlameNode15"),
-    Function_NameType(0x002E,(STRING)"FlameNode16"),
-    Function_NameType(0x002F,(STRING)"FlameNode17"),
-    Function_NameType(0x0030,(STRING)"FlameNode18"),
-    Function_NameType(0x0031,(STRING)"FlameNode19"),
-    Function_NameType(0x0032,(STRING)"FlameNode20"),
-    Function_NameType(0x0034,(STRING)"XMarkerHeading"),
-    Function_NameType(0x0035,(STRING)"GameYear"),
-    Function_NameType(0x0036,(STRING)"GameMonth"),
-    Function_NameType(0x0037,(STRING)"GameDay"),
-    Function_NameType(0x0038,(STRING)"GameHour"),
-    Function_NameType(0x0039,(STRING)"GameDaysPassed"),
-    Function_NameType(0x003A,(STRING)"TimeScale"),
-    Function_NameType(0x003B,(STRING)"XMarker"),
-    Function_NameType(0x003C,(STRING)"Tamriel"),
-    Function_NameType(0x003D,(STRING)"SkillArmorer"),
-    Function_NameType(0x003E,(STRING)"SkillAthletics"),
-    Function_NameType(0x003F,(STRING)"SkillBlade"),
-    Function_NameType(0x0040,(STRING)"SkillBlock"),
-    Function_NameType(0x0041,(STRING)"SkillBlunt"),
-    Function_NameType(0x0042,(STRING)"SkillHandToHand"),
-    Function_NameType(0x0043,(STRING)"SkillHeavyArmor"),
-    Function_NameType(0x0044,(STRING)"SkillAlchemy"),
-    Function_NameType(0x0045,(STRING)"SkillAlteration"),
-    Function_NameType(0x0046,(STRING)"SkillConjuration"),
-    Function_NameType(0x0047,(STRING)"SkillDestruction"),
-    Function_NameType(0x0048,(STRING)"SkillIllusion"),
-    Function_NameType(0x0049,(STRING)"SkillMysticism"),
-    Function_NameType(0x004A,(STRING)"SkillRestoration"),
-    Function_NameType(0x004B,(STRING)"SkillAcrobatics"),
-    Function_NameType(0x004C,(STRING)"SkillLightArmor"),
-    Function_NameType(0x004D,(STRING)"SkillMarksman"),
-    Function_NameType(0x004E,(STRING)"SkillMercantile"),
-    Function_NameType(0x004F,(STRING)"SkillSecurity"),
-    Function_NameType(0x0050,(STRING)"SkillSneak"),
-    Function_NameType(0x0051,(STRING)"SkillSpeechcraft"),
-    Function_NameType(0x0064,(STRING)"FurnitureMarker01"),
-    Function_NameType(0x0065,(STRING)"FurnitureMarker02"),
-    Function_NameType(0x0066,(STRING)"FurnitureMarker03"),
-    Function_NameType(0x0067,(STRING)"FurnitureMarker04"),
-    Function_NameType(0x0068,(STRING)"FurnitureMarker05"),
-    Function_NameType(0x0069,(STRING)"FurnitureMarker06"),
-    Function_NameType(0x006A,(STRING)"FurnitureMarker07"),
-    Function_NameType(0x006B,(STRING)"FurnitureMarker08"),
-    Function_NameType(0x006C,(STRING)"FurnitureMarker09"),
-    Function_NameType(0x006D,(STRING)"FurnitureMarker10"),
-    Function_NameType(0x006E,(STRING)"FurnitureMarker11"),
-    Function_NameType(0x006F,(STRING)"FurnitureMarker12"),
-    Function_NameType(0x0070,(STRING)"FurnitureMarker13"),
-    Function_NameType(0x0071,(STRING)"FurnitureMarker14"),
-    Function_NameType(0x0072,(STRING)"FurnitureMarker15"),
-    Function_NameType(0x0073,(STRING)"FurnitureMarker16"),
-    Function_NameType(0x0074,(STRING)"FurnitureMarker17"),
-    Function_NameType(0x0075,(STRING)"FurnitureMarker18"),
-    Function_NameType(0x0076,(STRING)"FurnitureMarker19"),
-    Function_NameType(0x0077,(STRING)"FurnitureMarker20"),
-    Function_NameType(0x00AA,(STRING)"ADMIREHATE"),
-    Function_NameType(0x00AB,(STRING)"ADMIRELOVE"),
-    Function_NameType(0x00AC,(STRING)"ADMIRELIKE"),
-    Function_NameType(0x00AD,(STRING)"ADMIREDISLIKE"),
-    Function_NameType(0x00AE,(STRING)"COERCEHATE"),
-    Function_NameType(0x00AF,(STRING)"COERCELOVE"),
-    Function_NameType(0x00B0,(STRING)"COERCELIKE"),
-    Function_NameType(0x00B1,(STRING)"COERCEDISLIKE"),
-    Function_NameType(0x00B2,(STRING)"BOASTHATE"),
-    Function_NameType(0x00B3,(STRING)"BOASTLOVE"),
-    Function_NameType(0x00B4,(STRING)"BOASTLIKE"),
-    Function_NameType(0x00B5,(STRING)"BOASTDISLIKE"),
-    Function_NameType(0x00B6,(STRING)"JOKEHATE"),
-    Function_NameType(0x00B7,(STRING)"JOKELOVE"),
-    Function_NameType(0x00B8,(STRING)"JOKELIKE"),
-    Function_NameType(0x00B9,(STRING)"JOKEDISLIKE"),
-    Function_NameType(0x00BA,(STRING)"BRIBE"),
-    Function_NameType(0x00BB,(STRING)"PERSUASIONENTER"),
-    Function_NameType(0x00BC,(STRING)"PERSUASIONEXIT"),
-    Function_NameType(0x00C8,(STRING)"GREETING"),
-    Function_NameType(0x00D2,(STRING)"HELLO"),
-    Function_NameType(0x00D3,(STRING)"ANY"),
-    Function_NameType(0x00D4,(STRING)"GOODBYE"),
-    Function_NameType(0x00D5,(STRING)"IdleChatter"),
-    Function_NameType(0x00D6,(STRING)"SPELLHELP"),
-    Function_NameType(0x00D7,(STRING)"INFOGENERAL"),
-    Function_NameType(0x00DC,(STRING)"Attack"),
-    Function_NameType(0x00DD,(STRING)"Hit"),
-    Function_NameType(0x00DE,(STRING)"Flee"),
-    Function_NameType(0x00DF,(STRING)"Steal"),
-    Function_NameType(0x00E0,(STRING)"Trespass"),
-    Function_NameType(0x00E1,(STRING)"Yield"),
-    Function_NameType(0x00E2,(STRING)"AcceptYield"),
-    Function_NameType(0x00E3,(STRING)"Pickpocket"),
-    Function_NameType(0x00E4,(STRING)"Assault"),
-    Function_NameType(0x00E5,(STRING)"Murder"),
-    Function_NameType(0x00E6,(STRING)"PowerAttack"),
-    Function_NameType(0x00E7,(STRING)"AssaultNoCrime"),
-    Function_NameType(0x00E8,(STRING)"MurderNoCrime"),
-    Function_NameType(0x00E9,(STRING)"PickpocketNoCrime"),
-    Function_NameType(0x00EA,(STRING)"StealNoCrime"),
-    Function_NameType(0x00EB,(STRING)"TrespassNoCrime"),
-    Function_NameType(0x00F0,(STRING)"AdmireSuccess"),
-    Function_NameType(0x00F1,(STRING)"AdmireFail"),
-    Function_NameType(0x00F2,(STRING)"AdmireNeutral"),
-    Function_NameType(0x00F3,(STRING)"TauntSuccess"),
-    Function_NameType(0x00F4,(STRING)"TauntFail"),
-    Function_NameType(0x00F5,(STRING)"TauntNeutral"),
-    Function_NameType(0x00F6,(STRING)"BoastSuccess"),
-    Function_NameType(0x00F7,(STRING)"BoastFail"),
-    Function_NameType(0x00F8,(STRING)"BoastNeutral"),
-    Function_NameType(0x00F9,(STRING)"JokeSuccess"),
-    Function_NameType(0x00FA,(STRING)"JokeFail"),
-    Function_NameType(0x00FB,(STRING)"JokeNeutral"),
-    Function_NameType(0x00FC,(STRING)"BribeSuccess"),
-    Function_NameType(0x00FD,(STRING)"BribeFail"),
-    Function_NameType(0x00FE,(STRING)"DemandSuccess"),
-    Function_NameType(0x00FF,(STRING)"DemandFail"),
-    Function_NameType(0x0100,(STRING)"DemandNoMoney"),
-    Function_NameType(0x0101,(STRING)"DemandNoMoreCircle"),
-    Function_NameType(0x0102,(STRING)"BribeNoMoreCircle"),
-    Function_NameType(0x0103,(STRING)"BribeNoMoney"),
-    Function_NameType(0x0104,(STRING)"Noticed"),
-    Function_NameType(0x0105,(STRING)"Seen"),
-    Function_NameType(0x0106,(STRING)"Unseen"),
-    Function_NameType(0x0107,(STRING)"Lost"),
-    Function_NameType(0x010E,(STRING)"ServiceRefusal"),
-    Function_NameType(0x010F,(STRING)"BarterStart"),
-    Function_NameType(0x0110,(STRING)"BarterFail"),
-    Function_NameType(0x0111,(STRING)"Repair"),
-    Function_NameType(0x0112,(STRING)"Travel"),
-    Function_NameType(0x0113,(STRING)"Training"),
-    Function_NameType(0x0114,(STRING)"BarterBuyItem"),
-    Function_NameType(0x0115,(STRING)"BarterSellItem"),
-    Function_NameType(0x0116,(STRING)"BarterExit"),
-    Function_NameType(0x0117,(STRING)"BarterStolen"),
-    Function_NameType(0x0118,(STRING)"InfoRefusal"),
-    Function_NameType(0x0119,(STRING)"Idle"),
-    Function_NameType(0x011A,(STRING)"ObserveCombat"),
-    Function_NameType(0x011B,(STRING)"Corpse"),
-    Function_NameType(0x011C,(STRING)"TimeToGo"),
-    Function_NameType(0x011D,(STRING)"RepairExit"),
-    Function_NameType(0x0120,(STRING)"Recharge"),
-    Function_NameType(0x0121,(STRING)"RechargeExit"),
-    Function_NameType(0x0124,(STRING)"TrainingExit"),
-    Function_NameType(0x012C,(STRING)"MagicFailureSoundAlteration"),
-    Function_NameType(0x012D,(STRING)"MagicFailureSoundConjuration"),
-    Function_NameType(0x012E,(STRING)"MagicFailureSoundDestruction"),
-    Function_NameType(0x012F,(STRING)"MagicFailureSoundIllusion"),
-    Function_NameType(0x0130,(STRING)"MagicFailureSoundMysticism"),
-    Function_NameType(0x0131,(STRING)"MagicFailureSoundRestoration"),
-    Function_NameType(0x0136,(STRING)"DefaultPlayerSpell"),
-    Function_NameType(0x0137,(STRING)"DefaultMarksmanParalyzeSpell"),
-    Function_NameType(0x0138,(STRING)"MagicEnchantDrawSoundAlteration"),
-    Function_NameType(0x0139,(STRING)"MagicEnchantDrawSoundConjuration"),
-    Function_NameType(0x013A,(STRING)"MagicEnchantDrawSoundDestruction"),
-    Function_NameType(0x013B,(STRING)"MagicEnchantDrawSoundIllusion"),
-    Function_NameType(0x013C,(STRING)"MagicEnchantDrawSoundMysticism"),
-    Function_NameType(0x013D,(STRING)"MagicEnchantDrawSoundRestoration"),
-    Function_NameType(0x013E,(STRING)"MagicEnchantHitSoundAlteration"),
-    Function_NameType(0x013F,(STRING)"MagicEnchantHitSoundConjuration"),
-    Function_NameType(0x0140,(STRING)"MagicEnchantHitSoundDestruction"),
-    Function_NameType(0x0141,(STRING)"MagicEnchantHitSoundIllusion"),
-    Function_NameType(0x0142,(STRING)"MagicEnchantHitSoundMysticism"),
-    Function_NameType(0x0143,(STRING)"MagicEnchantHitSoundRestoration"),
-    Function_NameType(0x0144,(STRING)"effectAbsorb"),
-    Function_NameType(0x0145,(STRING)"effectReflect"),
-    Function_NameType(0x0146,(STRING)"LifeDetected"),
-    Function_NameType(0x015E,(STRING)"DefaultWeather"),
-    Function_NameType(0x015F,(STRING)"DefaultClimate"),
-    Function_NameType(0x0191,(STRING)"WelkyndStone"),
-    Function_NameType(0x0192,(STRING)"BlackSoulGem"),
-    Function_NameType(0x0193,(STRING)"AzuraStone"),
-    Function_NameType(0x0194,(STRING)"VarlaStone"),
-    Function_NameType(0x0212,(STRING)"FootSoundDirt"),
-    Function_NameType(0x0213,(STRING)"FootSoundGrass"),
-    Function_NameType(0x0214,(STRING)"FootSoundStone"),
-    Function_NameType(0x0215,(STRING)"FootSoundWater"),
-    Function_NameType(0x0216,(STRING)"FootSoundWood"),
-    Function_NameType(0x0217,(STRING)"FootSoundHeavyArmor"),
-    Function_NameType(0x0218,(STRING)"FootSoundLightArmor"),
-    Function_NameType(0x0219,(STRING)"FootSoundEarthLand"),
-    Function_NameType(0x021A,(STRING)"FootSoundGrassLand"),
-    Function_NameType(0x021B,(STRING)"FootSoundMetalLand"),
-    Function_NameType(0x021C,(STRING)"FootSoundStoneLand"),
-    Function_NameType(0x021D,(STRING)"FootSoundWaterLand"),
-    Function_NameType(0x021E,(STRING)"FootSoundWoodLand"),
-    Function_NameType(0x021F,(STRING)"FSTSnow"),
-    Function_NameType(0x0220,(STRING)"FSTSnowLand"),
-    Function_NameType(0x0221,(STRING)"FSTEarthSneak"),
-    Function_NameType(0x0222,(STRING)"FSTGrassSneak"),
-    Function_NameType(0x0223,(STRING)"FSTMetalSneak"),
-    Function_NameType(0x0224,(STRING)"FSTSnowSneak"),
-    Function_NameType(0x0225,(STRING)"FSTStoneSneak"),
-    Function_NameType(0x0226,(STRING)"FSTWaterSneak"),
-    Function_NameType(0x0227,(STRING)"FSTWoodSneak"),
-    Function_NameType(0x0228,(STRING)"FSTArmorLightSneak"),
-    Function_NameType(0x0229,(STRING)"FSTArmorHeavySneak"),
-    Function_NameType(0x022B,(STRING)"FSTMetal")
+    Function_NameType(0x0001,(char *)"DoorMarker"),
+    Function_NameType(0x0002,(char *)"TravelMarker"),
+    Function_NameType(0x0003,(char *)"NorthMarker"),
+    Function_NameType(0x0004,(char *)"PrisonMarker"),
+    Function_NameType(0x0005,(char *)"DivineMarker"),
+    Function_NameType(0x0006,(char *)"TempleMarker"),
+    Function_NameType(0x0007,(char *)"Player"),
+    Function_NameType(0x000A,(char *)"Lockpick"),
+    Function_NameType(0x000B,(char *)"SkeletonKey"),
+    Function_NameType(0x000C,(char *)"RepairHammer"),
+    Function_NameType(0x000E,(char *)"LootBag"),
+    Function_NameType(0x000F,(char *)"Gold001"),
+    Function_NameType(0x0010,(char *)"MapMarker"),
+    Function_NameType(0x0011,(char *)"StolenGoods"),
+    Function_NameType(0x0012,(char *)"HorseMarker"),
+    Function_NameType(0x0013,(char *)"CreatureFaction"),
+    Function_NameType(0x0014,(char *)"PlayerRef"),
+    Function_NameType(0x0015,(char *)"JailPants"),
+    Function_NameType(0x0016,(char *)"JailShoes"),
+    Function_NameType(0x0017,(char *)"JailShirt"),
+    Function_NameType(0x0018,(char *)"DefaultWater"),
+    Function_NameType(0x0019,(char *)"VampireRace"),
+    Function_NameType(0x001A,(char *)"eyeReanimate"),
+    Function_NameType(0x001E,(char *)"FlameNode0"),
+    Function_NameType(0x001F,(char *)"FlameNode1"),
+    Function_NameType(0x0020,(char *)"FlameNode2"),
+    Function_NameType(0x0021,(char *)"FlameNode3"),
+    Function_NameType(0x0022,(char *)"FlameNode4"),
+    Function_NameType(0x0023,(char *)"FlameNode5"),
+    Function_NameType(0x0024,(char *)"FlameNode6"),
+    Function_NameType(0x0025,(char *)"FlameNode7"),
+    Function_NameType(0x0026,(char *)"FlameNode8"),
+    Function_NameType(0x0027,(char *)"FlameNode9"),
+    Function_NameType(0x0028,(char *)"FlameNode10"),
+    Function_NameType(0x0029,(char *)"FlameNode11"),
+    Function_NameType(0x002A,(char *)"FlameNode12"),
+    Function_NameType(0x002B,(char *)"FlameNode13"),
+    Function_NameType(0x002C,(char *)"FlameNode14"),
+    Function_NameType(0x002D,(char *)"FlameNode15"),
+    Function_NameType(0x002E,(char *)"FlameNode16"),
+    Function_NameType(0x002F,(char *)"FlameNode17"),
+    Function_NameType(0x0030,(char *)"FlameNode18"),
+    Function_NameType(0x0031,(char *)"FlameNode19"),
+    Function_NameType(0x0032,(char *)"FlameNode20"),
+    Function_NameType(0x0034,(char *)"XMarkerHeading"),
+    Function_NameType(0x0035,(char *)"GameYear"),
+    Function_NameType(0x0036,(char *)"GameMonth"),
+    Function_NameType(0x0037,(char *)"GameDay"),
+    Function_NameType(0x0038,(char *)"GameHour"),
+    Function_NameType(0x0039,(char *)"GameDaysPassed"),
+    Function_NameType(0x003A,(char *)"TimeScale"),
+    Function_NameType(0x003B,(char *)"XMarker"),
+    Function_NameType(0x003C,(char *)"Tamriel"),
+    Function_NameType(0x003D,(char *)"SkillArmorer"),
+    Function_NameType(0x003E,(char *)"SkillAthletics"),
+    Function_NameType(0x003F,(char *)"SkillBlade"),
+    Function_NameType(0x0040,(char *)"SkillBlock"),
+    Function_NameType(0x0041,(char *)"SkillBlunt"),
+    Function_NameType(0x0042,(char *)"SkillHandToHand"),
+    Function_NameType(0x0043,(char *)"SkillHeavyArmor"),
+    Function_NameType(0x0044,(char *)"SkillAlchemy"),
+    Function_NameType(0x0045,(char *)"SkillAlteration"),
+    Function_NameType(0x0046,(char *)"SkillConjuration"),
+    Function_NameType(0x0047,(char *)"SkillDestruction"),
+    Function_NameType(0x0048,(char *)"SkillIllusion"),
+    Function_NameType(0x0049,(char *)"SkillMysticism"),
+    Function_NameType(0x004A,(char *)"SkillRestoration"),
+    Function_NameType(0x004B,(char *)"SkillAcrobatics"),
+    Function_NameType(0x004C,(char *)"SkillLightArmor"),
+    Function_NameType(0x004D,(char *)"SkillMarksman"),
+    Function_NameType(0x004E,(char *)"SkillMercantile"),
+    Function_NameType(0x004F,(char *)"SkillSecurity"),
+    Function_NameType(0x0050,(char *)"SkillSneak"),
+    Function_NameType(0x0051,(char *)"SkillSpeechcraft"),
+    Function_NameType(0x0064,(char *)"FurnitureMarker01"),
+    Function_NameType(0x0065,(char *)"FurnitureMarker02"),
+    Function_NameType(0x0066,(char *)"FurnitureMarker03"),
+    Function_NameType(0x0067,(char *)"FurnitureMarker04"),
+    Function_NameType(0x0068,(char *)"FurnitureMarker05"),
+    Function_NameType(0x0069,(char *)"FurnitureMarker06"),
+    Function_NameType(0x006A,(char *)"FurnitureMarker07"),
+    Function_NameType(0x006B,(char *)"FurnitureMarker08"),
+    Function_NameType(0x006C,(char *)"FurnitureMarker09"),
+    Function_NameType(0x006D,(char *)"FurnitureMarker10"),
+    Function_NameType(0x006E,(char *)"FurnitureMarker11"),
+    Function_NameType(0x006F,(char *)"FurnitureMarker12"),
+    Function_NameType(0x0070,(char *)"FurnitureMarker13"),
+    Function_NameType(0x0071,(char *)"FurnitureMarker14"),
+    Function_NameType(0x0072,(char *)"FurnitureMarker15"),
+    Function_NameType(0x0073,(char *)"FurnitureMarker16"),
+    Function_NameType(0x0074,(char *)"FurnitureMarker17"),
+    Function_NameType(0x0075,(char *)"FurnitureMarker18"),
+    Function_NameType(0x0076,(char *)"FurnitureMarker19"),
+    Function_NameType(0x0077,(char *)"FurnitureMarker20"),
+    Function_NameType(0x00AA,(char *)"ADMIREHATE"),
+    Function_NameType(0x00AB,(char *)"ADMIRELOVE"),
+    Function_NameType(0x00AC,(char *)"ADMIRELIKE"),
+    Function_NameType(0x00AD,(char *)"ADMIREDISLIKE"),
+    Function_NameType(0x00AE,(char *)"COERCEHATE"),
+    Function_NameType(0x00AF,(char *)"COERCELOVE"),
+    Function_NameType(0x00B0,(char *)"COERCELIKE"),
+    Function_NameType(0x00B1,(char *)"COERCEDISLIKE"),
+    Function_NameType(0x00B2,(char *)"BOASTHATE"),
+    Function_NameType(0x00B3,(char *)"BOASTLOVE"),
+    Function_NameType(0x00B4,(char *)"BOASTLIKE"),
+    Function_NameType(0x00B5,(char *)"BOASTDISLIKE"),
+    Function_NameType(0x00B6,(char *)"JOKEHATE"),
+    Function_NameType(0x00B7,(char *)"JOKELOVE"),
+    Function_NameType(0x00B8,(char *)"JOKELIKE"),
+    Function_NameType(0x00B9,(char *)"JOKEDISLIKE"),
+    Function_NameType(0x00BA,(char *)"BRIBE"),
+    Function_NameType(0x00BB,(char *)"PERSUASIONENTER"),
+    Function_NameType(0x00BC,(char *)"PERSUASIONEXIT"),
+    Function_NameType(0x00C8,(char *)"GREETING"),
+    Function_NameType(0x00D2,(char *)"HELLO"),
+    Function_NameType(0x00D3,(char *)"ANY"),
+    Function_NameType(0x00D4,(char *)"GOODBYE"),
+    Function_NameType(0x00D5,(char *)"IdleChatter"),
+    Function_NameType(0x00D6,(char *)"SPELLHELP"),
+    Function_NameType(0x00D7,(char *)"INFOGENERAL"),
+    Function_NameType(0x00DC,(char *)"Attack"),
+    Function_NameType(0x00DD,(char *)"Hit"),
+    Function_NameType(0x00DE,(char *)"Flee"),
+    Function_NameType(0x00DF,(char *)"Steal"),
+    Function_NameType(0x00E0,(char *)"Trespass"),
+    Function_NameType(0x00E1,(char *)"Yield"),
+    Function_NameType(0x00E2,(char *)"AcceptYield"),
+    Function_NameType(0x00E3,(char *)"Pickpocket"),
+    Function_NameType(0x00E4,(char *)"Assault"),
+    Function_NameType(0x00E5,(char *)"Murder"),
+    Function_NameType(0x00E6,(char *)"PowerAttack"),
+    Function_NameType(0x00E7,(char *)"AssaultNoCrime"),
+    Function_NameType(0x00E8,(char *)"MurderNoCrime"),
+    Function_NameType(0x00E9,(char *)"PickpocketNoCrime"),
+    Function_NameType(0x00EA,(char *)"StealNoCrime"),
+    Function_NameType(0x00EB,(char *)"TrespassNoCrime"),
+    Function_NameType(0x00F0,(char *)"AdmireSuccess"),
+    Function_NameType(0x00F1,(char *)"AdmireFail"),
+    Function_NameType(0x00F2,(char *)"AdmireNeutral"),
+    Function_NameType(0x00F3,(char *)"TauntSuccess"),
+    Function_NameType(0x00F4,(char *)"TauntFail"),
+    Function_NameType(0x00F5,(char *)"TauntNeutral"),
+    Function_NameType(0x00F6,(char *)"BoastSuccess"),
+    Function_NameType(0x00F7,(char *)"BoastFail"),
+    Function_NameType(0x00F8,(char *)"BoastNeutral"),
+    Function_NameType(0x00F9,(char *)"JokeSuccess"),
+    Function_NameType(0x00FA,(char *)"JokeFail"),
+    Function_NameType(0x00FB,(char *)"JokeNeutral"),
+    Function_NameType(0x00FC,(char *)"BribeSuccess"),
+    Function_NameType(0x00FD,(char *)"BribeFail"),
+    Function_NameType(0x00FE,(char *)"DemandSuccess"),
+    Function_NameType(0x00FF,(char *)"DemandFail"),
+    Function_NameType(0x0100,(char *)"DemandNoMoney"),
+    Function_NameType(0x0101,(char *)"DemandNoMoreCircle"),
+    Function_NameType(0x0102,(char *)"BribeNoMoreCircle"),
+    Function_NameType(0x0103,(char *)"BribeNoMoney"),
+    Function_NameType(0x0104,(char *)"Noticed"),
+    Function_NameType(0x0105,(char *)"Seen"),
+    Function_NameType(0x0106,(char *)"Unseen"),
+    Function_NameType(0x0107,(char *)"Lost"),
+    Function_NameType(0x010E,(char *)"ServiceRefusal"),
+    Function_NameType(0x010F,(char *)"BarterStart"),
+    Function_NameType(0x0110,(char *)"BarterFail"),
+    Function_NameType(0x0111,(char *)"Repair"),
+    Function_NameType(0x0112,(char *)"Travel"),
+    Function_NameType(0x0113,(char *)"Training"),
+    Function_NameType(0x0114,(char *)"BarterBuyItem"),
+    Function_NameType(0x0115,(char *)"BarterSellItem"),
+    Function_NameType(0x0116,(char *)"BarterExit"),
+    Function_NameType(0x0117,(char *)"BarterStolen"),
+    Function_NameType(0x0118,(char *)"InfoRefusal"),
+    Function_NameType(0x0119,(char *)"Idle"),
+    Function_NameType(0x011A,(char *)"ObserveCombat"),
+    Function_NameType(0x011B,(char *)"Corpse"),
+    Function_NameType(0x011C,(char *)"TimeToGo"),
+    Function_NameType(0x011D,(char *)"RepairExit"),
+    Function_NameType(0x0120,(char *)"Recharge"),
+    Function_NameType(0x0121,(char *)"RechargeExit"),
+    Function_NameType(0x0124,(char *)"TrainingExit"),
+    Function_NameType(0x012C,(char *)"MagicFailureSoundAlteration"),
+    Function_NameType(0x012D,(char *)"MagicFailureSoundConjuration"),
+    Function_NameType(0x012E,(char *)"MagicFailureSoundDestruction"),
+    Function_NameType(0x012F,(char *)"MagicFailureSoundIllusion"),
+    Function_NameType(0x0130,(char *)"MagicFailureSoundMysticism"),
+    Function_NameType(0x0131,(char *)"MagicFailureSoundRestoration"),
+    Function_NameType(0x0136,(char *)"DefaultPlayerSpell"),
+    Function_NameType(0x0137,(char *)"DefaultMarksmanParalyzeSpell"),
+    Function_NameType(0x0138,(char *)"MagicEnchantDrawSoundAlteration"),
+    Function_NameType(0x0139,(char *)"MagicEnchantDrawSoundConjuration"),
+    Function_NameType(0x013A,(char *)"MagicEnchantDrawSoundDestruction"),
+    Function_NameType(0x013B,(char *)"MagicEnchantDrawSoundIllusion"),
+    Function_NameType(0x013C,(char *)"MagicEnchantDrawSoundMysticism"),
+    Function_NameType(0x013D,(char *)"MagicEnchantDrawSoundRestoration"),
+    Function_NameType(0x013E,(char *)"MagicEnchantHitSoundAlteration"),
+    Function_NameType(0x013F,(char *)"MagicEnchantHitSoundConjuration"),
+    Function_NameType(0x0140,(char *)"MagicEnchantHitSoundDestruction"),
+    Function_NameType(0x0141,(char *)"MagicEnchantHitSoundIllusion"),
+    Function_NameType(0x0142,(char *)"MagicEnchantHitSoundMysticism"),
+    Function_NameType(0x0143,(char *)"MagicEnchantHitSoundRestoration"),
+    Function_NameType(0x0144,(char *)"effectAbsorb"),
+    Function_NameType(0x0145,(char *)"effectReflect"),
+    Function_NameType(0x0146,(char *)"LifeDetected"),
+    Function_NameType(0x015E,(char *)"DefaultWeather"),
+    Function_NameType(0x015F,(char *)"DefaultClimate"),
+    Function_NameType(0x0191,(char *)"WelkyndStone"),
+    Function_NameType(0x0192,(char *)"BlackSoulGem"),
+    Function_NameType(0x0193,(char *)"AzuraStone"),
+    Function_NameType(0x0194,(char *)"VarlaStone"),
+    Function_NameType(0x0212,(char *)"FootSoundDirt"),
+    Function_NameType(0x0213,(char *)"FootSoundGrass"),
+    Function_NameType(0x0214,(char *)"FootSoundStone"),
+    Function_NameType(0x0215,(char *)"FootSoundWater"),
+    Function_NameType(0x0216,(char *)"FootSoundWood"),
+    Function_NameType(0x0217,(char *)"FootSoundHeavyArmor"),
+    Function_NameType(0x0218,(char *)"FootSoundLightArmor"),
+    Function_NameType(0x0219,(char *)"FootSoundEarthLand"),
+    Function_NameType(0x021A,(char *)"FootSoundGrassLand"),
+    Function_NameType(0x021B,(char *)"FootSoundMetalLand"),
+    Function_NameType(0x021C,(char *)"FootSoundStoneLand"),
+    Function_NameType(0x021D,(char *)"FootSoundWaterLand"),
+    Function_NameType(0x021E,(char *)"FootSoundWoodLand"),
+    Function_NameType(0x021F,(char *)"FSTSnow"),
+    Function_NameType(0x0220,(char *)"FSTSnowLand"),
+    Function_NameType(0x0221,(char *)"FSTEarthSneak"),
+    Function_NameType(0x0222,(char *)"FSTGrassSneak"),
+    Function_NameType(0x0223,(char *)"FSTMetalSneak"),
+    Function_NameType(0x0224,(char *)"FSTSnowSneak"),
+    Function_NameType(0x0225,(char *)"FSTStoneSneak"),
+    Function_NameType(0x0226,(char *)"FSTWaterSneak"),
+    Function_NameType(0x0227,(char *)"FSTWoodSneak"),
+    Function_NameType(0x0228,(char *)"FSTArmorLightSneak"),
+    Function_NameType(0x0229,(char *)"FSTArmorHeavySneak"),
+    Function_NameType(0x022B,(char *)"FSTMetal")
     };
 
 Function_NameType EntryPoint_NameInit[] =
     {
-    Function_NameType(0,(STRING)"Calculate Weapon Damage"),
-    Function_NameType(1,(STRING)"Calculate My Critical Hit Chance"),
-    Function_NameType(2,(STRING)"Calculate My Critical Hit Damage"),
-    Function_NameType(3,(STRING)"Calculate Weapon Attack AP Cost"),
-    Function_NameType(4,(STRING)"Calculate Mine Explode Chance"),
-    Function_NameType(5,(STRING)"Adjust Range Penalty"),
-    Function_NameType(6,(STRING)"Adjust Limb Damage"),
-    Function_NameType(7,(STRING)"Calculate Weapon Range"),
-    Function_NameType(8,(STRING)"Calculate To Hit Chance"),
-    Function_NameType(9,(STRING)"Adjust Experience Points"),
-    Function_NameType(10,(STRING)"Adjust Gained Skill Points"),
-    Function_NameType(11,(STRING)"Adjust Book Skill Points"),
-    Function_NameType(12,(STRING)"Modify Recovered Health"),
-    Function_NameType(13,(STRING)"Calculate Inventory AP Cost"),
-    Function_NameType(14,(STRING)"Get Disposition"),
-    Function_NameType(15,(STRING)"Get Should Attack"),
-    Function_NameType(16,(STRING)"Get Should Assist"),
-    Function_NameType(17,(STRING)"Calculate Buy Price"),
-    Function_NameType(18,(STRING)"Get Bad Karma"),
-    Function_NameType(19,(STRING)"Get Good Karma"),
-    Function_NameType(20,(STRING)"Ignore Locked Terminal"),
-    Function_NameType(21,(STRING)"Add Leveled List On Death"),
-    Function_NameType(22,(STRING)"Get Max Carry Weight"),
-    Function_NameType(23,(STRING)"Modify Addiction Chance"),
-    Function_NameType(24,(STRING)"Modify Addiction Duration"),
-    Function_NameType(25,(STRING)"Modify Positive Chem Duration"),
-    Function_NameType(26,(STRING)"Adjust Drinking Radiation"),
-    Function_NameType(27,(STRING)"Activate"),
-    Function_NameType(28,(STRING)"Mysterious Stranger"),
-    Function_NameType(29,(STRING)"Has Paralyzing Palm"),
-    Function_NameType(30,(STRING)"Hacking Science Bonus"),
-    Function_NameType(31,(STRING)"Ignore Running During Detection"),
-    Function_NameType(32,(STRING)"Ignore Broken Lock"),
-    Function_NameType(33,(STRING)"Has Concentrated Fire"),
-    Function_NameType(34,(STRING)"Calculate Gun Spread"),
-    Function_NameType(35,(STRING)"Player Kill AP Reward"),
-    Function_NameType(36,(STRING)"Modify Enemy Critical Hit Chance"),
-    Function_NameType(37,(STRING)"Reload Speed"),
-    Function_NameType(38,(STRING)"Equip Speed"),
-    Function_NameType(39,(STRING)"Action Point Regen"),
-    Function_NameType(40,(STRING)"Action Point Cost"),
-    Function_NameType(41,(STRING)"Miss Fortune"),
-    Function_NameType(42,(STRING)"Modify Run Speed"),
-    Function_NameType(43,(STRING)"Modify Attack Speed"),
-    Function_NameType(44,(STRING)"Modify Radiation Consumed"),
-    Function_NameType(45,(STRING)"Has Pip Hacker"),
-    Function_NameType(46,(STRING)"Has Meltdown"),
-    Function_NameType(47,(STRING)"See Enemy Health"),
-    Function_NameType(48,(STRING)"Has Jury Rigging"),
-    Function_NameType(49,(STRING)"Modify Threat Range"),
-    Function_NameType(50,(STRING)"Modify Thread"),
-    Function_NameType(51,(STRING)"Has Fast Travel Always"),
-    Function_NameType(52,(STRING)"Knockdown Chance"),
-    Function_NameType(53,(STRING)"Modify Weapon Strength Req"),
-    Function_NameType(54,(STRING)"Modify Aiming Move Speed"),
-    Function_NameType(55,(STRING)"Modify Light Items"),
-    Function_NameType(56,(STRING)"Modify Damage Threshold (defender)"),
-    Function_NameType(57,(STRING)"Modify Chance for Ammo Item"),
-    Function_NameType(58,(STRING)"Modify Damage Threshold (attacker)"),
-    Function_NameType(59,(STRING)"Modify Throwing Velocity"),
-    Function_NameType(60,(STRING)"Chance for Item on Fire"),
-    Function_NameType(61,(STRING)"Has Unarmed Forward Power Attack"),
-    Function_NameType(62,(STRING)"Has Unarmed Back Power Attack"),
-    Function_NameType(63,(STRING)"Has Unarmed Crouched Power Attack"),
-    Function_NameType(64,(STRING)"Has Unarmed Counter Attack"),
-    Function_NameType(65,(STRING)"Has Unarmed Left Power Attack"),
-    Function_NameType(66,(STRING)"Has Unarmed Right Power Attack"),
-    Function_NameType(67,(STRING)"VATS HelperChance"),
-    Function_NameType(68,(STRING)"Modify Item Damage"),
-    Function_NameType(69,(STRING)"Has Improved Detection"),
-    Function_NameType(70,(STRING)"Has Improved Spotting"),
-    Function_NameType(71,(STRING)"Has Improved Item Detection"),
-    Function_NameType(72,(STRING)"Adjust Explosion Radius"),
-    Function_NameType(73,(STRING)"Reserved")
+    Function_NameType(0,(char *)"Calculate Weapon Damage"),
+    Function_NameType(1,(char *)"Calculate My Critical Hit Chance"),
+    Function_NameType(2,(char *)"Calculate My Critical Hit Damage"),
+    Function_NameType(3,(char *)"Calculate Weapon Attack AP Cost"),
+    Function_NameType(4,(char *)"Calculate Mine Explode Chance"),
+    Function_NameType(5,(char *)"Adjust Range Penalty"),
+    Function_NameType(6,(char *)"Adjust Limb Damage"),
+    Function_NameType(7,(char *)"Calculate Weapon Range"),
+    Function_NameType(8,(char *)"Calculate To Hit Chance"),
+    Function_NameType(9,(char *)"Adjust Experience Points"),
+    Function_NameType(10,(char *)"Adjust Gained Skill Points"),
+    Function_NameType(11,(char *)"Adjust Book Skill Points"),
+    Function_NameType(12,(char *)"Modify Recovered Health"),
+    Function_NameType(13,(char *)"Calculate Inventory AP Cost"),
+    Function_NameType(14,(char *)"Get Disposition"),
+    Function_NameType(15,(char *)"Get Should Attack"),
+    Function_NameType(16,(char *)"Get Should Assist"),
+    Function_NameType(17,(char *)"Calculate Buy Price"),
+    Function_NameType(18,(char *)"Get Bad Karma"),
+    Function_NameType(19,(char *)"Get Good Karma"),
+    Function_NameType(20,(char *)"Ignore Locked Terminal"),
+    Function_NameType(21,(char *)"Add Leveled List On Death"),
+    Function_NameType(22,(char *)"Get Max Carry Weight"),
+    Function_NameType(23,(char *)"Modify Addiction Chance"),
+    Function_NameType(24,(char *)"Modify Addiction Duration"),
+    Function_NameType(25,(char *)"Modify Positive Chem Duration"),
+    Function_NameType(26,(char *)"Adjust Drinking Radiation"),
+    Function_NameType(27,(char *)"Activate"),
+    Function_NameType(28,(char *)"Mysterious Stranger"),
+    Function_NameType(29,(char *)"Has Paralyzing Palm"),
+    Function_NameType(30,(char *)"Hacking Science Bonus"),
+    Function_NameType(31,(char *)"Ignore Running During Detection"),
+    Function_NameType(32,(char *)"Ignore Broken Lock"),
+    Function_NameType(33,(char *)"Has Concentrated Fire"),
+    Function_NameType(34,(char *)"Calculate Gun Spread"),
+    Function_NameType(35,(char *)"Player Kill AP Reward"),
+    Function_NameType(36,(char *)"Modify Enemy Critical Hit Chance"),
+    Function_NameType(37,(char *)"Reload Speed"),
+    Function_NameType(38,(char *)"Equip Speed"),
+    Function_NameType(39,(char *)"Action Point Regen"),
+    Function_NameType(40,(char *)"Action Point Cost"),
+    Function_NameType(41,(char *)"Miss Fortune"),
+    Function_NameType(42,(char *)"Modify Run Speed"),
+    Function_NameType(43,(char *)"Modify Attack Speed"),
+    Function_NameType(44,(char *)"Modify Radiation Consumed"),
+    Function_NameType(45,(char *)"Has Pip Hacker"),
+    Function_NameType(46,(char *)"Has Meltdown"),
+    Function_NameType(47,(char *)"See Enemy Health"),
+    Function_NameType(48,(char *)"Has Jury Rigging"),
+    Function_NameType(49,(char *)"Modify Threat Range"),
+    Function_NameType(50,(char *)"Modify Thread"),
+    Function_NameType(51,(char *)"Has Fast Travel Always"),
+    Function_NameType(52,(char *)"Knockdown Chance"),
+    Function_NameType(53,(char *)"Modify Weapon Strength Req"),
+    Function_NameType(54,(char *)"Modify Aiming Move Speed"),
+    Function_NameType(55,(char *)"Modify Light Items"),
+    Function_NameType(56,(char *)"Modify Damage Threshold (defender)"),
+    Function_NameType(57,(char *)"Modify Chance for Ammo Item"),
+    Function_NameType(58,(char *)"Modify Damage Threshold (attacker)"),
+    Function_NameType(59,(char *)"Modify Throwing Velocity"),
+    Function_NameType(60,(char *)"Chance for Item on Fire"),
+    Function_NameType(61,(char *)"Has Unarmed Forward Power Attack"),
+    Function_NameType(62,(char *)"Has Unarmed Back Power Attack"),
+    Function_NameType(63,(char *)"Has Unarmed Crouched Power Attack"),
+    Function_NameType(64,(char *)"Has Unarmed Counter Attack"),
+    Function_NameType(65,(char *)"Has Unarmed Left Power Attack"),
+    Function_NameType(66,(char *)"Has Unarmed Right Power Attack"),
+    Function_NameType(67,(char *)"VATS HelperChance"),
+    Function_NameType(68,(char *)"Modify Item Damage"),
+    Function_NameType(69,(char *)"Has Improved Detection"),
+    Function_NameType(70,(char *)"Has Improved Spotting"),
+    Function_NameType(71,(char *)"Has Improved Item Detection"),
+    Function_NameType(72,(char *)"Adjust Explosion Radius"),
+    Function_NameType(73,(char *)"Reserved")
     };
 
-const std::map<UINT32, FunctionArguments> Function_Arguments(Function_ArgumentsInit, Function_ArgumentsInit + sizeof(Function_ArgumentsInit) / sizeof(Function_ArgumentsInit[0]));
+const std::map<uint32_t, FunctionArguments> Function_Arguments(Function_ArgumentsInit, Function_ArgumentsInit + sizeof(Function_ArgumentsInit) / sizeof(Function_ArgumentsInit[0]));
 
-const std::map<UINT32, STRING> Function_Name(Function_NameInit, Function_NameInit + sizeof(Function_NameInit) / sizeof(Function_NameInit[0]));
-const std::map<UINT32, STRING> Comparison_Name(Comparison_NameInit, Comparison_NameInit + sizeof(Comparison_NameInit) / sizeof(Comparison_NameInit[0]));
-const std::map<UINT32, STRING> IDLEGroup_Name(IDLEGroup_NameInit, IDLEGroup_NameInit + sizeof(IDLEGroup_NameInit) / sizeof(IDLEGroup_NameInit[0]));
-const std::map<UINT32, STRING> PACKAIType_Name(PACKAIType_NameInit, PACKAIType_NameInit + sizeof(PACKAIType_NameInit) / sizeof(PACKAIType_NameInit[0]));
-const std::map<UINT32, STRING> PACKLocType_Name(PACKLocType_NameInit, PACKLocType_NameInit + sizeof(PACKLocType_NameInit) / sizeof(PACKLocType_NameInit[0]));
-const std::map<UINT32, STRING> PACKTargetType_Name(PACKTargetType_NameInit, PACKTargetType_NameInit + sizeof(PACKTargetType_NameInit) / sizeof(PACKTargetType_NameInit[0]));
-const std::map<UINT32, STRING> HardCodedFormID_EditorID(HardCodedFormID_EditorIDInit, HardCodedFormID_EditorIDInit + sizeof(HardCodedFormID_EditorIDInit) / sizeof(HardCodedFormID_EditorIDInit[0]));
+const std::map<uint32_t, char *> Function_Name(Function_NameInit, Function_NameInit + sizeof(Function_NameInit) / sizeof(Function_NameInit[0]));
+const std::map<uint32_t, char *> Comparison_Name(Comparison_NameInit, Comparison_NameInit + sizeof(Comparison_NameInit) / sizeof(Comparison_NameInit[0]));
+const std::map<uint32_t, char *> IDLEGroup_Name(IDLEGroup_NameInit, IDLEGroup_NameInit + sizeof(IDLEGroup_NameInit) / sizeof(IDLEGroup_NameInit[0]));
+const std::map<uint32_t, char *> PACKAIType_Name(PACKAIType_NameInit, PACKAIType_NameInit + sizeof(PACKAIType_NameInit) / sizeof(PACKAIType_NameInit[0]));
+const std::map<uint32_t, char *> PACKLocType_Name(PACKLocType_NameInit, PACKLocType_NameInit + sizeof(PACKLocType_NameInit) / sizeof(PACKLocType_NameInit[0]));
+const std::map<uint32_t, char *> PACKTargetType_Name(PACKTargetType_NameInit, PACKTargetType_NameInit + sizeof(PACKTargetType_NameInit) / sizeof(PACKTargetType_NameInit[0]));
+const std::map<uint32_t, char *> HardCodedFormID_EditorID(HardCodedFormID_EditorIDInit, HardCodedFormID_EditorIDInit + sizeof(HardCodedFormID_EditorIDInit) / sizeof(HardCodedFormID_EditorIDInit[0]));
 
-const std::map<UINT32, STRING> EntryPoint_Name(EntryPoint_NameInit, EntryPoint_NameInit + sizeof(EntryPoint_NameInit) / sizeof(EntryPoint_NameInit[0]));
-const std::map<UINT32, FunctionArguments> FNVFunction_Arguments(FNVFunction_ArgumentsInit, FNVFunction_ArgumentsInit + sizeof(FNVFunction_ArgumentsInit) / sizeof(FNVFunction_ArgumentsInit[0]));
-const std::map<UINT32, FunctionArguments> SKFunction_Arguments(SKFunction_ArgumentsInit, SKFunction_ArgumentsInit + sizeof(SKFunction_ArgumentsInit) / sizeof(SKFunction_ArgumentsInit[0]));
+const std::map<uint32_t, char *> EntryPoint_Name(EntryPoint_NameInit, EntryPoint_NameInit + sizeof(EntryPoint_NameInit) / sizeof(EntryPoint_NameInit[0]));
+const std::map<uint32_t, FunctionArguments> FNVFunction_Arguments(FNVFunction_ArgumentsInit, FNVFunction_ArgumentsInit + sizeof(FNVFunction_ArgumentsInit) / sizeof(FNVFunction_ArgumentsInit[0]));
+const std::map<uint32_t, FunctionArguments> SKFunction_Arguments(SKFunction_ArgumentsInit, SKFunction_ArgumentsInit + sizeof(SKFunction_ArgumentsInit) / sizeof(SKFunction_ArgumentsInit[0]));
 
 const float flt_max = FLT_MAX;
 const float flt_min = FLT_MIN;

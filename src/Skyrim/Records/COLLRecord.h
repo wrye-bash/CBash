@@ -47,12 +47,12 @@ class COLLRecord : public TES5Record // Collision Layer
     public:
         StringRecord EDID; // Editor ID
         LStringRecord DESC; // Description
-        ReqSimpleSubRecord<UINT32> BNAM; // ID
+        ReqSimpleSubRecord<uint32_t> BNAM; // ID
         ReqSubRecord<GENCNAM> FNAM; // Color
-        ReqSimpleSubRecord<UINT32, 0> GNAM; // Flags
+        ReqSimpleSubRecord<uint32_t, 0> GNAM; // Flags
         StringRecord MNAM; // Name
         // INTV - handled seperately
-        OptCounted<OrderedPackedArray<FORMID>, UINT32, REV32(INTV)> CNAM; // collidesWidth
+        OptCounted<OrderedPackedArray<FORMID>, uint32_t, REV32(INTV)> CNAM; // collidesWidth
         //OrderedPackedArray<FORMID> CNAM; // colliedsWith
 
         enum flagFlags
@@ -72,22 +72,22 @@ class COLLRecord : public TES5Record // Collision Layer
         void IsSensor(bool value);
         bool IsNavmeshObstacle() const;
         void IsNavmeshObstacle(bool value);
-        bool IsFlagMask(UINT32 Mask, bool Exact=false);
-        void SetFlagMask(UINT32 Mask);
+        bool IsFlagMask(uint32_t Mask, bool Exact=false);
+        void SetFlagMask(uint32_t Mask);
 
         bool VisitFormIDs(FormIDOp &op);
 
-        UINT32 GetFieldAttribute(DEFAULTED_FIELD_IDENTIFIERS, UINT32 WhichAttribute=0);
+        uint32_t GetFieldAttribute(DEFAULTED_FIELD_IDENTIFIERS, uint32_t WhichAttribute=0);
         void * GetField(DEFAULTED_FIELD_IDENTIFIERS, void **FieldValues=NULL);
-        bool   SetField(DEFAULTED_FIELD_IDENTIFIERS, void *FieldValue=NULL, UINT32 ArraySize=0);
+        bool   SetField(DEFAULTED_FIELD_IDENTIFIERS, void *FieldValue=NULL, uint32_t ArraySize=0);
         void   DeleteField(DEFAULTED_FIELD_IDENTIFIERS);
 
-        UINT32 GetType();
-        STRING GetStrType();
+        uint32_t GetType();
+        char * GetStrType();
 
-        SINT32 ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk=false);
-        SINT32 Unload();
-        SINT32 WriteRecord(FileWriter &writer);
+        int32_t ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk=false);
+        int32_t Unload();
+        int32_t WriteRecord(FileWriter &writer);
 
         bool operator ==(const COLLRecord &other) const;
         bool operator !=(const COLLRecord &other) const;

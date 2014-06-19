@@ -44,7 +44,7 @@ class MATTRecord : public TES5Record //Material Type
     {
     struct MATTCNAM // Havok display color
     {
-        FLOAT32 red, green, blue;
+        float red, green, blue;
 
         MATTCNAM();
         ~MATTCNAM();
@@ -60,7 +60,7 @@ class MATTRecord : public TES5Record //Material Type
         StringRecord MNAM; // Material Name
         ReqSubRecord<MATTCNAM> CNAM; // Havok Display Color
         ReqSimpleFloatSubRecord<flt_0> BNAM; // Bouyancy
-        ReqSimpleSubRecord<UINT32> FNAM; // Flags
+        ReqSimpleSubRecord<uint32_t> FNAM; // Flags
         ReqSimpleSubRecord<FORMID> HNAM; //Havok Impact Data Set (IPDS)
 
         enum flagFlags
@@ -73,24 +73,24 @@ class MATTRecord : public TES5Record //Material Type
         void IsStairMaterial(bool value);
         bool IsArrowsStick() const;
         void IsArrowsStick(bool value);
-        bool IsFlagMask(UINT32 Mask, bool Exact=false);
-        void SetFlagMask(UINT32 Mask);
+        bool IsFlagMask(uint32_t Mask, bool Exact=false);
+        void SetFlagMask(uint32_t Mask);
 
         MATTRecord(unsigned char *_recData=NULL);
         MATTRecord(MATTRecord *srcRecord);
         ~MATTRecord();
 
-        UINT32 GetFieldAttribute(DEFAULTED_FIELD_IDENTIFIERS, UINT32 WhichAttribute=0);
+        uint32_t GetFieldAttribute(DEFAULTED_FIELD_IDENTIFIERS, uint32_t WhichAttribute=0);
         void * GetField(DEFAULTED_FIELD_IDENTIFIERS, void **FieldValues=NULL);
-        bool   SetField(DEFAULTED_FIELD_IDENTIFIERS, void *FieldValue=NULL, UINT32 ArraySize=0);
+        bool   SetField(DEFAULTED_FIELD_IDENTIFIERS, void *FieldValue=NULL, uint32_t ArraySize=0);
         void   DeleteField(DEFAULTED_FIELD_IDENTIFIERS);
 
-        UINT32 GetType();
-        STRING GetStrType();
+        uint32_t GetType();
+        char * GetStrType();
 
-        SINT32 ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk=false);
-        SINT32 Unload();
-        SINT32 WriteRecord(FileWriter &writer);
+        int32_t ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk=false);
+        int32_t Unload();
+        int32_t WriteRecord(FileWriter &writer);
 
         bool operator ==(const MATTRecord &other) const;
         bool operator !=(const MATTRecord &other) const;

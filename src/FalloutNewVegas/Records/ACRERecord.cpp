@@ -104,7 +104,7 @@ bool ACRERecord::VisitFormIDs(FormIDOp &op)
     if(Patrol.IsLoaded())
         {
         op.Accept(Patrol->INAM.value);
-        for(UINT32 x = 0; x < Patrol->SCR_.value.size(); x++)
+        for(uint32_t x = 0; x < Patrol->SCR_.value.size(); x++)
             if(Patrol->SCR_.value[x]->isSCRO)
                 op.Accept(Patrol->SCR_.value[x]->reference);
         op.Accept(Patrol->TNAM.value);
@@ -113,13 +113,13 @@ bool ACRERecord::VisitFormIDs(FormIDOp &op)
         op.Accept(Ownership->XOWN.value);
     if(XMRC.IsLoaded())
         op.Accept(XMRC.value);
-    for(UINT32 x = 0; x < XDCR.value.size(); x++)
+    for(uint32_t x = 0; x < XDCR.value.size(); x++)
         op.Accept(XDCR.value[x]->reference);
     if(XLKR.IsLoaded())
         op.Accept(XLKR.value);
     if(ActivateParents.IsLoaded())
         {
-        for(UINT32 x = 0; x < ActivateParents->XAPR.value.size(); x++)
+        for(uint32_t x = 0; x < ActivateParents->XAPR.value.size(); x++)
             op.Accept(ActivateParents->XAPR.value[x]->reference);
         }
     if(XESP.IsLoaded())
@@ -154,46 +154,46 @@ void ACRERecord::IsPopIn(bool value)
     SETBIT(XESP->flags, fIsPopIn, value);
     }
 
-bool ACRERecord::IsFlagMask(UINT8 Mask, bool Exact)
+bool ACRERecord::IsFlagMask(uint8_t Mask, bool Exact)
     {
     if(!XESP.IsLoaded()) return false;
     return Exact ? ((XESP->flags & Mask) == Mask) : ((XESP->flags & Mask) != 0);
     }
 
-void ACRERecord::SetFlagMask(UINT8 Mask)
+void ACRERecord::SetFlagMask(uint8_t Mask)
     {
     XESP.Load();
     XESP->flags = Mask;
     }
 
-UINT32 ACRERecord::GetType()
+uint32_t ACRERecord::GetType()
     {
     return REV32(ACRE);
     }
 
-STRING ACRERecord::GetStrType()
+char * ACRERecord::GetStrType()
     {
     return "ACRE";
     }
 
-SINT32 ACRERecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk)
+int32_t ACRERecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk)
     {
-    UINT32 subType = 0;
-    UINT32 subSize = 0;
+    uint32_t subType = 0;
+    uint32_t subSize = 0;
     while(buffer < end_buffer){
-        subType = *(UINT32 *)buffer;
+        subType = *(uint32_t *)buffer;
         buffer += 4;
         switch(subType)
             {
             case REV32(XXXX):
                 buffer += 2;
-                subSize = *(UINT32 *)buffer;
+                subSize = *(uint32_t *)buffer;
                 buffer += 4;
-                subType = *(UINT32 *)buffer;
+                subType = *(uint32_t *)buffer;
                 buffer += 6;
                 break;
             default:
-                subSize = *(UINT16 *)buffer;
+                subSize = *(uint16_t *)buffer;
                 buffer += 2;
                 break;
             }
@@ -337,7 +337,7 @@ SINT32 ACRERecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer,
     return 0;
     }
 
-SINT32 ACRERecord::Unload()
+int32_t ACRERecord::Unload()
     {
     IsChanged(false);
     IsLoaded(false);
@@ -367,7 +367,7 @@ SINT32 ACRERecord::Unload()
     return 1;
     }
 
-SINT32 ACRERecord::WriteRecord(FileWriter &writer)
+int32_t ACRERecord::WriteRecord(FileWriter &writer)
     {
     WRITE(EDID);
     WRITE(NAME);

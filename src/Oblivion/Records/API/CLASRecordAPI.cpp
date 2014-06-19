@@ -38,7 +38,7 @@
 
 namespace Ob
 {
-UINT32 CLASRecord::GetFieldAttribute(FIELD_IDENTIFIERS, UINT32 WhichAttribute)
+uint32_t CLASRecord::GetFieldAttribute(FIELD_IDENTIFIERS, uint32_t WhichAttribute)
     {
     switch(FieldID)
         {
@@ -157,69 +157,69 @@ void * CLASRecord::GetField(FIELD_IDENTIFIERS, void **FieldValues)
     return NULL;
     }
 
-bool CLASRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
+bool CLASRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, uint32_t ArraySize)
     {
     switch(FieldID)
         {
         case 1: //flags1
-            SetHeaderFlagMask(*(UINT32 *)FieldValue);
+            SetHeaderFlagMask(*(uint32_t *)FieldValue);
             break;
         case 3: //flags2
-            SetHeaderUnknownFlagMask(*(UINT32 *)FieldValue);
+            SetHeaderUnknownFlagMask(*(uint32_t *)FieldValue);
             break;
         case 4: //eid
-            EDID.Copy((STRING)FieldValue);
+            EDID.Copy((char *)FieldValue);
             break;
         case 5: //full
-            FULL.Copy((STRING)FieldValue);
+            FULL.Copy((char *)FieldValue);
             break;
         case 6: //description
-            DESC.Copy((STRING)FieldValue);
+            DESC.Copy((char *)FieldValue);
             break;
         case 7: //iconPath
-            ICON.Copy((STRING)FieldValue);
+            ICON.Copy((char *)FieldValue);
             break;
         case 8: //primary1
-            DATA.value.primary[0] = *(SINT32 *)FieldValue;
+            DATA.value.primary[0] = *(int32_t *)FieldValue;
             break;
         case 9: //primary2
-            DATA.value.primary[1] = *(SINT32 *)FieldValue;
+            DATA.value.primary[1] = *(int32_t *)FieldValue;
             break;
         case 10: //specialization
-            DATA.value.specialization = *(UINT32 *)FieldValue;
+            DATA.value.specialization = *(uint32_t *)FieldValue;
             break;
         case 11: //major1
-            DATA.value.major[0] = *(SINT32 *)FieldValue;
+            DATA.value.major[0] = *(int32_t *)FieldValue;
             break;
         case 12: //major2
-            DATA.value.major[1] = *(SINT32 *)FieldValue;
+            DATA.value.major[1] = *(int32_t *)FieldValue;
             break;
         case 13: //major3
-            DATA.value.major[2] = *(SINT32 *)FieldValue;
+            DATA.value.major[2] = *(int32_t *)FieldValue;
             break;
         case 14: //major4
-            DATA.value.major[3] = *(SINT32 *)FieldValue;
+            DATA.value.major[3] = *(int32_t *)FieldValue;
             break;
         case 15: //major5
-            DATA.value.major[4] = *(SINT32 *)FieldValue;
+            DATA.value.major[4] = *(int32_t *)FieldValue;
             break;
         case 16: //major6
-            DATA.value.major[5] = *(SINT32 *)FieldValue;
+            DATA.value.major[5] = *(int32_t *)FieldValue;
             break;
         case 17: //major7
-            DATA.value.major[6] = *(SINT32 *)FieldValue;
+            DATA.value.major[6] = *(int32_t *)FieldValue;
             break;
         case 18: //flags
-            SetFlagMask(*(UINT32 *)FieldValue);
+            SetFlagMask(*(uint32_t *)FieldValue);
             break;
         case 19: //services
-            SetServicesFlagMask(*(UINT32 *)FieldValue);
+            SetServicesFlagMask(*(uint32_t *)FieldValue);
             break;
         case 20: //trainSkill
-            DATA.value.trainSkill = *(SINT8 *)FieldValue;
+            DATA.value.trainSkill = *(int8_t *)FieldValue;
             break;
         case 21: //trainLevel
-            DATA.value.trainLevel = *(UINT8 *)FieldValue;
+            DATA.value.trainLevel = *(uint8_t *)FieldValue;
             break;
         case 22: //unused1
             if(ArraySize != 2)

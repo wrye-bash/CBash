@@ -147,12 +147,12 @@ bool PROJRecord::VisitFormIDs(FormIDOp &op)
 
     if(MODL.IsLoaded())
         {
-        for(UINT32 x = 0; x < MODL->Textures.MODS.size(); x++)
+        for(uint32_t x = 0; x < MODL->Textures.MODS.size(); x++)
             op.Accept(MODL->Textures.MODS[x]->texture);
         }
     if(Destructable.IsLoaded())
         {
-        for(UINT32 x = 0; x < Destructable->Stages.value.size(); ++x)
+        for(uint32_t x = 0; x < Destructable->Stages.value.size(); ++x)
             {
             op.Accept(Destructable->Stages.value[x]->DSTD.value.explosion);
             op.Accept(Destructable->Stages.value[x]->DSTD.value.debris);
@@ -278,12 +278,12 @@ void PROJRecord::IsRotation(bool value)
     SETBIT(DATA.value.flags, fIsRotation, value);
     }
 
-bool PROJRecord::IsFlagMask(UINT16 Mask, bool Exact)
+bool PROJRecord::IsFlagMask(uint16_t Mask, bool Exact)
     {
     return Exact ? ((DATA.value.flags & Mask) == Mask) : ((DATA.value.flags & Mask) != 0);
     }
 
-void PROJRecord::SetFlagMask(UINT16 Mask)
+void PROJRecord::SetFlagMask(uint16_t Mask)
     {
     DATA.value.flags = Mask;
     }
@@ -338,12 +338,12 @@ void PROJRecord::IsContinuousBeam(bool value)
     DATA.value.projType = value ? eContinuousBeam : eMissile;
     }
 
-bool PROJRecord::IsType(UINT16 Type)
+bool PROJRecord::IsType(uint16_t Type)
     {
     return DATA.value.projType == Type;
     }
 
-void PROJRecord::SetType(UINT16 Type)
+void PROJRecord::SetType(uint16_t Type)
     {
     DATA.value.projType = Type;
     }
@@ -378,44 +378,44 @@ void PROJRecord::IsSilent(bool value)
     VNAM.value = value ? eSilent : eLoud;
     }
 
-bool PROJRecord::IsSoundLevelType(UINT32 Type)
+bool PROJRecord::IsSoundLevelType(uint32_t Type)
     {
     return VNAM.value == Type;
     }
 
-void PROJRecord::SetSoundLevelType(UINT32 Type)
+void PROJRecord::SetSoundLevelType(uint32_t Type)
     {
     VNAM.value = Type;
     }
 
-UINT32 PROJRecord::GetType()
+uint32_t PROJRecord::GetType()
     {
     return REV32(PROJ);
     }
 
-STRING PROJRecord::GetStrType()
+char * PROJRecord::GetStrType()
     {
     return "PROJ";
     }
 
-SINT32 PROJRecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk)
+int32_t PROJRecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk)
     {
-    UINT32 subType = 0;
-    UINT32 subSize = 0;
+    uint32_t subType = 0;
+    uint32_t subSize = 0;
     while(buffer < end_buffer){
-        subType = *(UINT32 *)buffer;
+        subType = *(uint32_t *)buffer;
         buffer += 4;
         switch(subType)
             {
             case REV32(XXXX):
                 buffer += 2;
-                subSize = *(UINT32 *)buffer;
+                subSize = *(uint32_t *)buffer;
                 buffer += 4;
-                subType = *(UINT32 *)buffer;
+                subType = *(uint32_t *)buffer;
                 buffer += 6;
                 break;
             default:
-                subSize = *(UINT16 *)buffer;
+                subSize = *(uint16_t *)buffer;
                 buffer += 2;
                 break;
             }
@@ -499,7 +499,7 @@ SINT32 PROJRecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer,
     return 0;
     }
 
-SINT32 PROJRecord::Unload()
+int32_t PROJRecord::Unload()
     {
     IsChanged(false);
     IsLoaded(false);
@@ -516,7 +516,7 @@ SINT32 PROJRecord::Unload()
     return 1;
     }
 
-SINT32 PROJRecord::WriteRecord(FileWriter &writer)
+int32_t PROJRecord::WriteRecord(FileWriter &writer)
     {
     WRITE(EDID);
     WRITE(OBND);

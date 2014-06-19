@@ -38,7 +38,7 @@
 
 namespace Sk
 {
-UINT32 WRLDRecord::GetFieldAttribute(FIELD_IDENTIFIERS, UINT32 WhichAttribute)
+uint32_t WRLDRecord::GetFieldAttribute(FIELD_IDENTIFIERS, uint32_t WhichAttribute)
     {
     switch(FieldID)
         {
@@ -142,7 +142,7 @@ UINT32 WRLDRecord::GetFieldAttribute(FIELD_IDENTIFIERS, UINT32 WhichAttribute)
                     case 0: //fieldType
                         return LIST_FIELD;
                     case 1: //fieldSize
-                        return (UINT32)IMPS.value.size();
+                        return (uint32_t)IMPS.value.size();
                     default:
                         return UNKNOWN_FIELD;
                     }
@@ -203,7 +203,7 @@ UINT32 WRLDRecord::GetFieldAttribute(FIELD_IDENTIFIERS, UINT32 WhichAttribute)
                 case 0: //fieldType
                     return SUBRECORD_ARRAY_FIELD;
                 case 1: //fieldSize
-                    return (UINT32)CELLS.size();
+                    return (uint32_t)CELLS.size();
                 default:
                     return UNKNOWN_FIELD;
                 }
@@ -333,7 +333,7 @@ void * WRLDRecord::GetField(FIELD_IDENTIFIERS, void **FieldValues)
         case 49: //CELL
             return CELL;
         case 50: //CELLS
-            for(UINT32 p = 0;p < (UINT32)CELLS.size();++p)
+            for(uint32_t p = 0;p < (uint32_t)CELLS.size();++p)
                 ((RECORDIDARRAY)FieldValues)[p] = CELLS[p];
             return NULL;
         default:
@@ -342,12 +342,12 @@ void * WRLDRecord::GetField(FIELD_IDENTIFIERS, void **FieldValues)
     return NULL;
     }
 
-bool WRLDRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
+bool WRLDRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, uint32_t ArraySize)
     {
     switch(FieldID)
         {
         case 1: //flags1
-            SetHeaderFlagMask(*(UINT32 *)FieldValue);
+            SetHeaderFlagMask(*(uint32_t *)FieldValue);
             break;
         case 3: //versionControl1
             if(ArraySize != 4)
@@ -358,10 +358,10 @@ bool WRLDRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             ((UINT8ARRAY)&flagsUnk)[3] = ((UINT8ARRAY)FieldValue)[3];
             break;
         case 4: //eid
-            EDID.Copy((STRING)FieldValue);
+            EDID.Copy((char *)FieldValue);
             break;
         case 5: //formVersion
-            formVersion = *(UINT16 *)FieldValue;
+            formVersion = *(uint16_t *)FieldValue;
             break;
         case 6: //versionControl2
             if(ArraySize != 2)
@@ -370,7 +370,7 @@ bool WRLDRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             versionControl2[1] = ((UINT8ARRAY)FieldValue)[1];
             break;
         case 7: //full
-            FULL.Copy((STRING)FieldValue);
+            FULL.Copy((char *)FieldValue);
             break;
         case 8: //encounterZone
             XEZN.value = *(FORMID *)FieldValue;
@@ -379,7 +379,7 @@ bool WRLDRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             WNAM.value = *(FORMID *)FieldValue;
             return true;
         case 10: //parentFlags
-            PNAM.value = *(UINT16 *)FieldValue;
+            PNAM.value = *(uint16_t *)FieldValue;
             break;
         case 11: //climate
             CNAM.value = *(FORMID *)FieldValue;
@@ -392,79 +392,79 @@ bool WRLDRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             return true;
         case 14: //lodWaterHeight
             NAM4.Load();
-            *NAM4.value = *(FLOAT32 *)FieldValue;
+            *NAM4.value = *(float *)FieldValue;
             break;
         case 15: //defaultLandHeight
-            DNAM.value.defaultLandHeight = *(FLOAT32 *)FieldValue;
+            DNAM.value.defaultLandHeight = *(float *)FieldValue;
             break;
         case 16: //defaultWaterHeight
-            DNAM.value.defaultWaterHeight = *(FLOAT32 *)FieldValue;
+            DNAM.value.defaultWaterHeight = *(float *)FieldValue;
             break;
         case 17: //iconPath
-            ICON.Copy((STRING)FieldValue);
+            ICON.Copy((char *)FieldValue);
             break;
         case 18: //smallIconPath
-            MICO.Copy((STRING)FieldValue);
+            MICO.Copy((char *)FieldValue);
             break;
         case 19: //dimX
             MNAM.Load();
-            MNAM->dimX = *(SINT32 *)FieldValue;
+            MNAM->dimX = *(int32_t *)FieldValue;
             break;
         case 20: //dimY
             MNAM.Load();
-            MNAM->dimY = *(SINT32 *)FieldValue;
+            MNAM->dimY = *(int32_t *)FieldValue;
             break;
         case 21: //NWCellX
             MNAM.Load();
-            MNAM->NWCellX = *(SINT16 *)FieldValue;
+            MNAM->NWCellX = *(int16_t *)FieldValue;
             break;
         case 22: //NWCellY
             MNAM.Load();
-            MNAM->NWCellY = *(SINT16 *)FieldValue;
+            MNAM->NWCellY = *(int16_t *)FieldValue;
             break;
         case 23: //SECellX
             MNAM.Load();
-            MNAM->SECellX = *(SINT16 *)FieldValue;
+            MNAM->SECellX = *(int16_t *)FieldValue;
             break;
         case 24: //SECellY
             MNAM.Load();
-            MNAM->SECellY = *(SINT16 *)FieldValue;
+            MNAM->SECellY = *(int16_t *)FieldValue;
             break;
         case 25: //mapScale
-            ONAM.value.mapScale = *(FLOAT32 *)FieldValue;
+            ONAM.value.mapScale = *(float *)FieldValue;
             break;
         case 26: //xCellOffset
-            ONAM.value.xCellOffset = *(FLOAT32 *)FieldValue;
+            ONAM.value.xCellOffset = *(float *)FieldValue;
             break;
         case 27: //yCellOffset
-            ONAM.value.yCellOffset = *(FLOAT32 *)FieldValue;
+            ONAM.value.yCellOffset = *(float *)FieldValue;
             break;
         case 28: //imageSpace
             INAM.value = *(FORMID *)FieldValue;
             return true;
         case 29: //flags
-            DATA.value = *(UINT8 *)FieldValue;
+            DATA.value = *(uint8_t *)FieldValue;
             break;
         case 30: //xMinObjBounds
-            NAM0.value.x = *(FLOAT32 *)FieldValue;
+            NAM0.value.x = *(float *)FieldValue;
             break;
         case 31: //yMinObjBounds
-            NAM0.value.y = *(FLOAT32 *)FieldValue;
+            NAM0.value.y = *(float *)FieldValue;
             break;
         case 32: //xMaxObjBounds
-            NAM9.value.x = *(FLOAT32 *)FieldValue;
+            NAM9.value.x = *(float *)FieldValue;
             break;
         case 33: //yMaxObjBounds
-            NAM9.value.y = *(FLOAT32 *)FieldValue;
+            NAM9.value.y = *(float *)FieldValue;
             break;
         case 34: //music
             ZNAM.value = *(FORMID *)FieldValue;
             return true;
         case 35: //canopyShadowPath
-            NNAM.Copy((STRING)FieldValue);
+            NNAM.Copy((char *)FieldValue);
             break;
         case 36: //waterNoisePath
-            XNAM.Copy((STRING)FieldValue);
+            XNAM.Copy((char *)FieldValue);
             break;
         case 37: //swappedImpacts
             if(ListFieldID == 0) //swappedImpactsSize
@@ -479,7 +479,7 @@ bool WRLDRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             switch(ListFieldID)
                 {
                 case 1: //material
-                    IMPS.value[ListIndex]->material = *(UINT32 *)FieldValue;
+                    IMPS.value[ListIndex]->material = *(uint32_t *)FieldValue;
                     break;
                 case 2: //oldImpact
                     IMPS.value[ListIndex]->oldImpact = *(FORMID *)FieldValue;
@@ -494,7 +494,7 @@ bool WRLDRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
         case 38: //concSolid
             if(FieldValue == NULL)
                 break;
-            ArraySize = (UINT32)strlen((STRING)FieldValue);
+            ArraySize = (uint32_t)strlen((char *)FieldValue);
             if(ArraySize > 29)
                 break;
             IMPF.Load();
@@ -504,7 +504,7 @@ bool WRLDRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
         case 39: //concBroken
             if(FieldValue == NULL)
                 break;
-            ArraySize = (UINT32)strlen((STRING)FieldValue);
+            ArraySize = (uint32_t)strlen((char *)FieldValue);
             if(ArraySize > 29)
                 break;
             IMPF.Load();
@@ -514,7 +514,7 @@ bool WRLDRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
         case 40: //metalSolid
             if(FieldValue == NULL)
                 break;
-            ArraySize = (UINT32)strlen((STRING)FieldValue);
+            ArraySize = (uint32_t)strlen((char *)FieldValue);
             if(ArraySize > 29)
                 break;
             IMPF.Load();
@@ -524,7 +524,7 @@ bool WRLDRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
         case 41: //metalHollow
             if(FieldValue == NULL)
                 break;
-            ArraySize = (UINT32)strlen((STRING)FieldValue);
+            ArraySize = (uint32_t)strlen((char *)FieldValue);
             if(ArraySize > 29)
                 break;
             IMPF.Load();
@@ -534,7 +534,7 @@ bool WRLDRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
         case 42: //metalSheet
             if(FieldValue == NULL)
                 break;
-            ArraySize = (UINT32)strlen((STRING)FieldValue);
+            ArraySize = (uint32_t)strlen((char *)FieldValue);
             if(ArraySize > 29)
                 break;
             IMPF.Load();
@@ -544,7 +544,7 @@ bool WRLDRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
         case 43: //wood
             if(FieldValue == NULL)
                 break;
-            ArraySize = (UINT32)strlen((STRING)FieldValue);
+            ArraySize = (uint32_t)strlen((char *)FieldValue);
             if(ArraySize > 29)
                 break;
             IMPF.Load();
@@ -554,7 +554,7 @@ bool WRLDRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
         case 44: //sand
             if(FieldValue == NULL)
                 break;
-            ArraySize = (UINT32)strlen((STRING)FieldValue);
+            ArraySize = (uint32_t)strlen((char *)FieldValue);
             if(ArraySize > 29)
                 break;
             IMPF.Load();
@@ -564,7 +564,7 @@ bool WRLDRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
         case 45: //dirt
             if(FieldValue == NULL)
                 break;
-            ArraySize = (UINT32)strlen((STRING)FieldValue);
+            ArraySize = (uint32_t)strlen((char *)FieldValue);
             if(ArraySize > 29)
                 break;
             IMPF.Load();
@@ -574,7 +574,7 @@ bool WRLDRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
         case 46: //grass
             if(FieldValue == NULL)
                 break;
-            ArraySize = (UINT32)strlen((STRING)FieldValue);
+            ArraySize = (uint32_t)strlen((char *)FieldValue);
             if(ArraySize > 29)
                 break;
             IMPF.Load();
@@ -584,7 +584,7 @@ bool WRLDRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
         case 47: //water
             if(FieldValue == NULL)
                 break;
-            ArraySize = (UINT32)strlen((STRING)FieldValue);
+            ArraySize = (uint32_t)strlen((char *)FieldValue);
             if(ArraySize > 29)
                 break;
             IMPF.Load();

@@ -46,10 +46,10 @@ class TES4Record : public Record
     private:
         struct TES4HEDR
             {
-            FLOAT32 version;
-            UINT32  numRecords, nextObject;
+            float version;
+            uint32_t  numRecords, nextObject;
 
-            TES4HEDR(FLOAT32 _version=0.8f, UINT32 _numRecords=0, UINT32 _nextObject=END_HARDCODED_IDS);
+            TES4HEDR(float _version=0.8f, uint32_t _numRecords=0, uint32_t _nextObject=END_HARDCODED_IDS);
             ~TES4HEDR();
 
             bool operator ==(const TES4HEDR &other) const;
@@ -64,14 +64,14 @@ class TES4Record : public Record
         RawRecord DELE; //Unknown
         StringRecord CNAM; //Author
         StringRecord SNAM; //Description
-        std::vector<STRING> MAST; //Master Files
+        std::vector<char *> MAST; //Master Files
 
         // Fallout: New Vegas & Skyrim
         UnorderedPackedArray<FORMID> ONAM; //OverridednForms
         RawRecord SCRN; //Screenshot
         // Part of record header:
-        UINT16 formVersion;
-        UINT8  versionControl2[2];
+        uint16_t formVersion;
+        uint8_t  versionControl2[2];
 
         // Skyrim
         RawRecord INTV; //Unknown
@@ -89,20 +89,20 @@ class TES4Record : public Record
         bool IsLookupStrings() const;
         void IsLookupStrings(bool value);
 
-        void LoadStringLookups(STRING FileName);
+        void LoadStringLookups(char * FileName);
 
-        UINT32 GetFieldAttribute(DEFAULTED_FIELD_IDENTIFIERS, UINT32 WhichAttribute=0);
+        uint32_t GetFieldAttribute(DEFAULTED_FIELD_IDENTIFIERS, uint32_t WhichAttribute=0);
         void * GetField(DEFAULTED_FIELD_IDENTIFIERS, void **FieldValues=NULL);
-        bool   SetField(DEFAULTED_FIELD_IDENTIFIERS, void *FieldValue=NULL, UINT32 ArraySize=0);
+        bool   SetField(DEFAULTED_FIELD_IDENTIFIERS, void *FieldValue=NULL, uint32_t ArraySize=0);
         void   DeleteField(DEFAULTED_FIELD_IDENTIFIERS);
 
-        UINT32 GetType();
-        STRING GetStrType();
+        uint32_t GetType();
+        char * GetStrType();
 
-        SINT32 ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk=false);
-        SINT32 Unload();
-        SINT32 WriteRecord(FileWriter &writer);
-        UINT32 Write(FileWriter &writer, const bool &bMastersChanged, FormIDResolver &expander, FormIDResolver &collapser, std::vector<FormIDResolver *> &Expanders);
+        int32_t ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk=false);
+        int32_t Unload();
+        int32_t WriteRecord(FileWriter &writer);
+        uint32_t Write(FileWriter &writer, const bool &bMastersChanged, FormIDResolver &expander, FormIDResolver &collapser, std::vector<FormIDResolver *> &Expanders);
 
         bool operator ==(const TES4Record &other) const;
         bool operator !=(const TES4Record &other) const;

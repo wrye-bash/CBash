@@ -61,7 +61,7 @@ class STATRecord : public FNVRecord //Static
         StringRecord EDID; //Editor ID
         ReqSubRecord<GENOBND> OBND; //Object Bounds
         OptSubRecord<FNVMODEL> MODL; //Model
-        SemiOptSimpleSubRecord<SINT8> BRUS; //Passthrough Sound
+        SemiOptSimpleSubRecord<int8_t> BRUS; //Passthrough Sound
         OptSimpleSubRecord<FORMID> RNAM; //Sound - Looping/Random
 
         STATRecord(unsigned char *_recData=NULL);
@@ -92,20 +92,20 @@ class STATRecord : public FNVRecord //Static
         void   IsSoundBushI(bool value);
         bool   IsSoundBushJ();
         void   IsSoundBushJ(bool value);
-        bool   IsSoundType(SINT8 Type);
-        void   SetSoundType(SINT8 Type);
+        bool   IsSoundType(int8_t Type);
+        void   SetSoundType(int8_t Type);
 
-        UINT32 GetFieldAttribute(DEFAULTED_FIELD_IDENTIFIERS, UINT32 WhichAttribute=0);
+        uint32_t GetFieldAttribute(DEFAULTED_FIELD_IDENTIFIERS, uint32_t WhichAttribute=0);
         void * GetField(DEFAULTED_FIELD_IDENTIFIERS, void **FieldValues=NULL);
-        bool   SetField(DEFAULTED_FIELD_IDENTIFIERS, void *FieldValue=NULL, UINT32 ArraySize=0);
+        bool   SetField(DEFAULTED_FIELD_IDENTIFIERS, void *FieldValue=NULL, uint32_t ArraySize=0);
         void   DeleteField(DEFAULTED_FIELD_IDENTIFIERS);
 
-        UINT32 GetType();
-        STRING GetStrType();
+        uint32_t GetType();
+        char * GetStrType();
 
-        SINT32 ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk=false);
-        SINT32 Unload();
-        SINT32 WriteRecord(FileWriter &writer);
+        int32_t ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk=false);
+        int32_t Unload();
+        int32_t WriteRecord(FileWriter &writer);
 
         bool operator ==(const STATRecord &other) const;
         bool operator !=(const STATRecord &other) const;

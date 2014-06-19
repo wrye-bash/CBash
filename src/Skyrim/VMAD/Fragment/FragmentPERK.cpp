@@ -70,51 +70,51 @@ FragmentPERK::FragmentPERK()
 
 FragmentPERK::~FragmentPERK()
 {
-    for (UINT16 i = 0; i < fragments.size(); ++i)
+    for (uint16_t i = 0; i < fragments.size(); ++i)
         delete fragments[i];
 }
 
 void FragmentPERK::Read(unsigned char *&buffer, const bool &CompressedOnDisk)
 {
     // unk1
-    unk1 = *(UINT8 *)buffer;
+    unk1 = *(uint8_t *)buffer;
     buffer += 1;
     // fileName
-    UINT16 nameSize = *(UINT16 *)buffer;
+    uint16_t nameSize = *(uint16_t *)buffer;
     buffer += 2;
     fileName.Read(buffer, nameSize, CompressedOnDisk);
     // fragmentCount
-    UINT16 count = *(UINT16 *)buffer;
+    uint16_t count = *(uint16_t *)buffer;
     buffer += 2;
     // fragments
-    for (UINT16 i = 0; i < count; ++i)
+    for (uint16_t i = 0; i < count; ++i)
     {
         Fragment *f = new Fragment;
-        f->index = *(UINT16 *)buffer;
+        f->index = *(uint16_t *)buffer;
         buffer += 2;
-        f->unk1 = *(UINT16 *)buffer;
+        f->unk1 = *(uint16_t *)buffer;
         buffer += 2;
-        f->unk2 = *(UINT8 *)buffer;
+        f->unk2 = *(uint8_t *)buffer;
         buffer += 1;
-        nameSize = *(UINT16 *)buffer;
+        nameSize = *(uint16_t *)buffer;
         buffer += 2;
         f->scriptName.Read(buffer, nameSize, CompressedOnDisk);
-        nameSize = *(UINT16 *)buffer;
+        nameSize = *(uint16_t *)buffer;
         buffer += 2;
         f->fragmentName.Read(buffer, nameSize, CompressedOnDisk);
         fragments.push_back(f);
     }
 }
 
-UINT32 FragmentPERK::GetSize() const
+uint32_t FragmentPERK::GetSize() const
 {
     // unk1 + fragmentCount + fileNameSize
-    UINT32 total = sizeof(UINT8) + sizeof(UINT16) + sizeof(UINT16);
+    uint32_t total = sizeof(uint8_t) + sizeof(uint16_t) + sizeof(uint16_t);
     total += fileName.GetSize();
-    for (UINT16 i = 0; i < fragments.size(); ++i)
+    for (uint16_t i = 0; i < fragments.size(); ++i)
     {
         // unk1 + unk2 + index + scriptNameSize + fragmentNameSize
-        total += (4 * sizeof(UINT16)) + sizeof(UINT8);
+        total += (4 * sizeof(uint16_t)) + sizeof(uint8_t);
         total += fragments[i]->scriptName.GetSize();
         total += fragments[i]->fragmentName.GetSize();
     }
@@ -125,13 +125,13 @@ void FragmentPERK::Write(FileWriter &writer) const
 {
     writer.record_write(&unk1, sizeof(unk1));
     fileName.Write16(writer);
-    UINT16 count = fragments.size();
+    uint16_t count = fragments.size();
     writer.record_write(&count, sizeof(count));
-    for (UINT16 i = 0; i < count; ++i)
+    for (uint16_t i = 0; i < count; ++i)
     {
-        writer.record_write(&(fragments[i]->index), sizeof(UINT16));
-        writer.record_write(&(fragments[i]->unk1), sizeof(UINT16));
-        writer.record_write(&(fragments[i]->unk2), sizeof(UINT8));
+        writer.record_write(&(fragments[i]->index), sizeof(uint16_t));
+        writer.record_write(&(fragments[i]->unk1), sizeof(uint16_t));
+        writer.record_write(&(fragments[i]->unk2), sizeof(uint8_t));
         fragments[i]->scriptName.Write16(writer);
         fragments[i]->fragmentName.Write16(writer);
     }
@@ -144,7 +144,7 @@ bool FragmentPERK::equals(const Fragments *other) const
         const FragmentPERK *o = reinterpret_cast<const FragmentPERK *>(other);
         if (fragments.size() != o->fragments.size())
             return false;
-        for (UINT16 i = 0; i < fragments.size(); ++i)
+        for (uint16_t i = 0; i < fragments.size(); ++i)
             if (*(fragments[i]) != *(o->fragments[i]))
                 return false;
         return true;
@@ -167,11 +167,11 @@ FragmentPERK & FragmentPERK::operator = (const FragmentPERK &other)
     unk1 = other.unk1;
     fileName = other.fileName;
 
-    for (UINT16 i = 0; i < fragments.size(); ++i)
+    for (uint16_t i = 0; i < fragments.size(); ++i)
         delete fragments[i];
     fragments.clear();
 
-    for (UINT16 i = 0; i < other.fragments.size(); ++i)
+    for (uint16_t i = 0; i < other.fragments.size(); ++i)
     {
         fragments.push_back(new Fragment);
         *(fragments.back()) = *(other.fragments[i]);

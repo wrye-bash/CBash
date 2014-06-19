@@ -38,7 +38,7 @@
 
 namespace FNV
 {
-UINT32 MICNRecord::GetFieldAttribute(FIELD_IDENTIFIERS, UINT32 WhichAttribute)
+uint32_t MICNRecord::GetFieldAttribute(FIELD_IDENTIFIERS, uint32_t WhichAttribute)
     {
     switch(FieldID)
         {
@@ -112,12 +112,12 @@ void * MICNRecord::GetField(FIELD_IDENTIFIERS, void **FieldValues)
     return NULL;
     }
 
-bool MICNRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
+bool MICNRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, uint32_t ArraySize)
     {
     switch(FieldID)
         {
         case 1: //flags1
-            SetHeaderFlagMask(*(UINT32 *)FieldValue);
+            SetHeaderFlagMask(*(uint32_t *)FieldValue);
             break;
         case 3: //versionControl1
             if(ArraySize != 4)
@@ -128,10 +128,10 @@ bool MICNRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             ((UINT8ARRAY)&flagsUnk)[3] = ((UINT8ARRAY)FieldValue)[3];
             break;
         case 4: //eid
-            EDID.Copy((STRING)FieldValue);
+            EDID.Copy((char *)FieldValue);
             break;
         case 5: //formVersion
-            formVersion = *(UINT16 *)FieldValue;
+            formVersion = *(uint16_t *)FieldValue;
             break;
         case 6: //versionControl2
             if(ArraySize != 2)
@@ -140,10 +140,10 @@ bool MICNRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             versionControl2[1] = ((UINT8ARRAY)FieldValue)[1];
             break;
         case 7: //iconPath
-            ICON.Copy((STRING)FieldValue);
+            ICON.Copy((char *)FieldValue);
             break;
         case 8: //smallIconPath
-            MICO.Copy((STRING)FieldValue);
+            MICO.Copy((char *)FieldValue);
             break;
         default:
             break;

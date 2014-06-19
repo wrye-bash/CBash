@@ -38,7 +38,7 @@
 
 namespace FNV
 {
-UINT32 EFSHRecord::GetFieldAttribute(FIELD_IDENTIFIERS, UINT32 WhichAttribute)
+uint32_t EFSHRecord::GetFieldAttribute(FIELD_IDENTIFIERS, uint32_t WhichAttribute)
     {
     switch(FieldID)
         {
@@ -570,12 +570,12 @@ void * EFSHRecord::GetField(FIELD_IDENTIFIERS, void **FieldValues)
     return NULL;
     }
 
-bool EFSHRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
+bool EFSHRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, uint32_t ArraySize)
     {
     switch(FieldID)
         {
         case 1: //flags1
-            SetHeaderFlagMask(*(UINT32 *)FieldValue);
+            SetHeaderFlagMask(*(uint32_t *)FieldValue);
             break;
         case 3: //versionControl1
             if(ArraySize != 4)
@@ -586,10 +586,10 @@ bool EFSHRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             ((UINT8ARRAY)&flagsUnk)[3] = ((UINT8ARRAY)FieldValue)[3];
             break;
         case 4: //eid
-            EDID.Copy((STRING)FieldValue);
+            EDID.Copy((char *)FieldValue);
             break;
         case 5: //formVersion
-            formVersion = *(UINT16 *)FieldValue;
+            formVersion = *(uint16_t *)FieldValue;
             break;
         case 6: //versionControl2
             if(ArraySize != 2)
@@ -598,16 +598,16 @@ bool EFSHRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             versionControl2[1] = ((UINT8ARRAY)FieldValue)[1];
             break;
         case 7: //fillPath
-            ICON.Copy((STRING)FieldValue);
+            ICON.Copy((char *)FieldValue);
             break;
         case 8: //particlePath
-            ICO2.Copy((STRING)FieldValue);
+            ICO2.Copy((char *)FieldValue);
             break;
         case 9: //holesPath
-            NAM7.Copy((STRING)FieldValue);
+            NAM7.Copy((char *)FieldValue);
             break;
         case 10: //flags
-            SetFlagMask(*(UINT8 *)FieldValue);
+            SetFlagMask(*(uint8_t *)FieldValue);
             break;
         case 11: //unused1
             if(ArraySize != 3)
@@ -617,22 +617,22 @@ bool EFSHRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             DATA.value.unused1[2] = ((UINT8ARRAY)FieldValue)[2];
             break;
         case 12: //memSBlend
-            DATA.value.memSBlend = *(UINT32 *)FieldValue;
+            DATA.value.memSBlend = *(uint32_t *)FieldValue;
             break;
         case 13: //memBlendOp
-            DATA.value.memBlendOp = *(UINT32 *)FieldValue;
+            DATA.value.memBlendOp = *(uint32_t *)FieldValue;
             break;
         case 14: //memZFunc
-            DATA.value.memZFunc = *(UINT32 *)FieldValue;
+            DATA.value.memZFunc = *(uint32_t *)FieldValue;
             break;
         case 15: //fill.red
-            DATA.value.fill.red = *(UINT8 *)FieldValue;
+            DATA.value.fill.red = *(uint8_t *)FieldValue;
             break;
         case 16: //fill.green
-            DATA.value.fill.green = *(UINT8 *)FieldValue;
+            DATA.value.fill.green = *(uint8_t *)FieldValue;
             break;
         case 17: //fill.blue
-            DATA.value.fill.blue = *(UINT8 *)FieldValue;
+            DATA.value.fill.blue = *(uint8_t *)FieldValue;
             break;
         case 18: //unused2
             if(ArraySize != 1)
@@ -640,40 +640,40 @@ bool EFSHRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             DATA.value.fill.unused1 = ((UINT8ARRAY)FieldValue)[0];
             break;
         case 19: //fillAIn
-            DATA.value.fillAIn = *(FLOAT32 *)FieldValue;
+            DATA.value.fillAIn = *(float *)FieldValue;
             break;
         case 20: //fillAFull
-            DATA.value.fillAFull = *(FLOAT32 *)FieldValue;
+            DATA.value.fillAFull = *(float *)FieldValue;
             break;
         case 21: //fillAOut
-            DATA.value.fillAOut = *(FLOAT32 *)FieldValue;
+            DATA.value.fillAOut = *(float *)FieldValue;
             break;
         case 22: //fillAPRatio
-            DATA.value.fillAPRatio = *(FLOAT32 *)FieldValue;
+            DATA.value.fillAPRatio = *(float *)FieldValue;
             break;
         case 23: //fillAAmp
-            DATA.value.fillAAmp = *(FLOAT32 *)FieldValue;
+            DATA.value.fillAAmp = *(float *)FieldValue;
             break;
         case 24: //fillAFreq
-            DATA.value.fillAFreq = *(FLOAT32 *)FieldValue;
+            DATA.value.fillAFreq = *(float *)FieldValue;
             break;
         case 25: //fillAnimSpdU
-            DATA.value.fillAnimSpdU = *(FLOAT32 *)FieldValue;
+            DATA.value.fillAnimSpdU = *(float *)FieldValue;
             break;
         case 26: //fillAnimSpdV
-            DATA.value.fillAnimSpdV = *(FLOAT32 *)FieldValue;
+            DATA.value.fillAnimSpdV = *(float *)FieldValue;
             break;
         case 27: //edgeEffOff
-            DATA.value.edgeEffOff = *(FLOAT32 *)FieldValue;
+            DATA.value.edgeEffOff = *(float *)FieldValue;
             break;
         case 28: //edgeEff.red
-            DATA.value.edgeEff.red = *(UINT8 *)FieldValue;
+            DATA.value.edgeEff.red = *(uint8_t *)FieldValue;
             break;
         case 29: //edgeEff.green
-            DATA.value.edgeEff.green = *(UINT8 *)FieldValue;
+            DATA.value.edgeEff.green = *(uint8_t *)FieldValue;
             break;
         case 30: //edgeEff.blue
-            DATA.value.edgeEff.blue = *(UINT8 *)FieldValue;
+            DATA.value.edgeEff.blue = *(uint8_t *)FieldValue;
             break;
         case 31: //unused3
             if(ArraySize != 1)
@@ -681,109 +681,109 @@ bool EFSHRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             DATA.value.edgeEff.unused1 = ((UINT8ARRAY)FieldValue)[0];
             break;
         case 32: //edgeEffAIn
-            DATA.value.edgeEffAIn = *(FLOAT32 *)FieldValue;
+            DATA.value.edgeEffAIn = *(float *)FieldValue;
             break;
         case 33: //edgeEffAFull
-            DATA.value.edgeEffAFull = *(FLOAT32 *)FieldValue;
+            DATA.value.edgeEffAFull = *(float *)FieldValue;
             break;
         case 34: //edgeEffAOut
-            DATA.value.edgeEffAOut = *(FLOAT32 *)FieldValue;
+            DATA.value.edgeEffAOut = *(float *)FieldValue;
             break;
         case 35: //edgeEffAPRatio
-            DATA.value.edgeEffAPRatio = *(FLOAT32 *)FieldValue;
+            DATA.value.edgeEffAPRatio = *(float *)FieldValue;
             break;
         case 36: //edgeEffAAmp
-            DATA.value.edgeEffAAmp = *(FLOAT32 *)FieldValue;
+            DATA.value.edgeEffAAmp = *(float *)FieldValue;
             break;
         case 37: //edgeEffAFreq
-            DATA.value.edgeEffAFreq = *(FLOAT32 *)FieldValue;
+            DATA.value.edgeEffAFreq = *(float *)FieldValue;
             break;
         case 38: //fillAFRatio
-            DATA.value.fillAFRatio = *(FLOAT32 *)FieldValue;
+            DATA.value.fillAFRatio = *(float *)FieldValue;
             break;
         case 39: //edgeEffAFRatio
-            DATA.value.edgeEffAFRatio = *(FLOAT32 *)FieldValue;
+            DATA.value.edgeEffAFRatio = *(float *)FieldValue;
             break;
         case 40: //memDBlend
-            DATA.value.memDBlend = *(UINT32 *)FieldValue;
+            DATA.value.memDBlend = *(uint32_t *)FieldValue;
             break;
         case 41: //partSBlend
-            DATA.value.partSBlend = *(UINT32 *)FieldValue;
+            DATA.value.partSBlend = *(uint32_t *)FieldValue;
             break;
         case 42: //partBlendOp
-            DATA.value.partBlendOp = *(UINT32 *)FieldValue;
+            DATA.value.partBlendOp = *(uint32_t *)FieldValue;
             break;
         case 43: //partZFunc
-            DATA.value.partZFunc = *(UINT32 *)FieldValue;
+            DATA.value.partZFunc = *(uint32_t *)FieldValue;
             break;
         case 44: //partDBlend
-            DATA.value.partDBlend = *(UINT32 *)FieldValue;
+            DATA.value.partDBlend = *(uint32_t *)FieldValue;
             break;
         case 45: //partBUp
-            DATA.value.partBUp = *(FLOAT32 *)FieldValue;
+            DATA.value.partBUp = *(float *)FieldValue;
             break;
         case 46: //partBFull
-            DATA.value.partBFull = *(FLOAT32 *)FieldValue;
+            DATA.value.partBFull = *(float *)FieldValue;
             break;
         case 47: //partBDown
-            DATA.value.partBDown = *(FLOAT32 *)FieldValue;
+            DATA.value.partBDown = *(float *)FieldValue;
             break;
         case 48: //partBFRatio
-            DATA.value.partBFRatio = *(FLOAT32 *)FieldValue;
+            DATA.value.partBFRatio = *(float *)FieldValue;
             break;
         case 49: //partBPRatio
-            DATA.value.partBPRatio = *(FLOAT32 *)FieldValue;
+            DATA.value.partBPRatio = *(float *)FieldValue;
             break;
         case 50: //partLTime
-            DATA.value.partLTime = *(FLOAT32 *)FieldValue;
+            DATA.value.partLTime = *(float *)FieldValue;
             break;
         case 51: //partLDelta
-            DATA.value.partLDelta = *(FLOAT32 *)FieldValue;
+            DATA.value.partLDelta = *(float *)FieldValue;
             break;
         case 52: //partNSpd
-            DATA.value.partNSpd = *(FLOAT32 *)FieldValue;
+            DATA.value.partNSpd = *(float *)FieldValue;
             break;
         case 53: //partNAcc
-            DATA.value.partNAcc = *(FLOAT32 *)FieldValue;
+            DATA.value.partNAcc = *(float *)FieldValue;
             break;
         case 54: //partVel1
-            DATA.value.partVel1 = *(FLOAT32 *)FieldValue;
+            DATA.value.partVel1 = *(float *)FieldValue;
             break;
         case 55: //partVel2
-            DATA.value.partVel2 = *(FLOAT32 *)FieldValue;
+            DATA.value.partVel2 = *(float *)FieldValue;
             break;
         case 56: //partVel3
-            DATA.value.partVel3 = *(FLOAT32 *)FieldValue;
+            DATA.value.partVel3 = *(float *)FieldValue;
             break;
         case 57: //partAcc1
-            DATA.value.partAcc1 = *(FLOAT32 *)FieldValue;
+            DATA.value.partAcc1 = *(float *)FieldValue;
             break;
         case 58: //partAcc2
-            DATA.value.partAcc2 = *(FLOAT32 *)FieldValue;
+            DATA.value.partAcc2 = *(float *)FieldValue;
             break;
         case 59: //partAcc3
-            DATA.value.partAcc3 = *(FLOAT32 *)FieldValue;
+            DATA.value.partAcc3 = *(float *)FieldValue;
             break;
         case 60: //partKey1
-            DATA.value.partKey1 = *(FLOAT32 *)FieldValue;
+            DATA.value.partKey1 = *(float *)FieldValue;
             break;
         case 61: //partKey2
-            DATA.value.partKey2 = *(FLOAT32 *)FieldValue;
+            DATA.value.partKey2 = *(float *)FieldValue;
             break;
         case 62: //partKey1Time
-            DATA.value.partKey1Time = *(FLOAT32 *)FieldValue;
+            DATA.value.partKey1Time = *(float *)FieldValue;
             break;
         case 63: //partKey2Time
-            DATA.value.partKey2Time = *(FLOAT32 *)FieldValue;
+            DATA.value.partKey2Time = *(float *)FieldValue;
             break;
         case 64: //key1.red
-            DATA.value.key1.red = *(UINT8 *)FieldValue;
+            DATA.value.key1.red = *(uint8_t *)FieldValue;
             break;
         case 65: //key1.green
-            DATA.value.key1.green = *(UINT8 *)FieldValue;
+            DATA.value.key1.green = *(uint8_t *)FieldValue;
             break;
         case 66: //key1.blue
-            DATA.value.key1.blue = *(UINT8 *)FieldValue;
+            DATA.value.key1.blue = *(uint8_t *)FieldValue;
             break;
         case 67: //unused4
             if(ArraySize != 1)
@@ -791,13 +791,13 @@ bool EFSHRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             DATA.value.key1.unused1 = ((UINT8ARRAY)FieldValue)[0];
             break;
         case 68: //key2.red
-            DATA.value.key2.red = *(UINT8 *)FieldValue;
+            DATA.value.key2.red = *(uint8_t *)FieldValue;
             break;
         case 69: //key2.green
-            DATA.value.key2.green = *(UINT8 *)FieldValue;
+            DATA.value.key2.green = *(uint8_t *)FieldValue;
             break;
         case 70: //key2.blue
-            DATA.value.key2.blue = *(UINT8 *)FieldValue;
+            DATA.value.key2.blue = *(uint8_t *)FieldValue;
             break;
         case 71: //unused5
             if(ArraySize != 1)
@@ -805,13 +805,13 @@ bool EFSHRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             DATA.value.key2.unused1 = ((UINT8ARRAY)FieldValue)[0];
             break;
         case 72: //key3.red
-            DATA.value.key3.red = *(UINT8 *)FieldValue;
+            DATA.value.key3.red = *(uint8_t *)FieldValue;
             break;
         case 73: //key3.green
-            DATA.value.key3.green = *(UINT8 *)FieldValue;
+            DATA.value.key3.green = *(uint8_t *)FieldValue;
             break;
         case 74: //key3.blue
-            DATA.value.key3.blue = *(UINT8 *)FieldValue;
+            DATA.value.key3.blue = *(uint8_t *)FieldValue;
             break;
         case 75: //unused6
             if(ArraySize != 1)
@@ -819,64 +819,64 @@ bool EFSHRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             DATA.value.key3.unused1 = ((UINT8ARRAY)FieldValue)[0];
             break;
         case 76: //key1A
-            DATA.value.key1A = *(FLOAT32 *)FieldValue;
+            DATA.value.key1A = *(float *)FieldValue;
             break;
         case 77: //key2A
-            DATA.value.key2A = *(FLOAT32 *)FieldValue;
+            DATA.value.key2A = *(float *)FieldValue;
             break;
         case 78: //key3A
-            DATA.value.key3A = *(FLOAT32 *)FieldValue;
+            DATA.value.key3A = *(float *)FieldValue;
             break;
         case 79: //key1Time
-            DATA.value.key1Time = *(FLOAT32 *)FieldValue;
+            DATA.value.key1Time = *(float *)FieldValue;
             break;
         case 80: //key2Time
-            DATA.value.key2Time = *(FLOAT32 *)FieldValue;
+            DATA.value.key2Time = *(float *)FieldValue;
             break;
         case 81: //key3Time
-            DATA.value.key3Time = *(FLOAT32 *)FieldValue;
+            DATA.value.key3Time = *(float *)FieldValue;
             break;
         case 82: //partInitSpd
-            DATA.value.partInitSpd = *(FLOAT32 *)FieldValue;
+            DATA.value.partInitSpd = *(float *)FieldValue;
             break;
         case 83: //partInitRot
-            DATA.value.partInitRot = *(FLOAT32 *)FieldValue;
+            DATA.value.partInitRot = *(float *)FieldValue;
             break;
         case 84: //partInitRotDelta
-            DATA.value.partInitRotDelta = *(FLOAT32 *)FieldValue;
+            DATA.value.partInitRotDelta = *(float *)FieldValue;
             break;
         case 85: //partRotSpd
-            DATA.value.partRotSpd = *(FLOAT32 *)FieldValue;
+            DATA.value.partRotSpd = *(float *)FieldValue;
             break;
         case 86: //partRotDelta
-            DATA.value.partRotDelta = *(FLOAT32 *)FieldValue;
+            DATA.value.partRotDelta = *(float *)FieldValue;
             break;
         case 87: //addon
             DATA.value.addon = *(FORMID *)FieldValue;
             return true;
         case 88: //holesSTime
-            DATA.value.holesSTime = *(FLOAT32 *)FieldValue;
+            DATA.value.holesSTime = *(float *)FieldValue;
             break;
         case 89: //holesETime
-            DATA.value.holesETime = *(FLOAT32 *)FieldValue;
+            DATA.value.holesETime = *(float *)FieldValue;
             break;
         case 90: //holesSValue
-            DATA.value.holesSValue = *(FLOAT32 *)FieldValue;
+            DATA.value.holesSValue = *(float *)FieldValue;
             break;
         case 91: //holesEValue
-            DATA.value.holesEValue = *(FLOAT32 *)FieldValue;
+            DATA.value.holesEValue = *(float *)FieldValue;
             break;
         case 92: //edgeWidth
-            DATA.value.edgeWidth = *(FLOAT32 *)FieldValue;
+            DATA.value.edgeWidth = *(float *)FieldValue;
             break;
         case 93: //edge.red
-            DATA.value.edge.red = *(UINT8 *)FieldValue;
+            DATA.value.edge.red = *(uint8_t *)FieldValue;
             break;
         case 94: //edge.green
-            DATA.value.edge.green = *(UINT8 *)FieldValue;
+            DATA.value.edge.green = *(uint8_t *)FieldValue;
             break;
         case 95: //edge.blue
-            DATA.value.edge.blue = *(UINT8 *)FieldValue;
+            DATA.value.edge.blue = *(uint8_t *)FieldValue;
             break;
         case 96: //unused7
             if(ArraySize != 1)
@@ -884,31 +884,31 @@ bool EFSHRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             DATA.value.edge.unused1 = ((UINT8ARRAY)FieldValue)[0];
             break;
         case 97: //explWindSpd
-            DATA.value.explWindSpd = *(FLOAT32 *)FieldValue;
+            DATA.value.explWindSpd = *(float *)FieldValue;
             break;
         case 98: //textCountU
-            DATA.value.textCountU = *(UINT32 *)FieldValue;
+            DATA.value.textCountU = *(uint32_t *)FieldValue;
             break;
         case 99: //textCountV
-            DATA.value.textCountV = *(UINT32 *)FieldValue;
+            DATA.value.textCountV = *(uint32_t *)FieldValue;
             break;
         case 100: //addonFITime
-            DATA.value.addonFITime = *(FLOAT32 *)FieldValue;
+            DATA.value.addonFITime = *(float *)FieldValue;
             break;
         case 101: //addonFOTime
-            DATA.value.addonFOTime = *(FLOAT32 *)FieldValue;
+            DATA.value.addonFOTime = *(float *)FieldValue;
             break;
         case 102: //addonScaleStart
-            DATA.value.addonScaleStart = *(FLOAT32 *)FieldValue;
+            DATA.value.addonScaleStart = *(float *)FieldValue;
             break;
         case 103: //addonScaleEnd
-            DATA.value.addonScaleEnd = *(FLOAT32 *)FieldValue;
+            DATA.value.addonScaleEnd = *(float *)FieldValue;
             break;
         case 104: //addonScaleInTime
-            DATA.value.addonScaleInTime = *(FLOAT32 *)FieldValue;
+            DATA.value.addonScaleInTime = *(float *)FieldValue;
             break;
         case 105: //addonScaleOutTime
-            DATA.value.addonScaleOutTime = *(FLOAT32 *)FieldValue;
+            DATA.value.addonScaleOutTime = *(float *)FieldValue;
             break;
         default:
             break;

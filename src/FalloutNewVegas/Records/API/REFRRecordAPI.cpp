@@ -38,7 +38,7 @@
 
 namespace FNV
 {
-UINT32 REFRRecord::GetFieldAttribute(FIELD_IDENTIFIERS, UINT32 WhichAttribute)
+uint32_t REFRRecord::GetFieldAttribute(FIELD_IDENTIFIERS, uint32_t WhichAttribute)
     {
     switch(FieldID)
         {
@@ -149,7 +149,7 @@ UINT32 REFRRecord::GetFieldAttribute(FIELD_IDENTIFIERS, UINT32 WhichAttribute)
                     case 0: //fieldType
                         return LIST_FIELD;
                     case 1: //fieldSize
-                        return (UINT32)Patrol->VARS.value.size();
+                        return (uint32_t)Patrol->VARS.value.size();
                     default:
                         return UNKNOWN_FIELD;
                     }
@@ -204,7 +204,7 @@ UINT32 REFRRecord::GetFieldAttribute(FIELD_IDENTIFIERS, UINT32 WhichAttribute)
                     case 0: //fieldType
                         return FORMID_OR_UINT32_ARRAY_FIELD;
                     case 1: //fieldSize
-                        return (UINT32)Patrol->SCR_.value.size();
+                        return (uint32_t)Patrol->SCR_.value.size();
                     default:
                         return UNKNOWN_FIELD;
                     }
@@ -257,7 +257,7 @@ UINT32 REFRRecord::GetFieldAttribute(FIELD_IDENTIFIERS, UINT32 WhichAttribute)
                     case 0: //fieldType
                         return LIST_FIELD;
                     case 1: //fieldSize
-                        return (UINT32)XDCR.value.size();
+                        return (uint32_t)XDCR.value.size();
                     default:
                         return UNKNOWN_FIELD;
                     }
@@ -346,7 +346,7 @@ UINT32 REFRRecord::GetFieldAttribute(FIELD_IDENTIFIERS, UINT32 WhichAttribute)
                     case 0: //fieldType
                         return LIST_FIELD;
                     case 1: //fieldSize
-                        return (UINT32)ActivateParents->XAPR.value.size();
+                        return (uint32_t)ActivateParents->XAPR.value.size();
                     default:
                         return UNKNOWN_FIELD;
                     }
@@ -557,7 +557,7 @@ UINT32 REFRRecord::GetFieldAttribute(FIELD_IDENTIFIERS, UINT32 WhichAttribute)
                     case 0: //fieldType
                         return LIST_FIELD;
                     case 1: //fieldSize
-                        return (UINT32)XPWR.value.size();
+                        return (uint32_t)XPWR.value.size();
                     default:
                         return UNKNOWN_FIELD;
                     }
@@ -583,7 +583,7 @@ UINT32 REFRRecord::GetFieldAttribute(FIELD_IDENTIFIERS, UINT32 WhichAttribute)
                 case 0: //fieldType
                     return FORMID_ARRAY_FIELD;
                 case 1: //fieldSize
-                    return (UINT32)XLTW.value.size();
+                    return (uint32_t)XLTW.value.size();
                 default:
                     return UNKNOWN_FIELD;
                 }
@@ -648,7 +648,7 @@ UINT32 REFRRecord::GetFieldAttribute(FIELD_IDENTIFIERS, UINT32 WhichAttribute)
                 case 0: //fieldType
                     return FORMID_ARRAY_FIELD;
                 case 1: //fieldSize
-                    return Room.IsLoaded() ? (UINT32)Room->XLRM.value.size() : 0;
+                    return Room.IsLoaded() ? (uint32_t)Room->XLRM.value.size() : 0;
                 default:
                     return UNKNOWN_FIELD;
                 }
@@ -790,7 +790,7 @@ void * REFRRecord::GetField(FIELD_IDENTIFIERS, void **FieldValues)
                 *FieldValues = NULL;
                 return NULL;
                 }
-            for(UINT32 x = 0; x < Patrol->SCR_.value.size(); ++x)
+            for(uint32_t x = 0; x < Patrol->SCR_.value.size(); ++x)
                 ((FORMIDARRAY)FieldValues)[x] = Patrol->SCR_.value[x]->reference;
             return NULL;
         case 23: //topic
@@ -1093,12 +1093,12 @@ void * REFRRecord::GetField(FIELD_IDENTIFIERS, void **FieldValues)
     return NULL;
     }
 
-bool REFRRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
+bool REFRRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, uint32_t ArraySize)
     {
     switch(FieldID)
         {
         case 1: //flags1
-            SetHeaderFlagMask(*(UINT32 *)FieldValue);
+            SetHeaderFlagMask(*(uint32_t *)FieldValue);
             break;
         case 3: //versionControl1
             if(ArraySize != 4)
@@ -1109,10 +1109,10 @@ bool REFRRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             ((UINT8ARRAY)&flagsUnk)[3] = ((UINT8ARRAY)FieldValue)[3];
             break;
         case 4: //eid
-            EDID.Copy((STRING)FieldValue);
+            EDID.Copy((char *)FieldValue);
             break;
         case 5: //formVersion
-            formVersion = *(UINT16 *)FieldValue;
+            formVersion = *(uint16_t *)FieldValue;
             break;
         case 6: //versionControl2
             if(ArraySize != 2)
@@ -1134,7 +1134,7 @@ bool REFRRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             break;
         case 11: //idleTime
             Patrol.Load();
-            Patrol->XPRD.value = *(FLOAT32 *)FieldValue;
+            Patrol->XPRD.value = *(float *)FieldValue;
             break;
         case 12: //idle
             Patrol.Load();
@@ -1151,23 +1151,23 @@ bool REFRRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             break;
         case 14: //numRefs
             Patrol.Load();
-            Patrol->SCHR.value.numRefs = *(UINT32 *)FieldValue;
+            Patrol->SCHR.value.numRefs = *(uint32_t *)FieldValue;
             break;
         case 15: //compiledSize
             Patrol.Load();
-            Patrol->SCHR.value.compiledSize = *(UINT32 *)FieldValue;
+            Patrol->SCHR.value.compiledSize = *(uint32_t *)FieldValue;
             break;
         case 16: //lastIndex
             Patrol.Load();
-            Patrol->SCHR.value.lastIndex = *(UINT32 *)FieldValue;
+            Patrol->SCHR.value.lastIndex = *(uint32_t *)FieldValue;
             break;
         case 17: //scriptType
             Patrol.Load();
-            Patrol->SetType(*(UINT16 *)FieldValue);
+            Patrol->SetType(*(uint16_t *)FieldValue);
             break;
         case 18: //scriptFlags
             Patrol.Load();
-            Patrol->SetScriptFlagMask(*(UINT16 *)FieldValue);
+            Patrol->SetScriptFlagMask(*(uint16_t *)FieldValue);
             break;
         case 19: //compiled_p
             Patrol.Load();
@@ -1175,7 +1175,7 @@ bool REFRRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             break;
         case 20: //scriptText
             Patrol.Load();
-            Patrol->SCTX.Copy((STRING)FieldValue);
+            Patrol->SCTX.Copy((char *)FieldValue);
             break;
         case 21: //vars
             Patrol.Load();
@@ -1191,7 +1191,7 @@ bool REFRRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             switch(ListFieldID)
                 {
                 case 1: //index
-                    Patrol->VARS.value[ListIndex]->SLSD.value.index = *(UINT32 *)FieldValue;
+                    Patrol->VARS.value[ListIndex]->SLSD.value.index = *(uint32_t *)FieldValue;
                     break;
                 case 2: //unused1
                     if(ArraySize != 12)
@@ -1210,7 +1210,7 @@ bool REFRRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
                     Patrol->VARS.value[ListIndex]->SLSD.value.unused1[11] = ((UINT8ARRAY)FieldValue)[11];
                     break;
                 case 3: //flags
-                    Patrol->VARS.value[ListIndex]->SetFlagMask(*(UINT8 *)FieldValue);
+                    Patrol->VARS.value[ListIndex]->SetFlagMask(*(uint8_t *)FieldValue);
                     break;
                 case 4: //unused2
                     if(ArraySize != 7)
@@ -1224,7 +1224,7 @@ bool REFRRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
                     Patrol->VARS.value[ListIndex]->SLSD.value.unused2[6] = ((UINT8ARRAY)FieldValue)[6];
                     break;
                 case 5: //name
-                    Patrol->VARS.value[ListIndex]->SCVR.Copy((STRING)FieldValue);
+                    Patrol->VARS.value[ListIndex]->SCVR.Copy((char *)FieldValue);
                     break;
                 default:
                     break;
@@ -1245,7 +1245,7 @@ bool REFRRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
                 {
                 case 1: //reference
                     //Borrowing ArraySize to flag if the new value is a formID
-                    Patrol->SCR_.value[ListIndex]->reference = *(UINT32 *)FieldValue;
+                    Patrol->SCR_.value[ListIndex]->reference = *(uint32_t *)FieldValue;
                     Patrol->SCR_.value[ListIndex]->isSCRO = ArraySize ? true : false;
                     return ArraySize != 0;
                 default:
@@ -1257,7 +1257,7 @@ bool REFRRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             Patrol->TNAM.value = *(FORMID *)FieldValue;
             return true;
         case 24: //levelMod
-            XLCM.value = *(SINT32 *)FieldValue;
+            XLCM.value = *(int32_t *)FieldValue;
             break;
         case 25: //owner
             Ownership.Load();
@@ -1265,22 +1265,22 @@ bool REFRRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             return true;
         case 26: //rank
             Ownership.Load();
-            *Ownership->XRNK.value = *(SINT32 *)FieldValue;
+            *Ownership->XRNK.value = *(int32_t *)FieldValue;
             break;
         case 27: //count
-            XCNT.value = *(SINT32 *)FieldValue;
+            XCNT.value = *(int32_t *)FieldValue;
             break;
         case 28: //radius
-            XRDS.value = *(FLOAT32 *)FieldValue;
+            XRDS.value = *(float *)FieldValue;
             break;
         case 29: //health
-            XHLP.value = *(FLOAT32 *)FieldValue;
+            XHLP.value = *(float *)FieldValue;
             break;
         case 30: //radiation
-            XRAD.value = *(FLOAT32 *)FieldValue;
+            XRAD.value = *(float *)FieldValue;
             break;
         case 31: //charge
-            XCHG.value = *(FLOAT32 *)FieldValue;
+            XCHG.value = *(float *)FieldValue;
             break;
         case 32: //decals
             if(ListFieldID == 0) //decalsSize
@@ -1334,15 +1334,15 @@ bool REFRRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             return true;
         case 34: //startRed
             XCLP.Load();
-            XCLP->start.red = *(UINT8 *)FieldValue;
+            XCLP->start.red = *(uint8_t *)FieldValue;
             break;
         case 35: //startRed
             XCLP.Load();
-            XCLP->start.green = *(UINT8 *)FieldValue;
+            XCLP->start.green = *(uint8_t *)FieldValue;
             break;
         case 36: //startBlue
             XCLP.Load();
-            XCLP->start.blue = *(UINT8 *)FieldValue;
+            XCLP->start.blue = *(uint8_t *)FieldValue;
             break;
         case 37: //unused2
             if(ArraySize != 1)
@@ -1352,15 +1352,15 @@ bool REFRRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             break;
         case 38: //endRed
             XCLP.Load();
-            XCLP->end.red = *(UINT8 *)FieldValue;
+            XCLP->end.red = *(uint8_t *)FieldValue;
             break;
         case 39: //endGreen
             XCLP.Load();
-            XCLP->end.green = *(UINT8 *)FieldValue;
+            XCLP->end.green = *(uint8_t *)FieldValue;
             break;
         case 40: //endBlue
             XCLP.Load();
-            XCLP->end.blue = *(UINT8 *)FieldValue;
+            XCLP->end.blue = *(uint8_t *)FieldValue;
             break;
         case 41: //unused3
             if(ArraySize != 1)
@@ -1373,7 +1373,7 @@ bool REFRRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             break;
         case 43: //activateParentFlags
             ActivateParents.Load();
-            ActivateParents->SetFlagMask(*(UINT8 *)FieldValue);
+            ActivateParents->SetFlagMask(*(uint8_t *)FieldValue);
             break;
         case 44: //activateParentRefs
             ActivateParents.Load();
@@ -1392,21 +1392,21 @@ bool REFRRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
                     ActivateParents->XAPR.value[ListIndex]->reference = *(FORMID *)FieldValue;
                     return true;
                 case 2: //delay
-                    ActivateParents->XAPR.value[ListIndex]->delay = *(FLOAT32 *)FieldValue;
+                    ActivateParents->XAPR.value[ListIndex]->delay = *(float *)FieldValue;
                     break;
                 default:
                     break;
                 }
             break;
         case 45: //prompt
-            XATO.Copy((STRING)FieldValue);
+            XATO.Copy((char *)FieldValue);
             break;
         case 46: //parent
             XESP.Load();
             XESP->parent = *(FORMID *)FieldValue;
             return true;
         case 47: //parentFlags
-            SetParentFlagMask(*(UINT8 *)FieldValue);
+            SetParentFlagMask(*(uint8_t *)FieldValue);
             break;
         case 48: //unused4
             if(ArraySize != 3)
@@ -1424,49 +1424,49 @@ bool REFRRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             return true;
         case 51: //primitiveX
             XPRM.Load();
-            XPRM->xBound = *(FLOAT32 *)FieldValue;
+            XPRM->xBound = *(float *)FieldValue;
             break;
         case 52: //primitiveY
             XPRM.Load();
-            XPRM->yBound = *(FLOAT32 *)FieldValue;
+            XPRM->yBound = *(float *)FieldValue;
             break;
         case 53: //primitiveZ
             XPRM.Load();
-            XPRM->zBound = *(FLOAT32 *)FieldValue;
+            XPRM->zBound = *(float *)FieldValue;
             break;
         case 54: //primitiveRed
             XPRM.Load();
-            XPRM->red = *(FLOAT32 *)FieldValue;
+            XPRM->red = *(float *)FieldValue;
             break;
         case 55: //primitiveGreen
             XPRM.Load();
-            XPRM->green = *(FLOAT32 *)FieldValue;
+            XPRM->green = *(float *)FieldValue;
             break;
         case 56: //primitiveBlue
             XPRM.Load();
-            XPRM->blue = *(FLOAT32 *)FieldValue;
+            XPRM->blue = *(float *)FieldValue;
             break;
         case 57: //primitiveUnknown
             XPRM.Load();
-            XPRM->unknown = *(FLOAT32 *)FieldValue;
+            XPRM->unknown = *(float *)FieldValue;
             break;
         case 58: //primitiveType
-            SetPrimitiveType(*(UINT32 *)FieldValue);
+            SetPrimitiveType(*(uint32_t *)FieldValue);
             break;
         case 59: //collisionType
-            SetCollisionType(*(UINT32 *)FieldValue);
+            SetCollisionType(*(uint32_t *)FieldValue);
             break;
         case 60: //extentX
             XMBO.Load();
-            XMBO->x = *(FLOAT32 *)FieldValue;
+            XMBO->x = *(float *)FieldValue;
             break;
         case 61: //extentY
             XMBO.Load();
-            XMBO->y = *(FLOAT32 *)FieldValue;
+            XMBO->y = *(float *)FieldValue;
             break;
         case 62: //extentZ
             XMBO.Load();
-            XMBO->z = *(FLOAT32 *)FieldValue;
+            XMBO->z = *(float *)FieldValue;
             break;
         case 63: //destinationFid
             XTEL.Load();
@@ -1474,40 +1474,40 @@ bool REFRRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             return true;
         case 64: //destinationPosX
             XTEL.Load();
-            XTEL->destination.posX = *(FLOAT32 *)FieldValue;
+            XTEL->destination.posX = *(float *)FieldValue;
             break;
         case 65: //destinationPosY
             XTEL.Load();
-            XTEL->destination.posY = *(FLOAT32 *)FieldValue;
+            XTEL->destination.posY = *(float *)FieldValue;
             break;
         case 66: //destinationPosZ
             XTEL.Load();
-            XTEL->destination.posZ = *(FLOAT32 *)FieldValue;
+            XTEL->destination.posZ = *(float *)FieldValue;
             break;
         case 67: //destinationRotX
             XTEL.Load();
-            XTEL->destination.rotX = *(FLOAT32 *)FieldValue;
+            XTEL->destination.rotX = *(float *)FieldValue;
             break;
         case 68: //destinationRotY
             XTEL.Load();
-            XTEL->destination.rotY = *(FLOAT32 *)FieldValue;
+            XTEL->destination.rotY = *(float *)FieldValue;
             break;
         case 69: //destinationRotZ
             XTEL.Load();
-            XTEL->destination.rotZ = *(FLOAT32 *)FieldValue;
+            XTEL->destination.rotZ = *(float *)FieldValue;
             break;
         case 70: //destinationFlags
-            SetDestFlagMask(*(UINT32 *)FieldValue);
+            SetDestFlagMask(*(uint32_t *)FieldValue);
             break;
         case 71: //markerFlags
-            SetMapFlagMask(*(UINT8 *)FieldValue);
+            SetMapFlagMask(*(uint8_t *)FieldValue);
             break;
         case 72: //markerFull
             MapData.Load();
-            MapData->FULL.Copy((STRING)FieldValue);
+            MapData->FULL.Copy((char *)FieldValue);
             break;
         case 73: //markerType
-            SetMapType(*(UINT8 *)FieldValue);
+            SetMapType(*(uint8_t *)FieldValue);
             break;
         case 74: //unused5
             if(ArraySize != 1)
@@ -1533,11 +1533,11 @@ bool REFRRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             break;
         case 79: //audioUnknown1
             AudioData.Load();
-            AudioData->MNAM.value = *(FLOAT32 *)FieldValue;
+            AudioData->MNAM.value = *(float *)FieldValue;
             break;
         case 80: //audioUnknown2
             AudioData.Load();
-            AudioData->NNAM.value = *(FLOAT32 *)FieldValue;
+            AudioData->NNAM.value = *(float *)FieldValue;
             break;
         case 81: //xsrf_p
             XSRF.Copy((UINT8ARRAY)FieldValue, ArraySize);
@@ -1550,14 +1550,14 @@ bool REFRRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             return true;
         case 84: //rangeRadius
             XRDO.Load();
-            XRDO->rangeRadius = *(FLOAT32 *)FieldValue;
+            XRDO->rangeRadius = *(float *)FieldValue;
             break;
         case 85: //rangeType
-            SetBroadcastType(*(UINT32 *)FieldValue);
+            SetBroadcastType(*(uint32_t *)FieldValue);
             break;
         case 86: //staticPercentage
             XRDO.Load();
-            XRDO->staticPercentage = *(FLOAT32 *)FieldValue;
+            XRDO->staticPercentage = *(float *)FieldValue;
             break;
         case 87: //positionReference
             XRDO.Load();
@@ -1565,7 +1565,7 @@ bool REFRRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             return true;
         case 88: //lockLevel
             XLOC.Load();
-            XLOC->level = *(UINT8 *)FieldValue;
+            XLOC->level = *(uint8_t *)FieldValue;
             break;
         case 89: //unused6
             if(ArraySize != 3)
@@ -1580,7 +1580,7 @@ bool REFRRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             XLOC->key = *(FORMID *)FieldValue;
             return true;
         case 91: //lockFlags
-            SetLockFlagMask(*(UINT8 *)FieldValue);
+            SetLockFlagMask(*(uint8_t *)FieldValue);
             break;
         case 92: //unused7
             if(ArraySize != 3)
@@ -1609,7 +1609,7 @@ bool REFRRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             return true;
         case 95: //ammoCount
             Ammo.Load();
-            Ammo->XAMC.value = *(SINT32 *)FieldValue;
+            Ammo->XAMC.value = *(int32_t *)FieldValue;
             break;
         case 96: //reflrefrs
             if(ListFieldID == 0) //reflrefrsSize
@@ -1627,7 +1627,7 @@ bool REFRRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
                     XPWR.value[ListIndex]->reference = *(FORMID *)FieldValue;
                     return true;
                 case 2: //type
-                    XPWR.value[ListIndex]->SetType(*(UINT32 *)FieldValue);
+                    XPWR.value[ListIndex]->SetType(*(uint32_t *)FieldValue);
                     break;
                 default:
                     break;
@@ -1635,11 +1635,11 @@ bool REFRRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             break;
         case 97: //litWaters
             XLTW.resize(ArraySize);
-            for(UINT32 x = 0; x < ArraySize; x++)
+            for(uint32_t x = 0; x < ArraySize; x++)
                 XLTW.value[x] = ((FORMIDARRAY)FieldValue)[x];
             return true;
         case 98: //actionFlags
-            SetActionFlagMask(*(UINT32 *)FieldValue);
+            SetActionFlagMask(*(uint32_t *)FieldValue);
             break;
         case 99: //navMesh
             XNDP.Load();
@@ -1647,7 +1647,7 @@ bool REFRRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             return true;
         case 100: //navUnknown1
             XNDP.Load();
-            XNDP->unknown1 = *(UINT16 *)FieldValue;
+            XNDP->unknown1 = *(uint16_t *)FieldValue;
             break;
         case 101: //unused8
             if(ArraySize != 2)
@@ -1666,47 +1666,47 @@ bool REFRRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             return true;
         case 104: //portalWidth
             XPTL.Load();
-            XPTL->width = *(FLOAT32 *)FieldValue;
+            XPTL->width = *(float *)FieldValue;
             break;
         case 105: //portalHeight
             XPTL.Load();
-            XPTL->height = *(FLOAT32 *)FieldValue;
+            XPTL->height = *(float *)FieldValue;
             break;
         case 106: //portalPosX
             XPTL.Load();
-            XPTL->xPos = *(FLOAT32 *)FieldValue;
+            XPTL->xPos = *(float *)FieldValue;
             break;
         case 107: //portalPosY
             XPTL.Load();
-            XPTL->yPos = *(FLOAT32 *)FieldValue;
+            XPTL->yPos = *(float *)FieldValue;
             break;
         case 108: //portalPosZ
             XPTL.Load();
-            XPTL->zPos = *(FLOAT32 *)FieldValue;
+            XPTL->zPos = *(float *)FieldValue;
             break;
         case 109: //portalQ1
             XPTL.Load();
-            XPTL->q1 = *(FLOAT32 *)FieldValue;
+            XPTL->q1 = *(float *)FieldValue;
             break;
         case 110: //portalQ2
             XPTL.Load();
-            XPTL->q2 = *(FLOAT32 *)FieldValue;
+            XPTL->q2 = *(float *)FieldValue;
             break;
         case 111: //portalQ3
             XPTL.Load();
-            XPTL->q3 = *(FLOAT32 *)FieldValue;
+            XPTL->q3 = *(float *)FieldValue;
             break;
         case 112: //portalQ4
             XPTL.Load();
-            XPTL->q4 = *(FLOAT32 *)FieldValue;
+            XPTL->q4 = *(float *)FieldValue;
             break;
         case 113: //seed
-            *XSED.value = *(UINT8 *)FieldValue;
+            *XSED.value = *(uint8_t *)FieldValue;
             break;
         case 114: //roomCount
             Room.Load();
             Room->XRMR.Load();
-            Room->XRMR->count = *(UINT16 *)FieldValue;
+            Room->XRMR->count = *(uint16_t *)FieldValue;
             break;
         case 115: //roomUnknown1
             if(ArraySize != 2)
@@ -1719,44 +1719,44 @@ bool REFRRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
         case 116: //rooms
             Room.Load();
             Room->XLRM.resize(ArraySize);
-            for(UINT32 x = 0; x < ArraySize; x++)
+            for(uint32_t x = 0; x < ArraySize; x++)
                 Room->XLRM.value[x] = ((FORMIDARRAY)FieldValue)[x];
             return true;
         case 117: //occPlaneWidth
             XOCP.Load();
-            XOCP->width = *(FLOAT32 *)FieldValue;
+            XOCP->width = *(float *)FieldValue;
             break;
         case 118: //occPlaneHeight
             XOCP.Load();
-            XOCP->height = *(FLOAT32 *)FieldValue;
+            XOCP->height = *(float *)FieldValue;
             break;
         case 119: //occPlanePosX
             XOCP.Load();
-            XOCP->xPos = *(FLOAT32 *)FieldValue;
+            XOCP->xPos = *(float *)FieldValue;
             break;
         case 120: //occPlanePosY
             XOCP.Load();
-            XOCP->yPos = *(FLOAT32 *)FieldValue;
+            XOCP->yPos = *(float *)FieldValue;
             break;
         case 121: //occPlanePosZ
             XOCP.Load();
-            XOCP->zPos = *(FLOAT32 *)FieldValue;
+            XOCP->zPos = *(float *)FieldValue;
             break;
         case 122: //occPlaneQ1
             XOCP.Load();
-            XOCP->q1 = *(FLOAT32 *)FieldValue;
+            XOCP->q1 = *(float *)FieldValue;
             break;
         case 123: //occPlaneQ2
             XOCP.Load();
-            XOCP->q2 = *(FLOAT32 *)FieldValue;
+            XOCP->q2 = *(float *)FieldValue;
             break;
         case 124: //occPlaneQ3
             XOCP.Load();
-            XOCP->q3 = *(FLOAT32 *)FieldValue;
+            XOCP->q3 = *(float *)FieldValue;
             break;
         case 125: //occPlaneQ4
             XOCP.Load();
-            XOCP->q4 = *(FLOAT32 *)FieldValue;
+            XOCP->q4 = *(float *)FieldValue;
             break;
         case 126: //occPlaneRight
             XORD.Load();
@@ -1776,39 +1776,39 @@ bool REFRRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             return true;
         case 130: //lod1
             XLOD.Load();
-            XLOD->lod1 = *(FLOAT32 *)FieldValue;
+            XLOD->lod1 = *(float *)FieldValue;
             break;
         case 131: //lod2
             XLOD.Load();
-            XLOD->lod2 = *(FLOAT32 *)FieldValue;
+            XLOD->lod2 = *(float *)FieldValue;
             break;
         case 132: //lod3
             XLOD.Load();
-            XLOD->lod3 = *(FLOAT32 *)FieldValue;
+            XLOD->lod3 = *(float *)FieldValue;
             break;
         case 133: //ignoredBySandbox
-            XIBS.value = *(UINT8 *)FieldValue;
+            XIBS.value = *(uint8_t *)FieldValue;
             break;
         case 134: //scale
-            XSCL.value = *(FLOAT32 *)FieldValue;
+            XSCL.value = *(float *)FieldValue;
             break;
         case 135: //posX
-            DATA.value.posX = *(FLOAT32 *)FieldValue;
+            DATA.value.posX = *(float *)FieldValue;
             break;
         case 136: //posY
-            DATA.value.posY = *(FLOAT32 *)FieldValue;
+            DATA.value.posY = *(float *)FieldValue;
             break;
         case 137: //posZ
-            DATA.value.posZ = *(FLOAT32 *)FieldValue;
+            DATA.value.posZ = *(float *)FieldValue;
             break;
         case 138: //rotX
-            DATA.value.rotX = *(FLOAT32 *)FieldValue;
+            DATA.value.rotX = *(float *)FieldValue;
             break;
         case 139: //rotY
-            DATA.value.rotY = *(FLOAT32 *)FieldValue;
+            DATA.value.rotY = *(float *)FieldValue;
             break;
         case 140: //rotZ
-            DATA.value.rotZ = *(FLOAT32 *)FieldValue;
+            DATA.value.rotZ = *(float *)FieldValue;
             break;
         default:
             break;

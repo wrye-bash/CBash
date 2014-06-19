@@ -102,7 +102,7 @@ bool FACTRecord::VisitFormIDs(FormIDOp &op)
     if(!IsLoaded())
         return false;
 
-    for(UINT32 ListIndex = 0; ListIndex < XNAM.value.size(); ListIndex++)
+    for(uint32_t ListIndex = 0; ListIndex < XNAM.value.size(); ListIndex++)
         op.Accept(XNAM.value[ListIndex]->faction);
 
     return op.Stop();
@@ -138,44 +138,44 @@ void FACTRecord::IsSpecialCombat(bool value)
     SETBIT(DATA.value, fIsSpecialCombat, value);
     }
 
-bool FACTRecord::IsFlagMask(UINT8 Mask, bool Exact)
+bool FACTRecord::IsFlagMask(uint8_t Mask, bool Exact)
     {
     return Exact ? ((DATA.value & Mask) == Mask) : ((DATA.value & Mask) != 0);
     }
 
-void FACTRecord::SetFlagMask(UINT8 Mask)
+void FACTRecord::SetFlagMask(uint8_t Mask)
     {
     DATA.value = Mask;
     }
 
-UINT32 FACTRecord::GetType()
+uint32_t FACTRecord::GetType()
     {
     return REV32(FACT);
     }
 
-STRING FACTRecord::GetStrType()
+char * FACTRecord::GetStrType()
     {
     return "FACT";
     }
 
-SINT32 FACTRecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk)
+int32_t FACTRecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk)
     {
-    UINT32 subType = 0;
-    UINT32 subSize = 0;
+    uint32_t subType = 0;
+    uint32_t subSize = 0;
     while(buffer < end_buffer){
-        subType = *(UINT32 *)buffer;
+        subType = *(uint32_t *)buffer;
         buffer += 4;
         switch(subType)
             {
             case REV32(XXXX):
                 buffer += 2;
-                subSize = *(UINT32 *)buffer;
+                subSize = *(uint32_t *)buffer;
                 buffer += 4;
-                subType = *(UINT32 *)buffer;
+                subType = *(uint32_t *)buffer;
                 buffer += 6;
                 break;
             default:
-                subSize = *(UINT16 *)buffer;
+                subSize = *(uint16_t *)buffer;
                 buffer += 2;
                 break;
             }
@@ -227,7 +227,7 @@ SINT32 FACTRecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer,
     return 0;
     }
 
-SINT32 FACTRecord::Unload()
+int32_t FACTRecord::Unload()
     {
     IsChanged(false);
     IsLoaded(false);
@@ -240,7 +240,7 @@ SINT32 FACTRecord::Unload()
     return 1;
     }
 
-SINT32 FACTRecord::WriteRecord(FileWriter &writer)
+int32_t FACTRecord::WriteRecord(FileWriter &writer)
     {
     WRITE(EDID);
     WRITE(FULL);

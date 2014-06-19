@@ -38,7 +38,7 @@
 
 namespace Ob
 {
-UINT32 ACRERecord::GetFieldAttribute(FIELD_IDENTIFIERS, UINT32 WhichAttribute)
+uint32_t ACRERecord::GetFieldAttribute(FIELD_IDENTIFIERS, uint32_t WhichAttribute)
     {
     switch(FieldID)
         {
@@ -172,18 +172,18 @@ void * ACRERecord::GetField(FIELD_IDENTIFIERS, void **FieldValues)
     return NULL;
     }
 
-bool ACRERecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
+bool ACRERecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, uint32_t ArraySize)
     {
     switch(FieldID)
         {
         case 1: //flags1
-            SetHeaderFlagMask(*(UINT32 *)FieldValue);
+            SetHeaderFlagMask(*(uint32_t *)FieldValue);
             break;
         case 3: //flags2
-            SetHeaderUnknownFlagMask(*(UINT32 *)FieldValue);
+            SetHeaderUnknownFlagMask(*(uint32_t *)FieldValue);
             break;
         case 4: //eid
-            EDID.Copy((STRING)FieldValue);
+            EDID.Copy((char *)FieldValue);
             break;
         case 5: //base
             NAME.value = *(FORMID *)FieldValue;
@@ -195,7 +195,7 @@ bool ACRERecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
         case 7: //rank
             Ownership.Load();
             Ownership->XRNK.Load();
-            *Ownership->XRNK.value = *(SINT32 *)FieldValue;
+            *Ownership->XRNK.value = *(int32_t *)FieldValue;
             break;
         case 8: //globalVariable
             Ownership.Load();
@@ -203,22 +203,22 @@ bool ACRERecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             return true;
         case 9: //lod1
             XLOD.Load();
-            XLOD->lod1 = *(FLOAT32 *)FieldValue;
+            XLOD->lod1 = *(float *)FieldValue;
             break;
         case 10: //lod2
             XLOD.Load();
-            XLOD->lod2 = *(FLOAT32 *)FieldValue;
+            XLOD->lod2 = *(float *)FieldValue;
             break;
         case 11: //lod3
             XLOD.Load();
-            XLOD->lod3 = *(FLOAT32 *)FieldValue;
+            XLOD->lod3 = *(float *)FieldValue;
             break;
         case 12: //parent
             XESP.Load();
             XESP->parent = *(FORMID *)FieldValue;
             return true;
         case 13: //parentFlags
-            SetFlagMask(*(UINT8 *)FieldValue);
+            SetFlagMask(*(uint8_t *)FieldValue);
             break;
         case 14: //unused1
             if(ArraySize != 3)
@@ -233,25 +233,25 @@ bool ACRERecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             break;
         case 16: //scale
             XSCL.Load();
-            XSCL.value = *(FLOAT32 *)FieldValue;
+            XSCL.value = *(float *)FieldValue;
             break;
         case 17: //posX
-            DATA.value.posX = *(FLOAT32 *)FieldValue;
+            DATA.value.posX = *(float *)FieldValue;
             break;
         case 18: //posY
-            DATA.value.posY = *(FLOAT32 *)FieldValue;
+            DATA.value.posY = *(float *)FieldValue;
             break;
         case 19: //posZ
-            DATA.value.posZ = *(FLOAT32 *)FieldValue;
+            DATA.value.posZ = *(float *)FieldValue;
             break;
         case 20: //rotX
-            DATA.value.rotX = *(FLOAT32 *)FieldValue;
+            DATA.value.rotX = *(float *)FieldValue;
             break;
         case 21: //rotY
-            DATA.value.rotY = *(FLOAT32 *)FieldValue;
+            DATA.value.rotY = *(float *)FieldValue;
             break;
         case 22: //rotZ
-            DATA.value.rotZ = *(FLOAT32 *)FieldValue;
+            DATA.value.rotZ = *(float *)FieldValue;
             break;
         default:
             break;

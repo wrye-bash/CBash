@@ -157,18 +157,18 @@ class TES4File : public ModFile
         GRUPRecords<Ob::WATRRecord, REV32(WATR), 20> WATR;
         GRUPRecords<Ob::EFSHRecord, REV32(EFSH), 20> EFSH;
 
-        TES4File(Collection *_Parent, STRING FileName, STRING ModName, const UINT32 _flags);
+        TES4File(Collection *_Parent, char * FileName, char * ModName, const uint32_t _flags);
         ~TES4File();
 
-        SINT32   LoadTES4();
-        SINT32   Load(RecordOp &read_parser, RecordOp &indexer, std::vector<FormIDResolver *> &Expanders, std::vector<Record *> &DeletedRecords);
-        UINT32   GetNumRecords(const UINT32 &RecordType);
-        Record * CreateRecord(const UINT32 &RecordType, STRING const &RecordEditorID, Record *&SourceRecord, Record *&ParentRecord, CreationFlags &options);
-        SINT32   DeleteRecord(Record *&curRecord, RecordOp &deindexer);
-        SINT32   Save(STRING const &SaveName, std::vector<FormIDResolver *> &Expanders, bool CloseMod, RecordOp &indexer);
+        int32_t   LoadTES4();
+        int32_t   Load(RecordOp &read_parser, RecordOp &indexer, std::vector<FormIDResolver *> &Expanders, std::vector<Record *> &DeletedRecords);
+        uint32_t   GetNumRecords(const uint32_t &RecordType);
+        Record * CreateRecord(const uint32_t &RecordType, char * const &RecordEditorID, Record *&SourceRecord, Record *&ParentRecord, CreationFlags &options);
+        int32_t   DeleteRecord(Record *&curRecord, RecordOp &deindexer);
+        int32_t   Save(char * const &SaveName, std::vector<FormIDResolver *> &Expanders, bool CloseMod, RecordOp &indexer);
 
-        void     SetFilter(bool inclusive, boost::unordered_set<UINT32> &RecordTypes, boost::unordered_set<FORMID> &WorldSpaces);
+        void     SetFilter(bool inclusive, boost::unordered_set<uint32_t> &RecordTypes, boost::unordered_set<FORMID> &WorldSpaces);
 
         void     VisitAllRecords(RecordOp &op);
-        void     VisitRecords(const UINT32 &RecordType, RecordOp &op);
+        void     VisitRecords(const uint32_t &RecordType, RecordOp &op);
     };

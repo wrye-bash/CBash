@@ -51,15 +51,15 @@ class GMSTRecord : public Record //Game Setting
             {
             union
                 {
-                FLOAT32 f;
-                SINT32 i;
-                STRING s;
+                float f;
+                int32_t i;
+                char * s;
                 };
             char format;
 
-            GMSTDATA(STRING _DATA);
-            GMSTDATA(SINT32 _DATA);
-            GMSTDATA(FLOAT32 _DATA);
+            GMSTDATA(char * _DATA);
+            GMSTDATA(int32_t _DATA);
+            GMSTDATA(float _DATA);
             GMSTDATA();
             ~GMSTDATA();
 
@@ -75,18 +75,18 @@ class GMSTRecord : public Record //Game Setting
         GMSTRecord(GMSTRecord *srcRecord);
         ~GMSTRecord();
 
-        UINT32 GetFieldAttribute(DEFAULTED_FIELD_IDENTIFIERS, UINT32 WhichAttribute=0);
+        uint32_t GetFieldAttribute(DEFAULTED_FIELD_IDENTIFIERS, uint32_t WhichAttribute=0);
         void * GetField(DEFAULTED_FIELD_IDENTIFIERS, void **FieldValues=NULL);
-        bool   SetField(DEFAULTED_FIELD_IDENTIFIERS, void *FieldValue=NULL, UINT32 ArraySize=0);
+        bool   SetField(DEFAULTED_FIELD_IDENTIFIERS, void *FieldValue=NULL, uint32_t ArraySize=0);
         void   DeleteField(DEFAULTED_FIELD_IDENTIFIERS);
 
-        UINT32 GetType();
-        STRING GetStrType();
+        uint32_t GetType();
+        char * GetStrType();
         bool   IsKeyedByEditorID();
 
-        SINT32 ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk=false);
-        SINT32 Unload();
-        SINT32 WriteRecord(FileWriter &writer);
+        int32_t ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk=false);
+        int32_t Unload();
+        int32_t WriteRecord(FileWriter &writer);
 
         bool operator ==(const GMSTRecord &other) const;
         bool operator !=(const GMSTRecord &other) const;

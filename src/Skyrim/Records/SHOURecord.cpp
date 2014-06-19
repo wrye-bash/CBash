@@ -96,7 +96,7 @@ bool SHOURecord::VisitFormIDs(FormIDOp &op)
     if (MDOB.IsLoaded())
         op.Accept(MDOB.value);
 
-    for (UINT32 x = 0; x < SNAM.value.size(); ++x)
+    for (uint32_t x = 0; x < SNAM.value.size(); ++x)
     {
         op.Accept(SNAM.value[x].word);
         op.Accept(SNAM.value[x].spell);
@@ -106,36 +106,36 @@ bool SHOURecord::VisitFormIDs(FormIDOp &op)
 }
 
 
-UINT32 SHOURecord::GetType()
+uint32_t SHOURecord::GetType()
 {
     return REV32(SHOU);
 }
 
-STRING SHOURecord::GetStrType()
+char * SHOURecord::GetStrType()
 {
     return "SHOU";
 }
 
-SINT32 SHOURecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk)
+int32_t SHOURecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk)
 {
-    UINT32 subType = 0;
-    UINT32 subSize = 0;
+    uint32_t subType = 0;
+    uint32_t subSize = 0;
     StringLookups *LookupStrings = GetParentMod()->TES4.LookupStrings;
     while(buffer < end_buffer)
     {
-        subType = *(UINT32 *)buffer;
+        subType = *(uint32_t *)buffer;
         buffer += 4;
         switch(subType)
         {
         case REV32(XXXX):
             buffer += 2;
-            subSize = *(UINT32 *)buffer;
+            subSize = *(uint32_t *)buffer;
             buffer += 4;
-            subType = *(UINT32 *)buffer;
+            subType = *(uint32_t *)buffer;
             buffer += 6;
             break;
         default:
-            subSize = *(UINT16 *)buffer;
+            subSize = *(uint16_t *)buffer;
             buffer += 2;
             break;
         }
@@ -166,7 +166,7 @@ SINT32 SHOURecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer,
     return 0;
 }
 
-SINT32 SHOURecord::Unload()
+int32_t SHOURecord::Unload()
 {
     IsLoaded(false);
     IsChanged(false);
@@ -177,7 +177,7 @@ SINT32 SHOURecord::Unload()
     return 1;
 }
 
-SINT32 SHOURecord::WriteRecord(FileWriter &writer)
+int32_t SHOURecord::WriteRecord(FileWriter &writer)
 {
     WRITE(EDID);
     WRITE(FULL);

@@ -46,16 +46,16 @@ class WATRRecord : public Record //Water
         #pragma pack(2)
         struct WATRDATA
             {
-            FLOAT32 windVelocity, windDirection, waveAmp, waveFreq, sunPower,
+            float windVelocity, windDirection, waveAmp, waveFreq, sunPower,
                     reflectAmt, fresnelAmt, xSpeed, ySpeed, fogNear, fogFar;
             GENCLR  shallow;
             GENCLR  deep;
             GENCLR  refl;
-            UINT8   blend, unused1[3];
-            FLOAT32 rainForce, rainVelocity, rainFalloff, rainDampner,
+            uint8_t   blend, unused1[3];
+            float rainForce, rainVelocity, rainFalloff, rainDampner,
                     rainSize, dispForce, dispVelocity, dispFalloff,
                     dispDampner, dispSize;
-            UINT16  damage;
+            uint16_t  damage;
 
             WATRDATA();
             ~WATRDATA();
@@ -85,8 +85,8 @@ class WATRRecord : public Record //Water
     public:
         StringRecord EDID; //Editor ID
         StringRecord TNAM; //Texture
-        ReqSimpleSubRecord<UINT8, 75> ANAM; //opacity
-        ReqSimpleSubRecord<UINT8> FNAM; //Flags
+        ReqSimpleSubRecord<uint8_t, 75> ANAM; //opacity
+        ReqSimpleSubRecord<uint8_t> FNAM; //Flags
         StringRecord MNAM; //Material ID
         OptSimpleSubRecord<FORMID> SNAM; //Sound
         SemiOptSubRecord<WATRDATA> DATA; //Water Data
@@ -104,20 +104,20 @@ class WATRRecord : public Record //Water
         void   IsCausesDamage(bool value);
         bool   IsReflective();
         void   IsReflective(bool value);
-        bool   IsFlagMask(UINT8 Mask, bool Exact=false);
-        void   SetFlagMask(UINT8 Mask);
+        bool   IsFlagMask(uint8_t Mask, bool Exact=false);
+        void   SetFlagMask(uint8_t Mask);
 
-        UINT32 GetFieldAttribute(DEFAULTED_FIELD_IDENTIFIERS, UINT32 WhichAttribute=0);
+        uint32_t GetFieldAttribute(DEFAULTED_FIELD_IDENTIFIERS, uint32_t WhichAttribute=0);
         void * GetField(DEFAULTED_FIELD_IDENTIFIERS, void **FieldValues=NULL);
-        bool   SetField(DEFAULTED_FIELD_IDENTIFIERS, void *FieldValue=NULL, UINT32 ArraySize=0);
+        bool   SetField(DEFAULTED_FIELD_IDENTIFIERS, void *FieldValue=NULL, uint32_t ArraySize=0);
         void   DeleteField(DEFAULTED_FIELD_IDENTIFIERS);
 
-        UINT32 GetType();
-        STRING GetStrType();
+        uint32_t GetType();
+        char * GetStrType();
 
-        SINT32 ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk=false);
-        SINT32 Unload();
-        SINT32 WriteRecord(FileWriter &writer);
+        int32_t ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk=false);
+        int32_t Unload();
+        int32_t WriteRecord(FileWriter &writer);
 
         bool operator ==(const WATRRecord &other) const;
         bool operator !=(const WATRRecord &other) const;

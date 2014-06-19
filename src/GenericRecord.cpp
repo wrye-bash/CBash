@@ -56,7 +56,7 @@ bool RecordOp::Accept(Record *&curRecord)
     return false;
     }
 
-UINT32 RecordOp::GetCount()
+uint32_t RecordOp::GetCount()
     {
     return count;
     }
@@ -71,7 +71,7 @@ bool RecordOp::Stop()
     return stop;
     }
 
-RecordProcessor::RecordProcessor(ModFile *_curModFile, FormIDHandlerClass &_FormIDHandler, const ModFlags &_Flags, boost::unordered_set<UINT32> &_UsedFormIDs):
+RecordProcessor::RecordProcessor(ModFile *_curModFile, FormIDHandlerClass &_FormIDHandler, const ModFlags &_Flags, boost::unordered_set<uint32_t> &_UsedFormIDs):
     curModFile(_curModFile),
     filter_records(),
     filter_wspaces(),
@@ -195,7 +195,7 @@ void Record::IsExtendedWinning(bool value)
 //    CBash_Flags = value ? (CBash_Flags | _fHasInvalidFormIDs) : (CBash_Flags & ~_fHasInvalidFormIDs);
 //    }
 
-UINT32 Record::GetFieldAttribute(FIELD_IDENTIFIERS, UINT32 WhichAttribute)
+uint32_t Record::GetFieldAttribute(FIELD_IDENTIFIERS, uint32_t WhichAttribute)
     {
     return UNKNOWN_FIELD;
     }
@@ -205,7 +205,7 @@ void * Record::GetField(FIELD_IDENTIFIERS, void **FieldValues)
     return NULL;
     }
 
-bool Record::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
+bool Record::SetField(FIELD_IDENTIFIERS, void *FieldValue, uint32_t ArraySize)
     {
     return false;
     }
@@ -220,12 +220,12 @@ bool Record::IsKeyedByEditorID()
     return false;
     }
 
-STRING Record::GetEditorIDKey()
+char * Record::GetEditorIDKey()
     {
-    return (STRING)GetField(4);
+    return (char *)GetField(4);
     }
 
-bool Record::SetEditorIDKey(STRING EditorID)
+bool Record::SetEditorIDKey(char * EditorID)
     {
     SetField(4, 0, 0, 0, 0, 0, 0, (void *)EditorID, 0);
     return false;
@@ -240,13 +240,13 @@ bool Record::Read()
     {
     if(IsLoaded() || IsChanged())
         return false;
-    UINT32 recSize = *(UINT32*)&recData[-16];
+    uint32_t recSize = *(uint32_t*)&recData[-16];
 
     //Check against the original record flags to see if it is compressed since the current flags may have changed
-    if ((*(UINT32*)&recData[-12] & fIsCompressed) != 0)
+    if ((*(uint32_t*)&recData[-12] & fIsCompressed) != 0)
         {
         unsigned char localBuffer[BUFFERSIZE];
-        UINT32 expandedRecSize = *(UINT32*)recData;
+        uint32_t expandedRecSize = *(uint32_t*)recData;
         unsigned char *buffer = (expandedRecSize >= BUFFERSIZE) ? new unsigned char[expandedRecSize] : &localBuffer[0];
         uncompress(buffer, (uLongf*)&expandedRecSize, &recData[4], recSize - 4);
         ParseRecord(buffer, buffer + expandedRecSize, true);
@@ -260,15 +260,15 @@ bool Record::Read()
     return true;
     }
 
-UINT32 Record::Write(FileWriter &writer, const bool &bMastersChanged, FormIDResolver &expander, FormIDResolver &collapser, std::vector<FormIDResolver *> &Expanders)
+uint32_t Record::Write(FileWriter &writer, const bool &bMastersChanged, FormIDResolver &expander, FormIDResolver &collapser, std::vector<FormIDResolver *> &Expanders)
     {
-    UINT32 recSize = 0;
-    UINT32 recType = GetType();
+    uint32_t recSize = 0;
+    uint32_t recType = GetType();
     collapser.Accept(formID);
 
     if(!IsChanged())
         {
-        if(bMastersChanged || flags != *(UINT32*)&recData[-12])
+        if(bMastersChanged || flags != *(uint32_t*)&recData[-12])
             {
             //if masters have changed, all formIDs have to be updated...
             //or if the flags have changed internally (notably fIsDeleted or fIsCompressed, possibly others)
@@ -277,8 +277,8 @@ UINT32 Record::Write(FileWriter &writer, const bool &bMastersChanged, FormIDReso
                 //if(expander.IsValid(data)) //optimization disabled for testing
                 //    VisitFormIDs(expander);
                 //printer("Looking for correct expander\n");
-                SINT32 index = -1;
-                for(UINT32 x = 0; x < Expanders.size(); ++x)
+                int32_t index = -1;
+                for(uint32_t x = 0; x < Expanders.size(); ++x)
                     if(IsValid(*Expanders[x]))
                         {
                         //if(index != -1)
@@ -287,7 +287,7 @@ UINT32 Record::Write(FileWriter &writer, const bool &bMastersChanged, FormIDReso
                         //    printer("  %i:   %08X, %08X, %08X\n", index, Expanders[index]->FileStart, data, Expanders[index]->FileEnd);
                         //    printer("  %i:   %08X, %08X, %08X\n", x, Expanders[x]->FileStart, data, Expanders[x]->FileEnd);
                         //    printer("Expanders:\n");
-                        //    for(UINT32 z = 0; z < Expanders.size(); ++z)
+                        //    for(uint32_t z = 0; z < Expanders.size(); ++z)
                         //        printer("  %i of %i:   %08X, %08X\n", z, Expanders.size(), Expanders[z]->FileStart, Expanders[z]->FileEnd);
                         //    }
                         index = x;
@@ -305,7 +305,7 @@ UINT32 Record::Write(FileWriter &writer, const bool &bMastersChanged, FormIDReso
         else
             {
             //if masters have not changed, the record can just be written from the read buffer
-            recSize = *(UINT32*)&recData[-16];
+            recSize = *(uint32_t*)&recData[-16];
 
             writer.file_write(&recType, 4);
             writer.file_write(&recSize, 4);
@@ -562,22 +562,22 @@ void Record::IsCantWait(bool value)
     SETBIT(flags, fIsCantWait, value);
     }
 
-bool Record::IsHeaderFlagMask(UINT32 Mask, bool Exact)
+bool Record::IsHeaderFlagMask(uint32_t Mask, bool Exact)
     {
     return Exact ? (flags & Mask) == Mask : (flags & Mask) != 0;
     }
 
-void Record::SetHeaderFlagMask(UINT32 Mask)
+void Record::SetHeaderFlagMask(uint32_t Mask)
     {
     flags = Mask;
     }
 
-bool Record::IsHeaderUnknownFlagMask(UINT32 Mask, bool Exact)
+bool Record::IsHeaderUnknownFlagMask(uint32_t Mask, bool Exact)
     {
     return Exact ? (flagsUnk & Mask) == Mask : (flagsUnk & Mask) != 0;
     }
 
-void Record::SetHeaderUnknownFlagMask(UINT32 Mask)
+void Record::SetHeaderUnknownFlagMask(uint32_t Mask)
     {
     flagsUnk = Mask;
     }
@@ -618,13 +618,13 @@ bool FNVRecord::Read()
     {
     if(IsLoaded() || IsChanged())
         return false;
-    UINT32 recSize = *(UINT32*)&recData[-20];
+    uint32_t recSize = *(uint32_t*)&recData[-20];
 
     //Check against the original record flags to see if it is compressed since the current flags may have changed
-    if ((*(UINT32*)&recData[-16] & fIsCompressed) != 0)
+    if ((*(uint32_t*)&recData[-16] & fIsCompressed) != 0)
         {
         unsigned char localBuffer[BUFFERSIZE];
-        UINT32 expandedRecSize = *(UINT32*)recData;
+        uint32_t expandedRecSize = *(uint32_t*)recData;
         unsigned char *buffer = (expandedRecSize >= BUFFERSIZE) ? new unsigned char[expandedRecSize] : &localBuffer[0];
         uncompress(buffer, (uLongf*)&expandedRecSize, &recData[4], recSize - 4);
         ParseRecord(buffer, buffer + expandedRecSize, true);
@@ -638,16 +638,16 @@ bool FNVRecord::Read()
     return true;
     }
 
-UINT32 FNVRecord::Write(FileWriter &writer, const bool &bMastersChanged, FormIDResolver &expander, FormIDResolver &collapser, std::vector<FormIDResolver *> &Expanders)
+uint32_t FNVRecord::Write(FileWriter &writer, const bool &bMastersChanged, FormIDResolver &expander, FormIDResolver &collapser, std::vector<FormIDResolver *> &Expanders)
     {
-    UINT32 recSize = 0;
-    UINT32 recType = GetType();
+    uint32_t recSize = 0;
+    uint32_t recType = GetType();
 
     collapser.Accept(formID);
 
     if(!IsChanged())
         {
-        if(bMastersChanged || flags != *(UINT32*)&recData[-16])
+        if(bMastersChanged || flags != *(uint32_t*)&recData[-16])
             {
             //if masters have changed, all formIDs have to be updated...
             //or if the flags have changed internally (notably fIsDeleted or fIsCompressed, possibly others)
@@ -657,8 +657,8 @@ UINT32 FNVRecord::Write(FileWriter &writer, const bool &bMastersChanged, FormIDR
                 //if(expander.IsValid(data)) //optimization disabled for testing
                 //    VisitFormIDs(expander);
                 //printer("Looking for correct expander\n");
-                SINT32 index = -1;
-                for(UINT32 x = 0; x < Expanders.size(); ++x)
+                int32_t index = -1;
+                for(uint32_t x = 0; x < Expanders.size(); ++x)
                     if(IsValid(*Expanders[x]))
                         {
                         //if(index != -1)
@@ -667,7 +667,7 @@ UINT32 FNVRecord::Write(FileWriter &writer, const bool &bMastersChanged, FormIDR
                         //    printer("  %i:   %08X, %08X, %08X\n", index, Expanders[index]->FileStart, data, Expanders[index]->FileEnd);
                         //    printer("  %i:   %08X, %08X, %08X\n", x, Expanders[x]->FileStart, data, Expanders[x]->FileEnd);
                         //    printer("Expanders:\n");
-                        //    for(UINT32 z = 0; z < Expanders.size(); ++z)
+                        //    for(uint32_t z = 0; z < Expanders.size(); ++z)
                         //        printer("  %i of %i:   %08X, %08X\n", z, Expanders.size(), Expanders[z]->FileStart, Expanders[z]->FileEnd);
                         //    }
                         index = x;
@@ -685,7 +685,7 @@ UINT32 FNVRecord::Write(FileWriter &writer, const bool &bMastersChanged, FormIDR
         else
             {
             //if masters have not changed, the record can just be written from the read buffer
-            recSize = *(UINT32*)&recData[-20];
+            recSize = *(uint32_t*)&recData[-20];
 
             writer.file_write(&recType, 4);
             writer.file_write(&recSize, 4);
@@ -770,13 +770,13 @@ bool TES5Record::Read()
     {
     if(IsLoaded() || IsChanged())
         return false;
-    UINT32 recSize = *(UINT32*)&recData[-20];
+    uint32_t recSize = *(uint32_t*)&recData[-20];
 
     //Check against the original record flags to see if it is compressed since the current flags may have changed
-    if ((*(UINT32*)&recData[-16] & fIsCompressed) != 0)
+    if ((*(uint32_t*)&recData[-16] & fIsCompressed) != 0)
         {
         unsigned char localBuffer[BUFFERSIZE];
-        UINT32 expandedRecSize = *(UINT32*)recData;
+        uint32_t expandedRecSize = *(uint32_t*)recData;
         unsigned char *buffer = (expandedRecSize >= BUFFERSIZE) ? new unsigned char[expandedRecSize] : &localBuffer[0];
         uncompress(buffer, (uLongf*)&expandedRecSize, &recData[4], recSize - 4);
         ParseRecord(buffer, buffer + expandedRecSize, true);
@@ -790,16 +790,16 @@ bool TES5Record::Read()
     return true;
     }
 
-UINT32 TES5Record::Write(FileWriter &writer, const bool &bMastersChanged, FormIDResolver &expander, FormIDResolver &collapser, std::vector<FormIDResolver *> &Expanders)
+uint32_t TES5Record::Write(FileWriter &writer, const bool &bMastersChanged, FormIDResolver &expander, FormIDResolver &collapser, std::vector<FormIDResolver *> &Expanders)
     {
-    UINT32 recSize = 0;
-    UINT32 recType = GetType();
+    uint32_t recSize = 0;
+    uint32_t recType = GetType();
 
     collapser.Accept(formID);
 
     if(!IsChanged())
         {
-        if(bMastersChanged || flags != *(UINT32*)&recData[-16])
+        if(bMastersChanged || flags != *(uint32_t*)&recData[-16])
             {
             //if masters have changed, all formIDs have to be updated...
             //or if the flags have changed internally (notably fIsDeleted or fIsCompressed, possibly others)
@@ -809,8 +809,8 @@ UINT32 TES5Record::Write(FileWriter &writer, const bool &bMastersChanged, FormID
                 //if(expander.IsValid(data)) //optimization disabled for testing
                 //    VisitFormIDs(expander);
                 //printer("Looking for correct expander\n");
-                SINT32 index = -1;
-                for(UINT32 x = 0; x < Expanders.size(); ++x)
+                int32_t index = -1;
+                for(uint32_t x = 0; x < Expanders.size(); ++x)
                     if(IsValid(*Expanders[x]))
                         {
                         //if(index != -1)
@@ -819,7 +819,7 @@ UINT32 TES5Record::Write(FileWriter &writer, const bool &bMastersChanged, FormID
                         //    printer("  %i:   %08X, %08X, %08X\n", index, Expanders[index]->FileStart, data, Expanders[index]->FileEnd);
                         //    printer("  %i:   %08X, %08X, %08X\n", x, Expanders[x]->FileStart, data, Expanders[x]->FileEnd);
                         //    printer("Expanders:\n");
-                        //    for(UINT32 z = 0; z < Expanders.size(); ++z)
+                        //    for(uint32_t z = 0; z < Expanders.size(); ++z)
                         //        printer("  %i of %i:   %08X, %08X\n", z, Expanders.size(), Expanders[z]->FileStart, Expanders[z]->FileEnd);
                         //    }
                         index = x;
@@ -837,7 +837,7 @@ UINT32 TES5Record::Write(FileWriter &writer, const bool &bMastersChanged, FormID
         else
             {
             //if masters have not changed, the record can just be written from the read buffer
-            recSize = *(UINT32*)&recData[-20];
+            recSize = *(uint32_t*)&recData[-20];
 
             writer.file_write(&recType, 4);
             writer.file_write(&recSize, 4);

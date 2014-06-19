@@ -93,34 +93,34 @@ ROADRecord::~ROADRecord()
     //Parent is a shared pointer that's deleted when the WRLD group is deleted
     }
 
-UINT32 ROADRecord::GetType()
+uint32_t ROADRecord::GetType()
     {
     return REV32(ROAD);
     }
 
-STRING ROADRecord::GetStrType()
+char * ROADRecord::GetStrType()
     {
     return "ROAD";
     }
 
-SINT32 ROADRecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk)
+int32_t ROADRecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk)
     {
-    UINT32 subType = 0;
-    UINT32 subSize = 0;
+    uint32_t subType = 0;
+    uint32_t subSize = 0;
     while(buffer < end_buffer){
-        subType = *(UINT32 *)buffer;
+        subType = *(uint32_t *)buffer;
         buffer += 4;
         switch(subType)
             {
             case REV32(XXXX):
                 buffer += 2;
-                subSize = *(UINT32 *)buffer;
+                subSize = *(uint32_t *)buffer;
                 buffer += 4;
-                subType = *(UINT32 *)buffer;
+                subType = *(uint32_t *)buffer;
                 buffer += 6;
                 break;
             default:
-                subSize = *(UINT16 *)buffer;
+                subSize = *(uint16_t *)buffer;
                 buffer += 2;
                 break;
             }
@@ -145,7 +145,7 @@ SINT32 ROADRecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer,
     return 0;
     }
 
-SINT32 ROADRecord::Unload()
+int32_t ROADRecord::Unload()
     {
     IsChanged(false);
     IsLoaded(false);
@@ -154,7 +154,7 @@ SINT32 ROADRecord::Unload()
     return 1;
     }
 
-SINT32 ROADRecord::WriteRecord(FileWriter &writer)
+int32_t ROADRecord::WriteRecord(FileWriter &writer)
     {
     WRITE(PGRP);
     WRITE(PGRR);

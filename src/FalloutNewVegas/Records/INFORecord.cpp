@@ -174,12 +174,12 @@ void INFORecord::INFOResponse::IsPained(bool value)
     TRDT.value.emotionType = value ? ePained : eNeutral;
     }
 
-bool INFORecord::INFOResponse::IsType(UINT32 Type)
+bool INFORecord::INFOResponse::IsType(uint32_t Type)
     {
     return TRDT.value.emotionType == Type;
     }
 
-void INFORecord::INFOResponse::SetType(UINT32 Type)
+void INFORecord::INFOResponse::SetType(uint32_t Type)
     {
     TRDT.value.emotionType = Type;
     }
@@ -194,12 +194,12 @@ void INFORecord::INFOResponse::IsUseEmotionAnim(bool value)
     SETBIT(TRDT.value.flags, fIsUseEmotionAnim, value);
     }
 
-bool INFORecord::INFOResponse::IsFlagMask(UINT8 Mask, bool Exact)
+bool INFORecord::INFOResponse::IsFlagMask(uint8_t Mask, bool Exact)
     {
     return Exact ? ((TRDT.value.flags & Mask) == Mask) : ((TRDT.value.flags & Mask) != 0);
     }
 
-void INFORecord::INFOResponse::SetFlagMask(UINT8 Mask)
+void INFORecord::INFOResponse::SetFlagMask(uint8_t Mask)
     {
     TRDT.value.flags = Mask;
     }
@@ -295,28 +295,28 @@ bool INFORecord::VisitFormIDs(FormIDOp &op)
         op.Accept(TPIC.value);
     if(PNAM.IsLoaded())
         op.Accept(PNAM.value);
-    for(UINT32 ListIndex = 0; ListIndex < NAME.value.size(); ListIndex++)
+    for(uint32_t ListIndex = 0; ListIndex < NAME.value.size(); ListIndex++)
         op.Accept(NAME.value[ListIndex]);
-    for(UINT32 ListIndex = 0; ListIndex < Responses.value.size(); ListIndex++)
+    for(uint32_t ListIndex = 0; ListIndex < Responses.value.size(); ListIndex++)
         {
         op.Accept(Responses.value[ListIndex]->TRDT.value.sound);
         op.Accept(Responses.value[ListIndex]->SNAM.value);
         op.Accept(Responses.value[ListIndex]->LNAM.value);
         }
-    for(UINT32 ListIndex = 0; ListIndex < CTDA.value.size(); ListIndex++)
+    for(uint32_t ListIndex = 0; ListIndex < CTDA.value.size(); ListIndex++)
         CTDA.value[ListIndex]->VisitFormIDs(op);
-    for(UINT32 ListIndex = 0; ListIndex < TCLT.value.size(); ListIndex++)
+    for(uint32_t ListIndex = 0; ListIndex < TCLT.value.size(); ListIndex++)
         op.Accept(TCLT.value[ListIndex]);
-    for(UINT32 ListIndex = 0; ListIndex < TCLF.value.size(); ListIndex++)
+    for(uint32_t ListIndex = 0; ListIndex < TCLF.value.size(); ListIndex++)
         op.Accept(TCLF.value[ListIndex]);
-    for(UINT32 ListIndex = 0; ListIndex < TCFU.value.size(); ListIndex++)
+    for(uint32_t ListIndex = 0; ListIndex < TCFU.value.size(); ListIndex++)
         op.Accept(TCFU.value[ListIndex]);
-    for(UINT32 ListIndex = 0; ListIndex < BeginSCR_.value.size(); ListIndex++)
+    for(uint32_t ListIndex = 0; ListIndex < BeginSCR_.value.size(); ListIndex++)
         {
         if(BeginSCR_.value[ListIndex]->isSCRO)
             op.Accept(BeginSCR_.value[ListIndex]->reference);
         }
-    for(UINT32 ListIndex = 0; ListIndex < EndSCR_.value.size(); ListIndex++)
+    for(uint32_t ListIndex = 0; ListIndex < EndSCR_.value.size(); ListIndex++)
         {
         if(EndSCR_.value[ListIndex]->isSCRO)
             op.Accept(EndSCR_.value[ListIndex]->reference);
@@ -431,12 +431,12 @@ void INFORecord::IsAlwaysDarken(bool value)
     SETBIT(DATA.value.flags, fIsAlwaysDarken, value);
     }
 
-bool INFORecord::IsFlagMask(UINT16 Mask, bool Exact)
+bool INFORecord::IsFlagMask(uint16_t Mask, bool Exact)
     {
     return Exact ? (DATA.value.flags & Mask) == Mask : (DATA.value.flags & Mask) != 0;
     }
 
-void INFORecord::SetFlagMask(UINT16 Mask)
+void INFORecord::SetFlagMask(uint16_t Mask)
     {
     DATA.value.flags = Mask;
     }
@@ -451,12 +451,12 @@ void INFORecord::IsBeginScriptEnabled(bool value)
     SETBIT(BeginSCHR.value.flags, fIsEnabled, value);
     }
 
-bool INFORecord::IsBeginScriptFlagMask(UINT16 Mask, bool Exact)
+bool INFORecord::IsBeginScriptFlagMask(uint16_t Mask, bool Exact)
     {
     return Exact ? (BeginSCHR.value.flags & Mask) == Mask : (BeginSCHR.value.flags & Mask) != 0;
     }
 
-void INFORecord::SetBeginScriptFlagMask(UINT16 Mask)
+void INFORecord::SetBeginScriptFlagMask(uint16_t Mask)
     {
     BeginSCHR.value.flags = Mask;
     }
@@ -471,12 +471,12 @@ void INFORecord::IsEndScriptEnabled(bool value)
     SETBIT(EndSCHR.value.flags, fIsEnabled, value);
     }
 
-bool INFORecord::IsEndScriptFlagMask(UINT16 Mask, bool Exact)
+bool INFORecord::IsEndScriptFlagMask(uint16_t Mask, bool Exact)
     {
     return Exact ? (EndSCHR.value.flags & Mask) == Mask : (EndSCHR.value.flags & Mask) != 0;
     }
 
-void INFORecord::SetEndScriptFlagMask(UINT16 Mask)
+void INFORecord::SetEndScriptFlagMask(uint16_t Mask)
     {
     EndSCHR.value.flags = Mask;
     }
@@ -561,12 +561,12 @@ void INFORecord::IsRadio(bool value)
     DATA.value.dialType = value ? eRadio : eTopic;
     }
 
-bool INFORecord::IsDialogType(UINT8 Type)
+bool INFORecord::IsDialogType(uint8_t Type)
     {
     return DATA.value.dialType == Type;
     }
 
-void INFORecord::SetDialogType(UINT8 Type)
+void INFORecord::SetDialogType(uint8_t Type)
     {
     DATA.value.dialType = Type;
     }
@@ -601,12 +601,12 @@ void INFORecord::IsEither(bool value)
     DATA.value.nextSpeaker = value ? eEither : eTarget;
     }
 
-bool INFORecord::IsSpeakerType(UINT8 Type)
+bool INFORecord::IsSpeakerType(uint8_t Type)
     {
     return DATA.value.nextSpeaker == Type;
     }
 
-void INFORecord::SetSpeakerType(UINT8 Type)
+void INFORecord::SetSpeakerType(uint8_t Type)
     {
     DATA.value.nextSpeaker = Type;
     }
@@ -671,12 +671,12 @@ void INFORecord::IsVeryHard(bool value)
     DNAM.value = value ? eVeryHard : eNone;
     }
 
-bool INFORecord::IsDifficultyType(UINT8 Type)
+bool INFORecord::IsDifficultyType(uint8_t Type)
     {
     return DNAM.value == Type;
     }
 
-void INFORecord::SetDifficultyType(UINT8 Type)
+void INFORecord::SetDifficultyType(uint8_t Type)
     {
     DNAM.value = Type;
     }
@@ -711,12 +711,12 @@ void INFORecord::IsBeginEffect(bool value)
     BeginSCHR.value.scriptType = value ? eEffect : eObject;
     }
 
-bool INFORecord::IsBeginType(UINT16 Type)
+bool INFORecord::IsBeginType(uint16_t Type)
     {
     return BeginSCHR.value.scriptType == Type;
     }
 
-void INFORecord::SetBeginType(UINT16 Type)
+void INFORecord::SetBeginType(uint16_t Type)
     {
     BeginSCHR.value.scriptType = Type;
     }
@@ -751,45 +751,45 @@ void INFORecord::IsEndEffect(bool value)
     EndSCHR.value.scriptType = value ? eEffect : eObject;
     }
 
-bool INFORecord::IsEndType(UINT16 Type)
+bool INFORecord::IsEndType(uint16_t Type)
     {
     return EndSCHR.value.scriptType == Type;
     }
 
-void INFORecord::SetEndType(UINT16 Type)
+void INFORecord::SetEndType(uint16_t Type)
     {
     EndSCHR.value.scriptType = Type;
     }
 
-UINT32 INFORecord::GetType()
+uint32_t INFORecord::GetType()
     {
     return REV32(INFO);
     }
 
-STRING INFORecord::GetStrType()
+char * INFORecord::GetStrType()
     {
     return "INFO";
     }
 
-SINT32 INFORecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk)
+int32_t INFORecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk)
     {
-    UINT32 subType = 0;
-    UINT32 subSize = 0;
-    UINT32 lastChunk = REV32(NONE);
+    uint32_t subType = 0;
+    uint32_t subSize = 0;
+    uint32_t lastChunk = REV32(NONE);
     while(buffer < end_buffer){
-        subType = *(UINT32 *)buffer;
+        subType = *(uint32_t *)buffer;
         buffer += 4;
         switch(subType)
             {
             case REV32(XXXX):
                 buffer += 2;
-                subSize = *(UINT32 *)buffer;
+                subSize = *(uint32_t *)buffer;
                 buffer += 4;
-                subType = *(UINT32 *)buffer;
+                subType = *(uint32_t *)buffer;
                 buffer += 6;
                 break;
             default:
-                subSize = *(UINT16 *)buffer;
+                subSize = *(uint16_t *)buffer;
                 buffer += 2;
                 break;
             }
@@ -1011,7 +1011,7 @@ SINT32 INFORecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer,
     return 0;
     }
 
-SINT32 INFORecord::Unload()
+int32_t INFORecord::Unload()
     {
     IsChanged(false);
     IsLoaded(false);
@@ -1044,7 +1044,7 @@ SINT32 INFORecord::Unload()
     return 1;
     }
 
-SINT32 INFORecord::WriteRecord(FileWriter &writer)
+int32_t INFORecord::WriteRecord(FileWriter &writer)
     {
     WRITE(DATA);
     WRITE(QSTI);
@@ -1056,9 +1056,9 @@ SINT32 INFORecord::WriteRecord(FileWriter &writer)
     WRITE(TCLT);
     WRITE(TCLF);
     WRITE(TCFU);
-    BeginSCHR.value.numRefs = (UINT32)BeginSCR_.value.size(); //Just to ensure that the value is correct
+    BeginSCHR.value.numRefs = (uint32_t)BeginSCR_.value.size(); //Just to ensure that the value is correct
     BeginSCHR.value.compiledSize = BeginSCDA.GetSize(); //Just to ensure that the value is correct
-    //for(UINT32 x = 0; x < BeginVARS.value.size(); ++x) //Just to ensure that the value is correct
+    //for(uint32_t x = 0; x < BeginVARS.value.size(); ++x) //Just to ensure that the value is correct
     //    BeginSCHR.value.lastIndex = (BeginSCHR.value.lastIndex > BeginVARS.value[x]->SLSD.value.index) ? BeginSCHR.value.lastIndex : BeginVARS.value[x]->SLSD.value.index;
     WRITEAS(BeginSCHR,SCHR);
     WRITEAS(BeginSCDA,SCDA);
@@ -1066,9 +1066,9 @@ SINT32 INFORecord::WriteRecord(FileWriter &writer)
     BeginVARS.Write(writer);
     BeginSCR_.Write(writer, true);
     WRITEEMPTY(NEXT);
-    EndSCHR.value.numRefs = (UINT32)EndSCR_.value.size(); //Just to ensure that the value is correct
+    EndSCHR.value.numRefs = (uint32_t)EndSCR_.value.size(); //Just to ensure that the value is correct
     EndSCHR.value.compiledSize = EndSCDA.GetSize(); //Just to ensure that the value is correct
-    //for(UINT32 x = 0; x < EndVARS.value.size(); ++x) //Just to ensure that the value is correct
+    //for(uint32_t x = 0; x < EndVARS.value.size(); ++x) //Just to ensure that the value is correct
     //    EndSCHR.value.lastIndex = (EndSCHR.value.lastIndex > EndVARS.value[x]->SLSD.value.index) ? EndSCHR.value.lastIndex : EndVARS.value[x]->SLSD.value.index;
     WRITEAS(EndSCHR,SCHR);
     WRITEAS(EndSCDA,SCDA);

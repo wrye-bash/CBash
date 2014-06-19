@@ -90,14 +90,14 @@ bool NOTERecord::VisitFormIDs(FormIDOp &op)
 
     if(MODL.IsLoaded())
         {
-        for(UINT32 x = 0; x < MODL->Textures.MODS.size(); x++)
+        for(uint32_t x = 0; x < MODL->Textures.MODS.size(); x++)
             op.Accept(MODL->Textures.MODS[x]->texture);
         }
     if(YNAM.IsLoaded())
         op.Accept(YNAM.value);
     if(ZNAM.IsLoaded())
         op.Accept(ZNAM.value);
-    for(UINT32 x = 0; x < ONAM.value.size(); x++)
+    for(uint32_t x = 0; x < ONAM.value.size(); x++)
         op.Accept(ONAM.value[x]);
 
     if(IsVoice() && TNAMAlt.IsLoaded())
@@ -148,44 +148,44 @@ void NOTERecord::IsVoice(bool value)
     DATA.value = value ? eVoice : eSound;
     }
 
-bool NOTERecord::IsType(UINT8 Type)
+bool NOTERecord::IsType(uint8_t Type)
     {
     return DATA.value == Type;
     }
 
-void NOTERecord::SetType(UINT8 Type)
+void NOTERecord::SetType(uint8_t Type)
     {
     DATA.value = Type;
     }
 
-UINT32 NOTERecord::GetType()
+uint32_t NOTERecord::GetType()
     {
     return REV32(NOTE);
     }
 
-STRING NOTERecord::GetStrType()
+char * NOTERecord::GetStrType()
     {
     return "NOTE";
     }
 
-SINT32 NOTERecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk)
+int32_t NOTERecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk)
     {
-    UINT32 subType = 0;
-    UINT32 subSize = 0;
+    uint32_t subType = 0;
+    uint32_t subSize = 0;
     while(buffer < end_buffer){
-        subType = *(UINT32 *)buffer;
+        subType = *(uint32_t *)buffer;
         buffer += 4;
         switch(subType)
             {
             case REV32(XXXX):
                 buffer += 2;
-                subSize = *(UINT32 *)buffer;
+                subSize = *(uint32_t *)buffer;
                 buffer += 4;
-                subType = *(UINT32 *)buffer;
+                subType = *(uint32_t *)buffer;
                 buffer += 6;
                 break;
             default:
-                subSize = *(UINT16 *)buffer;
+                subSize = *(uint16_t *)buffer;
                 buffer += 2;
                 break;
             }
@@ -263,7 +263,7 @@ SINT32 NOTERecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer,
     return 0;
     }
 
-SINT32 NOTERecord::Unload()
+int32_t NOTERecord::Unload()
     {
     IsChanged(false);
     IsLoaded(false);
@@ -285,7 +285,7 @@ SINT32 NOTERecord::Unload()
     return 1;
     }
 
-SINT32 NOTERecord::WriteRecord(FileWriter &writer)
+int32_t NOTERecord::WriteRecord(FileWriter &writer)
     {
     WRITE(EDID);
     WRITE(OBND);

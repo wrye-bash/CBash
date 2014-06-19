@@ -37,16 +37,16 @@
 
 #include "PropertyFloat.h"
 
-UINT32 PropertyFloat::GetSize() const
+uint32_t PropertyFloat::GetSize() const
 {
     // common + value
-    return Property::GetSize() + sizeof(FLOAT32);
+    return Property::GetSize() + sizeof(float);
 }
 
-void PropertyFloat::Read(unsigned char *&buffer, const SINT16 &version, const SINT16 &objFormat, const bool &CompressedOnDisk)
+void PropertyFloat::Read(unsigned char *&buffer, const int16_t &version, const int16_t &objFormat, const bool &CompressedOnDisk)
 {
     Property::Read(buffer, version, objFormat, CompressedOnDisk);
-    value = *(FLOAT32 *)buffer;
+    value = *(float *)buffer;
     buffer += 4;
 }
 
@@ -85,28 +85,28 @@ PropertyFloat & PropertyFloat::operator = (const PropertyFloat &other)
     return *this;
 }
 
-UINT32 PropertyFloatArray::GetSize() const
+uint32_t PropertyFloatArray::GetSize() const
 {
     // common + itemCount + items
-    return Property::GetSize() + sizeof(UINT32) + (size() * sizeof(FLOAT32));
+    return Property::GetSize() + sizeof(uint32_t) + (size() * sizeof(float));
 }
 
-void PropertyFloatArray::Read(unsigned char *&buffer, const SINT16 &version, const SINT16 &objFormat, const bool &CompressedOnDisk)
+void PropertyFloatArray::Read(unsigned char *&buffer, const int16_t &version, const int16_t &objFormat, const bool &CompressedOnDisk)
 {
-    UINT32 count = *(UINT32 *)buffer;
+    uint32_t count = *(uint32_t *)buffer;
     buffer += 4;
 
     resize(count);
-    memcpy(&((*this)[0]), buffer, count * sizeof(FLOAT32));
-    buffer += count * sizeof(FLOAT32);
+    memcpy(&((*this)[0]), buffer, count * sizeof(float));
+    buffer += count * sizeof(float);
 }
 
 void PropertyFloatArray::Write(FileWriter &writer)
 {
     Property::Write(writer);
-    UINT32 count = size();
+    uint32_t count = size();
     writer.record_write(&count, sizeof(count));
-    writer.record_write(&((*this)[0]), count * sizeof(FLOAT32));
+    writer.record_write(&((*this)[0]), count * sizeof(float));
 }
 
 bool PropertyFloatArray::equals(const Property *other) const
@@ -116,7 +116,7 @@ bool PropertyFloatArray::equals(const Property *other) const
         const PropertyFloatArray *o = reinterpret_cast<const PropertyFloatArray *>(other);
         if (size() != o->size())
             return false;
-        return memcmp(&((*this)[0]), &((*o)[0]), size() * sizeof(FLOAT32)) == 0;
+        return memcmp(&((*this)[0]), &((*o)[0]), size() * sizeof(float)) == 0;
     }
     catch (...)
     {

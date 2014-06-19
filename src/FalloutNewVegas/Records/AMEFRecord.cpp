@@ -142,13 +142,13 @@ bool AMEFRecord::IsFatigue()
     return (DATA->type == eFatigue);
     }
 
-bool AMEFRecord::IsModType(UINT32 Type)
+bool AMEFRecord::IsModType(uint32_t Type)
     {
     if (!DATA.IsLoaded()) return false;
     return (DATA->type == Type);
     }
 
-void AMEFRecord::SetModType(UINT32 Type)
+void AMEFRecord::SetModType(uint32_t Type)
     {
     DATA.Load();
     DATA->type = Type;
@@ -172,46 +172,46 @@ bool AMEFRecord::IsSubtract()
     return (DATA->op == eSubtract);
     }
 
-bool AMEFRecord::IsOpType(UINT32 Type)
+bool AMEFRecord::IsOpType(uint32_t Type)
     {
     if (!DATA.IsLoaded()) return false;
     return (DATA->op == Type);
     }
 
-void AMEFRecord::SetOpType(UINT32 Type)
+void AMEFRecord::SetOpType(uint32_t Type)
     {
     DATA.Load();
     DATA->op = Type;
     }
 
-UINT32 AMEFRecord::GetType()
+uint32_t AMEFRecord::GetType()
     {
     return REV32(AMEF);
     }
 
-STRING AMEFRecord::GetStrType()
+char * AMEFRecord::GetStrType()
     {
     return "AMEF";
     }
 
-SINT32 AMEFRecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk)
+int32_t AMEFRecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk)
     {
-    UINT32 subType = 0;
-    UINT32 subSize = 0;
+    uint32_t subType = 0;
+    uint32_t subSize = 0;
     while(buffer < end_buffer){
-        subType = *(UINT32 *)buffer;
+        subType = *(uint32_t *)buffer;
         buffer += 4;
         switch(subType)
             {
             case REV32(XXXX):
                 buffer += 2;
-                subSize = *(UINT32 *)buffer;
+                subSize = *(uint32_t *)buffer;
                 buffer += 4;
-                subType = *(UINT32 *)buffer;
+                subType = *(uint32_t *)buffer;
                 buffer += 6;
                 break;
             default:
-                subSize = *(UINT16 *)buffer;
+                subSize = *(uint16_t *)buffer;
                 buffer += 2;
                 break;
             }
@@ -238,7 +238,7 @@ SINT32 AMEFRecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer,
     return 0;
     }
 
-SINT32 AMEFRecord::Unload()
+int32_t AMEFRecord::Unload()
     {
     IsChanged(false);
     IsLoaded(false);
@@ -248,7 +248,7 @@ SINT32 AMEFRecord::Unload()
     return 1;
     }
 
-SINT32 AMEFRecord::WriteRecord(FileWriter &writer)
+int32_t AMEFRecord::WriteRecord(FileWriter &writer)
     {
     WRITE(EDID);
     WRITE(FULL);

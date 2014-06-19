@@ -83,13 +83,13 @@ void TXSTRecord::IsNoSpecularMap(bool value)
     *DNAM.value = value ? (*DNAM.value | fIsNoSpecularMap) : (*DNAM.value & ~fIsNoSpecularMap);
     }
 
-bool TXSTRecord::IsFlagMask(UINT16 Mask, bool Exact)
+bool TXSTRecord::IsFlagMask(uint16_t Mask, bool Exact)
     {
     if(!DNAM.IsLoaded()) return false;
     return Exact ? ((*DNAM.value & Mask) == Mask) : ((*DNAM.value & Mask) != 0);
     }
 
-void TXSTRecord::SetFlagMask(UINT16 Mask)
+void TXSTRecord::SetFlagMask(uint16_t Mask)
     {
     DNAM.Load();
     *DNAM.value = Mask;
@@ -128,46 +128,46 @@ void TXSTRecord::IsObjectAlphaTesting(bool value)
     DODT->flags = value ? (DODT->flags | fIsAlphaTesting) : (DODT->flags & ~fIsAlphaTesting);
     }
 
-bool TXSTRecord::IsObjectFlagMask(UINT8 Mask, bool Exact)
+bool TXSTRecord::IsObjectFlagMask(uint8_t Mask, bool Exact)
     {
     if(!DODT.IsLoaded()) return false;
     return Exact ? ((DODT->flags & Mask) == Mask) : ((DODT->flags & Mask) != 0);
     }
 
-void TXSTRecord::SetObjectFlagMask(UINT8 Mask)
+void TXSTRecord::SetObjectFlagMask(uint8_t Mask)
     {
     DODT.Load();
     DODT->flags = Mask;
     }
 
-UINT32 TXSTRecord::GetType()
+uint32_t TXSTRecord::GetType()
     {
     return REV32(TXST);
     }
 
-STRING TXSTRecord::GetStrType()
+char * TXSTRecord::GetStrType()
     {
     return "TXST";
     }
 
-SINT32 TXSTRecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk)
+int32_t TXSTRecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk)
     {
-    UINT32 subType = 0;
-    UINT32 subSize = 0;
+    uint32_t subType = 0;
+    uint32_t subSize = 0;
     while(buffer < end_buffer){
-        subType = *(UINT32 *)buffer;
+        subType = *(uint32_t *)buffer;
         buffer += 4;
         switch(subType)
             {
             case REV32(XXXX):
                 buffer += 2;
-                subSize = *(UINT32 *)buffer;
+                subSize = *(uint32_t *)buffer;
                 buffer += 4;
-                subType = *(UINT32 *)buffer;
+                subType = *(uint32_t *)buffer;
                 buffer += 6;
                 break;
             default:
-                subSize = *(UINT16 *)buffer;
+                subSize = *(uint16_t *)buffer;
                 buffer += 2;
                 break;
             }
@@ -223,7 +223,7 @@ SINT32 TXSTRecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer,
     return 0;
     }
 
-SINT32 TXSTRecord::Unload()
+int32_t TXSTRecord::Unload()
     {
     IsChanged(false);
     IsLoaded(false);
@@ -242,7 +242,7 @@ SINT32 TXSTRecord::Unload()
     return 1;
     }
 
-SINT32 TXSTRecord::WriteRecord(FileWriter &writer)
+int32_t TXSTRecord::WriteRecord(FileWriter &writer)
     {
     WRITE(EDID);
     WRITE(OBND);

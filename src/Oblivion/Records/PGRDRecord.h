@@ -47,7 +47,7 @@ class PGRDRecord : public Record
         //    unsigned short start, end;
         //    PGRDPGRR():start(0), end(0) {}
         //    #ifdef _DEBUG
-        //    void Debug(SINT32 debugLevel, size_t &indentation)
+        //    void Debug(int32_t debugLevel, size_t &indentation)
         //        {
         //        if(debugLevel > 3)
         //            {
@@ -64,9 +64,9 @@ class PGRDRecord : public Record
 
         struct PGRDPGRI
             {
-            UINT16  point;
-            UINT8   unused1[2];
-            FLOAT32 x, y, z;
+            uint16_t  point;
+            uint8_t   unused1[2];
+            float x, y, z;
 
             PGRDPGRI();
             ~PGRDPGRI();
@@ -77,7 +77,7 @@ class PGRDRecord : public Record
 
         struct PGRDPGRL
             {
-            UnorderedPackedArray<UINT32> points;
+            UnorderedPackedArray<uint32_t> points;
 
             PGRDPGRL();
             ~PGRDPGRL();
@@ -89,7 +89,7 @@ class PGRDRecord : public Record
             };
 
     public:
-        ReqSimpleSubRecord<UINT16> DATA; //Point Count
+        ReqSimpleSubRecord<uint16_t> DATA; //Point Count
         UnorderedPackedArray<GENPGRP> PGRP; //Points
         RawRecord PGAG; //Unknown
         RawRecord PGRR; //UnorderedPackedArray<PGRDPGRR> ? //Point-to-Point Connections
@@ -102,17 +102,17 @@ class PGRDRecord : public Record
 
         bool   VisitFormIDs(FormIDOp &op);
 
-        UINT32 GetFieldAttribute(DEFAULTED_FIELD_IDENTIFIERS, UINT32 WhichAttribute=0);
+        uint32_t GetFieldAttribute(DEFAULTED_FIELD_IDENTIFIERS, uint32_t WhichAttribute=0);
         void * GetField(DEFAULTED_FIELD_IDENTIFIERS, void **FieldValues=NULL);
-        bool   SetField(DEFAULTED_FIELD_IDENTIFIERS, void *FieldValue=NULL, UINT32 ArraySize=0);
+        bool   SetField(DEFAULTED_FIELD_IDENTIFIERS, void *FieldValue=NULL, uint32_t ArraySize=0);
         void   DeleteField(DEFAULTED_FIELD_IDENTIFIERS);
 
-        UINT32 GetType();
-        STRING GetStrType();
+        uint32_t GetType();
+        char * GetStrType();
 
-        SINT32 ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk=false);
-        SINT32 Unload();
-        SINT32 WriteRecord(FileWriter &writer);
+        int32_t ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk=false);
+        int32_t Unload();
+        int32_t WriteRecord(FileWriter &writer);
 
         bool operator ==(const PGRDRecord &other) const;
         bool operator !=(const PGRDRecord &other) const;

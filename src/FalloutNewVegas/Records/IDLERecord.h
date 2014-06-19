@@ -44,10 +44,10 @@ class IDLERecord : public FNVRecord //Idle Animation
     private:
         struct IDLEDATA
             {
-            UINT8   group, minLooping, maxLooping, unused1;
-            SINT16  replayDelay;
+            uint8_t   group, minLooping, maxLooping, unused1;
+            int16_t  replayDelay;
             //Below are not always present on chunk...
-            UINT8   flags, unused2;
+            uint8_t   flags, unused2;
 
             IDLEDATA();
             ~IDLEDATA();
@@ -96,8 +96,8 @@ class IDLERecord : public FNVRecord //Idle Animation
 
         bool   IsNoAttacking();
         void   IsNoAttacking(bool value);
-        bool   IsFlagMask(UINT8 Mask, bool Exact=false);
-        void   SetFlagMask(UINT8 Mask);
+        bool   IsFlagMask(uint8_t Mask, bool Exact=false);
+        void   SetFlagMask(uint8_t Mask);
 
         bool   IsIdle();
         void   IsIdle(bool value);
@@ -119,8 +119,8 @@ class IDLERecord : public FNVRecord //Idle Animation
         void   IsWholeBody(bool value);
         bool   IsUpperBody();
         void   IsUpperBody(bool value);
-        bool   IsType(UINT8 Type);
-        void   SetType(UINT8 Type);
+        bool   IsType(uint8_t Type);
+        void   SetType(uint8_t Type);
 
         bool   IsUnknown1();
         void   IsUnknown1(bool value);
@@ -128,20 +128,20 @@ class IDLERecord : public FNVRecord //Idle Animation
         void   IsNotReturnFile(bool value);
         bool   IsReturnFile();
         void   IsReturnFile(bool value);
-        bool   IsIdleFlagMask(UINT8 Mask, bool Exact=false);
-        void   SetIdleFlagMask(UINT8 Mask);
+        bool   IsIdleFlagMask(uint8_t Mask, bool Exact=false);
+        void   SetIdleFlagMask(uint8_t Mask);
 
-        UINT32 GetFieldAttribute(DEFAULTED_FIELD_IDENTIFIERS, UINT32 WhichAttribute=0);
+        uint32_t GetFieldAttribute(DEFAULTED_FIELD_IDENTIFIERS, uint32_t WhichAttribute=0);
         void * GetField(DEFAULTED_FIELD_IDENTIFIERS, void **FieldValues=NULL);
-        bool   SetField(DEFAULTED_FIELD_IDENTIFIERS, void *FieldValue=NULL, UINT32 ArraySize=0);
+        bool   SetField(DEFAULTED_FIELD_IDENTIFIERS, void *FieldValue=NULL, uint32_t ArraySize=0);
         void   DeleteField(DEFAULTED_FIELD_IDENTIFIERS);
 
-        UINT32 GetType();
-        STRING GetStrType();
+        uint32_t GetType();
+        char * GetStrType();
 
-        SINT32 ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk=false);
-        SINT32 Unload();
-        SINT32 WriteRecord(FileWriter &writer);
+        int32_t ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk=false);
+        int32_t Unload();
+        int32_t WriteRecord(FileWriter &writer);
 
         bool operator ==(const IDLERecord &other) const;
         bool operator !=(const IDLERecord &other) const;

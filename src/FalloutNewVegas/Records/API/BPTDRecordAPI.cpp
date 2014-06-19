@@ -38,7 +38,7 @@
 
 namespace FNV
 {
-UINT32 BPTDRecord::GetFieldAttribute(FIELD_IDENTIFIERS, UINT32 WhichAttribute)
+uint32_t BPTDRecord::GetFieldAttribute(FIELD_IDENTIFIERS, uint32_t WhichAttribute)
     {
     switch(FieldID)
         {
@@ -131,7 +131,7 @@ UINT32 BPTDRecord::GetFieldAttribute(FIELD_IDENTIFIERS, UINT32 WhichAttribute)
                     case 0: //fieldType
                         return LIST_FIELD;
                     case 1: //fieldSize
-                        return (UINT32)Parts.value.size();
+                        return (uint32_t)Parts.value.size();
                     default:
                         return UNKNOWN_FIELD;
                     }
@@ -379,12 +379,12 @@ void * BPTDRecord::GetField(FIELD_IDENTIFIERS, void **FieldValues)
     return NULL;
     }
 
-bool BPTDRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
+bool BPTDRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, uint32_t ArraySize)
     {
     switch(FieldID)
         {
         case 1: //flags1
-            SetHeaderFlagMask(*(UINT32 *)FieldValue);
+            SetHeaderFlagMask(*(uint32_t *)FieldValue);
             break;
         case 3: //versionControl1
             if(ArraySize != 4)
@@ -395,10 +395,10 @@ bool BPTDRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             ((UINT8ARRAY)&flagsUnk)[3] = ((UINT8ARRAY)FieldValue)[3];
             break;
         case 4: //eid
-            EDID.Copy((STRING)FieldValue);
+            EDID.Copy((char *)FieldValue);
             break;
         case 5: //formVersion
-            formVersion = *(UINT16 *)FieldValue;
+            formVersion = *(uint16_t *)FieldValue;
             break;
         case 6: //versionControl2
             if(ArraySize != 2)
@@ -408,11 +408,11 @@ bool BPTDRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             break;
         case 7: //modPath
             MODL.Load();
-            MODL->MODL.Copy((STRING)FieldValue);
+            MODL->MODL.Copy((char *)FieldValue);
             break;
         case 8: //modb
             MODL.Load();
-            MODL->MODB.value = *(FLOAT32 *)FieldValue;
+            MODL->MODB.value = *(float *)FieldValue;
             break;
         case 9: //modt_p
             MODL.Load();
@@ -436,16 +436,16 @@ bool BPTDRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
                     MODL->Textures.MODS[ListIndex]->name = NULL;
                     if(FieldValue != NULL)
                         {
-                        ArraySize = (UINT32)strlen((STRING)FieldValue) + 1;
+                        ArraySize = (uint32_t)strlen((char *)FieldValue) + 1;
                         MODL->Textures.MODS[ListIndex]->name = new char[ArraySize];
-                        strcpy_s(MODL->Textures.MODS[ListIndex]->name, ArraySize, (STRING)FieldValue);
+                        strcpy_s(MODL->Textures.MODS[ListIndex]->name, ArraySize, (char *)FieldValue);
                         }
                     break;
                 case 2: //texture
                     MODL->Textures.MODS[ListIndex]->texture = *(FORMID *)FieldValue;
                     return true;
                 case 3: //index
-                    MODL->Textures.MODS[ListIndex]->index = *(SINT32 *)FieldValue;
+                    MODL->Textures.MODS[ListIndex]->index = *(int32_t *)FieldValue;
                     break;
                 default:
                     break;
@@ -453,7 +453,7 @@ bool BPTDRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             break;
         case 11: //modelFlags
             MODL.Load();
-            MODL->SetFlagMask(*(UINT8 *)FieldValue);
+            MODL->SetFlagMask(*(uint8_t *)FieldValue);
             break;
         case 12: //parts
             if(ListFieldID == 0) //partsSize
@@ -468,40 +468,40 @@ bool BPTDRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             switch(ListFieldID)
                 {
                 case 1: //name
-                    Parts.value[ListIndex]->BPTN.Copy((STRING)FieldValue);
+                    Parts.value[ListIndex]->BPTN.Copy((char *)FieldValue);
                     break;
                 case 2: //node
-                    Parts.value[ListIndex]->BPNN.Copy((STRING)FieldValue);
+                    Parts.value[ListIndex]->BPNN.Copy((char *)FieldValue);
                     break;
                 case 3: //vats
-                    Parts.value[ListIndex]->BPNT.Copy((STRING)FieldValue);
+                    Parts.value[ListIndex]->BPNT.Copy((char *)FieldValue);
                     break;
                 case 4: //IKData
-                    Parts.value[ListIndex]->BPNI.Copy((STRING)FieldValue);
+                    Parts.value[ListIndex]->BPNI.Copy((char *)FieldValue);
                     break;
                 case 5: //damageMult
-                    Parts.value[ListIndex]->BPND.value.damageMult = *(FLOAT32 *)FieldValue;
+                    Parts.value[ListIndex]->BPND.value.damageMult = *(float *)FieldValue;
                     break;
                 case 6: //flags
-                    Parts.value[ListIndex]->SetFlagMask(*(UINT8 *)FieldValue);
+                    Parts.value[ListIndex]->SetFlagMask(*(uint8_t *)FieldValue);
                     break;
                 case 7: //partType
-                    Parts.value[ListIndex]->SetType(*(UINT8 *)FieldValue);
+                    Parts.value[ListIndex]->SetType(*(uint8_t *)FieldValue);
                     break;
                 case 8: //healthPercent
-                    Parts.value[ListIndex]->BPND.value.healthPercent = *(UINT8 *)FieldValue;
+                    Parts.value[ListIndex]->BPND.value.healthPercent = *(uint8_t *)FieldValue;
                     break;
                 case 9: //actorValue
-                    Parts.value[ListIndex]->BPND.value.actorValue = *(SINT8 *)FieldValue;
+                    Parts.value[ListIndex]->BPND.value.actorValue = *(int8_t *)FieldValue;
                     break;
                 case 10: //hitChance
-                    Parts.value[ListIndex]->BPND.value.hitChance = *(UINT8 *)FieldValue;
+                    Parts.value[ListIndex]->BPND.value.hitChance = *(uint8_t *)FieldValue;
                     break;
                 case 11: //explodableExplosionChance
-                    Parts.value[ListIndex]->BPND.value.explodableExplosionChance = *(UINT8 *)FieldValue;
+                    Parts.value[ListIndex]->BPND.value.explodableExplosionChance = *(uint8_t *)FieldValue;
                     break;
                 case 12: //explodableDebrisCount
-                    Parts.value[ListIndex]->BPND.value.explodableDebrisCount = *(UINT16 *)FieldValue;
+                    Parts.value[ListIndex]->BPND.value.explodableDebrisCount = *(uint16_t *)FieldValue;
                     break;
                 case 13: //explodableDebris
                     Parts.value[ListIndex]->BPND.value.explodableDebris = *(FORMID *)FieldValue;
@@ -510,13 +510,13 @@ bool BPTDRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
                     Parts.value[ListIndex]->BPND.value.explodableExplosion = *(FORMID *)FieldValue;
                     return true;
                 case 15: //maxTrackAngle
-                    Parts.value[ListIndex]->BPND.value.maxTrackAngle = *(FLOAT32 *)FieldValue;
+                    Parts.value[ListIndex]->BPND.value.maxTrackAngle = *(float *)FieldValue;
                     break;
                 case 16: //explodableDebrisScale
-                    Parts.value[ListIndex]->BPND.value.explodableDebrisScale = *(FLOAT32 *)FieldValue;
+                    Parts.value[ListIndex]->BPND.value.explodableDebrisScale = *(float *)FieldValue;
                     break;
                 case 17: //severableDebrisCount
-                    Parts.value[ListIndex]->BPND.value.severableDebrisCount = *(SINT32 *)FieldValue;
+                    Parts.value[ListIndex]->BPND.value.severableDebrisCount = *(int32_t *)FieldValue;
                     break;
                 case 18: //severableDebris
                     Parts.value[ListIndex]->BPND.value.severableDebris = *(FORMID *)FieldValue;
@@ -525,25 +525,25 @@ bool BPTDRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
                     Parts.value[ListIndex]->BPND.value.severableExplosion = *(FORMID *)FieldValue;
                     return true;
                 case 20: //severableDebrisScale
-                    Parts.value[ListIndex]->BPND.value.severableDebrisScale = *(FLOAT32 *)FieldValue;
+                    Parts.value[ListIndex]->BPND.value.severableDebrisScale = *(float *)FieldValue;
                     break;
                 case 21: //transX
-                    Parts.value[ListIndex]->BPND.value.transX = *(FLOAT32 *)FieldValue;
+                    Parts.value[ListIndex]->BPND.value.transX = *(float *)FieldValue;
                     break;
                 case 22: //transY
-                    Parts.value[ListIndex]->BPND.value.transY = *(FLOAT32 *)FieldValue;
+                    Parts.value[ListIndex]->BPND.value.transY = *(float *)FieldValue;
                     break;
                 case 23: //transZ
-                    Parts.value[ListIndex]->BPND.value.transZ = *(FLOAT32 *)FieldValue;
+                    Parts.value[ListIndex]->BPND.value.transZ = *(float *)FieldValue;
                     break;
                 case 24: //rotX
-                    Parts.value[ListIndex]->BPND.value.rotX = *(FLOAT32 *)FieldValue;
+                    Parts.value[ListIndex]->BPND.value.rotX = *(float *)FieldValue;
                     break;
                 case 25: //rotY
-                    Parts.value[ListIndex]->BPND.value.rotY = *(FLOAT32 *)FieldValue;
+                    Parts.value[ListIndex]->BPND.value.rotY = *(float *)FieldValue;
                     break;
                 case 26: //rotZ
-                    Parts.value[ListIndex]->BPND.value.rotZ = *(FLOAT32 *)FieldValue;
+                    Parts.value[ListIndex]->BPND.value.rotZ = *(float *)FieldValue;
                     break;
                 case 27: //severableImpact
                     Parts.value[ListIndex]->BPND.value.severableImpact = *(FORMID *)FieldValue;
@@ -552,10 +552,10 @@ bool BPTDRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
                     Parts.value[ListIndex]->BPND.value.explodableImpact = *(FORMID *)FieldValue;
                     return true;
                 case 29: //severableDecalCount
-                    Parts.value[ListIndex]->BPND.value.severableDecalCount = *(UINT8 *)FieldValue;
+                    Parts.value[ListIndex]->BPND.value.severableDecalCount = *(uint8_t *)FieldValue;
                     break;
                 case 30: //explodableDecalCount
-                    Parts.value[ListIndex]->BPND.value.explodableDecalCount = *(UINT8 *)FieldValue;
+                    Parts.value[ListIndex]->BPND.value.explodableDecalCount = *(uint8_t *)FieldValue;
                     break;
                 case 31: //unused1
                     if(ArraySize != 2)
@@ -564,13 +564,13 @@ bool BPTDRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
                     Parts.value[ListIndex]->BPND.value.unused1[1] = ((UINT8ARRAY)FieldValue)[1];
                     break;
                 case 32: //limbReplaceScale
-                    Parts.value[ListIndex]->BPND.value.limbReplaceScale = *(FLOAT32 *)FieldValue;
+                    Parts.value[ListIndex]->BPND.value.limbReplaceScale = *(float *)FieldValue;
                     break;
                 case 33: //limbReplaceModPath
-                    Parts.value[ListIndex]->NAM1.Copy((STRING)FieldValue);
+                    Parts.value[ListIndex]->NAM1.Copy((char *)FieldValue);
                     break;
                 case 34: //goreBone
-                    Parts.value[ListIndex]->NAM4.Copy((STRING)FieldValue);
+                    Parts.value[ListIndex]->NAM4.Copy((char *)FieldValue);
                     break;
                 case 35: //nam5_p
                     Parts.value[ListIndex]->NAM5.Copy((UINT8ARRAY)FieldValue, ArraySize);

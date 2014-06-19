@@ -44,23 +44,23 @@ class BPTDRecord : public FNVRecord //Body Part Data
     private:
         struct BPTDBPND
             {
-            FLOAT32 damageMult;
-            UINT8   flags, partType, healthPercent;
-            SINT8   actorValue;
-            UINT8   hitChance, explodableExplosionChance;
-            UINT16  explodableDebrisCount;
+            float damageMult;
+            uint8_t   flags, partType, healthPercent;
+            int8_t   actorValue;
+            uint8_t   hitChance, explodableExplosionChance;
+            uint16_t  explodableDebrisCount;
             FORMID  explodableDebris, explodableExplosion;
-            FLOAT32 maxTrackAngle, explodableDebrisScale;
-            SINT32  severableDebrisCount;
+            float maxTrackAngle, explodableDebrisScale;
+            int32_t  severableDebrisCount;
             FORMID  severableDebris, severableExplosion;
-            FLOAT32 severableDebrisScale;
+            float severableDebrisScale;
 
             //Gore Positioning
-            FLOAT32 transX, transY, transZ, rotX, rotY, rotZ;
+            float transX, transY, transZ, rotX, rotY, rotZ;
 
             FORMID  severableImpact, explodableImpact;
-            UINT8   severableDecalCount, explodableDecalCount, unused1[2];
-            FLOAT32 limbReplaceScale;
+            uint8_t   severableDecalCount, explodableDecalCount, unused1[2];
+            float limbReplaceScale;
 
             BPTDBPND();
             ~BPTDBPND();
@@ -124,8 +124,8 @@ class BPTDRecord : public FNVRecord //Body Part Data
             void   IsIKDataHeadTracking(bool value);
             bool   IsAbsoluteHitChance();
             void   IsAbsoluteHitChance(bool value);
-            bool   IsFlagMask(UINT8 Mask, bool Exact=false);
-            void   SetFlagMask(UINT8 Mask);
+            bool   IsFlagMask(uint8_t Mask, bool Exact=false);
+            void   SetFlagMask(uint8_t Mask);
 
             bool   IsTorso();
             void   IsTorso(bool value);
@@ -157,8 +157,8 @@ class BPTDRecord : public FNVRecord //Body Part Data
             void   IsBrain(bool value);
             bool   IsWeapon();
             void   IsWeapon(bool value);
-            bool   IsType(UINT8 Type);
-            void   SetType(UINT8 Type);
+            bool   IsType(uint8_t Type);
+            void   SetType(uint8_t Type);
 
             void Write(FileWriter &writer);
 
@@ -178,17 +178,17 @@ class BPTDRecord : public FNVRecord //Body Part Data
 
         bool   VisitFormIDs(FormIDOp &op);
 
-        UINT32 GetFieldAttribute(DEFAULTED_FIELD_IDENTIFIERS, UINT32 WhichAttribute=0);
+        uint32_t GetFieldAttribute(DEFAULTED_FIELD_IDENTIFIERS, uint32_t WhichAttribute=0);
         void * GetField(DEFAULTED_FIELD_IDENTIFIERS, void **FieldValues=NULL);
-        bool   SetField(DEFAULTED_FIELD_IDENTIFIERS, void *FieldValue=NULL, UINT32 ArraySize=0);
+        bool   SetField(DEFAULTED_FIELD_IDENTIFIERS, void *FieldValue=NULL, uint32_t ArraySize=0);
         void   DeleteField(DEFAULTED_FIELD_IDENTIFIERS);
 
-        UINT32 GetType();
-        STRING GetStrType();
+        uint32_t GetType();
+        char * GetStrType();
 
-        SINT32 ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk = false);
-        SINT32 Unload();
-        SINT32 WriteRecord(FileWriter &writer);
+        int32_t ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk = false);
+        int32_t Unload();
+        int32_t WriteRecord(FileWriter &writer);
 
         bool operator ==(const BPTDRecord &other) const;
         bool operator !=(const BPTDRecord &other) const;

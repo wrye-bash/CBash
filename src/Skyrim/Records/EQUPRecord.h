@@ -45,7 +45,7 @@ class EQUPRecord : public TES5Record // Word of Power Record
     public:
         StringRecord EDID; // Editor ID
         UnorderedPackedArray<FORMID> PNAM; // Slot Parents
-        SimpleSubRecord<UINT32> DATA; // Use All Parents
+        SimpleSubRecord<uint32_t> DATA; // Use All Parents
 
         EQUPRecord(unsigned char *_recData=NULL);
         EQUPRecord(EQUPRecord *srcRecord);
@@ -54,17 +54,17 @@ class EQUPRecord : public TES5Record // Word of Power Record
         bool IsUseAllParents() const;
         void IsUseAllParents(bool value);
 
-        UINT32 GetFieldAttribute(DEFAULTED_FIELD_IDENTIFIERS, UINT32 WhichAttribute=0);
+        uint32_t GetFieldAttribute(DEFAULTED_FIELD_IDENTIFIERS, uint32_t WhichAttribute=0);
         void * GetField(DEFAULTED_FIELD_IDENTIFIERS, void **FieldValues=NULL);
-        bool   SetField(DEFAULTED_FIELD_IDENTIFIERS, void *FieldValue=NULL, UINT32 ArraySize=0);
+        bool   SetField(DEFAULTED_FIELD_IDENTIFIERS, void *FieldValue=NULL, uint32_t ArraySize=0);
         void   DeleteField(DEFAULTED_FIELD_IDENTIFIERS);
 
-        UINT32 GetType();
-        STRING GetStrType();
+        uint32_t GetType();
+        char * GetStrType();
 
-        SINT32 ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk=false);
-        SINT32 Unload();
-        SINT32 WriteRecord(FileWriter &writer);
+        int32_t ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk=false);
+        int32_t Unload();
+        int32_t WriteRecord(FileWriter &writer);
 
         bool operator ==(const EQUPRecord &other) const;
         bool operator !=(const EQUPRecord &other) const;

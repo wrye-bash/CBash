@@ -38,7 +38,7 @@
 
 namespace FNV
 {
-UINT32 GMSTRecord::GetFieldAttribute(FIELD_IDENTIFIERS, UINT32 WhichAttribute)
+uint32_t GMSTRecord::GetFieldAttribute(FIELD_IDENTIFIERS, uint32_t WhichAttribute)
     {
     switch(FieldID)
         {
@@ -137,12 +137,12 @@ void * GMSTRecord::GetField(FIELD_IDENTIFIERS, void **FieldValues)
     return NULL;
     }
 
-bool GMSTRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
+bool GMSTRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, uint32_t ArraySize)
     {
     switch(FieldID)
         {
         case 1: //flags1
-            SetHeaderFlagMask(*(UINT32 *)FieldValue);
+            SetHeaderFlagMask(*(uint32_t *)FieldValue);
             break;
         case 3: //versionControl1
             if(ArraySize != 4)
@@ -153,10 +153,10 @@ bool GMSTRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             ((UINT8ARRAY)&flagsUnk)[3] = ((UINT8ARRAY)FieldValue)[3];
             break;
         case 4: //eid
-            EDID.Copy((STRING)FieldValue);
+            EDID.Copy((char *)FieldValue);
             break;
         case 5: //formVersion
-            formVersion = *(UINT16 *)FieldValue;
+            formVersion = *(uint16_t *)FieldValue;
             break;
         case 6: //versionControl2
             if(ArraySize != 2)
@@ -171,16 +171,16 @@ bool GMSTRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
                     if(FieldValue != NULL)
                         {
                         delete []DATA.s;
-                        ArraySize = (UINT32)strlen((STRING)FieldValue) + 1;
+                        ArraySize = (uint32_t)strlen((char *)FieldValue) + 1;
                         DATA.s = new char[ArraySize];
-                        strcpy_s(DATA.s, ArraySize, (STRING)FieldValue);
+                        strcpy_s(DATA.s, ArraySize, (char *)FieldValue);
                         }
                     break;
                 case 'i':
-                    DATA.i = *(SINT32 *)FieldValue;
+                    DATA.i = *(int32_t *)FieldValue;
                     break;
                 case 'f':
-                    DATA.f = *(FLOAT32 *)FieldValue;
+                    DATA.f = *(float *)FieldValue;
                     break;
                 default:
                     break;
@@ -195,7 +195,7 @@ bool GMSTRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
 void GMSTRecord::DeleteField(FIELD_IDENTIFIERS)
     {
     GMSTDATA defaultDATA;
-    UINT32 ArraySize = 0;
+    uint32_t ArraySize = 0;
 
     switch(FieldID)
         {
@@ -223,7 +223,7 @@ void GMSTRecord::DeleteField(FIELD_IDENTIFIERS)
                     DATA.s = defaultDATA.s;
                     if(defaultDATA.s != NULL)
                         {
-                        ArraySize = (UINT32)strlen(defaultDATA.s) + 1;
+                        ArraySize = (uint32_t)strlen(defaultDATA.s) + 1;
                         DATA.s = new char[ArraySize];
                         strcpy_s(DATA.s, ArraySize, defaultDATA.s);
                         }

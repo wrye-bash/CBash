@@ -185,7 +185,7 @@ bool PACKRecord::VisitFormIDs(FormIDOp &op)
     if(PTDT.IsLoaded() && PTDT->targetType != 2)
         op.Accept(PTDT->targetId);
 
-    for(UINT32 ListIndex = 0; ListIndex < CTDA.value.size(); ListIndex++)
+    for(uint32_t ListIndex = 0; ListIndex < CTDA.value.size(); ListIndex++)
         CTDA.value[ListIndex]->VisitFormIDs(op);
 
     return op.Stop();
@@ -401,12 +401,12 @@ void PACKRecord::IsNoIdleAnims(bool value)
     SETBIT(PKDT.value.flags, fIsNoIdleAnims, value);
     }
 
-bool PACKRecord::IsFlagMask(UINT32 Mask, bool Exact)
+bool PACKRecord::IsFlagMask(uint32_t Mask, bool Exact)
     {
     return Exact ? ((PKDT.value.flags & Mask) == Mask) : ((PKDT.value.flags & Mask) != 0);
     }
 
-void PACKRecord::SetFlagMask(UINT32 Mask)
+void PACKRecord::SetFlagMask(uint32_t Mask)
     {
     PKDT.value.flags = Mask;
     }
@@ -567,12 +567,12 @@ void PACKRecord::IsAICastMagic(bool value)
         PKDT.value.aiType = eAIFind;
     }
 
-bool PACKRecord::IsAIType(UINT8 Type)
+bool PACKRecord::IsAIType(uint8_t Type)
     {
     return (PKDT.value.aiType == Type);
     }
 
-void PACKRecord::SetAIType(UINT8 Type)
+void PACKRecord::SetAIType(uint8_t Type)
     {
     PKDT.value.aiType = Type;
     }
@@ -661,12 +661,12 @@ void PACKRecord::IsLocObjectType(bool value)
         PLDT->locType = eLocNearReference;
     }
 
-bool PACKRecord::IsLocType(SINT32 Type)
+bool PACKRecord::IsLocType(int32_t Type)
     {
     return PLDT.IsLoaded() ? (PLDT->locType == Type) : false;
     }
 
-void PACKRecord::SetLocType(SINT32 Type)
+void PACKRecord::SetLocType(int32_t Type)
     {
     PLDT.Load();
     PLDT->locType = Type;
@@ -714,45 +714,45 @@ void PACKRecord::IsTargetObjectType(bool value)
         PTDT->targetType = eTargetReference;
     }
 
-bool PACKRecord::IsTargetType(SINT32 Type)
+bool PACKRecord::IsTargetType(int32_t Type)
     {
     return PTDT.IsLoaded() ? (PTDT->targetType == Type) : false;
     }
 
-void PACKRecord::SetTargetType(SINT32 Type)
+void PACKRecord::SetTargetType(int32_t Type)
     {
     PTDT.Load();
     PTDT->targetType = Type;
     }
 
-UINT32 PACKRecord::GetType()
+uint32_t PACKRecord::GetType()
     {
     return REV32(PACK);
     }
 
-STRING PACKRecord::GetStrType()
+char * PACKRecord::GetStrType()
     {
     return "PACK";
     }
 
-SINT32 PACKRecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk)
+int32_t PACKRecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk)
     {
-    UINT32 subType = 0;
-    UINT32 subSize = 0;
+    uint32_t subType = 0;
+    uint32_t subSize = 0;
     while(buffer < end_buffer){
-        subType = *(UINT32 *)buffer;
+        subType = *(uint32_t *)buffer;
         buffer += 4;
         switch(subType)
             {
             case REV32(XXXX):
                 buffer += 2;
-                subSize = *(UINT32 *)buffer;
+                subSize = *(uint32_t *)buffer;
                 buffer += 4;
-                subType = *(UINT32 *)buffer;
+                subType = *(uint32_t *)buffer;
                 buffer += 6;
                 break;
             default:
-                subSize = *(UINT16 *)buffer;
+                subSize = *(uint16_t *)buffer;
                 buffer += 2;
                 break;
             }
@@ -767,9 +767,9 @@ SINT32 PACKRecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer,
                     case 4:
                         //old format (flags was originally a short, but changed to a uint; this change also affected the padding)
                         //PKDT.size = 8; //Force it to write out the updated version
-                        PKDT.value.flags = *(UINT16 *)buffer;
+                        PKDT.value.flags = *(uint16_t *)buffer;
                         buffer += 2;
-                        PKDT.value.aiType = *(UINT8 *)buffer;
+                        PKDT.value.aiType = *(uint8_t *)buffer;
                         buffer += 2; //Skip over junk value. unused padding will default to 0
                         break;
                     default:
@@ -803,7 +803,7 @@ SINT32 PACKRecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer,
     return 0;
     }
 
-SINT32 PACKRecord::Unload()
+int32_t PACKRecord::Unload()
     {
     IsChanged(false);
     IsLoaded(false);
@@ -816,7 +816,7 @@ SINT32 PACKRecord::Unload()
     return 1;
     }
 
-SINT32 PACKRecord::WriteRecord(FileWriter &writer)
+int32_t PACKRecord::WriteRecord(FileWriter &writer)
     {
     WRITE(EDID);
     WRITE(PKDT);

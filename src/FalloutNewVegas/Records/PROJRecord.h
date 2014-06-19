@@ -44,15 +44,15 @@ class PROJRecord : public FNVRecord //Projectile
     private:
         struct PROJDATA
             {
-            UINT16  flags, projType;
-            FLOAT32 gravity, speed, range;
+            uint16_t  flags, projType;
+            float gravity, speed, range;
             FORMID  light, flash;
-            FLOAT32 tracerChance, altExplProximityTrigger, altExplProximityTimer;
+            float tracerChance, altExplProximityTrigger, altExplProximityTimer;
             FORMID  explosion, sound;
-            FLOAT32 flashDuration, fadeDuration, impactForce;
+            float flashDuration, fadeDuration, impactForce;
             FORMID  soundCountdown, soundDisable, defaultWeaponSource;
             //Below are not always in chunk...
-            FLOAT32 rotX, rotY, rotZ, bouncyMult;
+            float rotX, rotY, rotZ, bouncyMult;
 
             PROJDATA();
             ~PROJDATA();
@@ -100,7 +100,7 @@ class PROJRecord : public FNVRecord //Projectile
         ReqSubRecord<PROJDATA> DATA; //Data
         StringRecord NAM1; //Model Filename
         RawRecord NAM2; //Texture Files Hashes
-        OptSimpleSubRecord<UINT32> VNAM; //Sound Level
+        OptSimpleSubRecord<uint32_t> VNAM; //Sound Level
 
         PROJRecord(unsigned char *_recData=NULL);
         PROJRecord(PROJRecord *srcRecord);
@@ -130,8 +130,8 @@ class PROJRecord : public FNVRecord //Projectile
         void   IsDetonates(bool value);
         bool   IsRotation();
         void   IsRotation(bool value);
-        bool   IsFlagMask(UINT16 Mask, bool Exact=false);
-        void   SetFlagMask(UINT16 Mask);
+        bool   IsFlagMask(uint16_t Mask, bool Exact=false);
+        void   SetFlagMask(uint16_t Mask);
 
         bool   IsMissile();
         void   IsMissile(bool value);
@@ -143,8 +143,8 @@ class PROJRecord : public FNVRecord //Projectile
         void   IsFlame(bool value);
         bool   IsContinuousBeam();
         void   IsContinuousBeam(bool value);
-        bool   IsType(UINT16 Type);
-        void   SetType(UINT16 Type);
+        bool   IsType(uint16_t Type);
+        void   SetType(uint16_t Type);
 
         bool   IsLoud();
         void   IsLoud(bool value);
@@ -152,20 +152,20 @@ class PROJRecord : public FNVRecord //Projectile
         void   IsNormal(bool value);
         bool   IsSilent();
         void   IsSilent(bool value);
-        bool   IsSoundLevelType(UINT32 Type);
-        void   SetSoundLevelType(UINT32 Type);
+        bool   IsSoundLevelType(uint32_t Type);
+        void   SetSoundLevelType(uint32_t Type);
 
-        UINT32 GetFieldAttribute(DEFAULTED_FIELD_IDENTIFIERS, UINT32 WhichAttribute=0);
+        uint32_t GetFieldAttribute(DEFAULTED_FIELD_IDENTIFIERS, uint32_t WhichAttribute=0);
         void * GetField(DEFAULTED_FIELD_IDENTIFIERS, void **FieldValues=NULL);
-        bool   SetField(DEFAULTED_FIELD_IDENTIFIERS, void *FieldValue=NULL, UINT32 ArraySize=0);
+        bool   SetField(DEFAULTED_FIELD_IDENTIFIERS, void *FieldValue=NULL, uint32_t ArraySize=0);
         void   DeleteField(DEFAULTED_FIELD_IDENTIFIERS);
 
-        UINT32 GetType();
-        STRING GetStrType();
+        uint32_t GetType();
+        char * GetStrType();
 
-        SINT32 ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk=false);
-        SINT32 Unload();
-        SINT32 WriteRecord(FileWriter &writer);
+        int32_t ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk=false);
+        int32_t Unload();
+        int32_t WriteRecord(FileWriter &writer);
 
         bool operator ==(const PROJRecord &other) const;
         bool operator !=(const PROJRecord &other) const;

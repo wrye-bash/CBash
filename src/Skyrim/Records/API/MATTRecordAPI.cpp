@@ -40,7 +40,7 @@
 namespace Sk
 {
 
-UINT32 MATTRecord::GetFieldAttribute(FIELD_IDENTIFIERS, UINT32 WhichAttribute)
+uint32_t MATTRecord::GetFieldAttribute(FIELD_IDENTIFIERS, uint32_t WhichAttribute)
 {
     switch (FieldID)
     {
@@ -138,12 +138,12 @@ void * MATTRecord::GetField(FIELD_IDENTIFIERS, void **FieldValues)
     return NULL;
 }
 
-bool MATTRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
+bool MATTRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, uint32_t ArraySize)
 {
     switch (FieldID)
     {
     case 1: //flags1
-        SetHeaderFlagMask(*(UINT32 *)FieldValue);
+        SetHeaderFlagMask(*(uint32_t *)FieldValue);
         break;
     case 3: //versionControl1
         if (ArraySize != 4)
@@ -154,10 +154,10 @@ bool MATTRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
         ((UINT8ARRAY)&flagsUnk)[3] = ((UINT8ARRAY)FieldValue)[3];
         break;
     case 4: //eid
-        EDID.Copy((STRING)FieldValue);
+        EDID.Copy((char *)FieldValue);
         break;
     case 5: //formVersion
-        formVersion = *(UINT16 *)FieldValue;
+        formVersion = *(uint16_t *)FieldValue;
         break;
     case 6: //versionControl2
         if (ArraySize != 2)
@@ -169,22 +169,22 @@ bool MATTRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
         PNAM.value = *(FORMID *)FieldValue;
         return true;
     case 8: //materialName
-        MNAM.Copy((STRING)FieldValue);
+        MNAM.Copy((char *)FieldValue);
         break;
     case 9: //havokRed
-        CNAM.value.red = *(FLOAT32 *)FieldValue;
+        CNAM.value.red = *(float *)FieldValue;
         break;
     case 10: //havokGreen
-        CNAM.value.green = *(FLOAT32 *)FieldValue;
+        CNAM.value.green = *(float *)FieldValue;
         break;
     case 11: //havokBlue
-        CNAM.value.blue = *(FLOAT32 *)FieldValue;
+        CNAM.value.blue = *(float *)FieldValue;
         break;
     case 12: //bouyancy
-        BNAM.value = *(FLOAT32 *)FieldValue;
+        BNAM.value = *(float *)FieldValue;
         break;
     case 13: //flags
-        SetFlagMask(*(UINT32 *)FieldValue);
+        SetFlagMask(*(uint32_t *)FieldValue);
         break;
     case 14: //havokIPDS
         HNAM.value = *(FORMID *)FieldValue;

@@ -44,20 +44,20 @@ class CSTYRecord : public Record //Combat Style
     private:
         struct CSTYCSTD //Standard
             {
-            UINT8   dodgeChance, lrChance, unused1[2];
-            FLOAT32 lrTimerMin, lrTimerMax, forTimerMin, forTimerMax, backTimerMin,
+            uint8_t   dodgeChance, lrChance, unused1[2];
+            float lrTimerMin, lrTimerMax, forTimerMin, forTimerMax, backTimerMin,
                     backTimerMax, idleTimerMin, idleTimerMax;
-            UINT8   blkChance, atkChance, unused2[2];
-            FLOAT32 atkBRecoil, atkBUnc, atkBh2h;
-            UINT8   pAtkChance, unused3[3];
-            FLOAT32 pAtkBRecoil, pAtkBUnc;
-            UINT8   pAtkNormal, pAtkFor, pAtkBack, pAtkL, pAtkR, unused4[3];
-            FLOAT32 holdTimerMin, holdTimerMax;
-            UINT8   flagsA, acroDodge, unused5[2];
-            FLOAT32 rMultOpt, rMultMax, mDistance, rDistance, buffStand, rStand, groupStand;
-            UINT8   rushChance, unused6[3];
-            FLOAT32 rushMult;
-            UINT32  flagsB;
+            uint8_t   blkChance, atkChance, unused2[2];
+            float atkBRecoil, atkBUnc, atkBh2h;
+            uint8_t   pAtkChance, unused3[3];
+            float pAtkBRecoil, pAtkBUnc;
+            uint8_t   pAtkNormal, pAtkFor, pAtkBack, pAtkL, pAtkR, unused4[3];
+            float holdTimerMin, holdTimerMax;
+            uint8_t   flagsA, acroDodge, unused5[2];
+            float rMultOpt, rMultMax, mDistance, rDistance, buffStand, rStand, groupStand;
+            uint8_t   rushChance, unused6[3];
+            float rushMult;
+            uint32_t  flagsB;
 
             CSTYCSTD();
             ~CSTYCSTD();
@@ -68,7 +68,7 @@ class CSTYRecord : public Record //Combat Style
 
         struct CSTYCSAD //Advanced
             {
-            FLOAT32 dodgeFMult, dodgeFBase, encSBase, encSMult, dodgeAtkMult,
+            float dodgeFMult, dodgeFBase, encSBase, encSMult, dodgeAtkMult,
                     dodgeNAtkMult, dodgeBAtkMult, dodgeBNAtkMult,
                     dodgeFAtkMult, dodgeFNAtkMult, blockMult, blockBase,
                     blockAtkMult, blockNAtkMult, atkMult, atkBase, atkAtkMult,
@@ -123,25 +123,25 @@ class CSTYRecord : public Record //Combat Style
         void   IsPrefersRanged(bool value);
         bool   IsMeleeAlertOK();
         void   IsMeleeAlertOK(bool value);
-        bool   IsFlagAMask(UINT8 Mask, bool Exact=false);
-        void   SetFlagAMask(UINT8 Mask);
+        bool   IsFlagAMask(uint8_t Mask, bool Exact=false);
+        void   SetFlagAMask(uint8_t Mask);
 
         bool   IsDoNotAcquire();
         void   IsDoNotAcquire(bool value);
-        bool   IsFlagBMask(UINT32 Mask, bool Exact=false);
-        void   SetFlagBMask(UINT32 Mask);
+        bool   IsFlagBMask(uint32_t Mask, bool Exact=false);
+        void   SetFlagBMask(uint32_t Mask);
 
-        UINT32 GetFieldAttribute(DEFAULTED_FIELD_IDENTIFIERS, UINT32 WhichAttribute=0);
+        uint32_t GetFieldAttribute(DEFAULTED_FIELD_IDENTIFIERS, uint32_t WhichAttribute=0);
         void * GetField(DEFAULTED_FIELD_IDENTIFIERS, void **FieldValues=NULL);
-        bool   SetField(DEFAULTED_FIELD_IDENTIFIERS, void *FieldValue=NULL, UINT32 ArraySize=0);
+        bool   SetField(DEFAULTED_FIELD_IDENTIFIERS, void *FieldValue=NULL, uint32_t ArraySize=0);
         void   DeleteField(DEFAULTED_FIELD_IDENTIFIERS);
 
-        UINT32 GetType();
-        STRING GetStrType();
+        uint32_t GetType();
+        char * GetStrType();
 
-        SINT32 ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk=false);
-        SINT32 Unload();
-        SINT32 WriteRecord(FileWriter &writer);
+        int32_t ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk=false);
+        int32_t Unload();
+        int32_t WriteRecord(FileWriter &writer);
 
         bool operator ==(const CSTYRecord &other) const;
         bool operator !=(const CSTYRecord &other) const;

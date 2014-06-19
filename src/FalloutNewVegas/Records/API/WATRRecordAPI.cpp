@@ -38,7 +38,7 @@
 
 namespace FNV
 {
-UINT32 WATRRecord::GetFieldAttribute(FIELD_IDENTIFIERS, UINT32 WhichAttribute)
+uint32_t WATRRecord::GetFieldAttribute(FIELD_IDENTIFIERS, uint32_t WhichAttribute)
     {
     switch(FieldID)
         {
@@ -430,12 +430,12 @@ void * WATRRecord::GetField(FIELD_IDENTIFIERS, void **FieldValues)
     return NULL;
     }
 
-bool WATRRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
+bool WATRRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, uint32_t ArraySize)
     {
     switch(FieldID)
         {
         case 1: //flags1
-            SetHeaderFlagMask(*(UINT32 *)FieldValue);
+            SetHeaderFlagMask(*(uint32_t *)FieldValue);
             break;
         case 3: //versionControl1
             if(ArraySize != 4)
@@ -446,10 +446,10 @@ bool WATRRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             ((UINT8ARRAY)&flagsUnk)[3] = ((UINT8ARRAY)FieldValue)[3];
             break;
         case 4: //eid
-            EDID.Copy((STRING)FieldValue);
+            EDID.Copy((char *)FieldValue);
             break;
         case 5: //formVersion
-            formVersion = *(UINT16 *)FieldValue;
+            formVersion = *(uint16_t *)FieldValue;
             break;
         case 6: //versionControl2
             if(ArraySize != 2)
@@ -458,19 +458,19 @@ bool WATRRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             versionControl2[1] = ((UINT8ARRAY)FieldValue)[1];
             break;
         case 7: //full
-            FULL.Copy((STRING)FieldValue);
+            FULL.Copy((char *)FieldValue);
             break;
         case 8: //noisePath
-            NNAM.Copy((STRING)FieldValue);
+            NNAM.Copy((char *)FieldValue);
             break;
         case 9: //opacity
-            ANAM.value = *(UINT8 *)FieldValue;
+            ANAM.value = *(uint8_t *)FieldValue;
             break;
         case 10: //flags
-            FNAM.value = *(UINT8 *)FieldValue;
+            FNAM.value = *(uint8_t *)FieldValue;
             break;
         case 11: //material
-            MNAM.Copy((STRING)FieldValue);
+            MNAM.Copy((char *)FieldValue);
             break;
         case 12: //sound
             SNAM.value = *(FORMID *)FieldValue;
@@ -479,28 +479,28 @@ bool WATRRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             XNAM.value = *(FORMID *)FieldValue;
             return true;
         case 14: //damage
-            DATA.value = *(UINT16 *)FieldValue;
+            DATA.value = *(uint16_t *)FieldValue;
             break;
         case 15: //unknown1
-            DNAM.value.unknown1 = *(FLOAT32 *)FieldValue;
+            DNAM.value.unknown1 = *(float *)FieldValue;
             break;
         case 16: //unknown2
-            DNAM.value.unknown2 = *(FLOAT32 *)FieldValue;
+            DNAM.value.unknown2 = *(float *)FieldValue;
             break;
         case 17: //unknown3
-            DNAM.value.unknown3 = *(FLOAT32 *)FieldValue;
+            DNAM.value.unknown3 = *(float *)FieldValue;
             break;
         case 18: //unknown4
-            DNAM.value.unknown4 = *(FLOAT32 *)FieldValue;
+            DNAM.value.unknown4 = *(float *)FieldValue;
             break;
         case 19: //sunPower
-            DNAM.value.sunPower = *(FLOAT32 *)FieldValue;
+            DNAM.value.sunPower = *(float *)FieldValue;
             break;
         case 20: //reflectAmt
-            DNAM.value.reflectAmt = *(FLOAT32 *)FieldValue;
+            DNAM.value.reflectAmt = *(float *)FieldValue;
             break;
         case 21: //fresnelAmt
-            DNAM.value.fresnelAmt = *(FLOAT32 *)FieldValue;
+            DNAM.value.fresnelAmt = *(float *)FieldValue;
             break;
         case 22: //unused1
             if(ArraySize != 4)
@@ -511,19 +511,19 @@ bool WATRRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             DNAM.value.unused1[3] = ((UINT8ARRAY)FieldValue)[3];
             break;
         case 23: //fogNear
-            DNAM.value.fogNear = *(FLOAT32 *)FieldValue;
+            DNAM.value.fogNear = *(float *)FieldValue;
             break;
         case 24: //fogFar
-            DNAM.value.fogFar = *(FLOAT32 *)FieldValue;
+            DNAM.value.fogFar = *(float *)FieldValue;
             break;
         case 25: //shallow.red
-            DNAM.value.shallow.red = *(UINT8 *)FieldValue;
+            DNAM.value.shallow.red = *(uint8_t *)FieldValue;
             break;
         case 26: //shallow.green
-            DNAM.value.shallow.green = *(UINT8 *)FieldValue;
+            DNAM.value.shallow.green = *(uint8_t *)FieldValue;
             break;
         case 27: //shallow.blue
-            DNAM.value.shallow.blue = *(UINT8 *)FieldValue;
+            DNAM.value.shallow.blue = *(uint8_t *)FieldValue;
             break;
         case 28: //unused2
             if(ArraySize != 1)
@@ -531,13 +531,13 @@ bool WATRRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             DNAM.value.shallow.unused1 = ((UINT8ARRAY)FieldValue)[0];
             break;
         case 29: //deep.red
-            DNAM.value.deep.red = *(UINT8 *)FieldValue;
+            DNAM.value.deep.red = *(uint8_t *)FieldValue;
             break;
         case 30: //deep.green
-            DNAM.value.deep.green = *(UINT8 *)FieldValue;
+            DNAM.value.deep.green = *(uint8_t *)FieldValue;
             break;
         case 31: //deep.blue
-            DNAM.value.deep.blue = *(UINT8 *)FieldValue;
+            DNAM.value.deep.blue = *(uint8_t *)FieldValue;
             break;
         case 32: //unused3
             if(ArraySize != 1)
@@ -545,13 +545,13 @@ bool WATRRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             DNAM.value.deep.unused1 = ((UINT8ARRAY)FieldValue)[0];
             break;
         case 33: //refl.red
-            DNAM.value.refl.red = *(UINT8 *)FieldValue;
+            DNAM.value.refl.red = *(uint8_t *)FieldValue;
             break;
         case 34: //refl.green
-            DNAM.value.refl.green = *(UINT8 *)FieldValue;
+            DNAM.value.refl.green = *(uint8_t *)FieldValue;
             break;
         case 35: //refl.blue
-            DNAM.value.refl.blue = *(UINT8 *)FieldValue;
+            DNAM.value.refl.blue = *(uint8_t *)FieldValue;
             break;
         case 36: //unused4
             if(ArraySize != 1)
@@ -567,109 +567,109 @@ bool WATRRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             DNAM.value.unused2[3] = ((UINT8ARRAY)FieldValue)[3];
             break;
         case 38: //rainForce
-            DNAM.value.rainForce = *(FLOAT32 *)FieldValue;
+            DNAM.value.rainForce = *(float *)FieldValue;
             break;
         case 39: //rainVelocity
-            DNAM.value.rainVelocity = *(FLOAT32 *)FieldValue;
+            DNAM.value.rainVelocity = *(float *)FieldValue;
             break;
         case 40: //rainFalloff
-            DNAM.value.rainFalloff = *(FLOAT32 *)FieldValue;
+            DNAM.value.rainFalloff = *(float *)FieldValue;
             break;
         case 41: //rainDampner
-            DNAM.value.rainDampner = *(FLOAT32 *)FieldValue;
+            DNAM.value.rainDampner = *(float *)FieldValue;
             break;
         case 42: //dispSize
-            DNAM.value.dispSize = *(FLOAT32 *)FieldValue;
+            DNAM.value.dispSize = *(float *)FieldValue;
             break;
         case 43: //dispForce
-            DNAM.value.dispForce = *(FLOAT32 *)FieldValue;
+            DNAM.value.dispForce = *(float *)FieldValue;
             break;
         case 44: //dispVelocity
-            DNAM.value.dispVelocity = *(FLOAT32 *)FieldValue;
+            DNAM.value.dispVelocity = *(float *)FieldValue;
             break;
         case 45: //dispFalloff
-            DNAM.value.dispFalloff = *(FLOAT32 *)FieldValue;
+            DNAM.value.dispFalloff = *(float *)FieldValue;
             break;
         case 46: //dispDampner
-            DNAM.value.dispDampner = *(FLOAT32 *)FieldValue;
+            DNAM.value.dispDampner = *(float *)FieldValue;
             break;
         case 47: //rainSize
-            DNAM.value.rainSize = *(FLOAT32 *)FieldValue;
+            DNAM.value.rainSize = *(float *)FieldValue;
             break;
         case 48: //normalsNoiseScale
-            DNAM.value.normalsNoiseScale = *(FLOAT32 *)FieldValue;
+            DNAM.value.normalsNoiseScale = *(float *)FieldValue;
             break;
         case 49: //noise1Direction
-            DNAM.value.noise1Direction = *(FLOAT32 *)FieldValue;
+            DNAM.value.noise1Direction = *(float *)FieldValue;
             break;
         case 50: //noise2Direction
-            DNAM.value.noise2Direction = *(FLOAT32 *)FieldValue;
+            DNAM.value.noise2Direction = *(float *)FieldValue;
             break;
         case 51: //noise3Direction
-            DNAM.value.noise3Direction = *(FLOAT32 *)FieldValue;
+            DNAM.value.noise3Direction = *(float *)FieldValue;
             break;
         case 52: //noise1Speed
-            DNAM.value.noise1Speed = *(FLOAT32 *)FieldValue;
+            DNAM.value.noise1Speed = *(float *)FieldValue;
             break;
         case 53: //noise2Speed
-            DNAM.value.noise2Speed = *(FLOAT32 *)FieldValue;
+            DNAM.value.noise2Speed = *(float *)FieldValue;
             break;
         case 54: //noise3Speed
-            DNAM.value.noise3Speed = *(FLOAT32 *)FieldValue;
+            DNAM.value.noise3Speed = *(float *)FieldValue;
             break;
         case 55: //normalsFalloffStart
-            DNAM.value.normalsFalloffStart = *(FLOAT32 *)FieldValue;
+            DNAM.value.normalsFalloffStart = *(float *)FieldValue;
             break;
         case 56: //normalsFalloffEnd
-            DNAM.value.normalsFalloffEnd = *(FLOAT32 *)FieldValue;
+            DNAM.value.normalsFalloffEnd = *(float *)FieldValue;
             break;
         case 57: //fogAmt
-            DNAM.value.fogAmt = *(FLOAT32 *)FieldValue;
+            DNAM.value.fogAmt = *(float *)FieldValue;
             break;
         case 58: //normalsUVScale
-            DNAM.value.normalsUVScale = *(FLOAT32 *)FieldValue;
+            DNAM.value.normalsUVScale = *(float *)FieldValue;
             break;
         case 59: //underFogAmt
-            DNAM.value.underFogAmt = *(FLOAT32 *)FieldValue;
+            DNAM.value.underFogAmt = *(float *)FieldValue;
             break;
         case 60: //underFogNear
-            DNAM.value.underFogNear = *(FLOAT32 *)FieldValue;
+            DNAM.value.underFogNear = *(float *)FieldValue;
             break;
         case 61: //underFogFar
-            DNAM.value.underFogFar = *(FLOAT32 *)FieldValue;
+            DNAM.value.underFogFar = *(float *)FieldValue;
             break;
         case 62: //distAmt
-            DNAM.value.distAmt = *(FLOAT32 *)FieldValue;
+            DNAM.value.distAmt = *(float *)FieldValue;
             break;
         case 63: //shininess
-            DNAM.value.shininess = *(FLOAT32 *)FieldValue;
+            DNAM.value.shininess = *(float *)FieldValue;
             break;
         case 64: //hdrMult
-            DNAM.value.hdrMult = *(FLOAT32 *)FieldValue;
+            DNAM.value.hdrMult = *(float *)FieldValue;
             break;
         case 65: //lightRadius
-            DNAM.value.lightRadius = *(FLOAT32 *)FieldValue;
+            DNAM.value.lightRadius = *(float *)FieldValue;
             break;
         case 66: //lightBright
-            DNAM.value.lightBright = *(FLOAT32 *)FieldValue;
+            DNAM.value.lightBright = *(float *)FieldValue;
             break;
         case 67: //noise1UVScale
-            DNAM.value.noise1UVScale = *(FLOAT32 *)FieldValue;
+            DNAM.value.noise1UVScale = *(float *)FieldValue;
             break;
         case 68: //noise2UVScale
-            DNAM.value.noise2UVScale = *(FLOAT32 *)FieldValue;
+            DNAM.value.noise2UVScale = *(float *)FieldValue;
             break;
         case 69: //noise3UVScale
-            DNAM.value.noise3UVScale = *(FLOAT32 *)FieldValue;
+            DNAM.value.noise3UVScale = *(float *)FieldValue;
             break;
         case 70: //noise1AmpScale
-            DNAM.value.noise1AmpScale = *(FLOAT32 *)FieldValue;
+            DNAM.value.noise1AmpScale = *(float *)FieldValue;
             break;
         case 71: //noise2AmpScale
-            DNAM.value.noise2AmpScale = *(FLOAT32 *)FieldValue;
+            DNAM.value.noise2AmpScale = *(float *)FieldValue;
             break;
         case 72: //noise3AmpScale
-            DNAM.value.noise3AmpScale = *(FLOAT32 *)FieldValue;
+            DNAM.value.noise3AmpScale = *(float *)FieldValue;
             break;
         case 73: //dayWater
             GNAM.value.dayWater = *(FORMID *)FieldValue;

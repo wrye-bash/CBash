@@ -63,7 +63,7 @@ class MSETRecord : public FNVRecord //Media Set
     public:
         StringRecord EDID; //Editor ID
         StringRecord FULL; //Name
-        OptSimpleSubRecord<UINT32> NAM1; //Type
+        OptSimpleSubRecord<uint32_t> NAM1; //Type
         StringRecord NAM2; //Loop (B) / Battle (D) / Day Outer (L)
         StringRecord NAM3; //Explore (D) / Day Middle (L)
         StringRecord NAM4; //Suspense (D) / Day Inner (L)
@@ -82,7 +82,7 @@ class MSETRecord : public FNVRecord //Media Set
         OptSimpleFloatSubRecord<flt_0> MNAM; //Night Outer Boundary % (L)
         OptSimpleFloatSubRecord<flt_0> NNAM; //Night Middle Boundary % (L)
         OptSimpleFloatSubRecord<flt_0> ONAM; //Night Inner Boundary % (L)
-        OptSimpleSubRecord<UINT8> PNAM; //Enable Flags
+        OptSimpleSubRecord<uint8_t> PNAM; //Enable Flags
         OptSimpleFloatSubRecord<flt_0> DNAM; //Wait Time (B) / Minimum Time On (D,L) / Daytime Min (I)
         OptSimpleFloatSubRecord<flt_0> ENAM; //Loop Fade Out (B) / Looping/Random Crossfade Overlap (D,L) / Nighttime Min (I)
         OptSimpleFloatSubRecord<flt_0> FNAM; //Recovery Time (B) / Layer Crossfade Time (D,L) / Daytime Max (I)
@@ -109,8 +109,8 @@ class MSETRecord : public FNVRecord //Media Set
         void   IsNightMiddle(bool value);
         bool   IsNightInner();
         void   IsNightInner(bool value);
-        bool   IsFlagMask(UINT8 Mask, bool Exact=false);
-        void   SetFlagMask(UINT8 Mask);
+        bool   IsFlagMask(uint8_t Mask, bool Exact=false);
+        void   SetFlagMask(uint8_t Mask);
 
         bool   IsNone();
         void   IsNone(bool value);
@@ -122,20 +122,20 @@ class MSETRecord : public FNVRecord //Media Set
         void   IsDungeon(bool value);
         bool   IsIncidential();
         void   IsIncidential(bool value);
-        bool   IsType(UINT32 Type);
-        void   SetType(UINT32 Type);
+        bool   IsType(uint32_t Type);
+        void   SetType(uint32_t Type);
 
-        UINT32 GetFieldAttribute(DEFAULTED_FIELD_IDENTIFIERS, UINT32 WhichAttribute=0);
+        uint32_t GetFieldAttribute(DEFAULTED_FIELD_IDENTIFIERS, uint32_t WhichAttribute=0);
         void * GetField(DEFAULTED_FIELD_IDENTIFIERS, void **FieldValues=NULL);
-        bool   SetField(DEFAULTED_FIELD_IDENTIFIERS, void *FieldValue=NULL, UINT32 ArraySize=0);
+        bool   SetField(DEFAULTED_FIELD_IDENTIFIERS, void *FieldValue=NULL, uint32_t ArraySize=0);
         void   DeleteField(DEFAULTED_FIELD_IDENTIFIERS);
 
-        UINT32 GetType();
-        STRING GetStrType();
+        uint32_t GetType();
+        char * GetStrType();
 
-        SINT32 ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk = false);
-        SINT32 Unload();
-        SINT32 WriteRecord(FileWriter &writer);
+        int32_t ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk = false);
+        int32_t Unload();
+        int32_t WriteRecord(FileWriter &writer);
 
         bool operator ==(const MSETRecord &other) const;
         bool operator !=(const MSETRecord &other) const;

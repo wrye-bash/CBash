@@ -112,12 +112,12 @@ bool IDLERecord::VisitFormIDs(FormIDOp &op)
 
     if(MODL.IsLoaded())
         {
-        for(UINT32 x = 0; x < MODL->Textures.MODS.size(); x++)
+        for(uint32_t x = 0; x < MODL->Textures.MODS.size(); x++)
             op.Accept(MODL->Textures.MODS[x]->texture);
         }
-    for(UINT32 ListIndex = 0; ListIndex < CTDA.value.size(); ListIndex++)
+    for(uint32_t ListIndex = 0; ListIndex < CTDA.value.size(); ListIndex++)
         CTDA.value[ListIndex]->VisitFormIDs(op);
-    for(UINT32 ListIndex = 0; ListIndex < ANAM.value.size(); ListIndex++)
+    for(uint32_t ListIndex = 0; ListIndex < ANAM.value.size(); ListIndex++)
         op.Accept(ANAM.value[ListIndex]);
 
     return op.Stop();
@@ -133,12 +133,12 @@ void IDLERecord::IsNoAttacking(bool value)
     SETBIT(DATA.value.flags, fIsNoAttacking, value);
     }
 
-bool IDLERecord::IsFlagMask(UINT8 Mask, bool Exact)
+bool IDLERecord::IsFlagMask(uint8_t Mask, bool Exact)
     {
     return Exact ? ((DATA.value.flags & Mask) == Mask) : ((DATA.value.flags & Mask) != 0);
     }
 
-void IDLERecord::SetFlagMask(UINT8 Mask)
+void IDLERecord::SetFlagMask(uint8_t Mask)
     {
     DATA.value.flags = Mask;
     }
@@ -273,12 +273,12 @@ void IDLERecord::IsUpperBody(bool value)
         DATA.value.group = DATA.value.group & 0xC0 | eIdle;
     }
 
-bool IDLERecord::IsType(UINT8 Type)
+bool IDLERecord::IsType(uint8_t Type)
     {
     return ((DATA.value.group & ~0xC0) == (Type & ~0xC0));
     }
 
-void IDLERecord::SetType(UINT8 Type)
+void IDLERecord::SetType(uint8_t Type)
     {
     DATA.value.group = DATA.value.group & 0xC0 | (Type & ~0xC0);
     }
@@ -313,44 +313,44 @@ void IDLERecord::IsReturnFile(bool value)
     IsNotReturnFile(!value);
     }
 
-bool IDLERecord::IsIdleFlagMask(UINT8 Mask, bool Exact)
+bool IDLERecord::IsIdleFlagMask(uint8_t Mask, bool Exact)
     {
     return Exact ? (((DATA.value.group & 0xC0) & (Mask & 0xC0)) == Mask) : (((DATA.value.group & 0xC0) & (Mask & 0xC0)) != 0);
     }
 
-void IDLERecord::SetIdleFlagMask(UINT8 Mask)
+void IDLERecord::SetIdleFlagMask(uint8_t Mask)
     {
     DATA.value.group = DATA.value.group & ~0xC0 | (Mask & 0xC0);
     }
 
-UINT32 IDLERecord::GetType()
+uint32_t IDLERecord::GetType()
     {
     return REV32(IDLE);
     }
 
-STRING IDLERecord::GetStrType()
+char * IDLERecord::GetStrType()
     {
     return "IDLE";
     }
 
-SINT32 IDLERecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk)
+int32_t IDLERecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk)
     {
-    UINT32 subType = 0;
-    UINT32 subSize = 0;
+    uint32_t subType = 0;
+    uint32_t subSize = 0;
     while(buffer < end_buffer){
-        subType = *(UINT32 *)buffer;
+        subType = *(uint32_t *)buffer;
         buffer += 4;
         switch(subType)
             {
             case REV32(XXXX):
                 buffer += 2;
-                subSize = *(UINT32 *)buffer;
+                subSize = *(uint32_t *)buffer;
                 buffer += 4;
-                subType = *(UINT32 *)buffer;
+                subType = *(uint32_t *)buffer;
                 buffer += 6;
                 break;
             default:
-                subSize = *(UINT16 *)buffer;
+                subSize = *(uint16_t *)buffer;
                 buffer += 2;
                 break;
             }
@@ -401,7 +401,7 @@ SINT32 IDLERecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer,
     return 0;
     }
 
-SINT32 IDLERecord::Unload()
+int32_t IDLERecord::Unload()
     {
     IsChanged(false);
     IsLoaded(false);
@@ -414,7 +414,7 @@ SINT32 IDLERecord::Unload()
     return 1;
     }
 
-SINT32 IDLERecord::WriteRecord(FileWriter &writer)
+int32_t IDLERecord::WriteRecord(FileWriter &writer)
     {
     WRITE(EDID);
     MODL.Write(writer);

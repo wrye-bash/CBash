@@ -38,7 +38,7 @@
 
 namespace FNV
 {
-UINT32 NAVMRecord::GetFieldAttribute(FIELD_IDENTIFIERS, UINT32 WhichAttribute)
+uint32_t NAVMRecord::GetFieldAttribute(FIELD_IDENTIFIERS, uint32_t WhichAttribute)
     {
     switch(FieldID)
         {
@@ -96,7 +96,7 @@ UINT32 NAVMRecord::GetFieldAttribute(FIELD_IDENTIFIERS, UINT32 WhichAttribute)
                     case 0: //fieldType
                         return LIST_FIELD;
                     case 1: //fieldSize
-                        return (UINT32)NVVX.value.size();
+                        return (uint32_t)NVVX.value.size();
                     default:
                         return UNKNOWN_FIELD;
                     }
@@ -126,7 +126,7 @@ UINT32 NAVMRecord::GetFieldAttribute(FIELD_IDENTIFIERS, UINT32 WhichAttribute)
                     case 0: //fieldType
                         return LIST_FIELD;
                     case 1: //fieldSize
-                        return (UINT32)NVTR.value.size();
+                        return (uint32_t)NVTR.value.size();
                     default:
                         return UNKNOWN_FIELD;
                     }
@@ -162,7 +162,7 @@ UINT32 NAVMRecord::GetFieldAttribute(FIELD_IDENTIFIERS, UINT32 WhichAttribute)
                 case 0: //fieldType
                     return SINT16_ARRAY_FIELD;
                 case 1: //fieldSize
-                    return (UINT32)NVCA.value.size();
+                    return (uint32_t)NVCA.value.size();
                 default:
                     return UNKNOWN_FIELD;
                 }
@@ -175,7 +175,7 @@ UINT32 NAVMRecord::GetFieldAttribute(FIELD_IDENTIFIERS, UINT32 WhichAttribute)
                     case 0: //fieldType
                         return LIST_FIELD;
                     case 1: //fieldSize
-                        return (UINT32)NVDP.value.size();
+                        return (uint32_t)NVDP.value.size();
                     default:
                         return UNKNOWN_FIELD;
                     }
@@ -225,7 +225,7 @@ UINT32 NAVMRecord::GetFieldAttribute(FIELD_IDENTIFIERS, UINT32 WhichAttribute)
                     case 0: //fieldType
                         return LIST_FIELD;
                     case 1: //fieldSize
-                        return (UINT32)NVEX.value.size();
+                        return (uint32_t)NVEX.value.size();
                     default:
                         return UNKNOWN_FIELD;
                     }
@@ -384,12 +384,12 @@ void * NAVMRecord::GetField(FIELD_IDENTIFIERS, void **FieldValues)
     return NULL;
     }
 
-bool NAVMRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
+bool NAVMRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, uint32_t ArraySize)
     {
     switch(FieldID)
         {
         case 1: //flags1
-            SetHeaderFlagMask(*(UINT32 *)FieldValue);
+            SetHeaderFlagMask(*(uint32_t *)FieldValue);
             break;
         case 3: //versionControl1
             if(ArraySize != 4)
@@ -400,10 +400,10 @@ bool NAVMRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             ((UINT8ARRAY)&flagsUnk)[3] = ((UINT8ARRAY)FieldValue)[3];
             break;
         case 4: //eid
-            EDID.Copy((STRING)FieldValue);
+            EDID.Copy((char *)FieldValue);
             break;
         case 5: //formVersion
-            formVersion = *(UINT16 *)FieldValue;
+            formVersion = *(uint16_t *)FieldValue;
             break;
         case 6: //versionControl2
             if(ArraySize != 2)
@@ -412,25 +412,25 @@ bool NAVMRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             versionControl2[1] = ((UINT8ARRAY)FieldValue)[1];
             break;
         case 7: //version
-            NVER.value = *(UINT32 *)FieldValue;
+            NVER.value = *(uint32_t *)FieldValue;
             break;
         case 8: //cell
             DATA.value.cell = *(FORMID *)FieldValue;
             return true;
         case 9: //numVertices
-            DATA.value.numVertices = *(UINT32 *)FieldValue;
+            DATA.value.numVertices = *(uint32_t *)FieldValue;
             break;
         case 10: //numTriangles
-            DATA.value.numTriangles = *(UINT32 *)FieldValue;
+            DATA.value.numTriangles = *(uint32_t *)FieldValue;
             break;
         case 11: //numConnections
-            DATA.value.numConnections = *(UINT32 *)FieldValue;
+            DATA.value.numConnections = *(uint32_t *)FieldValue;
             break;
         case 12: //numUnknown
-            DATA.value.numNVCA = *(UINT32 *)FieldValue;
+            DATA.value.numNVCA = *(uint32_t *)FieldValue;
             break;
         case 13: //numDoors
-            DATA.value.numDoors = *(UINT32 *)FieldValue;
+            DATA.value.numDoors = *(uint32_t *)FieldValue;
             break;
         case 14: //vertices
             if(ListFieldID == 0) //verticesSize
@@ -446,13 +446,13 @@ bool NAVMRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             switch(ListFieldID)
                 {
                 case 1: //x
-                    NVVX.value[ListIndex].x = *(FLOAT32 *)FieldValue;
+                    NVVX.value[ListIndex].x = *(float *)FieldValue;
                     break;
                 case 2: //y
-                    NVVX.value[ListIndex].y = *(FLOAT32 *)FieldValue;
+                    NVVX.value[ListIndex].y = *(float *)FieldValue;
                     break;
                 case 3: //z
-                    NVVX.value[ListIndex].z = *(FLOAT32 *)FieldValue;
+                    NVVX.value[ListIndex].z = *(float *)FieldValue;
                     break;
                 default:
                     break;
@@ -472,25 +472,25 @@ bool NAVMRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             switch(ListFieldID)
                 {
                 case 1: //vertex1
-                    NVTR.value[ListIndex].vertex1 = *(SINT16 *)FieldValue;
+                    NVTR.value[ListIndex].vertex1 = *(int16_t *)FieldValue;
                     break;
                 case 2: //vertex2
-                    NVTR.value[ListIndex].vertex2 = *(SINT16 *)FieldValue;
+                    NVTR.value[ListIndex].vertex2 = *(int16_t *)FieldValue;
                     break;
                 case 3: //vertex3
-                    NVTR.value[ListIndex].vertex3 = *(SINT16 *)FieldValue;
+                    NVTR.value[ListIndex].vertex3 = *(int16_t *)FieldValue;
                     break;
                 case 4: //edge1
-                    NVTR.value[ListIndex].edge1 = *(SINT16 *)FieldValue;
+                    NVTR.value[ListIndex].edge1 = *(int16_t *)FieldValue;
                     break;
                 case 5: //edge2
-                    NVTR.value[ListIndex].edge2 = *(SINT16 *)FieldValue;
+                    NVTR.value[ListIndex].edge2 = *(int16_t *)FieldValue;
                     break;
                 case 6: //edge3
-                    NVTR.value[ListIndex].edge3 = *(SINT16 *)FieldValue;
+                    NVTR.value[ListIndex].edge3 = *(int16_t *)FieldValue;
                     break;
                 case 7: //flags
-                    NVTR.value[ListIndex].flags = *(UINT32 *)FieldValue;
+                    NVTR.value[ListIndex].flags = *(uint32_t *)FieldValue;
                     break;
                 default:
                     break;
@@ -498,7 +498,7 @@ bool NAVMRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             break;
         case 16: //unknown1
             NVCA.value.resize(ArraySize);
-            for(UINT32 x = 0; x < ArraySize; x++)
+            for(uint32_t x = 0; x < ArraySize; x++)
                 NVCA.value[x] = ((SINT16ARRAY)FieldValue)[x];
             DATA.value.numNVCA = ArraySize;
             break;
@@ -519,7 +519,7 @@ bool NAVMRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
                     NVDP.value[ListIndex].door = *(FORMID *)FieldValue;
                     return true;
                 case 2: //unknown1
-                    NVDP.value[ListIndex].unknown1 = *(UINT16 *)FieldValue;
+                    NVDP.value[ListIndex].unknown1 = *(uint16_t *)FieldValue;
                     break;
                 case 3: //unused1
                     if(ArraySize != 2)
@@ -559,7 +559,7 @@ bool NAVMRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
                     NVEX.value[ListIndex].mesh = *(FORMID *)FieldValue;
                     return true;
                 case 3: //triangle
-                    NVEX.value[ListIndex].triangle = *(UINT16 *)FieldValue;
+                    NVEX.value[ListIndex].triangle = *(uint16_t *)FieldValue;
                     break;
                 default:
                     break;

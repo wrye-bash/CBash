@@ -79,45 +79,45 @@ void VTYPRecord::IsFemale(bool value)
     SETBIT(DNAM.value, fIsFemale, value);
 }
 
-bool VTYPRecord::IsFlagMask(UINT8 Mask, bool Exact)
+bool VTYPRecord::IsFlagMask(uint8_t Mask, bool Exact)
 {
     return Exact ? (DNAM.value & Mask) == Mask : (DNAM.value & Mask) != 0;
 }
 
-void VTYPRecord::SetFlagMask(UINT8 Mask)
+void VTYPRecord::SetFlagMask(uint8_t Mask)
 {
     DNAM.value = Mask;
 }
 
-UINT32 VTYPRecord::GetType()
+uint32_t VTYPRecord::GetType()
     {
         return REV32(VTYP);
     }
 
-STRING VTYPRecord::GetStrType()
+char * VTYPRecord::GetStrType()
     {
         return "VTYP";
     }
 
-SINT32 VTYPRecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk)
+int32_t VTYPRecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk)
     {
-        UINT32 subType = 0;
-        UINT32 subSize = 0;
+        uint32_t subType = 0;
+        uint32_t subSize = 0;
         while(buffer < end_buffer)
         {
-            subType = *(UINT32 *)buffer;
+            subType = *(uint32_t *)buffer;
             buffer += 4;
             switch(subType)
             {
                 case REV32(XXXX):
                     buffer += 2;
-                    subSize = *(UINT32 *)buffer;
+                    subSize = *(uint32_t *)buffer;
                     buffer += 4;
-                    subType = *(UINT32 *)buffer;
+                    subType = *(uint32_t *)buffer;
                     buffer += 6;
                     break;
                 default:
-                    subSize = *(UINT16 *)buffer;
+                    subSize = *(uint16_t *)buffer;
                     buffer += 2;
                     break;
             }
@@ -142,7 +142,7 @@ SINT32 VTYPRecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer,
         return 0;
     }
 
-SINT32 VTYPRecord::Unload()
+int32_t VTYPRecord::Unload()
     {
         IsLoaded(false);
         IsChanged(false);
@@ -151,7 +151,7 @@ SINT32 VTYPRecord::Unload()
         return 1;
     }
 
-SINT32 VTYPRecord::WriteRecord(FileWriter &writer)
+int32_t VTYPRecord::WriteRecord(FileWriter &writer)
     {
         WRITE(EDID);
         WRITE(DNAM);

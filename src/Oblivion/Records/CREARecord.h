@@ -44,12 +44,12 @@ class CREARecord : public Record //Creature
     private:
         struct CREADATA
             {
-            UINT8   creatureType, combat, magic, stealth, soul;
-            UINT8   unused1;
-            UINT16  health;
-            UINT8   unused2[2];
-            UINT16  attackDamage;
-            UINT8   strength, intelligence, willpower, agility, speed, endurance, personality, luck;
+            uint8_t   creatureType, combat, magic, stealth, soul;
+            uint8_t   unused1;
+            uint16_t  health;
+            uint8_t   unused2[2];
+            uint16_t  attackDamage;
+            uint8_t   strength, intelligence, willpower, agility, speed, endurance, personality, luck;
 
             CREADATA();
             ~CREADATA();
@@ -60,9 +60,9 @@ class CREARecord : public Record //Creature
 
         struct CREASound //Sound
             {
-            ReqSimpleSubRecord<UINT32> CSDT; //Sound Type
+            ReqSimpleSubRecord<uint32_t> CSDT; //Sound Type
             ReqSimpleSubRecord<FORMID> CSDI; //Sound
-            ReqSimpleSubRecord<UINT8>  CSDC; //Sound Chance
+            ReqSimpleSubRecord<uint8_t>  CSDC; //Sound Chance
 
             enum eSoundType
                 {
@@ -98,8 +98,8 @@ class CREARecord : public Record //Creature
             void   IsDeath(bool value);
             bool   IsWeapon();
             void   IsWeapon(bool value);
-            bool   IsType(UINT32 Type);
-            void   SetType(UINT32 Type);
+            bool   IsType(uint32_t Type);
+            void   SetType(uint32_t Type);
 
             void   Write(FileWriter &writer);
 
@@ -183,7 +183,7 @@ class CREARecord : public Record //Creature
         OrderedSparseArray<FORMID> PKID; //Packages
         UnorderedPackedStrings KFFZ; //Animations
         ReqSubRecord<CREADATA> DATA; //Data
-        ReqSimpleSubRecord<UINT8, 32> RNAM; //Attack reach
+        ReqSimpleSubRecord<uint8_t, 32> RNAM; //Attack reach
         OptSimpleSubRecord<FORMID> ZNAM; //Combat Style
         ReqSimpleFloatSubRecord<flt_0> TNAM; //Turning Speed
         ReqSimpleFloatSubRecord<flt_1> BNAM; //Base Scale
@@ -251,8 +251,8 @@ class CREARecord : public Record //Creature
         void   IsNoCorpseCheck(bool value);
         bool   IsCorpseCheck();
         void   IsCorpseCheck(bool value);
-        bool   IsFlagMask(UINT32 Mask, bool Exact=false);
-        void   SetFlagMask(UINT32 Mask);
+        bool   IsFlagMask(uint32_t Mask, bool Exact=false);
+        void   SetFlagMask(uint32_t Mask);
 
         bool   IsCreature();
         void   IsCreature(bool value);
@@ -266,8 +266,8 @@ class CREARecord : public Record //Creature
         void   IsHorse(bool value);
         bool   IsGiant();
         void   IsGiant(bool value);
-        bool   IsType(UINT8 Type);
-        void   SetType(UINT8 Type);
+        bool   IsType(uint8_t Type);
+        void   SetType(uint8_t Type);
 
         bool   IsNoSoul();
         void   IsNoSoul(bool value);
@@ -281,8 +281,8 @@ class CREARecord : public Record //Creature
         void   IsGreaterSoul(bool value);
         bool   IsGrandSoul();
         void   IsGrandSoul(bool value);
-        bool   IsSoul(UINT8 Type);
-        void   SetSoul(UINT8 Type);
+        bool   IsSoul(uint8_t Type);
+        void   SetSoul(uint8_t Type);
 
         bool   IsServicesWeapons();
         void   IsServicesWeapons(bool value);
@@ -312,20 +312,20 @@ class CREARecord : public Record //Creature
         void   IsServicesRecharge(bool value);
         bool   IsServicesRepair();
         void   IsServicesRepair(bool value);
-        bool   IsServicesFlagMask(UINT32 Mask, bool Exact=false);
-        void   SetServicesFlagMask(UINT32 Mask);
+        bool   IsServicesFlagMask(uint32_t Mask, bool Exact=false);
+        void   SetServicesFlagMask(uint32_t Mask);
 
-        UINT32 GetFieldAttribute(DEFAULTED_FIELD_IDENTIFIERS, UINT32 WhichAttribute=0);
+        uint32_t GetFieldAttribute(DEFAULTED_FIELD_IDENTIFIERS, uint32_t WhichAttribute=0);
         void * GetField(DEFAULTED_FIELD_IDENTIFIERS, void **FieldValues=NULL);
-        bool   SetField(DEFAULTED_FIELD_IDENTIFIERS, void *FieldValue=NULL, UINT32 ArraySize=0);
+        bool   SetField(DEFAULTED_FIELD_IDENTIFIERS, void *FieldValue=NULL, uint32_t ArraySize=0);
         void   DeleteField(DEFAULTED_FIELD_IDENTIFIERS);
 
-        UINT32 GetType();
-        STRING GetStrType();
+        uint32_t GetType();
+        char * GetStrType();
 
-        SINT32 ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk=false);
-        SINT32 Unload();
-        SINT32 WriteRecord(FileWriter &writer);
+        int32_t ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk=false);
+        int32_t Unload();
+        int32_t WriteRecord(FileWriter &writer);
 
         bool operator ==(const CREARecord &other) const;
         bool operator !=(const CREARecord &other) const;

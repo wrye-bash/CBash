@@ -39,32 +39,32 @@
 #include "GenericRecord.h"
 #include "TES4Record.h" //Is shared across all mod types
 
-class Collection;
+struct Collection;
 
-class ModFile
+struct ModFile
     {
     public:
         boost::iostreams::mapped_file_source file_map;
 
-        STRING FileName;
-        STRING ModName;
+        char * FileName;
+        char * ModName;
 
         unsigned char *buffer_start, *buffer_position, *buffer_end;
 
-        boost::unordered_set<UINT32> filter_records;
+        boost::unordered_set<uint32_t> filter_records;
         boost::unordered_set<FORMID> filter_wspaces;
         bool filter_inclusive;
 
         FormIDHandlerClass FormIDHandler;
         ModFlags Flags;
         time_t ModTime;
-        UINT32 ModID;
+        uint32_t ModID;
 
         Collection *Parent;
 
         TES4Record TES4;
 
-        ModFile(Collection *_Parent, STRING FileName, STRING ModName, const UINT32 _flags);
+        ModFile(Collection *_Parent, char * FileName, char * ModName, const uint32_t _flags);
         virtual ~ModFile();
 
         bool operator <(ModFile &other);
@@ -76,27 +76,27 @@ class ModFile
         bool   Open();
         bool   Close();
 
-        virtual SINT32   LoadTES4() abstract {};
-        virtual SINT32   Load(RecordOp &read_parser, RecordOp &indexer, std::vector<FormIDResolver *> &Expanders, std::vector<Record *> &DeletedRecords) abstract {};
-        virtual UINT32   GetNumRecords(const UINT32 &RecordType) abstract {};
-        virtual Record * CreateRecord(const UINT32 &RecordType, STRING const &RecordEditorID, Record *&SourceRecord, Record *&ParentRecord, CreationFlags &options) abstract {};
-        virtual SINT32   DeleteRecord(Record *&curRecord, RecordOp &deindexer) abstract {};
-        virtual SINT32   Save(STRING const &SaveName, std::vector<FormIDResolver *> &Expanders, bool CloseMod, RecordOp &indexer) abstract {};
+        virtual int32_t   LoadTES4() abstract {};
+        virtual int32_t   Load(RecordOp &read_parser, RecordOp &indexer, std::vector<FormIDResolver *> &Expanders, std::vector<Record *> &DeletedRecords) abstract {};
+        virtual uint32_t   GetNumRecords(const uint32_t &RecordType) abstract {};
+        virtual Record * CreateRecord(const uint32_t &RecordType, char * const &RecordEditorID, Record *&SourceRecord, Record *&ParentRecord, CreationFlags &options) abstract {};
+        virtual int32_t   DeleteRecord(Record *&curRecord, RecordOp &deindexer) abstract {};
+        virtual int32_t   Save(char * const &SaveName, std::vector<FormIDResolver *> &Expanders, bool CloseMod, RecordOp &indexer) abstract {};
 
-        virtual void     SetFilter(bool inclusive, boost::unordered_set<UINT32> &RecordTypes, boost::unordered_set<FORMID> &WorldSpaces) abstract {};
+        virtual void     SetFilter(bool inclusive, boost::unordered_set<uint32_t> &RecordTypes, boost::unordered_set<FORMID> &WorldSpaces) abstract {};
 
         virtual void     VisitAllRecords(RecordOp &op) abstract {};
-        virtual void     VisitRecords(const UINT32 &RecordType, RecordOp &op) abstract {};
+        virtual void     VisitRecords(const uint32_t &RecordType, RecordOp &op) abstract {};
     };
 
 class FormIDMasterUpdater : public FormIDOp
     {
     private:
         FormIDHandlerClass &FormIDHandler;
-        const UINT8 &ExpandedIndex;
-        const UINT8 &CollapsedIndex;
-        const UINT8 (&ExpandTable)[256];
-        const UINT8 (&CollapseTable)[256];
+        const uint8_t &ExpandedIndex;
+        const uint8_t &CollapsedIndex;
+        const uint8_t (&ExpandTable)[256];
+        const uint8_t (&CollapseTable)[256];
 
     public:
         FormIDMasterUpdater(FormIDHandlerClass &_FormIDHandler);
@@ -104,6 +104,6 @@ class FormIDMasterUpdater : public FormIDOp
         FormIDMasterUpdater(Record *RecordID);
         ~FormIDMasterUpdater();
 
-        bool Accept(UINT32 &curFormID);
-        bool AcceptMGEF(UINT32 &curMgefCode);
+        bool Accept(uint32_t &curFormID);
+        bool AcceptMGEF(uint32_t &curMgefCode);
     };

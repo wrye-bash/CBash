@@ -42,8 +42,8 @@ class Property
 {
 public:
     NonNullStringRecord name;
-    UINT8 type;
-    UINT8 status;
+    uint8_t type;
+    uint8_t status;
 
     enum statusFlags
         {
@@ -75,17 +75,17 @@ public:
     bool IsIntArray() const;
     bool IsFloatArray() const;
     bool IsBoolArray() const;
-    bool IsType(UINT8 Type) const;
+    bool IsType(uint8_t Type) const;
 
     bool IsEdited() const;
     void IsEdited(bool value);
     bool IsRemoved() const;
     void IsRemoved(bool value);
-    bool IsStatusMask(UINT8 Mask, bool Exact=false);
-    void SetStatusMask(UINT8 Mask);
+    bool IsStatusMask(uint8_t Mask, bool Exact=false);
+    void SetStatusMask(uint8_t Mask);
 
-    virtual UINT32 GetSize() const = 0;
-    virtual void Read(unsigned char *&buffer, const SINT16 &version, const SINT16 &objFormat, const bool &CompressedOnDisk) = 0;
+    virtual uint32_t GetSize() const = 0;
+    virtual void Read(unsigned char *&buffer, const int16_t &version, const int16_t &objFormat, const bool &CompressedOnDisk) = 0;
     virtual void Write(FileWriter &writer) = 0;
     virtual bool equals(const Property *other) const = 0;
     virtual Property * Copy() const = 0;

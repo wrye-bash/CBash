@@ -38,7 +38,7 @@
 
 namespace Ob
 {
-UINT32 LVSPRecord::GetFieldAttribute(FIELD_IDENTIFIERS, UINT32 WhichAttribute)
+uint32_t LVSPRecord::GetFieldAttribute(FIELD_IDENTIFIERS, uint32_t WhichAttribute)
     {
     switch(FieldID)
         {
@@ -74,7 +74,7 @@ UINT32 LVSPRecord::GetFieldAttribute(FIELD_IDENTIFIERS, UINT32 WhichAttribute)
                     case 0: //fieldType
                         return LIST_FIELD;
                     case 1: //fieldSize
-                        return (UINT32)Entries.value.size();
+                        return (uint32_t)Entries.value.size();
                     default:
                         return UNKNOWN_FIELD;
                     }
@@ -164,21 +164,21 @@ void * LVSPRecord::GetField(FIELD_IDENTIFIERS, void **FieldValues)
     return NULL;
     }
 
-bool LVSPRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
+bool LVSPRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, uint32_t ArraySize)
     {
     switch(FieldID)
         {
         case 1: //flags1
-            SetHeaderFlagMask(*(UINT32 *)FieldValue);
+            SetHeaderFlagMask(*(uint32_t *)FieldValue);
             break;
         case 3: //flags2
-            SetHeaderUnknownFlagMask(*(UINT32 *)FieldValue);
+            SetHeaderUnknownFlagMask(*(uint32_t *)FieldValue);
             break;
         case 4: //eid
-            EDID.Copy((STRING)FieldValue);
+            EDID.Copy((char *)FieldValue);
             break;
         case 5: //chanceNone
-            LVLD.value = *(UINT8 *)FieldValue;
+            LVLD.value = *(uint8_t *)FieldValue;
             if((LVLD.value & fAltCalcFromAllLevels) != 0)
                 {
                 LVLD.value &= ~fAltCalcFromAllLevels;
@@ -186,7 +186,7 @@ bool LVSPRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
                 }
             break;
         case 6: //flags
-            SetFlagMask(*(UINT8 *)FieldValue);
+            SetFlagMask(*(uint8_t *)FieldValue);
             break;
         case 9: //entries
             if(ListFieldID == 0) //entriesSize
@@ -201,7 +201,7 @@ bool LVSPRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             switch(ListFieldID)
                 {
                 case 1: //level
-                    Entries.value[ListIndex]->level = *(SINT16 *)FieldValue;
+                    Entries.value[ListIndex]->level = *(int16_t *)FieldValue;
                     break;
                 case 2: //unused1
                     if(ArraySize != 2)
@@ -213,7 +213,7 @@ bool LVSPRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
                     Entries.value[ListIndex]->listId = *(FORMID *)FieldValue;
                     return true;
                 case 4: //count
-                    Entries.value[ListIndex]->count = *(SINT16 *)FieldValue;
+                    Entries.value[ListIndex]->count = *(int16_t *)FieldValue;
                     break;
                 case 5: //unused2
                     if(ArraySize != 2)

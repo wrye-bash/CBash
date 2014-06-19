@@ -38,7 +38,7 @@
 
 namespace Ob
 {
-UINT32 CELLRecord::GetFieldAttribute(FIELD_IDENTIFIERS, UINT32 WhichAttribute)
+uint32_t CELLRecord::GetFieldAttribute(FIELD_IDENTIFIERS, uint32_t WhichAttribute)
     {
     switch(FieldID)
         {
@@ -137,7 +137,7 @@ UINT32 CELLRecord::GetFieldAttribute(FIELD_IDENTIFIERS, UINT32 WhichAttribute)
                 case 0: //fieldType
                     return FORMID_ARRAY_FIELD;
                 case 1: //fieldSize
-                    return (UINT32)XCLR.value.size();
+                    return (uint32_t)XCLR.value.size();
                 default:
                     return UNKNOWN_FIELD;
                 }
@@ -176,7 +176,7 @@ UINT32 CELLRecord::GetFieldAttribute(FIELD_IDENTIFIERS, UINT32 WhichAttribute)
                 case 0: //fieldType
                     return SUBRECORD_ARRAY_FIELD;
                 case 1: //fieldSize
-                    return (UINT32)ACHR.size();
+                    return (uint32_t)ACHR.size();
                 default:
                     return UNKNOWN_FIELD;
                 }
@@ -187,7 +187,7 @@ UINT32 CELLRecord::GetFieldAttribute(FIELD_IDENTIFIERS, UINT32 WhichAttribute)
                 case 0: //fieldType
                     return SUBRECORD_ARRAY_FIELD;
                 case 1: //fieldSize
-                    return (UINT32)ACRE.size();
+                    return (uint32_t)ACRE.size();
                 default:
                     return UNKNOWN_FIELD;
                 }
@@ -198,7 +198,7 @@ UINT32 CELLRecord::GetFieldAttribute(FIELD_IDENTIFIERS, UINT32 WhichAttribute)
                 case 0: //fieldType
                     return SUBRECORD_ARRAY_FIELD;
                 case 1: //fieldSize
-                    return (UINT32)REFR.size();
+                    return (uint32_t)REFR.size();
                 default:
                     return UNKNOWN_FIELD;
                 }
@@ -292,15 +292,15 @@ void * CELLRecord::GetField(FIELD_IDENTIFIERS, void **FieldValues)
         case 34: //water
             return XCWT.IsLoaded() ? &XCWT.value : NULL;
         case 35: //ACHR
-            for(UINT32 p = 0;p < (UINT32)ACHR.size();++p)
+            for(uint32_t p = 0;p < (uint32_t)ACHR.size();++p)
                 ((RECORDIDARRAY)FieldValues)[p] = ACHR[p];
             return NULL;
         case 36: //ACRE
-            for(UINT32 p = 0;p < (UINT32)ACRE.size();++p)
+            for(uint32_t p = 0;p < (uint32_t)ACRE.size();++p)
                 ((RECORDIDARRAY)FieldValues)[p] = ACRE[p];
             return NULL;
         case 37: //REFR
-            for(UINT32 p = 0;p < (UINT32)REFR.size();++p)
+            for(uint32_t p = 0;p < (uint32_t)REFR.size();++p)
                 ((RECORDIDARRAY)FieldValues)[p] = REFR[p];
             return NULL;
         case 38: //PGRD
@@ -315,36 +315,36 @@ void * CELLRecord::GetField(FIELD_IDENTIFIERS, void **FieldValues)
     return NULL;
     }
 
-bool CELLRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
+bool CELLRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, uint32_t ArraySize)
     {
     switch(FieldID)
         {
         case 1: //flags1
-            SetHeaderFlagMask(*(UINT32 *)FieldValue);
+            SetHeaderFlagMask(*(uint32_t *)FieldValue);
             break;
         case 3: //flags2
-            SetHeaderUnknownFlagMask(*(UINT32 *)FieldValue);
+            SetHeaderUnknownFlagMask(*(uint32_t *)FieldValue);
             break;
         case 4: //eid
-            EDID.Copy((STRING)FieldValue);
+            EDID.Copy((char *)FieldValue);
             break;
         case 5: //full
-            FULL.Copy((STRING)FieldValue);
+            FULL.Copy((char *)FieldValue);
             break;
         case 6: //flags
-            SetFlagMask(*(UINT8 *)FieldValue);
+            SetFlagMask(*(uint8_t *)FieldValue);
             break;
         case 7: //ambientRed
             XCLL.Load();
-            XCLL->ambient.red = *(UINT8 *)FieldValue;
+            XCLL->ambient.red = *(uint8_t *)FieldValue;
             break;
         case 8: //ambientGreen
             XCLL.Load();
-            XCLL->ambient.green = *(UINT8 *)FieldValue;
+            XCLL->ambient.green = *(uint8_t *)FieldValue;
             break;
         case 9: //ambientBlue
             XCLL.Load();
-            XCLL->ambient.blue = *(UINT8 *)FieldValue;
+            XCLL->ambient.blue = *(uint8_t *)FieldValue;
             break;
         case 10: //unused1
             if(ArraySize != 1)
@@ -354,15 +354,15 @@ bool CELLRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             break;
         case 11: //directionalRed
             XCLL.Load();
-            XCLL->directional.red = *(UINT8 *)FieldValue;
+            XCLL->directional.red = *(uint8_t *)FieldValue;
             break;
         case 12: //directionalGreen
             XCLL.Load();
-            XCLL->directional.green = *(UINT8 *)FieldValue;
+            XCLL->directional.green = *(uint8_t *)FieldValue;
             break;
         case 13: //directionalBlue
             XCLL.Load();
-            XCLL->directional.blue = *(UINT8 *)FieldValue;
+            XCLL->directional.blue = *(uint8_t *)FieldValue;
             break;
         case 14: //unused2
             if(ArraySize != 1)
@@ -372,15 +372,15 @@ bool CELLRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             break;
         case 15: //fogRed
             XCLL.Load();
-            XCLL->fog.red = *(UINT8 *)FieldValue;
+            XCLL->fog.red = *(uint8_t *)FieldValue;
             break;
         case 16: //fogGreen
             XCLL.Load();
-            XCLL->fog.green = *(UINT8 *)FieldValue;
+            XCLL->fog.green = *(uint8_t *)FieldValue;
             break;
         case 17: //fogBlue
             XCLL.Load();
-            XCLL->fog.blue = *(UINT8 *)FieldValue;
+            XCLL->fog.blue = *(uint8_t *)FieldValue;
             break;
         case 18: //unused3
             if(ArraySize != 1)
@@ -390,30 +390,30 @@ bool CELLRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             break;
         case 19: //fogNear
             XCLL.Load();
-            XCLL->fogNear = *(FLOAT32 *)FieldValue;
+            XCLL->fogNear = *(float *)FieldValue;
             break;
         case 20: //fogFar
             XCLL.Load();
-            XCLL->fogFar = *(FLOAT32 *)FieldValue;
+            XCLL->fogFar = *(float *)FieldValue;
             break;
         case 21: //directionalXY
             XCLL.Load();
-            XCLL->directionalXY = *(SINT32 *)FieldValue;
+            XCLL->directionalXY = *(int32_t *)FieldValue;
             break;
         case 22: //directionalZ
             XCLL.Load();
-            XCLL->directionalZ = *(SINT32 *)FieldValue;
+            XCLL->directionalZ = *(int32_t *)FieldValue;
             break;
         case 23: //directionalFade
             XCLL.Load();
-            XCLL->directionalFade = *(FLOAT32 *)FieldValue;
+            XCLL->directionalFade = *(float *)FieldValue;
             break;
         case 24: //fogClip
             XCLL.Load();
-            XCLL->fogClip = *(FLOAT32 *)FieldValue;
+            XCLL->fogClip = *(float *)FieldValue;
             break;
         case 25: //musicType
-            SetMusicType(*(UINT8 *)FieldValue);
+            SetMusicType(*(uint8_t *)FieldValue);
             break;
         case 26: //owner
             Ownership.Load();
@@ -422,7 +422,7 @@ bool CELLRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
         case 27: //rank
             Ownership.Load();
             Ownership->XRNK.Load();
-            *Ownership->XRNK.value = *(SINT32 *)FieldValue;
+            *Ownership->XRNK.value = *(int32_t *)FieldValue;
             break;
         case 28: //globalVariable
             Ownership.Load();
@@ -434,24 +434,24 @@ bool CELLRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             return true;
         case 30: //waterHeight
             XCLW.Load();
-            XCLW.value = *(FLOAT32 *)FieldValue;
+            XCLW.value = *(float *)FieldValue;
             break;
         case 31: //regions
             XCLR.resize(ArraySize);
-            for(UINT32 x = 0; x < ArraySize; ++x)
+            for(uint32_t x = 0; x < ArraySize; ++x)
                 XCLR.value[x] = ((FORMIDARRAY)FieldValue)[x];
             return true;
         case 32: //posX
             if(IsInterior())
                 break;
             XCLC.Load();
-            XCLC->posX = *(SINT32 *)FieldValue;
+            XCLC->posX = *(int32_t *)FieldValue;
             break;
         case 33: //posY
             if(IsInterior())
                 break;
             XCLC.Load();
-            XCLC->posY = *(SINT32 *)FieldValue;
+            XCLC->posY = *(int32_t *)FieldValue;
             break;
         case 34: //water
             XCWT.Load();

@@ -38,7 +38,7 @@
 
 namespace FNV
 {
-UINT32 NPC_Record::GetFieldAttribute(FIELD_IDENTIFIERS, UINT32 WhichAttribute)
+uint32_t NPC_Record::GetFieldAttribute(FIELD_IDENTIFIERS, uint32_t WhichAttribute)
     {
     switch(FieldID)
         {
@@ -114,7 +114,7 @@ UINT32 NPC_Record::GetFieldAttribute(FIELD_IDENTIFIERS, UINT32 WhichAttribute)
                     case 0: //fieldType
                         return LIST_FIELD;
                     case 1: //fieldSize
-                        return (UINT32)MODL->Textures.MODS.size();
+                        return (uint32_t)MODL->Textures.MODS.size();
                     default:
                         return UNKNOWN_FIELD;
                     }
@@ -165,7 +165,7 @@ UINT32 NPC_Record::GetFieldAttribute(FIELD_IDENTIFIERS, UINT32 WhichAttribute)
                     case 0: //fieldType
                         return LIST_FIELD;
                     case 1: //fieldSize
-                        return (UINT32)SNAM.value.size();
+                        return (uint32_t)SNAM.value.size();
                     default:
                         return UNKNOWN_FIELD;
                     }
@@ -209,7 +209,7 @@ UINT32 NPC_Record::GetFieldAttribute(FIELD_IDENTIFIERS, UINT32 WhichAttribute)
                 case 0: //fieldType
                     return FORMID_ARRAY_FIELD;
                 case 1: //fieldSize
-                    return (UINT32)SPLO.value.size();
+                    return (uint32_t)SPLO.value.size();
                 default:
                     return UNKNOWN_FIELD;
                 }
@@ -246,7 +246,7 @@ UINT32 NPC_Record::GetFieldAttribute(FIELD_IDENTIFIERS, UINT32 WhichAttribute)
                     case 0: //fieldType
                         return LIST_FIELD;
                     case 1: //fieldSize
-                        return (UINT32)Destructable->Stages.value.size();
+                        return (uint32_t)Destructable->Stages.value.size();
                     default:
                         return UNKNOWN_FIELD;
                     }
@@ -299,7 +299,7 @@ UINT32 NPC_Record::GetFieldAttribute(FIELD_IDENTIFIERS, UINT32 WhichAttribute)
                     case 0: //fieldType
                         return LIST_FIELD;
                     case 1: //fieldSize
-                        return (UINT32)CNTO.value.size();
+                        return (uint32_t)CNTO.value.size();
                     default:
                         return UNKNOWN_FIELD;
                     }
@@ -373,7 +373,7 @@ UINT32 NPC_Record::GetFieldAttribute(FIELD_IDENTIFIERS, UINT32 WhichAttribute)
                 case 0: //fieldType
                     return FORMID_ARRAY_FIELD;
                 case 1: //fieldSize
-                    return (UINT32)PKID.value.size();
+                    return (uint32_t)PKID.value.size();
                 default:
                     return UNKNOWN_FIELD;
                 }
@@ -458,7 +458,7 @@ UINT32 NPC_Record::GetFieldAttribute(FIELD_IDENTIFIERS, UINT32 WhichAttribute)
                 case 0: //fieldType
                     return FORMID_ARRAY_FIELD;
                 case 1: //fieldSize
-                    return (UINT32)PNAM.value.size();
+                    return (uint32_t)PNAM.value.size();
                 default:
                     return UNKNOWN_FIELD;
                 }
@@ -857,12 +857,12 @@ void * NPC_Record::GetField(FIELD_IDENTIFIERS, void **FieldValues)
     return NULL;
     }
 
-bool NPC_Record::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
+bool NPC_Record::SetField(FIELD_IDENTIFIERS, void *FieldValue, uint32_t ArraySize)
     {
     switch(FieldID)
         {
         case 1: //flags1
-            SetHeaderFlagMask(*(UINT32 *)FieldValue);
+            SetHeaderFlagMask(*(uint32_t *)FieldValue);
             break;
         case 3: //versionControl1
             if(ArraySize != 4)
@@ -873,10 +873,10 @@ bool NPC_Record::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             ((UINT8ARRAY)&flagsUnk)[3] = ((UINT8ARRAY)FieldValue)[3];
             break;
         case 4: //eid
-            EDID.Copy((STRING)FieldValue);
+            EDID.Copy((char *)FieldValue);
             break;
         case 5: //formVersion
-            formVersion = *(UINT16 *)FieldValue;
+            formVersion = *(uint16_t *)FieldValue;
             break;
         case 6: //versionControl2
             if(ArraySize != 2)
@@ -886,38 +886,38 @@ bool NPC_Record::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             break;
         case 7:  //boundX1
             OBND.Load();
-            OBND.value.x1 = *(SINT16 *)FieldValue;
+            OBND.value.x1 = *(int16_t *)FieldValue;
             break;
         case 8: //boundY1
             OBND.Load();
-            OBND.value.y1 = *(SINT16 *)FieldValue;
+            OBND.value.y1 = *(int16_t *)FieldValue;
             break;
         case 9: //boundZ1
             OBND.Load();
-            OBND.value.z1 = *(SINT16 *)FieldValue;
+            OBND.value.z1 = *(int16_t *)FieldValue;
             break;
         case 10: //boundX2
             OBND.Load();
-            OBND.value.x2 = *(SINT16 *)FieldValue;
+            OBND.value.x2 = *(int16_t *)FieldValue;
             break;
         case 11: //boundY2
             OBND.Load();
-            OBND.value.y2 = *(SINT16 *)FieldValue;
+            OBND.value.y2 = *(int16_t *)FieldValue;
             break;
         case 12: //boundZ2
             OBND.Load();
-            OBND.value.z2 = *(SINT16 *)FieldValue;
+            OBND.value.z2 = *(int16_t *)FieldValue;
             break;
         case 13: //full
-            FULL.Copy((STRING)FieldValue);
+            FULL.Copy((char *)FieldValue);
             break;
         case 14: //modPath
             MODL.Load();
-            MODL->MODL.Copy((STRING)FieldValue);
+            MODL->MODL.Copy((char *)FieldValue);
             break;
         case 15: //modb
             MODL.Load();
-            MODL->MODB.value = *(FLOAT32 *)FieldValue;
+            MODL->MODB.value = *(float *)FieldValue;
             break;
         case 16: //modt_p
             MODL.Load();
@@ -941,16 +941,16 @@ bool NPC_Record::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
                     MODL->Textures.MODS[ListIndex]->name = NULL;
                     if(FieldValue != NULL)
                         {
-                        ArraySize = (UINT32)strlen((STRING)FieldValue) + 1;
+                        ArraySize = (uint32_t)strlen((char *)FieldValue) + 1;
                         MODL->Textures.MODS[ListIndex]->name = new char[ArraySize];
-                        strcpy_s(MODL->Textures.MODS[ListIndex]->name, ArraySize, (STRING)FieldValue);
+                        strcpy_s(MODL->Textures.MODS[ListIndex]->name, ArraySize, (char *)FieldValue);
                         }
                     break;
                 case 2: //texture
                     MODL->Textures.MODS[ListIndex]->texture = *(FORMID *)FieldValue;
                     return true;
                 case 3: //index
-                    MODL->Textures.MODS[ListIndex]->index = *(SINT32 *)FieldValue;
+                    MODL->Textures.MODS[ListIndex]->index = *(int32_t *)FieldValue;
                     break;
                 default:
                     break;
@@ -958,37 +958,37 @@ bool NPC_Record::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             break;
         case 18: //modelFlags
             MODL.Load();
-            MODL->SetFlagMask(*(UINT8 *)FieldValue);
+            MODL->SetFlagMask(*(uint8_t *)FieldValue);
             break;
         case 19: //flags
-            SetFlagMask(*(UINT32 *)FieldValue);
+            SetFlagMask(*(uint32_t *)FieldValue);
             break;
         case 20: //fatigue
-            ACBS.value.fatigue = *(UINT16 *)FieldValue;
+            ACBS.value.fatigue = *(uint16_t *)FieldValue;
             break;
         case 21: //barterGold
-            ACBS.value.barterGold = *(UINT16 *)FieldValue;
+            ACBS.value.barterGold = *(uint16_t *)FieldValue;
             break;
         case 22: //level
-            ACBS.value.level = *(SINT16 *)FieldValue;
+            ACBS.value.level = *(int16_t *)FieldValue;
             break;
         case 23: //calcMin
-            ACBS.value.calcMin = *(UINT16 *)FieldValue;
+            ACBS.value.calcMin = *(uint16_t *)FieldValue;
             break;
         case 24: //calcMax
-            ACBS.value.calcMax = *(UINT16 *)FieldValue;
+            ACBS.value.calcMax = *(uint16_t *)FieldValue;
             break;
         case 25: //speedMult
-            ACBS.value.speedMult = *(UINT16 *)FieldValue;
+            ACBS.value.speedMult = *(uint16_t *)FieldValue;
             break;
         case 26: //karma
-            ACBS.value.karma = *(FLOAT32 *)FieldValue;
+            ACBS.value.karma = *(float *)FieldValue;
             break;
         case 27: //dispBase
-            ACBS.value.dispBase = *(SINT16 *)FieldValue;
+            ACBS.value.dispBase = *(int16_t *)FieldValue;
             break;
         case 28: //templateFlags
-            SetTemplateFlagMask(*(UINT16 *)FieldValue);
+            SetTemplateFlagMask(*(uint16_t *)FieldValue);
             break;
         case 29: //factions
             if(ListFieldID == 0) //altTexturesSize
@@ -1006,7 +1006,7 @@ bool NPC_Record::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
                     SNAM.value[ListIndex]->faction = *(FORMID *)FieldValue;
                     return true;
                 case 2: //rank
-                    SNAM.value[ListIndex]->rank = *(UINT8 *)FieldValue;
+                    SNAM.value[ListIndex]->rank = *(uint8_t *)FieldValue;
                     break;
                 case 3: //unused1
                     if(ArraySize != 3)
@@ -1033,26 +1033,26 @@ bool NPC_Record::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             return true;
         case 34: //actorEffects
             SPLO.resize(ArraySize);
-            for(UINT32 x = 0; x < ArraySize; x++)
+            for(uint32_t x = 0; x < ArraySize; x++)
                 SPLO.value[x] = ((FORMIDARRAY)FieldValue)[x];
             return true;
         case 35: //unarmedEffect
             EITM.value = *(FORMID *)FieldValue;
             return true;
         case 36: //unarmedAnim
-            EAMT.value = *(UINT16 *)FieldValue;
+            EAMT.value = *(uint16_t *)FieldValue;
             break;
         case 37: //destructableHealth
             Destructable.Load();
-            Destructable->DEST.value.health = *(SINT32 *)FieldValue;
+            Destructable->DEST.value.health = *(int32_t *)FieldValue;
             break;
         case 38: //destructableCount
             Destructable.Load();
-            Destructable->DEST.value.count = *(UINT8 *)FieldValue;
+            Destructable->DEST.value.count = *(uint8_t *)FieldValue;
             break;
         case 39: //destructableFlags
             Destructable.Load();
-            Destructable->SetFlagMask(*(UINT8 *)FieldValue);
+            Destructable->SetFlagMask(*(uint8_t *)FieldValue);
             break;
         case 40: //destructableUnused1
             if(ArraySize != 2)
@@ -1075,19 +1075,19 @@ bool NPC_Record::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             switch(ListFieldID)
                 {
                 case 1: //health
-                    Destructable->Stages.value[ListIndex]->DSTD.value.health = *(UINT8 *)FieldValue;
+                    Destructable->Stages.value[ListIndex]->DSTD.value.health = *(uint8_t *)FieldValue;
                     break;
                 case 2: //index
-                    Destructable->Stages.value[ListIndex]->DSTD.value.index = *(UINT8 *)FieldValue;
+                    Destructable->Stages.value[ListIndex]->DSTD.value.index = *(uint8_t *)FieldValue;
                     break;
                 case 3: //stage
-                    Destructable->Stages.value[ListIndex]->DSTD.value.stage = *(UINT8 *)FieldValue;
+                    Destructable->Stages.value[ListIndex]->DSTD.value.stage = *(uint8_t *)FieldValue;
                     break;
                 case 4: //flags
-                    Destructable->Stages.value[ListIndex]->SetFlagMask(*(UINT8 *)FieldValue);
+                    Destructable->Stages.value[ListIndex]->SetFlagMask(*(uint8_t *)FieldValue);
                     break;
                 case 5: //dps
-                    Destructable->Stages.value[ListIndex]->DSTD.value.dps = *(SINT32 *)FieldValue;
+                    Destructable->Stages.value[ListIndex]->DSTD.value.dps = *(int32_t *)FieldValue;
                     break;
                 case 6: //explosion
                     Destructable->Stages.value[ListIndex]->DSTD.value.explosion = *(FORMID *)FieldValue;
@@ -1096,10 +1096,10 @@ bool NPC_Record::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
                     Destructable->Stages.value[ListIndex]->DSTD.value.debris = *(FORMID *)FieldValue;
                     return true;
                 case 8: //debrisCount
-                    Destructable->Stages.value[ListIndex]->DSTD.value.debrisCount = *(SINT32 *)FieldValue;
+                    Destructable->Stages.value[ListIndex]->DSTD.value.debrisCount = *(int32_t *)FieldValue;
                     break;
                 case 9: //modPath
-                    Destructable->Stages.value[ListIndex]->DMDL.Copy((STRING)FieldValue);
+                    Destructable->Stages.value[ListIndex]->DMDL.Copy((char *)FieldValue);
                     break;
                 case 10: //modt_p
                     Destructable->Stages.value[ListIndex]->DMDT.Copy((UINT8ARRAY)FieldValue, ArraySize);
@@ -1127,7 +1127,7 @@ bool NPC_Record::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
                     CNTO.value[ListIndex]->CNTO.value.item = *(FORMID *)FieldValue;
                     return true;
                 case 2: //count
-                    CNTO.value[ListIndex]->CNTO.value.count = *(SINT32 *)FieldValue;
+                    CNTO.value[ListIndex]->CNTO.value.count = *(int32_t *)FieldValue;
                     break;
                 case 3: //owner
                     CNTO.value[ListIndex]->COED.Load();
@@ -1139,28 +1139,28 @@ bool NPC_Record::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
                     return true;
                 case 5: //condition
                     CNTO.value[ListIndex]->COED.Load();
-                    CNTO.value[ListIndex]->COED->condition = *(FLOAT32 *)FieldValue;
+                    CNTO.value[ListIndex]->COED->condition = *(float *)FieldValue;
                     break;
                 default:
                     break;
                 }
             break;
         case 44: //aggression
-            SetAggressionType(*(UINT8 *)FieldValue);
+            SetAggressionType(*(uint8_t *)FieldValue);
             break;
         case 45: //confidence
-            SetConfidenceType(*(UINT8 *)FieldValue);
+            SetConfidenceType(*(uint8_t *)FieldValue);
             break;
         case 46: //energyLevel
             AIDT.Load();
-            AIDT->energyLevel = *(UINT8 *)FieldValue;
+            AIDT->energyLevel = *(uint8_t *)FieldValue;
             break;
         case 47: //responsibility
             AIDT.Load();
-            AIDT->responsibility = *(UINT8 *)FieldValue;
+            AIDT->responsibility = *(uint8_t *)FieldValue;
             break;
         case 48: //mood
-            SetMoodType(*(UINT8 *)FieldValue);
+            SetMoodType(*(uint8_t *)FieldValue);
             break;
         case 49: //unused1
             if(ArraySize != 3)
@@ -1171,29 +1171,29 @@ bool NPC_Record::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             AIDT->unused1[2] = ((UINT8ARRAY)FieldValue)[2];
             break;
         case 50: //services
-            SetServicesFlagMask(*(UINT32 *)FieldValue);
+            SetServicesFlagMask(*(uint32_t *)FieldValue);
             break;
         case 51: //trainSkill
             AIDT.Load();
-            AIDT->trainSkill = *(SINT8 *)FieldValue;
+            AIDT->trainSkill = *(int8_t *)FieldValue;
             break;
         case 52: //trainLevel
             AIDT.Load();
-            AIDT->trainLevel = *(UINT8 *)FieldValue;
+            AIDT->trainLevel = *(uint8_t *)FieldValue;
             break;
         case 53: //assistance
-            SetAssistanceType(*(UINT8 *)FieldValue);
+            SetAssistanceType(*(uint8_t *)FieldValue);
             break;
         case 54: //aggroFlags
-            SetAggroFlagMask(*(UINT8 *)FieldValue);
+            SetAggroFlagMask(*(uint8_t *)FieldValue);
             break;
         case 55: //aggroRadius
             AIDT.Load();
-            AIDT->aggroRadius = *(SINT32 *)FieldValue;
+            AIDT->aggroRadius = *(int32_t *)FieldValue;
             break;
         case 56: //aiPackages
             PKID.resize(ArraySize);
-            for(UINT32 x = 0; x < ArraySize; x++)
+            for(uint32_t x = 0; x < ArraySize; x++)
                 PKID.value[x] = ((FORMIDARRAY)FieldValue)[x];
             return true;
         case 57: //iclass
@@ -1201,151 +1201,151 @@ bool NPC_Record::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             return true;
         case 58: //baseHealth
             DATA.Load();
-            DATA->baseHealth = *(SINT32 *)FieldValue;
+            DATA->baseHealth = *(int32_t *)FieldValue;
             break;
         case 59: //strength
             DATA.Load();
-            DATA->strength = *(UINT8 *)FieldValue;
+            DATA->strength = *(uint8_t *)FieldValue;
             break;
         case 60: //perception
             DATA.Load();
-            DATA->perception = *(UINT8 *)FieldValue;
+            DATA->perception = *(uint8_t *)FieldValue;
             break;
         case 61: //endurance
             DATA.Load();
-            DATA->endurance = *(UINT8 *)FieldValue;
+            DATA->endurance = *(uint8_t *)FieldValue;
             break;
         case 62: //charisma
             DATA.Load();
-            DATA->charisma = *(UINT8 *)FieldValue;
+            DATA->charisma = *(uint8_t *)FieldValue;
             break;
         case 63: //intelligence
             DATA.Load();
-            DATA->intelligence = *(UINT8 *)FieldValue;
+            DATA->intelligence = *(uint8_t *)FieldValue;
             break;
         case 64: //agility
             DATA.Load();
-            DATA->agility = *(UINT8 *)FieldValue;
+            DATA->agility = *(uint8_t *)FieldValue;
             break;
         case 65: //luck
             DATA.Load();
-            DATA->luck = *(UINT8 *)FieldValue;
+            DATA->luck = *(uint8_t *)FieldValue;
             break;
         case 66: //barter
             DNAM.Load();
-            DNAM->barter = *(UINT8 *)FieldValue;
+            DNAM->barter = *(uint8_t *)FieldValue;
             break;
         case 67: //bigGuns
             DNAM.Load();
-            DNAM->bigGuns = *(UINT8 *)FieldValue;
+            DNAM->bigGuns = *(uint8_t *)FieldValue;
             break;
         case 68: //energy
             DNAM.Load();
-            DNAM->energy = *(UINT8 *)FieldValue;
+            DNAM->energy = *(uint8_t *)FieldValue;
             break;
         case 69: //explosives
             DNAM.Load();
-            DNAM->explosives = *(UINT8 *)FieldValue;
+            DNAM->explosives = *(uint8_t *)FieldValue;
             break;
         case 70: //lockpick
             DNAM.Load();
-            DNAM->lockpick = *(UINT8 *)FieldValue;
+            DNAM->lockpick = *(uint8_t *)FieldValue;
             break;
         case 71: //medicine
             DNAM.Load();
-            DNAM->medicine = *(UINT8 *)FieldValue;
+            DNAM->medicine = *(uint8_t *)FieldValue;
             break;
         case 72: //melee
             DNAM.Load();
-            DNAM->melee = *(UINT8 *)FieldValue;
+            DNAM->melee = *(uint8_t *)FieldValue;
             break;
         case 73: //repair
             DNAM.Load();
-            DNAM->repair = *(UINT8 *)FieldValue;
+            DNAM->repair = *(uint8_t *)FieldValue;
             break;
         case 74: //science
             DNAM.Load();
-            DNAM->science = *(UINT8 *)FieldValue;
+            DNAM->science = *(uint8_t *)FieldValue;
             break;
         case 75: //guns
             DNAM.Load();
-            DNAM->guns = *(UINT8 *)FieldValue;
+            DNAM->guns = *(uint8_t *)FieldValue;
             break;
         case 76: //sneak
             DNAM.Load();
-            DNAM->sneak = *(UINT8 *)FieldValue;
+            DNAM->sneak = *(uint8_t *)FieldValue;
             break;
         case 77: //speech
             DNAM.Load();
-            DNAM->speech = *(UINT8 *)FieldValue;
+            DNAM->speech = *(uint8_t *)FieldValue;
             break;
         case 78: //survival
             DNAM.Load();
-            DNAM->survival = *(UINT8 *)FieldValue;
+            DNAM->survival = *(uint8_t *)FieldValue;
             break;
         case 79: //unarmed
             DNAM.Load();
-            DNAM->unarmed = *(UINT8 *)FieldValue;
+            DNAM->unarmed = *(uint8_t *)FieldValue;
             break;
         case 80: //barterBoost
             DNAM.Load();
-            DNAM->barterBoost = *(UINT8 *)FieldValue;
+            DNAM->barterBoost = *(uint8_t *)FieldValue;
             break;
         case 81: //bigGunsBoost
             DNAM.Load();
-            DNAM->bigGunsBoost = *(UINT8 *)FieldValue;
+            DNAM->bigGunsBoost = *(uint8_t *)FieldValue;
             break;
         case 82: //energyBoost
             DNAM.Load();
-            DNAM->energyBoost = *(UINT8 *)FieldValue;
+            DNAM->energyBoost = *(uint8_t *)FieldValue;
             break;
         case 83: //explosivesBoost
             DNAM.Load();
-            DNAM->explosivesBoost = *(UINT8 *)FieldValue;
+            DNAM->explosivesBoost = *(uint8_t *)FieldValue;
             break;
         case 84: //lockpickBoost
             DNAM.Load();
-            DNAM->lockpickBoost = *(UINT8 *)FieldValue;
+            DNAM->lockpickBoost = *(uint8_t *)FieldValue;
             break;
         case 85: //medicineBoost
             DNAM.Load();
-            DNAM->medicineBoost = *(UINT8 *)FieldValue;
+            DNAM->medicineBoost = *(uint8_t *)FieldValue;
             break;
         case 86: //meleeBoost
             DNAM.Load();
-            DNAM->meleeBoost = *(UINT8 *)FieldValue;
+            DNAM->meleeBoost = *(uint8_t *)FieldValue;
             break;
         case 87: //repairBoost
             DNAM.Load();
-            DNAM->repairBoost = *(UINT8 *)FieldValue;
+            DNAM->repairBoost = *(uint8_t *)FieldValue;
             break;
         case 88: //scienceBoost
             DNAM.Load();
-            DNAM->scienceBoost = *(UINT8 *)FieldValue;
+            DNAM->scienceBoost = *(uint8_t *)FieldValue;
             break;
         case 89: //gunsBoost
             DNAM.Load();
-            DNAM->gunsBoost = *(UINT8 *)FieldValue;
+            DNAM->gunsBoost = *(uint8_t *)FieldValue;
             break;
         case 90: //sneakBoost
             DNAM.Load();
-            DNAM->sneakBoost = *(UINT8 *)FieldValue;
+            DNAM->sneakBoost = *(uint8_t *)FieldValue;
             break;
         case 91: //speechBoost
             DNAM.Load();
-            DNAM->speechBoost = *(UINT8 *)FieldValue;
+            DNAM->speechBoost = *(uint8_t *)FieldValue;
             break;
         case 92: //survivalBoost
             DNAM.Load();
-            DNAM->survivalBoost = *(UINT8 *)FieldValue;
+            DNAM->survivalBoost = *(uint8_t *)FieldValue;
             break;
         case 93: //unarmedBoost
             DNAM.Load();
-            DNAM->unarmedBoost = *(UINT8 *)FieldValue;
+            DNAM->unarmedBoost = *(uint8_t *)FieldValue;
             break;
         case 94: //headParts
             PNAM.resize(ArraySize);
-            for(UINT32 x = 0; x < ArraySize; x++)
+            for(uint32_t x = 0; x < ArraySize; x++)
                 PNAM.value[x] = ((FORMIDARRAY)FieldValue)[x];
             return true;
         case 95: //hair
@@ -1353,22 +1353,22 @@ bool NPC_Record::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             return true;
         case 96: //hairLength
             LNAM.Load();
-            *LNAM.value = *(FLOAT32 *)FieldValue;
+            *LNAM.value = *(float *)FieldValue;
             break;
         case 97: //eyes
             ENAM.value = *(FORMID *)FieldValue;
             return true;
         case 98: //hairRed
             HCLR.Load();
-            HCLR->red = *(UINT8 *)FieldValue;
+            HCLR->red = *(uint8_t *)FieldValue;
             break;
         case 99: //hairGreen
             HCLR.Load();
-            HCLR->green = *(UINT8 *)FieldValue;
+            HCLR->green = *(uint8_t *)FieldValue;
             break;
         case 100: //hairBlue
             HCLR.Load();
-            HCLR->blue = *(UINT8 *)FieldValue;
+            HCLR->blue = *(uint8_t *)FieldValue;
             break;
         case 101: //unused2
             if(ArraySize != 1)
@@ -1380,7 +1380,7 @@ bool NPC_Record::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             ZNAM.value = *(FORMID *)FieldValue;
             return true;
         case 103: //impactType
-            SetImpactType(*(UINT32 *)FieldValue);
+            SetImpactType(*(uint32_t *)FieldValue);
             break;
         case 104: //FGGS
             FGGS.Copy((UINT8ARRAY)FieldValue, ArraySize);
@@ -1392,15 +1392,15 @@ bool NPC_Record::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             FGTS.Copy((UINT8ARRAY)FieldValue, ArraySize);
             break;
         case 107: //unknown
-            NAM5.value = *(UINT16 *)FieldValue;
+            NAM5.value = *(uint16_t *)FieldValue;
             break;
         case 108: //height
             NAM6.Load();
-            *NAM6.value = *(FLOAT32 *)FieldValue;
+            *NAM6.value = *(float *)FieldValue;
             break;
         case 109: //weight
             NAM7.Load();
-            *NAM7.value = *(FLOAT32 *)FieldValue;
+            *NAM7.value = *(float *)FieldValue;
             break;
         default:
             break;

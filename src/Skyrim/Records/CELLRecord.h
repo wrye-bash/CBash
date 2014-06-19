@@ -44,8 +44,8 @@ class CELLRecord : public TES5Record //Cell
     private:
         struct CELLXCLC
             {
-            SINT32  posX, posY;
-            UINT32  flags; //Not always present in chunk
+            int32_t  posX, posY;
+            uint32_t  flags; //Not always present in chunk
 
             CELLXCLC();
             ~CELLXCLC();
@@ -90,13 +90,13 @@ class CELLRecord : public TES5Record //Cell
     public:
         StringRecord EDID; //Editor ID
         StringRecord FULL; //Name
-        ReqSimpleSubRecord<UINT8> DATA; //Flags
+        ReqSimpleSubRecord<uint8_t> DATA; //Flags
         OptSubRecord<CELLXCLC> XCLC; //Grid
 //      OptSubRecord<TES5LIGHT> XCLL; //Lighting
         UnorderedSparseArray<GENIMPS *> IMPS; //Swapped Impact
         OptSubRecord<GENIMPF> IMPF; //Footstep Materials
         ReqSimpleSubRecord<FORMID> LTMP; //Light Template
-        ReqSimpleSubRecord<UINT32> LNAM; //Light Inherit Flags
+        ReqSimpleSubRecord<uint32_t> LNAM; //Light Inherit Flags
         SimpleFloatSubRecord<flt_max> XCLW; //waterHeight
         StringRecord XNAM; //Water Noise Texture
         UnorderedPackedArray<FORMID> XCLR; //Regions
@@ -150,8 +150,8 @@ class CELLRecord : public TES5Record //Cell
         void   IsHandChanged(bool value);
         bool   IsBehaveLikeExterior();
         void   IsBehaveLikeExterior(bool value);
-        bool   IsFlagMask(UINT8 Mask, bool Exact=false);
-        void   SetFlagMask(UINT8 Mask);
+        bool   IsFlagMask(uint8_t Mask, bool Exact=false);
+        void   SetFlagMask(uint8_t Mask);
 
         bool   IsQuad1ForceHidden();
         void   IsQuad1ForceHidden(bool value);
@@ -161,8 +161,8 @@ class CELLRecord : public TES5Record //Cell
         void   IsQuad3ForceHidden(bool value);
         bool   IsQuad4ForceHidden();
         void   IsQuad4ForceHidden(bool value);
-        bool   IsQuadFlagMask(UINT32 Mask, bool Exact=false);
-        void   SetQuadFlagMask(UINT32 Mask);
+        bool   IsQuadFlagMask(uint32_t Mask, bool Exact=false);
+        void   SetQuadFlagMask(uint32_t Mask);
 
         bool   IsLightAmbientInherited();
         void   IsLightAmbientInherited(bool value);
@@ -182,20 +182,20 @@ class CELLRecord : public TES5Record //Cell
         void   IsLightFogClipInherited(bool value);
         bool   IsLightFogPowerInherited();
         void   IsLightFogPowerInherited(bool value);
-        bool   IsLightFlagMask(UINT32 Mask, bool Exact=false);
-        void   SetLightFlagMask(UINT32 Mask);
+        bool   IsLightFlagMask(uint32_t Mask, bool Exact=false);
+        void   SetLightFlagMask(uint32_t Mask);
 
-        UINT32 GetFieldAttribute(DEFAULTED_FIELD_IDENTIFIERS, UINT32 WhichAttribute=0);
+        uint32_t GetFieldAttribute(DEFAULTED_FIELD_IDENTIFIERS, uint32_t WhichAttribute=0);
         void * GetField(DEFAULTED_FIELD_IDENTIFIERS, void **FieldValues=NULL);
-        bool   SetField(DEFAULTED_FIELD_IDENTIFIERS, void *FieldValue=NULL, UINT32 ArraySize=0);
+        bool   SetField(DEFAULTED_FIELD_IDENTIFIERS, void *FieldValue=NULL, uint32_t ArraySize=0);
         void   DeleteField(DEFAULTED_FIELD_IDENTIFIERS);
 
-        UINT32 GetType();
-        STRING GetStrType();
+        uint32_t GetType();
+        char * GetStrType();
 
-        SINT32 ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk=false);
-        SINT32 Unload();
-        SINT32 WriteRecord(FileWriter &writer);
+        int32_t ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk=false);
+        int32_t Unload();
+        int32_t WriteRecord(FileWriter &writer);
 
         bool operator ==(const CELLRecord &other) const;
         bool operator !=(const CELLRecord &other) const;

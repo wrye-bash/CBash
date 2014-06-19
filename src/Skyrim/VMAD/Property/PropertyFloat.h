@@ -42,10 +42,10 @@
 class PropertyFloat : public Property
 {
 public:
-    FLOAT32 value;
+    float value;
 
-    virtual UINT32 GetSize() const;
-    virtual void Read(unsigned char *&buffer, const SINT16 &version, const SINT16 &objFormat, const bool &CompressedOnDisk);
+    virtual uint32_t GetSize() const;
+    virtual void Read(unsigned char *&buffer, const int16_t &version, const int16_t &objFormat, const bool &CompressedOnDisk);
     virtual void Write(FileWriter &writer);
     virtual bool equals(const Property *other) const;
     virtual Property * Copy() const;
@@ -53,11 +53,11 @@ public:
     PropertyFloat & operator = (const PropertyFloat &other);
 };
 
-class PropertyFloatArray : public Property, public std::vector<FLOAT32>
+class PropertyFloatArray : public Property, public std::vector<float>
 {
 public:
-    virtual UINT32 GetSize() const;
-    virtual void Read(unsigned char *&buffer, const SINT16 &version, const SINT16 &objFormat, const bool &CompressedOnDisk);
+    virtual uint32_t GetSize() const;
+    virtual void Read(unsigned char *&buffer, const int16_t &version, const int16_t &objFormat, const bool &CompressedOnDisk);
     virtual void Write(FileWriter &writer);
     virtual bool equals(const Property *other) const;
     virtual Property * Copy() const;

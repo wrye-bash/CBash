@@ -38,7 +38,7 @@
 
 namespace FNV
 {
-UINT32 ARMORecord::GetFieldAttribute(FIELD_IDENTIFIERS, UINT32 WhichAttribute)
+uint32_t ARMORecord::GetFieldAttribute(FIELD_IDENTIFIERS, uint32_t WhichAttribute)
     {
     switch(FieldID)
         {
@@ -131,7 +131,7 @@ UINT32 ARMORecord::GetFieldAttribute(FIELD_IDENTIFIERS, UINT32 WhichAttribute)
                     case 0: //fieldType
                         return LIST_FIELD;
                     case 1: //fieldSize
-                        return (UINT32)MODL->Textures.MODS.size();
+                        return (uint32_t)MODL->Textures.MODS.size();
                     default:
                         return UNKNOWN_FIELD;
                     }
@@ -179,7 +179,7 @@ UINT32 ARMORecord::GetFieldAttribute(FIELD_IDENTIFIERS, UINT32 WhichAttribute)
                     case 0: //fieldType
                         return LIST_FIELD;
                     case 1: //fieldSize
-                        return (UINT32)MOD2->Textures.MODS.size();
+                        return (uint32_t)MOD2->Textures.MODS.size();
                     default:
                         return UNKNOWN_FIELD;
                     }
@@ -229,7 +229,7 @@ UINT32 ARMORecord::GetFieldAttribute(FIELD_IDENTIFIERS, UINT32 WhichAttribute)
                     case 0: //fieldType
                         return LIST_FIELD;
                     case 1: //fieldSize
-                        return (UINT32)MOD3->Textures.MODS.size();
+                        return (uint32_t)MOD3->Textures.MODS.size();
                     default:
                         return UNKNOWN_FIELD;
                     }
@@ -276,7 +276,7 @@ UINT32 ARMORecord::GetFieldAttribute(FIELD_IDENTIFIERS, UINT32 WhichAttribute)
                     case 0: //fieldType
                         return LIST_FIELD;
                     case 1: //fieldSize
-                        return (UINT32)MOD4->Textures.MODS.size();
+                        return (uint32_t)MOD4->Textures.MODS.size();
                     default:
                         return UNKNOWN_FIELD;
                     }
@@ -346,7 +346,7 @@ UINT32 ARMORecord::GetFieldAttribute(FIELD_IDENTIFIERS, UINT32 WhichAttribute)
                     case 0: //fieldType
                         return LIST_FIELD;
                     case 1: //fieldSize
-                        return (UINT32)Sounds.value.size();
+                        return (uint32_t)Sounds.value.size();
                     default:
                         return UNKNOWN_FIELD;
                     }
@@ -594,12 +594,12 @@ void * ARMORecord::GetField(FIELD_IDENTIFIERS, void **FieldValues)
     return NULL;
     }
 
-bool ARMORecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
+bool ARMORecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, uint32_t ArraySize)
     {
     switch(FieldID)
         {
         case 1: //flags1
-            SetHeaderFlagMask(*(UINT32 *)FieldValue);
+            SetHeaderFlagMask(*(uint32_t *)FieldValue);
             break;
         case 3: //versionControl1
             if(ArraySize != 4)
@@ -610,10 +610,10 @@ bool ARMORecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             ((UINT8ARRAY)&flagsUnk)[3] = ((UINT8ARRAY)FieldValue)[3];
             break;
         case 4: //eid
-            EDID.Copy((STRING)FieldValue);
+            EDID.Copy((char *)FieldValue);
             break;
         case 5: //formVersion
-            formVersion = *(UINT16 *)FieldValue;
+            formVersion = *(uint16_t *)FieldValue;
             break;
         case 6: //versionControl2
             if(ArraySize != 2)
@@ -622,25 +622,25 @@ bool ARMORecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             versionControl2[1] = ((UINT8ARRAY)FieldValue)[1];
             break;
         case 7: //boundX1
-            OBND.value.x1 = *(SINT16 *)FieldValue;
+            OBND.value.x1 = *(int16_t *)FieldValue;
             break;
         case 8: //boundY1
-            OBND.value.y1 = *(SINT16 *)FieldValue;
+            OBND.value.y1 = *(int16_t *)FieldValue;
             break;
         case 9: //boundZ1
-            OBND.value.z1 = *(SINT16 *)FieldValue;
+            OBND.value.z1 = *(int16_t *)FieldValue;
             break;
         case 10: //boundX2
-            OBND.value.x2 = *(SINT16 *)FieldValue;
+            OBND.value.x2 = *(int16_t *)FieldValue;
             break;
         case 11: //boundY2
-            OBND.value.y2 = *(SINT16 *)FieldValue;
+            OBND.value.y2 = *(int16_t *)FieldValue;
             break;
         case 12: //boundZ2
-            OBND.value.z2 = *(SINT16 *)FieldValue;
+            OBND.value.z2 = *(int16_t *)FieldValue;
             break;
         case 13: //full
-            FULL.Copy((STRING)FieldValue);
+            FULL.Copy((char *)FieldValue);
             break;
         case 14: //script
             SCRI.value = *(FORMID *)FieldValue;
@@ -649,10 +649,10 @@ bool ARMORecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             EITM.value = *(FORMID *)FieldValue;
             return true;
         case 16: //flags
-            SetFlagMask(*(UINT32 *)FieldValue);
+            SetFlagMask(*(uint32_t *)FieldValue);
             break;
         case 17: //extraFlags
-            SetExtraFlagMask(*(UINT8 *)FieldValue);
+            SetExtraFlagMask(*(uint8_t *)FieldValue);
             break;
         case 18: //unused1
             if(ArraySize != 3)
@@ -663,7 +663,7 @@ bool ARMORecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             break;
         case 19: //male_modPath
             MODL.Load();
-            MODL->MODL.Copy((STRING)FieldValue);
+            MODL->MODL.Copy((char *)FieldValue);
             break;
         case 20: //male_modt_p
             MODL.Load();
@@ -687,16 +687,16 @@ bool ARMORecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
                     MODL->Textures.MODS[ListIndex]->name = NULL;
                     if(FieldValue != NULL)
                         {
-                        ArraySize = (UINT32)strlen((STRING)FieldValue) + 1;
+                        ArraySize = (uint32_t)strlen((char *)FieldValue) + 1;
                         MODL->Textures.MODS[ListIndex]->name = new char[ArraySize];
-                        strcpy_s(MODL->Textures.MODS[ListIndex]->name, ArraySize, (STRING)FieldValue);
+                        strcpy_s(MODL->Textures.MODS[ListIndex]->name, ArraySize, (char *)FieldValue);
                         }
                     break;
                 case 2: //texture
                     MODL->Textures.MODS[ListIndex]->texture = *(FORMID *)FieldValue;
                     return true;
                 case 3: //index
-                    MODL->Textures.MODS[ListIndex]->index = *(SINT32 *)FieldValue;
+                    MODL->Textures.MODS[ListIndex]->index = *(int32_t *)FieldValue;
                     break;
                 default:
                     break;
@@ -704,11 +704,11 @@ bool ARMORecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             break;
         case 22: //male_modelFlags
             MODL.Load();
-            MODL->MODD.value = *(UINT8 *)FieldValue;
+            MODL->MODD.value = *(uint8_t *)FieldValue;
             break;
         case 23: //maleWorld_modPath
             MOD2.Load();
-            MOD2->MODL.Copy((STRING)FieldValue);
+            MOD2->MODL.Copy((char *)FieldValue);
             break;
         case 24: //maleWorld_modt_p
             MOD2.Load();
@@ -732,30 +732,30 @@ bool ARMORecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
                     MOD2->Textures.MODS[ListIndex]->name = NULL;
                     if(FieldValue != NULL)
                         {
-                        ArraySize = (UINT32)strlen((STRING)FieldValue) + 1;
+                        ArraySize = (uint32_t)strlen((char *)FieldValue) + 1;
                         MOD2->Textures.MODS[ListIndex]->name = new char[ArraySize];
-                        strcpy_s(MOD2->Textures.MODS[ListIndex]->name, ArraySize, (STRING)FieldValue);
+                        strcpy_s(MOD2->Textures.MODS[ListIndex]->name, ArraySize, (char *)FieldValue);
                         }
                     break;
                 case 2: //texture
                     MOD2->Textures.MODS[ListIndex]->texture = *(FORMID *)FieldValue;
                     return true;
                 case 3: //index
-                    MOD2->Textures.MODS[ListIndex]->index = *(SINT32 *)FieldValue;
+                    MOD2->Textures.MODS[ListIndex]->index = *(int32_t *)FieldValue;
                     break;
                 default:
                     break;
                 }
             break;
         case 26: //maleIconPath
-            ICON.Copy((STRING)FieldValue);
+            ICON.Copy((char *)FieldValue);
             break;
         case 27: //maleSmallIconPath
-            MICO.Copy((STRING)FieldValue);
+            MICO.Copy((char *)FieldValue);
             break;
         case 28: //female_modPath
             MOD3.Load();
-            MOD3->MODL.Copy((STRING)FieldValue);
+            MOD3->MODL.Copy((char *)FieldValue);
             break;
         case 29: //female_modt_p
             MOD3.Load();
@@ -779,16 +779,16 @@ bool ARMORecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
                     MOD3->Textures.MODS[ListIndex]->name = NULL;
                     if(FieldValue != NULL)
                         {
-                        ArraySize = (UINT32)strlen((STRING)FieldValue) + 1;
+                        ArraySize = (uint32_t)strlen((char *)FieldValue) + 1;
                         MOD3->Textures.MODS[ListIndex]->name = new char[ArraySize];
-                        strcpy_s(MOD3->Textures.MODS[ListIndex]->name, ArraySize, (STRING)FieldValue);
+                        strcpy_s(MOD3->Textures.MODS[ListIndex]->name, ArraySize, (char *)FieldValue);
                         }
                     break;
                 case 2: //texture
                     MOD3->Textures.MODS[ListIndex]->texture = *(FORMID *)FieldValue;
                     return true;
                 case 3: //index
-                    MOD3->Textures.MODS[ListIndex]->index = *(SINT32 *)FieldValue;
+                    MOD3->Textures.MODS[ListIndex]->index = *(int32_t *)FieldValue;
                     break;
                 default:
                     break;
@@ -796,11 +796,11 @@ bool ARMORecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             break;
         case 31: //female_modelFlags
             MOD3.Load();
-            MOD3->MODD.value = *(UINT8 *)FieldValue;
+            MOD3->MODD.value = *(uint8_t *)FieldValue;
             break;
         case 32: //femaleWorld_modPath
             MOD4.Load();
-            MOD4->MODL.Copy((STRING)FieldValue);
+            MOD4->MODL.Copy((char *)FieldValue);
             break;
         case 33: //femaleWorld_modt_p
             MOD4.Load();
@@ -824,29 +824,29 @@ bool ARMORecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
                     MOD4->Textures.MODS[ListIndex]->name = NULL;
                     if(FieldValue != NULL)
                         {
-                        ArraySize = (UINT32)strlen((STRING)FieldValue) + 1;
+                        ArraySize = (uint32_t)strlen((char *)FieldValue) + 1;
                         MOD4->Textures.MODS[ListIndex]->name = new char[ArraySize];
-                        strcpy_s(MOD4->Textures.MODS[ListIndex]->name, ArraySize, (STRING)FieldValue);
+                        strcpy_s(MOD4->Textures.MODS[ListIndex]->name, ArraySize, (char *)FieldValue);
                         }
                     break;
                 case 2: //texture
                     MOD4->Textures.MODS[ListIndex]->texture = *(FORMID *)FieldValue;
                     return true;
                 case 3: //index
-                    MOD4->Textures.MODS[ListIndex]->index = *(SINT32 *)FieldValue;
+                    MOD4->Textures.MODS[ListIndex]->index = *(int32_t *)FieldValue;
                     break;
                 default:
                     break;
                 }
             break;
         case 35: //femaleIconPath
-            ICO2.Copy((STRING)FieldValue);
+            ICO2.Copy((char *)FieldValue);
             break;
         case 36: //femaleSmallIconPath
-            MIC2.Copy((STRING)FieldValue);
+            MIC2.Copy((char *)FieldValue);
             break;
         case 37: //ragdollTemplatePath
-            BMCT.Copy((STRING)FieldValue);
+            BMCT.Copy((char *)FieldValue);
             break;
         case 38: //repairList
             REPL.value = *(FORMID *)FieldValue;
@@ -855,7 +855,7 @@ bool ARMORecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             BIPL.value = *(FORMID *)FieldValue;
             return true;
         case 40: //equipmentType
-            SetEquipmentType(*(SINT32 *)FieldValue);
+            SetEquipmentType(*(int32_t *)FieldValue);
             break;
         case 41: //pickupSound
             YNAM.value = *(FORMID *)FieldValue;
@@ -864,22 +864,22 @@ bool ARMORecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             ZNAM.value = *(FORMID *)FieldValue;
             return true;
         case 43: //value
-            DATA.value.value = *(SINT32 *)FieldValue;
+            DATA.value.value = *(int32_t *)FieldValue;
             break;
         case 44: //health
-            DATA.value.health = *(SINT32 *)FieldValue;
+            DATA.value.health = *(int32_t *)FieldValue;
             break;
         case 45: //weight
-            DATA.value.weight = *(FLOAT32 *)FieldValue;
+            DATA.value.weight = *(float *)FieldValue;
             break;
         case 46: //AR
-            DNAM.value.AR = *(SINT16 *)FieldValue;
+            DNAM.value.AR = *(int16_t *)FieldValue;
             break;
         case 47: //voiceFlags
-            SetVoiceFlagMask(*(UINT16 *)FieldValue);
+            SetVoiceFlagMask(*(uint16_t *)FieldValue);
             break;
         case 48: //DT
-            DNAM.value.DT = *(FLOAT32 *)FieldValue;
+            DNAM.value.DT = *(float *)FieldValue;
             break;
         case 49: //unknown1
             if(ArraySize != 4)
@@ -890,7 +890,7 @@ bool ARMORecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             DNAM.value.unknown[3] = ((UINT8ARRAY)FieldValue)[3];
             break;
         case 50: //overrideSounds
-            SetOverrideType(*(UINT32 *)FieldValue);
+            SetOverrideType(*(uint32_t *)FieldValue);
             break;
         case 51: //sounds
             if(ListFieldID == 0) //soundsSize
@@ -908,7 +908,7 @@ bool ARMORecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
                     Sounds.value[ListIndex]->sound = *(FORMID *)FieldValue;
                     return true;
                 case 2: //chance
-                    Sounds.value[ListIndex]->chance = *(UINT8 *)FieldValue;
+                    Sounds.value[ListIndex]->chance = *(uint8_t *)FieldValue;
                     break;
                 case 3: //unused1
                     if(ArraySize != 3)
@@ -918,7 +918,7 @@ bool ARMORecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
                     Sounds.value[ListIndex]->unused1[2] = ((UINT8ARRAY)FieldValue)[2];
                     break;
                 case 4: //type
-                    Sounds.value[ListIndex]->type = *(UINT32 *)FieldValue;
+                    Sounds.value[ListIndex]->type = *(uint32_t *)FieldValue;
                     break;
                 default:
                     break;

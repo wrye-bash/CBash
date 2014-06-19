@@ -70,7 +70,7 @@ void VMADRecord::Load()
 
 void VMADRecord::Unload()
 {
-    for (UINT16 i = 0; i, scripts.size(); ++i)
+    for (uint16_t i = 0; i, scripts.size(); ++i)
         delete scripts[i];
     scripts.clear();
     delete fragment;
@@ -79,18 +79,18 @@ void VMADRecord::Unload()
 
 void VMADRecord::VisitFormIDs(FormIDOp &op)
 {
-    for (UINT16 i = 0; i < scripts.size(); ++i)
+    for (uint16_t i = 0; i < scripts.size(); ++i)
         scripts[i]->VisitFormIDs(op);
     if (fragment != NULL)
         fragment->VisitFormIDs(op);
 }
 
-UINT32 VMADRecord::GetSize() const
+uint32_t VMADRecord::GetSize() const
 {
     // version + objFormat + scriptCount
-    UINT32 total = sizeof(SINT16) + sizeof(SINT16) + sizeof(UINT16);
+    uint32_t total = sizeof(int16_t) + sizeof(int16_t) + sizeof(uint16_t);
     // scripts
-    for (UINT16 i = 0; i < scripts.size(); ++i)
+    for (uint16_t i = 0; i < scripts.size(); ++i)
         total += scripts[i]->GetSize();
     // script fragments
     if (fragment != NULL)
@@ -98,20 +98,20 @@ UINT32 VMADRecord::GetSize() const
     return total;
 }
 
-void VMADRecord::Read(unsigned char *&buffer, const UINT32 &subSize, const UINT32 &recordType, bool CompressedOnDisk)
+void VMADRecord::Read(unsigned char *&buffer, const uint32_t &subSize, const uint32_t &recordType, bool CompressedOnDisk)
 {
     unsigned char *end_buffer = buffer + subSize;
 
     // objFormat/version
-    SINT16 version = *(SINT16 *)buffer;
+    int16_t version = *(int16_t *)buffer;
     buffer += 2;
-    SINT16 objFormat = *(SINT16 *)buffer;
+    int16_t objFormat = *(int16_t *)buffer;
     buffer += 2;
 
     // Scripts
-    UINT16 count = *(UINT16 *)buffer;
+    uint16_t count = *(uint16_t *)buffer;
     buffer += 2;
-    for (UINT16 i = 0; i < count; ++i)
+    for (uint16_t i = 0; i < count; ++i)
     {
         scripts.push_back(new Script);
         scripts.back()->Read(buffer, version, objFormat, CompressedOnDisk);
@@ -155,7 +155,7 @@ void VMADRecord::Read(unsigned char *&buffer, const UINT32 &subSize, const UINT3
     buffer = end_buffer;
 }
 
-void VMADRecord::Write(UINT32 _Type, FileWriter &writer)
+void VMADRecord::Write(uint32_t _Type, FileWriter &writer)
 {
     if (!IsLoaded())
         return;
@@ -163,24 +163,24 @@ void VMADRecord::Write(UINT32 _Type, FileWriter &writer)
     ReqWrite(_Type, writer);
 }
 
-void VMADRecord::ReqWrite(UINT32 _Type, FileWriter &writer)
+void VMADRecord::ReqWrite(uint32_t _Type, FileWriter &writer)
 {
     // Subrecord header
     writer.record_write_subheader(_Type, GetSize());
 
     // version: always write in version 5
-    SINT16 version = 5;
+    int16_t version = 5;
     writer.record_write(&version, 2);
     // objFormat: always write in format 2
-    SINT16 objFormat = 2;
+    int16_t objFormat = 2;
     writer.record_write(&objFormat, 2);
 
     // scriptCount
-    UINT16 count = scripts.size();
+    uint16_t count = scripts.size();
     writer.record_write(&count, 2);
 
     // scripts
-    for (UINT16 i = 0; i < count; ++i)
+    for (uint16_t i = 0; i < count; ++i)
         scripts[i]->Write(writer);
 
     // script fragments
@@ -192,7 +192,7 @@ VMADRecord & VMADRecord::operator = (const VMADRecord &other)
 {
     Unload();
     // scripts
-    for (UINT16 i = 0; i < other.scripts.size(); ++i)
+    for (uint16_t i = 0; i < other.scripts.size(); ++i)
     {
         scripts.push_back(new Script);
         *(scripts.back()) = *(other.scripts[i]);
@@ -209,7 +209,7 @@ bool VMADRecord::operator == (const VMADRecord &other) const
     // Scripts
     if (scripts.size() != other.scripts.size())
         return false;
-    for (UINT16 i = 0; i < scripts.size(); ++i)
+    for (uint16_t i = 0; i < scripts.size(); ++i)
         if (*(scripts[i]) != *(other.scripts[i]))
             return false;
     // Script fragments

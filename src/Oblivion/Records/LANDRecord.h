@@ -44,9 +44,9 @@ class LANDRecord : public Record
     public:
         struct LANDNORMALS
             {
-            UINT8   x;
-            UINT8   y;
-            UINT8   z;
+            uint8_t   x;
+            uint8_t   y;
+            uint8_t   z;
 
             LANDNORMALS();
             ~LANDNORMALS();
@@ -65,9 +65,9 @@ class LANDRecord : public Record
 
         struct LANDVHGT
             {
-            FLOAT32 offset;
-            SINT8   VHGT[33][33];
-            UINT8   unused1[3];
+            float offset;
+            int8_t   VHGT[33][33];
+            uint8_t   unused1[3];
 
             LANDVHGT();
             ~LANDVHGT();
@@ -78,9 +78,9 @@ class LANDRecord : public Record
 
         struct LANDCOLORS
             {
-            UINT8   red;
-            UINT8   green;
-            UINT8   blue;
+            uint8_t   red;
+            uint8_t   green;
+            uint8_t   blue;
 
             LANDCOLORS();
             ~LANDCOLORS();
@@ -100,9 +100,9 @@ class LANDRecord : public Record
         struct LANDGENTXT
             {
             FORMID  texture;
-            UINT8   quadrant;
-            UINT8   unused1;
-            SINT16  layer;
+            uint8_t   quadrant;
+            uint8_t   unused1;
+            int16_t  layer;
 
             LANDGENTXT();
             ~LANDGENTXT();
@@ -113,9 +113,9 @@ class LANDRecord : public Record
 
         struct LANDVTXT
             {
-            UINT16  position;
-            UINT8   unused1[2];
-            FLOAT32 opacity;
+            uint16_t  position;
+            uint8_t   unused1[2];
+            float opacity;
 
             LANDVTXT();
             ~LANDVTXT();
@@ -155,14 +155,14 @@ class LANDRecord : public Record
         //struct LANDMERGED
         //    {//156B, 40*33*33 (1.319GB), 28B - 7B*33*33 (265MB)
         //    LANDPOINTS Points[33][33];
-        //    //UINT32 bottomLeftAlphas[8];
-        //    //UINT32 bottomRightAlphas[8];
-        //    //UINT32 topLeftAlphas[8];
-        //    //UINT32 topRightAlphas[8];
-        //    UINT32 bottomLeftBaseTexture;
-        //    UINT32 bottomRightBaseTexture;
-        //    UINT32 topLeftBaseTexture;
-        //    UINT32 topRightBaseTexture;
+        //    //uint32_t bottomLeftAlphas[8];
+        //    //uint32_t bottomRightAlphas[8];
+        //    //uint32_t topLeftAlphas[8];
+        //    //uint32_t topRightAlphas[8];
+        //    uint32_t bottomLeftBaseTexture;
+        //    uint32_t bottomRightBaseTexture;
+        //    uint32_t topLeftBaseTexture;
+        //    uint32_t topRightBaseTexture;
         //    float heightOffset;
         //    short bottomLeftBaseLayer;
         //    short bottomRightBaseLayer;
@@ -199,22 +199,22 @@ class LANDRecord : public Record
 
         bool    VisitFormIDs(FormIDOp &op);
 
-        UINT8   CalcQuadrant(const UINT32 &row, const UINT32 &column);
-        UINT16  CalcPosition(const UINT8 &curQuadrant, const UINT32 &row, const UINT32 &column);
-        FLOAT32 CalcHeight(const UINT32 &row, const UINT32 &column);
+        uint8_t   CalcQuadrant(const uint32_t &row, const uint32_t &column);
+        uint16_t  CalcPosition(const uint8_t &curQuadrant, const uint32_t &row, const uint32_t &column);
+        float CalcHeight(const uint32_t &row, const uint32_t &column);
 
-        UINT32  GetFieldAttribute(DEFAULTED_FIELD_IDENTIFIERS, UINT32 WhichAttribute=0);
+        uint32_t  GetFieldAttribute(DEFAULTED_FIELD_IDENTIFIERS, uint32_t WhichAttribute=0);
         void *  GetField(DEFAULTED_FIELD_IDENTIFIERS, void **FieldValues=NULL);
-        bool    SetField(DEFAULTED_FIELD_IDENTIFIERS, void *FieldValue=NULL, UINT32 ArraySize=0);
+        bool    SetField(DEFAULTED_FIELD_IDENTIFIERS, void *FieldValue=NULL, uint32_t ArraySize=0);
         void    DeleteField(DEFAULTED_FIELD_IDENTIFIERS);
 
-        UINT32  GetSize(bool forceCalc=false);
-        UINT32  GetType();
-        STRING  GetStrType();
+        uint32_t  GetSize(bool forceCalc=false);
+        uint32_t  GetType();
+        char *  GetStrType();
 
-        SINT32  ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk);
-        SINT32  Unload();
-        SINT32  WriteRecord(FileWriter &writer);
+        int32_t  ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk);
+        int32_t  Unload();
+        int32_t  WriteRecord(FileWriter &writer);
 
         bool operator ==(const LANDRecord &other) const;
         bool operator !=(const LANDRecord &other) const;

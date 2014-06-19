@@ -70,35 +70,35 @@ void EQUPRecord::IsUseAllParents(bool value)
         DATA.value = value ? 0x01 : 0x00;
     }
 
-UINT32 EQUPRecord::GetType()
+uint32_t EQUPRecord::GetType()
     {
         return REV32(EQUP);
     }
 
-STRING EQUPRecord::GetStrType()
+char * EQUPRecord::GetStrType()
     {
         return "EQUP";
     }
 
-SINT32 EQUPRecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk)
+int32_t EQUPRecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk)
     {
-        UINT32 subType = 0;
-        UINT32 subSize = 0;
+        uint32_t subType = 0;
+        uint32_t subSize = 0;
         while(buffer < end_buffer)
         {
-            subType = *(UINT32 *)buffer;
+            subType = *(uint32_t *)buffer;
             buffer += 4;
             switch(subType)
             {
                 case REV32(XXXX):
                     buffer += 2;
-                    subSize = *(UINT32 *)buffer;
+                    subSize = *(uint32_t *)buffer;
                     buffer += 4;
-                    subType = *(UINT32 *)buffer;
+                    subType = *(uint32_t *)buffer;
                     buffer += 6;
                     break;
                 default:
-                    subSize = *(UINT16 *)buffer;
+                    subSize = *(uint16_t *)buffer;
                     buffer += 2;
                     break;
             }
@@ -126,7 +126,7 @@ SINT32 EQUPRecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer,
         return 0;
     }
 
-SINT32 EQUPRecord::Unload()
+int32_t EQUPRecord::Unload()
     {
         IsLoaded(false);
         IsChanged(false);
@@ -136,7 +136,7 @@ SINT32 EQUPRecord::Unload()
         return 1;
     }
 
-SINT32 EQUPRecord::WriteRecord(FileWriter &writer)
+int32_t EQUPRecord::WriteRecord(FileWriter &writer)
     {
         WRITE(EDID);
         WRITE(PNAM);

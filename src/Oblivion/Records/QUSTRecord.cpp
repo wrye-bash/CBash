@@ -71,12 +71,12 @@ void QUSTRecord::QUSTEntry::IsCompletes(bool value)
     SETBIT(QSDT.value, fIsCompletes, value);
     }
 
-bool QUSTRecord::QUSTEntry::IsFlagMask(UINT8 Mask, bool Exact)
+bool QUSTRecord::QUSTEntry::IsFlagMask(uint8_t Mask, bool Exact)
     {
     return Exact ? ((QSDT.value & Mask) == Mask) : ((QSDT.value & Mask) != 0);
     }
 
-void QUSTRecord::QUSTEntry::SetFlagMask(UINT8 Mask)
+void QUSTRecord::QUSTEntry::SetFlagMask(uint8_t Mask)
     {
     QSDT.value = Mask;
     }
@@ -111,12 +111,12 @@ void QUSTRecord::QUSTEntry::IsEffect(bool value)
     SCHR.value.scriptType = value ? eEffect : eObject;
     }
 
-bool QUSTRecord::QUSTEntry::IsType(UINT16 Type)
+bool QUSTRecord::QUSTEntry::IsType(uint16_t Type)
     {
     return SCHR.value.scriptType == Type;
     }
 
-void QUSTRecord::QUSTEntry::SetType(UINT16 Type)
+void QUSTRecord::QUSTEntry::SetType(uint16_t Type)
     {
     SCHR.value.scriptType = Type;
     }
@@ -126,9 +126,9 @@ void QUSTRecord::QUSTEntry::Write(FileWriter &writer)
     WRITE(QSDT);
     CTDA.Write(writer, true);
     WRITE(CNAM);
-    SCHR.value.numRefs = (UINT32)SCR_.value.size(); //Just to ensure that the value is correct
+    SCHR.value.numRefs = (uint32_t)SCR_.value.size(); //Just to ensure that the value is correct
     SCHR.value.compiledSize = SCDA.GetSize(); //Just to ensure that the value is correct
-    //for(UINT32 x = 0; x < VARS.value.size(); ++x) //Just to ensure that the value is correct
+    //for(uint32_t x = 0; x < VARS.value.size(); ++x) //Just to ensure that the value is correct
     //    SCHR.value.lastIndex = (SCHR.value.lastIndex > VARS.value[x]->SLSD.value.index) ? SCHR.value.lastIndex : VARS.value[x]->SLSD.value.index;
     WRITE(SCHR);
     WRITE(SCDA);
@@ -202,12 +202,12 @@ void QUSTRecord::QUSTTarget::IsIgnoresLocks(bool value)
     SETBIT(QSTA.value.flags, fIsIgnoresLocks, value);
     }
 
-bool QUSTRecord::QUSTTarget::IsFlagMask(UINT8 Mask, bool Exact)
+bool QUSTRecord::QUSTTarget::IsFlagMask(uint8_t Mask, bool Exact)
     {
     return Exact ? ((QSTA.value.flags & Mask) == Mask) : ((QSTA.value.flags & Mask) != 0);
     }
 
-void QUSTRecord::QUSTTarget::SetFlagMask(UINT8 Mask)
+void QUSTRecord::QUSTTarget::SetFlagMask(uint8_t Mask)
     {
     QSTA.value.flags = Mask;
     }
@@ -272,25 +272,25 @@ bool QUSTRecord::VisitFormIDs(FormIDOp &op)
 
     if(SCRI.IsLoaded())
         op.Accept(SCRI.value);
-    for(UINT32 ListIndex = 0; ListIndex < CTDA.value.size(); ListIndex++)
+    for(uint32_t ListIndex = 0; ListIndex < CTDA.value.size(); ListIndex++)
         CTDA.value[ListIndex]->VisitFormIDs(op);
-    for(UINT32 ListIndex = 0; ListIndex < Stages.value.size(); ListIndex++)
+    for(uint32_t ListIndex = 0; ListIndex < Stages.value.size(); ListIndex++)
         {
-        for(UINT32 ListX2Index = 0; ListX2Index < Stages.value[ListIndex]->Entries.value.size(); ListX2Index++)
+        for(uint32_t ListX2Index = 0; ListX2Index < Stages.value[ListIndex]->Entries.value.size(); ListX2Index++)
             {
-            for(UINT32 ListX3Index = 0; ListX3Index < Stages.value[ListIndex]->Entries.value[ListX2Index]->CTDA.value.size(); ListX3Index++)
+            for(uint32_t ListX3Index = 0; ListX3Index < Stages.value[ListIndex]->Entries.value[ListX2Index]->CTDA.value.size(); ListX3Index++)
                 Stages.value[ListIndex]->Entries.value[ListX2Index]->CTDA.value[ListX3Index]->VisitFormIDs(op);
-            for(UINT32 ListX3Index = 0; ListX3Index < Stages.value[ListIndex]->Entries.value[ListX2Index]->SCR_.value.size(); ListX3Index++)
+            for(uint32_t ListX3Index = 0; ListX3Index < Stages.value[ListIndex]->Entries.value[ListX2Index]->SCR_.value.size(); ListX3Index++)
                 {
                 if(Stages.value[ListIndex]->Entries.value[ListX2Index]->SCR_.value[ListX3Index]->isSCRO)
                     op.Accept(Stages.value[ListIndex]->Entries.value[ListX2Index]->SCR_.value[ListX3Index]->reference);
                 }
             }
         }
-    for(UINT32 ListIndex = 0; ListIndex < Targets.value.size(); ListIndex++)
+    for(uint32_t ListIndex = 0; ListIndex < Targets.value.size(); ListIndex++)
         {
         op.Accept(Targets.value[ListIndex]->QSTA.value.targetId);
-        for(UINT32 ListX2Index = 0; ListX2Index < Targets.value[ListIndex]->CTDA.value.size(); ListX2Index++)
+        for(uint32_t ListX2Index = 0; ListX2Index < Targets.value[ListIndex]->CTDA.value.size(); ListX2Index++)
             Targets.value[ListIndex]->CTDA.value[ListX2Index]->VisitFormIDs(op);
         }
 
@@ -327,45 +327,45 @@ void QUSTRecord::IsRepeatedStages(bool value)
     SETBIT(DATA.value.flags, fIsRepeatedStages, value);
     }
 
-bool QUSTRecord::IsFlagMask(UINT8 Mask, bool Exact)
+bool QUSTRecord::IsFlagMask(uint8_t Mask, bool Exact)
     {
     return Exact ? ((DATA.value.flags & Mask) == Mask) : ((DATA.value.flags & Mask) != 0);
     }
 
-void QUSTRecord::SetFlagMask(UINT8 Mask)
+void QUSTRecord::SetFlagMask(uint8_t Mask)
     {
     DATA.value.flags = Mask;
     }
 
-UINT32 QUSTRecord::GetType()
+uint32_t QUSTRecord::GetType()
     {
     return REV32(QUST);
     }
 
-STRING QUSTRecord::GetStrType()
+char * QUSTRecord::GetStrType()
     {
     return "QUST";
     }
 
-SINT32 QUSTRecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk)
+int32_t QUSTRecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk)
     {
-    UINT32 subType = 0;
-    UINT32 subSize = 0;
-    UINT32 lastChunk = REV32(NONE);
+    uint32_t subType = 0;
+    uint32_t subSize = 0;
+    uint32_t lastChunk = REV32(NONE);
     while(buffer < end_buffer){
-        subType = *(UINT32 *)buffer;
+        subType = *(uint32_t *)buffer;
         buffer += 4;
         switch(subType)
             {
             case REV32(XXXX):
                 buffer += 2;
-                subSize = *(UINT32 *)buffer;
+                subSize = *(uint32_t *)buffer;
                 buffer += 4;
-                subType = *(UINT32 *)buffer;
+                subType = *(uint32_t *)buffer;
                 buffer += 6;
                 break;
             default:
-                subSize = *(UINT16 *)buffer;
+                subSize = *(uint16_t *)buffer;
                 buffer += 2;
                 break;
             }
@@ -487,7 +487,7 @@ SINT32 QUSTRecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer,
     return 0;
     }
 
-SINT32 QUSTRecord::Unload()
+int32_t QUSTRecord::Unload()
     {
     IsChanged(false);
     IsLoaded(false);
@@ -503,7 +503,7 @@ SINT32 QUSTRecord::Unload()
     return 1;
     }
 
-SINT32 QUSTRecord::WriteRecord(FileWriter &writer)
+int32_t QUSTRecord::WriteRecord(FileWriter &writer)
     {
     WRITE(EDID);
     WRITE(SCRI);

@@ -87,12 +87,12 @@ bool INGRRecord::VisitFormIDs(FormIDOp &op)
 
     if(MODL.IsLoaded())
         {
-        for(UINT32 x = 0; x < MODL->Textures.MODS.size(); x++)
+        for(uint32_t x = 0; x < MODL->Textures.MODS.size(); x++)
             op.Accept(MODL->Textures.MODS[x]->texture);
         }
     if(SCRI.IsLoaded())
         op.Accept(SCRI.value);
-    for(UINT32 x = 0; x < Effects.value.size(); x++)
+    for(uint32_t x = 0; x < Effects.value.size(); x++)
         Effects.value[x]->VisitFormIDs(op);
 
     return op.Stop();
@@ -118,12 +118,12 @@ void INGRRecord::IsFood(bool value)
     SETBIT(ENIT.value.flags, fIsFood, value);
     }
 
-bool INGRRecord::IsFlagMask(UINT8 Mask, bool Exact)
+bool INGRRecord::IsFlagMask(uint8_t Mask, bool Exact)
     {
     return Exact ? ((ENIT.value.flags & Mask) == Mask) : ((ENIT.value.flags & Mask) != 0);
     }
 
-void INGRRecord::SetFlagMask(UINT8 Mask)
+void INGRRecord::SetFlagMask(uint8_t Mask)
     {
     ENIT.value.flags = Mask;
     }
@@ -278,44 +278,44 @@ void INGRRecord::IsAlcohol(bool value)
     ETYP.value = value ? eAlcohol : eNone;
     }
 
-bool INGRRecord::IsEquipmentType(SINT32 Type)
+bool INGRRecord::IsEquipmentType(int32_t Type)
     {
     return ETYP.value == Type;
     }
 
-void INGRRecord::SetEquipmentType(SINT32 Type)
+void INGRRecord::SetEquipmentType(int32_t Type)
     {
     ETYP.value = Type;
     }
 
-UINT32 INGRRecord::GetType()
+uint32_t INGRRecord::GetType()
     {
     return REV32(INGR);
     }
 
-STRING INGRRecord::GetStrType()
+char * INGRRecord::GetStrType()
     {
     return "INGR";
     }
 
-SINT32 INGRRecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk)
+int32_t INGRRecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk)
     {
-    UINT32 subType = 0;
-    UINT32 subSize = 0;
+    uint32_t subType = 0;
+    uint32_t subSize = 0;
     while(buffer < end_buffer){
-        subType = *(UINT32 *)buffer;
+        subType = *(uint32_t *)buffer;
         buffer += 4;
         switch(subType)
             {
             case REV32(XXXX):
                 buffer += 2;
-                subSize = *(UINT32 *)buffer;
+                subSize = *(uint32_t *)buffer;
                 buffer += 4;
-                subType = *(UINT32 *)buffer;
+                subType = *(uint32_t *)buffer;
                 buffer += 6;
                 break;
             default:
-                subSize = *(UINT16 *)buffer;
+                subSize = *(uint16_t *)buffer;
                 buffer += 2;
                 break;
             }
@@ -395,7 +395,7 @@ SINT32 INGRRecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer,
     return 0;
     }
 
-SINT32 INGRRecord::Unload()
+int32_t INGRRecord::Unload()
     {
     IsChanged(false);
     IsLoaded(false);
@@ -413,7 +413,7 @@ SINT32 INGRRecord::Unload()
     return 1;
     }
 
-SINT32 INGRRecord::WriteRecord(FileWriter &writer)
+int32_t INGRRecord::WriteRecord(FileWriter &writer)
     {
     WRITE(EDID);
     WRITE(OBND);

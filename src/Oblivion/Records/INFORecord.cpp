@@ -178,12 +178,12 @@ void INFORecord::INFOResponse::IsSurprise(bool value)
         TRDT.value.emotionType = eNeutral;
     }
 
-bool INFORecord::INFOResponse::IsType(UINT32 Type)
+bool INFORecord::INFOResponse::IsType(uint32_t Type)
     {
     return (TRDT.value.emotionType == Type);
     }
 
-void INFORecord::INFOResponse::SetType(UINT32 Type)
+void INFORecord::INFOResponse::SetType(uint32_t Type)
     {
     TRDT.value.emotionType = Type;
     }
@@ -258,15 +258,15 @@ bool INFORecord::VisitFormIDs(FormIDOp &op)
         op.Accept(TPIC.value);
     if(PNAM.IsLoaded())
         op.Accept(*PNAM.value);
-    for(UINT32 ListIndex = 0; ListIndex < NAME.value.size(); ListIndex++)
+    for(uint32_t ListIndex = 0; ListIndex < NAME.value.size(); ListIndex++)
         op.Accept(NAME.value[ListIndex]);
-    for(UINT32 ListIndex = 0; ListIndex < CTDA.value.size(); ListIndex++)
+    for(uint32_t ListIndex = 0; ListIndex < CTDA.value.size(); ListIndex++)
         CTDA.value[ListIndex]->VisitFormIDs(op);
-    for(UINT32 ListIndex = 0; ListIndex < TCLT.value.size(); ListIndex++)
+    for(uint32_t ListIndex = 0; ListIndex < TCLT.value.size(); ListIndex++)
         op.Accept(TCLT.value[ListIndex]);
-    for(UINT32 ListIndex = 0; ListIndex < TCLF.value.size(); ListIndex++)
+    for(uint32_t ListIndex = 0; ListIndex < TCLF.value.size(); ListIndex++)
         op.Accept(TCLF.value[ListIndex]);
-    for(UINT32 ListIndex = 0; ListIndex < SCR_.value.size(); ListIndex++)
+    for(uint32_t ListIndex = 0; ListIndex < SCR_.value.size(); ListIndex++)
         {
         if(SCR_.value[ListIndex]->isSCRO)
             op.Accept(SCR_.value[ListIndex]->reference);
@@ -366,12 +366,12 @@ void INFORecord::IsMisc(bool value)
         DATA.value.dialType = eTopic;
     }
 
-bool INFORecord::IsDialogType(UINT16 Type)
+bool INFORecord::IsDialogType(uint16_t Type)
     {
     return (DATA.value.dialType == Type);
     }
 
-void INFORecord::SetDialogType(UINT16 Type)
+void INFORecord::SetDialogType(uint16_t Type)
     {
     DATA.value.dialType = Type;
     }
@@ -446,12 +446,12 @@ void INFORecord::IsRunForRumors(bool value)
     SETBIT(DATA.value.flags, fIsRunForRumors, value);
     }
 
-bool INFORecord::IsFlagMask(UINT8 Mask, bool Exact)
+bool INFORecord::IsFlagMask(uint8_t Mask, bool Exact)
     {
     return Exact ? ((DATA.value.flags & Mask) == Mask) : ((DATA.value.flags & Mask) != 0);
     }
 
-void INFORecord::SetFlagMask(UINT8 Mask)
+void INFORecord::SetFlagMask(uint8_t Mask)
     {
     DATA.value.flags = Mask;
     }
@@ -486,44 +486,44 @@ void INFORecord::IsScriptEffect(bool value)
     SCHR.value.scriptType = value ? eEffect : eObject;
     }
 
-bool INFORecord::IsScriptType(UINT32 Type)
+bool INFORecord::IsScriptType(uint32_t Type)
     {
     return SCHR.value.scriptType == Type;
     }
 
-void INFORecord::SetScriptType(UINT32 Type)
+void INFORecord::SetScriptType(uint32_t Type)
     {
     SCHR.value.scriptType = Type;
     }
 
-UINT32 INFORecord::GetType()
+uint32_t INFORecord::GetType()
     {
     return REV32(INFO);
     }
 
-STRING INFORecord::GetStrType()
+char * INFORecord::GetStrType()
     {
     return "INFO";
     }
 
-SINT32 INFORecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk)
+int32_t INFORecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk)
     {
-    UINT32 subType = 0;
-    UINT32 subSize = 0;
+    uint32_t subType = 0;
+    uint32_t subSize = 0;
     while(buffer < end_buffer){
-        subType = *(UINT32 *)buffer;
+        subType = *(uint32_t *)buffer;
         buffer += 4;
         switch(subType)
             {
             case REV32(XXXX):
                 buffer += 2;
-                subSize = *(UINT32 *)buffer;
+                subSize = *(uint32_t *)buffer;
                 buffer += 4;
-                subType = *(UINT32 *)buffer;
+                subType = *(uint32_t *)buffer;
                 buffer += 6;
                 break;
             default:
-                subSize = *(UINT16 *)buffer;
+                subSize = *(uint16_t *)buffer;
                 buffer += 2;
                 break;
             }
@@ -601,7 +601,7 @@ SINT32 INFORecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer,
     return 0;
     }
 
-SINT32 INFORecord::Unload()
+int32_t INFORecord::Unload()
     {
     IsChanged(false);
     IsLoaded(false);
@@ -621,7 +621,7 @@ SINT32 INFORecord::Unload()
     return 1;
     }
 
-SINT32 INFORecord::WriteRecord(FileWriter &writer)
+int32_t INFORecord::WriteRecord(FileWriter &writer)
     {
     WRITE(DATA);
     WRITE(QSTI);
@@ -632,7 +632,7 @@ SINT32 INFORecord::WriteRecord(FileWriter &writer)
     CTDA.Write(writer, true);
     WRITE(TCLT);
     WRITE(TCLF);
-    SCHR.value.numRefs = (UINT32)SCR_.value.size(); //Just to ensure that the value is correct
+    SCHR.value.numRefs = (uint32_t)SCR_.value.size(); //Just to ensure that the value is correct
     SCHR.value.compiledSize = SCDA.GetSize(); //Just to ensure that the value is correct
     WRITE(SCHR);
     WRITE(SCDA);

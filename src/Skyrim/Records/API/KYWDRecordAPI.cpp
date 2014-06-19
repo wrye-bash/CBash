@@ -38,7 +38,7 @@
 namespace Sk
 {
 
-UINT32 KYWDRecord::GetFieldAttribute(FIELD_IDENTIFIERS, UINT32 WhichAttribute)
+uint32_t KYWDRecord::GetFieldAttribute(FIELD_IDENTIFIERS, uint32_t WhichAttribute)
 {
     switch(FieldID)
     {
@@ -120,12 +120,12 @@ void * KYWDRecord::GetField(FIELD_IDENTIFIERS, void **FieldValues)
     return NULL;
 }
 
-bool KYWDRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
+bool KYWDRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, uint32_t ArraySize)
 {
     switch(FieldID)
     {
     case 1: //flags1
-        SetHeaderFlagMask(*(UINT32 *)FieldValue);
+        SetHeaderFlagMask(*(uint32_t *)FieldValue);
         break;
     case 3: //versionControl1
         if(ArraySize != 4)
@@ -136,10 +136,10 @@ bool KYWDRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
         ((UINT8ARRAY)&flagsUnk)[3] = ((UINT8ARRAY)FieldValue)[3];
         break;
     case 4: //eid
-        EDID.Copy((STRING)FieldValue);
+        EDID.Copy((char *)FieldValue);
         break;
     case 5: //formVersion
-        formVersion = *(UINT16 *)FieldValue;
+        formVersion = *(uint16_t *)FieldValue;
         break;
     case 6: //versionControl2
         if(ArraySize != 2)
@@ -148,16 +148,16 @@ bool KYWDRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
         versionControl2[1] = ((UINT8ARRAY)FieldValue)[1];
         break;
     case 7: //color.red
-        CNAM->red = *(UINT8 *)FieldValue;
+        CNAM->red = *(uint8_t *)FieldValue;
         break;
     case 8: //color.green
-        CNAM->green = *(UINT8 *)FieldValue;
+        CNAM->green = *(uint8_t *)FieldValue;
         break;
     case 9: //color.green
-        CNAM->blue = *(UINT8 *)FieldValue;
+        CNAM->blue = *(uint8_t *)FieldValue;
         break;
     case 10: //color.unk1
-        CNAM->unk1 = *(UINT8 *)FieldValue;
+        CNAM->unk1 = *(uint8_t *)FieldValue;
         break;
     default:
         break;

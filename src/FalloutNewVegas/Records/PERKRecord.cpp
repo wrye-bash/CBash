@@ -143,13 +143,13 @@ void PERKRecord::PERKEffect::IsRunImmediately(bool value)
     SETBIT(EPF3.value, fIsRunImmediately, value);
     }
 
-bool PERKRecord::PERKEffect::IsFlagMask(UINT16 Mask, bool Exact)
+bool PERKRecord::PERKEffect::IsFlagMask(uint16_t Mask, bool Exact)
     {
     if (!EPF3.IsLoaded()) return false;
     return Exact ? ((EPF3.value & Mask) == Mask) : ((EPF3.value & Mask) != 0);
     }
 
-void PERKRecord::PERKEffect::SetFlagMask(UINT16 Mask)
+void PERKRecord::PERKEffect::SetFlagMask(uint16_t Mask)
     {
     EPF3.Load();
     EPF3.value = Mask;
@@ -165,12 +165,12 @@ void PERKRecord::PERKEffect::IsScriptEnabled(bool value)
     SETBIT(SCHR.value.flags, fIsEnabled, value);
     }
 
-bool PERKRecord::PERKEffect::IsScriptFlagMask(UINT16 Mask, bool Exact)
+bool PERKRecord::PERKEffect::IsScriptFlagMask(uint16_t Mask, bool Exact)
     {
     return Exact ? (SCHR.value.flags & Mask) == Mask : (SCHR.value.flags & Mask) != 0;
     }
 
-void PERKRecord::PERKEffect::SetScriptFlagMask(UINT16 Mask)
+void PERKRecord::PERKEffect::SetScriptFlagMask(uint16_t Mask)
     {
     SCHR.value.flags = Mask;
     }
@@ -267,13 +267,13 @@ bool PERKRecord::IsTrait()
     return (DATA->trait == eTrait);
     }
 
-bool PERKRecord::IsTraitType(UINT8 Type)
+bool PERKRecord::IsTraitType(uint8_t Type)
     {
     if (!DATA.IsLoaded()) return false;
     return DATA->trait == Type;
     }
 
-void PERKRecord::SetTraitType(UINT8 Type)
+void PERKRecord::SetTraitType(uint8_t Type)
     {
     DATA.Load();
     DATA->trait = Type;
@@ -291,13 +291,13 @@ bool PERKRecord::IsPlayable()
     return (DATA->playable == ePlayable);
     }
 
-bool PERKRecord::IsPlayableType(UINT8 Type)
+bool PERKRecord::IsPlayableType(uint8_t Type)
     {
     if (!DATA.IsLoaded()) return false;
     return DATA->playable == Type;
     }
 
-void PERKRecord::SetPlayableType(UINT8 Type)
+void PERKRecord::SetPlayableType(uint8_t Type)
     {
     DATA.Load();
     DATA->playable = Type;
@@ -315,13 +315,13 @@ bool PERKRecord::IsHidden()
     return (DATA->hidden == eHidden);
     }
 
-bool PERKRecord::IsHiddenType(UINT8 Type)
+bool PERKRecord::IsHiddenType(uint8_t Type)
     {
     if (!DATA.IsLoaded()) return false;
     return DATA->hidden == Type;
     }
 
-void PERKRecord::SetHiddenType(UINT8 Type)
+void PERKRecord::SetHiddenType(uint8_t Type)
     {
     DATA.Load();
     DATA->hidden = Type;
@@ -346,47 +346,47 @@ bool PERKRecord::IsEntryPoint()
     return (PRKE->perkType == eEntryPoint);
     }
 
-bool PERKRecord::IsType(UINT8 Type)
+bool PERKRecord::IsType(uint8_t Type)
     {
     if (!PRKE.IsLoaded()) return false;
     return PRKE->perkType == Type;
     }
 
-void PERKRecord::SetType(UINT8 Type)
+void PERKRecord::SetType(uint8_t Type)
     {
     PRKE.Load();
     PRKE->perkType = Mask;
     }
 */
 
-UINT32 PERKRecord::GetType()
+uint32_t PERKRecord::GetType()
     {
     return REV32(PERK);
     }
 
-STRING PERKRecord::GetStrType()
+char * PERKRecord::GetStrType()
     {
     return "PERK";
     }
 
-SINT32 PERKRecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk)
+int32_t PERKRecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk)
     {
-    UINT32 subType = 0;
-    UINT32 subSize = 0;
+    uint32_t subType = 0;
+    uint32_t subSize = 0;
     while(buffer < end_buffer){
-        subType = *(UINT32 *)buffer;
+        subType = *(uint32_t *)buffer;
         buffer += 4;
         switch(subType)
             {
             case REV32(XXXX):
                 buffer += 2;
-                subSize = *(UINT32 *)buffer;
+                subSize = *(uint32_t *)buffer;
                 buffer += 4;
-                subType = *(UINT32 *)buffer;
+                subType = *(uint32_t *)buffer;
                 buffer += 6;
                 break;
             default:
-                subSize = *(UINT16 *)buffer;
+                subSize = *(uint16_t *)buffer;
                 buffer += 2;
                 break;
             }
@@ -479,7 +479,7 @@ SINT32 PERKRecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer,
     return 0;
     }
 
-SINT32 PERKRecord::Unload()
+int32_t PERKRecord::Unload()
     {
     IsChanged(false);
     IsLoaded(false);
@@ -501,7 +501,7 @@ SINT32 PERKRecord::Unload()
     return 1;
     }
 
-SINT32 PERKRecord::WriteRecord(FileWriter &writer)
+int32_t PERKRecord::WriteRecord(FileWriter &writer)
     {
     WRITE(EDID);
     WRITE(FULL);

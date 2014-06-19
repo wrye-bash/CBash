@@ -38,7 +38,7 @@
 
 namespace Ob
 {
-UINT32 CONTRecord::GetFieldAttribute(FIELD_IDENTIFIERS, UINT32 WhichAttribute)
+uint32_t CONTRecord::GetFieldAttribute(FIELD_IDENTIFIERS, uint32_t WhichAttribute)
     {
     switch(FieldID)
         {
@@ -79,7 +79,7 @@ UINT32 CONTRecord::GetFieldAttribute(FIELD_IDENTIFIERS, UINT32 WhichAttribute)
                     case 0: //fieldType
                         return LIST_FIELD;
                     case 1: //fieldSize
-                        return (UINT32)CNTO.value.size();
+                        return (uint32_t)CNTO.value.size();
                     default:
                         return UNKNOWN_FIELD;
                     }
@@ -163,29 +163,29 @@ void * CONTRecord::GetField(FIELD_IDENTIFIERS, void **FieldValues)
     return NULL;
     }
 
-bool CONTRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
+bool CONTRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, uint32_t ArraySize)
     {
     switch(FieldID)
         {
         case 1: //flags1
-            SetHeaderFlagMask(*(UINT32 *)FieldValue);
+            SetHeaderFlagMask(*(uint32_t *)FieldValue);
             break;
         case 3: //flags2
-            SetHeaderUnknownFlagMask(*(UINT32 *)FieldValue);
+            SetHeaderUnknownFlagMask(*(uint32_t *)FieldValue);
             break;
         case 4: //eid
-            EDID.Copy((STRING)FieldValue);
+            EDID.Copy((char *)FieldValue);
             break;
         case 5: //full
-            FULL.Copy((STRING)FieldValue);
+            FULL.Copy((char *)FieldValue);
             break;
         case 6: //modPath
             MODL.Load();
-            MODL->MODL.Copy((STRING)FieldValue);
+            MODL->MODL.Copy((char *)FieldValue);
             break;
         case 7: //modb
             MODL.Load();
-            MODL->MODB.value = *(FLOAT32 *)FieldValue;
+            MODL->MODB.value = *(float *)FieldValue;
             break;
         case 8: //modt_p
             MODL.Load();
@@ -210,17 +210,17 @@ bool CONTRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
                     CNTO.value[ListIndex]->item = *(FORMID *)FieldValue;
                     return true;
                 case 2: //count
-                    CNTO.value[ListIndex]->count = *(SINT32 *)FieldValue;
+                    CNTO.value[ListIndex]->count = *(int32_t *)FieldValue;
                     break;
                 default:
                     break;
                 }
             break;
         case 11: //flags
-            SetFlagMask(*(UINT8 *)FieldValue);
+            SetFlagMask(*(uint8_t *)FieldValue);
             break;
         case 12: //weight
-            DATA.value.weight = *(FLOAT32 *)FieldValue;
+            DATA.value.weight = *(float *)FieldValue;
             break;
         case 13: //soundOpen
             SNAM.value = *(FORMID *)FieldValue;

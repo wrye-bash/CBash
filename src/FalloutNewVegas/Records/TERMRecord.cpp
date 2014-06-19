@@ -71,9 +71,9 @@ void TERMRecord::TERMMenu::Write(FileWriter &writer)
     WRITE(ANAM);
     WRITE(INAM);
     WRITE(TNAM);
-    SCHR.value.numRefs = (UINT32)SCR_.value.size(); //Just to ensure that the value is correct
+    SCHR.value.numRefs = (uint32_t)SCR_.value.size(); //Just to ensure that the value is correct
     SCHR.value.compiledSize = SCDA.GetSize(); //Just to ensure that the value is correct
-    //for(UINT32 x = 0; x < VARS.value.size(); ++x) //Just to ensure that the value is correct
+    //for(uint32_t x = 0; x < VARS.value.size(); ++x) //Just to ensure that the value is correct
     //    SCHR.value.lastIndex = (SCHR.value.lastIndex > VARS.value[x]->SLSD.value.index) ? SCHR.value.lastIndex : VARS.value[x]->SLSD.value.index;
     WRITE(SCHR);
     WRITE(SCDA);
@@ -103,12 +103,12 @@ void TERMRecord::TERMMenu::IsForceRedraw(bool value)
     SETBIT(ANAM.value, fIsForceRedraw, value);
     }
 
-bool TERMRecord::TERMMenu::IsFlagMask(UINT8 Mask, bool Exact)
+bool TERMRecord::TERMMenu::IsFlagMask(uint8_t Mask, bool Exact)
     {
     return Exact ? ((ANAM.value & Mask) == Mask) : ((ANAM.value & Mask) != 0);
     }
 
-void TERMRecord::TERMMenu::SetFlagMask(UINT8 Mask)
+void TERMRecord::TERMMenu::SetFlagMask(uint8_t Mask)
     {
     ANAM.value = Mask;
     }
@@ -123,12 +123,12 @@ void TERMRecord::TERMMenu::IsScriptEnabled(bool value)
     SETBIT(SCHR.value.flags, fIsEnabled, value);
     }
 
-bool TERMRecord::TERMMenu::IsScriptFlagMask(UINT16 Mask, bool Exact)
+bool TERMRecord::TERMMenu::IsScriptFlagMask(uint16_t Mask, bool Exact)
     {
     return Exact ? (SCHR.value.flags & Mask) == Mask : (SCHR.value.flags & Mask) != 0;
     }
 
-void TERMRecord::TERMMenu::SetScriptFlagMask(UINT16 Mask)
+void TERMRecord::TERMMenu::SetScriptFlagMask(uint16_t Mask)
     {
     SCHR.value.flags = Mask;
     }
@@ -163,12 +163,12 @@ void TERMRecord::TERMMenu::IsEffect(bool value)
     SCHR.value.scriptType = value ? eEffect : eObject;
     }
 
-bool TERMRecord::TERMMenu::IsType(UINT16 Type)
+bool TERMRecord::TERMMenu::IsType(uint16_t Type)
     {
     return SCHR.value.scriptType == Type;
     }
 
-void TERMRecord::TERMMenu::SetType(UINT16 Type)
+void TERMRecord::TERMMenu::SetType(uint16_t Type)
     {
     SCHR.value.scriptType = Type;
     }
@@ -242,14 +242,14 @@ bool TERMRecord::VisitFormIDs(FormIDOp &op)
 
     if(MODL.IsLoaded())
         {
-        for(UINT32 x = 0; x < MODL->Textures.MODS.size(); x++)
+        for(uint32_t x = 0; x < MODL->Textures.MODS.size(); x++)
             op.Accept(MODL->Textures.MODS[x]->texture);
         }
     if(SCRI.IsLoaded())
         op.Accept(SCRI.value);
     if(Destructable.IsLoaded())
         {
-        for(UINT32 x = 0; x < Destructable->Stages.value.size(); ++x)
+        for(uint32_t x = 0; x < Destructable->Stages.value.size(); ++x)
             {
             op.Accept(Destructable->Stages.value[x]->DSTD.value.explosion);
             op.Accept(Destructable->Stages.value[x]->DSTD.value.debris);
@@ -260,16 +260,16 @@ bool TERMRecord::VisitFormIDs(FormIDOp &op)
     if(PNAM.IsLoaded())
         op.Accept(PNAM.value);
 
-    for(UINT32 x = 0; x < Menus.value.size(); ++x)
+    for(uint32_t x = 0; x < Menus.value.size(); ++x)
         {
         if(Menus.value[x]->INAM.IsLoaded())
             op.Accept(Menus.value[x]->INAM.value);
         if(Menus.value[x]->INAM.IsLoaded())
             op.Accept(Menus.value[x]->TNAM.value);
-        for(UINT32 p = 0; p < Menus.value[x]->SCR_.value.size(); p++)
+        for(uint32_t p = 0; p < Menus.value[x]->SCR_.value.size(); p++)
             if(Menus.value[x]->SCR_.value[p]->isSCRO)
                 op.Accept(Menus.value[x]->SCR_.value[p]->reference);
-        for(UINT32 p = 0; p < Menus.value[x]->CTDA.value.size(); p++)
+        for(uint32_t p = 0; p < Menus.value[x]->CTDA.value.size(); p++)
             Menus.value[x]->CTDA.value[p]->VisitFormIDs(op);
         }
 
@@ -316,12 +316,12 @@ void TERMRecord::IsHideWelcomeTextWhenDisplayingImage(bool value)
     SETBIT(DNAM.value.flags, fIsHideWelcomeTextWhenDisplayingImage, value);
     }
 
-bool TERMRecord::IsFlagMask(UINT8 Mask, bool Exact)
+bool TERMRecord::IsFlagMask(uint8_t Mask, bool Exact)
     {
     return Exact ? ((DNAM.value.flags & Mask) == Mask) : ((DNAM.value.flags & Mask) != 0);
     }
 
-void TERMRecord::SetFlagMask(UINT8 Mask)
+void TERMRecord::SetFlagMask(uint8_t Mask)
     {
     DNAM.value.flags = Mask;
     }
@@ -386,12 +386,12 @@ void TERMRecord::IsRequiresKey(bool value)
     DNAM.value.difficultyType = value ? eRequiresKey : eVeryEasy;
     }
 
-bool TERMRecord::IsLockType(UINT8 Type)
+bool TERMRecord::IsLockType(uint8_t Type)
     {
     return DNAM.value.difficultyType == Type;
     }
 
-void TERMRecord::SetLockType(UINT8 Type)
+void TERMRecord::SetLockType(uint8_t Type)
     {
     DNAM.value.difficultyType = Type;
     }
@@ -496,44 +496,44 @@ void TERMRecord::IsServer10(bool value)
     DNAM.value.serverType = value ? eServer10 : eServer1;
     }
 
-bool TERMRecord::IsServerType(UINT8 Type)
+bool TERMRecord::IsServerType(uint8_t Type)
     {
     return DNAM.value.serverType == Type;
     }
 
-void TERMRecord::SetServerType(UINT8 Type)
+void TERMRecord::SetServerType(uint8_t Type)
     {
     DNAM.value.serverType = Type;
     }
 
-UINT32 TERMRecord::GetType()
+uint32_t TERMRecord::GetType()
     {
     return REV32(TERM);
     }
 
-STRING TERMRecord::GetStrType()
+char * TERMRecord::GetStrType()
     {
     return "TERM";
     }
 
-SINT32 TERMRecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk)
+int32_t TERMRecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk)
     {
-    UINT32 subType = 0;
-    UINT32 subSize = 0;
+    uint32_t subType = 0;
+    uint32_t subSize = 0;
     while(buffer < end_buffer){
-        subType = *(UINT32 *)buffer;
+        subType = *(uint32_t *)buffer;
         buffer += 4;
         switch(subType)
             {
             case REV32(XXXX):
                 buffer += 2;
-                subSize = *(UINT32 *)buffer;
+                subSize = *(uint32_t *)buffer;
                 buffer += 4;
-                subType = *(UINT32 *)buffer;
+                subType = *(uint32_t *)buffer;
                 buffer += 6;
                 break;
             default:
-                subSize = *(UINT16 *)buffer;
+                subSize = *(uint16_t *)buffer;
                 buffer += 2;
                 break;
             }
@@ -689,7 +689,7 @@ SINT32 TERMRecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer,
     return 0;
     }
 
-SINT32 TERMRecord::Unload()
+int32_t TERMRecord::Unload()
     {
     IsChanged(false);
     IsLoaded(false);
@@ -707,7 +707,7 @@ SINT32 TERMRecord::Unload()
     return 1;
     }
 
-SINT32 TERMRecord::WriteRecord(FileWriter &writer)
+int32_t TERMRecord::WriteRecord(FileWriter &writer)
     {
     WRITE(EDID);
     WRITE(OBND);

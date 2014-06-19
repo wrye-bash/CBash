@@ -132,19 +132,19 @@ bool REFRRecord::VisitFormIDs(FormIDOp &op)
     if(Patrol.IsLoaded())
         {
         op.Accept(Patrol->INAM.value);
-        for(UINT32 x = 0; x < Patrol->SCR_.value.size(); x++)
+        for(uint32_t x = 0; x < Patrol->SCR_.value.size(); x++)
             if(Patrol->SCR_.value[x]->isSCRO)
                 op.Accept(Patrol->SCR_.value[x]->reference);
         op.Accept(Patrol->TNAM.value);
         }
     if(Ownership.IsLoaded())
         op.Accept(Ownership->XOWN.value);
-    for(UINT32 x = 0; x < XDCR.value.size(); x++)
+    for(uint32_t x = 0; x < XDCR.value.size(); x++)
         op.Accept(XDCR.value[x]->reference);
     if(XLKR.IsLoaded())
         op.Accept(XLKR.value);
     if(ActivateParents.IsLoaded())
-        for(UINT32 x = 0; x < ActivateParents->XAPR.value.size(); x++)
+        for(uint32_t x = 0; x < ActivateParents->XAPR.value.size(); x++)
             op.Accept(ActivateParents->XAPR.value[x]->reference);
     if(XESP.IsLoaded())
         op.Accept(XESP->parent);
@@ -175,9 +175,9 @@ bool REFRRecord::VisitFormIDs(FormIDOp &op)
         if(Ammo->XAMT.IsLoaded())
             op.Accept(Ammo->XAMT.value);
         }
-    for(UINT32 x = 0; x < XPWR.value.size(); x++)
+    for(uint32_t x = 0; x < XPWR.value.size(); x++)
         op.Accept(XPWR.value[x]->reference);
-    for(UINT32 x = 0; x < XLTW.value.size(); x++)
+    for(uint32_t x = 0; x < XLTW.value.size(); x++)
         op.Accept(XLTW.value[x]);
     if(XNDP.IsLoaded())
         op.Accept(XNDP->navMesh);
@@ -187,7 +187,7 @@ bool REFRRecord::VisitFormIDs(FormIDOp &op)
         op.Accept(XPOD->room2);
         }
     if(Room.IsLoaded())
-        for(UINT32 x = 0; x < Room->XLRM.value.size(); x++)
+        for(uint32_t x = 0; x < Room->XLRM.value.size(); x++)
             op.Accept(Room->XLRM.value[x]);
     if(XORD.IsLoaded())
         {
@@ -240,12 +240,12 @@ void REFRRecord::IsOpenByDefault(bool value)
     SETBIT(XACT.value, fIsOpenByDefault, value);
     }
 
-bool REFRRecord::IsActionFlagMask(UINT32 Mask, bool Exact)
+bool REFRRecord::IsActionFlagMask(uint32_t Mask, bool Exact)
     {
     return Exact ? ((XACT.value & Mask) == Mask) : ((XACT.value & Mask) != 0);
     }
 
-void REFRRecord::SetActionFlagMask(UINT32 Mask)
+void REFRRecord::SetActionFlagMask(uint32_t Mask)
     {
     XACT.value = Mask;
     }
@@ -274,13 +274,13 @@ void REFRRecord::IsPopIn(bool value)
     SETBIT(XESP->flags, fIsPopIn, value);
     }
 
-bool REFRRecord::IsParentFlagMask(UINT8 Mask, bool Exact)
+bool REFRRecord::IsParentFlagMask(uint8_t Mask, bool Exact)
     {
     if(!XESP.IsLoaded()) return false;
     return Exact ? ((XESP->flags & Mask) == Mask) : ((XESP->flags & Mask) != 0);
     }
 
-void REFRRecord::SetParentFlagMask(UINT8 Mask)
+void REFRRecord::SetParentFlagMask(uint8_t Mask)
     {
     XESP.Load();
     XESP->flags = Mask;
@@ -298,13 +298,13 @@ void REFRRecord::IsNoAlarm(bool value)
     SETBIT(XTEL->flags, fIsNoAlarm, value);
     }
 
-bool REFRRecord::IsDestFlagMask(UINT32 Mask, bool Exact)
+bool REFRRecord::IsDestFlagMask(uint32_t Mask, bool Exact)
     {
     if(!XTEL.IsLoaded()) return false;
     return Exact ? ((XTEL->flags & Mask) == Mask) : ((XTEL->flags & Mask) != 0);
     }
 
-void REFRRecord::SetDestFlagMask(UINT32 Mask)
+void REFRRecord::SetDestFlagMask(uint32_t Mask)
     {
     XTEL.Load();
     XTEL->flags = Mask;
@@ -334,13 +334,13 @@ void REFRRecord::IsCanTravelTo(bool value)
     SETBIT(MapData->FNAM.value, fIsCanTravelTo, value);
     }
 
-bool REFRRecord::IsMapFlagMask(UINT8 Mask, bool Exact)
+bool REFRRecord::IsMapFlagMask(uint8_t Mask, bool Exact)
     {
     if(!MapData.IsLoaded()) return false;
     return Exact ? ((MapData->FNAM.value & Mask) == Mask) : ((MapData->FNAM.value & Mask) != 0);
     }
 
-void REFRRecord::SetMapFlagMask(UINT8 Mask)
+void REFRRecord::SetMapFlagMask(uint8_t Mask)
     {
     MapData.Load();
     MapData->FNAM.value = Mask;
@@ -358,13 +358,13 @@ void REFRRecord::IsLeveledLock(bool value)
     SETBIT(XLOC->flags, fIsLeveledLock, value);
     }
 
-bool REFRRecord::IsLockFlagMask(UINT8 Mask, bool Exact)
+bool REFRRecord::IsLockFlagMask(uint8_t Mask, bool Exact)
     {
     if(!XLOC.IsLoaded()) return false;
     return Exact ? ((XLOC->flags & Mask) == Mask) : ((XLOC->flags & Mask) != 0);
     }
 
-void REFRRecord::SetLockFlagMask(UINT8 Mask)
+void REFRRecord::SetLockFlagMask(uint8_t Mask)
     {
     XLOC.Load();
     XLOC->flags = Mask;
@@ -418,13 +418,13 @@ void REFRRecord::IsPortalBox(bool value)
     XPRM->type = value ? ePortalBox : eNone;
     }
 
-bool REFRRecord::IsPrimitiveType(UINT32 Type)
+bool REFRRecord::IsPrimitiveType(uint32_t Type)
     {
     if(!XPRM.IsLoaded()) return false;
     return XPRM->type == Type;
     }
 
-void REFRRecord::SetPrimitiveType(UINT32 Type)
+void REFRRecord::SetPrimitiveType(uint32_t Type)
     {
     XPRM.Load();
     XPRM->type = Type;
@@ -860,12 +860,12 @@ void REFRRecord::IsDroppingPick(bool value)
     XTRI.value = value ? eDroppingPick : eUnidentified;
     }
 
-bool REFRRecord::IsCollisionType(UINT32 Type)
+bool REFRRecord::IsCollisionType(uint32_t Type)
     {
     return XTRI.value == Type;
     }
 
-void REFRRecord::SetCollisionType(UINT32 Type)
+void REFRRecord::SetCollisionType(uint32_t Type)
     {
     XTRI.value = Type;
     }
@@ -1050,13 +1050,13 @@ void REFRRecord::IsVault(bool value)
     MapData->TNAM.value.markerType = value ? eVault : eMarkerNone;
     }
 
-bool REFRRecord::IsMapType(UINT8 Type)
+bool REFRRecord::IsMapType(uint8_t Type)
     {
     if(!MapData.IsLoaded()) return false;
     return MapData->TNAM.value.markerType == Type;
     }
 
-void REFRRecord::SetMapType(UINT8 Type)
+void REFRRecord::SetMapType(uint8_t Type)
     {
     MapData.Load();
     MapData->TNAM.value.markerType = Type;
@@ -1122,47 +1122,47 @@ void REFRRecord::IsCurrentCellOnly(bool value)
     XRDO->rangeType = value ? eCurrentCellOnly : eRadius;
     }
 
-bool REFRRecord::IsBroadcastType(UINT32 Type)
+bool REFRRecord::IsBroadcastType(uint32_t Type)
     {
     if(!XRDO.IsLoaded()) return false;
     return XRDO->rangeType == Type;
     }
 
-void REFRRecord::SetBroadcastType(UINT32 Type)
+void REFRRecord::SetBroadcastType(uint32_t Type)
     {
     XRDO.Load();
     XRDO->rangeType = Type;
     }
 
-UINT32 REFRRecord::GetType()
+uint32_t REFRRecord::GetType()
     {
     return REV32(REFR);
     }
 
-STRING REFRRecord::GetStrType()
+char * REFRRecord::GetStrType()
     {
     return "REFR";
     }
 
-SINT32 REFRRecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk)
+int32_t REFRRecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk)
     {
-    UINT32 subType = 0;
-    UINT32 subSize = 0;
-    UINT32 lastChunk = 0;
+    uint32_t subType = 0;
+    uint32_t subSize = 0;
+    uint32_t lastChunk = 0;
     while(buffer < end_buffer){
-        subType = *(UINT32 *)buffer;
+        subType = *(uint32_t *)buffer;
         buffer += 4;
         switch(subType)
             {
             case REV32(XXXX):
                 buffer += 2;
-                subSize = *(UINT32 *)buffer;
+                subSize = *(uint32_t *)buffer;
                 buffer += 4;
-                subType = *(UINT32 *)buffer;
+                subType = *(uint32_t *)buffer;
                 buffer += 6;
                 break;
             default:
-                subSize = *(UINT16 *)buffer;
+                subSize = *(uint16_t *)buffer;
                 buffer += 2;
                 break;
             }
@@ -1458,7 +1458,7 @@ SINT32 REFRRecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer,
     return 0;
     }
 
-SINT32 REFRRecord::Unload()
+int32_t REFRRecord::Unload()
     {
     IsChanged(false);
     IsLoaded(false);
@@ -1515,7 +1515,7 @@ SINT32 REFRRecord::Unload()
     return 1;
     }
 
-SINT32 REFRRecord::WriteRecord(FileWriter &writer)
+int32_t REFRRecord::WriteRecord(FileWriter &writer)
     {
     WRITE(EDID);
     WRITE(NAME);

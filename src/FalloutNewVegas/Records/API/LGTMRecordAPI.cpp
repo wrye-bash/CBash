@@ -38,7 +38,7 @@
 
 namespace FNV
 {
-UINT32 LGTMRecord::GetFieldAttribute(FIELD_IDENTIFIERS, UINT32 WhichAttribute)
+uint32_t LGTMRecord::GetFieldAttribute(FIELD_IDENTIFIERS, uint32_t WhichAttribute)
     {
     switch(FieldID)
         {
@@ -210,12 +210,12 @@ void * LGTMRecord::GetField(FIELD_IDENTIFIERS, void **FieldValues)
     return NULL;
     }
 
-bool LGTMRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
+bool LGTMRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, uint32_t ArraySize)
     {
     switch(FieldID)
         {
         case 1: //flags1
-            SetHeaderFlagMask(*(UINT32 *)FieldValue);
+            SetHeaderFlagMask(*(uint32_t *)FieldValue);
             break;
         case 3: //versionControl1
             if(ArraySize != 4)
@@ -226,10 +226,10 @@ bool LGTMRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             ((UINT8ARRAY)&flagsUnk)[3] = ((UINT8ARRAY)FieldValue)[3];
             break;
         case 4: //eid
-            EDID.Copy((STRING)FieldValue);
+            EDID.Copy((char *)FieldValue);
             break;
         case 5: //formVersion
-            formVersion = *(UINT16 *)FieldValue;
+            formVersion = *(uint16_t *)FieldValue;
             break;
         case 6: //versionControl2
             if(ArraySize != 2)
@@ -239,15 +239,15 @@ bool LGTMRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             break;
         case 7: //data DATA ,, Struct
             DATA.Load();
-            DATA->ambient.red = *(UINT8 *)FieldValue;
+            DATA->ambient.red = *(uint8_t *)FieldValue;
             break;
         case 8: //data DATA ,, Struct
             DATA.Load();
-            DATA->ambient.green = *(UINT8 *)FieldValue;
+            DATA->ambient.green = *(uint8_t *)FieldValue;
             break;
         case 9: //data DATA ,, Struct
             DATA.Load();
-            DATA->ambient.blue = *(UINT8 *)FieldValue;
+            DATA->ambient.blue = *(uint8_t *)FieldValue;
             break;
         case 10: //data_p DATA ,, Struct
             if(ArraySize != 1)
@@ -257,15 +257,15 @@ bool LGTMRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             break;
         case 11: //data DATA ,, Struct
             DATA.Load();
-            DATA->directional.red = *(UINT8 *)FieldValue;
+            DATA->directional.red = *(uint8_t *)FieldValue;
             break;
         case 12: //data DATA ,, Struct
             DATA.Load();
-            DATA->directional.green = *(UINT8 *)FieldValue;
+            DATA->directional.green = *(uint8_t *)FieldValue;
             break;
         case 13: //data DATA ,, Struct
             DATA.Load();
-            DATA->directional.blue = *(UINT8 *)FieldValue;
+            DATA->directional.blue = *(uint8_t *)FieldValue;
             break;
         case 14: //data_p DATA ,, Struct
             if(ArraySize != 1)
@@ -275,15 +275,15 @@ bool LGTMRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             break;
         case 15: //data DATA ,, Struct
             DATA.Load();
-            DATA->fog.red = *(UINT8 *)FieldValue;
+            DATA->fog.red = *(uint8_t *)FieldValue;
             break;
         case 16: //data DATA ,, Struct
             DATA.Load();
-            DATA->fog.green = *(UINT8 *)FieldValue;
+            DATA->fog.green = *(uint8_t *)FieldValue;
             break;
         case 17: //data DATA ,, Struct
             DATA.Load();
-            DATA->fog.blue = *(UINT8 *)FieldValue;
+            DATA->fog.blue = *(uint8_t *)FieldValue;
             break;
         case 18: //data_p DATA ,, Struct
             if(ArraySize != 1)
@@ -293,31 +293,31 @@ bool LGTMRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             break;
         case 19: //data DATA ,, Struct
             DATA.Load();
-            DATA->fogNear = *(FLOAT32 *)FieldValue;
+            DATA->fogNear = *(float *)FieldValue;
             break;
         case 20: //data DATA ,, Struct
             DATA.Load();
-            DATA->fogFar = *(FLOAT32 *)FieldValue;
+            DATA->fogFar = *(float *)FieldValue;
             break;
         case 21: //data DATA ,, Struct
             DATA.Load();
-            DATA->directionalXY = *(SINT32 *)FieldValue;
+            DATA->directionalXY = *(int32_t *)FieldValue;
             break;
         case 22: //data DATA ,, Struct
             DATA.Load();
-            DATA->directionalZ = *(SINT32 *)FieldValue;
+            DATA->directionalZ = *(int32_t *)FieldValue;
             break;
         case 23: //data DATA ,, Struct
             DATA.Load();
-            DATA->directionalFade = *(FLOAT32 *)FieldValue;
+            DATA->directionalFade = *(float *)FieldValue;
             break;
         case 24: //data DATA ,, Struct
             DATA.Load();
-            DATA->fogClip = *(FLOAT32 *)FieldValue;
+            DATA->fogClip = *(float *)FieldValue;
             break;
         case 25: //data DATA ,, Struct
             DATA.Load();
-            DATA->fogPower = *(FLOAT32 *)FieldValue;
+            DATA->fogPower = *(float *)FieldValue;
             break;
         default:
             break;

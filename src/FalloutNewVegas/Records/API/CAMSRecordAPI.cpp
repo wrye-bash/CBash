@@ -38,7 +38,7 @@
 
 namespace FNV
 {
-UINT32 CAMSRecord::GetFieldAttribute(FIELD_IDENTIFIERS, UINT32 WhichAttribute)
+uint32_t CAMSRecord::GetFieldAttribute(FIELD_IDENTIFIERS, uint32_t WhichAttribute)
     {
     switch(FieldID)
         {
@@ -215,12 +215,12 @@ void * CAMSRecord::GetField(FIELD_IDENTIFIERS, void **FieldValues)
     return NULL;
     }
 
-bool CAMSRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
+bool CAMSRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, uint32_t ArraySize)
     {
     switch(FieldID)
         {
         case 1: //flags1
-            SetHeaderFlagMask(*(UINT32 *)FieldValue);
+            SetHeaderFlagMask(*(uint32_t *)FieldValue);
             break;
         case 3: //versionControl1
             if(ArraySize != 4)
@@ -231,10 +231,10 @@ bool CAMSRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             ((UINT8ARRAY)&flagsUnk)[3] = ((UINT8ARRAY)FieldValue)[3];
             break;
         case 4: //eid
-            EDID.Copy((STRING)FieldValue);
+            EDID.Copy((char *)FieldValue);
             break;
         case 5: //formVersion
-            formVersion = *(UINT16 *)FieldValue;
+            formVersion = *(uint16_t *)FieldValue;
             break;
         case 6: //versionControl2
             if(ArraySize != 2)
@@ -244,11 +244,11 @@ bool CAMSRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             break;
         case 7: //modPath
             MODL.Load();
-            MODL->MODL.Copy((STRING)FieldValue);
+            MODL->MODL.Copy((char *)FieldValue);
             break;
         case 8: //modb
             MODL.Load();
-            MODL->MODB.value = *(FLOAT32 *)FieldValue;
+            MODL->MODB.value = *(float *)FieldValue;
             break;
         case 9: //modt_p
             MODL.Load();
@@ -256,7 +256,7 @@ bool CAMSRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             break;
         case 10: //mods Alternate Textures
             MODL.Load();
-            //MODL->Textures.MODS.Copy((STRING)FieldValue);
+            //MODL->Textures.MODS.Copy((char *)FieldValue);
             break;
         case 11: //mods Alternate Textures
             MODL.Load();
@@ -266,52 +266,52 @@ bool CAMSRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
         case 12: //mods Alternate Textures
             MODL.Load();
             //MODL->Textures.MODS.Load();
-            //MODL->Textures.MODS->value12 = *(SINT32 *)FieldValue;
+            //MODL->Textures.MODS->value12 = *(int32_t *)FieldValue;
             break;
         case 13: //modelFlags
             MODL.Load();
             MODL->MODD.Load();
-            MODL->MODD.value = *(UINT8 *)FieldValue;
+            MODL->MODD.value = *(uint8_t *)FieldValue;
             break;
         case 14: //data DATA ,, Struct
             DATA.Load();
-            DATA->action = *(UINT32 *)FieldValue;
+            DATA->action = *(uint32_t *)FieldValue;
             break;
         case 15: //data DATA ,, Struct
             DATA.Load();
-            DATA->location = *(UINT32 *)FieldValue;
+            DATA->location = *(uint32_t *)FieldValue;
             break;
         case 16: //data DATA ,, Struct
             DATA.Load();
-            DATA->target = *(UINT32 *)FieldValue;
+            DATA->target = *(uint32_t *)FieldValue;
             break;
         case 17: //data DATA ,, Struct
             DATA.Load();
-            DATA->flags = *(UINT32 *)FieldValue;
+            DATA->flags = *(uint32_t *)FieldValue;
             break;
         case 18: //data DATA ,, Struct
             DATA.Load();
-            DATA->playerTimeMult = *(FLOAT32 *)FieldValue;
+            DATA->playerTimeMult = *(float *)FieldValue;
             break;
         case 19: //data DATA ,, Struct
             DATA.Load();
-            DATA->targetTimeMult = *(FLOAT32 *)FieldValue;
+            DATA->targetTimeMult = *(float *)FieldValue;
             break;
         case 20: //data DATA ,, Struct
             DATA.Load();
-            DATA->globalTimeMult = *(FLOAT32 *)FieldValue;
+            DATA->globalTimeMult = *(float *)FieldValue;
             break;
         case 21: //data DATA ,, Struct
             DATA.Load();
-            DATA->maxTime = *(FLOAT32 *)FieldValue;
+            DATA->maxTime = *(float *)FieldValue;
             break;
         case 22: //data DATA ,, Struct
             DATA.Load();
-            DATA->minTime = *(FLOAT32 *)FieldValue;
+            DATA->minTime = *(float *)FieldValue;
             break;
         case 23: //data DATA ,, Struct
             DATA.Load();
-            DATA->targetPercentBetweenActors = *(FLOAT32 *)FieldValue;
+            DATA->targetPercentBetweenActors = *(float *)FieldValue;
             break;
         case 24: //mnam Image Space Modifier
             MNAM.Load();

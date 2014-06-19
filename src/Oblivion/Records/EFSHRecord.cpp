@@ -278,34 +278,34 @@ void EFSHRecord::IsMembraneShaderSkinOnly(bool value)
     SETBIT(DATA.value.flags, fIsMemSkinOnly, value);
     }
 
-bool EFSHRecord::IsFlagMask(UINT8 Mask, bool Exact)
+bool EFSHRecord::IsFlagMask(uint8_t Mask, bool Exact)
     {
     return Exact ? ((DATA.value.flags & Mask) == Mask) : ((DATA.value.flags & Mask) != 0);
     }
 
-void EFSHRecord::SetFlagMask(UINT8 Mask)
+void EFSHRecord::SetFlagMask(uint8_t Mask)
     {
     DATA.value.flags = Mask;
     }
 
-SINT32 EFSHRecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk)
+int32_t EFSHRecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk)
     {
-    UINT32 subType = 0;
-    UINT32 subSize = 0;
+    uint32_t subType = 0;
+    uint32_t subSize = 0;
     while(buffer < end_buffer){
-        subType = *(UINT32 *)buffer;
+        subType = *(uint32_t *)buffer;
         buffer += 4;
         switch(subType)
             {
             case REV32(XXXX):
                 buffer += 2;
-                subSize = *(UINT32 *)buffer;
+                subSize = *(uint32_t *)buffer;
                 buffer += 4;
-                subType = *(UINT32 *)buffer;
+                subType = *(uint32_t *)buffer;
                 buffer += 6;
                 break;
             default:
-                subSize = *(UINT16 *)buffer;
+                subSize = *(uint16_t *)buffer;
                 buffer += 2;
                 break;
             }
@@ -336,17 +336,17 @@ SINT32 EFSHRecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer,
     return 0;
     }
 
-UINT32 EFSHRecord::GetType()
+uint32_t EFSHRecord::GetType()
     {
     return REV32(EFSH);
     }
 
-STRING EFSHRecord::GetStrType()
+char * EFSHRecord::GetStrType()
     {
     return "EFSH";
     }
 
-SINT32 EFSHRecord::Unload()
+int32_t EFSHRecord::Unload()
     {
     IsChanged(false);
     IsLoaded(false);
@@ -357,7 +357,7 @@ SINT32 EFSHRecord::Unload()
     return 1;
     }
 
-SINT32 EFSHRecord::WriteRecord(FileWriter &writer)
+int32_t EFSHRecord::WriteRecord(FileWriter &writer)
     {
     WRITE(EDID);
     WRITE(ICON);

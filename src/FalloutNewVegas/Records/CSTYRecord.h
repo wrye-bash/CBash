@@ -44,18 +44,18 @@ class CSTYRecord : public FNVRecord //Combat Style
     private:
         struct CSTYCSTD //Advanced Standard
             {
-            UINT8   dodgeChance, lrChance, unused1[2];
-            FLOAT32 lrTimerMin, lrTimerMax, forTimerMin, forTimerMax, backTimerMin,
+            uint8_t   dodgeChance, lrChance, unused1[2];
+            float lrTimerMin, lrTimerMax, forTimerMin, forTimerMax, backTimerMin,
                     backTimerMax, idleTimerMin, idleTimerMax;
-            UINT8   blkChance, atkChance, unused2[2];
-            FLOAT32 atkBRecoil, atkBUnc, atkBh2h;
-            UINT8   pAtkChance, unused3[3];
-            FLOAT32 pAtkBRecoil, pAtkBUnc;
-            UINT8   pAtkNormal, pAtkFor, pAtkBack, pAtkL, pAtkR, unused4[3];
-            FLOAT32 holdTimerMin, holdTimerMax;
-            UINT16  flags;
-            UINT8   unused5[2], acroDodge, rushChance, unused6[2];
-            FLOAT32 rushMult;
+            uint8_t   blkChance, atkChance, unused2[2];
+            float atkBRecoil, atkBUnc, atkBh2h;
+            uint8_t   pAtkChance, unused3[3];
+            float pAtkBRecoil, pAtkBUnc;
+            uint8_t   pAtkNormal, pAtkFor, pAtkBack, pAtkL, pAtkR, unused4[3];
+            float holdTimerMin, holdTimerMax;
+            uint16_t  flags;
+            uint8_t   unused5[2], acroDodge, rushChance, unused6[2];
+            float rushMult;
 
             CSTYCSTD();
             ~CSTYCSTD();
@@ -66,7 +66,7 @@ class CSTYRecord : public FNVRecord //Combat Style
 
         struct CSTYCSAD //Advanced - Advanced
             {
-            FLOAT32 dodgeFMult, dodgeFBase, encSBase, encSMult, dodgeAtkMult,
+            float dodgeFMult, dodgeFBase, encSBase, encSMult, dodgeAtkMult,
                     dodgeNAtkMult, dodgeBAtkMult, dodgeBNAtkMult,
                     dodgeFAtkMult, dodgeFNAtkMult, blockMult, blockBase,
                     blockAtkMult, blockNAtkMult, atkMult, atkBase, atkAtkMult,
@@ -81,12 +81,12 @@ class CSTYRecord : public FNVRecord //Combat Style
 
         struct CSTYCSSD //Simple
             {
-            FLOAT32 coverRadius, coverChance, waitTimerMin, waitTimerMax,
+            float coverRadius, coverChance, waitTimerMin, waitTimerMax,
                     waitFireTimerMin, waitFireTimerMax, fireTimerMin,
                     fireTimerMax, rangedRangeMultMin;
-            UINT8   unused1[4];
-            UINT32  weaponRestrictions;
-            FLOAT32 rangedRangeMultMax, targetMaxFOV, combatRadius,
+            uint8_t   unused1[4];
+            uint32_t  weaponRestrictions;
+            float rangedRangeMultMax, targetMaxFOV, combatRadius,
                     semiAutoFireDelayMultMin, semiAutoFireDelayMultMax;
 
             CSTYCSSD();
@@ -141,8 +141,8 @@ class CSTYRecord : public FNVRecord //Combat Style
         void   IsIgnoreDamagingSpectator(bool value);
         bool   IsNoUseStealthboy();
         void   IsNoUseStealthboy(bool value);
-        bool   IsFlagMask(UINT16 Mask, bool Exact=false);
-        void   SetFlagMask(UINT16 Mask);
+        bool   IsFlagMask(uint16_t Mask, bool Exact=false);
+        void   SetFlagMask(uint16_t Mask);
 
         bool   IsNone();
         void   IsNone(bool value);
@@ -150,20 +150,20 @@ class CSTYRecord : public FNVRecord //Combat Style
         void   IsMeleeOnly(bool value);
         bool   IsRangedOnly();
         void   IsRangedOnly(bool value);
-        bool   IsType(UINT32 Type);
-        void   SetType(UINT32 Type);
+        bool   IsType(uint32_t Type);
+        void   SetType(uint32_t Type);
 
-        UINT32 GetFieldAttribute(DEFAULTED_FIELD_IDENTIFIERS, UINT32 WhichAttribute=0);
+        uint32_t GetFieldAttribute(DEFAULTED_FIELD_IDENTIFIERS, uint32_t WhichAttribute=0);
         void * GetField(DEFAULTED_FIELD_IDENTIFIERS, void **FieldValues=NULL);
-        bool   SetField(DEFAULTED_FIELD_IDENTIFIERS, void *FieldValue=NULL, UINT32 ArraySize=0);
+        bool   SetField(DEFAULTED_FIELD_IDENTIFIERS, void *FieldValue=NULL, uint32_t ArraySize=0);
         void   DeleteField(DEFAULTED_FIELD_IDENTIFIERS);
 
-        UINT32 GetType();
-        STRING GetStrType();
+        uint32_t GetType();
+        char * GetStrType();
 
-        SINT32 ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk=false);
-        SINT32 Unload();
-        SINT32 WriteRecord(FileWriter &writer);
+        int32_t ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk=false);
+        int32_t Unload();
+        int32_t WriteRecord(FileWriter &writer);
 
         bool operator ==(const CSTYRecord &other) const;
         bool operator !=(const CSTYRecord &other) const;

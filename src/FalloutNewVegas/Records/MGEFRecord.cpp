@@ -134,7 +134,7 @@ bool MGEFRecord::VisitFormIDs(FormIDOp &op)
 
     if(MODL.IsLoaded())
         {
-        for(UINT32 x = 0; x < MODL->Textures.MODS.size(); x++)
+        for(uint32_t x = 0; x < MODL->Textures.MODS.size(); x++)
             op.Accept(MODL->Textures.MODS[x]->texture);
         }
     op.Accept(DATA.value.associated);
@@ -396,12 +396,12 @@ void MGEFRecord::IsUnknown1(bool value)
     SETBIT(DATA.value.flags, fIsUnknown1, value);
     }
 
-bool MGEFRecord::IsFlagMask(UINT32 Mask, bool Exact)
+bool MGEFRecord::IsFlagMask(uint32_t Mask, bool Exact)
     {
     return Exact ? ((DATA.value.flags & Mask) == Mask) : ((DATA.value.flags & Mask) != 0);
     }
 
-void MGEFRecord::SetFlagMask(UINT32 Mask)
+void MGEFRecord::SetFlagMask(uint32_t Mask)
     {
     DATA.value.flags = Mask;
     }
@@ -596,12 +596,12 @@ void MGEFRecord::IsTurbo(bool value)
     DATA.value.archType = value ? eTurbo : eValueModifier;
     }
 
-bool MGEFRecord::IsType(UINT32 Type)
+bool MGEFRecord::IsType(uint32_t Type)
     {
     return DATA.value.archType == Type;
     }
 
-void MGEFRecord::SetType(UINT32 Type)
+void MGEFRecord::SetType(uint32_t Type)
     {
     DATA.value.archType = Type;
     }
@@ -666,44 +666,44 @@ void MGEFRecord::IsSchoolRestoration(bool value)
     DATA.value.schoolType = value ? eRestoration : eAlteration;
     }
 
-bool MGEFRecord::IsSchool(UINT32 Type)
+bool MGEFRecord::IsSchool(uint32_t Type)
     {
     return (DATA.value.schoolType == Type);
     }
 
-void MGEFRecord::SetSchool(UINT32 Type)
+void MGEFRecord::SetSchool(uint32_t Type)
     {
     DATA.value.schoolType = Type;
     }
 
-UINT32 MGEFRecord::GetType()
+uint32_t MGEFRecord::GetType()
     {
     return REV32(MGEF);
     }
 
-STRING MGEFRecord::GetStrType()
+char * MGEFRecord::GetStrType()
     {
     return "MGEF";
     }
 
-SINT32 MGEFRecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk)
+int32_t MGEFRecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk)
     {
-    UINT32 subType = 0;
-    UINT32 subSize = 0;
+    uint32_t subType = 0;
+    uint32_t subSize = 0;
     while(buffer < end_buffer){
-        subType = *(UINT32 *)buffer;
+        subType = *(uint32_t *)buffer;
         buffer += 4;
         switch(subType)
             {
             case REV32(XXXX):
                 buffer += 2;
-                subSize = *(UINT32 *)buffer;
+                subSize = *(uint32_t *)buffer;
                 buffer += 4;
-                subType = *(UINT32 *)buffer;
+                subType = *(uint32_t *)buffer;
                 buffer += 6;
                 break;
             default:
-                subSize = *(UINT16 *)buffer;
+                subSize = *(uint16_t *)buffer;
                 buffer += 2;
                 break;
             }
@@ -760,7 +760,7 @@ SINT32 MGEFRecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer,
     return 0;
     }
 
-SINT32 MGEFRecord::Unload()
+int32_t MGEFRecord::Unload()
     {
     IsChanged(false);
     IsLoaded(false);
@@ -774,7 +774,7 @@ SINT32 MGEFRecord::Unload()
     return 1;
     }
 
-SINT32 MGEFRecord::WriteRecord(FileWriter &writer)
+int32_t MGEFRecord::WriteRecord(FileWriter &writer)
     {
     WRITE(EDID);
     WRITE(FULL);

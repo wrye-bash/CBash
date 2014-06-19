@@ -160,13 +160,13 @@ void CHALRecord::IsShowZeroProgress(bool value)
     SETBIT(DATA->flags, fIsShowZeroProgress, value);
     }
 
-bool CHALRecord::IsFlagMask(UINT8 Mask, bool Exact)
+bool CHALRecord::IsFlagMask(uint8_t Mask, bool Exact)
     {
     if (!DATA.IsLoaded()) return false;
     return Exact ? ((DATA->flags & Mask) == Mask) : ((DATA->flags & Mask) != 0);
     }
 
-void CHALRecord::SetFlagMask(UINT8 Mask)
+void CHALRecord::SetFlagMask(uint8_t Mask)
     {
     DATA.Load();
     DATA->flags = Mask;
@@ -244,46 +244,46 @@ bool CHALRecord::IsMiscStat()
     return (DATA->challengeType == eMiscStat);
     }
 
-bool CHALRecord::IsType(UINT8 Type)
+bool CHALRecord::IsType(uint8_t Type)
     {
     if (!DATA.IsLoaded()) return false;
     return DATA->challengeType == Type;
     }
 
-void CHALRecord::SetType(UINT8 Type)
+void CHALRecord::SetType(uint8_t Type)
     {
     DATA.Load();
     DATA->challengeType = Type;
     }
 
-UINT32 CHALRecord::GetType()
+uint32_t CHALRecord::GetType()
     {
     return REV32(CHAL);
     }
 
-STRING CHALRecord::GetStrType()
+char * CHALRecord::GetStrType()
     {
     return "CHAL";
     }
 
-SINT32 CHALRecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk)
+int32_t CHALRecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk)
     {
-    UINT32 subType = 0;
-    UINT32 subSize = 0;
+    uint32_t subType = 0;
+    uint32_t subSize = 0;
     while(buffer < end_buffer){
-        subType = *(UINT32 *)buffer;
+        subType = *(uint32_t *)buffer;
         buffer += 4;
         switch(subType)
             {
             case REV32(XXXX):
                 buffer += 2;
-                subSize = *(UINT32 *)buffer;
+                subSize = *(uint32_t *)buffer;
                 buffer += 4;
-                subType = *(UINT32 *)buffer;
+                subType = *(uint32_t *)buffer;
                 buffer += 6;
                 break;
             default:
-                subSize = *(UINT16 *)buffer;
+                subSize = *(uint16_t *)buffer;
                 buffer += 2;
                 break;
             }
@@ -322,7 +322,7 @@ SINT32 CHALRecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer,
     return 0;
     }
 
-SINT32 CHALRecord::Unload()
+int32_t CHALRecord::Unload()
     {
     IsChanged(false);
     IsLoaded(false);
@@ -336,7 +336,7 @@ SINT32 CHALRecord::Unload()
     return 1;
     }
 
-SINT32 CHALRecord::WriteRecord(FileWriter &writer)
+int32_t CHALRecord::WriteRecord(FileWriter &writer)
     {
     WRITE(EDID);
     WRITE(FULL);

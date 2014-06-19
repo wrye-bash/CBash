@@ -38,7 +38,7 @@
 
 namespace Ob
 {
-UINT32 LTEXRecord::GetFieldAttribute(FIELD_IDENTIFIERS, UINT32 WhichAttribute)
+uint32_t LTEXRecord::GetFieldAttribute(FIELD_IDENTIFIERS, uint32_t WhichAttribute)
     {
     switch(FieldID)
         {
@@ -68,7 +68,7 @@ UINT32 LTEXRecord::GetFieldAttribute(FIELD_IDENTIFIERS, UINT32 WhichAttribute)
                 case 0: //fieldType
                     return FORMID_ARRAY_FIELD;
                 case 1: //fieldSize
-                    return (UINT32)GNAM.value.size();
+                    return (uint32_t)GNAM.value.size();
                 default:
                     return UNKNOWN_FIELD;
                 }
@@ -109,40 +109,40 @@ void * LTEXRecord::GetField(FIELD_IDENTIFIERS, void **FieldValues)
     return NULL;
     }
 
-bool LTEXRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
+bool LTEXRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, uint32_t ArraySize)
     {
     switch(FieldID)
         {
         case 1: //flags1
-            SetHeaderFlagMask(*(UINT32 *)FieldValue);
+            SetHeaderFlagMask(*(uint32_t *)FieldValue);
             break;
         case 3: //flags2
-            SetHeaderUnknownFlagMask(*(UINT32 *)FieldValue);
+            SetHeaderUnknownFlagMask(*(uint32_t *)FieldValue);
             break;
         case 4: //eid
-            EDID.Copy((STRING)FieldValue);
+            EDID.Copy((char *)FieldValue);
             break;
         case 5: //iconPath
-            ICON.Copy((STRING)FieldValue);
+            ICON.Copy((char *)FieldValue);
             break;
         case 6: //types
-            SetType(*(UINT8 *)FieldValue);
+            SetType(*(uint8_t *)FieldValue);
             break;
         case 7: //friction
             HNAM.Load();
-            HNAM->friction = *(UINT8 *)FieldValue;
+            HNAM->friction = *(uint8_t *)FieldValue;
             break;
         case 8: //restitution
             HNAM.Load();
-            HNAM->restitution = *(UINT8 *)FieldValue;
+            HNAM->restitution = *(uint8_t *)FieldValue;
             break;
         case 9: //specular
             SNAM.Load();
-            *SNAM.value = *(UINT8 *)FieldValue;
+            *SNAM.value = *(uint8_t *)FieldValue;
             break;
         case 10: //grass
             GNAM.resize(ArraySize);
-            for(UINT32 x = 0; x < ArraySize; x++)
+            for(uint32_t x = 0; x < ArraySize; x++)
                 GNAM.value[x] = ((FORMIDARRAY)FieldValue)[x];
             return true;
         default:

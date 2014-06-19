@@ -38,7 +38,7 @@
 
 namespace FNV
 {
-UINT32 PROJRecord::GetFieldAttribute(FIELD_IDENTIFIERS, UINT32 WhichAttribute)
+uint32_t PROJRecord::GetFieldAttribute(FIELD_IDENTIFIERS, uint32_t WhichAttribute)
     {
     switch(FieldID)
         {
@@ -114,7 +114,7 @@ UINT32 PROJRecord::GetFieldAttribute(FIELD_IDENTIFIERS, UINT32 WhichAttribute)
                     case 0: //fieldType
                         return LIST_FIELD;
                     case 1: //fieldSize
-                        return (UINT32)MODL->Textures.MODS.size();
+                        return (uint32_t)MODL->Textures.MODS.size();
                     default:
                         return UNKNOWN_FIELD;
                     }
@@ -165,7 +165,7 @@ UINT32 PROJRecord::GetFieldAttribute(FIELD_IDENTIFIERS, UINT32 WhichAttribute)
                     case 0: //fieldType
                         return LIST_FIELD;
                     case 1: //fieldSize
-                        return (UINT32)Destructable->Stages.value.size();
+                        return (uint32_t)Destructable->Stages.value.size();
                     default:
                         return UNKNOWN_FIELD;
                     }
@@ -433,12 +433,12 @@ void * PROJRecord::GetField(FIELD_IDENTIFIERS, void **FieldValues)
     return NULL;
     }
 
-bool PROJRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
+bool PROJRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, uint32_t ArraySize)
     {
     switch(FieldID)
         {
         case 1: //flags1
-            SetHeaderFlagMask(*(UINT32 *)FieldValue);
+            SetHeaderFlagMask(*(uint32_t *)FieldValue);
             break;
         case 3: //versionControl1
             if(ArraySize != 4)
@@ -449,10 +449,10 @@ bool PROJRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             ((UINT8ARRAY)&flagsUnk)[3] = ((UINT8ARRAY)FieldValue)[3];
             break;
         case 4: //eid
-            EDID.Copy((STRING)FieldValue);
+            EDID.Copy((char *)FieldValue);
             break;
         case 5: //formVersion
-            formVersion = *(UINT16 *)FieldValue;
+            formVersion = *(uint16_t *)FieldValue;
             break;
         case 6: //versionControl2
             if(ArraySize != 2)
@@ -461,33 +461,33 @@ bool PROJRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             versionControl2[1] = ((UINT8ARRAY)FieldValue)[1];
             break;
         case 7: //boundX1
-            OBND.value.x1 = *(SINT16 *)FieldValue;
+            OBND.value.x1 = *(int16_t *)FieldValue;
             break;
         case 8: //boundY1
-            OBND.value.y1 = *(SINT16 *)FieldValue;
+            OBND.value.y1 = *(int16_t *)FieldValue;
             break;
         case 9: //boundZ1
-            OBND.value.z1 = *(SINT16 *)FieldValue;
+            OBND.value.z1 = *(int16_t *)FieldValue;
             break;
         case 10: //boundX2
-            OBND.value.x2 = *(SINT16 *)FieldValue;
+            OBND.value.x2 = *(int16_t *)FieldValue;
             break;
         case 11: //boundY2
-            OBND.value.y2 = *(SINT16 *)FieldValue;
+            OBND.value.y2 = *(int16_t *)FieldValue;
             break;
         case 12: //boundZ2
-            OBND.value.z2 = *(SINT16 *)FieldValue;
+            OBND.value.z2 = *(int16_t *)FieldValue;
             break;
         case 13: //full
-            FULL.Copy((STRING)FieldValue);
+            FULL.Copy((char *)FieldValue);
             break;
         case 14: //modPath
             MODL.Load();
-            MODL->MODL.Copy((STRING)FieldValue);
+            MODL->MODL.Copy((char *)FieldValue);
             break;
         case 15: //modb
             MODL.Load();
-            MODL->MODB.value = *(FLOAT32 *)FieldValue;
+            MODL->MODB.value = *(float *)FieldValue;
             break;
         case 16: //modt_p
             MODL.Load();
@@ -511,16 +511,16 @@ bool PROJRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
                     MODL->Textures.MODS[ListIndex]->name = NULL;
                     if(FieldValue != NULL)
                         {
-                        ArraySize = (UINT32)strlen((STRING)FieldValue) + 1;
+                        ArraySize = (uint32_t)strlen((char *)FieldValue) + 1;
                         MODL->Textures.MODS[ListIndex]->name = new char[ArraySize];
-                        strcpy_s(MODL->Textures.MODS[ListIndex]->name, ArraySize, (STRING)FieldValue);
+                        strcpy_s(MODL->Textures.MODS[ListIndex]->name, ArraySize, (char *)FieldValue);
                         }
                     break;
                 case 2: //texture
                     MODL->Textures.MODS[ListIndex]->texture = *(FORMID *)FieldValue;
                     return true;
                 case 3: //index
-                    MODL->Textures.MODS[ListIndex]->index = *(SINT32 *)FieldValue;
+                    MODL->Textures.MODS[ListIndex]->index = *(int32_t *)FieldValue;
                     break;
                 default:
                     break;
@@ -528,19 +528,19 @@ bool PROJRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             break;
         case 18: //modelFlags
             MODL.Load();
-            MODL->SetFlagMask(*(UINT8 *)FieldValue);
+            MODL->SetFlagMask(*(uint8_t *)FieldValue);
             break;
         case 19: //destructableHealth
             Destructable.Load();
-            Destructable->DEST.value.health = *(SINT32 *)FieldValue;
+            Destructable->DEST.value.health = *(int32_t *)FieldValue;
             break;
         case 20: //destructableCount
             Destructable.Load();
-            Destructable->DEST.value.count = *(UINT8 *)FieldValue;
+            Destructable->DEST.value.count = *(uint8_t *)FieldValue;
             break;
         case 21: //destructableFlags
             Destructable.Load();
-            Destructable->SetFlagMask(*(UINT8 *)FieldValue);
+            Destructable->SetFlagMask(*(uint8_t *)FieldValue);
             break;
         case 22: //destructableUnused1
             if(ArraySize != 2)
@@ -563,19 +563,19 @@ bool PROJRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             switch(ListFieldID)
                 {
                 case 1: //health
-                    Destructable->Stages.value[ListIndex]->DSTD.value.health = *(UINT8 *)FieldValue;
+                    Destructable->Stages.value[ListIndex]->DSTD.value.health = *(uint8_t *)FieldValue;
                     break;
                 case 2: //index
-                    Destructable->Stages.value[ListIndex]->DSTD.value.index = *(UINT8 *)FieldValue;
+                    Destructable->Stages.value[ListIndex]->DSTD.value.index = *(uint8_t *)FieldValue;
                     break;
                 case 3: //stage
-                    Destructable->Stages.value[ListIndex]->DSTD.value.stage = *(UINT8 *)FieldValue;
+                    Destructable->Stages.value[ListIndex]->DSTD.value.stage = *(uint8_t *)FieldValue;
                     break;
                 case 4: //flags
-                    Destructable->Stages.value[ListIndex]->SetFlagMask(*(UINT8 *)FieldValue);
+                    Destructable->Stages.value[ListIndex]->SetFlagMask(*(uint8_t *)FieldValue);
                     break;
                 case 5: //dps
-                    Destructable->Stages.value[ListIndex]->DSTD.value.dps = *(SINT32 *)FieldValue;
+                    Destructable->Stages.value[ListIndex]->DSTD.value.dps = *(int32_t *)FieldValue;
                     break;
                 case 6: //explosion
                     Destructable->Stages.value[ListIndex]->DSTD.value.explosion = *(FORMID *)FieldValue;
@@ -584,10 +584,10 @@ bool PROJRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
                     Destructable->Stages.value[ListIndex]->DSTD.value.debris = *(FORMID *)FieldValue;
                     return true;
                 case 8: //debrisCount
-                    Destructable->Stages.value[ListIndex]->DSTD.value.debrisCount = *(SINT32 *)FieldValue;
+                    Destructable->Stages.value[ListIndex]->DSTD.value.debrisCount = *(int32_t *)FieldValue;
                     break;
                 case 9: //modPath
-                    Destructable->Stages.value[ListIndex]->DMDL.Copy((STRING)FieldValue);
+                    Destructable->Stages.value[ListIndex]->DMDL.Copy((char *)FieldValue);
                     break;
                 case 10: //modt_p
                     Destructable->Stages.value[ListIndex]->DMDT.Copy((UINT8ARRAY)FieldValue, ArraySize);
@@ -597,19 +597,19 @@ bool PROJRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
                 }
             break;
         case 24: //flags
-            SetFlagMask(*(UINT16 *)FieldValue);
+            SetFlagMask(*(uint16_t *)FieldValue);
             break;
         case 25: //projType
-            SetType(*(UINT16 *)FieldValue);
+            SetType(*(uint16_t *)FieldValue);
             break;
         case 26: //gravity
-            DATA.value.gravity = *(FLOAT32 *)FieldValue;
+            DATA.value.gravity = *(float *)FieldValue;
             break;
         case 27: //speed
-            DATA.value.speed = *(FLOAT32 *)FieldValue;
+            DATA.value.speed = *(float *)FieldValue;
             break;
         case 28: //range
-            DATA.value.range = *(FLOAT32 *)FieldValue;
+            DATA.value.range = *(float *)FieldValue;
             break;
         case 29: //light
             DATA.value.light = *(FORMID *)FieldValue;
@@ -618,13 +618,13 @@ bool PROJRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             DATA.value.flash = *(FORMID *)FieldValue;
             return true;
         case 31: //tracerChance
-            DATA.value.tracerChance = *(FLOAT32 *)FieldValue;
+            DATA.value.tracerChance = *(float *)FieldValue;
             break;
         case 32: //altExplProximityTrigger
-            DATA.value.altExplProximityTrigger = *(FLOAT32 *)FieldValue;
+            DATA.value.altExplProximityTrigger = *(float *)FieldValue;
             break;
         case 33: //altExplProximityTimer
-            DATA.value.altExplProximityTimer = *(FLOAT32 *)FieldValue;
+            DATA.value.altExplProximityTimer = *(float *)FieldValue;
             break;
         case 34: //explosion
             DATA.value.explosion = *(FORMID *)FieldValue;
@@ -633,13 +633,13 @@ bool PROJRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             DATA.value.sound = *(FORMID *)FieldValue;
             return true;
         case 36: //flashDuration
-            DATA.value.flashDuration = *(FLOAT32 *)FieldValue;
+            DATA.value.flashDuration = *(float *)FieldValue;
             break;
         case 37: //fadeDuration
-            DATA.value.fadeDuration = *(FLOAT32 *)FieldValue;
+            DATA.value.fadeDuration = *(float *)FieldValue;
             break;
         case 38: //impactForce
-            DATA.value.impactForce = *(FLOAT32 *)FieldValue;
+            DATA.value.impactForce = *(float *)FieldValue;
             break;
         case 39: //soundCountdown
             DATA.value.soundCountdown = *(FORMID *)FieldValue;
@@ -651,25 +651,25 @@ bool PROJRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             DATA.value.defaultWeaponSource = *(FORMID *)FieldValue;
             return true;
         case 42: //rotX
-            DATA.value.rotX = *(FLOAT32 *)FieldValue;
+            DATA.value.rotX = *(float *)FieldValue;
             break;
         case 43: //rotY
-            DATA.value.rotY = *(FLOAT32 *)FieldValue;
+            DATA.value.rotY = *(float *)FieldValue;
             break;
         case 44: //rotZ
-            DATA.value.rotZ = *(FLOAT32 *)FieldValue;
+            DATA.value.rotZ = *(float *)FieldValue;
             break;
         case 45: //bouncyMult
-            DATA.value.bouncyMult = *(FLOAT32 *)FieldValue;
+            DATA.value.bouncyMult = *(float *)FieldValue;
             break;
         case 46: //modelPath
-            NAM1.Copy((STRING)FieldValue);
+            NAM1.Copy((char *)FieldValue);
             break;
         case 47: //nam2_p
             NAM2.Copy((UINT8ARRAY)FieldValue, ArraySize);
             break;
         case 48: //soundLevel
-            SetSoundLevelType(*(UINT32 *)FieldValue);
+            SetSoundLevelType(*(uint32_t *)FieldValue);
             break;
         default:
             break;

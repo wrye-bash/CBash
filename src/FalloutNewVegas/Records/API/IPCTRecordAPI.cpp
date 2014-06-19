@@ -38,7 +38,7 @@
 
 namespace FNV
 {
-UINT32 IPCTRecord::GetFieldAttribute(FIELD_IDENTIFIERS, UINT32 WhichAttribute)
+uint32_t IPCTRecord::GetFieldAttribute(FIELD_IDENTIFIERS, uint32_t WhichAttribute)
     {
     switch(FieldID)
         {
@@ -283,12 +283,12 @@ void * IPCTRecord::GetField(FIELD_IDENTIFIERS, void **FieldValues)
     return NULL;
     }
 
-bool IPCTRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
+bool IPCTRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, uint32_t ArraySize)
     {
     switch(FieldID)
         {
         case 1: //flags1
-            SetHeaderFlagMask(*(UINT32 *)FieldValue);
+            SetHeaderFlagMask(*(uint32_t *)FieldValue);
             break;
         case 3: //versionControl1
             if(ArraySize != 4)
@@ -299,10 +299,10 @@ bool IPCTRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             ((UINT8ARRAY)&flagsUnk)[3] = ((UINT8ARRAY)FieldValue)[3];
             break;
         case 4: //eid
-            EDID.Copy((STRING)FieldValue);
+            EDID.Copy((char *)FieldValue);
             break;
         case 5: //formVersion
-            formVersion = *(UINT16 *)FieldValue;
+            formVersion = *(uint16_t *)FieldValue;
             break;
         case 6: //versionControl2
             if(ArraySize != 2)
@@ -312,11 +312,11 @@ bool IPCTRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             break;
         case 7: //modPath
             MODL.Load();
-            MODL->MODL.Copy((STRING)FieldValue);
+            MODL->MODL.Copy((char *)FieldValue);
             break;
         case 8: //modb
             MODL.Load();
-            MODL->MODB.value = *(FLOAT32 *)FieldValue;
+            MODL->MODB.value = *(float *)FieldValue;
             break;
         case 9: //modt_p
             MODL.Load();
@@ -324,7 +324,7 @@ bool IPCTRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             break;
         case 10: //mods Alternate Textures
             MODL.Load();
-            //MODL->MODS.Copy((STRING)FieldValue);
+            //MODL->MODS.Copy((char *)FieldValue);
             break;
         case 11: //mods Alternate Textures
             MODL.Load();
@@ -334,72 +334,72 @@ bool IPCTRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
         case 12: //mods Alternate Textures
             MODL.Load();
             MODL->Textures.Load();
-            //MODL->MODS->value12 = *(SINT32 *)FieldValue;
+            //MODL->MODS->value12 = *(int32_t *)FieldValue;
             break;
         case 13: //modelFlags
             MODL.Load();
             MODL->MODD.Load();
-            MODL->MODD.value = *(UINT8 *)FieldValue;
+            MODL->MODD.value = *(uint8_t *)FieldValue;
             break;
         case 14: //data DATA ,, Struct
             DATA.Load();
-            DATA->duration = *(FLOAT32 *)FieldValue;
+            DATA->duration = *(float *)FieldValue;
             break;
         case 15: //data DATA ,, Struct
             DATA.Load();
-            DATA->orientation = *(UINT32 *)FieldValue;
+            DATA->orientation = *(uint32_t *)FieldValue;
             break;
         case 16: //data DATA ,, Struct
             DATA.Load();
-            DATA->angleThreshold = *(FLOAT32 *)FieldValue;
+            DATA->angleThreshold = *(float *)FieldValue;
             break;
         case 17: //data DATA ,, Struct
             DATA.Load();
-            DATA->placementRadius = *(FLOAT32 *)FieldValue;
+            DATA->placementRadius = *(float *)FieldValue;
             break;
         case 18: //data DATA ,, Struct
             DATA.Load();
-            DATA->soundLevel = *(UINT32 *)FieldValue;
+            DATA->soundLevel = *(uint32_t *)FieldValue;
             break;
         case 19: //data DATA ,, Struct
             DATA.Load();
-            DATA->flags = *(UINT32 *)FieldValue;
+            DATA->flags = *(uint32_t *)FieldValue;
             break;
         case 20: //decalMinWidth
             DODT.Load();
-            DODT->minWidth = *(FLOAT32 *)FieldValue;
+            DODT->minWidth = *(float *)FieldValue;
             break;
         case 21: //decalMaxWidth
             DODT.Load();
-            DODT->maxWidth = *(FLOAT32 *)FieldValue;
+            DODT->maxWidth = *(float *)FieldValue;
             break;
         case 22: //decalMinHeight
             DODT.Load();
-            DODT->minHeight = *(FLOAT32 *)FieldValue;
+            DODT->minHeight = *(float *)FieldValue;
             break;
         case 23: //decalMaxHeight
             DODT.Load();
-            DODT->maxHeight = *(FLOAT32 *)FieldValue;
+            DODT->maxHeight = *(float *)FieldValue;
             break;
         case 24: //decalDepth
             DODT.Load();
-            DODT->depth = *(FLOAT32 *)FieldValue;
+            DODT->depth = *(float *)FieldValue;
             break;
         case 25: //decalShininess
             DODT.Load();
-            DODT->shininess = *(FLOAT32 *)FieldValue;
+            DODT->shininess = *(float *)FieldValue;
             break;
         case 26: //decalScale
             DODT.Load();
-            DODT->scale = *(FLOAT32 *)FieldValue;
+            DODT->scale = *(float *)FieldValue;
             break;
         case 27: //decalPasses
             DODT.Load();
-            DODT->passes = *(UINT8 *)FieldValue;
+            DODT->passes = *(uint8_t *)FieldValue;
             break;
         case 28: //decalFlags
             DODT.Load();
-            DODT->flags = *(UINT8 *)FieldValue;
+            DODT->flags = *(uint8_t *)FieldValue;
             break;
         case 29: //decalUnused1
             if(ArraySize != 2)
@@ -410,15 +410,15 @@ bool IPCTRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             break;
         case 30: //decalRed
             DODT.Load();
-            DODT->red = *(UINT8 *)FieldValue;
+            DODT->red = *(uint8_t *)FieldValue;
             break;
         case 31: //decalGreen
             DODT.Load();
-            DODT->green = *(UINT8 *)FieldValue;
+            DODT->green = *(uint8_t *)FieldValue;
             break;
         case 32: //decalBlue
             DODT.Load();
-            DODT->blue = *(UINT8 *)FieldValue;
+            DODT->blue = *(uint8_t *)FieldValue;
             break;
         case 33: //decalUnused2
             if(ArraySize != 1)

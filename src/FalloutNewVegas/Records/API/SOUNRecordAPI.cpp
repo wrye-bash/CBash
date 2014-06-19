@@ -38,7 +38,7 @@
 
 namespace FNV
 {
-UINT32 SOUNRecord::GetFieldAttribute(FIELD_IDENTIFIERS, UINT32 WhichAttribute)
+uint32_t SOUNRecord::GetFieldAttribute(FIELD_IDENTIFIERS, uint32_t WhichAttribute)
     {
     switch(FieldID)
         {
@@ -208,12 +208,12 @@ void * SOUNRecord::GetField(FIELD_IDENTIFIERS, void **FieldValues)
     return NULL;
     }
 
-bool SOUNRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
+bool SOUNRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, uint32_t ArraySize)
     {
     switch(FieldID)
         {
         case 1: //flags1
-            SetHeaderFlagMask(*(UINT32 *)FieldValue);
+            SetHeaderFlagMask(*(uint32_t *)FieldValue);
             break;
         case 3: //versionControl1
             if(ArraySize != 4)
@@ -224,10 +224,10 @@ bool SOUNRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             ((UINT8ARRAY)&flagsUnk)[3] = ((UINT8ARRAY)FieldValue)[3];
             break;
         case 4: //eid
-            EDID.Copy((STRING)FieldValue);
+            EDID.Copy((char *)FieldValue);
             break;
         case 5: //formVersion
-            formVersion = *(UINT16 *)FieldValue;
+            formVersion = *(uint16_t *)FieldValue;
             break;
         case 6: //versionControl2
             if(ArraySize != 2)
@@ -236,38 +236,38 @@ bool SOUNRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             versionControl2[1] = ((UINT8ARRAY)FieldValue)[1];
             break;
         case 7: //boundX1
-            OBND.value.x1 = *(SINT16 *)FieldValue;
+            OBND.value.x1 = *(int16_t *)FieldValue;
             break;
         case 8: //boundY1
-            OBND.value.y1 = *(SINT16 *)FieldValue;
+            OBND.value.y1 = *(int16_t *)FieldValue;
             break;
         case 9: //boundZ1
-            OBND.value.z1 = *(SINT16 *)FieldValue;
+            OBND.value.z1 = *(int16_t *)FieldValue;
             break;
         case 10: //boundX2
-            OBND.value.x2 = *(SINT16 *)FieldValue;
+            OBND.value.x2 = *(int16_t *)FieldValue;
             break;
         case 11: //boundY2
-            OBND.value.y2 = *(SINT16 *)FieldValue;
+            OBND.value.y2 = *(int16_t *)FieldValue;
             break;
         case 12: //boundZ2
-            OBND.value.z2 = *(SINT16 *)FieldValue;
+            OBND.value.z2 = *(int16_t *)FieldValue;
             break;
         case 13: //soundPath
-            FNAM.Copy((STRING)FieldValue);
+            FNAM.Copy((char *)FieldValue);
             break;
         case 14: //chance
             RNAM.Load();
-            *RNAM.value = *(UINT8 *)FieldValue;
+            *RNAM.value = *(uint8_t *)FieldValue;
             break;
         case 15: //minDistance
-            SNDD.value.minDistance = *(UINT8 *)FieldValue;
+            SNDD.value.minDistance = *(uint8_t *)FieldValue;
             break;
         case 16: //maxDistance
-            SNDD.value.maxDistance = *(UINT8 *)FieldValue;
+            SNDD.value.maxDistance = *(uint8_t *)FieldValue;
             break;
         case 17: //freqAdjustment
-            SNDD.value.freqAdjustment = *(SINT8 *)FieldValue;
+            SNDD.value.freqAdjustment = *(int8_t *)FieldValue;
             break;
         case 18: //unused1
             if(ArraySize != 1)
@@ -275,16 +275,16 @@ bool SOUNRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             SNDD.value.unused1 = ((UINT8ARRAY)FieldValue)[0];
             break;
         case 19: //flags
-            SetFlagMask(*(UINT32 *)FieldValue);
+            SetFlagMask(*(uint32_t *)FieldValue);
             break;
         case 20: //staticAtten
-            SNDD.value.staticAtten = *(SINT16 *)FieldValue;
+            SNDD.value.staticAtten = *(int16_t *)FieldValue;
             break;
         case 21: //stopTime
-            SNDD.value.stopTime = *(UINT8 *)FieldValue;
+            SNDD.value.stopTime = *(uint8_t *)FieldValue;
             break;
         case 22: //startTime
-            SNDD.value.startTime = *(UINT8 *)FieldValue;
+            SNDD.value.startTime = *(uint8_t *)FieldValue;
             break;
         case 23: //attenCurve
             if(ArraySize != 5)
@@ -296,16 +296,16 @@ bool SOUNRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             SNDD.value.attenCurve[4] = ((SINT16ARRAY)FieldValue)[4];
             break;
         case 24: //reverb
-            SNDD.value.reverb = *(SINT16 *)FieldValue;
+            SNDD.value.reverb = *(int16_t *)FieldValue;
             break;
         case 25: //priority
-            SNDD.value.priority = *(SINT32 *)FieldValue;
+            SNDD.value.priority = *(int32_t *)FieldValue;
             break;
         case 26: //x
-            SNDD.value.x = *(SINT32 *)FieldValue;
+            SNDD.value.x = *(int32_t *)FieldValue;
             break;
         case 27: //y
-            SNDD.value.y = *(SINT32 *)FieldValue;
+            SNDD.value.y = *(int32_t *)FieldValue;
             break;
         default:
             break;

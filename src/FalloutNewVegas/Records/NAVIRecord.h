@@ -47,16 +47,16 @@ class NAVIRecord : public FNVRecord //Navigation Mesh Info Map
         //Normally, it would be expected for unknown2 to be a separate chunk with varying sig's
         struct NAVINVMI
             {
-            UINT8   unknown1[4];
+            uint8_t   unknown1[4];
             FORMID  mesh, location;
-            SINT16  xGrid, yGrid;
+            int16_t  xGrid, yGrid;
             UINT8ARRAY unknown2;
-            UINT32  unknown2Size;
+            uint32_t  unknown2Size;
 
             NAVINVMI();
             ~NAVINVMI();
 
-            bool Read(unsigned char *&buffer, const UINT32 &subSize);
+            bool Read(unsigned char *&buffer, const uint32_t &subSize);
             void Write(FileWriter &writer);
 
             NAVINVMI& operator = (const NAVINVMI &rhs);
@@ -77,7 +77,7 @@ class NAVIRecord : public FNVRecord //Navigation Mesh Info Map
             NAVINVCI();
             ~NAVINVCI();
 
-            bool Read(unsigned char *&buffer, const UINT32 &subSize);
+            bool Read(unsigned char *&buffer, const uint32_t &subSize);
             void Write(FileWriter &writer);
 
             bool operator ==(const NAVINVCI &other) const;
@@ -86,7 +86,7 @@ class NAVIRecord : public FNVRecord //Navigation Mesh Info Map
 
     public:
         StringRecord EDID; //Editor ID
-        OptSimpleSubRecord<UINT32> NVER; //Version
+        OptSimpleSubRecord<uint32_t> NVER; //Version
         UnorderedSparseArray<NAVINVMI *> NVMI; //Unknown
         UnorderedSparseArray<NAVINVCI *> NVCI; //Unknown
 
@@ -96,17 +96,17 @@ class NAVIRecord : public FNVRecord //Navigation Mesh Info Map
 
         bool   VisitFormIDs(FormIDOp &op);
 
-        UINT32 GetFieldAttribute(DEFAULTED_FIELD_IDENTIFIERS, UINT32 WhichAttribute=0);
+        uint32_t GetFieldAttribute(DEFAULTED_FIELD_IDENTIFIERS, uint32_t WhichAttribute=0);
         void * GetField(DEFAULTED_FIELD_IDENTIFIERS, void **FieldValues=NULL);
-        bool   SetField(DEFAULTED_FIELD_IDENTIFIERS, void *FieldValue=NULL, UINT32 ArraySize=0);
+        bool   SetField(DEFAULTED_FIELD_IDENTIFIERS, void *FieldValue=NULL, uint32_t ArraySize=0);
         void   DeleteField(DEFAULTED_FIELD_IDENTIFIERS);
 
-        UINT32 GetType();
-        STRING GetStrType();
+        uint32_t GetType();
+        char * GetStrType();
 
-        SINT32 ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk=false);
-        SINT32 Unload();
-        SINT32 WriteRecord(FileWriter &writer);
+        int32_t ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk=false);
+        int32_t Unload();
+        int32_t WriteRecord(FileWriter &writer);
 
         bool operator ==(const NAVIRecord &other) const;
         bool operator !=(const NAVIRecord &other) const;

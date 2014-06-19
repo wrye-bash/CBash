@@ -46,11 +46,11 @@ class NPC_Record : public FNVRecord //Non-Player Character
         #pragma pack(1)
         struct NPC_DATA //Data
             {
-            SINT32  baseHealth; //Base Health
-            UINT8   strength, perception, endurance,
+            int32_t  baseHealth; //Base Health
+            uint8_t   strength, perception, endurance,
                     charisma, intelligence,
                     agility, luck;
-            //UINT8 unused1; //only present in old record versions
+            //uint8_t unused1; //only present in old record versions
 
             NPC_DATA();
             ~NPC_DATA();
@@ -62,11 +62,11 @@ class NPC_Record : public FNVRecord //Non-Player Character
 
         struct NPC_DNAM //Skill Data
             {
-            UINT8   barter, bigGuns, energy, explosives,
+            uint8_t   barter, bigGuns, energy, explosives,
                     lockpick, medicine, melee, repair,
                     science, guns, sneak, speech,
                     survival, unarmed; //Big Guns is obsolete for FNV
-            UINT8   barterBoost, bigGunsBoost, energyBoost, explosivesBoost,
+            uint8_t   barterBoost, bigGunsBoost, energyBoost, explosivesBoost,
                     lockpickBoost, medicineBoost, meleeBoost, repairBoost,
                     scienceBoost, gunsBoost, sneakBoost, speechBoost,
                     survivalBoost, unarmedBoost; //Big Guns is obsolete for FNV
@@ -213,7 +213,7 @@ class NPC_Record : public FNVRecord //Non-Player Character
         OptSimpleSubRecord<FORMID> RNAM; //Race
         UnorderedSparseArray<FORMID> SPLO; //Actor Effects
         OptSimpleSubRecord<FORMID> EITM; //Unarmed Attack Effect
-        OptSimpleSubRecord<UINT16> EAMT; //Unarmed Attack Animation
+        OptSimpleSubRecord<uint16_t> EAMT; //Unarmed Attack Animation
         OptSubRecord<GENDESTRUCT> Destructable; //Destructable
         OptSimpleSubRecord<FORMID> SCRI; //Script
         UnorderedSparseArray<FNVCNTO *> CNTO;  //Items
@@ -228,11 +228,11 @@ class NPC_Record : public FNVRecord //Non-Player Character
         OptSimpleSubRecord<FORMID> ENAM; //Eyes
         OptSubRecord<GENCLR> HCLR; //Hair Color
         OptSimpleSubRecord<FORMID> ZNAM; //Combat Style
-        OptSimpleSubRecord<UINT32> NAM4; //Impact Material Type
+        OptSimpleSubRecord<uint32_t> NAM4; //Impact Material Type
         RawRecord FGGS; //FaceGen Geometry-Symmetric
         RawRecord FGGA; //FaceGen Geometry-Asymmetric
         RawRecord FGTS; //FaceGen Texture-Symmetric
-        ReqSimpleSubRecord<UINT16> NAM5; //Unknown
+        ReqSimpleSubRecord<uint16_t> NAM5; //Unknown
         SemiOptSimpleFloatSubRecord<flt_0> NAM6; //Height
         SemiOptSimpleFloatSubRecord<flt_0> NAM7; //Weight
 
@@ -274,8 +274,8 @@ class NPC_Record : public FNVRecord //Non-Player Character
         void   IsNotPushable(bool value);
         bool   IsNoHeadTracking();
         void   IsNoHeadTracking(bool value);
-        bool   IsFlagMask(UINT32 Mask, bool Exact=false);
-        void   SetFlagMask(UINT32 Mask);
+        bool   IsFlagMask(uint32_t Mask, bool Exact=false);
+        void   SetFlagMask(uint32_t Mask);
 
         bool   IsUseTraits();
         void   IsUseTraits(bool value);
@@ -297,13 +297,13 @@ class NPC_Record : public FNVRecord //Non-Player Character
         void   IsUseInventory(bool value);
         bool   IsUseScript();
         void   IsUseScript(bool value);
-        bool   IsTemplateFlagMask(UINT16 Mask, bool Exact=false);
-        void   SetTemplateFlagMask(UINT16 Mask);
+        bool   IsTemplateFlagMask(uint16_t Mask, bool Exact=false);
+        void   SetTemplateFlagMask(uint16_t Mask);
 
         bool   IsAggroRadiusBehavior();
         void   IsAggroRadiusBehavior(bool value);
-        bool   IsAggroFlagMask(UINT8 Mask, bool Exact=false);
-        void   SetAggroFlagMask(UINT8 Mask);
+        bool   IsAggroFlagMask(uint8_t Mask, bool Exact=false);
+        void   SetAggroFlagMask(uint8_t Mask);
 
         bool   IsServicesWeapons();
         void   IsServicesWeapons(bool value);
@@ -331,8 +331,8 @@ class NPC_Record : public FNVRecord //Non-Player Character
         void   IsServicesRecharge(bool value);
         bool   IsServicesRepair();
         void   IsServicesRepair(bool value);
-        bool   IsServicesFlagMask(UINT32 Mask, bool Exact=false);
-        void   SetServicesFlagMask(UINT32 Mask);
+        bool   IsServicesFlagMask(uint32_t Mask, bool Exact=false);
+        void   SetServicesFlagMask(uint32_t Mask);
 
         bool   IsUnaggressive();
         void   IsUnaggressive(bool value);
@@ -342,8 +342,8 @@ class NPC_Record : public FNVRecord //Non-Player Character
         void   IsVeryAggressive(bool value);
         bool   IsFrenzied();
         void   IsFrenzied(bool value);
-        bool   IsAggressionType(UINT8 Type);
-        void   SetAggressionType(UINT8 Type);
+        bool   IsAggressionType(uint8_t Type);
+        void   SetAggressionType(uint8_t Type);
 
         bool   IsCowardly();
         void   IsCowardly(bool value);
@@ -355,8 +355,8 @@ class NPC_Record : public FNVRecord //Non-Player Character
         void   IsBrave(bool value);
         bool   IsFoolhardy();
         void   IsFoolhardy(bool value);
-        bool   IsConfidenceType(UINT8 Type);
-        void   SetConfidenceType(UINT8 Type);
+        bool   IsConfidenceType(uint8_t Type);
+        void   SetConfidenceType(uint8_t Type);
 
         bool   IsNeutral();
         void   IsNeutral(bool value);
@@ -374,8 +374,8 @@ class NPC_Record : public FNVRecord //Non-Player Character
         void   IsAngry(bool value);
         bool   IsSad();
         void   IsSad(bool value);
-        bool   IsMoodType(UINT8 Type);
-        void   SetMoodType(UINT8 Type);
+        bool   IsMoodType(uint8_t Type);
+        void   SetMoodType(uint8_t Type);
 
         bool   IsHelpsNobody();
         void   IsHelpsNobody(bool value);
@@ -383,8 +383,8 @@ class NPC_Record : public FNVRecord //Non-Player Character
         void   IsHelpsAllies(bool value);
         bool   IsHelpsFriendsAndAllies();
         void   IsHelpsFriendsAndAllies(bool value);
-        bool   IsAssistanceType(UINT8 Type);
-        void   SetAssistanceType(UINT8 Type);
+        bool   IsAssistanceType(uint8_t Type);
+        void   SetAssistanceType(uint8_t Type);
 
         bool   IsStone();
         void   IsStone(bool value);
@@ -410,20 +410,20 @@ class NPC_Record : public FNVRecord //Non-Player Character
         void   IsOrganicBug(bool value);
         bool   IsOrganicGlow();
         void   IsOrganicGlow(bool value);
-        bool   IsImpactType(UINT32 Type);
-        void   SetImpactType(UINT32 Type);
+        bool   IsImpactType(uint32_t Type);
+        void   SetImpactType(uint32_t Type);
 
-        UINT32 GetFieldAttribute(DEFAULTED_FIELD_IDENTIFIERS, UINT32 WhichAttribute=0);
+        uint32_t GetFieldAttribute(DEFAULTED_FIELD_IDENTIFIERS, uint32_t WhichAttribute=0);
         void * GetField(DEFAULTED_FIELD_IDENTIFIERS, void **FieldValues=NULL);
-        bool   SetField(DEFAULTED_FIELD_IDENTIFIERS, void *FieldValue=NULL, UINT32 ArraySize=0);
+        bool   SetField(DEFAULTED_FIELD_IDENTIFIERS, void *FieldValue=NULL, uint32_t ArraySize=0);
         void   DeleteField(DEFAULTED_FIELD_IDENTIFIERS);
 
-        UINT32 GetType();
-        STRING GetStrType();
+        uint32_t GetType();
+        char * GetStrType();
 
-        SINT32 ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk=false);
-        SINT32 Unload();
-        SINT32 WriteRecord(FileWriter &writer);
+        int32_t ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk=false);
+        int32_t Unload();
+        int32_t WriteRecord(FileWriter &writer);
 
         bool operator ==(const NPC_Record &other) const;
         bool operator !=(const NPC_Record &other) const;

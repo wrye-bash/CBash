@@ -38,7 +38,7 @@
 
 namespace Ob
 {
-UINT32 LIGHRecord::GetFieldAttribute(FIELD_IDENTIFIERS, UINT32 WhichAttribute)
+uint32_t LIGHRecord::GetFieldAttribute(FIELD_IDENTIFIERS, uint32_t WhichAttribute)
     {
     switch(FieldID)
         {
@@ -172,26 +172,26 @@ void * LIGHRecord::GetField(FIELD_IDENTIFIERS, void **FieldValues)
     return NULL;
     }
 
-bool LIGHRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
+bool LIGHRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, uint32_t ArraySize)
     {
     switch(FieldID)
         {
         case 1: //flags1
-            SetHeaderFlagMask(*(UINT32 *)FieldValue);
+            SetHeaderFlagMask(*(uint32_t *)FieldValue);
             break;
         case 3: //flags2
-            SetHeaderUnknownFlagMask(*(UINT32 *)FieldValue);
+            SetHeaderUnknownFlagMask(*(uint32_t *)FieldValue);
             break;
         case 4: //eid
-            EDID.Copy((STRING)FieldValue);
+            EDID.Copy((char *)FieldValue);
             break;
         case 5: //modPath
             MODL.Load();
-            MODL->MODL.Copy((STRING)FieldValue);
+            MODL->MODL.Copy((char *)FieldValue);
             break;
         case 6: //modb
             MODL.Load();
-            MODL->MODB.value = *(FLOAT32 *)FieldValue;
+            MODL->MODB.value = *(float *)FieldValue;
             break;
         case 7: //modt_p
             MODL.Load();
@@ -201,25 +201,25 @@ bool LIGHRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             SCRI.value = *(FORMID *)FieldValue;
             return true;
         case 9: //full
-            FULL.Copy((STRING)FieldValue);
+            FULL.Copy((char *)FieldValue);
             break;
         case 10: //iconPath
-            ICON.Copy((STRING)FieldValue);
+            ICON.Copy((char *)FieldValue);
             break;
         case 11: //duration
-            DATA.value.duration = *(SINT32 *)FieldValue;
+            DATA.value.duration = *(int32_t *)FieldValue;
             break;
         case 12: //radius
-            DATA.value.radius = *(UINT32 *)FieldValue;
+            DATA.value.radius = *(uint32_t *)FieldValue;
             break;
         case 13: //red
-            DATA.value.color.red = *(UINT8 *)FieldValue;
+            DATA.value.color.red = *(uint8_t *)FieldValue;
             break;
         case 14: //green
-            DATA.value.color.green = *(UINT8 *)FieldValue;
+            DATA.value.color.green = *(uint8_t *)FieldValue;
             break;
         case 15: //blue
-            DATA.value.color.blue = *(UINT8 *)FieldValue;
+            DATA.value.color.blue = *(uint8_t *)FieldValue;
             break;
         case 16: //unused1
             if(ArraySize != 1)
@@ -227,22 +227,22 @@ bool LIGHRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             DATA.value.color.unused1 = ((UINT8ARRAY)FieldValue)[0];
             break;
         case 17: //flags
-            SetFlagMask(*(UINT32 *)FieldValue);
+            SetFlagMask(*(uint32_t *)FieldValue);
             break;
         case 18: //falloff
-            DATA.value.falloff = *(FLOAT32 *)FieldValue;
+            DATA.value.falloff = *(float *)FieldValue;
             break;
         case 19: //fov
-            DATA.value.fov = *(FLOAT32 *)FieldValue;
+            DATA.value.fov = *(float *)FieldValue;
             break;
         case 20: //value
-            DATA.value.value = *(UINT32 *)FieldValue;
+            DATA.value.value = *(uint32_t *)FieldValue;
             break;
         case 21: //weight
-            DATA.value.weight = *(FLOAT32 *)FieldValue;
+            DATA.value.weight = *(float *)FieldValue;
             break;
         case 22: //fade
-            FNAM.value = *(FLOAT32 *)FieldValue;
+            FNAM.value = *(float *)FieldValue;
             break;
         case 23: //sound.
             SNAM.value = *(FORMID *)FieldValue;

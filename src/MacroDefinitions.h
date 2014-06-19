@@ -36,6 +36,8 @@
 #pragma once
 //don't touch
 
+#include "Types.h"
+
 #ifdef _M_X64
     //#pragma message("Compiling with x64 compatibility")
     #define CBASH_X64_COMPATIBILITY
@@ -59,14 +61,14 @@
 
 //Peek into the data before and after to see what's up
 #ifdef CBASH_DEBUG_CHUNK
-    #define CBASH_CHUNK_DEBUG   for(SINT32 x = 32; x > 0; x--) \
+    #define CBASH_CHUNK_DEBUG   for(int32_t x = 32; x > 0; x--) \
                                     printer("%02X ", buffer[-x]); \
-                                for(UINT32 x = 0; x < 32; x++) \
+                                for(uint32_t x = 0; x < 32; x++) \
                                     printer("%02X ", buffer[x]); \
                              /* printer("\n\n");*/ \
-                             /* for(SINT32 x = 32; x > 0; x--)*/ \
+                             /* for(int32_t x = 32; x > 0; x--)*/ \
                              /*     printer("%c", buffer[-x]);*/ \
-                             /* for(UINT32 x = 0; x < 32; x++)*/ \
+                             /* for(uint32_t x = 0; x < 32; x++)*/ \
                              /*     printer("%c", buffer[x]);*/ \
                                 printer("\n");
 #else
@@ -238,76 +240,26 @@
     #define VATSFUNCTIONSIZE 18
 #endif
 
-#ifndef UINT8
-    #define UINT8 unsigned char
-#endif
+typedef uint32_t MGEFCODE;
+typedef uint32_t ACTORVALUE;
+typedef uint32_t FORMID_OR_UINT32;
+typedef uint32_t FORMID_OR_FLOAT32;
+typedef uint32_t MGEFCODE_OR_UINT32;
+typedef uint32_t FORMID_OR_MGEFCODE_OR_ACTORVALUE_OR_UINT32;
+typedef uint32_t FORMID_OR_ACTORVALUE_OR_UINT32;
 
-#ifndef UINT8ARRAY
-    #define UINT8ARRAY unsigned char *
-#endif
-
-#ifndef UINT16
-    #define UINT16 unsigned short
-#endif
-
-#ifndef SINT8
-    #define SINT8 signed char
-#endif
-
-#ifndef SINT16
-    #define SINT16 signed short
-#endif
-
-#ifndef SINT16ARRAY
-    #define SINT16ARRAY signed short *
-#endif
-
-#ifndef SINT32ARRAY
-    #define SINT32ARRAY signed long *
-#endif
-
-#ifndef FLOAT32
-    #define FLOAT32 float
-#endif
-
-#ifndef STRINGARRAY
-    #define STRINGARRAY char **
-#endif
-
-#ifndef MGEFCODE
-    #define MGEFCODE unsigned long
-#endif
-
-#ifndef FORMID_OR_UINT32
-    #define FORMID_OR_UINT32 unsigned long
-#endif
-
-#ifndef FORMID_OR_FLOAT32
-    #define FORMID_OR_FLOAT32 unsigned long
-#endif
-
-#ifndef MGEFCODE_OR_UINT32
-    #define MGEFCODE_OR_UINT32 unsigned long
-#endif
-
-#ifndef FORMID_OR_MGEFCODE_OR_ACTORVALUE_OR_UINT32
-    #define FORMID_OR_MGEFCODE_OR_ACTORVALUE_OR_UINT32 unsigned long
-#endif
-
-#ifndef ACTORVALUE
-    #define ACTORVALUE unsigned long
-#endif
-
-#ifndef FORMID_OR_ACTORVALUE_OR_UINT32
-    #define FORMID_OR_ACTORVALUE_OR_UINT32 unsigned long
-#endif
-
-#ifndef MGEFCODEARRAY
-    #define MGEFCODEARRAY unsigned long *
-#endif
+typedef uint8_t * UINT8ARRAY;
+typedef int16_t * SINT16ARRAY;
+typedef uint32_t * UINT32ARRAY;
+typedef int32_t * SINT32ARRAY;
+typedef FORMID * FORMIDARRAY;
+typedef char ** STRINGARRAY;
+typedef MGEFCODE * MGEFCODEARRAY;
+typedef ModFile ** MODIDARRAY;
+typedef Record ** RECORDIDARRAY;
 
 #ifndef DEFAULTED_FIELD_IDENTIFIERS
-    #define DEFAULTED_FIELD_IDENTIFIERS const UINT32 FieldID=0, const UINT32 ListIndex=0, const UINT32 ListFieldID=0, const UINT32 ListX2Index=0, const UINT32 ListX2FieldID=0, const UINT32 ListX3Index=0, const UINT32 ListX3FieldID=0
+    #define DEFAULTED_FIELD_IDENTIFIERS const uint32_t FieldID=0, const uint32_t ListIndex=0, const uint32_t ListFieldID=0, const uint32_t ListX2Index=0, const uint32_t ListX2FieldID=0, const uint32_t ListX3Index=0, const uint32_t ListX3FieldID=0
 #endif
 
 #define WHERESTR            "[%s, line %d]: "

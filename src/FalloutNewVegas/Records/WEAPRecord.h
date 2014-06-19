@@ -46,10 +46,10 @@ class WEAPRecord : public FNVRecord //Weapon
         #pragma pack(1)
         struct WEAPDATA
             {
-            SINT32  value, health;
-            FLOAT32 weight;
-            SINT16  damage;
-            UINT8   clipSize;
+            int32_t  value, health;
+            float weight;
+            int16_t  damage;
+            uint8_t   clipSize;
 
             WEAPDATA();
             ~WEAPDATA();
@@ -61,29 +61,29 @@ class WEAPRecord : public FNVRecord //Weapon
 
         struct WEAPDNAM
             {
-            UINT32  animType;
-            FLOAT32 animMult, reach;
-            UINT8   flags1, gripAnim, ammoUse, reloadAnim;
-            FLOAT32 minSpread, spread, unknown1, sightFOV, unknown2;
+            uint32_t  animType;
+            float animMult, reach;
+            uint8_t   flags1, gripAnim, ammoUse, reloadAnim;
+            float minSpread, spread, unknown1, sightFOV, unknown2;
             FORMID  projectile;
-            UINT8   VATSHitChance, attackAnim, projectileCount, weaponAV;
-            FLOAT32 minRange, maxRange;
-            UINT32  onHit, flags2;
-            FLOAT32 animAttackMult, fireRate, overrideAP, leftRumble,
+            uint8_t   VATSHitChance, attackAnim, projectileCount, weaponAV;
+            float minRange, maxRange;
+            uint32_t  onHit, flags2;
+            float animAttackMult, fireRate, overrideAP, leftRumble,
                     rightRumble, timeRumble, overrideDamageToWeapon,
                     shotsPerSecond, reloadTime, jamTime, aimArc;
-            SINT32  skill;
-            UINT32  rumbleType;
-            FLOAT32 rumbleWavelength, limbDamageMult;
-            SINT32  resistType;
-            FLOAT32 sightUsage, semiFireDelayMin, semiFireDelayMax, unknown3;
-            UINT32  effectMod1, effectMod2, effectMod3;
-            FLOAT32 valueAMod1, valueAMod2, valueAMod3;
-            UINT32  overridePwrAtkAnim, strengthReq;
-            UINT8   unknown4, reloadAnimMod, unknown5[2];
-            FLOAT32 regenRate, killImpulse, valueBMod1, valueBMod2, valueBMod3,
+            int32_t  skill;
+            uint32_t  rumbleType;
+            float rumbleWavelength, limbDamageMult;
+            int32_t  resistType;
+            float sightUsage, semiFireDelayMin, semiFireDelayMax, unknown3;
+            uint32_t  effectMod1, effectMod2, effectMod3;
+            float valueAMod1, valueAMod2, valueAMod3;
+            uint32_t  overridePwrAtkAnim, strengthReq;
+            uint8_t   unknown4, reloadAnimMod, unknown5[2];
+            float regenRate, killImpulse, valueBMod1, valueBMod2, valueBMod3,
                     impulseDist;
-            UINT32  skillReq;
+            uint32_t  skillReq;
 
             WEAPDNAM();
             ~WEAPDNAM();
@@ -94,10 +94,10 @@ class WEAPRecord : public FNVRecord //Weapon
 
         struct WEAPCRDT //Critical Data
             {
-            UINT16  critDamage;
-            UINT8   unused1[2];
-            FLOAT32 critMult;
-            UINT8   flags, unused2[3];
+            uint16_t  critDamage;
+            uint8_t   unused1[2];
+            float critMult;
+            uint8_t   flags, unused2[3];
             FORMID  effect;
 
             WEAPCRDT();
@@ -110,9 +110,9 @@ class WEAPRecord : public FNVRecord //Weapon
         struct WEAPVATS //VATS
             {
             FORMID  effect;
-            FLOAT32 skill, damageMult, AP;
+            float skill, damageMult, AP;
             //Below are not present on all chunks...
-            UINT8   silenceType, modRequiredType, unused1[2];
+            uint8_t   silenceType, modRequiredType, unused1[2];
 
             WEAPVATS();
             ~WEAPVATS();
@@ -326,11 +326,11 @@ class WEAPRecord : public FNVRecord //Weapon
         StringRecord MICO; //Small Icon Filename
         OptSimpleSubRecord<FORMID> SCRI; //Script
         OptSimpleSubRecord<FORMID> EITM; //Object Effect
-        OptSimpleSubRecord<SINT16> EAMT; //Enchantment Charge Amount
+        OptSimpleSubRecord<int16_t> EAMT; //Enchantment Charge Amount
         OptSimpleSubRecord<FORMID> NAM0; //Ammo
         OptSubRecord<GENDESTRUCT> Destructable; //Destructable
         OptSimpleSubRecord<FORMID> REPL; //Repair List
-        ReqSimpleSubRecord<SINT32> ETYP; //Equipment Type
+        ReqSimpleSubRecord<int32_t> ETYP; //Equipment Type
         OptSimpleSubRecord<FORMID> BIPL; //Biped Model List
         OptSimpleSubRecord<FORMID> YNAM; //Sound - Pick Up
         OptSimpleSubRecord<FORMID> ZNAM; //Sound - Drop
@@ -383,7 +383,7 @@ class WEAPRecord : public FNVRecord //Weapon
         ReqSubRecord<WEAPDNAM> DNAM; //Advanced Weapon Data
         ReqSubRecord<WEAPCRDT> CRDT; //Critical Data
         ReqSubRecord<WEAPVATS> VATS; //VATS
-        ReqSimpleSubRecord<UINT32> VNAM; //Sound Level
+        ReqSimpleSubRecord<uint32_t> VNAM; //Sound Level
 
         WEAPRecord(unsigned char *_recData=NULL);
         WEAPRecord(WEAPRecord *srcRecord);
@@ -407,8 +407,8 @@ class WEAPRecord : public FNVRecord //Weapon
         void   IsDontUse1stPersonISAnimations(bool value);
         bool   IsNonPlayable();
         void   IsNonPlayable(bool value);
-        bool   IsFlagMask(UINT8 Mask, bool Exact=false);
-        void   SetFlagMask(UINT8 Mask);
+        bool   IsFlagMask(uint8_t Mask, bool Exact=false);
+        void   SetFlagMask(uint8_t Mask);
 
         bool   IsPlayerOnly();
         void   IsPlayerOnly(bool value);
@@ -438,13 +438,13 @@ class WEAPRecord : public FNVRecord //Weapon
         void   IsScopeHasNightVision(bool value);
         bool   IsScopeFromMod();
         void   IsScopeFromMod(bool value);
-        bool   IsAdvFlagMask(UINT32 Mask, bool Exact=false);
-        void   SetAdvFlagMask(UINT32 Mask);
+        bool   IsAdvFlagMask(uint32_t Mask, bool Exact=false);
+        void   SetAdvFlagMask(uint32_t Mask);
 
         bool   IsCritOnDeath();
         void   IsCritOnDeath(bool value);
-        bool   IsCritFlagMask(UINT8 Mask, bool Exact=false);
-        void   SetCritFlagMask(UINT8 Mask);
+        bool   IsCritFlagMask(uint8_t Mask, bool Exact=false);
+        void   SetCritFlagMask(uint8_t Mask);
 
         bool   IsNone();
         void   IsNone(bool value);
@@ -476,8 +476,8 @@ class WEAPRecord : public FNVRecord //Weapon
         void   IsEdible(bool value);
         bool   IsAlcohol();
         void   IsAlcohol(bool value);
-        bool   IsEquipmentType(SINT32 Type);
-        void   SetEquipmentType(SINT32 Type);
+        bool   IsEquipmentType(int32_t Type);
+        void   SetEquipmentType(int32_t Type);
 
         bool   IsHand2Hand();
         void   IsHand2Hand(bool value);
@@ -507,8 +507,8 @@ class WEAPRecord : public FNVRecord //Weapon
         void   IsMineDrop1Hand(bool value);
         bool   IsThrown1Hand();
         void   IsThrown1Hand(bool value);
-        bool   IsType(UINT32 Type);
-        void   SetType(UINT32 Type);
+        bool   IsType(uint32_t Type);
+        void   SetType(uint32_t Type);
 
         bool   IsGripHandGrip1();
         void   IsGripHandGrip1(bool value);
@@ -524,8 +524,8 @@ class WEAPRecord : public FNVRecord //Weapon
         void   IsGripHandGrip6(bool value);
         bool   IsGripDefault();
         void   IsGripDefault(bool value);
-        bool   IsGripType(UINT8 Type);
-        void   SetGripType(UINT8 Type);
+        bool   IsGripType(uint8_t Type);
+        void   SetGripType(uint8_t Type);
 
         bool   IsReloadA();
         void   IsReloadA(bool value);
@@ -573,8 +573,8 @@ class WEAPRecord : public FNVRecord //Weapon
         void   IsReloadY(bool value);
         bool   IsReloadZ();
         void   IsReloadZ(bool value);
-        bool   IsReloadType(UINT8 Type);
-        void   SetReloadType(UINT8 Type);
+        bool   IsReloadType(uint8_t Type);
+        void   SetReloadType(uint8_t Type);
 
         bool   IsAttackLeft();
         void   IsAttackLeft(bool value);
@@ -622,8 +622,8 @@ class WEAPRecord : public FNVRecord //Weapon
         void   IsAttackPlaceMine2(bool value);
         bool   IsAttackDefault();
         void   IsAttackDefault(bool value);
-        bool   IsAttackType(UINT8 Type);
-        void   SetAttackType(UINT8 Type);
+        bool   IsAttackType(uint8_t Type);
+        void   SetAttackType(uint8_t Type);
 
         bool   IsEmbeddedAVPerception();
         void   IsEmbeddedAVPerception(bool value);
@@ -639,8 +639,8 @@ class WEAPRecord : public FNVRecord //Weapon
         void   IsEmbeddedAVRightMobilty(bool value);
         bool   IsEmbeddedAVBrain();
         void   IsEmbeddedAVBrain(bool value);
-        bool   IsEmbeddedAVType(UINT8 Type);
-        void   SetEmbeddedAVType(UINT8 Type);
+        bool   IsEmbeddedAVType(uint8_t Type);
+        void   SetEmbeddedAVType(uint8_t Type);
 
         bool   IsOnHitNormalFormulaBehavior();
         void   IsOnHitNormalFormulaBehavior(bool value);
@@ -650,8 +650,8 @@ class WEAPRecord : public FNVRecord //Weapon
         void   IsOnHitExplodeOnly(bool value);
         bool   IsOnHitNoDismemberExplode();
         void   IsOnHitNoDismemberExplode(bool value);
-        bool   IsOnHitType(UINT32 Type);
-        void   SetOnHitType(UINT32 Type);
+        bool   IsOnHitType(uint32_t Type);
+        void   SetOnHitType(uint32_t Type);
 
         bool   IsRumbleConstant();
         void   IsRumbleConstant(bool value);
@@ -661,8 +661,8 @@ class WEAPRecord : public FNVRecord //Weapon
         void   IsRumbleTriangle(bool value);
         bool   IsRumbleSawtooth();
         void   IsRumbleSawtooth(bool value);
-        bool   IsRumbleType(UINT32 Type);
-        void   SetRumbleType(UINT32 Type);
+        bool   IsRumbleType(uint32_t Type);
+        void   SetRumbleType(uint32_t Type);
 
         bool   IsPowerAttackAnimOverrideUnknown0();
         void   IsPowerAttackAnimOverrideUnknown0(bool value);
@@ -678,8 +678,8 @@ class WEAPRecord : public FNVRecord //Weapon
         void   IsPowerAttackAnimOverrideAttackCustom5Power(bool value);
         bool   IsPowerAttackAnimOverrideDefault();
         void   IsPowerAttackAnimOverrideDefault(bool value);
-        bool   IsPowerAttackAnimOverrideType(UINT32 Type);
-        void   SetPowerAttackAnimOverrideType(UINT32 Type);
+        bool   IsPowerAttackAnimOverrideType(uint32_t Type);
+        void   SetPowerAttackAnimOverrideType(uint32_t Type);
 
         bool   IsModReloadA();
         void   IsModReloadA(bool value);
@@ -727,22 +727,22 @@ class WEAPRecord : public FNVRecord //Weapon
         void   IsModReloadY(bool value);
         bool   IsModReloadZ();
         void   IsModReloadZ(bool value);
-        bool   IsModType(UINT8 Type);
-        void   SetModType(UINT8 Type);
+        bool   IsModType(uint8_t Type);
+        void   SetModType(uint8_t Type);
 
         bool   IsVATSNotSilent();
         void   IsVATSNotSilent(bool value);
         bool   IsVATSSilent();
         void   IsVATSSilent(bool value);
-        bool   IsVATSSilenceType(UINT8 Type);
-        void   SetVATSSilenceType(UINT8 Type);
+        bool   IsVATSSilenceType(uint8_t Type);
+        void   SetVATSSilenceType(uint8_t Type);
 
         bool   IsVATSModNotRequired();
         void   IsVATSModNotRequired(bool value);
         bool   IsVATSModRequired();
         void   IsVATSModRequired(bool value);
-        bool   IsVATSModType(UINT8 Type);
-        void   SetVATSModType(UINT8 Type);
+        bool   IsVATSModType(uint8_t Type);
+        void   SetVATSModType(uint8_t Type);
 
         bool   IsLoud();
         void   IsLoud(bool value);
@@ -750,20 +750,20 @@ class WEAPRecord : public FNVRecord //Weapon
         void   IsNormal(bool value);
         bool   IsSilent();
         void   IsSilent(bool value);
-        bool   IsSoundLevelType(UINT32 Type);
-        void   SetSoundLevelType(UINT32 Type);
+        bool   IsSoundLevelType(uint32_t Type);
+        void   SetSoundLevelType(uint32_t Type);
 
-        UINT32 GetFieldAttribute(DEFAULTED_FIELD_IDENTIFIERS, UINT32 WhichAttribute=0);
+        uint32_t GetFieldAttribute(DEFAULTED_FIELD_IDENTIFIERS, uint32_t WhichAttribute=0);
         void * GetField(DEFAULTED_FIELD_IDENTIFIERS, void **FieldValues=NULL);
-        bool   SetField(DEFAULTED_FIELD_IDENTIFIERS, void *FieldValue=NULL, UINT32 ArraySize=0);
+        bool   SetField(DEFAULTED_FIELD_IDENTIFIERS, void *FieldValue=NULL, uint32_t ArraySize=0);
         void   DeleteField(DEFAULTED_FIELD_IDENTIFIERS);
 
-        UINT32 GetType();
-        STRING GetStrType();
+        uint32_t GetType();
+        char * GetStrType();
 
-        SINT32 ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk=false);
-        SINT32 Unload();
-        SINT32 WriteRecord(FileWriter &writer);
+        int32_t ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk=false);
+        int32_t Unload();
+        int32_t WriteRecord(FileWriter &writer);
 
         bool operator ==(const WEAPRecord &other) const;
         bool operator !=(const WEAPRecord &other) const;

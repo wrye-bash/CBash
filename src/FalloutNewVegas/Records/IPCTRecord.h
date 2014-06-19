@@ -44,10 +44,10 @@ class IPCTRecord : public FNVRecord //Impact
     private:
         struct IPCTDATA
             {
-            FLOAT32 duration; //Effect - Duration
-            UINT32  orientation; //Effect - Orientation
-            FLOAT32 angleThreshold, placementRadius; //Angle Threshold, Placement Radius
-            UINT32  soundLevel, flags; //Sound Level, Flags
+            float duration; //Effect - Duration
+            uint32_t  orientation; //Effect - Orientation
+            float angleThreshold, placementRadius; //Angle Threshold, Placement Radius
+            uint32_t  soundLevel, flags; //Sound Level, Flags
 
             IPCTDATA();
             ~IPCTDATA();
@@ -92,8 +92,8 @@ class IPCTRecord : public FNVRecord //Impact
 
         bool   IsNoDecalData();
         void   IsNoDecalData(bool value);
-        bool   IsFlagMask(UINT32 Mask, bool Exact=false);
-        void   SetFlagMask(UINT32 Mask);
+        bool   IsFlagMask(uint32_t Mask, bool Exact=false);
+        void   SetFlagMask(uint32_t Mask);
 
         bool   IsObjectParallax();
         void   IsObjectParallax(bool value);
@@ -101,26 +101,26 @@ class IPCTRecord : public FNVRecord //Impact
         void   IsObjectAlphaBlending(bool value);
         bool   IsObjectAlphaTesting();
         void   IsObjectAlphaTesting(bool value);
-        bool   IsObjectFlagMask(UINT8 Mask, bool Exact=false);
-        void   SetObjectFlagMask(UINT8 Mask);
+        bool   IsObjectFlagMask(uint8_t Mask, bool Exact=false);
+        void   SetObjectFlagMask(uint8_t Mask);
 
         bool   IsLoud();
         bool   IsNormal();
         bool   IsSilent();
-        bool   IsSoundLevelType(UINT8 Type);
-        void   SetSoundLevelType(UINT8 Type);
+        bool   IsSoundLevelType(uint8_t Type);
+        void   SetSoundLevelType(uint8_t Type);
 
-        UINT32 GetFieldAttribute(DEFAULTED_FIELD_IDENTIFIERS, UINT32 WhichAttribute=0);
+        uint32_t GetFieldAttribute(DEFAULTED_FIELD_IDENTIFIERS, uint32_t WhichAttribute=0);
         void * GetField(DEFAULTED_FIELD_IDENTIFIERS, void **FieldValues=NULL);
-        bool   SetField(DEFAULTED_FIELD_IDENTIFIERS, void *FieldValue=NULL, UINT32 ArraySize=0);
+        bool   SetField(DEFAULTED_FIELD_IDENTIFIERS, void *FieldValue=NULL, uint32_t ArraySize=0);
         void   DeleteField(DEFAULTED_FIELD_IDENTIFIERS);
 
-        UINT32 GetType();
-        STRING GetStrType();
+        uint32_t GetType();
+        char * GetStrType();
 
-        SINT32 ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk=false);
-        SINT32 Unload();
-        SINT32 WriteRecord(FileWriter &writer);
+        int32_t ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk=false);
+        int32_t Unload();
+        int32_t WriteRecord(FileWriter &writer);
 
         bool operator ==(const IPCTRecord &other) const;
         bool operator !=(const IPCTRecord &other) const;

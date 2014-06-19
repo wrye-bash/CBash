@@ -37,23 +37,23 @@
 
 #include "PropertyBool.h"
 
-UINT32 PropertyBool::GetSize() const
+uint32_t PropertyBool::GetSize() const
 {
     // common + value
-    return Property::GetSize() + sizeof(UINT8);
+    return Property::GetSize() + sizeof(uint8_t);
 }
 
-void PropertyBool::Read(unsigned char *&buffer, const SINT16 &version, const SINT16 &objFormat, const bool &CompressedOnDisk)
+void PropertyBool::Read(unsigned char *&buffer, const int16_t &version, const int16_t &objFormat, const bool &CompressedOnDisk)
 {
     Property::Read(buffer, version, objFormat, CompressedOnDisk);
-    value = *(UINT8 *)buffer ? true : false;
+    value = *(uint8_t *)buffer ? true : false;
     buffer += 1;
 }
 
 void PropertyBool::Write(FileWriter &writer)
 {
     Property::Write(writer);
-    UINT8 b = value ? 1 : 0;
+    uint8_t b = value ? 1 : 0;
     writer.record_write(&b, sizeof(b));
 }
 
@@ -87,21 +87,21 @@ PropertyBool & PropertyBool::operator = (const PropertyBool &other)
     return *this;
 }
 
-UINT32 PropertyBoolArray::GetSize() const
+uint32_t PropertyBoolArray::GetSize() const
 {
     // common + itemCount + items
-    return Property::GetSize() + sizeof(UINT32) + (size() * sizeof(UINT8));
+    return Property::GetSize() + sizeof(uint32_t) + (size() * sizeof(uint8_t));
 }
 
-void PropertyBoolArray::Read(unsigned char *&buffer, const SINT16 &version, const SINT16 &objFormat, const bool &CompressedOnDisk)
+void PropertyBoolArray::Read(unsigned char *&buffer, const int16_t &version, const int16_t &objFormat, const bool &CompressedOnDisk)
 {
-    UINT32 count = *(UINT32 *)buffer;
+    uint32_t count = *(uint32_t *)buffer;
     buffer += 4;
 
     resize(count);
-    for (UINT32 i = 0; i < count; ++i)
+    for (uint32_t i = 0; i < count; ++i)
     {
-        (*this)[i] = *(UINT8 *)buffer ? true : false;
+        (*this)[i] = *(uint8_t *)buffer ? true : false;
         buffer += 1;
     }
 }
@@ -109,11 +109,11 @@ void PropertyBoolArray::Read(unsigned char *&buffer, const SINT16 &version, cons
 void PropertyBoolArray::Write(FileWriter &writer)
 {
     Property::Write(writer);
-    UINT32 count = size();
+    uint32_t count = size();
     writer.record_write(&count, sizeof(count));
-    for (UINT32 i = 0; i < count; ++i)
+    for (uint32_t i = 0; i < count; ++i)
     {
-        UINT8 b = (*this)[i] ? 1 : 0;
+        uint8_t b = (*this)[i] ? 1 : 0;
         writer.record_write(&b, sizeof(b));
     }
 }
@@ -125,7 +125,7 @@ bool PropertyBoolArray::equals(const Property *other) const
         const PropertyBoolArray *o = reinterpret_cast<const PropertyBoolArray *>(other);
         if (size() != o->size())
             return false;
-        for (UINT32 i = 0; i < size(); ++i)
+        for (uint32_t i = 0; i < size(); ++i)
             if ((*this)[i] != (*o)[i])
                 return false;
         return true;

@@ -61,36 +61,36 @@ WOOPRecord::~WOOPRecord()
         //
     }
 
-UINT32 WOOPRecord::GetType()
+uint32_t WOOPRecord::GetType()
     {
         return REV32(WOOP);
     }
 
-STRING WOOPRecord::GetStrType()
+char * WOOPRecord::GetStrType()
     {
         return "WOOP";
     }
 
-SINT32 WOOPRecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk)
+int32_t WOOPRecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk)
     {
-        UINT32 subType = 0;
-        UINT32 subSize = 0;
+        uint32_t subType = 0;
+        uint32_t subSize = 0;
         StringLookups *LookupStrings = GetParentMod()->TES4.LookupStrings;
         while(buffer < end_buffer)
         {
-            subType = *(UINT32 *)buffer;
+            subType = *(uint32_t *)buffer;
             buffer += 4;
             switch(subType)
             {
                 case REV32(XXXX):
                     buffer += 2;
-                    subSize = *(UINT32 *)buffer;
+                    subSize = *(uint32_t *)buffer;
                     buffer += 4;
-                    subType = *(UINT32 *)buffer;
+                    subType = *(uint32_t *)buffer;
                     buffer += 6;
                     break;
                 default:
-                    subSize = *(UINT16 *)buffer;
+                    subSize = *(uint16_t *)buffer;
                     buffer += 2;
                     break;
             }
@@ -118,7 +118,7 @@ SINT32 WOOPRecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer,
         return 0;
     }
 
-SINT32 WOOPRecord::Unload()
+int32_t WOOPRecord::Unload()
     {
         IsLoaded(false);
         IsChanged(false);
@@ -128,7 +128,7 @@ SINT32 WOOPRecord::Unload()
         return 1;
     }
 
-SINT32 WOOPRecord::WriteRecord(FileWriter &writer)
+int32_t WOOPRecord::WriteRecord(FileWriter &writer)
     {
         WRITE(EDID);
         WRITE(FULL);

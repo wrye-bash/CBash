@@ -45,8 +45,8 @@ class FormIDOp;
 class Alias
 {
 public:
-    UINT32 formId;
-    UINT16 aliasId;
+    uint32_t formId;
+    uint16_t aliasId;
     std::vector<Script *> scripts;
 
     Alias();
@@ -54,8 +54,8 @@ public:
 
     void VisitFormIDs(FormIDOp &op);
 
-    void Read(unsigned char *&buffer, const SINT16 &version, const SINT16 &objFormat, const bool &CompressedOnDisk);
-    UINT32 GetSize() const;
+    void Read(unsigned char *&buffer, const int16_t &version, const int16_t &objFormat, const bool &CompressedOnDisk);
+    uint32_t GetSize() const;
     void Write(FileWriter &writer);
 
     Alias & operator = (const Alias &other);

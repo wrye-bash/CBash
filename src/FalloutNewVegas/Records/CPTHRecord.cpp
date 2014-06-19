@@ -80,13 +80,13 @@ bool CPTHRecord::VisitFormIDs(FormIDOp &op)
         return false;
 
     if(CTDA.IsLoaded())
-        for(UINT32 ListIndex = 0; ListIndex < CTDA.value.size(); ListIndex++)
+        for(uint32_t ListIndex = 0; ListIndex < CTDA.value.size(); ListIndex++)
             CTDA.value[ListIndex].VisitFormIDs(op);
     if(ANAM.IsLoaded())
-        for(UINT32 ListIndex = 0; ListIndex < ANAM.value.size(); ListIndex++)
+        for(uint32_t ListIndex = 0; ListIndex < ANAM.value.size(); ListIndex++)
             op.Accept(ANAM.value[ListIndex]);
     if(SNAM.IsLoaded())
-        for(UINT32 ListIndex = 0; ListIndex < SNAM.value.size(); ListIndex++)
+        for(uint32_t ListIndex = 0; ListIndex < SNAM.value.size(); ListIndex++)
             op.Accept(SNAM.value[ListIndex]);
 
     return op.Stop();
@@ -110,46 +110,46 @@ bool CPTHRecord::IsShotList()
     return (DATA.value == eShotList);
     }
 
-bool CPTHRecord::IsType(UINT8 Type)
+bool CPTHRecord::IsType(uint8_t Type)
     {
     if (!DATA.IsLoaded()) return false;
     return DATA.value == Type;
     }
 
-void CPTHRecord::SetType(UINT8 Type)
+void CPTHRecord::SetType(uint8_t Type)
     {
     DATA.Load();
     DATA.value = Type;
     }
 
-UINT32 CPTHRecord::GetType()
+uint32_t CPTHRecord::GetType()
     {
     return REV32(CPTH);
     }
 
-STRING CPTHRecord::GetStrType()
+char * CPTHRecord::GetStrType()
     {
     return "CPTH";
     }
 
-SINT32 CPTHRecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk)
+int32_t CPTHRecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk)
     {
-    UINT32 subType = 0;
-    UINT32 subSize = 0;
+    uint32_t subType = 0;
+    uint32_t subSize = 0;
     while(buffer < end_buffer){
-        subType = *(UINT32 *)buffer;
+        subType = *(uint32_t *)buffer;
         buffer += 4;
         switch(subType)
             {
             case REV32(XXXX):
                 buffer += 2;
-                subSize = *(UINT32 *)buffer;
+                subSize = *(uint32_t *)buffer;
                 buffer += 4;
-                subType = *(UINT32 *)buffer;
+                subType = *(uint32_t *)buffer;
                 buffer += 6;
                 break;
             default:
-                subSize = *(UINT16 *)buffer;
+                subSize = *(uint16_t *)buffer;
                 buffer += 2;
                 break;
             }
@@ -182,7 +182,7 @@ SINT32 CPTHRecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer,
     return 0;
     }
 
-SINT32 CPTHRecord::Unload()
+int32_t CPTHRecord::Unload()
     {
     IsChanged(false);
     IsLoaded(false);
@@ -194,7 +194,7 @@ SINT32 CPTHRecord::Unload()
     return 1;
     }
 
-SINT32 CPTHRecord::WriteRecord(FileWriter &writer)
+int32_t CPTHRecord::WriteRecord(FileWriter &writer)
     {
     WRITE(EDID);
     WRITE(CTDA);

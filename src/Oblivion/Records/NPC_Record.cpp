@@ -178,7 +178,7 @@ bool NPC_Record::VisitFormIDs(FormIDOp &op)
     if(!IsLoaded())
         return false;
 
-    for(UINT32 ListIndex = 0; ListIndex < SNAM.value.size(); ListIndex++)
+    for(uint32_t ListIndex = 0; ListIndex < SNAM.value.size(); ListIndex++)
         op.Accept(SNAM.value[ListIndex]->faction);
 
     if(INAM.IsLoaded())
@@ -187,16 +187,16 @@ bool NPC_Record::VisitFormIDs(FormIDOp &op)
     if(RNAM.IsLoaded())
         op.Accept(RNAM.value);
 
-    for(UINT32 ListIndex = 0; ListIndex < SPLO.value.size(); ListIndex++)
+    for(uint32_t ListIndex = 0; ListIndex < SPLO.value.size(); ListIndex++)
         op.Accept(SPLO.value[ListIndex]);
 
     if(SCRI.IsLoaded())
         op.Accept(SCRI.value);
 
-    for(UINT32 ListIndex = 0; ListIndex < CNTO.value.size(); ListIndex++)
+    for(uint32_t ListIndex = 0; ListIndex < CNTO.value.size(); ListIndex++)
         op.Accept(CNTO.value[ListIndex]->item);
 
-    for(UINT32 ListIndex = 0; ListIndex < PKID.value.size(); ListIndex++)
+    for(uint32_t ListIndex = 0; ListIndex < PKID.value.size(); ListIndex++)
         op.Accept(PKID.value[ListIndex]);
 
     if(CNAM.IsLoaded())
@@ -354,12 +354,12 @@ void NPC_Record::IsCanCorpseCheck(bool value)
     SETBIT(ACBS.value.flags, fIsCanCorpseCheck, value);
     }
 
-bool NPC_Record::IsFlagMask(UINT32 Mask, bool Exact)
+bool NPC_Record::IsFlagMask(uint32_t Mask, bool Exact)
     {
     return Exact ? ((ACBS.value.flags & Mask) == Mask) : ((ACBS.value.flags & Mask) != 0);
     }
 
-void NPC_Record::SetFlagMask(UINT32 Mask)
+void NPC_Record::SetFlagMask(uint32_t Mask)
     {
     ACBS.value.flags = Mask;
     }
@@ -504,44 +504,44 @@ void NPC_Record::IsServicesRepair(bool value)
     SETBIT(AIDT.value.flags, fRepair, value);
     }
 
-bool NPC_Record::IsServicesFlagMask(UINT32 Mask, bool Exact)
+bool NPC_Record::IsServicesFlagMask(uint32_t Mask, bool Exact)
     {
     return Exact ? ((AIDT.value.flags & Mask) == Mask) : ((AIDT.value.flags & Mask) != 0);
     }
 
-void NPC_Record::SetServicesFlagMask(UINT32 Mask)
+void NPC_Record::SetServicesFlagMask(uint32_t Mask)
     {
     AIDT.value.flags = Mask;
     }
 
-UINT32 NPC_Record::GetType()
+uint32_t NPC_Record::GetType()
     {
     return REV32(NPC_);
     }
 
-STRING NPC_Record::GetStrType()
+char * NPC_Record::GetStrType()
     {
     return "NPC_";
     }
 
-SINT32 NPC_Record::ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk)
+int32_t NPC_Record::ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk)
     {
-    UINT32 subType = 0;
-    UINT32 subSize = 0;
+    uint32_t subType = 0;
+    uint32_t subSize = 0;
     while(buffer < end_buffer){
-        subType = *(UINT32 *)buffer;
+        subType = *(uint32_t *)buffer;
         buffer += 4;
         switch(subType)
             {
             case REV32(XXXX):
                 buffer += 2;
-                subSize = *(UINT32 *)buffer;
+                subSize = *(uint32_t *)buffer;
                 buffer += 4;
-                subType = *(UINT32 *)buffer;
+                subType = *(uint32_t *)buffer;
                 buffer += 6;
                 break;
             default:
-                subSize = *(UINT16 *)buffer;
+                subSize = *(uint16_t *)buffer;
                 buffer += 2;
                 break;
             }
@@ -642,7 +642,7 @@ SINT32 NPC_Record::ParseRecord(unsigned char *buffer, unsigned char *end_buffer,
     return 0;
     }
 
-SINT32 NPC_Record::Unload()
+int32_t NPC_Record::Unload()
     {
     IsChanged(false);
     IsLoaded(false);
@@ -673,7 +673,7 @@ SINT32 NPC_Record::Unload()
     return 1;
     }
 
-SINT32 NPC_Record::WriteRecord(FileWriter &writer)
+int32_t NPC_Record::WriteRecord(FileWriter &writer)
     {
     WRITE(EDID);
     WRITE(FULL);

@@ -38,7 +38,7 @@
 
 namespace Ob
 {
-UINT32 PGRDRecord::GetFieldAttribute(FIELD_IDENTIFIERS, UINT32 WhichAttribute)
+uint32_t PGRDRecord::GetFieldAttribute(FIELD_IDENTIFIERS, uint32_t WhichAttribute)
     {
     switch(FieldID)
         {
@@ -62,7 +62,7 @@ UINT32 PGRDRecord::GetFieldAttribute(FIELD_IDENTIFIERS, UINT32 WhichAttribute)
                     case 0: //fieldType
                         return LIST_FIELD;
                     case 1: //fieldSize
-                        return (UINT32)PGRP.value.size();
+                        return (uint32_t)PGRP.value.size();
                     default:
                         return UNKNOWN_FIELD;
                     }
@@ -125,7 +125,7 @@ UINT32 PGRDRecord::GetFieldAttribute(FIELD_IDENTIFIERS, UINT32 WhichAttribute)
                     case 0: //fieldType
                         return LIST_FIELD;
                     case 1: //fieldSize
-                        return (UINT32)PGRI.value.size();
+                        return (uint32_t)PGRI.value.size();
                     default:
                         return UNKNOWN_FIELD;
                     }
@@ -166,7 +166,7 @@ UINT32 PGRDRecord::GetFieldAttribute(FIELD_IDENTIFIERS, UINT32 WhichAttribute)
                     case 0: //fieldType
                         return LIST_FIELD;
                     case 1: //fieldSize
-                        return (UINT32)PGRL.value.size();
+                        return (uint32_t)PGRL.value.size();
                     default:
                         return UNKNOWN_FIELD;
                     }
@@ -186,7 +186,7 @@ UINT32 PGRDRecord::GetFieldAttribute(FIELD_IDENTIFIERS, UINT32 WhichAttribute)
                             return UINT32_ARRAY_FIELD;
                         case 1: //fieldSize
                             //The first entry in the points array is actually the reference
-                            return (UINT32)PGRL.value[ListIndex]->points.value.size() - 1;
+                            return (uint32_t)PGRL.value[ListIndex]->points.value.size() - 1;
                         default:
                             return UNKNOWN_FIELD;
                         }
@@ -284,20 +284,20 @@ void * PGRDRecord::GetField(FIELD_IDENTIFIERS, void **FieldValues)
     return NULL;
     }
 
-bool PGRDRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
+bool PGRDRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, uint32_t ArraySize)
     {
-    UINT32 reference = 0;
+    uint32_t reference = 0;
 
     switch(FieldID)
         {
         case 1: //flags1
-            SetHeaderFlagMask(*(UINT32 *)FieldValue);
+            SetHeaderFlagMask(*(uint32_t *)FieldValue);
             break;
         case 3: //flags2
-            SetHeaderUnknownFlagMask(*(UINT32 *)FieldValue);
+            SetHeaderUnknownFlagMask(*(uint32_t *)FieldValue);
             break;
         case 5: //count
-            DATA.value = *(UINT16 *)FieldValue;
+            DATA.value = *(uint16_t *)FieldValue;
             break;
         case 6: //pgrp
             if(ListFieldID == 0) //pgrpSize
@@ -312,16 +312,16 @@ bool PGRDRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             switch(ListFieldID)
                 {
                 case 1: //x
-                    PGRP.value[ListIndex].x = *(FLOAT32 *)FieldValue;
+                    PGRP.value[ListIndex].x = *(float *)FieldValue;
                     break;
                 case 2: //y
-                    PGRP.value[ListIndex].y = *(FLOAT32 *)FieldValue;
+                    PGRP.value[ListIndex].y = *(float *)FieldValue;
                     break;
                 case 3: //z
-                    PGRP.value[ListIndex].z = *(FLOAT32 *)FieldValue;
+                    PGRP.value[ListIndex].z = *(float *)FieldValue;
                     break;
                 case 4: //connections
-                    PGRP.value[ListIndex].connections = *(UINT8 *)FieldValue;
+                    PGRP.value[ListIndex].connections = *(uint8_t *)FieldValue;
                     break;
                 case 5: //unused1
                     if(ArraySize != 3)
@@ -353,7 +353,7 @@ bool PGRDRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             switch(ListFieldID)
                 {
                 case 1: //point
-                    PGRI.value[ListIndex].point = *(UINT16 *)FieldValue;
+                    PGRI.value[ListIndex].point = *(uint16_t *)FieldValue;
                     break;
                 case 2: //unused1
                     if(ArraySize != 2)
@@ -362,13 +362,13 @@ bool PGRDRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
                     PGRI.value[ListIndex].unused1[1] = ((UINT8ARRAY)FieldValue)[1];
                     break;
                 case 3: //x
-                    PGRI.value[ListIndex].x = *(FLOAT32 *)FieldValue;
+                    PGRI.value[ListIndex].x = *(float *)FieldValue;
                     break;
                 case 4: //y
-                    PGRI.value[ListIndex].y = *(FLOAT32 *)FieldValue;
+                    PGRI.value[ListIndex].y = *(float *)FieldValue;
                     break;
                 case 5: //z
-                    PGRI.value[ListIndex].z = *(FLOAT32 *)FieldValue;
+                    PGRI.value[ListIndex].z = *(float *)FieldValue;
                     break;
                 default:
                     break;
@@ -397,7 +397,7 @@ bool PGRDRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
                     PGRL.value[ListIndex]->points.value.resize(ArraySize + 1);
                     PGRL.value[ListIndex]->points.value[0] = reference;
 
-                    for(UINT32 x = 0; x < ArraySize; x++)
+                    for(uint32_t x = 0; x < ArraySize; x++)
                         PGRL.value[ListIndex]->points.value[x + 1] = ((UINT32ARRAY)FieldValue)[x];
                     break;
                 default:
@@ -415,7 +415,7 @@ void PGRDRecord::DeleteField(FIELD_IDENTIFIERS)
     GENPGRP defaultPGRP;
     PGRDPGRI defaultPGRI;
     PGRDPGRL defaultPGRL;
-    UINT32 reference;
+    uint32_t reference;
 
     switch(FieldID)
         {

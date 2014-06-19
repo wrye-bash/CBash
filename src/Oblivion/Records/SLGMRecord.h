@@ -59,8 +59,8 @@ class SLGMRecord : public Record
         StringRecord ICON; //Icon filename
         OptSimpleSubRecord<FORMID> SCRI; //Script
         ReqSubRecord<GENVALUEWEIGHT> DATA; //Data
-        ReqSimpleSubRecord<UINT8> SOUL; //Contained Soul
-        ReqSimpleSubRecord<UINT8, 1> SLCP; //Maximum Capacity
+        ReqSimpleSubRecord<uint8_t> SOUL; //Contained Soul
+        ReqSimpleSubRecord<uint8_t, 1> SLCP; //Maximum Capacity
 
         SLGMRecord(unsigned char *_recData=NULL);
         SLGMRecord(SLGMRecord *srcRecord);
@@ -80,8 +80,8 @@ class SLGMRecord : public Record
         void   IsGreaterSoul(bool value);
         bool   IsGrandSoul();
         void   IsGrandSoul(bool value);
-        bool   IsSoul(UINT8 Type);
-        void   SetSoul(UINT8 Type);
+        bool   IsSoul(uint8_t Type);
+        void   SetSoul(uint8_t Type);
 
         bool   IsNoCapacity();
         void   IsNoCapacity(bool value);
@@ -95,20 +95,20 @@ class SLGMRecord : public Record
         void   IsGreaterCapacity(bool value);
         bool   IsGrandCapacity();
         void   IsGrandCapacity(bool value);
-        bool   IsCapacity(UINT8 Type);
-        void   SetCapacity(UINT8 Type);
+        bool   IsCapacity(uint8_t Type);
+        void   SetCapacity(uint8_t Type);
 
-        UINT32 GetFieldAttribute(DEFAULTED_FIELD_IDENTIFIERS, UINT32 WhichAttribute=0);
+        uint32_t GetFieldAttribute(DEFAULTED_FIELD_IDENTIFIERS, uint32_t WhichAttribute=0);
         void * GetField(DEFAULTED_FIELD_IDENTIFIERS, void **FieldValues=NULL);
-        bool   SetField(DEFAULTED_FIELD_IDENTIFIERS, void *FieldValue=NULL, UINT32 ArraySize=0);
+        bool   SetField(DEFAULTED_FIELD_IDENTIFIERS, void *FieldValue=NULL, uint32_t ArraySize=0);
         void   DeleteField(DEFAULTED_FIELD_IDENTIFIERS);
 
-        UINT32 GetType();
-        STRING GetStrType();
+        uint32_t GetType();
+        char * GetStrType();
 
-        SINT32 ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk=false);
-        SINT32 Unload();
-        SINT32 WriteRecord(FileWriter &writer);
+        int32_t ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk=false);
+        int32_t Unload();
+        int32_t WriteRecord(FileWriter &writer);
 
         bool operator ==(const SLGMRecord &other) const;
         bool operator !=(const SLGMRecord &other) const;

@@ -46,7 +46,7 @@ class Script
 {
 public:
     NonNullStringRecord name;
-    UINT8 status;
+    uint8_t status;
     std::vector<Property *> properties;
 
     enum statusFlags
@@ -61,8 +61,8 @@ public:
 
     void VisitFormIDs(FormIDOp &op);
 
-    UINT32 GetSize() const;
-    void Read(unsigned char *&buffer, const SINT16 &version, const SINT16 &objFormat, const bool &CompressedOnDisk);
+    uint32_t GetSize() const;
+    void Read(unsigned char *&buffer, const int16_t &version, const int16_t &objFormat, const bool &CompressedOnDisk);
     void Write(FileWriter &writer);
 
     Script & operator = (const Script &other);

@@ -198,46 +198,46 @@ void IMGSRecord::IsBrightness(bool value)
     SETBIT(DNAM->flags, fIsBrightness, value);
     }
 
-bool IMGSRecord::IsFlagMask(UINT8 Mask, bool Exact)
+bool IMGSRecord::IsFlagMask(uint8_t Mask, bool Exact)
     {
     if (!DNAM.IsLoaded()) return false;
     return Exact ? ((DNAM->flags & Mask) == Mask) : ((DNAM->flags & Mask) != 0);
     }
 
-void IMGSRecord::SetFlagMask(UINT8 Mask)
+void IMGSRecord::SetFlagMask(uint8_t Mask)
     {
     DNAM.Load();
     DNAM->flags = Mask;
     }
 
-UINT32 IMGSRecord::GetType()
+uint32_t IMGSRecord::GetType()
     {
     return REV32(IMGS);
     }
 
-STRING IMGSRecord::GetStrType()
+char * IMGSRecord::GetStrType()
     {
     return "IMGS";
     }
 
-SINT32 IMGSRecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk)
+int32_t IMGSRecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk)
     {
-    UINT32 subType = 0;
-    UINT32 subSize = 0;
+    uint32_t subType = 0;
+    uint32_t subSize = 0;
     while(buffer < end_buffer){
-        subType = *(UINT32 *)buffer;
+        subType = *(uint32_t *)buffer;
         buffer += 4;
         switch(subType)
             {
             case REV32(XXXX):
                 buffer += 2;
-                subSize = *(UINT32 *)buffer;
+                subSize = *(uint32_t *)buffer;
                 buffer += 4;
-                subType = *(UINT32 *)buffer;
+                subType = *(uint32_t *)buffer;
                 buffer += 6;
                 break;
             default:
-                subSize = *(UINT16 *)buffer;
+                subSize = *(uint16_t *)buffer;
                 buffer += 2;
                 break;
             }
@@ -261,7 +261,7 @@ SINT32 IMGSRecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer,
     return 0;
     }
 
-SINT32 IMGSRecord::Unload()
+int32_t IMGSRecord::Unload()
     {
     IsChanged(false);
     IsLoaded(false);
@@ -270,7 +270,7 @@ SINT32 IMGSRecord::Unload()
     return 1;
     }
 
-SINT32 IMGSRecord::WriteRecord(FileWriter &writer)
+int32_t IMGSRecord::WriteRecord(FileWriter &writer)
     {
     WRITE(EDID);
     WRITE(DNAM);

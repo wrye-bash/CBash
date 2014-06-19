@@ -44,8 +44,8 @@ class CHALRecord : public FNVRecord //Challenge
     private:
         struct CHALDATA //Data
             {
-            UINT32  challengeType, threshold, flags, interval; //Type, Threshold, Flags, Interval
-            UINT8   var1[2], var2[2], var3[4]; //(depends on type)
+            uint32_t  challengeType, threshold, flags, interval; //Type, Threshold, Flags, Interval
+            uint8_t   var1[2], var2[2], var3[4]; //(depends on type)
 
             CHALDATA();
             ~CHALDATA();
@@ -97,8 +97,8 @@ class CHALRecord : public FNVRecord //Challenge
         void   IsRecurring(bool value);
         bool   IsShowZeroProgress();
         void   IsShowZeroProgress(bool value);
-        bool   IsFlagMask(UINT8 Mask, bool Exact=false);
-        void   SetFlagMask(UINT8 Mask);
+        bool   IsFlagMask(uint8_t Mask, bool Exact=false);
+        void   SetFlagMask(uint8_t Mask);
 
         bool   IsKillFromList();
         bool   IsKillFormID();
@@ -112,20 +112,20 @@ class CHALRecord : public FNVRecord //Challenge
         bool   IsUseItemFromList();
         bool   IsGetItemFromList();
         bool   IsMiscStat();
-        bool   IsType(UINT8 Type);
-        void   SetType(UINT8 Type);
+        bool   IsType(uint8_t Type);
+        void   SetType(uint8_t Type);
 
-        UINT32 GetFieldAttribute(DEFAULTED_FIELD_IDENTIFIERS, UINT32 WhichAttribute=0);
+        uint32_t GetFieldAttribute(DEFAULTED_FIELD_IDENTIFIERS, uint32_t WhichAttribute=0);
         void * GetField(DEFAULTED_FIELD_IDENTIFIERS, void **FieldValues=NULL);
-        bool   SetField(DEFAULTED_FIELD_IDENTIFIERS, void *FieldValue=NULL, UINT32 ArraySize=0);
+        bool   SetField(DEFAULTED_FIELD_IDENTIFIERS, void *FieldValue=NULL, uint32_t ArraySize=0);
         void   DeleteField(DEFAULTED_FIELD_IDENTIFIERS);
 
-        UINT32 GetType();
-        STRING GetStrType();
+        uint32_t GetType();
+        char * GetStrType();
 
-        SINT32 ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk=false);
-        SINT32 Unload();
-        SINT32 WriteRecord(FileWriter &writer);
+        int32_t ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk=false);
+        int32_t Unload();
+        int32_t WriteRecord(FileWriter &writer);
 
         bool operator ==(const CHALRecord &other) const;
         bool operator !=(const CHALRecord &other) const;

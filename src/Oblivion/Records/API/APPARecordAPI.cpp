@@ -38,7 +38,7 @@
 
 namespace Ob
 {
-UINT32 APPARecord::GetFieldAttribute(FIELD_IDENTIFIERS, UINT32 WhichAttribute)
+uint32_t APPARecord::GetFieldAttribute(FIELD_IDENTIFIERS, uint32_t WhichAttribute)
     {
     switch(FieldID)
         {
@@ -126,51 +126,51 @@ void * APPARecord::GetField(FIELD_IDENTIFIERS, void **FieldValues)
     return NULL;
     }
 
-bool APPARecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
+bool APPARecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, uint32_t ArraySize)
     {
     switch(FieldID)
         {
         case 1: //flags1
-            SetHeaderFlagMask(*(UINT32 *)FieldValue);
+            SetHeaderFlagMask(*(uint32_t *)FieldValue);
             break;
         case 3: //flags2
-            SetHeaderUnknownFlagMask(*(UINT32 *)FieldValue);
+            SetHeaderUnknownFlagMask(*(uint32_t *)FieldValue);
             break;
         case 4: //eid
-            EDID.Copy((STRING)FieldValue);
+            EDID.Copy((char *)FieldValue);
             break;
         case 5: //full
-            FULL.Copy((STRING)FieldValue);
+            FULL.Copy((char *)FieldValue);
             break;
         case 6: //modPath
             MODL.Load();
-            MODL->MODL.Copy((STRING)FieldValue);
+            MODL->MODL.Copy((char *)FieldValue);
             break;
         case 7: //modb
             MODL.Load();
-            MODL->MODB.value = *(FLOAT32 *)FieldValue;
+            MODL->MODB.value = *(float *)FieldValue;
             break;
         case 8: //modt_p
             MODL.Load();
             MODL->MODT.Copy((UINT8ARRAY)FieldValue, ArraySize);
             break;
         case 9: //iconPath
-            ICON.Copy((STRING)FieldValue);
+            ICON.Copy((char *)FieldValue);
             break;
         case 10: //script
             SCRI.value = *(FORMID *)FieldValue;
             return true;
         case 11: //apparatusType
-            SetType(*(UINT8 *)FieldValue);
+            SetType(*(uint8_t *)FieldValue);
             break;
         case 12: //value
-            DATA.value.value = *(UINT32 *)FieldValue;
+            DATA.value.value = *(uint32_t *)FieldValue;
             break;
         case 13: //weight
-            DATA.value.weight = *(FLOAT32 *)FieldValue;
+            DATA.value.weight = *(float *)FieldValue;
             break;
         case 14: //quality
-            DATA.value.quality = *(FLOAT32 *)FieldValue;
+            DATA.value.quality = *(float *)FieldValue;
             break;
         default:
             break;

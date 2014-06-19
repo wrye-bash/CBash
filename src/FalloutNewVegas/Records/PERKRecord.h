@@ -46,7 +46,7 @@ class PERKRecord : public FNVRecord //Perk
         #pragma pack(1)
         struct PERKDATA
             {
-            UINT8   trait, minLevel, ranks, playable, hidden;
+            uint8_t   trait, minLevel, ranks, playable, hidden;
 
             PERKDATA();
             ~PERKDATA();
@@ -60,7 +60,7 @@ class PERKRecord : public FNVRecord //Perk
         #pragma pack(1)
         struct PERKPRKE //Header
             {
-            UINT8   perkType, rank, priority;
+            uint8_t   perkType, rank, priority;
 
             PERKPRKE();
             ~PERKPRKE();
@@ -72,7 +72,7 @@ class PERKRecord : public FNVRecord //Perk
 
         struct PERKCondition //Perk Condition
             {
-            ReqSimpleSubRecord<SINT8> PRKC; //Run On
+            ReqSimpleSubRecord<int8_t> PRKC; //Run On
             OrderedSparseArray<FNVCTDA *> CTDA; //Conditions
 
             bool   operator ==(const PERKCondition &other) const;
@@ -90,10 +90,10 @@ class PERKRecord : public FNVRecord //Perk
             //if(PRKE.value.perkType == 0) //Quest + Stage
             //    {
             //    ReqSimpleSubRecord<FORMID> DATAfid; //quest
-            //    ReqSimpleSubRecord<SINT8> DATAS8; //stage
-            //    ReqSimpleSubRecord<UINT8> DATAU81; //unused
-            //    ReqSimpleSubRecord<UINT8> DATAU82; //unused
-            //    ReqSimpleSubRecord<UINT8> DATAU83; //unused
+            //    ReqSimpleSubRecord<int8_t> DATAS8; //stage
+            //    ReqSimpleSubRecord<uint8_t> DATAU81; //unused
+            //    ReqSimpleSubRecord<uint8_t> DATAU82; //unused
+            //    ReqSimpleSubRecord<uint8_t> DATAU83; //unused
             //    }
             //else if(PRKE.value.perkType == 1) //Ability
             //    {
@@ -101,28 +101,28 @@ class PERKRecord : public FNVRecord //Perk
             //    }
             //else if(PRKE.value.perkType == 2) //Entry Point
             //    {
-            //    ReqSimpleSubRecord<UINT8> DATAU81; //entryType
-            //    ReqSimpleSubRecord<UINT8> DATAU82; //functionType
-            //    ReqSimpleSubRecord<UINT8> DATAU83; //tabCount
+            //    ReqSimpleSubRecord<uint8_t> DATAU81; //entryType
+            //    ReqSimpleSubRecord<uint8_t> DATAU82; //functionType
+            //    ReqSimpleSubRecord<uint8_t> DATAU83; //tabCount
             //    }
 
             //Effect Data
             ReqSimpleSubRecord<FORMID> DATAfid; //quest or ability
-            ReqSimpleSubRecord<SINT8> DATAS8; //stage
-            ReqSimpleSubRecord<UINT8> DATAU81; //unused or entryType
-            ReqSimpleSubRecord<UINT8> DATAU82; //unused or functionType
-            ReqSimpleSubRecord<UINT8> DATAU83; //unused or tabCount
+            ReqSimpleSubRecord<int8_t> DATAS8; //stage
+            ReqSimpleSubRecord<uint8_t> DATAU81; //unused or entryType
+            ReqSimpleSubRecord<uint8_t> DATAU82; //unused or functionType
+            ReqSimpleSubRecord<uint8_t> DATAU83; //unused or tabCount
 
             OrderedSparseArray<PERKCondition *> CTDA; //Conditions
 
-            OptSimpleSubRecord<UINT8> EPFT; //Type
+            OptSimpleSubRecord<uint8_t> EPFT; //Type
             //if(EPFT.value == 1)
             //    ReqSimpleFloatSubRecord<flt_0> EPFDf1; //Data
             //else if(EPFT.value == 2)// Quest + Stage
             //    {
             //    if(DATA->DATA3.func == 5)// Ability
             //        {
-            //        ReqSimpleSubRecord<UINT32> EPFDav1; //Data
+            //        ReqSimpleSubRecord<uint32_t> EPFDav1; //Data
             //        ReqSimpleFloatSubRecord<flt_0> EPFDf2; //Data
             //        }
             //    else
@@ -136,7 +136,7 @@ class PERKRecord : public FNVRecord //Perk
             //else if(EPFT.value == 4)
             //    {
             //    StringRecord EPF2; //Button Label
-            //    OptSimpleSubRecord<UINT16> EPF3; //Script Flags
+            //    OptSimpleSubRecord<uint16_t> EPF3; //Script Flags
             //    ReqSubRecord<FNVSCHR> SCHR;
             //    RawRecord SCDA;
             //    NonNullStringRecord SCTX;
@@ -145,10 +145,10 @@ class PERKRecord : public FNVRecord //Perk
             //    }
             ReqSimpleFloatSubRecord<flt_0> EPFDf1; //Data
             ReqSimpleFloatSubRecord<flt_0> EPFDf2; //Data
-            ReqSimpleSubRecord<UINT32> EPFDav1; //Data
+            ReqSimpleSubRecord<uint32_t> EPFDav1; //Data
             ReqSimpleSubRecord<FORMID> EPFDfid1; //Data
             StringRecord EPF2; //Button Label
-            OptSimpleSubRecord<UINT16> EPF3; //Script Flags
+            OptSimpleSubRecord<uint16_t> EPF3; //Script Flags
             ReqSubRecord<FNVSCHR> SCHR;
             RawRecord SCDA;
             NonNullStringRecord SCTX;
@@ -253,13 +253,13 @@ class PERKRecord : public FNVRecord //Perk
 
             bool   IsRunImmediately();
             void   IsRunImmediately(bool value);
-            bool   IsFlagMask(UINT16 Mask, bool Exact=false);
-            void   SetFlagMask(UINT16 Mask);
+            bool   IsFlagMask(uint16_t Mask, bool Exact=false);
+            void   SetFlagMask(uint16_t Mask);
 
             bool   IsScriptEnabled();
             void   IsScriptEnabled(bool value);
-            bool   IsScriptFlagMask(UINT16 Mask, bool Exact=false);
-            void   SetScriptFlagMask(UINT16 Mask);
+            bool   IsScriptFlagMask(uint16_t Mask, bool Exact=false);
+            void   SetScriptFlagMask(uint16_t Mask);
 
             void   Write(FileWriter &writer);
 
@@ -310,36 +310,36 @@ class PERKRecord : public FNVRecord //Perk
 
         bool   IsNotTrait();
         bool   IsTrait();
-        bool   IsTraitType(UINT8 Type);
-        void   SetTraitType(UINT8 Type);
+        bool   IsTraitType(uint8_t Type);
+        void   SetTraitType(uint8_t Type);
 
         bool   IsNotPlayable();
         bool   IsPlayable();
-        bool   IsPlayableType(UINT8 Type);
-        void   SetPlayableType(UINT8 Type);
+        bool   IsPlayableType(uint8_t Type);
+        void   SetPlayableType(uint8_t Type);
 
         bool   IsNotHidden();
         bool   IsHidden();
-        bool   IsHiddenType(UINT8 Type);
-        void   SetHiddenType(UINT8 Type);
+        bool   IsHiddenType(uint8_t Type);
+        void   SetHiddenType(uint8_t Type);
 
         //bool   IsQuestStage();
         //bool   IsAbility();
         //bool   IsEntryPoint();
-        //bool   IsType(UINT8 Type);
-        //void   SetType(UINT8 Type);
+        //bool   IsType(uint8_t Type);
+        //void   SetType(uint8_t Type);
 
-        UINT32 GetFieldAttribute(DEFAULTED_FIELD_IDENTIFIERS, UINT32 WhichAttribute=0);
+        uint32_t GetFieldAttribute(DEFAULTED_FIELD_IDENTIFIERS, uint32_t WhichAttribute=0);
         void * GetField(DEFAULTED_FIELD_IDENTIFIERS, void **FieldValues=NULL);
-        bool   SetField(DEFAULTED_FIELD_IDENTIFIERS, void *FieldValue=NULL, UINT32 ArraySize=0);
+        bool   SetField(DEFAULTED_FIELD_IDENTIFIERS, void *FieldValue=NULL, uint32_t ArraySize=0);
         void   DeleteField(DEFAULTED_FIELD_IDENTIFIERS);
 
-        UINT32 GetType();
-        STRING GetStrType();
+        uint32_t GetType();
+        char * GetStrType();
 
-        SINT32 ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk=false);
-        SINT32 Unload();
-        SINT32 WriteRecord(FileWriter &writer);
+        int32_t ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk=false);
+        int32_t Unload();
+        int32_t WriteRecord(FileWriter &writer);
 
         bool operator ==(const PERKRecord &other) const;
         bool operator !=(const PERKRecord &other) const;

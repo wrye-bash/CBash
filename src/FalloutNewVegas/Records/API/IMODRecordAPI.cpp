@@ -38,7 +38,7 @@
 
 namespace FNV
 {
-UINT32 IMODRecord::GetFieldAttribute(FIELD_IDENTIFIERS, UINT32 WhichAttribute)
+uint32_t IMODRecord::GetFieldAttribute(FIELD_IDENTIFIERS, uint32_t WhichAttribute)
     {
     switch(FieldID)
         {
@@ -297,12 +297,12 @@ void * IMODRecord::GetField(FIELD_IDENTIFIERS, void **FieldValues)
     return NULL;
     }
 
-bool IMODRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
+bool IMODRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, uint32_t ArraySize)
     {
     switch(FieldID)
         {
         case 1: //flags1
-            SetHeaderFlagMask(*(UINT32 *)FieldValue);
+            SetHeaderFlagMask(*(uint32_t *)FieldValue);
             break;
         case 3: //versionControl1
             if(ArraySize != 4)
@@ -313,10 +313,10 @@ bool IMODRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             ((UINT8ARRAY)&flagsUnk)[3] = ((UINT8ARRAY)FieldValue)[3];
             break;
         case 4: //eid
-            EDID.Copy((STRING)FieldValue);
+            EDID.Copy((char *)FieldValue);
             break;
         case 5: //formVersion
-            formVersion = *(UINT16 *)FieldValue;
+            formVersion = *(uint16_t *)FieldValue;
             break;
         case 6: //versionControl2
             if(ArraySize != 2)
@@ -326,26 +326,26 @@ bool IMODRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             break;
         case 7: //boundX
             OBND.Load();
-            OBND->x1 = *(SINT16 *)FieldValue;
+            OBND->x1 = *(int16_t *)FieldValue;
             break;
         case 8: //boundY
             OBND.Load();
-            OBND->y1 = *(SINT16 *)FieldValue;
+            OBND->y1 = *(int16_t *)FieldValue;
             break;
         case 9: //boundZ
             OBND.Load();
-            OBND->z1 = *(SINT16 *)FieldValue;
+            OBND->z1 = *(int16_t *)FieldValue;
             break;
         case 10: //full
-            FULL.Copy((STRING)FieldValue);
+            FULL.Copy((char *)FieldValue);
             break;
         case 11: //modPath
             MODL.Load();
-            MODL->MODL.Copy((STRING)FieldValue);
+            MODL->MODL.Copy((char *)FieldValue);
             break;
         case 12: //modb
             MODL.Load();
-            MODL->MODB.value = *(FLOAT32 *)FieldValue;
+            MODL->MODB.value = *(float *)FieldValue;
             break;
         case 13: //modt_p
             MODL.Load();
@@ -353,7 +353,7 @@ bool IMODRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             break;
         case 14: //mods Alternate Textures
             MODL.Load();
-            //MODL->Textures.MODS.Copy((STRING)FieldValue);
+            //MODL->Textures.MODS.Copy((char *)FieldValue);
             break;
         case 15: //mods Alternate Textures
             MODL.Load();
@@ -363,40 +363,40 @@ bool IMODRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
         case 16: //mods Alternate Textures
             MODL.Load();
             MODL->Textures.Load();
-            //MODL->Textures.MODS->value16 = *(SINT32 *)FieldValue;
+            //MODL->Textures.MODS->value16 = *(int32_t *)FieldValue;
             break;
         case 17: //modelFlags
             MODL.Load();
             MODL->MODD.Load();
-            MODL->MODD.value = *(UINT8 *)FieldValue;
+            MODL->MODD.value = *(uint8_t *)FieldValue;
             break;
         case 18: //iconPath
-            ICON.Copy((STRING)FieldValue);
+            ICON.Copy((char *)FieldValue);
             break;
         case 19: //smallIconPath
-            MICO.Copy((STRING)FieldValue);
+            MICO.Copy((char *)FieldValue);
             break;
         case 20: //script
             SCRI.Load();
             SCRI.value = *(FORMID *)FieldValue;
             return true;
         case 21: //description
-            DESC.Copy((STRING)FieldValue);
+            DESC.Copy((char *)FieldValue);
             break;
         case 22: //dest Header
             Destructable.Load();
             Destructable->DEST.Load();
-            Destructable->DEST->health = *(SINT32 *)FieldValue;
+            Destructable->DEST->health = *(int32_t *)FieldValue;
             break;
         case 23: //dest Header
             Destructable.Load();
             Destructable->DEST.Load();
-            Destructable->DEST->count = *(UINT8 *)FieldValue;
+            Destructable->DEST->count = *(uint8_t *)FieldValue;
             break;
         case 24: //dest Header
             Destructable.Load();
             Destructable->DEST.Load();
-            Destructable->DEST->flags = *(UINT8 *)FieldValue;
+            Destructable->DEST->flags = *(uint8_t *)FieldValue;
             break;
         case 25: //dest_p Header
             if(ArraySize != 2)
@@ -410,27 +410,27 @@ bool IMODRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             // TODO Make the work on more than just the first destruction Stage item
             Destructable.Load();
             Destructable->Stages.value[0]->DSTD.Load();
-            Destructable->Stages.value[0]->DSTD->health = *(UINT8 *)FieldValue;
+            Destructable->Stages.value[0]->DSTD->health = *(uint8_t *)FieldValue;
             break;
         case 27: //dstd Destruction Stage Data
             Destructable.Load();
             Destructable->Stages.value[0]->DSTD.Load();
-            Destructable->Stages.value[0]->DSTD->index = *(UINT8 *)FieldValue;
+            Destructable->Stages.value[0]->DSTD->index = *(uint8_t *)FieldValue;
             break;
         case 28: //dstd Destruction Stage Data
             Destructable.Load();
             Destructable->Stages.value[0]->DSTD.Load();
-            Destructable->Stages.value[0]->DSTD->stage = *(UINT8 *)FieldValue;
+            Destructable->Stages.value[0]->DSTD->stage = *(uint8_t *)FieldValue;
             break;
         case 29: //dstd Destruction Stage Data
             Destructable.Load();
             Destructable->Stages.value[0]->DSTD.Load();
-            Destructable->Stages.value[0]->DSTD->flags = *(UINT8 *)FieldValue;
+            Destructable->Stages.value[0]->DSTD->flags = *(uint8_t *)FieldValue;
             break;
         case 30: //dstd Destruction Stage Data
             Destructable.Load();
             Destructable->Stages.value[0]->DSTD.Load();
-            Destructable->Stages.value[0]->DSTD->dps = *(SINT32 *)FieldValue;
+            Destructable->Stages.value[0]->DSTD->dps = *(int32_t *)FieldValue;
             break;
         case 31: //dstd Destruction Stage Data
             Destructable.Load();
@@ -445,11 +445,11 @@ bool IMODRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
         case 33: //dstd Destruction Stage Data
             Destructable.Load();
             Destructable->Stages.value[0]->DSTD.Load();
-            Destructable->Stages.value[0]->DSTD->debrisCount = *(SINT32 *)FieldValue;
+            Destructable->Stages.value[0]->DSTD->debrisCount = *(int32_t *)FieldValue;
             break;
         case 34: //dmdl Model Filename
             Destructable.Load();
-            Destructable->Stages.value[0]->DMDL.Copy((STRING)FieldValue);
+            Destructable->Stages.value[0]->DMDL.Copy((char *)FieldValue);
             break;
         case 35: //dmdt_p Texture Files Hashes
             Destructable.Load();
@@ -465,11 +465,11 @@ bool IMODRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             return true;
         case 38: //data DATA ,, Struct
             DATA.Load();
-            DATA->value = *(UINT32 *)FieldValue;
+            DATA->value = *(uint32_t *)FieldValue;
             break;
         case 39: //data DATA ,, Struct
             DATA.Load();
-            DATA->weight = *(FLOAT32 *)FieldValue;
+            DATA->weight = *(float *)FieldValue;
             break;
         default:
             break;

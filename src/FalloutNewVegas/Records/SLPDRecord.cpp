@@ -82,34 +82,34 @@ bool SLPDRecord::VisitFormIDs(FormIDOp &op)
     return op.Stop();
     }
 
-UINT32 SLPDRecord::GetType()
+uint32_t SLPDRecord::GetType()
     {
     return REV32(SLPD);
     }
 
-STRING SLPDRecord::GetStrType()
+char * SLPDRecord::GetStrType()
     {
     return "SLPD";
     }
 
-SINT32 SLPDRecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk)
+int32_t SLPDRecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk)
     {
-    UINT32 subType = 0;
-    UINT32 subSize = 0;
+    uint32_t subType = 0;
+    uint32_t subSize = 0;
     while(buffer < end_buffer){
-        subType = *(UINT32 *)buffer;
+        subType = *(uint32_t *)buffer;
         buffer += 4;
         switch(subType)
             {
             case REV32(XXXX):
                 buffer += 2;
-                subSize = *(UINT32 *)buffer;
+                subSize = *(uint32_t *)buffer;
                 buffer += 4;
-                subType = *(UINT32 *)buffer;
+                subType = *(uint32_t *)buffer;
                 buffer += 6;
                 break;
             default:
-                subSize = *(UINT16 *)buffer;
+                subSize = *(uint16_t *)buffer;
                 buffer += 2;
                 break;
             }
@@ -133,7 +133,7 @@ SINT32 SLPDRecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer,
     return 0;
     }
 
-SINT32 SLPDRecord::Unload()
+int32_t SLPDRecord::Unload()
     {
     IsChanged(false);
     IsLoaded(false);
@@ -142,7 +142,7 @@ SINT32 SLPDRecord::Unload()
     return 1;
     }
 
-SINT32 SLPDRecord::WriteRecord(FileWriter &writer)
+int32_t SLPDRecord::WriteRecord(FileWriter &writer)
     {
     WRITE(EDID);
     WRITE(DATA);

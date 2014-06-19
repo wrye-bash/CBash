@@ -45,9 +45,9 @@ class ARMORecord : public FNVRecord //Armor
         struct FNVSNAM //Animation Sound
             {
             FORMID  sound; //Sound
-            UINT8   chance; //Chance
-            UINT8   unused1[3]; //Unused
-            UINT32  type; //Type
+            uint8_t   chance; //Chance
+            uint8_t   unused1[3]; //Unused
+            uint32_t  type; //Type
 
             enum typeTypes
                 {
@@ -74,8 +74,8 @@ class ARMORecord : public FNVRecord //Armor
             void   IsRunArmor(bool value);
             bool   IsWalkArmor();
             void   IsWalkArmor(bool value);
-            bool   IsType(UINT32 Type);
-            void   SetType(UINT32 Type);
+            bool   IsType(uint32_t Type);
+            void   SetType(uint32_t Type);
 
             bool operator ==(const FNVSNAM &other) const;
             bool operator !=(const FNVSNAM &other) const;
@@ -164,12 +164,12 @@ class ARMORecord : public FNVRecord //Armor
         StringRecord BMCT; //Ragdoll Constraint Template
         OptSimpleSubRecord<FORMID> REPL; //Repair List
         OptSimpleSubRecord<FORMID> BIPL; //Biped Model List
-        ReqSimpleSubRecord<SINT32> ETYP; //Equipment Type
+        ReqSimpleSubRecord<int32_t> ETYP; //Equipment Type
         OptSimpleSubRecord<FORMID> YNAM; //Sound - Pick Up
         OptSimpleSubRecord<FORMID> ZNAM; //Sound - Drop
         ReqSubRecord<FNVEQUIPDATA> DATA; //Equipment Data
         ReqSubRecord<FNVEQUIPDNAM> DNAM; //Extra Equipment Data
-        ReqSimpleSubRecord<UINT32> BNAM; //Overrides Animation Sounds
+        ReqSimpleSubRecord<uint32_t> BNAM; //Overrides Animation Sounds
         UnorderedSparseArray<FNVSNAM *> Sounds; //Animation Sounds
         OptSimpleSubRecord<FORMID> TNAM; //Animation Sounds Template
 
@@ -219,8 +219,8 @@ class ARMORecord : public FNVRecord //Armor
         void   IsBodyAddon2(bool value);
         bool   IsBodyAddon3();
         void   IsBodyAddon3(bool value);
-        bool   IsFlagMask(UINT32 Mask, bool Exact=false);
-        void   SetFlagMask(UINT32 Mask);
+        bool   IsFlagMask(uint32_t Mask, bool Exact=false);
+        void   SetFlagMask(uint32_t Mask);
 
         bool   IsUnknown1();
         void   IsUnknown1(bool value);
@@ -238,13 +238,13 @@ class ARMORecord : public FNVRecord //Armor
         void   IsNonPlayable(bool value);
         bool   IsHeavy();
         void   IsHeavy(bool value);
-        bool   IsExtraFlagMask(UINT8 Mask, bool Exact=false);
-        void   SetExtraFlagMask(UINT8 Mask);
+        bool   IsExtraFlagMask(uint8_t Mask, bool Exact=false);
+        void   SetExtraFlagMask(uint8_t Mask);
 
         bool   IsModulatesVoice();
         void   IsModulatesVoice(bool value);
-        bool   IsVoiceFlagMask(UINT16 Mask, bool Exact=false);
-        void   SetVoiceFlagMask(UINT16 Mask);
+        bool   IsVoiceFlagMask(uint16_t Mask, bool Exact=false);
+        void   SetVoiceFlagMask(uint16_t Mask);
 
         bool   IsNone();
         void   IsNone(bool value);
@@ -276,27 +276,27 @@ class ARMORecord : public FNVRecord //Armor
         void   IsEdible(bool value);
         bool   IsAlcohol();
         void   IsAlcohol(bool value);
-        bool   IsEquipmentType(SINT32 Type);
-        void   SetEquipmentType(SINT32 Type);
+        bool   IsEquipmentType(int32_t Type);
+        void   SetEquipmentType(int32_t Type);
 
         bool   IsNotOverridingSounds();
         void   IsNotOverridingSounds(bool value);
         bool   IsOverridingSounds();
         void   IsOverridingSounds(bool value);
-        bool   IsOverrideType(UINT32 Type);
-        void   SetOverrideType(UINT32 Type);
+        bool   IsOverrideType(uint32_t Type);
+        void   SetOverrideType(uint32_t Type);
 
-        UINT32 GetFieldAttribute(DEFAULTED_FIELD_IDENTIFIERS, UINT32 WhichAttribute=0);
+        uint32_t GetFieldAttribute(DEFAULTED_FIELD_IDENTIFIERS, uint32_t WhichAttribute=0);
         void * GetField(DEFAULTED_FIELD_IDENTIFIERS, void **FieldValues=NULL);
-        bool   SetField(DEFAULTED_FIELD_IDENTIFIERS, void *FieldValue=NULL, UINT32 ArraySize=0);
+        bool   SetField(DEFAULTED_FIELD_IDENTIFIERS, void *FieldValue=NULL, uint32_t ArraySize=0);
         void   DeleteField(DEFAULTED_FIELD_IDENTIFIERS);
 
-        UINT32 GetType();
-        STRING GetStrType();
+        uint32_t GetType();
+        char * GetStrType();
 
-        SINT32 ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk=false);
-        SINT32 Unload();
-        SINT32 WriteRecord(FileWriter &writer);
+        int32_t ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk=false);
+        int32_t Unload();
+        int32_t WriteRecord(FileWriter &writer);
 
         bool operator ==(const ARMORecord &other) const;
         bool operator !=(const ARMORecord &other) const;

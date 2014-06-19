@@ -43,48 +43,22 @@
     @details This documentation was not written by the original developer, and so may be inaccurate.
 */
 
-#ifndef NULL
-    #ifdef __cplusplus
-        #define NULL    0
-    #else
-        #define NULL    ((void *)0)
-    #endif
+#include <stddef.h>
+#include <stdint.h>
+
+#ifdef __cplusplus
+extern "C"
+{
 #endif
 
-#ifndef UINT32
-    #define UINT32 unsigned long
-#endif
+struct Collection;
+struct ModFile;
+struct Record;
 
-#ifndef SINT32
-    #define SINT32 signed long
-#endif
-
-#ifndef STRING
-    #define STRING char *
-#endif
-
-#ifndef FORMID
-    #define FORMID unsigned long
-#endif
-
-#ifndef UINT32ARRAY
-    #define UINT32ARRAY unsigned long *
-#endif
-
-#ifndef FORMIDARRAY
-    #define FORMIDARRAY unsigned long *
-#endif
-
-#ifndef MODIDARRAY
-    #define MODIDARRAY ModFile **
-#endif
-
-#ifndef RECORDIDARRAY
-    #define RECORDIDARRAY Record **
-#endif
+typedef uint32_t FORMID;
 
 #ifndef FIELD_IDENTIFIERS
-    #define FIELD_IDENTIFIERS const UINT32 FieldID, const UINT32 ListIndex, const UINT32 ListFieldID, const UINT32 ListX2Index, const UINT32 ListX2FieldID, const UINT32 ListX3Index, const UINT32 ListX3FieldID
+    #define FIELD_IDENTIFIERS const uint32_t FieldID, const uint32_t ListIndex, const uint32_t ListFieldID, const uint32_t ListX2Index, const uint32_t ListX2FieldID, const uint32_t ListX3Index, const uint32_t ListX3FieldID
 #endif
 
 /**
@@ -195,3 +169,7 @@ typedef enum {
     fSetAsOverride     = 0x00000001,  ///< Create the record as an override of the source record.
     fCopyWinningParent = 0x00000002   ///< Populate the record using data from the winning parent.
 } createFlags;
+
+#ifdef __cplusplus
+}
+#endif

@@ -158,7 +158,7 @@ bool CELLRecord::VisitFormIDs(FormIDOp &op)
         }
     if(XCCM.IsLoaded())
         op.Accept(XCCM.value);
-    for(UINT32 ListIndex = 0; ListIndex < XCLR.value.size(); ListIndex++)
+    for(uint32_t ListIndex = 0; ListIndex < XCLR.value.size(); ListIndex++)
         op.Accept(XCLR.value[ListIndex]);
 
     if(XCWT.IsLoaded())
@@ -237,12 +237,12 @@ void CELLRecord::IsBehaveLikeExterior(bool value)
     SETBIT(DATA.value, fBehaveLikeExterior, value);
     }
 
-bool CELLRecord::IsFlagMask(UINT8 Mask, bool Exact)
+bool CELLRecord::IsFlagMask(uint8_t Mask, bool Exact)
     {
     return Exact ? ((DATA.value & Mask) == Mask) : ((DATA.value & Mask) != 0);
     }
 
-void CELLRecord::SetFlagMask(UINT8 Mask)
+void CELLRecord::SetFlagMask(uint8_t Mask)
     {
     DATA.value = Mask;
     }
@@ -292,46 +292,46 @@ void CELLRecord::IsDungeonMusic(bool value)
         XCMT.value = eDefault;
     }
 
-bool CELLRecord::IsMusicType(UINT8 Type)
+bool CELLRecord::IsMusicType(uint8_t Type)
     {
     XCMT.Load();
     return XCMT.value == Type;
     }
 
-void CELLRecord::SetMusicType(UINT8 Type)
+void CELLRecord::SetMusicType(uint8_t Type)
     {
     XCMT.Load();
     XCMT.value = Type;
     }
 
-UINT32 CELLRecord::GetType()
+uint32_t CELLRecord::GetType()
     {
     return REV32(CELL);
     }
 
-STRING CELLRecord::GetStrType()
+char * CELLRecord::GetStrType()
     {
     return "CELL";
     }
 
-SINT32 CELLRecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk)
+int32_t CELLRecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk)
     {
-    UINT32 subType = 0;
-    UINT32 subSize = 0;
+    uint32_t subType = 0;
+    uint32_t subSize = 0;
     while(buffer < end_buffer){
-        subType = *(UINT32 *)buffer;
+        subType = *(uint32_t *)buffer;
         buffer += 4;
         switch(subType)
             {
             case REV32(XXXX):
                 buffer += 2;
-                subSize = *(UINT32 *)buffer;
+                subSize = *(uint32_t *)buffer;
                 buffer += 4;
-                subType = *(UINT32 *)buffer;
+                subType = *(uint32_t *)buffer;
                 buffer += 6;
                 break;
             default:
-                subSize = *(UINT16 *)buffer;
+                subSize = *(uint16_t *)buffer;
                 buffer += 2;
                 break;
             }
@@ -392,7 +392,7 @@ SINT32 CELLRecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer,
     return 0;
     }
 
-SINT32 CELLRecord::Unload()
+int32_t CELLRecord::Unload()
     {
     IsChanged(false);
     IsLoaded(false);
@@ -410,7 +410,7 @@ SINT32 CELLRecord::Unload()
     return 1;
     }
 
-SINT32 CELLRecord::WriteRecord(FileWriter &writer)
+int32_t CELLRecord::WriteRecord(FileWriter &writer)
     {
     WRITE(EDID);
 
@@ -504,15 +504,15 @@ bool CELLRecord::deep_equals(Record *master, RecordOp &read_self, RecordOp &read
             return false;
         }
 
-    for(UINT32 ListIndex = 0; ListIndex < ACHR.size(); ++ListIndex)
+    for(uint32_t ListIndex = 0; ListIndex < ACHR.size(); ++ListIndex)
         if(identical_records.count(ACHR[ListIndex]) == 0)
             return false;
 
-    for(UINT32 ListIndex = 0; ListIndex < ACRE.size(); ++ListIndex)
+    for(uint32_t ListIndex = 0; ListIndex < ACRE.size(); ++ListIndex)
         if(identical_records.count(ACRE[ListIndex]) == 0)
             return false;
 
-    for(UINT32 ListIndex = 0; ListIndex < REFR.size(); ++ListIndex)
+    for(uint32_t ListIndex = 0; ListIndex < REFR.size(); ++ListIndex)
         if(identical_records.count(REFR[ListIndex]) == 0)
             return false;
 
@@ -521,13 +521,13 @@ bool CELLRecord::deep_equals(Record *master, RecordOp &read_self, RecordOp &read
     identical_records.erase(PGRD);
     identical_records.erase(LAND);
 
-    for(UINT32 ListIndex = 0; ListIndex < ACHR.size(); ++ListIndex)
+    for(uint32_t ListIndex = 0; ListIndex < ACHR.size(); ++ListIndex)
         identical_records.erase(ACHR[ListIndex]);
 
-    for(UINT32 ListIndex = 0; ListIndex < ACRE.size(); ++ListIndex)
+    for(uint32_t ListIndex = 0; ListIndex < ACRE.size(); ++ListIndex)
         identical_records.erase(ACRE[ListIndex]);
 
-    for(UINT32 ListIndex = 0; ListIndex < REFR.size(); ++ListIndex)
+    for(uint32_t ListIndex = 0; ListIndex < REFR.size(); ++ListIndex)
         identical_records.erase(REFR[ListIndex]);
 
     return true;

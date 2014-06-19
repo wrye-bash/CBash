@@ -73,32 +73,32 @@ FragmentSCEN::~FragmentSCEN()
 {
     delete beginFragment;
     delete endFragment;
-    for (UINT16 i = 0; i < phases.size(); ++i)
+    for (uint16_t i = 0; i < phases.size(); ++i)
         delete phases[i];
 }
 
 void FragmentSCEN::Read(unsigned char *&buffer, const bool &CompressedOnDisk)
 {
     // unk1
-    unk1 = *(UINT8 *)buffer;
+    unk1 = *(uint8_t *)buffer;
     buffer += 1;
     // flags
-    UINT8 flags = *(UINT8 *)buffer;
+    uint8_t flags = *(uint8_t *)buffer;
     buffer += 1;
     // fileName
-    UINT16 nameSize = *(UINT16 *)buffer;
+    uint16_t nameSize = *(uint16_t *)buffer;
     buffer += 2;
     fileName.Read(buffer, nameSize, CompressedOnDisk);
     // beginFragment
     if (flags & fHasBegin)
     {
         beginFragment = new GenFragment;
-        beginFragment->unk1 = *(UINT8 *)buffer;
+        beginFragment->unk1 = *(uint8_t *)buffer;
         buffer += 1;
-        nameSize = *(UINT16 *)buffer;
+        nameSize = *(uint16_t *)buffer;
         buffer += 2;
         beginFragment->scriptName.Read(buffer, nameSize, CompressedOnDisk);
-        nameSize = *(UINT16 *)buffer;
+        nameSize = *(uint16_t *)buffer;
         buffer += 2;
         beginFragment->fragmentName.Read(buffer, nameSize, CompressedOnDisk);
     }
@@ -108,62 +108,62 @@ void FragmentSCEN::Read(unsigned char *&buffer, const bool &CompressedOnDisk)
     if (flags & fHasEnd)
     {
         endFragment = new GenFragment;
-        endFragment->unk1 = *(UINT8 *)buffer;
+        endFragment->unk1 = *(uint8_t *)buffer;
         buffer += 1;
-        nameSize = *(UINT16 *)buffer;
+        nameSize = *(uint16_t *)buffer;
         buffer += 2;
         endFragment->scriptName.Read(buffer, nameSize, CompressedOnDisk);
-        nameSize = *(UINT16 *)buffer;
+        nameSize = *(uint16_t *)buffer;
         buffer += 2;
         endFragment->fragmentName.Read(buffer, nameSize, CompressedOnDisk);
     }
     else
         endFragment = NULL;
     // phaseCount
-    UINT16 count = *(UINT16 *)buffer;
+    uint16_t count = *(uint16_t *)buffer;
     buffer += 2;
     // phases
-    for (UINT16 i = 0; i < count; ++i)
+    for (uint16_t i = 0; i < count; ++i)
     {
         FragmentPhase *f = new FragmentPhase;
-        f->flags = *(UINT8 *)buffer;
+        f->flags = *(uint8_t *)buffer;
         buffer += 1;
-        f->index = *(UINT8 *)buffer;
+        f->index = *(uint8_t *)buffer;
         buffer += 1;
-        f->unk1 = *(UINT32 *)buffer;
+        f->unk1 = *(uint32_t *)buffer;
         buffer += 4;
-        nameSize = *(UINT16 *)buffer;
+        nameSize = *(uint16_t *)buffer;
         buffer += 2;
         f->scriptName.Read(buffer, nameSize, CompressedOnDisk);
-        nameSize = *(UINT16 *)buffer;
+        nameSize = *(uint16_t *)buffer;
         buffer += 2;
         f->fragmentName.Read(buffer, nameSize, CompressedOnDisk);
         phases.push_back(f);
     }
 }
 
-UINT32 FragmentSCEN::GetSize() const
+uint32_t FragmentSCEN::GetSize() const
 {
     // unk1 + flags + fileNameSize + phaseCount
-    UINT32 total = sizeof(UINT8) + sizeof(UINT8) + sizeof(UINT16) + sizeof(UINT16);
+    uint32_t total = sizeof(uint8_t) + sizeof(uint8_t) + sizeof(uint16_t) + sizeof(uint16_t);
     total += fileName.GetSize();
     if (beginFragment != NULL)
     {
         // unk1 + scriptNameSize + fragmentNameSize
-        total += sizeof(UINT8) + sizeof(UINT16) + sizeof(UINT16);
+        total += sizeof(uint8_t) + sizeof(uint16_t) + sizeof(uint16_t);
         total += beginFragment->scriptName.GetSize();
         total += beginFragment->fragmentName.GetSize();
     }
     if (endFragment != NULL)
     {
-        total += sizeof(UINT8) + sizeof(UINT16) + sizeof(UINT16);
+        total += sizeof(uint8_t) + sizeof(uint16_t) + sizeof(uint16_t);
         total += endFragment->scriptName.GetSize();
         total += endFragment->fragmentName.GetSize();
     }
-    for (UINT16 i = 0; i < phases.size(); ++i)
+    for (uint16_t i = 0; i < phases.size(); ++i)
     {
         // flags + index + unk1 + scriptNameSize + fragmentNameSize
-        total += sizeof(UINT8) + sizeof(UINT8) + sizeof(UINT32) + sizeof(UINT16) + sizeof(UINT16);
+        total += sizeof(uint8_t) + sizeof(uint8_t) + sizeof(uint32_t) + sizeof(uint16_t) + sizeof(uint16_t);
         total += phases[i]->scriptName.GetSize();
         total += phases[i]->fragmentName.GetSize();
     }
@@ -173,23 +173,23 @@ UINT32 FragmentSCEN::GetSize() const
 void FragmentSCEN::Write(FileWriter &writer) const
 {
     writer.record_write(&unk1, sizeof(unk1));
-    UINT8 flags = ((beginFragment != NULL ? fHasBegin : 0) |
+    uint8_t flags = ((beginFragment != NULL ? fHasBegin : 0) |
                    (endFragment != NULL ? fHasEnd : 0));
     writer.record_write(&flags, sizeof(flags));
     fileName.Write16(writer);
     if (beginFragment != NULL)
     {
-        writer.record_write(&(beginFragment->unk1), sizeof(UINT8));
+        writer.record_write(&(beginFragment->unk1), sizeof(uint8_t));
         beginFragment->scriptName.Write16(writer);
         beginFragment->fragmentName.Write16(writer);
     }
-    UINT16 count = phases.size();
+    uint16_t count = phases.size();
     writer.record_write(&count, sizeof(count));
-    for (UINT16 i = 0; i < count; ++i)
+    for (uint16_t i = 0; i < count; ++i)
     {
-        writer.record_write(&(phases[i]->flags), sizeof(UINT8));
-        writer.record_write(&(phases[i]->index), sizeof(UINT8));
-        writer.record_write(&(phases[i]->unk1), sizeof(UINT32));
+        writer.record_write(&(phases[i]->flags), sizeof(uint8_t));
+        writer.record_write(&(phases[i]->index), sizeof(uint8_t));
+        writer.record_write(&(phases[i]->unk1), sizeof(uint32_t));
         phases[i]->scriptName.Write16(writer);
         phases[i]->fragmentName.Write16(writer);
     }
@@ -219,7 +219,7 @@ bool FragmentSCEN::equals(const Fragments *other) const
         // phases
         if (phases.size() != o->phases.size())
             return false;
-        for (UINT16 i = 0; i < phases.size(); ++i)
+        for (uint16_t i = 0; i < phases.size(); ++i)
             if (*(phases[i]) != *(o->phases[i]))
                 return false;
         return true;
@@ -262,11 +262,11 @@ FragmentSCEN & FragmentSCEN::operator = (const FragmentSCEN &other)
     else
         endFragment = NULL;
 
-    for (UINT16 i = 0; i < phases.size(); ++i)
+    for (uint16_t i = 0; i < phases.size(); ++i)
         delete phases[i];
     phases.clear();
 
-    for (UINT16 i = 0; i < other.phases.size(); ++i)
+    for (uint16_t i = 0; i < other.phases.size(); ++i)
     {
         phases.push_back(new FragmentPhase);
         *(phases.back()) = *(other.phases[i]);

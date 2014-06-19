@@ -111,12 +111,12 @@ void ARMORecord::FNVSNAM::IsWalkArmor(bool value)
     type = value ? eWalkArmor : eWalk;
     }
 
-bool ARMORecord::FNVSNAM::IsType(UINT32 Type)
+bool ARMORecord::FNVSNAM::IsType(uint32_t Type)
     {
     return type == Type;
     }
 
-void ARMORecord::FNVSNAM::SetType(UINT32 Type)
+void ARMORecord::FNVSNAM::SetType(uint32_t Type)
     {
     type = Type;
     }
@@ -200,22 +200,22 @@ bool ARMORecord::VisitFormIDs(FormIDOp &op)
         op.Accept(EITM.value);
     if(MODL.IsLoaded())
         {
-        for(UINT32 x = 0; x < MODL->Textures.MODS.size(); x++)
+        for(uint32_t x = 0; x < MODL->Textures.MODS.size(); x++)
             op.Accept(MODL->Textures.MODS[x]->texture);
         }
     if(MOD2.IsLoaded())
         {
-        for(UINT32 x = 0; x < MOD2->Textures.MODS.size(); x++)
+        for(uint32_t x = 0; x < MOD2->Textures.MODS.size(); x++)
             op.Accept(MOD2->Textures.MODS[x]->texture);
         }
     if(MOD3.IsLoaded())
         {
-        for(UINT32 x = 0; x < MOD3->Textures.MODS.size(); x++)
+        for(uint32_t x = 0; x < MOD3->Textures.MODS.size(); x++)
             op.Accept(MOD3->Textures.MODS[x]->texture);
         }
     if(MOD4.IsLoaded())
         {
-        for(UINT32 x = 0; x < MOD4->Textures.MODS.size(); x++)
+        for(uint32_t x = 0; x < MOD4->Textures.MODS.size(); x++)
             op.Accept(MOD4->Textures.MODS[x]->texture);
         }
     if(REPL.IsLoaded())
@@ -226,7 +226,7 @@ bool ARMORecord::VisitFormIDs(FormIDOp &op)
         op.Accept(YNAM.value);
     if(ZNAM.IsLoaded())
         op.Accept(ZNAM.value);
-    for(UINT32 x = 0; x < Sounds.value.size(); x++)
+    for(uint32_t x = 0; x < Sounds.value.size(); x++)
         op.Accept(Sounds.value[x]->sound);
     if(TNAM.IsLoaded())
         op.Accept(TNAM.value);
@@ -434,12 +434,12 @@ void ARMORecord::IsBodyAddon3(bool value)
     SETBIT(BMDT.value.bipedFlags, fIsBodyAddon3, value);
     }
 
-bool ARMORecord::IsFlagMask(UINT32 Mask, bool Exact)
+bool ARMORecord::IsFlagMask(uint32_t Mask, bool Exact)
     {
     return Exact ? ((BMDT.value.bipedFlags & Mask) == Mask) : ((BMDT.value.bipedFlags & Mask) != 0);
     }
 
-void ARMORecord::SetFlagMask(UINT32 Mask)
+void ARMORecord::SetFlagMask(uint32_t Mask)
     {
     BMDT.value.bipedFlags = Mask;
     }
@@ -524,12 +524,12 @@ void ARMORecord::IsHeavy(bool value)
     SETBIT(BMDT.value.generalFlags, fIsHeavy, value);
     }
 
-bool ARMORecord::IsExtraFlagMask(UINT8 Mask, bool Exact)
+bool ARMORecord::IsExtraFlagMask(uint8_t Mask, bool Exact)
     {
     return Exact ? ((BMDT.value.generalFlags & Mask) == Mask) : ((BMDT.value.generalFlags & Mask) != 0);
     }
 
-void ARMORecord::SetExtraFlagMask(UINT8 Mask)
+void ARMORecord::SetExtraFlagMask(uint8_t Mask)
     {
     BMDT.value.generalFlags = Mask;
     }
@@ -544,12 +544,12 @@ void ARMORecord::IsModulatesVoice(bool value)
     SETBIT(DNAM.value.flags, fIsModulatesVoice, value);
     }
 
-bool ARMORecord::IsVoiceFlagMask(UINT16 Mask, bool Exact)
+bool ARMORecord::IsVoiceFlagMask(uint16_t Mask, bool Exact)
     {
     return Exact ? ((DNAM.value.flags & Mask) == Mask) : ((DNAM.value.flags & Mask) != 0);
     }
 
-void ARMORecord::SetVoiceFlagMask(UINT16 Mask)
+void ARMORecord::SetVoiceFlagMask(uint16_t Mask)
     {
     DNAM.value.flags = Mask;
     }
@@ -704,12 +704,12 @@ void ARMORecord::IsAlcohol(bool value)
     ETYP.value = value ? eAlcohol : eNone;
     }
 
-bool ARMORecord::IsEquipmentType(SINT32 Type)
+bool ARMORecord::IsEquipmentType(int32_t Type)
     {
     return ETYP.value == Type;
     }
 
-void ARMORecord::SetEquipmentType(SINT32 Type)
+void ARMORecord::SetEquipmentType(int32_t Type)
     {
     ETYP.value = Type;
     }
@@ -734,44 +734,44 @@ void ARMORecord::IsOverridingSounds(bool value)
     BNAM.value = value ? eOverridingSounds : eNotOverridingSounds;
     }
 
-bool ARMORecord::IsOverrideType(UINT32 Type)
+bool ARMORecord::IsOverrideType(uint32_t Type)
     {
     return BNAM.value == Type;
     }
 
-void ARMORecord::SetOverrideType(UINT32 Type)
+void ARMORecord::SetOverrideType(uint32_t Type)
     {
     BNAM.value = Type;
     }
 
-UINT32 ARMORecord::GetType()
+uint32_t ARMORecord::GetType()
     {
     return REV32(ARMO);
     }
 
-STRING ARMORecord::GetStrType()
+char * ARMORecord::GetStrType()
     {
     return "ARMO";
     }
 
-SINT32 ARMORecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk)
+int32_t ARMORecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk)
     {
-    UINT32 subType = 0;
-    UINT32 subSize = 0;
+    uint32_t subType = 0;
+    uint32_t subSize = 0;
     while(buffer < end_buffer){
-        subType = *(UINT32 *)buffer;
+        subType = *(uint32_t *)buffer;
         buffer += 4;
         switch(subType)
             {
             case REV32(XXXX):
                 buffer += 2;
-                subSize = *(UINT32 *)buffer;
+                subSize = *(uint32_t *)buffer;
                 buffer += 4;
-                subType = *(UINT32 *)buffer;
+                subType = *(uint32_t *)buffer;
                 buffer += 6;
                 break;
             default:
-                subSize = *(UINT16 *)buffer;
+                subSize = *(uint16_t *)buffer;
                 buffer += 2;
                 break;
             }
@@ -909,7 +909,7 @@ SINT32 ARMORecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer,
     return 0;
     }
 
-SINT32 ARMORecord::Unload()
+int32_t ARMORecord::Unload()
     {
     IsChanged(false);
     IsLoaded(false);
@@ -941,7 +941,7 @@ SINT32 ARMORecord::Unload()
     return 1;
     }
 
-SINT32 ARMORecord::WriteRecord(FileWriter &writer)
+int32_t ARMORecord::WriteRecord(FileWriter &writer)
     {
     WRITE(EDID);
     WRITE(OBND);

@@ -54,7 +54,7 @@ class ASTPRecord : public TES5Record // Association Type Record
         StringRecord FPRT;                  // Female Parent
         StringRecord MCHT;                  // Male Child
         StringRecord FCHT;                  // Female Child
-        ReqSimpleSubRecord<UINT32> DATA;    // flags
+        ReqSimpleSubRecord<uint32_t> DATA;    // flags
 
         ASTPRecord(unsigned char *_recData=NULL);
         ASTPRecord(ASTPRecord *srcRecord);
@@ -62,20 +62,20 @@ class ASTPRecord : public TES5Record // Association Type Record
 
         bool IsRelated() const;
         void IsRelated(bool value);
-        bool IsFlagMask(UINT32 Mask, bool Exact=false) const;
-        void SetFlagMask(UINT32 Mask);
+        bool IsFlagMask(uint32_t Mask, bool Exact=false) const;
+        void SetFlagMask(uint32_t Mask);
 
-        UINT32 GetFieldAttribute(DEFAULTED_FIELD_IDENTIFIERS, UINT32 WhichAttribute=0);
+        uint32_t GetFieldAttribute(DEFAULTED_FIELD_IDENTIFIERS, uint32_t WhichAttribute=0);
         void * GetField(DEFAULTED_FIELD_IDENTIFIERS, void **FieldValues=NULL);
-        bool   SetField(DEFAULTED_FIELD_IDENTIFIERS, void *FieldValue=NULL, UINT32 ArraySize=0);
+        bool   SetField(DEFAULTED_FIELD_IDENTIFIERS, void *FieldValue=NULL, uint32_t ArraySize=0);
         void   DeleteField(DEFAULTED_FIELD_IDENTIFIERS);
 
-        UINT32 GetType();
-        STRING GetStrType();
+        uint32_t GetType();
+        char * GetStrType();
 
-        SINT32 ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk=false);
-        SINT32 Unload();
-        SINT32 WriteRecord(FileWriter &writer);
+        int32_t ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk=false);
+        int32_t Unload();
+        int32_t WriteRecord(FileWriter &writer);
 
         bool operator ==(const ASTPRecord &other) const;
         bool operator !=(const ASTPRecord &other) const;

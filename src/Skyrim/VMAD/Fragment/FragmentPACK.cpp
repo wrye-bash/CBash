@@ -53,25 +53,25 @@ FragmentPACK::~FragmentPACK()
 void FragmentPACK::Read(unsigned char *&buffer, const bool &CompressedOnDisk)
 {
     // unk1
-    unk1 = *(UINT8 *)buffer;
+    unk1 = *(uint8_t *)buffer;
     buffer += 1;
     // flags
-    UINT8 flags = *(UINT8 *)buffer;
+    uint8_t flags = *(uint8_t *)buffer;
     buffer += 1;
     // fileName
-    UINT16 nameSize = *(UINT16 *)buffer;
+    uint16_t nameSize = *(uint16_t *)buffer;
     buffer += 2;
     fileName.Read(buffer, nameSize, CompressedOnDisk);
     // fragments
     if (flags & fHasOnBegin)
     {
         onBegin = new GenFragment;
-        onBegin->unk1 = *(UINT8 *)buffer;
+        onBegin->unk1 = *(uint8_t *)buffer;
         buffer += 1;
-        nameSize = *(UINT16 *)buffer;
+        nameSize = *(uint16_t *)buffer;
         buffer += 2;
         onBegin->scriptName.Read(buffer, nameSize, CompressedOnDisk);
-        nameSize = *(UINT16 *)buffer;
+        nameSize = *(uint16_t *)buffer;
         buffer += 2;
         onBegin->fragmentName.Read(buffer, nameSize, CompressedOnDisk);
     }
@@ -80,12 +80,12 @@ void FragmentPACK::Read(unsigned char *&buffer, const bool &CompressedOnDisk)
     if (flags & fHasOnEnd)
     {
         onEnd = new GenFragment;
-        onEnd->unk1 = *(UINT8 *)buffer;
+        onEnd->unk1 = *(uint8_t *)buffer;
         buffer += 1;
-        nameSize = *(UINT16 *)buffer;
+        nameSize = *(uint16_t *)buffer;
         buffer += 2;
         onEnd->scriptName.Read(buffer, nameSize, CompressedOnDisk);
-        nameSize = *(UINT16 *)buffer;
+        nameSize = *(uint16_t *)buffer;
         buffer += 2;
         onEnd->fragmentName.Read(buffer, nameSize, CompressedOnDisk);
     }
@@ -94,12 +94,12 @@ void FragmentPACK::Read(unsigned char *&buffer, const bool &CompressedOnDisk)
     if (flags  & fHasOnChange)
     {
         onChange = new GenFragment;
-        onChange->unk1 = *(UINT8 *)buffer;
+        onChange->unk1 = *(uint8_t *)buffer;
         buffer += 1;
-        nameSize = *(UINT16 *)buffer;
+        nameSize = *(uint16_t *)buffer;
         buffer += 2;
         onChange->scriptName.Read(buffer, nameSize, CompressedOnDisk);
-        nameSize = *(UINT16 *)buffer;
+        nameSize = *(uint16_t *)buffer;
         buffer += 2;
         onChange->fragmentName.Read(buffer, nameSize, CompressedOnDisk);
     }
@@ -107,27 +107,27 @@ void FragmentPACK::Read(unsigned char *&buffer, const bool &CompressedOnDisk)
         onChange = NULL;
 }
 
-UINT32 FragmentPACK::GetSize() const
+uint32_t FragmentPACK::GetSize() const
 {
     // unk1 + flags + fileNameSize
-    UINT32 total = sizeof(UINT8) + sizeof(UINT8) + sizeof(UINT16);
+    uint32_t total = sizeof(uint8_t) + sizeof(uint8_t) + sizeof(uint16_t);
     total += fileName.GetSize();
     if (onBegin != NULL)
     {
         // unk1 + scriptNameSize + fragmentNameSize
-        total += sizeof(UINT8) + sizeof(UINT16) + sizeof(UINT16);
+        total += sizeof(uint8_t) + sizeof(uint16_t) + sizeof(uint16_t);
         total += onBegin->scriptName.GetSize();
         total += onBegin->fragmentName.GetSize();
     }
     if (onEnd != NULL)
     {
-        total += sizeof(UINT8) + sizeof(UINT16) + sizeof(UINT16);
+        total += sizeof(uint8_t) + sizeof(uint16_t) + sizeof(uint16_t);
         total += onEnd->scriptName.GetSize();
         total += onEnd->fragmentName.GetSize();
     }
     if (onChange != NULL)
     {
-        total += sizeof(UINT8)+sizeof(UINT16)+sizeof(UINT16);
+        total += sizeof(uint8_t)+sizeof(uint16_t)+sizeof(uint16_t);
         total += onChange->scriptName.GetSize();
         total += onChange->fragmentName.GetSize();
     }
@@ -137,7 +137,7 @@ UINT32 FragmentPACK::GetSize() const
 void FragmentPACK::Write(FileWriter &writer) const
 {
     writer.record_write(&unk1, sizeof(unk1));
-    UINT8 flags = ((onBegin != NULL ? fHasOnBegin : 0) |
+    uint8_t flags = ((onBegin != NULL ? fHasOnBegin : 0) |
                    (onEnd != NULL ? fHasOnEnd : 0) |
                    (onChange != NULL ? fHasOnChange : 0)
                    );
@@ -145,19 +145,19 @@ void FragmentPACK::Write(FileWriter &writer) const
     fileName.Write16(writer);
     if (onBegin != NULL)
     {
-        writer.record_write(&(onBegin->unk1), sizeof(UINT8));
+        writer.record_write(&(onBegin->unk1), sizeof(uint8_t));
         onBegin->scriptName.Write16(writer);
         onBegin->fragmentName.Write16(writer);
     }
     if (onEnd != NULL)
     {
-        writer.record_write(&(onEnd->unk1), sizeof(UINT8));
+        writer.record_write(&(onEnd->unk1), sizeof(uint8_t));
         onEnd->scriptName.Write16(writer);
         onEnd->fragmentName.Write16(writer);
     }
     if (onChange != NULL)
     {
-        writer.record_write(&(onChange->unk1), sizeof(UINT8));
+        writer.record_write(&(onChange->unk1), sizeof(uint8_t));
         onChange->scriptName.Write16(writer);
         onChange->fragmentName.Write16(writer);
     }

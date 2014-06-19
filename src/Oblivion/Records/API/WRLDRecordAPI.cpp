@@ -38,7 +38,7 @@
 
 namespace Ob
 {
-UINT32 WRLDRecord::GetFieldAttribute(FIELD_IDENTIFIERS, UINT32 WhichAttribute)
+uint32_t WRLDRecord::GetFieldAttribute(FIELD_IDENTIFIERS, uint32_t WhichAttribute)
     {
     switch(FieldID)
         {
@@ -107,7 +107,7 @@ UINT32 WRLDRecord::GetFieldAttribute(FIELD_IDENTIFIERS, UINT32 WhichAttribute)
                 case 0: //fieldType
                     return SUBRECORD_ARRAY_FIELD;
                 case 1: //fieldSize
-                    return (UINT32)CELLS.size();
+                    return (uint32_t)CELLS.size();
                 default:
                     return UNKNOWN_FIELD;
                 }
@@ -171,7 +171,7 @@ void * WRLDRecord::GetField(FIELD_IDENTIFIERS, void **FieldValues)
         case 24: //CELL
             return CELL;
         case 25: //CELLS
-            for(UINT32 p = 0;p < (UINT32)CELLS.size();++p)
+            for(uint32_t p = 0;p < (uint32_t)CELLS.size();++p)
                 ((RECORDIDARRAY)FieldValues)[p] = CELLS[p];
             return NULL;
         default:
@@ -180,21 +180,21 @@ void * WRLDRecord::GetField(FIELD_IDENTIFIERS, void **FieldValues)
     return NULL;
     }
 
-bool WRLDRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
+bool WRLDRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, uint32_t ArraySize)
     {
     switch(FieldID)
         {
         case 1: //flags1
-            SetHeaderFlagMask(*(UINT32 *)FieldValue);
+            SetHeaderFlagMask(*(uint32_t *)FieldValue);
             break;
         case 3: //flags2
-            SetHeaderUnknownFlagMask(*(UINT32 *)FieldValue);
+            SetHeaderUnknownFlagMask(*(uint32_t *)FieldValue);
             break;
         case 4: //eid
-            EDID.Copy((STRING)FieldValue);
+            EDID.Copy((char *)FieldValue);
             break;
         case 5: //full
-            FULL.Copy((STRING)FieldValue);
+            FULL.Copy((char *)FieldValue);
             break;
         case 6: //parent
             WNAM.value = *(FORMID *)FieldValue;
@@ -206,49 +206,49 @@ bool WRLDRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             NAM2.value = *(FORMID *)FieldValue;
             return true;
         case 9: //mapPath
-            ICON.Copy((STRING)FieldValue);
+            ICON.Copy((char *)FieldValue);
             break;
         case 10: //dimX
             MNAM.Load();
-            MNAM->dimX = *(SINT32 *)FieldValue;
+            MNAM->dimX = *(int32_t *)FieldValue;
             break;
         case 11: //dimY
             MNAM.Load();
-            MNAM->dimY = *(SINT32 *)FieldValue;
+            MNAM->dimY = *(int32_t *)FieldValue;
             break;
         case 12: //NWCellX
             MNAM.Load();
-            MNAM->NWCellX = *(SINT16 *)FieldValue;
+            MNAM->NWCellX = *(int16_t *)FieldValue;
             break;
         case 13: //NWCellY
             MNAM.Load();
-            MNAM->NWCellY = *(SINT16 *)FieldValue;
+            MNAM->NWCellY = *(int16_t *)FieldValue;
             break;
         case 14: //SECellX
             MNAM.Load();
-            MNAM->SECellX = *(SINT16 *)FieldValue;
+            MNAM->SECellX = *(int16_t *)FieldValue;
             break;
         case 15: //SECellY
             MNAM.Load();
-            MNAM->SECellY = *(SINT16 *)FieldValue;
+            MNAM->SECellY = *(int16_t *)FieldValue;
             break;
         case 16: //flags
-            DATA.value = *(UINT8 *)FieldValue;
+            DATA.value = *(uint8_t *)FieldValue;
             break;
         case 17: //xMinObjBounds
-            NAM0.value.x = *(FLOAT32 *)FieldValue;
+            NAM0.value.x = *(float *)FieldValue;
             break;
         case 18: //yMinObjBounds
-            NAM0.value.y = *(FLOAT32 *)FieldValue;
+            NAM0.value.y = *(float *)FieldValue;
             break;
         case 19: //xMaxObjBounds
-            NAM9.value.x = *(FLOAT32 *)FieldValue;
+            NAM9.value.x = *(float *)FieldValue;
             break;
         case 20: //yMaxObjBounds
-            NAM9.value.y = *(FLOAT32 *)FieldValue;
+            NAM9.value.y = *(float *)FieldValue;
             break;
         case 21: //musicType
-            SetMusicType(*(UINT32 *)FieldValue);
+            SetMusicType(*(uint32_t *)FieldValue);
             break;
         case 22: //ofst_p
             OFST.Copy((UINT8ARRAY)FieldValue, ArraySize);

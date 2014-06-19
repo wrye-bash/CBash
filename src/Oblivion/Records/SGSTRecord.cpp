@@ -106,41 +106,41 @@ bool SGSTRecord::VisitFormIDs(FormIDOp &op)
     if(SCRI.IsLoaded())
         op.Accept(SCRI.value);
 
-    for(UINT32 ListIndex = 0; ListIndex < Effects.value.size(); ListIndex++)
+    for(uint32_t ListIndex = 0; ListIndex < Effects.value.size(); ListIndex++)
         Effects.value[ListIndex]->VisitFormIDs(op);
 
     return op.Stop();
     }
 
-UINT32 SGSTRecord::GetType()
+uint32_t SGSTRecord::GetType()
     {
     return REV32(SGST);
     }
 
-STRING SGSTRecord::GetStrType()
+char * SGSTRecord::GetStrType()
     {
     return "SGST";
     }
 
-SINT32 SGSTRecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk)
+int32_t SGSTRecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk)
     {
-    UINT32 subType = 0;
-    UINT32 subSize = 0;
+    uint32_t subType = 0;
+    uint32_t subSize = 0;
     bool bNoOBME = true;
     while(buffer < end_buffer){
-        subType = *(UINT32 *)buffer;
+        subType = *(uint32_t *)buffer;
         buffer += 4;
         switch(subType)
             {
             case REV32(XXXX):
                 buffer += 2;
-                subSize = *(UINT32 *)buffer;
+                subSize = *(uint32_t *)buffer;
                 buffer += 4;
-                subType = *(UINT32 *)buffer;
+                subType = *(uint32_t *)buffer;
                 buffer += 6;
                 break;
             default:
-                subSize = *(UINT16 *)buffer;
+                subSize = *(uint16_t *)buffer;
                 buffer += 2;
                 break;
             }
@@ -234,7 +234,7 @@ SINT32 SGSTRecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer,
     return 0;
     }
 
-SINT32 SGSTRecord::Unload()
+int32_t SGSTRecord::Unload()
     {
     IsChanged(false);
     IsLoaded(false);
@@ -249,7 +249,7 @@ SINT32 SGSTRecord::Unload()
     return 1;
     }
 
-SINT32 SGSTRecord::WriteRecord(FileWriter &writer)
+int32_t SGSTRecord::WriteRecord(FileWriter &writer)
     {
     WRITE(EDID);
     if(OBME.IsLoaded())

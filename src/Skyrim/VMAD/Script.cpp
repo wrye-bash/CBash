@@ -52,54 +52,54 @@ status(fDefault)
 
 Script::~Script()
 {
-    for (UINT32 i = 0; i < properties.size(); ++i)
+    for (uint32_t i = 0; i < properties.size(); ++i)
         delete properties[i];
 }
 
 void Script::VisitFormIDs(FormIDOp &op)
 {
-    for (UINT32 i = 0; i < properties.size(); ++i)
+    for (uint32_t i = 0; i < properties.size(); ++i)
     {
         if (properties[i]->type == Property::eObject)
             op.Accept(((PropertyObject *)properties[i])->formId);
         else if (properties[i]->type == Property::eObjectArray)
         {
             PropertyObjectArray *p = reinterpret_cast<PropertyObjectArray *>(properties[i]);
-            for (UINT32 j = 0; j < p->size(); ++j)
+            for (uint32_t j = 0; j < p->size(); ++j)
                 op.Accept((*p)[j].formId);
         }
     }
 }
 
-UINT32 Script::GetSize() const
+uint32_t Script::GetSize() const
 {
     // status + nameSize + propertyCount
-    UINT32 total = sizeof(status) + sizeof(UINT16) + sizeof(UINT16);
+    uint32_t total = sizeof(status) + sizeof(uint16_t) + sizeof(uint16_t);
     total += name.GetSize();
-    for (UINT16 i = 0; i < properties.size(); ++i)
+    for (uint16_t i = 0; i < properties.size(); ++i)
         total += properties[i]->GetSize();
     return total;
 }
 
-void Script::Read(unsigned char *&buffer, const SINT16 &version, const SINT16 &objFormat, const bool &CompressedOnDisk)
+void Script::Read(unsigned char *&buffer, const int16_t &version, const int16_t &objFormat, const bool &CompressedOnDisk)
 {
     // name
-    UINT16 nameSize = *(UINT16 *)buffer;
+    uint16_t nameSize = *(uint16_t *)buffer;
     buffer += 2;
     name.Read(buffer, nameSize, CompressedOnDisk);
     // status
-    status = *(UINT8 *)buffer;
+    status = *(uint8_t *)buffer;
     buffer += 1;
     // propertyCount
-    UINT16 count = *(UINT16 *)buffer;
+    uint16_t count = *(uint16_t *)buffer;
     buffer += 2;
     // properties
-    for (UINT16 i = 0; i < count; ++i)
+    for (uint16_t i = 0; i < count; ++i)
     {
         unsigned char *read_ahead = buffer;
-        nameSize = *(UINT16 *)read_ahead;
+        nameSize = *(uint16_t *)read_ahead;
         read_ahead += 2 + nameSize;
-        UINT8 type = *(UINT8 *)read_ahead;
+        uint8_t type = *(uint8_t *)read_ahead;
         switch (type)
         {
         case Property::eObject:
@@ -153,9 +153,9 @@ void Script::Write(FileWriter &writer)
 {
     name.Write16(writer);
     writer.record_write(&status, sizeof(status));
-    UINT16 count = properties.size();
+    uint16_t count = properties.size();
     writer.record_write(&count, sizeof(count));
-    for (UINT16 i = 0; i < count; ++i)
+    for (uint16_t i = 0; i < count; ++i)
         properties[i]->Write(writer);
 }
 
@@ -164,11 +164,11 @@ Script & Script::operator = (const Script &other)
     name = other.name;
     status = other.status;
 
-    for (UINT32 i = 0; i < properties.size(); ++i)
+    for (uint32_t i = 0; i < properties.size(); ++i)
         delete properties[i];
     properties.clear();
 
-    for (UINT32 i = 0; i < other.properties.size(); ++i)
+    for (uint32_t i = 0; i < other.properties.size(); ++i)
         properties.push_back(other.properties[i]->Copy());
 
     return *this;
@@ -178,7 +178,7 @@ bool Script::operator == (const Script &other) const
 {
     if (properties.size() != other.properties.size())
         return false;
-    for (UINT16 i = 0; i < properties.size(); ++i)
+    for (uint16_t i = 0; i < properties.size(); ++i)
         if (*(properties[i]) != *(other.properties[i]))
             return false;
     return (status == other.status &&

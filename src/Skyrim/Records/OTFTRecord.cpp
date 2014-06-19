@@ -64,41 +64,41 @@ bool OTFTRecord::VisitFormIDs(FormIDOp &op)
     if (!IsLoaded())
         return false;
 
-    for (UINT32 i = 0; i < INAM.value.size(); ++i)
+    for (uint32_t i = 0; i < INAM.value.size(); ++i)
         op.Accept(INAM.value[i]);
 
     return op.Stop();
 }
 
-UINT32 OTFTRecord::GetType()
+uint32_t OTFTRecord::GetType()
 {
     return REV32(OTFT);
 }
 
-STRING OTFTRecord::GetStrType()
+char * OTFTRecord::GetStrType()
 {
     return "OTFT";
 }
 
-SINT32 OTFTRecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk)
+int32_t OTFTRecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk)
 {
-    UINT32 subType = 0;
-    UINT32 subSize = 0;
+    uint32_t subType = 0;
+    uint32_t subSize = 0;
     while(buffer < end_buffer)
     {
-        subType = *(UINT32 *)buffer;
+        subType = *(uint32_t *)buffer;
         buffer += 4;
         switch(subType)
         {
         case REV32(XXXX):
             buffer += 2;
-            subSize = *(UINT32 *)buffer;
+            subSize = *(uint32_t *)buffer;
             buffer += 4;
-            subType = *(UINT32 *)buffer;
+            subType = *(uint32_t *)buffer;
             buffer += 6;
             break;
         default:
-            subSize = *(UINT16 *)buffer;
+            subSize = *(uint16_t *)buffer;
             buffer += 2;
             break;
         }
@@ -123,7 +123,7 @@ SINT32 OTFTRecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer,
     return 0;
 }
 
-SINT32 OTFTRecord::Unload()
+int32_t OTFTRecord::Unload()
 {
     IsLoaded(false);
     IsChanged(false);
@@ -132,7 +132,7 @@ SINT32 OTFTRecord::Unload()
     return 1;
 }
 
-SINT32 OTFTRecord::WriteRecord(FileWriter &writer)
+int32_t OTFTRecord::WriteRecord(FileWriter &writer)
 {
     WRITE(EDID);
     WRITE(INAM);

@@ -38,7 +38,7 @@
 
 namespace FNV
 {
-UINT32 NAVIRecord::GetFieldAttribute(FIELD_IDENTIFIERS, UINT32 WhichAttribute)
+uint32_t NAVIRecord::GetFieldAttribute(FIELD_IDENTIFIERS, uint32_t WhichAttribute)
     {
     switch(FieldID)
         {
@@ -84,7 +84,7 @@ UINT32 NAVIRecord::GetFieldAttribute(FIELD_IDENTIFIERS, UINT32 WhichAttribute)
                     case 0: //fieldType
                         return LIST_FIELD;
                     case 1: //fieldSize
-                        return (UINT32)NVMI.value.size();
+                        return (uint32_t)NVMI.value.size();
                     default:
                         return UNKNOWN_FIELD;
                     }
@@ -138,7 +138,7 @@ UINT32 NAVIRecord::GetFieldAttribute(FIELD_IDENTIFIERS, UINT32 WhichAttribute)
                     case 0: //fieldType
                         return LIST_FIELD;
                     case 1: //fieldSize
-                        return (UINT32)NVCI.value.size();
+                        return (uint32_t)NVCI.value.size();
                     default:
                         return UNKNOWN_FIELD;
                     }
@@ -158,7 +158,7 @@ UINT32 NAVIRecord::GetFieldAttribute(FIELD_IDENTIFIERS, UINT32 WhichAttribute)
                         case 0: //fieldType
                             return FORMID_ARRAY_FIELD;
                         case 1: //fieldSize
-                            return (UINT32)NVCI.value[ListIndex]->unknown2.size();
+                            return (uint32_t)NVCI.value[ListIndex]->unknown2.size();
                         default:
                             return UNKNOWN_FIELD;
                         }
@@ -169,7 +169,7 @@ UINT32 NAVIRecord::GetFieldAttribute(FIELD_IDENTIFIERS, UINT32 WhichAttribute)
                         case 0: //fieldType
                             return FORMID_ARRAY_FIELD;
                         case 1: //fieldSize
-                            return (UINT32)NVCI.value[ListIndex]->unknown3.size();
+                            return (uint32_t)NVCI.value[ListIndex]->unknown3.size();
                         default:
                             return UNKNOWN_FIELD;
                         }
@@ -180,7 +180,7 @@ UINT32 NAVIRecord::GetFieldAttribute(FIELD_IDENTIFIERS, UINT32 WhichAttribute)
                         case 0: //fieldType
                             return FORMID_ARRAY_FIELD;
                         case 1: //fieldSize
-                            return (UINT32)NVCI.value[ListIndex]->doors.size();
+                            return (uint32_t)NVCI.value[ListIndex]->doors.size();
                         default:
                             return UNKNOWN_FIELD;
                         }
@@ -266,12 +266,12 @@ void * NAVIRecord::GetField(FIELD_IDENTIFIERS, void **FieldValues)
     return NULL;
     }
 
-bool NAVIRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
+bool NAVIRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, uint32_t ArraySize)
     {
     switch(FieldID)
         {
         case 1: //flags1
-            SetHeaderFlagMask(*(UINT32 *)FieldValue);
+            SetHeaderFlagMask(*(uint32_t *)FieldValue);
             break;
         case 3: //versionControl1
             if(ArraySize != 4)
@@ -282,10 +282,10 @@ bool NAVIRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             ((UINT8ARRAY)&flagsUnk)[3] = ((UINT8ARRAY)FieldValue)[3];
             break;
         case 4: //eid
-            EDID.Copy((STRING)FieldValue);
+            EDID.Copy((char *)FieldValue);
             break;
         case 5: //formVersion
-            formVersion = *(UINT16 *)FieldValue;
+            formVersion = *(uint16_t *)FieldValue;
             break;
         case 6: //versionControl2
             if(ArraySize != 2)
@@ -294,7 +294,7 @@ bool NAVIRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             versionControl2[1] = ((UINT8ARRAY)FieldValue)[1];
             break;
         case 7: //version
-            NVER.value = *(UINT32 *)FieldValue;
+            NVER.value = *(uint32_t *)FieldValue;
             break;
         case 8: //NVMI
             if(ListFieldID == 0) //NVMISize
@@ -323,10 +323,10 @@ bool NAVIRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
                     NVMI.value[ListIndex]->location = *(FORMID *)FieldValue;
                     return true;
                 case 4: //xGrid
-                    NVMI.value[ListIndex]->xGrid = *(SINT16 *)FieldValue;
+                    NVMI.value[ListIndex]->xGrid = *(int16_t *)FieldValue;
                     break;
                 case 5: //yGrid
-                    NVMI.value[ListIndex]->yGrid = *(SINT16 *)FieldValue;
+                    NVMI.value[ListIndex]->yGrid = *(int16_t *)FieldValue;
                     break;
                 case 6: //unknown2_p
                     //Not recommended...would make read only, but required for copying one NVMI over another
@@ -356,17 +356,17 @@ bool NAVIRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
                     return true;
                 case 2: //unknown2
                     NVCI.value[ListIndex]->unknown2.resize(ArraySize);
-                    for(UINT32 x = 0; x < ArraySize; x++)
+                    for(uint32_t x = 0; x < ArraySize; x++)
                         NVCI.value[ListIndex]->unknown2[x] = ((FORMIDARRAY)FieldValue)[x];
                     return true;
                 case 3: //unknown3
                     NVCI.value[ListIndex]->unknown3.resize(ArraySize);
-                    for(UINT32 x = 0; x < ArraySize; x++)
+                    for(uint32_t x = 0; x < ArraySize; x++)
                         NVCI.value[ListIndex]->unknown3[x] = ((FORMIDARRAY)FieldValue)[x];
                     return true;
                 case 4: //doors
                     NVCI.value[ListIndex]->doors.resize(ArraySize);
-                    for(UINT32 x = 0; x < ArraySize; x++)
+                    for(uint32_t x = 0; x < ArraySize; x++)
                         NVCI.value[ListIndex]->doors[x] = ((FORMIDARRAY)FieldValue)[x];
                     return true;
                 default:

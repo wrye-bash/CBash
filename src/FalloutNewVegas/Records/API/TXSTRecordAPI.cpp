@@ -38,7 +38,7 @@
 
 namespace FNV
 {
-UINT32 TXSTRecord::GetFieldAttribute(FIELD_IDENTIFIERS, UINT32 WhichAttribute)
+uint32_t TXSTRecord::GetFieldAttribute(FIELD_IDENTIFIERS, uint32_t WhichAttribute)
     {
     switch(FieldID)
         {
@@ -232,12 +232,12 @@ void * TXSTRecord::GetField(FIELD_IDENTIFIERS, void **FieldValues)
     return NULL;
     }
 
-bool TXSTRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
+bool TXSTRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, uint32_t ArraySize)
     {
     switch(FieldID)
         {
         case 1: //flags1
-            SetHeaderFlagMask(*(UINT32 *)FieldValue);
+            SetHeaderFlagMask(*(uint32_t *)FieldValue);
             break;
         case 3: //versionControl1
             if(ArraySize != 4)
@@ -248,10 +248,10 @@ bool TXSTRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             ((UINT8ARRAY)&flagsUnk)[3] = ((UINT8ARRAY)FieldValue)[3];
             break;
         case 4: //eid
-            EDID.Copy((STRING)FieldValue);
+            EDID.Copy((char *)FieldValue);
             break;
         case 5: //formVersion
-            formVersion = *(UINT16 *)FieldValue;
+            formVersion = *(uint16_t *)FieldValue;
             break;
         case 6: //versionControl2
             if(ArraySize != 2)
@@ -260,76 +260,76 @@ bool TXSTRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             versionControl2[1] = ((UINT8ARRAY)FieldValue)[1];
             break;
         case 7: //boundX1
-            OBND.value.x1 = *(SINT16 *)FieldValue;
+            OBND.value.x1 = *(int16_t *)FieldValue;
             break;
         case 8: //boundY1
-            OBND.value.y1 = *(SINT16 *)FieldValue;
+            OBND.value.y1 = *(int16_t *)FieldValue;
             break;
         case 9: //boundZ1
-            OBND.value.z1 = *(SINT16 *)FieldValue;
+            OBND.value.z1 = *(int16_t *)FieldValue;
             break;
         case 10: //boundX2
-            OBND.value.x2 = *(SINT16 *)FieldValue;
+            OBND.value.x2 = *(int16_t *)FieldValue;
             break;
         case 11: //boundY2
-            OBND.value.y2 = *(SINT16 *)FieldValue;
+            OBND.value.y2 = *(int16_t *)FieldValue;
             break;
         case 12: //boundZ2
-            OBND.value.z2 = *(SINT16 *)FieldValue;
+            OBND.value.z2 = *(int16_t *)FieldValue;
             break;
         case 13: //baseImageOrTransparency
-            TX00.Copy((STRING)FieldValue);
+            TX00.Copy((char *)FieldValue);
             break;
         case 14: //normalMapOrSpecular
-            TX01.Copy((STRING)FieldValue);
+            TX01.Copy((char *)FieldValue);
             break;
         case 15: //envMapMaskOrUnk
-            TX02.Copy((STRING)FieldValue);
+            TX02.Copy((char *)FieldValue);
             break;
         case 16: //glowMapOrUnused
-            TX03.Copy((STRING)FieldValue);
+            TX03.Copy((char *)FieldValue);
             break;
         case 17: //parallaxMapOrUnused
-            TX04.Copy((STRING)FieldValue);
+            TX04.Copy((char *)FieldValue);
             break;
         case 18: //envMapOrUnused
-            TX05.Copy((STRING)FieldValue);
+            TX05.Copy((char *)FieldValue);
             break;
         case 19: //decalMinWidth
             DODT.Load();
-            DODT->minWidth = *(FLOAT32 *)FieldValue;
+            DODT->minWidth = *(float *)FieldValue;
             break;
         case 20: //decalMaxWidth
             DODT.Load();
-            DODT->maxWidth = *(FLOAT32 *)FieldValue;
+            DODT->maxWidth = *(float *)FieldValue;
             break;
         case 21: //decalMinHeight
             DODT.Load();
-            DODT->minHeight = *(FLOAT32 *)FieldValue;
+            DODT->minHeight = *(float *)FieldValue;
             break;
         case 22: //decalMaxHeight
             DODT.Load();
-            DODT->maxHeight = *(FLOAT32 *)FieldValue;
+            DODT->maxHeight = *(float *)FieldValue;
             break;
         case 23: //decalDepth
             DODT.Load();
-            DODT->depth = *(FLOAT32 *)FieldValue;
+            DODT->depth = *(float *)FieldValue;
             break;
         case 24: //decalShininess
             DODT.Load();
-            DODT->shininess = *(FLOAT32 *)FieldValue;
+            DODT->shininess = *(float *)FieldValue;
             break;
         case 25: //decalScale
             DODT.Load();
-            DODT->scale = *(FLOAT32 *)FieldValue;
+            DODT->scale = *(float *)FieldValue;
             break;
         case 26: //decalPasses
             DODT.Load();
-            DODT->passes = *(UINT8 *)FieldValue;
+            DODT->passes = *(uint8_t *)FieldValue;
             break;
         case 27: //decalFlags
             DODT.Load();
-            DODT->flags = *(UINT8 *)FieldValue;
+            DODT->flags = *(uint8_t *)FieldValue;
             break;
         case 28: //decalUnused1
             if(ArraySize != 2)
@@ -340,15 +340,15 @@ bool TXSTRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             break;
         case 29: //decalRed
             DODT.Load();
-            DODT->red = *(UINT8 *)FieldValue;
+            DODT->red = *(uint8_t *)FieldValue;
             break;
         case 30: //decalGreen
             DODT.Load();
-            DODT->green = *(UINT8 *)FieldValue;
+            DODT->green = *(uint8_t *)FieldValue;
             break;
         case 31: //decalBlue
             DODT.Load();
-            DODT->blue = *(UINT8 *)FieldValue;
+            DODT->blue = *(uint8_t *)FieldValue;
             break;
         case 32: //decalUnused2
             if(ArraySize != 1)
@@ -357,7 +357,7 @@ bool TXSTRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             DODT->unused2 = ((UINT8ARRAY)FieldValue)[0];
             break;
         case 33: //flags
-            SetFlagMask(*(UINT16 *)FieldValue);
+            SetFlagMask(*(uint16_t *)FieldValue);
             break;
         default:
             break;

@@ -50,7 +50,7 @@ FormIDOp::~FormIDOp()
     //
     }
 
-UINT32 FormIDOp::GetCount()
+uint32_t FormIDOp::GetCount()
     {
     return count;
     }
@@ -65,7 +65,7 @@ bool FormIDOp::Stop()
     return stop;
     }
 
-FormIDResolver::FormIDResolver(const UINT8 (&_ResolveTable)[256], const unsigned char * const _FileStart, const unsigned char * const _FileEnd):
+FormIDResolver::FormIDResolver(const uint8_t (&_ResolveTable)[256], const unsigned char * const _FileStart, const unsigned char * const _FileEnd):
     FormIDOp(),
     ResolveTable(_ResolveTable),
     FileStart(_FileStart),
@@ -79,7 +79,7 @@ FormIDResolver::~FormIDResolver()
     //
     }
 
-bool FormIDResolver::Accept(UINT32 &curFormID)
+bool FormIDResolver::Accept(uint32_t &curFormID)
     {
     if((curFormID & 0x00FFFFFF) < END_HARDCODED_IDS)
         curFormID &= 0x00FFFFFF;
@@ -92,7 +92,7 @@ bool FormIDResolver::Accept(UINT32 &curFormID)
     return stop;
     }
 
-bool FormIDResolver::AcceptMGEF(UINT32 &curMgefCode)
+bool FormIDResolver::AcceptMGEF(uint32_t &curMgefCode)
     {
     //ModIndex = ResolveTable[curMgefCode & 0x000000FF];
     curMgefCode = (ResolveTable[curMgefCode & 0x000000FF]) | (curMgefCode & 0xFFFFFF00);
@@ -212,12 +212,12 @@ void GENVARS::IsLongOrShort(bool value)
     SETBIT(SLSD.value.flags, fIsLongOrShort, value);
     }
 
-bool GENVARS::IsFlagMask(UINT8 Mask, bool Exact)
+bool GENVARS::IsFlagMask(uint8_t Mask, bool Exact)
     {
     return Exact ? ((SLSD.value.flags & Mask) == Mask) : ((SLSD.value.flags & Mask) != 0);
     }
 
-void GENVARS::SetFlagMask(UINT8 Mask)
+void GENVARS::SetFlagMask(uint8_t Mask)
     {
     SLSD.value.flags = Mask;
     }
@@ -499,13 +499,13 @@ void GENEffect::IsSchoolRestoration(bool value)
     SCIT->schoolType = value ? eRestoration : eAlteration;
     }
 
-bool GENEffect::IsSchool(UINT32 Type)
+bool GENEffect::IsSchool(uint32_t Type)
     {
     if(!SCIT.IsLoaded()) return false;
     return (SCIT->schoolType == Type);
     }
 
-void GENEffect::SetSchool(UINT32 Type)
+void GENEffect::SetSchool(uint32_t Type)
     {
     SCIT.Load();
     SCIT->schoolType = Type;
@@ -523,13 +523,13 @@ void GENEffect::IsHostile(bool value)
     SCIT->flags = value ? (SCIT->flags | fIsHostile) : (SCIT->flags & ~fIsHostile);
     }
 
-bool GENEffect::IsFlagMask(UINT8 Mask, bool Exact)
+bool GENEffect::IsFlagMask(uint8_t Mask, bool Exact)
     {
     if(!SCIT.IsLoaded()) return false;
     return Exact ? (SCIT->flags & Mask) == Mask : (SCIT->flags & Mask) != 0;
     }
 
-void GENEffect::SetFlagMask(UINT8 Mask)
+void GENEffect::SetFlagMask(uint8_t Mask)
     {
     SCIT.Load();
     SCIT->flags = Mask;
@@ -565,12 +565,12 @@ void GENEffect::IsRangeTarget(bool value)
     EFIT.value.rangeType = value ? eRangeTarget : eRangeSelf;
     }
 
-bool GENEffect::IsRange(UINT32 Type)
+bool GENEffect::IsRange(uint32_t Type)
     {
     return (EFIT.value.rangeType == Type);
     }
 
-void GENEffect::SetRange(UINT32 Type)
+void GENEffect::SetRange(uint32_t Type)
     {
     EFIT.value.rangeType = Type;
     }
@@ -887,13 +887,13 @@ void GENEffect::OBME_IsUsingHiddenOverride(bool value)
     OBME->EFIX->efixOverrides = value ? (OBME->EFIX->efixOverrides | fOBME_IsUsingHiddenOverride) : (OBME->EFIX->efixOverrides & ~fOBME_IsUsingHiddenOverride);
     }
 
-bool GENEffect::OBME_IsOverrideFlagMask(UINT32 Mask, bool Exact)
+bool GENEffect::OBME_IsOverrideFlagMask(uint32_t Mask, bool Exact)
     {
     if(!OBME.IsLoaded() || !OBME->EFIX.IsLoaded()) return false;
     return Exact ? (OBME->EFIX->efixOverrides & Mask) == Mask : (OBME->EFIX->efixOverrides & Mask) != 0;
     }
 
-void GENEffect::OBME_SetOverrideFlagMask(UINT32 Mask)
+void GENEffect::OBME_SetOverrideFlagMask(uint32_t Mask)
     {
     if(Mask == 0 && OBME.IsLoaded())
         OBME->EFIX.Unload();
@@ -1121,13 +1121,13 @@ void GENEffect::OBME_IsHidden(bool value)
     OBME->EFIX->efixFlags = value ? (OBME->EFIX->efixFlags | fOBME_IsHidden) : (OBME->EFIX->efixFlags & ~fOBME_IsHidden);
     }
 
-bool GENEffect::OBME_IsFlagMask(UINT32 Mask, bool Exact)
+bool GENEffect::OBME_IsFlagMask(uint32_t Mask, bool Exact)
     {
     if(!OBME.IsLoaded() || !OBME->EFIX.IsLoaded()) return false;
     return Exact ? (OBME->EFIX->efixFlags & Mask) == Mask : (OBME->EFIX->efixFlags & Mask) != 0;
     }
 
-void GENEffect::OBME_SetFlagMask(UINT32 Mask)
+void GENEffect::OBME_SetFlagMask(uint32_t Mask)
     {
     OBME.Load();
     OBME->EFIX.Load();
@@ -1524,12 +1524,12 @@ void GENCTDA::IsLessOrEqual(bool value)
         }
     }
 
-bool GENCTDA::IsType(UINT8 Type)
+bool GENCTDA::IsType(uint8_t Type)
     {
     return ((operType & 0xF0) == (Type & 0xF0));
     }
 
-void GENCTDA::SetType(UINT8 Type)
+void GENCTDA::SetType(uint8_t Type)
     {
     Type &= 0xF0;
     operType &= 0x0F;
@@ -1577,12 +1577,12 @@ void GENCTDA::IsUseGlobal(bool value)
     SETBIT(operType, fIsUseGlobal, value);
     }
 
-bool GENCTDA::IsFlagMask(UINT8 Mask, bool Exact)
+bool GENCTDA::IsFlagMask(uint8_t Mask, bool Exact)
     {
     return Exact ? ((operType & 0x0F) & (Mask & 0x0F)) == Mask : ((operType & 0x0F) & (Mask & 0x0F)) != 0;
     }
 
-void GENCTDA::SetFlagMask(UINT8 Mask)
+void GENCTDA::SetFlagMask(uint8_t Mask)
     {
     Mask &= 0x0F;
     operType &= 0xF0;
@@ -1632,7 +1632,7 @@ void GENCTDA::Write(FileWriter &writer)
 bool GENCTDA::operator ==(const GENCTDA &other) const
     {
     return (operType == other.operType &&
-            (IsUseGlobal() ? compValue == other.compValue : AlmostEqual(*(FLOAT32 *)&compValue,*(FLOAT32 *)&other.compValue,2)) &&
+            (IsUseGlobal() ? compValue == other.compValue : AlmostEqual(*(float *)&compValue,*(float *)&other.compValue,2)) &&
             ifunc == other.ifunc &&
             param1 == other.param1 &&
             param2 == other.param2);
@@ -1643,7 +1643,7 @@ bool GENCTDA::operator !=(const GENCTDA &other) const
     return !(*this == other);
     }
 
-GENCLR::GENCLR(UINT8 _red, UINT8 _green, UINT8 _blue, UINT8 _unused1):
+GENCLR::GENCLR(uint8_t _red, uint8_t _green, uint8_t _blue, uint8_t _unused1):
     red(_red),
     green(_green),
     blue(_blue),
@@ -2267,12 +2267,12 @@ void GENPATROL::IsScriptEnabled(bool value)
     SETBIT(SCHR.value.flags, fIsEnabled, value);
     }
 
-bool GENPATROL::IsScriptFlagMask(UINT16 Mask, bool Exact)
+bool GENPATROL::IsScriptFlagMask(uint16_t Mask, bool Exact)
     {
     return Exact ? (SCHR.value.flags & Mask) == Mask : (SCHR.value.flags & Mask) != 0;
     }
 
-void GENPATROL::SetScriptFlagMask(UINT16 Mask)
+void GENPATROL::SetScriptFlagMask(uint16_t Mask)
     {
     SCHR.value.flags = Mask;
     }
@@ -2307,12 +2307,12 @@ void GENPATROL::IsEffect(bool value)
     SCHR.value.scriptType = value ? eEffect : eObject;
     }
 
-bool GENPATROL::IsType(UINT16 Type)
+bool GENPATROL::IsType(uint16_t Type)
     {
     return SCHR.value.scriptType == Type;
     }
 
-void GENPATROL::SetType(UINT16 Type)
+void GENPATROL::SetType(uint16_t Type)
     {
     SCHR.value.scriptType = Type;
     }
@@ -2322,9 +2322,9 @@ void GENPATROL::Write(FileWriter &writer)
     WRITE(XPRD);
     WRITEEMPTY(XPPA);
     WRITE(INAM);
-    SCHR.value.numRefs = (UINT32)SCR_.value.size(); //Just to ensure that the value is correct
+    SCHR.value.numRefs = (uint32_t)SCR_.value.size(); //Just to ensure that the value is correct
     SCHR.value.compiledSize = SCDA.GetSize(); //Just to ensure that the value is correct
-    //for(UINT32 x = 0; x < VARS.value.size(); ++x) //Just to ensure that the value is correct
+    //for(uint32_t x = 0; x < VARS.value.size(); ++x) //Just to ensure that the value is correct
     //    SCHR.value.lastIndex = (SCHR.value.lastIndex > VARS.value[x]->SLSD.value.index) ? SCHR.value.lastIndex : VARS.value[x]->SLSD.value.index;
     WRITE(SCHR);
     WRITE(SCDA);
@@ -2403,12 +2403,12 @@ void FNVXNAM::IsFriend(bool value)
     groupReactionType = value ? eFriend : eNeutral;
     }
 
-bool FNVXNAM::IsType(UINT32 Type)
+bool FNVXNAM::IsType(uint32_t Type)
     {
     return groupReactionType == Type;
     }
 
-void FNVXNAM::SetType(UINT32 Type)
+void FNVXNAM::SetType(uint32_t Type)
     {
     groupReactionType = Type;
     }
@@ -2460,16 +2460,16 @@ FNVAlternateTextures::~FNVAlternateTextures()
     Unload();
     }
 
-UINT32 FNVAlternateTextures::GetSize() const
+uint32_t FNVAlternateTextures::GetSize() const
     {
     if(MODS.size())
         {
-        UINT32 cSize = 4; // num elements field
-        for(UINT32 x = 0; x < MODS.size(); ++x)
+        uint32_t cSize = 4; // num elements field
+        for(uint32_t x = 0; x < MODS.size(); ++x)
             {
             cSize += 12; // string size, New Texture, 3D Index fields
             if(MODS[x]->name != NULL)
-                cSize += (UINT32)strlen(MODS[x]->name);
+                cSize += (uint32_t)strlen(MODS[x]->name);
             }
         return cSize;
         }
@@ -2488,15 +2488,15 @@ void FNVAlternateTextures::Load()
 
 void FNVAlternateTextures::Unload()
     {
-    for(UINT32 x = 0; x < MODS.size(); ++x)
+    for(uint32_t x = 0; x < MODS.size(); ++x)
         delete MODS[x];
     MODS.clear();
     }
 
-void FNVAlternateTextures::resize(UINT32 newSize)
+void FNVAlternateTextures::resize(uint32_t newSize)
     {
     //Shrink
-    UINT32 size = (UINT32)MODS.size();
+    uint32_t size = (uint32_t)MODS.size();
     for(; size > newSize;)
         delete MODS[--size];
     MODS.resize(newSize);
@@ -2505,21 +2505,21 @@ void FNVAlternateTextures::resize(UINT32 newSize)
         MODS[size++] = new FNVMODS;
     }
 
-bool FNVAlternateTextures::Read(unsigned char *&buffer, const UINT32 &subSize)
+bool FNVAlternateTextures::Read(unsigned char *&buffer, const uint32_t &subSize)
     {
     if(MODS.size() != 0)
         {
         buffer += subSize;
         return false;
         }
-    UINT32 numElements = 0;
-    UINT32 sizeString = 0;
-    numElements = *(UINT32 *)buffer;
+    uint32_t numElements = 0;
+    uint32_t sizeString = 0;
+    numElements = *(uint32_t *)buffer;
     buffer += 4;
-    for(UINT32 x = 0; x < numElements; ++x)
+    for(uint32_t x = 0; x < numElements; ++x)
         {
         MODS.push_back(new FNVMODS);
-        sizeString = *(UINT32 *)buffer;
+        sizeString = *(uint32_t *)buffer;
         buffer += 4;
         if(sizeString > 0)
             {
@@ -2530,7 +2530,7 @@ bool FNVAlternateTextures::Read(unsigned char *&buffer, const UINT32 &subSize)
             }
         MODS.back()->texture = *(FORMID *)buffer;
         buffer += 4;
-        MODS.back()->index = *(SINT32 *)buffer;
+        MODS.back()->index = *(int32_t *)buffer;
         buffer += 4;
         }
     return true;
@@ -2538,16 +2538,16 @@ bool FNVAlternateTextures::Read(unsigned char *&buffer, const UINT32 &subSize)
 
 void FNVAlternateTextures::Write(FileWriter &writer)
     {
-    UINT32 cSize = (UINT32)MODS.size();
+    uint32_t cSize = (uint32_t)MODS.size();
     if(cSize)
         {
         writer.record_write_subheader(REV32(MODS), GetSize());
         writer.record_write(&cSize, 4);
-        for(UINT32 p = 0; p < MODS.size(); ++p)
+        for(uint32_t p = 0; p < MODS.size(); ++p)
             {
             if(MODS[p]->name != NULL)
                 {
-                cSize = (UINT32)strlen(MODS[p]->name);
+                cSize = (uint32_t)strlen(MODS[p]->name);
                 writer.record_write(&cSize, 4);
                 writer.record_write(MODS[p]->name, cSize);
                 }
@@ -2557,18 +2557,18 @@ void FNVAlternateTextures::Write(FileWriter &writer)
        }
     }
 
-void FNVAlternateTextures::Write(UINT32 _Type, FileWriter &writer)
+void FNVAlternateTextures::Write(uint32_t _Type, FileWriter &writer)
     {
-    UINT32 cSize = (UINT32)MODS.size();
+    uint32_t cSize = (uint32_t)MODS.size();
     if(cSize)
         {
         writer.record_write_subheader(_Type, GetSize());
         writer.record_write(&cSize, 4);
-        for(UINT32 p = 0; p < MODS.size(); ++p)
+        for(uint32_t p = 0; p < MODS.size(); ++p)
             {
             if(MODS[p]->name != NULL)
                 {
-                cSize = (UINT32)strlen(MODS[p]->name);
+                cSize = (uint32_t)strlen(MODS[p]->name);
                 writer.record_write(&cSize, 4);
                 writer.record_write(MODS[p]->name, cSize);
                 }
@@ -2580,7 +2580,7 @@ void FNVAlternateTextures::Write(UINT32 _Type, FileWriter &writer)
 
 void FNVAlternateTextures::VisitFormIDs(FormIDOp &op)
     {
-    for(UINT32 x = 0; x < MODS.size(); x++)
+    for(uint32_t x = 0; x < MODS.size(); x++)
         op.Accept(MODS[x]->texture);
     }
 
@@ -2592,13 +2592,13 @@ FNVAlternateTextures& FNVAlternateTextures::operator = (const FNVAlternateTextur
             {
             Unload();
             MODS.resize(rhs.MODS.size());
-            UINT32 nameSize = 0;
-            for(UINT32 p = 0; p < rhs.MODS.size(); p++)
+            uint32_t nameSize = 0;
+            for(uint32_t p = 0; p < rhs.MODS.size(); p++)
                 {
                 MODS[p] = new FNVMODS;
                 if(rhs.MODS[p]->name != NULL)
                     {
-                    nameSize = (UINT32)strlen(rhs.MODS[p]->name) + 1;
+                    nameSize = (uint32_t)strlen(rhs.MODS[p]->name) + 1;
                     MODS[p]->name = new char[nameSize];
                     strcpy_s(MODS[p]->name, nameSize, rhs.MODS[p]->name);
                     }
@@ -2618,7 +2618,7 @@ bool FNVAlternateTextures::operator ==(const FNVAlternateTextures &other) const
         {
         //Not sure if record order matters on alternate textures, so equality testing is a guess
         //Fix-up later
-        for(UINT32 x = 0; x < MODS.size(); ++x)
+        for(uint32_t x = 0; x < MODS.size(); ++x)
             if(*MODS[x] != *other.MODS[x])
                 return false;
         return true;
@@ -2681,12 +2681,12 @@ void FNVMODEL::IsLeftHand(bool value)
     SETBIT(MODD.value, fIsLeftHand, value);
     }
 
-bool FNVMODEL::IsFlagMask(UINT8 Mask, bool Exact)
+bool FNVMODEL::IsFlagMask(uint8_t Mask, bool Exact)
     {
     return Exact ? ((MODD.value & Mask) == Mask) : ((MODD.value & Mask) != 0);
     }
 
-void FNVMODEL::SetFlagMask(UINT8 Mask)
+void FNVMODEL::SetFlagMask(uint8_t Mask)
     {
     MODD.value = Mask;
     }
@@ -2754,12 +2754,12 @@ void FNVBIPEDMODEL::IsLeftHand(bool value)
     SETBIT(MODD.value, fIsLeftHand, value);
     }
 
-bool FNVBIPEDMODEL::IsFlagMask(UINT8 Mask, bool Exact)
+bool FNVBIPEDMODEL::IsFlagMask(uint8_t Mask, bool Exact)
     {
     return Exact ? ((MODD.value & Mask) == Mask) : ((MODD.value & Mask) != 0);
     }
 
-void FNVBIPEDMODEL::SetFlagMask(UINT8 Mask)
+void FNVBIPEDMODEL::SetFlagMask(uint8_t Mask)
     {
     MODD.value = Mask;
     }
@@ -2875,7 +2875,7 @@ void FNVCTDA::Write(FileWriter &writer)
 bool FNVCTDA::operator ==(const FNVCTDA &other) const
     {
     return (operType == other.operType &&
-            (IsUseGlobal() ? compValue == other.compValue : AlmostEqual(*(FLOAT32 *)&compValue,*(FLOAT32 *)&other.compValue,2)) &&
+            (IsUseGlobal() ? compValue == other.compValue : AlmostEqual(*(float *)&compValue,*(float *)&other.compValue,2)) &&
             ifunc == other.ifunc &&
             param1 == other.param1 &&
             param2 == other.param2 &&
@@ -3002,12 +3002,12 @@ void FNVCTDA::IsLessOrEqual(bool value)
         }
     }
 
-bool FNVCTDA::IsType(UINT8 Type)
+bool FNVCTDA::IsType(uint8_t Type)
     {
     return ((operType & 0xF0) == (Type & 0xF0));
     }
 
-void FNVCTDA::SetType(UINT8 Type)
+void FNVCTDA::SetType(uint8_t Type)
     {
     Type &= 0xF0;
     operType &= 0x0F;
@@ -3055,12 +3055,12 @@ void FNVCTDA::IsUseGlobal(bool value)
     SETBIT(operType, fIsUseGlobal, value);
     }
 
-bool FNVCTDA::IsFlagMask(UINT8 Mask, bool Exact)
+bool FNVCTDA::IsFlagMask(uint8_t Mask, bool Exact)
     {
     return Exact ? ((operType & 0x0F) & (Mask & 0x0F)) == Mask : ((operType & 0x0F) & (Mask & 0x0F)) != 0;
     }
 
-void FNVCTDA::SetFlagMask(UINT8 Mask)
+void FNVCTDA::SetFlagMask(uint8_t Mask)
     {
     Mask &= 0x0F;
     operType &= 0xF0;
@@ -3117,12 +3117,12 @@ void FNVCTDA::IsResultOnLinkedReference(bool value)
     runOnType = value ? eLinkedReference : eSubject;
     }
 
-bool FNVCTDA::IsResultOnType(UINT32 Type)
+bool FNVCTDA::IsResultOnType(uint32_t Type)
     {
     return runOnType == Type;
     }
 
-void FNVCTDA::SetResultOnType(UINT32 Type)
+void FNVCTDA::SetResultOnType(uint32_t Type)
     {
     runOnType = Type;
     }
@@ -3159,7 +3159,7 @@ bool FNVEFIT::operator !=(const FNVEFIT &other) const
 bool FNVEffect::VisitFormIDs(FormIDOp &op)
     {
     op.Accept(EFID.value);
-    for(UINT32 p = 0; p < CTDA.value.size(); p++)
+    for(uint32_t p = 0; p < CTDA.value.size(); p++)
         CTDA.value[p]->VisitFormIDs(op);
     return op.Stop();
     }
@@ -3201,12 +3201,12 @@ void FNVEffect::IsRangeTarget(bool value)
     EFIT.value.rangeType = value ? eRangeTarget : eRangeSelf;
     }
 
-bool FNVEffect::IsRange(UINT32 Mask)
+bool FNVEffect::IsRange(uint32_t Mask)
     {
     return (EFIT.value.rangeType == Mask);
     }
 
-void FNVEffect::SetRange(UINT32 Mask)
+void FNVEffect::SetRange(uint32_t Mask)
     {
     EFIT.value.rangeType = Mask;
     }
@@ -3299,12 +3299,12 @@ void DESTSTAGE::IsDestroy(bool value)
     SETBIT(DSTD.value.flags, fIsDestroy, value);
     }
 
-bool DESTSTAGE::IsFlagMask(UINT8 Mask, bool Exact)
+bool DESTSTAGE::IsFlagMask(uint8_t Mask, bool Exact)
     {
     return Exact ? ((DSTD.value.flags & Mask) == Mask) : ((DSTD.value.flags & Mask) != 0);
     }
 
-void DESTSTAGE::SetFlagMask(UINT8 Mask)
+void DESTSTAGE::SetFlagMask(uint8_t Mask)
     {
     DSTD.value.flags = Mask;
     }
@@ -3367,12 +3367,12 @@ void GENDESTRUCT::IsVATSTargetable(bool value)
     SETBIT(DEST.value.flags, fIsVATSTargetable, value);
     }
 
-bool GENDESTRUCT::IsFlagMask(UINT8 Mask, bool Exact)
+bool GENDESTRUCT::IsFlagMask(uint8_t Mask, bool Exact)
     {
     return Exact ? ((DEST.value.flags & Mask) == Mask) : ((DEST.value.flags & Mask) != 0);
     }
 
-void GENDESTRUCT::SetFlagMask(UINT8 Mask)
+void GENDESTRUCT::SetFlagMask(uint8_t Mask)
     {
     DEST.value.flags = Mask;
     }
@@ -3833,12 +3833,12 @@ void GENXPWR::IsRefraction(bool value)
     type = value ? eRefraction : eReflection;
     }
 
-bool GENXPWR::IsType(UINT32 Type)
+bool GENXPWR::IsType(uint32_t Type)
     {
     return type == Type;
     }
 
-void GENXPWR::SetType(UINT32 Type)
+void GENXPWR::SetType(uint32_t Type)
     {
     type = Type;
     }
@@ -3919,12 +3919,12 @@ void GENACTPARENT::IsParentActivateOnly(bool value)
     SETBIT(XAPD.value, fIsParentActivateOnly, value);
     }
 
-bool GENACTPARENT::IsFlagMask(UINT8 Mask, bool Exact)
+bool GENACTPARENT::IsFlagMask(uint8_t Mask, bool Exact)
     {
     return Exact ? ((XAPD.value & Mask) == Mask) : ((XAPD.value & Mask) != 0);
     }
 
-void GENACTPARENT::SetFlagMask(UINT8 Mask)
+void GENACTPARENT::SetFlagMask(uint8_t Mask)
     {
     XAPD.value = Mask;
     }

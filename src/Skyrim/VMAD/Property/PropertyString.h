@@ -44,8 +44,8 @@ class PropertyString : public Property
 public:
     NonNullStringRecord value;
 
-    virtual UINT32 GetSize() const;
-    virtual void Read(unsigned char *&buffer, const SINT16 &version, const SINT16 &objFormat, const bool &CompressedOnDisk);
+    virtual uint32_t GetSize() const;
+    virtual void Read(unsigned char *&buffer, const int16_t &version, const int16_t &objFormat, const bool &CompressedOnDisk);
     virtual void Write(FileWriter &writer);
     virtual bool equals(const Property *other) const;
     virtual Property * Copy() const;
@@ -56,8 +56,8 @@ public:
 class PropertyStringArray : public Property, public std::vector<NonNullStringRecord>
 {
 public:
-    virtual UINT32 GetSize() const;
-    virtual void Read(unsigned char *&buffer, const SINT16 &version, const SINT16 &objFormat, const bool &CompressedOnDisk);
+    virtual uint32_t GetSize() const;
+    virtual void Read(unsigned char *&buffer, const int16_t &version, const int16_t &objFormat, const bool &CompressedOnDisk);
     virtual void Write(FileWriter &writer);
     virtual bool equals(const Property *other) const;
     virtual Property * Copy() const;

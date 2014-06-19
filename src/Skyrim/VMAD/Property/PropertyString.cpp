@@ -37,16 +37,16 @@
 
 #include "PropertyString.h"
 
-UINT32 PropertyString::GetSize() const
+uint32_t PropertyString::GetSize() const
 {
     // common + valueSize + value
-    return Property::GetSize() + sizeof(UINT16) + value.GetSize();
+    return Property::GetSize() + sizeof(uint16_t) + value.GetSize();
 }
 
-void PropertyString::Read(unsigned char *&buffer, const SINT16 &version, const SINT16 &objFormat, const bool &CompressedOnDisk)
+void PropertyString::Read(unsigned char *&buffer, const int16_t &version, const int16_t &objFormat, const bool &CompressedOnDisk)
 {
     Property::Read(buffer, version, objFormat, CompressedOnDisk);
-    UINT16 strSize = *(UINT16 *)buffer;
+    uint16_t strSize = *(uint16_t *)buffer;
     buffer += 2;
     value.Read(buffer, strSize, CompressedOnDisk);
 }
@@ -86,24 +86,24 @@ PropertyString & PropertyString::operator = (const PropertyString  &other)
     return *this;
 }
 
-UINT32 PropertyStringArray::GetSize() const
+uint32_t PropertyStringArray::GetSize() const
 {
     // common + itemCount
-    UINT32 total = Property::GetSize() + sizeof(UINT32);
-    for (UINT32 i = 0; i < size(); ++i)
-        total += sizeof(UINT16)+(*this)[i].GetSize();
+    uint32_t total = Property::GetSize() + sizeof(uint32_t);
+    for (uint32_t i = 0; i < size(); ++i)
+        total += sizeof(uint16_t)+(*this)[i].GetSize();
     return total;
 }
 
-void PropertyStringArray::Read(unsigned char *&buffer, const SINT16 &version, const SINT16 &objFormat, const bool &CompressedOnDisk)
+void PropertyStringArray::Read(unsigned char *&buffer, const int16_t &version, const int16_t &objFormat, const bool &CompressedOnDisk)
 {
-    UINT32 count = *(UINT32 *)buffer;
+    uint32_t count = *(uint32_t *)buffer;
     buffer += 4;
 
     resize(count);
-    for (UINT32 i = 0; i < count; ++i)
+    for (uint32_t i = 0; i < count; ++i)
     {
-        UINT16 strSize = *(UINT16 *)buffer;
+        uint16_t strSize = *(uint16_t *)buffer;
         buffer += 2;
         (*this)[i].Read(buffer, strSize, CompressedOnDisk);
     }
@@ -112,9 +112,9 @@ void PropertyStringArray::Read(unsigned char *&buffer, const SINT16 &version, co
 void PropertyStringArray::Write(FileWriter &writer)
 {
     Property::Write(writer);
-    UINT32 count = size();
+    uint32_t count = size();
     writer.record_write(&count, sizeof(count));
-    for (UINT32 i = 0; i < count; ++i)
+    for (uint32_t i = 0; i < count; ++i)
         (*this)[i].Write16(writer);
 }
 
@@ -125,7 +125,7 @@ bool PropertyStringArray::equals(const Property *other) const
         const PropertyStringArray *o = reinterpret_cast<const PropertyStringArray *>(other);
         if (size() != o->size())
             return false;
-        for (UINT32 i = 0; i < size(); ++i)
+        for (uint32_t i = 0; i < size(); ++i)
         {
             if (!(*this)[i].equals((*o)[i]))
                 return false;

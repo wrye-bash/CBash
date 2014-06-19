@@ -38,13 +38,13 @@
 #include "Common.h"
 #include "GenericChunks.h"
 
-class Record;
-class ModFile;
+struct Record;
+struct ModFile;
 
 class RecordOp
     {
     protected:
-        UINT32 count;
+        uint32_t count;
         bool stop;
 
     public:
@@ -55,19 +55,19 @@ class RecordOp
 
         virtual bool Accept(Record *&curRecord);
 
-        UINT32 GetCount();
+        uint32_t GetCount();
         void ResetCount();
         bool Stop();
     };
 
 struct RecordHeader
     {
-    UINT32 type;
-    UINT32 flags;
+    uint32_t type;
+    uint32_t flags;
     FORMID formID;
-    UINT32 flagsUnk;
-    UINT16 formVersion; //FNV
-    UINT8  versionControl2[2]; //FNV
+    uint32_t flagsUnk;
+    uint16_t formVersion; //FNV
+    uint8_t  versionControl2[2]; //FNV
     unsigned char *data;
     };
 
@@ -75,16 +75,16 @@ class RecordProcessor
     {
     public:
         ModFile *curModFile;
-        boost::unordered_set<UINT32> &NewTypes;
-        UINT8 ExpandedIndex;
+        boost::unordered_set<uint32_t> &NewTypes;
+        uint8_t ExpandedIndex;
         FormIDResolver expander;
         const ModFlags &Flags;
-        boost::unordered_set<UINT32> &UsedFormIDs;
-        SINT32 &EmptyGRUPs;
+        boost::unordered_set<uint32_t> &UsedFormIDs;
+        int32_t &EmptyGRUPs;
         std::vector<FORMID> &OrphanedRecords;
 
-        boost::unordered_set<UINT32> filter_records;
-        boost::unordered_set<UINT32> filter_wspaces;
+        boost::unordered_set<uint32_t> filter_records;
+        boost::unordered_set<uint32_t> filter_wspaces;
         bool filter_inclusive; FORMID activewspace;
 
         bool IsSkipNewRecords;
@@ -93,13 +93,13 @@ class RecordProcessor
         bool IsTrackNewTypes;
         bool IsAddMasters;
 
-        RecordProcessor(ModFile *curModFile, FormIDHandlerClass &_FormIDHandler, const ModFlags &_Flags, boost::unordered_set<UINT32> &_UsedFormIDs);
+        RecordProcessor(ModFile *curModFile, FormIDHandlerClass &_FormIDHandler, const ModFlags &_Flags, boost::unordered_set<uint32_t> &_UsedFormIDs);
         ~RecordProcessor();
 
         //template<bool IsKeyedByEditorID, typename U>
         //typename boost::enable_if_c<!IsKeyedByEditorID,bool>::type Accept(U &header)
 
-        void SetFilter(bool inclusive, boost::unordered_set<UINT32> &RecordTypes, boost::unordered_set<FORMID> &WorldSpaces) {
+        void SetFilter(bool inclusive, boost::unordered_set<uint32_t> &RecordTypes, boost::unordered_set<FORMID> &WorldSpaces) {
             filter_inclusive = inclusive;
             filter_records = RecordTypes;
             filter_wspaces = WorldSpaces;
@@ -180,7 +180,7 @@ class RecordProcessor
         //    }
     };
 
-class Record
+struct Record
     {
     protected:
         enum headerFlags
@@ -215,13 +215,13 @@ class Record
 
     public:
         unsigned char *recData;
-        UINT32 CBash_Flags;
+        uint32_t CBash_Flags;
 
-        UINT32 flags;
+        uint32_t flags;
         FORMID formID;
-        UINT32 flagsUnk; //Version Control Info 1, FNV
-        //UINT16 formVersion; //FNV
-        //UINT8 versionControl2[2]; //FNV
+        uint32_t flagsUnk; //Version Control Info 1, FNV
+        //uint16_t formVersion; //FNV
+        //uint8_t versionControl2[2]; //FNV
 
         Record(unsigned char *_recData=NULL);
         virtual ~Record();
@@ -242,25 +242,25 @@ class Record
         //bool   HasInvalidFormIDs() const;
         //void   HasInvalidFormIDs(bool value);
 
-        virtual SINT32 Unload() abstract {};
-        virtual UINT32 GetType() abstract {};
-        virtual STRING GetStrType() abstract {};
-        virtual SINT32 WriteRecord(FileWriter &writer) abstract {};
-        virtual SINT32 ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk=false) abstract {};
+        virtual int32_t Unload() abstract {};
+        virtual uint32_t GetType() abstract {};
+        virtual char * GetStrType() abstract {};
+        virtual int32_t WriteRecord(FileWriter &writer) abstract {};
+        virtual int32_t ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk=false) abstract {};
 
-        virtual UINT32 GetFieldAttribute(DEFAULTED_FIELD_IDENTIFIERS, UINT32 WhichAttribute=0);
+        virtual uint32_t GetFieldAttribute(DEFAULTED_FIELD_IDENTIFIERS, uint32_t WhichAttribute=0);
         virtual void * GetField(DEFAULTED_FIELD_IDENTIFIERS, void **FieldValues=NULL);
-        virtual bool   SetField(DEFAULTED_FIELD_IDENTIFIERS, void *FieldValue=NULL, UINT32 ArraySize=0);
+        virtual bool   SetField(DEFAULTED_FIELD_IDENTIFIERS, void *FieldValue=NULL, uint32_t ArraySize=0);
         virtual void   DeleteField(DEFAULTED_FIELD_IDENTIFIERS);
 
         virtual bool   IsKeyedByEditorID();
-        virtual STRING GetEditorIDKey();
-        virtual bool   SetEditorIDKey(STRING EditorID);
+        virtual char * GetEditorIDKey();
+        virtual bool   SetEditorIDKey(char * EditorID);
 
         virtual bool VisitFormIDs(FormIDOp &op);
 
         virtual bool   Read();
-        virtual UINT32 Write(FileWriter &writer, const bool &bMastersChanged, FormIDResolver &expander, FormIDResolver &collapser, std::vector<FormIDResolver *> &Expanders);
+        virtual uint32_t Write(FileWriter &writer, const bool &bMastersChanged, FormIDResolver &expander, FormIDResolver &collapser, std::vector<FormIDResolver *> &Expanders);
         bool           IsValid(FormIDResolver &expander);
 
         bool         master_equality(Record *master, RecordOp &read_self, RecordOp &read_master, boost::unordered_set<Record *> &identical_records);
@@ -302,11 +302,11 @@ class Record
         void IsCompressed(bool value);
         bool IsCantWait();
         void IsCantWait(bool value);
-        bool IsHeaderFlagMask(UINT32 Mask, bool Exact=false);
-        void SetHeaderFlagMask(UINT32 Mask);
+        bool IsHeaderFlagMask(uint32_t Mask, bool Exact=false);
+        void SetHeaderFlagMask(uint32_t Mask);
 
-        bool IsHeaderUnknownFlagMask(UINT32 Mask, bool Exact=false);
-        void SetHeaderUnknownFlagMask(UINT32 Mask);
+        bool IsHeaderUnknownFlagMask(uint32_t Mask, bool Exact=false);
+        void SetHeaderUnknownFlagMask(uint32_t Mask);
 
         bool IsLoaded() const;
         void IsLoaded(bool value);
@@ -355,14 +355,14 @@ class FNVRecord : public Record
             };
 
     public:
-        UINT16 formVersion; //FNV
-        UINT8  versionControl2[2]; //FNV
+        uint16_t formVersion; //FNV
+        uint8_t  versionControl2[2]; //FNV
 
         FNVRecord(unsigned char *_recData=NULL);
         virtual ~FNVRecord();
 
         bool Read();
-        UINT32 Write(FileWriter &writer, const bool &bMastersChanged, FormIDResolver &expander, FormIDResolver &collapser, std::vector<FormIDResolver *> &Expanders);
+        uint32_t Write(FileWriter &writer, const bool &bMastersChanged, FormIDResolver &expander, FormIDResolver &collapser, std::vector<FormIDResolver *> &Expanders);
     };
 
 class TES5Record : public Record
@@ -405,13 +405,13 @@ class TES5Record : public Record
             };
 
     public:
-        UINT16 formVersion; //TES5
-        UINT8  versionControl2[2]; //TES5
+        uint16_t formVersion; //TES5
+        uint8_t  versionControl2[2]; //TES5
 
         TES5Record(unsigned char *_recData=NULL);
         TES5Record(TES5Record *srcRecord);
         virtual ~TES5Record();
 
         bool Read();
-        UINT32 Write(FileWriter &writer, const bool &bMastersChanged, FormIDResolver &expander, FormIDResolver &collapser, std::vector<FormIDResolver *> &Expanders);
+        uint32_t Write(FileWriter &writer, const bool &bMastersChanged, FormIDResolver &expander, FormIDResolver &collapser, std::vector<FormIDResolver *> &Expanders);
     };

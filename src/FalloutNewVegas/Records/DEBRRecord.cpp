@@ -61,17 +61,17 @@ void DEBRRecord::DEBRModel::IsHasCollisionData(bool value)
     SETBIT(flags, fIsHasCollisionData, value);
     }
 
-bool DEBRRecord::DEBRModel::IsFlagMask(UINT8 Mask, bool Exact)
+bool DEBRRecord::DEBRModel::IsFlagMask(uint8_t Mask, bool Exact)
     {
     return Exact ? ((flags & Mask) == Mask) : ((flags & Mask) != 0);
     }
 
-void DEBRRecord::DEBRModel::SetFlagMask(UINT8 Mask)
+void DEBRRecord::DEBRModel::SetFlagMask(uint8_t Mask)
     {
     flags = Mask;
     }
 
-bool DEBRRecord::DEBRModel::Read(unsigned char *&buffer, const UINT32 &subSize)
+bool DEBRRecord::DEBRModel::Read(unsigned char *&buffer, const uint32_t &subSize)
     {
     if(subSize < 3)
         {
@@ -82,15 +82,15 @@ bool DEBRRecord::DEBRModel::Read(unsigned char *&buffer, const UINT32 &subSize)
         buffer += subSize;
         return false;
         }
-    percentage = *(UINT8 *)buffer;
+    percentage = *(uint8_t *)buffer;
     buffer++;
 
-    UINT32 size = (UINT32)strlen((STRING)buffer) + 1;
+    uint32_t size = (uint32_t)strlen((char *)buffer) + 1;
     modPath = new char[size];
-    strcpy_s(modPath, size, (STRING)buffer);
+    strcpy_s(modPath, size, (char *)buffer);
     buffer += size;
 
-    flags = *(UINT8 *)buffer;
+    flags = *(uint8_t *)buffer;
     buffer++;
 
     size += 2;
@@ -106,10 +106,10 @@ bool DEBRRecord::DEBRModel::Read(unsigned char *&buffer, const UINT32 &subSize)
 
 void DEBRRecord::DEBRModel::Write(FileWriter &writer)
     {
-    UINT32 size = 3; //null terminator, percentage, and flags
+    uint32_t size = 3; //null terminator, percentage, and flags
     if(modPath != NULL)
         {
-        size += (UINT32)strlen(modPath);
+        size += (uint32_t)strlen(modPath);
         writer.record_write_subheader(REV32(DATA), size);
         writer.record_write(&percentage, 1);
         writer.record_write(modPath, size - 2);
@@ -161,15 +161,15 @@ void DEBRRecord::DEBRModels::Load()
 
 void DEBRRecord::DEBRModels::Unload()
     {
-    for(UINT32 x = 0; x < MODS.size(); ++x)
+    for(uint32_t x = 0; x < MODS.size(); ++x)
         delete MODS[x];
     MODS.clear();
     }
 
-void DEBRRecord::DEBRModels::resize(UINT32 newSize)
+void DEBRRecord::DEBRModels::resize(uint32_t newSize)
     {
     //Shrink
-    UINT32 size = (UINT32)MODS.size();
+    uint32_t size = (uint32_t)MODS.size();
     for(; size > newSize;)
         delete MODS[--size];
     MODS.resize(newSize);
@@ -180,7 +180,7 @@ void DEBRRecord::DEBRModels::resize(UINT32 newSize)
 
 void DEBRRecord::DEBRModels::Write(FileWriter &writer)
     {
-    for(UINT32 p = 0; p < MODS.size(); p++)
+    for(uint32_t p = 0; p < MODS.size(); p++)
         MODS[p]->Write(writer);
     }
 
@@ -192,15 +192,15 @@ DEBRRecord::DEBRModels& DEBRRecord::DEBRModels::operator = (const DEBRModels &rh
         if(rhs.MODS.size() != 0)
             {
             MODS.resize(rhs.MODS.size());
-            UINT32 pathSize = 0;
-            for(UINT32 p = 0; p < rhs.MODS.size(); p++)
+            uint32_t pathSize = 0;
+            for(uint32_t p = 0; p < rhs.MODS.size(); p++)
                 {
                 MODS[p] = new DEBRModel;
                 MODS[p]->percentage = rhs.MODS[p]->percentage;
 
                 if(rhs.MODS[p]->modPath != NULL)
                     {
-                    pathSize = (UINT32)strlen(rhs.MODS[p]->modPath) + 1;
+                    pathSize = (uint32_t)strlen(rhs.MODS[p]->modPath) + 1;
                     MODS[p]->modPath = new char[pathSize];
                     strcpy_s(MODS[p]->modPath, pathSize, rhs.MODS[p]->modPath);
                     }
@@ -217,7 +217,7 @@ bool DEBRRecord::DEBRModels::operator ==(const DEBRModels &other) const
         {
         //Not sure if record order matters on debris models, so equality testing is a guess
         //Fix-up later
-        for(UINT32 x = 0; x < MODS.size(); ++x)
+        for(uint32_t x = 0; x < MODS.size(); ++x)
             if(*MODS[x] != *other.MODS[x])
                 return false;
         return true;
@@ -263,34 +263,34 @@ DEBRRecord::~DEBRRecord()
     //
     }
 
-UINT32 DEBRRecord::GetType()
+uint32_t DEBRRecord::GetType()
     {
     return REV32(DEBR);
     }
 
-STRING DEBRRecord::GetStrType()
+char * DEBRRecord::GetStrType()
     {
     return "DEBR";
     }
 
-SINT32 DEBRRecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk)
+int32_t DEBRRecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk)
     {
-    UINT32 subType = 0;
-    UINT32 subSize = 0;
+    uint32_t subType = 0;
+    uint32_t subSize = 0;
     while(buffer < end_buffer){
-        subType = *(UINT32 *)buffer;
+        subType = *(uint32_t *)buffer;
         buffer += 4;
         switch(subType)
             {
             case REV32(XXXX):
                 buffer += 2;
-                subSize = *(UINT32 *)buffer;
+                subSize = *(uint32_t *)buffer;
                 buffer += 4;
-                subType = *(UINT32 *)buffer;
+                subType = *(uint32_t *)buffer;
                 buffer += 6;
                 break;
             default:
-                subSize = *(UINT16 *)buffer;
+                subSize = *(uint16_t *)buffer;
                 buffer += 2;
                 break;
             }
@@ -321,7 +321,7 @@ SINT32 DEBRRecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer,
     return 0;
     }
 
-SINT32 DEBRRecord::Unload()
+int32_t DEBRRecord::Unload()
     {
     IsChanged(false);
     IsLoaded(false);
@@ -330,7 +330,7 @@ SINT32 DEBRRecord::Unload()
     return 1;
     }
 
-SINT32 DEBRRecord::WriteRecord(FileWriter &writer)
+int32_t DEBRRecord::WriteRecord(FileWriter &writer)
     {
     WRITE(EDID);
     Models.Write(writer);

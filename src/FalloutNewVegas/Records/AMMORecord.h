@@ -46,11 +46,11 @@ class AMMORecord : public FNVRecord //Ammunition
         #pragma pack(1)
         struct AMMODATA
             {
-            FLOAT32 speed; //Speed
-            UINT8   flags; //Flags
-            UINT8   unused[3]; //Unused
-            SINT32  value; //Value
-            UINT8   clipRounds; //Clip Rounds
+            float speed; //Speed
+            uint8_t   flags; //Flags
+            uint8_t   unused[3]; //Unused
+            int32_t  value; //Value
+            uint8_t   clipRounds; //Clip Rounds
 
             AMMODATA();
             ~AMMODATA();
@@ -62,12 +62,12 @@ class AMMORecord : public FNVRecord //Ammunition
 
         struct AMMODAT2
             {
-            UINT32  projectilesPerShot; //Proj. per Shot
+            uint32_t  projectilesPerShot; //Proj. per Shot
             FORMID  projectile; //Projectile
-            FLOAT32 weight; //Weight
+            float weight; //Weight
             //Below are not always present on chunk...
             FORMID  consumedAmmo; //Consumed Ammo
-            FLOAT32 consumedPercentage; //Consumed Percentage
+            float consumedPercentage; //Consumed Percentage
 
             AMMODAT2();
             ~AMMODAT2();
@@ -109,20 +109,20 @@ class AMMORecord : public FNVRecord //Ammunition
         void   IsNotNormalWeapon(bool value);
         bool   IsNonPlayable();
         void   IsNonPlayable(bool value);
-        bool   IsFlagMask(UINT8 Mask, bool Exact=false);
-        void   SetFlagMask(UINT8 Mask);
+        bool   IsFlagMask(uint8_t Mask, bool Exact=false);
+        void   SetFlagMask(uint8_t Mask);
 
-        UINT32 GetFieldAttribute(DEFAULTED_FIELD_IDENTIFIERS, UINT32 WhichAttribute=0);
+        uint32_t GetFieldAttribute(DEFAULTED_FIELD_IDENTIFIERS, uint32_t WhichAttribute=0);
         void * GetField(DEFAULTED_FIELD_IDENTIFIERS, void **FieldValues=NULL);
-        bool   SetField(DEFAULTED_FIELD_IDENTIFIERS, void *FieldValue=NULL, UINT32 ArraySize=0);
+        bool   SetField(DEFAULTED_FIELD_IDENTIFIERS, void *FieldValue=NULL, uint32_t ArraySize=0);
         void   DeleteField(DEFAULTED_FIELD_IDENTIFIERS);
 
-        UINT32 GetType();
-        STRING GetStrType();
+        uint32_t GetType();
+        char * GetStrType();
 
-        SINT32 ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk=false);
-        SINT32 Unload();
-        SINT32 WriteRecord(FileWriter &writer);
+        int32_t ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk=false);
+        int32_t Unload();
+        int32_t WriteRecord(FileWriter &writer);
 
         bool operator ==(const AMMORecord &other) const;
         bool operator !=(const AMMORecord &other) const;

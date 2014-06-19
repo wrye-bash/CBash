@@ -320,12 +320,12 @@ void CREARecord::CREASoundType::IsPlayRandomLoop(bool value)
     CSDT.value = value ? ePlayRandomLoop : eLeftFoot;
     }
 
-bool CREARecord::CREASoundType::IsType(UINT32 Type)
+bool CREARecord::CREASoundType::IsType(uint32_t Type)
     {
     return CSDT.value == Type;
     }
 
-void CREARecord::CREASoundType::SetType(UINT32 Type)
+void CREARecord::CREASoundType::SetType(uint32_t Type)
     {
     CSDT.value = Type;
     }
@@ -422,14 +422,14 @@ bool CREARecord::VisitFormIDs(FormIDOp &op)
 
     if(MODL.IsLoaded())
         {
-        for(UINT32 x = 0; x < MODL->Textures.MODS.size(); x++)
+        for(uint32_t x = 0; x < MODL->Textures.MODS.size(); x++)
             op.Accept(MODL->Textures.MODS[x]->texture);
         }
-    for(UINT32 x = 0; x < SPLO.value.size(); x++)
+    for(uint32_t x = 0; x < SPLO.value.size(); x++)
         op.Accept(SPLO.value[x]);
     if(EITM.IsLoaded())
         op.Accept(EITM.value);
-    for(UINT32 x = 0; x < SNAM.value.size(); x++)
+    for(uint32_t x = 0; x < SNAM.value.size(); x++)
         op.Accept(SNAM.value[x]->faction);
     if(INAM.IsLoaded())
         op.Accept(INAM.value);
@@ -439,7 +439,7 @@ bool CREARecord::VisitFormIDs(FormIDOp &op)
         op.Accept(TPLT.value);
     if(Destructable.IsLoaded())
         {
-        for(UINT32 x = 0; x < Destructable->Stages.value.size(); ++x)
+        for(uint32_t x = 0; x < Destructable->Stages.value.size(); ++x)
             {
             op.Accept(Destructable->Stages.value[x]->DSTD.value.explosion);
             op.Accept(Destructable->Stages.value[x]->DSTD.value.debris);
@@ -447,13 +447,13 @@ bool CREARecord::VisitFormIDs(FormIDOp &op)
         }
     if(SCRI.IsLoaded())
         op.Accept(SCRI.value);
-    for(UINT32 x = 0; x < CNTO.value.size(); ++x)
+    for(uint32_t x = 0; x < CNTO.value.size(); ++x)
         {
         op.Accept(CNTO.value[x]->CNTO.value.item);
         if(CNTO.value[x]->IsGlobal())
             op.Accept(CNTO.value[x]->COED->globalOrRank);
         }
-    for(UINT32 x = 0; x < PKID.value.size(); x++)
+    for(uint32_t x = 0; x < PKID.value.size(); x++)
         op.Accept(PKID.value[x]);
     if(ZNAM.IsLoaded())
         op.Accept(ZNAM.value);
@@ -461,8 +461,8 @@ bool CREARecord::VisitFormIDs(FormIDOp &op)
         op.Accept(PNAM.value);
     if(CSCR.IsLoaded())
         op.Accept(CSCR.value);
-    for(UINT32 x = 0; x < Types.value.size(); x++)
-        for(UINT32 p = 0; p < Types.value[x]->Sounds.value.size(); ++p)
+    for(uint32_t x = 0; x < Types.value.size(); x++)
+        for(uint32_t p = 0; p < Types.value[x]->Sounds.value.size(); ++p)
             op.Accept(Types.value[x]->Sounds.value[p]->CSDI.value);
     if(CNAM.IsLoaded())
         op.Accept(CNAM.value);
@@ -761,12 +761,12 @@ void CREARecord::IsInvulnerable(bool value)
     SETBIT(ACBS.value.flags, fIsInvulnerable, value);
     }
 
-bool CREARecord::IsFlagMask(UINT32 Mask, bool Exact)
+bool CREARecord::IsFlagMask(uint32_t Mask, bool Exact)
     {
     return Exact ? ((ACBS.value.flags & Mask) == Mask) : ((ACBS.value.flags & Mask) != 0);
     }
 
-void CREARecord::SetFlagMask(UINT32 Mask)
+void CREARecord::SetFlagMask(uint32_t Mask)
     {
     ACBS.value.flags = Mask;
     }
@@ -871,12 +871,12 @@ void CREARecord::IsUseScript(bool value)
     SETBIT(ACBS.value.templateFlags, fIsUseScript, value);
     }
 
-bool CREARecord::IsTemplateFlagMask(UINT16 Mask, bool Exact)
+bool CREARecord::IsTemplateFlagMask(uint16_t Mask, bool Exact)
     {
     return Exact ? ((ACBS.value.templateFlags & Mask) == Mask) : ((ACBS.value.templateFlags & Mask) != 0);
     }
 
-void CREARecord::SetTemplateFlagMask(UINT16 Mask)
+void CREARecord::SetTemplateFlagMask(uint16_t Mask)
     {
     ACBS.value.templateFlags = Mask;
     }
@@ -891,12 +891,12 @@ void CREARecord::IsAggroRadiusBehavior(bool value)
     SETBIT(AIDT.value.aggroFlags, fIsAggroRadiusBehavior, value);
     }
 
-bool CREARecord::IsAggroFlagMask(UINT8 Mask, bool Exact)
+bool CREARecord::IsAggroFlagMask(uint8_t Mask, bool Exact)
     {
     return Exact ? ((AIDT.value.aggroFlags & Mask) == Mask) : ((AIDT.value.aggroFlags & Mask) != 0);
     }
 
-void CREARecord::SetAggroFlagMask(UINT8 Mask)
+void CREARecord::SetAggroFlagMask(uint8_t Mask)
     {
     AIDT.value.aggroFlags = Mask;
     }
@@ -1031,12 +1031,12 @@ void CREARecord::IsServicesRepair(bool value)
     SETBIT(AIDT.value.flags, fIsServicesRepair, value);
     }
 
-bool CREARecord::IsServicesFlagMask(UINT32 Mask, bool Exact)
+bool CREARecord::IsServicesFlagMask(uint32_t Mask, bool Exact)
     {
     return Exact ? ((AIDT.value.flags & Mask) == Mask) : ((AIDT.value.flags & Mask) != 0);
     }
 
-void CREARecord::SetServicesFlagMask(UINT32 Mask)
+void CREARecord::SetServicesFlagMask(uint32_t Mask)
     {
     AIDT.value.flags = Mask;
     }
@@ -1121,12 +1121,12 @@ void CREARecord::IsGiant(bool value)
     DATA.value.creatureType = value ? eGiant : eAnimal;
     }
 
-bool CREARecord::IsType(UINT8 Type)
+bool CREARecord::IsType(uint8_t Type)
     {
     return DATA.value.creatureType == Type;
     }
 
-void CREARecord::SetType(UINT8 Type)
+void CREARecord::SetType(uint8_t Type)
     {
     DATA.value.creatureType = Type;
     }
@@ -2291,12 +2291,12 @@ void CREARecord::IsANY(bool value)
     EAMT.value = value ? eANY : eAttackLeft;
     }
 
-bool CREARecord::IsAttackAnimType(UINT16 Type)
+bool CREARecord::IsAttackAnimType(uint16_t Type)
     {
     return EAMT.value == Type;
     }
 
-void CREARecord::SetAttackAnimType(UINT16 Type)
+void CREARecord::SetAttackAnimType(uint16_t Type)
     {
     EAMT.value = Type;
     }
@@ -2331,12 +2331,12 @@ void CREARecord::IsSilent(bool value)
     NAM5.value = value ? eSilent : eLoud;
     }
 
-bool CREARecord::IsSoundLevelType(UINT32 Type)
+bool CREARecord::IsSoundLevelType(uint32_t Type)
     {
     return NAM5.value == Type;
     }
 
-void CREARecord::SetSoundLevelType(UINT32 Type)
+void CREARecord::SetSoundLevelType(uint32_t Type)
     {
     NAM5.value = Type;
     }
@@ -2381,12 +2381,12 @@ void CREARecord::IsFrenzied(bool value)
     AIDT.value.aggression = value ? eFrenzied : eUnaggressive;
     }
 
-bool CREARecord::IsAggressionType(UINT8 Type)
+bool CREARecord::IsAggressionType(uint8_t Type)
     {
     return AIDT.value.aggression == Type;
     }
 
-void CREARecord::SetAggressionType(UINT8 Type)
+void CREARecord::SetAggressionType(uint8_t Type)
     {
     AIDT.value.aggression = Type;
     }
@@ -2441,12 +2441,12 @@ void CREARecord::IsFoolhardy(bool value)
     AIDT.value.confidence = value ? eFoolhardy : eCowardly;
     }
 
-bool CREARecord::IsConfidenceType(UINT8 Type)
+bool CREARecord::IsConfidenceType(uint8_t Type)
     {
     return AIDT.value.confidence == Type;
     }
 
-void CREARecord::SetConfidenceType(UINT8 Type)
+void CREARecord::SetConfidenceType(uint8_t Type)
     {
     AIDT.value.confidence = Type;
     }
@@ -2531,12 +2531,12 @@ void CREARecord::IsSad(bool value)
     AIDT.value.mood = value ? eSad : eNeutral;
     }
 
-bool CREARecord::IsMoodType(UINT8 Type)
+bool CREARecord::IsMoodType(uint8_t Type)
     {
     return AIDT.value.mood == Type;
     }
 
-void CREARecord::SetMoodType(UINT8 Type)
+void CREARecord::SetMoodType(uint8_t Type)
     {
     AIDT.value.mood = Type;
     }
@@ -2571,12 +2571,12 @@ void CREARecord::IsHelpsFriendsAndAllies(bool value)
     AIDT.value.assistance = value ? eHelpsFriendsAndAllies : eHelpsNobody;
     }
 
-bool CREARecord::IsAssistanceType(UINT8 Type)
+bool CREARecord::IsAssistanceType(uint8_t Type)
     {
     return AIDT.value.assistance == Type;
     }
 
-void CREARecord::SetAssistanceType(UINT8 Type)
+void CREARecord::SetAssistanceType(uint8_t Type)
     {
     AIDT.value.assistance = Type;
     }
@@ -2701,44 +2701,44 @@ void CREARecord::IsOrganicGlow(bool value)
     NAM4.value = value ? eOrganicGlow : eStone;
     }
 
-bool CREARecord::IsImpactType(UINT32 Type)
+bool CREARecord::IsImpactType(uint32_t Type)
     {
     return NAM4.value == Type;
     }
 
-void CREARecord::SetImpactType(UINT32 Type)
+void CREARecord::SetImpactType(uint32_t Type)
     {
     NAM4.value = Type;
     }
 
-UINT32 CREARecord::GetType()
+uint32_t CREARecord::GetType()
     {
     return REV32(CREA);
     }
 
-STRING CREARecord::GetStrType()
+char * CREARecord::GetStrType()
     {
     return "CREA";
     }
 
-SINT32 CREARecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk)
+int32_t CREARecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk)
     {
-    UINT32 subType = 0;
-    UINT32 subSize = 0;
+    uint32_t subType = 0;
+    uint32_t subSize = 0;
     while(buffer < end_buffer){
-        subType = *(UINT32 *)buffer;
+        subType = *(uint32_t *)buffer;
         buffer += 4;
         switch(subType)
             {
             case REV32(XXXX):
                 buffer += 2;
-                subSize = *(UINT32 *)buffer;
+                subSize = *(uint32_t *)buffer;
                 buffer += 4;
-                subType = *(UINT32 *)buffer;
+                subType = *(uint32_t *)buffer;
                 buffer += 6;
                 break;
             default:
-                subSize = *(UINT16 *)buffer;
+                subSize = *(uint16_t *)buffer;
                 buffer += 2;
                 break;
             }
@@ -2790,7 +2790,7 @@ SINT32 CREARecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer,
                 //Hack
                 {
                 bool unload_nift = true;
-                for(UINT32 x = 0; x < NIFT.GetSize(); ++x)
+                for(uint32_t x = 0; x < NIFT.GetSize(); ++x)
                     if(NIFT.value[x] != 0)
                         {
                         unload_nift = false;
@@ -2926,7 +2926,7 @@ SINT32 CREARecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer,
     return 0;
     }
 
-SINT32 CREARecord::Unload()
+int32_t CREARecord::Unload()
     {
     IsChanged(false);
     IsLoaded(false);
@@ -2967,7 +2967,7 @@ SINT32 CREARecord::Unload()
     return 1;
     }
 
-SINT32 CREARecord::WriteRecord(FileWriter &writer)
+int32_t CREARecord::WriteRecord(FileWriter &writer)
     {
     WRITE(EDID);
     WRITE(OBND);

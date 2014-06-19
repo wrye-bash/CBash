@@ -38,7 +38,7 @@
 
 namespace Ob
 {
-UINT32 CSTYRecord::GetFieldAttribute(FIELD_IDENTIFIERS, UINT32 WhichAttribute)
+uint32_t CSTYRecord::GetFieldAttribute(FIELD_IDENTIFIERS, uint32_t WhichAttribute)
     {
     switch(FieldID)
         {
@@ -392,24 +392,24 @@ void * CSTYRecord::GetField(FIELD_IDENTIFIERS, void **FieldValues)
     return NULL;
     }
 
-bool CSTYRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
+bool CSTYRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, uint32_t ArraySize)
     {
     switch(FieldID)
         {
         case 1: //flags1
-            SetHeaderFlagMask(*(UINT32 *)FieldValue);
+            SetHeaderFlagMask(*(uint32_t *)FieldValue);
             break;
         case 3: //flags2
-            SetHeaderUnknownFlagMask(*(UINT32 *)FieldValue);
+            SetHeaderUnknownFlagMask(*(uint32_t *)FieldValue);
             break;
         case 4: //eid
-            EDID.Copy((STRING)FieldValue);
+            EDID.Copy((char *)FieldValue);
             break;
         case 5: //dodgeChance
-            CSTD.value.dodgeChance = *(UINT8 *)FieldValue;
+            CSTD.value.dodgeChance = *(uint8_t *)FieldValue;
             break;
         case 6: //lrChance
-            CSTD.value.lrChance = *(UINT8 *)FieldValue;
+            CSTD.value.lrChance = *(uint8_t *)FieldValue;
             break;
         case 7: //unused1
             if(ArraySize != 2)
@@ -418,34 +418,34 @@ bool CSTYRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             CSTD.value.unused1[1] = ((UINT8ARRAY)FieldValue)[1];
             break;
         case 8: //lrTimerMin
-            CSTD.value.lrTimerMin = *(FLOAT32 *)FieldValue;
+            CSTD.value.lrTimerMin = *(float *)FieldValue;
             break;
         case 9: //lrTimerMax
-            CSTD.value.lrTimerMax = *(FLOAT32 *)FieldValue;
+            CSTD.value.lrTimerMax = *(float *)FieldValue;
             break;
         case 10: //forTimerMin
-            CSTD.value.forTimerMin = *(FLOAT32 *)FieldValue;
+            CSTD.value.forTimerMin = *(float *)FieldValue;
             break;
         case 11: //forTimerMax
-            CSTD.value.forTimerMax = *(FLOAT32 *)FieldValue;
+            CSTD.value.forTimerMax = *(float *)FieldValue;
             break;
         case 12: //backTimerMin
-            CSTD.value.backTimerMin = *(FLOAT32 *)FieldValue;
+            CSTD.value.backTimerMin = *(float *)FieldValue;
             break;
         case 13: //backTimerMax
-            CSTD.value.backTimerMax = *(FLOAT32 *)FieldValue;
+            CSTD.value.backTimerMax = *(float *)FieldValue;
             break;
         case 14: //idleTimerMin
-            CSTD.value.idleTimerMin = *(FLOAT32 *)FieldValue;
+            CSTD.value.idleTimerMin = *(float *)FieldValue;
             break;
         case 15: //idleTimerMax
-            CSTD.value.idleTimerMax = *(FLOAT32 *)FieldValue;
+            CSTD.value.idleTimerMax = *(float *)FieldValue;
             break;
         case 16: //blkChance
-            CSTD.value.blkChance = *(UINT8 *)FieldValue;
+            CSTD.value.blkChance = *(uint8_t *)FieldValue;
             break;
         case 17: //atkChance
-            CSTD.value.atkChance = *(UINT8 *)FieldValue;
+            CSTD.value.atkChance = *(uint8_t *)FieldValue;
             break;
         case 18: //unused2
             if(ArraySize != 2)
@@ -454,16 +454,16 @@ bool CSTYRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             CSTD.value.unused2[1] = ((UINT8ARRAY)FieldValue)[1];
             break;
         case 19: //atkBRecoil
-            CSTD.value.atkBRecoil = *(FLOAT32 *)FieldValue;
+            CSTD.value.atkBRecoil = *(float *)FieldValue;
             break;
         case 20: //atkBUnc
-            CSTD.value.atkBUnc = *(FLOAT32 *)FieldValue;
+            CSTD.value.atkBUnc = *(float *)FieldValue;
             break;
         case 21: //atkBh2h
-            CSTD.value.atkBh2h = *(FLOAT32 *)FieldValue;
+            CSTD.value.atkBh2h = *(float *)FieldValue;
             break;
         case 22: //pAtkChance
-            CSTD.value.pAtkChance = *(UINT8 *)FieldValue;
+            CSTD.value.pAtkChance = *(uint8_t *)FieldValue;
             break;
         case 23: //unused3
             if(ArraySize != 3)
@@ -473,25 +473,25 @@ bool CSTYRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             CSTD.value.unused3[2] = ((UINT8ARRAY)FieldValue)[2];
             break;
         case 24: //pAtkBRecoil
-            CSTD.value.pAtkBRecoil = *(FLOAT32 *)FieldValue;
+            CSTD.value.pAtkBRecoil = *(float *)FieldValue;
             break;
         case 25: //pAtkBUnc
-            CSTD.value.pAtkBUnc = *(FLOAT32 *)FieldValue;
+            CSTD.value.pAtkBUnc = *(float *)FieldValue;
             break;
         case 26: //pAtkNormal
-            CSTD.value.pAtkNormal = *(UINT8 *)FieldValue;
+            CSTD.value.pAtkNormal = *(uint8_t *)FieldValue;
             break;
         case 27: //pAtkFor
-            CSTD.value.pAtkFor = *(UINT8 *)FieldValue;
+            CSTD.value.pAtkFor = *(uint8_t *)FieldValue;
             break;
         case 28: //pAtkBack
-            CSTD.value.pAtkBack = *(UINT8 *)FieldValue;
+            CSTD.value.pAtkBack = *(uint8_t *)FieldValue;
             break;
         case 29: //pAtkL
-            CSTD.value.pAtkL = *(UINT8 *)FieldValue;
+            CSTD.value.pAtkL = *(uint8_t *)FieldValue;
             break;
         case 30: //pAtkR
-            CSTD.value.pAtkR = *(UINT8 *)FieldValue;
+            CSTD.value.pAtkR = *(uint8_t *)FieldValue;
             break;
         case 31: //unused4
             if(ArraySize != 3)
@@ -501,16 +501,16 @@ bool CSTYRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             CSTD.value.unused4[2] = ((UINT8ARRAY)FieldValue)[2];
             break;
         case 32: //holdTimerMin
-            CSTD.value.holdTimerMin = *(FLOAT32 *)FieldValue;
+            CSTD.value.holdTimerMin = *(float *)FieldValue;
             break;
         case 33: //holdTimerMax
-            CSTD.value.holdTimerMax = *(FLOAT32 *)FieldValue;
+            CSTD.value.holdTimerMax = *(float *)FieldValue;
             break;
         case 34: //flagsA
-            SetFlagAMask(*(UINT8 *)FieldValue);
+            SetFlagAMask(*(uint8_t *)FieldValue);
             break;
         case 35: //acroDodge
-            CSTD.value.acroDodge = *(UINT8 *)FieldValue;
+            CSTD.value.acroDodge = *(uint8_t *)FieldValue;
             break;
         case 36: //unused5
             if(ArraySize != 2)
@@ -519,28 +519,28 @@ bool CSTYRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             CSTD.value.unused5[1] = ((UINT8ARRAY)FieldValue)[1];
             break;
         case 37: //rMultOpt
-            CSTD.value.rMultOpt = *(FLOAT32 *)FieldValue;
+            CSTD.value.rMultOpt = *(float *)FieldValue;
             break;
         case 38: //rMultMax
-            CSTD.value.rMultMax = *(FLOAT32 *)FieldValue;
+            CSTD.value.rMultMax = *(float *)FieldValue;
             break;
         case 39: //mDistance
-            CSTD.value.mDistance = *(FLOAT32 *)FieldValue;
+            CSTD.value.mDistance = *(float *)FieldValue;
             break;
         case 40: //rDistance
-            CSTD.value.rDistance = *(FLOAT32 *)FieldValue;
+            CSTD.value.rDistance = *(float *)FieldValue;
             break;
         case 41: //buffStand
-            CSTD.value.buffStand = *(FLOAT32 *)FieldValue;
+            CSTD.value.buffStand = *(float *)FieldValue;
             break;
         case 42: //rStand
-            CSTD.value.rStand = *(FLOAT32 *)FieldValue;
+            CSTD.value.rStand = *(float *)FieldValue;
             break;
         case 43: //groupStand
-            CSTD.value.groupStand = *(FLOAT32 *)FieldValue;
+            CSTD.value.groupStand = *(float *)FieldValue;
             break;
         case 44: //rushChance
-            CSTD.value.rushChance = *(UINT8 *)FieldValue;
+            CSTD.value.rushChance = *(uint8_t *)FieldValue;
             break;
         case 45: //unused6
             if(ArraySize != 3)
@@ -550,94 +550,94 @@ bool CSTYRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             CSTD.value.unused6[2] = ((UINT8ARRAY)FieldValue)[2];
             break;
         case 46: //rushMult
-            CSTD.value.rushMult = *(FLOAT32 *)FieldValue;
+            CSTD.value.rushMult = *(float *)FieldValue;
             break;
         case 47: //flagsB
-            SetFlagBMask(*(UINT32 *)FieldValue);
+            SetFlagBMask(*(uint32_t *)FieldValue);
             break;
         case 48: //dodgeFMult
             CSAD.Load();
-            CSAD->dodgeFMult = *(FLOAT32 *)FieldValue;
+            CSAD->dodgeFMult = *(float *)FieldValue;
             break;
         case 49: //dodgeFBase
             CSAD.Load();
-            CSAD->dodgeFBase = *(FLOAT32 *)FieldValue;
+            CSAD->dodgeFBase = *(float *)FieldValue;
             break;
         case 50: //encSBase
             CSAD.Load();
-            CSAD->encSBase = *(FLOAT32 *)FieldValue;
+            CSAD->encSBase = *(float *)FieldValue;
             break;
         case 51: //encSMult
             CSAD.Load();
-            CSAD->encSMult = *(FLOAT32 *)FieldValue;
+            CSAD->encSMult = *(float *)FieldValue;
             break;
         case 52: //dodgeAtkMult
             CSAD.Load();
-            CSAD->dodgeAtkMult = *(FLOAT32 *)FieldValue;
+            CSAD->dodgeAtkMult = *(float *)FieldValue;
             break;
         case 53: //dodgeNAtkMult
             CSAD.Load();
-            CSAD->dodgeNAtkMult = *(FLOAT32 *)FieldValue;
+            CSAD->dodgeNAtkMult = *(float *)FieldValue;
             break;
         case 54: //dodgeBAtkMult
             CSAD.Load();
-            CSAD->dodgeBAtkMult = *(FLOAT32 *)FieldValue;
+            CSAD->dodgeBAtkMult = *(float *)FieldValue;
             break;
         case 55: //dodgeBNAtkMult
             CSAD.Load();
-            CSAD->dodgeBNAtkMult = *(FLOAT32 *)FieldValue;
+            CSAD->dodgeBNAtkMult = *(float *)FieldValue;
             break;
         case 56: //dodgeFAtkMult
             CSAD.Load();
-            CSAD->dodgeFAtkMult = *(FLOAT32 *)FieldValue;
+            CSAD->dodgeFAtkMult = *(float *)FieldValue;
             break;
         case 57: //dodgeFNAtkMult
             CSAD.Load();
-            CSAD->dodgeFNAtkMult = *(FLOAT32 *)FieldValue;
+            CSAD->dodgeFNAtkMult = *(float *)FieldValue;
             break;
         case 58: //blockMult
             CSAD.Load();
-            CSAD->blockMult = *(FLOAT32 *)FieldValue;
+            CSAD->blockMult = *(float *)FieldValue;
             break;
         case 59: //blockBase
             CSAD.Load();
-            CSAD->blockBase = *(FLOAT32 *)FieldValue;
+            CSAD->blockBase = *(float *)FieldValue;
             break;
         case 60: //blockAtkMult
             CSAD.Load();
-            CSAD->blockAtkMult = *(FLOAT32 *)FieldValue;
+            CSAD->blockAtkMult = *(float *)FieldValue;
             break;
         case 61: //blockNAtkMult
             CSAD.Load();
-            CSAD->blockNAtkMult = *(FLOAT32 *)FieldValue;
+            CSAD->blockNAtkMult = *(float *)FieldValue;
             break;
         case 62: //atkMult
             CSAD.Load();
-            CSAD->atkMult = *(FLOAT32 *)FieldValue;
+            CSAD->atkMult = *(float *)FieldValue;
             break;
         case 63: //atkBase
             CSAD.Load();
-            CSAD->atkBase = *(FLOAT32 *)FieldValue;
+            CSAD->atkBase = *(float *)FieldValue;
             break;
         case 64: //atkAtkMult
             CSAD.Load();
-            CSAD->atkAtkMult = *(FLOAT32 *)FieldValue;
+            CSAD->atkAtkMult = *(float *)FieldValue;
             break;
         case 65: //atkNAtkMult
             CSAD.Load();
-            CSAD->atkNAtkMult = *(FLOAT32 *)FieldValue;
+            CSAD->atkNAtkMult = *(float *)FieldValue;
             break;
         case 66: //atkBlockMult
             CSAD.Load();
-            CSAD->atkBlockMult = *(FLOAT32 *)FieldValue;
+            CSAD->atkBlockMult = *(float *)FieldValue;
             break;
         case 67: //pAtkFBase
             CSAD.Load();
-            CSAD->pAtkFBase = *(FLOAT32 *)FieldValue;
+            CSAD->pAtkFBase = *(float *)FieldValue;
             break;
         case 68: //pAtkFMult
             CSAD.Load();
-            CSAD->pAtkFMult = *(FLOAT32 *)FieldValue;
+            CSAD->pAtkFMult = *(float *)FieldValue;
             break;
         default:
             break;

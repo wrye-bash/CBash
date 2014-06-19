@@ -304,14 +304,14 @@ void REFRRecord::IsOppositeParent(bool value)
     Data->XESP->flags = value ? (Data->XESP->flags | fIsOppositeParent) : (Data->XESP->flags & ~fIsOppositeParent);
     }
 
-bool REFRRecord::IsParentFlagMask(UINT8 Mask, bool Exact)
+bool REFRRecord::IsParentFlagMask(uint8_t Mask, bool Exact)
     {
     if(!Data.IsLoaded()) return false;
     if(!Data->XESP.IsLoaded()) return false;
     return Exact ? ((Data->XESP->flags & Mask) == Mask) : ((Data->XESP->flags & Mask) != 0);
     }
 
-void REFRRecord::SetParentFlagMask(UINT8 Mask)
+void REFRRecord::SetParentFlagMask(uint8_t Mask)
     {
     Data.Load();
     Data->XESP.Load();
@@ -346,14 +346,14 @@ void REFRRecord::IsCanTravelTo(bool value)
     Data->Marker->FNAM.value = value ? (Data->Marker->FNAM.value | fCanTravelTo) : (Data->Marker->FNAM.value & ~fCanTravelTo);
     }
 
-bool REFRRecord::IsMapFlagMask(UINT8 Mask, bool Exact)
+bool REFRRecord::IsMapFlagMask(uint8_t Mask, bool Exact)
     {
     if(!Data.IsLoaded()) return false;
     if(!Data->Marker.IsLoaded()) return false;
     return Exact ? ((Data->Marker->FNAM.value & Mask) == Mask) : ((Data->Marker->FNAM.value & Mask) != 0);
     }
 
-void REFRRecord::SetMapFlagMask(UINT8 Mask)
+void REFRRecord::SetMapFlagMask(uint8_t Mask)
     {
     Data.Load();
     Data->Marker.Load();
@@ -408,13 +408,13 @@ void REFRRecord::IsOpenByDefault(bool value)
     Data->XACT.value = value ? (Data->XACT.value | fOpenByDefault) : (Data->XACT.value & ~fOpenByDefault);
     }
 
-bool REFRRecord::IsActionFlagMask(UINT32 Mask, bool Exact)
+bool REFRRecord::IsActionFlagMask(uint32_t Mask, bool Exact)
     {
     if(!Data.IsLoaded()) return false;
     return Exact ? ((Data->XACT.value & Mask) == Mask) : ((Data->XACT.value & Mask) != 0);
     }
 
-void REFRRecord::SetActionFlagMask(UINT32 Mask)
+void REFRRecord::SetActionFlagMask(uint32_t Mask)
     {
     Data.Load();
     Data->XACT.value = Mask;
@@ -434,14 +434,14 @@ void REFRRecord::IsLeveledLock(bool value)
     Data->XLOC->flags = value ? (Data->XLOC->flags | fLeveledLock) : (Data->XLOC->flags & ~fLeveledLock);
     }
 
-bool REFRRecord::IsLockFlagMask(UINT8 Mask, bool Exact)
+bool REFRRecord::IsLockFlagMask(uint8_t Mask, bool Exact)
     {
     if(!Data.IsLoaded()) return false;
     if(!Data->XLOC.IsLoaded()) return false;
     return Exact ? ((Data->XLOC->flags & Mask) == Mask) : ((Data->XLOC->flags & Mask) != 0);
     }
 
-void REFRRecord::SetLockFlagMask(UINT8 Mask)
+void REFRRecord::SetLockFlagMask(uint8_t Mask)
     {
     Data.Load();
     Data->XLOC.Load();
@@ -669,14 +669,14 @@ void REFRRecord::IsUnknownDoorIcon(bool value)
         Data->Marker->TNAM.value.markerType = eMarkerNone;
     }
 
-bool REFRRecord::IsMarkerType(UINT8 Type)
+bool REFRRecord::IsMarkerType(uint8_t Type)
     {
     if(!Data.IsLoaded()) return false;
     if(!Data->Marker.IsLoaded()) return false;
     return (Data->Marker->TNAM.value.markerType == Type);
     }
 
-void REFRRecord::SetMarkerType(UINT8 Type)
+void REFRRecord::SetMarkerType(uint8_t Type)
     {
     Data.Load();
     Data->Marker.Load();
@@ -773,48 +773,48 @@ void REFRRecord::IsGrandSoul(bool value)
         Data->XSOL.value = eNone;
     }
 
-bool REFRRecord::IsSoul(UINT8 Type)
+bool REFRRecord::IsSoul(uint8_t Type)
     {
     if(!Data.IsLoaded()) return false;
     return (Data->XSOL.value == Type);
     }
 
-void REFRRecord::SetSoul(UINT8 Type)
+void REFRRecord::SetSoul(uint8_t Type)
     {
     Data.Load();
     Data->XSOL.value = Type;
     }
 
-UINT32 REFRRecord::GetType()
+uint32_t REFRRecord::GetType()
     {
     return REV32(REFR);
     }
 
-STRING REFRRecord::GetStrType()
+char * REFRRecord::GetStrType()
     {
     return "REFR";
     }
 
-SINT32 REFRRecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk)
+int32_t REFRRecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk)
     {
-    UINT32 subType = 0;
-    UINT32 subSize = 0;
-    UINT32 lastChunk = 0;
+    uint32_t subType = 0;
+    uint32_t subSize = 0;
+    uint32_t lastChunk = 0;
     Data.Load();
     while(buffer < end_buffer){
-        subType = *(UINT32 *)buffer;
+        subType = *(uint32_t *)buffer;
         buffer += 4;
         switch(subType)
             {
             case REV32(XXXX):
                 buffer += 2;
-                subSize = *(UINT32 *)buffer;
+                subSize = *(uint32_t *)buffer;
                 buffer += 4;
-                subType = *(UINT32 *)buffer;
+                subType = *(uint32_t *)buffer;
                 buffer += 6;
                 break;
             default:
-                subSize = *(UINT16 *)buffer;
+                subSize = *(uint16_t *)buffer;
                 buffer += 2;
                 break;
             }
@@ -871,7 +871,7 @@ SINT32 REFRRecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer,
                         Data->XSED.Load();
                         Data->XSED->isOffset = true;
                         //XSED.size = 1;
-                        Data->XSED->offset = *(UINT8 *)buffer;
+                        Data->XSED->offset = *(uint8_t *)buffer;
                         buffer++;
                         break;
                     case 4:
@@ -879,7 +879,7 @@ SINT32 REFRRecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer,
                         Data->XSED.Load();
                         Data->XSED->isOffset = false;
                         //XSED.size = 4;
-                        Data->XSED->seed = *(UINT32 *)buffer;
+                        Data->XSED->seed = *(uint32_t *)buffer;
                         buffer += 4;
                         break;
                     default:
@@ -972,7 +972,7 @@ SINT32 REFRRecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer,
     return 0;
     }
 
-SINT32 REFRRecord::Unload()
+int32_t REFRRecord::Unload()
     {
     IsChanged(false);
     IsLoaded(false);
@@ -1000,7 +1000,7 @@ SINT32 REFRRecord::Unload()
     return 1;
     }
 
-SINT32 REFRRecord::WriteRecord(FileWriter &writer)
+int32_t REFRRecord::WriteRecord(FileWriter &writer)
     {
     if(!Data.IsLoaded())
         return 0;

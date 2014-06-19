@@ -270,12 +270,12 @@ void WTHRRecord::WTHRSNAM::IsThunder(bool value)
         type = eDefault;
     }
 
-bool WTHRRecord::WTHRSNAM::IsType(UINT32 Type)
+bool WTHRRecord::WTHRSNAM::IsType(uint32_t Type)
     {
     return (type == Type);
     }
 
-void WTHRRecord::WTHRSNAM::SetType(UINT32 Type)
+void WTHRRecord::WTHRSNAM::SetType(uint32_t Type)
     {
     type = Type;
     }
@@ -331,7 +331,7 @@ bool WTHRRecord::VisitFormIDs(FormIDOp &op)
     if(!IsLoaded())
         return false;
 
-    for(UINT32 ListIndex = 0; ListIndex < Sounds.value.size(); ListIndex++)
+    for(uint32_t ListIndex = 0; ListIndex < Sounds.value.size(); ListIndex++)
         op.Accept(Sounds.value[ListIndex]->sound);
 
     return op.Stop();
@@ -472,54 +472,54 @@ void WTHRRecord::IsUnk2(bool value)
     SETBIT(DATA.value.weatherType, fUnk2, value);
     }
 
-bool WTHRRecord::IsType(UINT8 Type)
+bool WTHRRecord::IsType(uint8_t Type)
     {
     return (DATA.value.weatherType == Type);
     }
 
-void WTHRRecord::SetType(UINT8 Type)
+void WTHRRecord::SetType(uint8_t Type)
     {
     DATA.value.weatherType = Type;
     }
 
-bool WTHRRecord::IsFlagMask(UINT8 Mask, bool Exact)
+bool WTHRRecord::IsFlagMask(uint8_t Mask, bool Exact)
     {
     return Exact ? ((DATA.value.weatherType & Mask) == Mask) : ((DATA.value.weatherType & Mask) != 0);
     }
 
-void WTHRRecord::SetFlagMask(UINT8 Mask)
+void WTHRRecord::SetFlagMask(uint8_t Mask)
     {
     DATA.value.weatherType = Mask;
     }
 
-UINT32 WTHRRecord::GetType()
+uint32_t WTHRRecord::GetType()
     {
     return REV32(WTHR);
     }
 
-STRING WTHRRecord::GetStrType()
+char * WTHRRecord::GetStrType()
     {
     return "WTHR";
     }
 
-SINT32 WTHRRecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk)
+int32_t WTHRRecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk)
     {
-    UINT32 subType = 0;
-    UINT32 subSize = 0;
+    uint32_t subType = 0;
+    uint32_t subSize = 0;
     while(buffer < end_buffer){
-        subType = *(UINT32 *)buffer;
+        subType = *(uint32_t *)buffer;
         buffer += 4;
         switch(subType)
             {
             case REV32(XXXX):
                 buffer += 2;
-                subSize = *(UINT32 *)buffer;
+                subSize = *(uint32_t *)buffer;
                 buffer += 4;
-                subType = *(UINT32 *)buffer;
+                subType = *(uint32_t *)buffer;
                 buffer += 6;
                 break;
             default:
-                subSize = *(UINT16 *)buffer;
+                subSize = *(uint16_t *)buffer;
                 buffer += 2;
                 break;
             }
@@ -574,7 +574,7 @@ SINT32 WTHRRecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer,
     return 0;
     }
 
-SINT32 WTHRRecord::Unload()
+int32_t WTHRRecord::Unload()
     {
     IsChanged(false);
     IsLoaded(false);
@@ -590,7 +590,7 @@ SINT32 WTHRRecord::Unload()
     return 1;
     }
 
-SINT32 WTHRRecord::WriteRecord(FileWriter &writer)
+int32_t WTHRRecord::WriteRecord(FileWriter &writer)
     {
     WRITE(EDID);
     WRITE(CNAM);

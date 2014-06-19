@@ -42,7 +42,7 @@ StringLookups::StringLookups()
     //
 }
 
-STRING StringLookups::GetFileName(STRING ModName, STRING Language, typeTypes Type) const
+char * StringLookups::GetFileName(char * ModName, char * Language, typeTypes Type) const
 {
     // Assume that cwd is set to the 'Data' directory still,
     // it should have been set by Collection.AddMod
@@ -53,7 +53,7 @@ STRING StringLookups::GetFileName(STRING ModName, STRING Language, typeTypes Typ
     NameSize += (Type == eStrings ? 8 : 10); // strlen(".STRINGS") : strlen(".DLSTRINGS") or strlen(".ILSTRINGS")
     
     // Allocate
-    STRING FileName = new char[NameSize];
+    char * FileName = new char[NameSize];
     strcpy(FileName, "./Strings/");
     strncat(FileName, ModName, ModNameSize);
     strcat(FileName, "_");
@@ -73,16 +73,16 @@ STRING StringLookups::GetFileName(STRING ModName, STRING Language, typeTypes Typ
     return FileName;
 }
 
-bool StringLookups::Open(STRING ModName)
+bool StringLookups::Open(char * ModName)
 {
     if (ModName == NULL || file_map_strings.is_open())
         return false;
 
     /* TODO: Actually generate the applicible file names */
     // .STRINGS file.  For now, we'll assume ENGLISH is the language to use
-    STRING StringsFileName = GetFileName(ModName, "English", eStrings);
-    STRING DLStringsFileName = GetFileName(ModName, "English", eDLStrings);
-    STRING ILStringsFileName = GetFileName(ModName, "English", eILStrings);
+    char * StringsFileName = GetFileName(ModName, "English", eStrings);
+    char * DLStringsFileName = GetFileName(ModName, "English", eDLStrings);
+    char * ILStringsFileName = GetFileName(ModName, "English", eILStrings);
 
     try
     {
@@ -106,7 +106,7 @@ bool StringLookups::Open(STRING ModName)
     return true;
 }
 
-void StringLookups::Open(STRING FileName, boost::iostreams::mapped_file_source &file_map)
+void StringLookups::Open(char * FileName, boost::iostreams::mapped_file_source &file_map)
 {
     try
     {
@@ -158,20 +158,20 @@ void StringLookups::Load()
 
 void StringLookups::Load(boost::iostreams::mapped_file_source &file_map, typeTypes Type)
 {
-    UINT8 *buffer, *dataBegin;
-    buffer = const_cast<UINT8 *>(reinterpret_cast<const UINT8 *>(file_map.data()));
+    uint8_t *buffer, *dataBegin;
+    buffer = const_cast<uint8_t *>(reinterpret_cast<const uint8_t *>(file_map.data()));
 
-    UINT32 stringCount = *reinterpret_cast<UINT32 *>(buffer);
+    uint32_t stringCount = *reinterpret_cast<uint32_t *>(buffer);
     buffer += 8; // 4 for stringCount, 4 for dataSize (skipped)
 
     dataBegin = buffer + (stringCount * 8) + (Type == 0 ? 0 : 4);    
 
-    for(UINT32 i = 0; i < stringCount; ++i)
+    for(uint32_t i = 0; i < stringCount; ++i)
     {
-        UINT32 id = *reinterpret_cast<UINT32 *>(buffer);
-        UINT32 offset = *reinterpret_cast<UINT32 *>(buffer);
+        uint32_t id = *reinterpret_cast<uint32_t *>(buffer);
+        uint32_t offset = *reinterpret_cast<uint32_t *>(buffer);
 
-        STRING value = reinterpret_cast<STRING>(dataBegin + offset);
+        char * value = reinterpret_cast<char *>(dataBegin + offset);
         Strings[id] = value;
     }
 }
@@ -197,7 +197,7 @@ LStringRecord::LStringRecord(const LStringRecord &p)
     }
     else
     {
-        UINT32 size = p.GetSize();
+        uint32_t size = p.GetSize();
         value = new char[size];
         memcpy(value, p.value, size);
     }
@@ -209,9 +209,9 @@ LStringRecord::~LStringRecord()
         delete [] value;
 }
 
-UINT32 LStringRecord::GetSize() const
+uint32_t LStringRecord::GetSize() const
 {
-    return value != NULL ? static_cast<UINT32>(strlen(value)) + 1 : 0;
+    return value != NULL ? static_cast<uint32_t>(strlen(value)) + 1 : 0;
 }
 
 bool LStringRecord::IsLoaded() const
@@ -233,7 +233,7 @@ void LStringRecord::Unload()
     }
 }
 
-bool LStringRecord::Read(unsigned char *&buffer, const UINT32 &subSize, const bool &CompressedOnDisk, StringLookups *LookupStrings)
+bool LStringRecord::Read(unsigned char *&buffer, const uint32_t &subSize, const bool &CompressedOnDisk, StringLookups *LookupStrings)
 {
     if (IsLoaded())
     {
@@ -242,7 +242,7 @@ bool LStringRecord::Read(unsigned char *&buffer, const UINT32 &subSize, const bo
     }
     if (LookupStrings != NULL)
     {
-        UINT32 Id = *reinterpret_cast<UINT32 *>(buffer);
+        uint32_t Id = *reinterpret_cast<uint32_t *>(buffer);
         value = LookupStrings->Strings[Id];
         IsOnDisk = true;
     }
@@ -255,7 +255,7 @@ bool LStringRecord::Read(unsigned char *&buffer, const UINT32 &subSize, const bo
         }
         else
         {
-            value = const_cast<STRING>(reinterpret_cast<const STRING>(buffer));
+            value = const_cast<char *>(reinterpret_cast<const char *>(buffer));
             IsOnDisk = true;
         }
     }
@@ -263,42 +263,42 @@ bool LStringRecord::Read(unsigned char *&buffer, const UINT32 &subSize, const bo
     return true;
 }
 
-void LStringRecord::Write(UINT32 _Type, FileWriter &writer)
+void LStringRecord::Write(uint32_t _Type, FileWriter &writer)
 {
     if (value != NULL)
-        writer.record_write_subrecord(_Type, value, static_cast<UINT32>(strlen(value)) + 1);
+        writer.record_write_subrecord(_Type, value, static_cast<uint32_t>(strlen(value)) + 1);
 }
 
-void LStringRecord::ReqWrite(UINT32 _Type, FileWriter &writer)
+void LStringRecord::ReqWrite(uint32_t _Type, FileWriter &writer)
 {
     if (value != NULL)
-        writer.record_write_subrecord(_Type, value, static_cast<UINT32>(strlen(value)) + 1);
+        writer.record_write_subrecord(_Type, value, static_cast<uint32_t>(strlen(value)) + 1);
     else
     {
-        UINT8 null = 0x00;
+        uint8_t null = 0x00;
         writer.record_write_subrecord(_Type, &null, 1);
     }
 }
 
-void LStringRecord::Copy(STRING FieldValue)
+void LStringRecord::Copy(char * FieldValue)
 {
     Unload();
     if (FieldValue != NULL)
     {
         IsOnDisk = false;
-        UINT32 size = static_cast<UINT32>(strlen(FieldValue)) + 1;
+        uint32_t size = static_cast<uint32_t>(strlen(FieldValue)) + 1;
         value = new char[size];
         memcpy(value, FieldValue, size);
     }
 }
 
-void LStringRecord::TruncateCopy(STRING FieldValue, UINT32 MaxSize)
+void LStringRecord::TruncateCopy(char * FieldValue, uint32_t MaxSize)
 {
     Unload();
     if (FieldValue != NULL)
     {
         IsOnDisk = false;
-        UINT32 size = static_cast<UINT32>(strlen(FieldValue)) + 1;
+        uint32_t size = static_cast<uint32_t>(strlen(FieldValue)) + 1;
         if (MaxSize > size)
             size = MaxSize;
         value = new char[size];
@@ -330,7 +330,7 @@ LStringRecord& LStringRecord::operator = (const LStringRecord &rhs)
         else if (rhs.value != NULL)
         {
             IsOnDisk = false;
-            UINT32 size = static_cast<UINT32>(strlen(rhs.VAL_NAME)) + 1;
+            uint32_t size = static_cast<uint32_t>(strlen(rhs.VAL_NAME)) + 1;
             value = new char[size];
             memcpy(value, rhs.value, size);
         }

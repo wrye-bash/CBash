@@ -57,7 +57,7 @@ public:
 
     void Read(unsigned char *&buffer, const bool &CompressedOnDisk);
 
-    virtual UINT32 GetSize() const;
+    virtual uint32_t GetSize() const;
     virtual void Write(FileWriter &writer) const;
     virtual bool equals(const Fragments *other) const;
     virtual Fragments * Copy() const;

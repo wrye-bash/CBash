@@ -46,8 +46,8 @@ class INFORecord : public Record
         #pragma pack(1)
         struct INFODATA
             {
-            UINT16  dialType; //Type
-            UINT8   flags;
+            uint16_t  dialType; //Type
+            uint8_t   flags;
 
             INFODATA();
             ~INFODATA();
@@ -59,9 +59,9 @@ class INFORecord : public Record
 
         struct INFOTRDT //Response Data
             {
-            UINT32  emotionType; //Emotion Type
-            SINT32  emotionValue; //Emotion Value
-            UINT8   unused1[4], responseNum, unused2[3]; //Unused, Response Number, Unused
+            uint32_t  emotionType; //Emotion Type
+            int32_t  emotionValue; //Emotion Value
+            uint8_t   unused1[4], responseNum, unused2[3]; //Unused, Response Number, Unused
 
             INFOTRDT();
             ~INFOTRDT();
@@ -101,8 +101,8 @@ class INFORecord : public Record
             void   IsHappy(bool value);
             bool   IsSurprise();
             void   IsSurprise(bool value);
-            bool   IsType(UINT32 Type);
-            void   SetType(UINT32 Type);
+            bool   IsType(uint32_t Type);
+            void   SetType(uint32_t Type);
 
             void Write(FileWriter &writer);
 
@@ -176,8 +176,8 @@ class INFORecord : public Record
         void   IsService(bool value);
         bool   IsMisc();
         void   IsMisc(bool value);
-        bool   IsDialogType(UINT16 Type);
-        void   SetDialogType(UINT16 Type);
+        bool   IsDialogType(uint16_t Type);
+        void   SetDialogType(uint16_t Type);
 
         bool   IsGoodbye();
         void   IsGoodbye(bool value);
@@ -193,8 +193,8 @@ class INFORecord : public Record
         void   IsRandomEnd(bool value);
         bool   IsRunForRumors();
         void   IsRunForRumors(bool value);
-        bool   IsFlagMask(UINT8 Mask, bool Exact=false);
-        void   SetFlagMask(UINT8 Mask);
+        bool   IsFlagMask(uint8_t Mask, bool Exact=false);
+        void   SetFlagMask(uint8_t Mask);
 
         bool   IsScriptObject();
         void   IsScriptObject(bool value);
@@ -202,20 +202,20 @@ class INFORecord : public Record
         void   IsScriptQuest(bool value);
         bool   IsScriptEffect();
         void   IsScriptEffect(bool value);
-        bool   IsScriptType(UINT32 Type);
-        void   SetScriptType(UINT32 Type);
+        bool   IsScriptType(uint32_t Type);
+        void   SetScriptType(uint32_t Type);
 
-        UINT32 GetFieldAttribute(DEFAULTED_FIELD_IDENTIFIERS, UINT32 WhichAttribute=0);
+        uint32_t GetFieldAttribute(DEFAULTED_FIELD_IDENTIFIERS, uint32_t WhichAttribute=0);
         void * GetField(DEFAULTED_FIELD_IDENTIFIERS, void **FieldValues=NULL);
-        bool   SetField(DEFAULTED_FIELD_IDENTIFIERS, void *FieldValue=NULL, UINT32 ArraySize=0);
+        bool   SetField(DEFAULTED_FIELD_IDENTIFIERS, void *FieldValue=NULL, uint32_t ArraySize=0);
         void   DeleteField(DEFAULTED_FIELD_IDENTIFIERS);
 
-        UINT32 GetType();
-        STRING GetStrType();
+        uint32_t GetType();
+        char * GetStrType();
 
-        SINT32 ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk=false);
-        SINT32 Unload();
-        SINT32 WriteRecord(FileWriter &writer);
+        int32_t ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk=false);
+        int32_t Unload();
+        int32_t WriteRecord(FileWriter &writer);
 
         bool operator ==(const INFORecord &other) const;
         bool operator !=(const INFORecord &other) const;

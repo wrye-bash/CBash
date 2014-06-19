@@ -44,8 +44,8 @@ class PACKRecord : public Record //Package
     private:
         struct PACKPKDT //General
             {
-            UINT32  flags; //General Flags
-            UINT8   aiType, unused1[3]; //Type, Unused
+            uint32_t  flags; //General Flags
+            uint8_t   aiType, unused1[3]; //Type, Unused
 
             PACKPKDT();
             ~PACKPKDT();
@@ -56,9 +56,9 @@ class PACKRecord : public Record //Package
 
         struct PACKPLDT //Location
             {
-            SINT32  locType;
+            int32_t  locType;
             FORMID_OR_UINT32  locId;
-            SINT32  locRadius;
+            int32_t  locRadius;
 
             PACKPLDT();
             ~PACKPLDT();
@@ -69,10 +69,10 @@ class PACKRecord : public Record //Package
 
         struct PACKPSDT //Schedule
             {
-            SINT8   month, day;
-            UINT8   date;
-            SINT8   time;
-            SINT32  duration;
+            int8_t   month, day;
+            uint8_t   date;
+            int8_t   time;
+            int32_t  duration;
 
             PACKPSDT();
             ~PACKPSDT();
@@ -83,9 +83,9 @@ class PACKRecord : public Record //Package
 
         struct PACKPTDT //Target
             {
-            SINT32 targetType;
+            int32_t targetType;
             FORMID_OR_UINT32 targetId;
-            SINT32 targetCount;
+            int32_t targetCount;
 
             PACKPTDT();
             ~PACKPTDT();
@@ -208,8 +208,8 @@ class PACKRecord : public Record //Package
         void   IsUseHorse(bool value);
         bool   IsNoIdleAnims();
         void   IsNoIdleAnims(bool value);
-        bool   IsFlagMask(UINT32 Mask, bool Exact=false);
-        void   SetFlagMask(UINT32 Mask);
+        bool   IsFlagMask(uint32_t Mask, bool Exact=false);
+        void   SetFlagMask(uint32_t Mask);
 
         bool   IsAIFind();
         void   IsAIFind(bool value);
@@ -235,8 +235,8 @@ class PACKRecord : public Record //Package
         void   IsAIFleeNotCombat(bool value);
         bool   IsAICastMagic();
         void   IsAICastMagic(bool value);
-        bool   IsAIType(UINT8 Type);
-        void   SetAIType(UINT8 Type);
+        bool   IsAIType(uint8_t Type);
+        void   SetAIType(uint8_t Type);
 
         bool   IsLocNearReference();
         void   IsLocNearReference(bool value);
@@ -250,8 +250,8 @@ class PACKRecord : public Record //Package
         void   IsLocObjectID(bool value);
         bool   IsLocObjectType();
         void   IsLocObjectType(bool value);
-        bool   IsLocType(SINT32 Type);
-        void   SetLocType(SINT32 Type);
+        bool   IsLocType(int32_t Type);
+        void   SetLocType(int32_t Type);
 
         bool   IsTargetReference();
         void   IsTargetReference(bool value);
@@ -259,20 +259,20 @@ class PACKRecord : public Record //Package
         void   IsTargetObjectID(bool value);
         bool   IsTargetObjectType();
         void   IsTargetObjectType(bool value);
-        bool   IsTargetType(SINT32 Type);
-        void   SetTargetType(SINT32 Type);
+        bool   IsTargetType(int32_t Type);
+        void   SetTargetType(int32_t Type);
 
-        UINT32 GetFieldAttribute(DEFAULTED_FIELD_IDENTIFIERS, UINT32 WhichAttribute=0);
+        uint32_t GetFieldAttribute(DEFAULTED_FIELD_IDENTIFIERS, uint32_t WhichAttribute=0);
         void * GetField(DEFAULTED_FIELD_IDENTIFIERS, void **FieldValues=NULL);
-        bool   SetField(DEFAULTED_FIELD_IDENTIFIERS, void *FieldValue=NULL, UINT32 ArraySize=0);
+        bool   SetField(DEFAULTED_FIELD_IDENTIFIERS, void *FieldValue=NULL, uint32_t ArraySize=0);
         void   DeleteField(DEFAULTED_FIELD_IDENTIFIERS);
 
-        UINT32 GetType();
-        STRING GetStrType();
+        uint32_t GetType();
+        char * GetStrType();
 
-        SINT32 ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk=false);
-        SINT32 Unload();
-        SINT32 WriteRecord(FileWriter &writer);
+        int32_t ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk=false);
+        int32_t Unload();
+        int32_t WriteRecord(FileWriter &writer);
 
         bool operator ==(const PACKRecord &other) const;
         bool operator !=(const PACKRecord &other) const;

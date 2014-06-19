@@ -158,12 +158,12 @@ void WRLDRecord::IsLODWater(bool value)
     IsNoLODWater(!value);
     }
 
-bool WRLDRecord::IsFlagMask(UINT8 Mask, bool Exact)
+bool WRLDRecord::IsFlagMask(uint8_t Mask, bool Exact)
     {
     return Exact ? ((DATA.value & Mask) == Mask) : ((DATA.value & Mask) != 0);
     }
 
-void WRLDRecord::SetFlagMask(UINT8 Mask)
+void WRLDRecord::SetFlagMask(uint8_t Mask)
     {
     DATA.value = Mask;
     }
@@ -207,44 +207,44 @@ void WRLDRecord::IsDungeonMusic(bool value)
         SNAM.value = eDefault;
     }
 
-bool WRLDRecord::IsMusicType(UINT32 Type)
+bool WRLDRecord::IsMusicType(uint32_t Type)
     {
     return (SNAM.value == Type);
     }
 
-void WRLDRecord::SetMusicType(UINT32 Type)
+void WRLDRecord::SetMusicType(uint32_t Type)
     {
     SNAM.value = Type;
     }
 
-UINT32 WRLDRecord::GetType()
+uint32_t WRLDRecord::GetType()
     {
     return REV32(WRLD);
     }
 
-STRING WRLDRecord::GetStrType()
+char * WRLDRecord::GetStrType()
     {
     return "WRLD";
     }
 
-SINT32 WRLDRecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk)
+int32_t WRLDRecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk)
     {
-    UINT32 subType = 0;
-    UINT32 subSize = 0;
+    uint32_t subType = 0;
+    uint32_t subSize = 0;
     while(buffer < end_buffer){
-        subType = *(UINT32 *)buffer;
+        subType = *(uint32_t *)buffer;
         buffer += 4;
         switch(subType)
             {
             case REV32(XXXX):
                 buffer += 2;
-                subSize = *(UINT32 *)buffer;
+                subSize = *(uint32_t *)buffer;
                 buffer += 4;
-                subType = *(UINT32 *)buffer;
+                subType = *(uint32_t *)buffer;
                 buffer += 6;
                 break;
             default:
-                subSize = *(UINT16 *)buffer;
+                subSize = *(uint16_t *)buffer;
                 buffer += 2;
                 break;
             }
@@ -299,7 +299,7 @@ SINT32 WRLDRecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer,
     return 0;
     }
 
-SINT32 WRLDRecord::Unload()
+int32_t WRLDRecord::Unload()
     {
     IsChanged(false);
     IsLoaded(false);
@@ -318,7 +318,7 @@ SINT32 WRLDRecord::Unload()
     return 1;
     }
 
-SINT32 WRLDRecord::WriteRecord(FileWriter &writer)
+int32_t WRLDRecord::WriteRecord(FileWriter &writer)
     {
     WRITE(EDID);
     WRITE(FULL);
@@ -392,7 +392,7 @@ bool WRLDRecord::deep_equals(Record *master, RecordOp &read_self, RecordOp &read
             return false;
         }
 
-    for(UINT32 ListIndex = 0; ListIndex < CELLS.size(); ++ListIndex)
+    for(uint32_t ListIndex = 0; ListIndex < CELLS.size(); ++ListIndex)
         if(identical_records.count(CELLS[ListIndex]) == 0)
                 return false;
 
@@ -401,7 +401,7 @@ bool WRLDRecord::deep_equals(Record *master, RecordOp &read_self, RecordOp &read
     identical_records.erase(ROAD);
     identical_records.erase(CELL);
 
-    for(UINT32 ListIndex = 0; ListIndex < CELLS.size(); ++ListIndex)
+    for(uint32_t ListIndex = 0; ListIndex < CELLS.size(); ++ListIndex)
         identical_records.erase(CELLS[ListIndex]);
     return true;
     }

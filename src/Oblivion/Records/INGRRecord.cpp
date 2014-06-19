@@ -83,7 +83,7 @@ bool INGRRecord::VisitFormIDs(FormIDOp &op)
     if(SCRI.IsLoaded())
         op.Accept(SCRI.value);
 
-    for(UINT32 ListIndex = 0; ListIndex < Effects.value.size(); ListIndex++)
+    for(uint32_t ListIndex = 0; ListIndex < Effects.value.size(); ListIndex++)
         Effects.value[ListIndex]->VisitFormIDs(op);
 
     return op.Stop();
@@ -109,45 +109,45 @@ void INGRRecord::IsFood(bool value)
     SETBIT(ENIT.value.flags, fIsFood, value);
     }
 
-bool INGRRecord::IsFlagMask(UINT8 Mask, bool Exact)
+bool INGRRecord::IsFlagMask(uint8_t Mask, bool Exact)
     {
     return Exact ? ((ENIT.value.flags & Mask) == Mask) : ((ENIT.value.flags & Mask) != 0);
     }
 
-void INGRRecord::SetFlagMask(UINT8 Mask)
+void INGRRecord::SetFlagMask(uint8_t Mask)
     {
     ENIT.value.flags = Mask;
     }
 
-UINT32 INGRRecord::GetType()
+uint32_t INGRRecord::GetType()
     {
     return REV32(INGR);
     }
 
-STRING INGRRecord::GetStrType()
+char * INGRRecord::GetStrType()
     {
     return "INGR";
     }
 
-SINT32 INGRRecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk)
+int32_t INGRRecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk)
     {
-    UINT32 subType = 0;
-    UINT32 subSize = 0;
+    uint32_t subType = 0;
+    uint32_t subSize = 0;
     bool bNoOBME = true;
     while(buffer < end_buffer){
-        subType = *(UINT32 *)buffer;
+        subType = *(uint32_t *)buffer;
         buffer += 4;
         switch(subType)
             {
             case REV32(XXXX):
                 buffer += 2;
-                subSize = *(UINT32 *)buffer;
+                subSize = *(uint32_t *)buffer;
                 buffer += 4;
-                subType = *(UINT32 *)buffer;
+                subType = *(uint32_t *)buffer;
                 buffer += 6;
                 break;
             default:
-                subSize = *(UINT16 *)buffer;
+                subSize = *(uint16_t *)buffer;
                 buffer += 2;
                 break;
             }
@@ -244,7 +244,7 @@ SINT32 INGRRecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer,
     return 0;
     }
 
-SINT32 INGRRecord::Unload()
+int32_t INGRRecord::Unload()
     {
     IsChanged(false);
     IsLoaded(false);
@@ -260,7 +260,7 @@ SINT32 INGRRecord::Unload()
     return 1;
     }
 
-SINT32 INGRRecord::WriteRecord(FileWriter &writer)
+int32_t INGRRecord::WriteRecord(FileWriter &writer)
     {
     WRITE(EDID);
     if(OBME.IsLoaded())

@@ -44,9 +44,9 @@ class INFORecord : public FNVRecord //Dialog response
     private:
         struct INFODATA
             {
-            UINT8   dialType; //Type
-            UINT8   nextSpeaker; //Next Speaker
-            UINT16  flags;
+            uint8_t   dialType; //Type
+            uint8_t   nextSpeaker; //Next Speaker
+            uint16_t  flags;
 
             INFODATA();
             ~INFODATA();
@@ -57,11 +57,11 @@ class INFORecord : public FNVRecord //Dialog response
 
         struct INFOTRDT //Response Data
             {
-            UINT32  emotionType; //Emotion Type
-            SINT32  emotionValue; //Emotion Value
-            UINT8   unused1[4], responseNum, unused2[3]; //Unused, Response Number, Unused
+            uint32_t  emotionType; //Emotion Type
+            int32_t  emotionValue; //Emotion Value
+            uint8_t   unused1[4], responseNum, unused2[3]; //Unused, Response Number, Unused
             FORMID  sound; //Sound
-            UINT8   flags, unused3[3]; //Flags, Unused
+            uint8_t   flags, unused3[3]; //Flags, Unused
 
             INFOTRDT();
             ~INFOTRDT();
@@ -112,13 +112,13 @@ class INFORecord : public FNVRecord //Dialog response
             void   IsSurprise(bool value);
             bool   IsPained();
             void   IsPained(bool value);
-            bool   IsType(UINT32 Type);
-            void   SetType(UINT32 Type);
+            bool   IsType(uint32_t Type);
+            void   SetType(uint32_t Type);
 
             bool   IsUseEmotionAnim();
             void   IsUseEmotionAnim(bool value);
-            bool   IsFlagMask(UINT8 Mask, bool Exact=false);
-            void   SetFlagMask(UINT8 Mask);
+            bool   IsFlagMask(uint8_t Mask, bool Exact=false);
+            void   SetFlagMask(uint8_t Mask);
 
             void Write(FileWriter &writer);
 
@@ -209,7 +209,7 @@ class INFORecord : public FNVRecord //Dialog response
         StringRecord RNAM; //Prompt
         OptSimpleSubRecord<FORMID> ANAM; //Speaker
         OptSimpleSubRecord<FORMID> KNAM; //ActorValue/Perk
-        OptSimpleSubRecord<UINT32> DNAM; //Speech Challenge
+        OptSimpleSubRecord<uint32_t> DNAM; //Speech Challenge
 
         INFORecord(unsigned char *_recData=NULL);
         INFORecord(INFORecord *srcRecord);
@@ -237,18 +237,18 @@ class INFORecord : public FNVRecord //Dialog response
         void   IsSayOnceADay(bool value);
         bool   IsAlwaysDarken();
         void   IsAlwaysDarken(bool value);
-        bool   IsFlagMask(UINT16 Mask, bool Exact=false);
-        void   SetFlagMask(UINT16 Mask);
+        bool   IsFlagMask(uint16_t Mask, bool Exact=false);
+        void   SetFlagMask(uint16_t Mask);
 
         bool   IsBeginScriptEnabled();
         void   IsBeginScriptEnabled(bool value);
-        bool   IsBeginScriptFlagMask(UINT16 Mask, bool Exact=false);
-        void   SetBeginScriptFlagMask(UINT16 Mask);
+        bool   IsBeginScriptFlagMask(uint16_t Mask, bool Exact=false);
+        void   SetBeginScriptFlagMask(uint16_t Mask);
 
         bool   IsEndScriptEnabled();
         void   IsEndScriptEnabled(bool value);
-        bool   IsEndScriptFlagMask(UINT16 Mask, bool Exact=false);
-        void   SetEndScriptFlagMask(UINT16 Mask);
+        bool   IsEndScriptFlagMask(uint16_t Mask, bool Exact=false);
+        void   SetEndScriptFlagMask(uint16_t Mask);
 
         bool   IsTopic();
         void   IsTopic(bool value);
@@ -266,8 +266,8 @@ class INFORecord : public FNVRecord //Dialog response
         void   IsMisc(bool value);
         bool   IsRadio();
         void   IsRadio(bool value);
-        bool   IsDialogType(UINT8 Type);
-        void   SetDialogType(UINT8 Type);
+        bool   IsDialogType(uint8_t Type);
+        void   SetDialogType(uint8_t Type);
 
         bool   IsTarget();
         void   IsTarget(bool value);
@@ -275,8 +275,8 @@ class INFORecord : public FNVRecord //Dialog response
         void   IsSelf(bool value);
         bool   IsEither();
         void   IsEither(bool value);
-        bool   IsSpeakerType(UINT8 Type);
-        void   SetSpeakerType(UINT8 Type);
+        bool   IsSpeakerType(uint8_t Type);
+        void   SetSpeakerType(uint8_t Type);
 
         bool   IsNone();
         void   IsNone(bool value);
@@ -290,8 +290,8 @@ class INFORecord : public FNVRecord //Dialog response
         void   IsHard(bool value);
         bool   IsVeryHard();
         void   IsVeryHard(bool value);
-        bool   IsDifficultyType(UINT8 Type);
-        void   SetDifficultyType(UINT8 Type);
+        bool   IsDifficultyType(uint8_t Type);
+        void   SetDifficultyType(uint8_t Type);
 
         bool   IsBeginObject();
         void   IsBeginObject(bool value);
@@ -299,8 +299,8 @@ class INFORecord : public FNVRecord //Dialog response
         void   IsBeginQuest(bool value);
         bool   IsBeginEffect();
         void   IsBeginEffect(bool value);
-        bool   IsBeginType(UINT16 Type);
-        void   SetBeginType(UINT16 Type);
+        bool   IsBeginType(uint16_t Type);
+        void   SetBeginType(uint16_t Type);
 
         bool   IsEndObject();
         void   IsEndObject(bool value);
@@ -308,20 +308,20 @@ class INFORecord : public FNVRecord //Dialog response
         void   IsEndQuest(bool value);
         bool   IsEndEffect();
         void   IsEndEffect(bool value);
-        bool   IsEndType(UINT16 Type);
-        void   SetEndType(UINT16 Type);
+        bool   IsEndType(uint16_t Type);
+        void   SetEndType(uint16_t Type);
 
-        UINT32 GetFieldAttribute(DEFAULTED_FIELD_IDENTIFIERS, UINT32 WhichAttribute=0);
+        uint32_t GetFieldAttribute(DEFAULTED_FIELD_IDENTIFIERS, uint32_t WhichAttribute=0);
         void * GetField(DEFAULTED_FIELD_IDENTIFIERS, void **FieldValues=NULL);
-        bool   SetField(DEFAULTED_FIELD_IDENTIFIERS, void *FieldValue=NULL, UINT32 ArraySize=0);
+        bool   SetField(DEFAULTED_FIELD_IDENTIFIERS, void *FieldValue=NULL, uint32_t ArraySize=0);
         void   DeleteField(DEFAULTED_FIELD_IDENTIFIERS);
 
-        UINT32 GetType();
-        STRING GetStrType();
+        uint32_t GetType();
+        char * GetStrType();
 
-        SINT32 ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk=false);
-        SINT32 Unload();
-        SINT32 WriteRecord(FileWriter &writer);
+        int32_t ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk=false);
+        int32_t Unload();
+        int32_t WriteRecord(FileWriter &writer);
 
         bool operator ==(const INFORecord &other) const;
         bool operator !=(const INFORecord &other) const;

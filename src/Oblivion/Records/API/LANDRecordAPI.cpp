@@ -38,7 +38,7 @@
 
 namespace Ob
 {
-UINT32 LANDRecord::GetFieldAttribute(FIELD_IDENTIFIERS, UINT32 WhichAttribute)
+uint32_t LANDRecord::GetFieldAttribute(FIELD_IDENTIFIERS, uint32_t WhichAttribute)
     {
     //normals, heights, and colors are accessed as if they were a list of lists
     //They aren't true lists, but rather 33x33 arrays
@@ -218,7 +218,7 @@ UINT32 LANDRecord::GetFieldAttribute(FIELD_IDENTIFIERS, UINT32 WhichAttribute)
                     case 0: //fieldType
                         return LIST_FIELD;
                     case 1: //fieldSize
-                        return (UINT32)BTXT.value.size();
+                        return (uint32_t)BTXT.value.size();
                     default:
                         return UNKNOWN_FIELD;
                     }
@@ -257,7 +257,7 @@ UINT32 LANDRecord::GetFieldAttribute(FIELD_IDENTIFIERS, UINT32 WhichAttribute)
                     case 0: //fieldType
                         return LIST_FIELD;
                     case 1: //fieldSize
-                        return (UINT32)Layers.value.size();
+                        return (uint32_t)Layers.value.size();
                     default:
                         return UNKNOWN_FIELD;
                     }
@@ -292,7 +292,7 @@ UINT32 LANDRecord::GetFieldAttribute(FIELD_IDENTIFIERS, UINT32 WhichAttribute)
                             case 0: //fieldType
                                 return LIST_FIELD;
                             case 1: //fieldSize
-                                return (UINT32)Layers.value[ListIndex]->VTXT.value.size();
+                                return (uint32_t)Layers.value[ListIndex]->VTXT.value.size();
                             default:
                                 return UNKNOWN_FIELD;
                             }
@@ -332,7 +332,7 @@ UINT32 LANDRecord::GetFieldAttribute(FIELD_IDENTIFIERS, UINT32 WhichAttribute)
                     case 0: //fieldType
                         return LIST_FIELD;
                     case 1: //fieldSize
-                        return (UINT32)VTEX.value.size();
+                        return (uint32_t)VTEX.value.size();
                     default:
                         return UNKNOWN_FIELD;
                     }
@@ -445,9 +445,9 @@ UINT32 LANDRecord::GetFieldAttribute(FIELD_IDENTIFIERS, UINT32 WhichAttribute)
 
 void * LANDRecord::GetField(FIELD_IDENTIFIERS, void **FieldValues)
     {
-    UINT8  curQuadrant;
-    UINT16 curPosition;
-    static FLOAT32 fRetValue;
+    uint8_t  curQuadrant;
+    uint16_t curPosition;
+    static float fRetValue;
 
     switch(FieldID)
         {
@@ -615,127 +615,127 @@ void * LANDRecord::GetField(FIELD_IDENTIFIERS, void **FieldValues)
                     return VCLR.IsLoaded() ? &VCLR->VCLR[ListIndex][ListX2Index].blue : NULL;
                 case 8: //baseTexture
                     curQuadrant = CalcQuadrant(ListIndex, ListX2Index);
-                    for(UINT32 x = 0; x < BTXT.value.size(); ++x)
+                    for(uint32_t x = 0; x < BTXT.value.size(); ++x)
                         if(BTXT.value[x]->quadrant == curQuadrant)
                             return &BTXT.value[x]->texture;
                     return NULL;
                 case 9: //alphaLayer1Texture
                     curQuadrant = CalcQuadrant(ListIndex, ListX2Index);
-                    for(UINT32 x = 0; x < Layers.value.size(); ++x)
+                    for(uint32_t x = 0; x < Layers.value.size(); ++x)
                         if(Layers.value[x]->ATXT.value.quadrant == curQuadrant && Layers.value[x]->ATXT.value.layer == 0)
                             return &Layers.value[x]->ATXT.value.texture;
                     return NULL;
                 case 10: //alphaLayer1Opacity
                     curQuadrant = CalcQuadrant(ListIndex, ListX2Index);
                     curPosition = CalcPosition(curQuadrant, ListIndex, ListX2Index);
-                    for(UINT32 x = 0; x < Layers.value.size(); ++x)
+                    for(uint32_t x = 0; x < Layers.value.size(); ++x)
                         if(Layers.value[x]->ATXT.value.quadrant == curQuadrant && Layers.value[x]->ATXT.value.layer == 0)
-                            for(UINT32 y = 0; y < Layers.value[x]->VTXT.value.size(); ++y)
+                            for(uint32_t y = 0; y < Layers.value[x]->VTXT.value.size(); ++y)
                                 if(Layers.value[x]->VTXT.value[y].position == curPosition)
                                     return &Layers.value[x]->VTXT.value[y].opacity;
                     return NULL;
                 case 11: //alphaLayer2Texture
                     curQuadrant = CalcQuadrant(ListIndex, ListX2Index);
-                    for(UINT32 x = 0; x < Layers.value.size(); ++x)
+                    for(uint32_t x = 0; x < Layers.value.size(); ++x)
                         if(Layers.value[x]->ATXT.value.quadrant == curQuadrant && Layers.value[x]->ATXT.value.layer == 1)
                             return &Layers.value[x]->ATXT.value.texture;
                     return NULL;
                 case 12: //alphaLayer2Opacity
                     curQuadrant = CalcQuadrant(ListIndex, ListX2Index);
                     curPosition = CalcPosition(curQuadrant, ListIndex, ListX2Index);
-                    for(UINT32 x = 0; x < Layers.value.size(); ++x)
+                    for(uint32_t x = 0; x < Layers.value.size(); ++x)
                         if(Layers.value[x]->ATXT.value.quadrant == curQuadrant && Layers.value[x]->ATXT.value.layer == 1)
-                            for(UINT32 y = 0; y < Layers.value[x]->VTXT.value.size(); ++y)
+                            for(uint32_t y = 0; y < Layers.value[x]->VTXT.value.size(); ++y)
                                 if(Layers.value[x]->VTXT.value[y].position == curPosition)
                                     return &Layers.value[x]->VTXT.value[y].opacity;
                     return NULL;
                 case 13: //alphaLayer3Texture
                     curQuadrant = CalcQuadrant(ListIndex, ListX2Index);
-                    for(UINT32 x = 0; x < Layers.value.size(); ++x)
+                    for(uint32_t x = 0; x < Layers.value.size(); ++x)
                         if(Layers.value[x]->ATXT.value.quadrant == curQuadrant && Layers.value[x]->ATXT.value.layer == 2)
                             return &Layers.value[x]->ATXT.value.texture;
                     return NULL;
                 case 14: //alphaLayer3Opacity
                     curQuadrant = CalcQuadrant(ListIndex, ListX2Index);
                     curPosition = CalcPosition(curQuadrant, ListIndex, ListX2Index);
-                    for(UINT32 x = 0; x < Layers.value.size(); ++x)
+                    for(uint32_t x = 0; x < Layers.value.size(); ++x)
                         if(Layers.value[x]->ATXT.value.quadrant == curQuadrant && Layers.value[x]->ATXT.value.layer == 2)
-                            for(UINT32 y = 0; y < Layers.value[x]->VTXT.value.size(); ++y)
+                            for(uint32_t y = 0; y < Layers.value[x]->VTXT.value.size(); ++y)
                                 if(Layers.value[x]->VTXT.value[y].position == curPosition)
                                     return &Layers.value[x]->VTXT.value[y].opacity;
                     return NULL;
                 case 15: //alphaLayer4Texture
                     curQuadrant = CalcQuadrant(ListIndex, ListX2Index);
-                    for(UINT32 x = 0; x < Layers.value.size(); ++x)
+                    for(uint32_t x = 0; x < Layers.value.size(); ++x)
                         if(Layers.value[x]->ATXT.value.quadrant == curQuadrant && Layers.value[x]->ATXT.value.layer == 3)
                             return &Layers.value[x]->ATXT.value.texture;
                     return NULL;
                 case 16: //alphaLayer4Opacity
                     curQuadrant = CalcQuadrant(ListIndex, ListX2Index);
                     curPosition = CalcPosition(curQuadrant, ListIndex, ListX2Index);
-                    for(UINT32 x = 0; x < Layers.value.size(); ++x)
+                    for(uint32_t x = 0; x < Layers.value.size(); ++x)
                         if(Layers.value[x]->ATXT.value.quadrant == curQuadrant && Layers.value[x]->ATXT.value.layer == 3)
-                            for(UINT32 y = 0; y < Layers.value[x]->VTXT.value.size(); ++y)
+                            for(uint32_t y = 0; y < Layers.value[x]->VTXT.value.size(); ++y)
                                 if(Layers.value[x]->VTXT.value[y].position == curPosition)
                                     return &Layers.value[x]->VTXT.value[y].opacity;
                     return NULL;
                 case 17: //alphaLayer5Texture
                     curQuadrant = CalcQuadrant(ListIndex, ListX2Index);
-                    for(UINT32 x = 0; x < Layers.value.size(); ++x)
+                    for(uint32_t x = 0; x < Layers.value.size(); ++x)
                         if(Layers.value[x]->ATXT.value.quadrant == curQuadrant && Layers.value[x]->ATXT.value.layer == 4)
                             return &Layers.value[x]->ATXT.value.texture;
                     return NULL;
                 case 18: //alphaLayer5Opacity
                     curQuadrant = CalcQuadrant(ListIndex, ListX2Index);
                     curPosition = CalcPosition(curQuadrant, ListIndex, ListX2Index);
-                    for(UINT32 x = 0; x < Layers.value.size(); ++x)
+                    for(uint32_t x = 0; x < Layers.value.size(); ++x)
                         if(Layers.value[x]->ATXT.value.quadrant == curQuadrant && Layers.value[x]->ATXT.value.layer == 4)
-                            for(UINT32 y = 0; y < Layers.value[x]->VTXT.value.size(); ++y)
+                            for(uint32_t y = 0; y < Layers.value[x]->VTXT.value.size(); ++y)
                                 if(Layers.value[x]->VTXT.value[y].position == curPosition)
                                     return &Layers.value[x]->VTXT.value[y].opacity;
                     return NULL;
                 case 19: //alphaLayer6Texture
                     curQuadrant = CalcQuadrant(ListIndex, ListX2Index);
-                    for(UINT32 x = 0; x < Layers.value.size(); ++x)
+                    for(uint32_t x = 0; x < Layers.value.size(); ++x)
                         if(Layers.value[x]->ATXT.value.quadrant == curQuadrant && Layers.value[x]->ATXT.value.layer == 5)
                             return &Layers.value[x]->ATXT.value.texture;
                     return NULL;
                 case 20: //alphaLayer6Opacity
                     curQuadrant = CalcQuadrant(ListIndex, ListX2Index);
                     curPosition = CalcPosition(curQuadrant, ListIndex, ListX2Index);
-                    for(UINT32 x = 0; x < Layers.value.size(); ++x)
+                    for(uint32_t x = 0; x < Layers.value.size(); ++x)
                         if(Layers.value[x]->ATXT.value.quadrant == curQuadrant && Layers.value[x]->ATXT.value.layer == 5)
-                            for(UINT32 y = 0; y < Layers.value[x]->VTXT.value.size(); ++y)
+                            for(uint32_t y = 0; y < Layers.value[x]->VTXT.value.size(); ++y)
                                 if(Layers.value[x]->VTXT.value[y].position == curPosition)
                                     return &Layers.value[x]->VTXT.value[y].opacity;
                     return NULL;
                 case 21: //alphaLayer7Texture
                     curQuadrant = CalcQuadrant(ListIndex, ListX2Index);
-                    for(UINT32 x = 0; x < Layers.value.size(); ++x)
+                    for(uint32_t x = 0; x < Layers.value.size(); ++x)
                         if(Layers.value[x]->ATXT.value.quadrant == curQuadrant && Layers.value[x]->ATXT.value.layer == 6)
                             return &Layers.value[x]->ATXT.value.texture;
                     return NULL;
                 case 22: //alphaLayer7Opacity
                     curQuadrant = CalcQuadrant(ListIndex, ListX2Index);
                     curPosition = CalcPosition(curQuadrant, ListIndex, ListX2Index);
-                    for(UINT32 x = 0; x < Layers.value.size(); ++x)
+                    for(uint32_t x = 0; x < Layers.value.size(); ++x)
                         if(Layers.value[x]->ATXT.value.quadrant == curQuadrant && Layers.value[x]->ATXT.value.layer == 6)
-                            for(UINT32 y = 0; y < Layers.value[x]->VTXT.value.size(); ++y)
+                            for(uint32_t y = 0; y < Layers.value[x]->VTXT.value.size(); ++y)
                                 if(Layers.value[x]->VTXT.value[y].position == curPosition)
                                     return &Layers.value[x]->VTXT.value[y].opacity;
                     return NULL;
                 case 23: //alphaLayer8Texture
                     curQuadrant = CalcQuadrant(ListIndex, ListX2Index);
-                    for(UINT32 x = 0; x < Layers.value.size(); ++x)
+                    for(uint32_t x = 0; x < Layers.value.size(); ++x)
                         if(Layers.value[x]->ATXT.value.quadrant == curQuadrant && Layers.value[x]->ATXT.value.layer == 7)
                             return &Layers.value[x]->ATXT.value.texture;
                     return NULL;
                 case 24: //alphaLayer8Opacity
                     curQuadrant = CalcQuadrant(ListIndex, ListX2Index);
                     curPosition = CalcPosition(curQuadrant, ListIndex, ListX2Index);
-                    for(UINT32 x = 0; x < Layers.value.size(); ++x)
+                    for(uint32_t x = 0; x < Layers.value.size(); ++x)
                         if(Layers.value[x]->ATXT.value.quadrant == curQuadrant && Layers.value[x]->ATXT.value.layer == 7)
-                            for(UINT32 y = 0; y < Layers.value[x]->VTXT.value.size(); ++y)
+                            for(uint32_t y = 0; y < Layers.value[x]->VTXT.value.size(); ++y)
                                 if(Layers.value[x]->VTXT.value[y].position == curPosition)
                                     return &Layers.value[x]->VTXT.value[y].opacity;
                     return NULL;
@@ -751,11 +751,11 @@ void * LANDRecord::GetField(FIELD_IDENTIFIERS, void **FieldValues)
     return NULL;
     }
 
-bool LANDRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
+bool LANDRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, uint32_t ArraySize)
     {
-    SINT8    newOffset;
-    UINT8    curQuadrant;
-    UINT16   curPosition;
+    int8_t    newOffset;
+    uint8_t    curQuadrant;
+    uint16_t   curPosition;
     LANDVTXT curVTXT;
     LANDGENTXT *curTexture;
     LANDLAYERS *curLayer;
@@ -763,10 +763,10 @@ bool LANDRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
     switch(FieldID)
         {
         case 1: //flags1
-            SetHeaderFlagMask(*(UINT32 *)FieldValue);
+            SetHeaderFlagMask(*(uint32_t *)FieldValue);
             break;
         case 3: //flags2
-            SetHeaderUnknownFlagMask(*(UINT32 *)FieldValue);
+            SetHeaderUnknownFlagMask(*(uint32_t *)FieldValue);
             break;
         case 5: //data
             DATA.Copy((UINT8ARRAY)FieldValue, ArraySize);
@@ -785,15 +785,15 @@ bool LANDRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
                 {
                 case 1: //x
                     VNML.Load();
-                    VNML->VNML[ListIndex][ListX2Index].x = *(UINT8 *)FieldValue;
+                    VNML->VNML[ListIndex][ListX2Index].x = *(uint8_t *)FieldValue;
                     break;
                 case 2: //y
                     VNML.Load();
-                    VNML->VNML[ListIndex][ListX2Index].y = *(UINT8 *)FieldValue;
+                    VNML->VNML[ListIndex][ListX2Index].y = *(uint8_t *)FieldValue;
                     break;
                 case 3: //z
                     VNML.Load();
-                    VNML->VNML[ListIndex][ListX2Index].z = *(UINT8 *)FieldValue;
+                    VNML->VNML[ListIndex][ListX2Index].z = *(uint8_t *)FieldValue;
                     break;
                 default:
                     break;
@@ -801,7 +801,7 @@ bool LANDRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             break;
         case 7: //heightOffset
             VHGT.Load();
-            VHGT->offset = *(FLOAT32 *)FieldValue;
+            VHGT->offset = *(float *)FieldValue;
             break;
         case 8: //heights
             if(ListFieldID == 0) //heightsSize, not really a list so it can't be resized
@@ -817,7 +817,7 @@ bool LANDRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
                 {
                 case 1: //height
                     VHGT.Load();
-                    VHGT->VHGT[ListIndex][ListX2Index] = *(SINT8 *)FieldValue;
+                    VHGT->VHGT[ListIndex][ListX2Index] = *(int8_t *)FieldValue;
                     break;
                 default:
                     break;
@@ -845,15 +845,15 @@ bool LANDRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
                 {
                 case 1: //red
                     VCLR.Load();
-                    VCLR->VCLR[ListIndex][ListX2Index].red = *(UINT8 *)FieldValue;
+                    VCLR->VCLR[ListIndex][ListX2Index].red = *(uint8_t *)FieldValue;
                     break;
                 case 2: //green
                     VCLR.Load();
-                    VCLR->VCLR[ListIndex][ListX2Index].green = *(UINT8 *)FieldValue;
+                    VCLR->VCLR[ListIndex][ListX2Index].green = *(uint8_t *)FieldValue;
                     break;
                 case 3: //blue
                     VCLR.Load();
-                    VCLR->VCLR[ListIndex][ListX2Index].blue = *(UINT8 *)FieldValue;
+                    VCLR->VCLR[ListIndex][ListX2Index].blue = *(uint8_t *)FieldValue;
                     break;
                 default:
                     break;
@@ -875,7 +875,7 @@ bool LANDRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
                     BTXT.value[ListIndex]->texture = *(FORMID *)FieldValue;
                     return true;
                 case 2: //quadrant
-                    BTXT.value[ListIndex]->quadrant = *(UINT8 *)FieldValue;
+                    BTXT.value[ListIndex]->quadrant = *(uint8_t *)FieldValue;
                     break;
                 case 3: //unused1
                     if(ArraySize != 1)
@@ -883,7 +883,7 @@ bool LANDRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
                     BTXT.value[ListIndex]->unused1 = ((UINT8ARRAY)FieldValue)[0];
                     break;
                 case 4: //layer
-                    BTXT.value[ListIndex]->layer = *(SINT16 *)FieldValue;
+                    BTXT.value[ListIndex]->layer = *(int16_t *)FieldValue;
                     break;
                 default:
                     break;
@@ -905,7 +905,7 @@ bool LANDRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
                     Layers.value[ListIndex]->ATXT.value.texture = *(FORMID *)FieldValue;
                     return true;
                 case 2: //quadrant
-                    Layers.value[ListIndex]->ATXT.value.quadrant = *(UINT8 *)FieldValue;
+                    Layers.value[ListIndex]->ATXT.value.quadrant = *(uint8_t *)FieldValue;
                     break;
                 case 3: //unused1
                     if(ArraySize != 1)
@@ -913,7 +913,7 @@ bool LANDRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
                     Layers.value[ListIndex]->ATXT.value.unused1 = ((UINT8ARRAY)FieldValue)[0];
                     break;
                 case 4: //layer
-                    Layers.value[ListIndex]->ATXT.value.layer = *(SINT16 *)FieldValue;
+                    Layers.value[ListIndex]->ATXT.value.layer = *(int16_t *)FieldValue;
                     break;
                 case 5: //opacities
                     if(ListX2Index >= Layers.value[ListIndex]->VTXT.value.size())
@@ -922,7 +922,7 @@ bool LANDRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
                     switch(ListX2FieldID)
                         {
                         case 1: //position
-                            Layers.value[ListIndex]->VTXT.value[ListX2Index].position = *(UINT16 *)FieldValue;
+                            Layers.value[ListIndex]->VTXT.value[ListX2Index].position = *(uint16_t *)FieldValue;
                             break;
                         case 2: //unused1
                             if(ArraySize != 2)
@@ -931,7 +931,7 @@ bool LANDRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
                             Layers.value[ListIndex]->VTXT.value[ListX2Index].unused1[1] = ((UINT8ARRAY)FieldValue)[1];
                             break;
                         case 3: //opacity
-                            Layers.value[ListIndex]->VTXT.value[ListX2Index].opacity = *(FLOAT32 *)FieldValue;
+                            Layers.value[ListIndex]->VTXT.value[ListX2Index].opacity = *(float *)FieldValue;
                             break;
                         default:
                             break;
@@ -978,13 +978,13 @@ bool LANDRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
                     //If any of the cells happen to be 0,0, then the baseHeight offset of that cell must be changed instead
                     //The borders of the cells must match the height of the surrounding cells or there will be visual tearing
                     VHGT.Load();
-                    newOffset = (SINT8)((*(FLOAT32 *)FieldValue - CalcHeight(ListIndex, ListX2Index)) / 8.0f);
+                    newOffset = (int8_t)((*(float *)FieldValue - CalcHeight(ListIndex, ListX2Index)) / 8.0f);
 
                     //Set the co-ords to the proper offset.  If the co-ords are 0,0, then change the baseHeight offset instead
                     if(ListIndex == 0 && ListX2Index == 0)
                         {
                         VHGT->VHGT[0][0] = 0;
-                        VHGT->offset = *(FLOAT32 *)FieldValue;
+                        VHGT->offset = *(float *)FieldValue;
                         }
                     else
                         VHGT->VHGT[ListIndex][ListX2Index] += newOffset;
@@ -998,9 +998,9 @@ bool LANDRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
                             if(EastLand != NULL)
                                 {
                                 EastLand->VHGT.Load();
-                                newOffset = (SINT8)((*(FLOAT32 *)FieldValue - EastLand->VHGT->offset) / 8.0f);
+                                newOffset = (int8_t)((*(float *)FieldValue - EastLand->VHGT->offset) / 8.0f);
                                 EastLand->VHGT->VHGT[0][0] = 0;
-                                EastLand->VHGT->offset = *(FLOAT32 *)FieldValue;
+                                EastLand->VHGT->offset = *(float *)FieldValue;
                                 EastLand->VHGT->VHGT[0][1] -= newOffset;
                                 EastLand->VHGT->VHGT[1][0] -= newOffset;
                                 }
@@ -1008,14 +1008,14 @@ bool LANDRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
                             if(EastLand != NULL && EastLand->SouthLand != NULL)
                                 {
                                 EastLand->SouthLand->VHGT.Load();
-                                newOffset = (SINT8)((*(FLOAT32 *)FieldValue - EastLand->SouthLand->CalcHeight(32, 0)) / 8.0f);
+                                newOffset = (int8_t)((*(float *)FieldValue - EastLand->SouthLand->CalcHeight(32, 0)) / 8.0f);
                                 EastLand->SouthLand->VHGT->VHGT[32][0] += newOffset;
                                 EastLand->SouthLand->VHGT->VHGT[32][1] -= newOffset;
                                 }
                             else if(SouthLand != NULL && SouthLand->EastLand != NULL)
                                 {
                                 SouthLand->EastLand->VHGT.Load();
-                                newOffset = (SINT8)((*(FLOAT32 *)FieldValue - SouthLand->EastLand->CalcHeight(32, 0)) / 8.0f);
+                                newOffset = (int8_t)((*(float *)FieldValue - SouthLand->EastLand->CalcHeight(32, 0)) / 8.0f);
                                 SouthLand->EastLand->VHGT->VHGT[32][0] += newOffset;
                                 SouthLand->EastLand->VHGT->VHGT[32][1] -= newOffset;
                                 }
@@ -1023,7 +1023,7 @@ bool LANDRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
                             if(SouthLand != NULL)
                                 {
                                 SouthLand->VHGT.Load();
-                                newOffset = (SINT8)((*(FLOAT32 *)FieldValue - SouthLand->CalcHeight(32, 32)) / 8.0f);
+                                newOffset = (int8_t)((*(float *)FieldValue - SouthLand->CalcHeight(32, 32)) / 8.0f);
                                 SouthLand->VHGT->VHGT[32][32] += newOffset;
                                 }
                             }
@@ -1033,7 +1033,7 @@ bool LANDRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
                             if(EastLand != NULL)
                                 {
                                 EastLand->VHGT.Load();
-                                newOffset = (SINT8)((*(FLOAT32 *)FieldValue - EastLand->CalcHeight(32, 0)) / 8.0f);
+                                newOffset = (int8_t)((*(float *)FieldValue - EastLand->CalcHeight(32, 0)) / 8.0f);
                                 EastLand->VHGT->VHGT[32][0] += newOffset;
                                 EastLand->VHGT->VHGT[32][1] -= newOffset;
                                 }
@@ -1042,18 +1042,18 @@ bool LANDRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
                             if(EastLand != NULL && EastLand->NorthLand != NULL)
                                 {
                                 EastLand->NorthLand->VHGT.Load();
-                                newOffset = (SINT8)((*(FLOAT32 *)FieldValue - EastLand->NorthLand->VHGT->offset) / 8.0f);
+                                newOffset = (int8_t)((*(float *)FieldValue - EastLand->NorthLand->VHGT->offset) / 8.0f);
                                 EastLand->NorthLand->VHGT->VHGT[0][0] = 0;
-                                EastLand->NorthLand->VHGT->offset = *(FLOAT32 *)FieldValue;
+                                EastLand->NorthLand->VHGT->offset = *(float *)FieldValue;
                                 EastLand->NorthLand->VHGT->VHGT[0][1] -= newOffset;
                                 EastLand->NorthLand->VHGT->VHGT[1][0] -= newOffset;
                                 }
                             else if(NorthLand != NULL && NorthLand->EastLand != NULL)
                                 {
                                 NorthLand->EastLand->VHGT.Load();
-                                newOffset = (SINT8)((*(FLOAT32 *)FieldValue - NorthLand->EastLand->VHGT->offset) / 8.0f);
+                                newOffset = (int8_t)((*(float *)FieldValue - NorthLand->EastLand->VHGT->offset) / 8.0f);
                                 NorthLand->EastLand->VHGT->VHGT[0][0] = 0;
-                                NorthLand->EastLand->VHGT->offset = *(FLOAT32 *)FieldValue;
+                                NorthLand->EastLand->VHGT->offset = *(float *)FieldValue;
                                 NorthLand->EastLand->VHGT->VHGT[0][1] -= newOffset;
                                 NorthLand->EastLand->VHGT->VHGT[1][0] -= newOffset;
                                 }
@@ -1061,7 +1061,7 @@ bool LANDRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
                             if(NorthLand != NULL)
                                 {
                                 NorthLand->VHGT.Load();
-                                newOffset = (SINT8)((*(FLOAT32 *)FieldValue - NorthLand->CalcHeight(0, 32)) / 8.0f);
+                                newOffset = (int8_t)((*(float *)FieldValue - NorthLand->CalcHeight(0, 32)) / 8.0f);
                                 NorthLand->VHGT->VHGT[0][32] += newOffset;
                                 }
                             }
@@ -1070,7 +1070,7 @@ bool LANDRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
                             //In between the corners of the eastern edge, so update overlapped cell
                             if(EastLand != NULL)
                                 {
-                                newOffset = (SINT8)((*(FLOAT32 *)FieldValue - EastLand->CalcHeight(ListIndex, 0)) / 8.0f);
+                                newOffset = (int8_t)((*(float *)FieldValue - EastLand->CalcHeight(ListIndex, 0)) / 8.0f);
                                 EastLand->VHGT->VHGT[ListIndex][0] += newOffset;
 
                                 //Then, update the co-ords to the east and north.
@@ -1091,7 +1091,7 @@ bool LANDRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
                             if(SouthLand != NULL)
                                 {
                                 SouthLand->VHGT.Load();
-                                newOffset = (SINT8)((*(FLOAT32 *)FieldValue - SouthLand->CalcHeight(32, 0)) / 8.0f);
+                                newOffset = (int8_t)((*(float *)FieldValue - SouthLand->CalcHeight(32, 0)) / 8.0f);
                                 SouthLand->VHGT->VHGT[32][0] += newOffset;
                                 SouthLand->VHGT->VHGT[32][1] -= newOffset;
                                 }
@@ -1099,29 +1099,29 @@ bool LANDRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
                             if(SouthLand != NULL && SouthLand->WestLand != NULL)
                                 {
                                 SouthLand->WestLand->VHGT.Load();
-                                newOffset = (SINT8)((*(FLOAT32 *)FieldValue - SouthLand->WestLand->CalcHeight(32, 32)) / 8.0f);
+                                newOffset = (int8_t)((*(float *)FieldValue - SouthLand->WestLand->CalcHeight(32, 32)) / 8.0f);
                                 SouthLand->WestLand->VHGT->VHGT[32][32] += newOffset;
                                 }
                             else if(WestLand != NULL && WestLand->SouthLand != NULL)
                                 {
                                 WestLand->SouthLand->VHGT.Load();
-                                newOffset = (SINT8)((*(FLOAT32 *)FieldValue - WestLand->SouthLand->CalcHeight(32, 32)) / 8.0f);
+                                newOffset = (int8_t)((*(float *)FieldValue - WestLand->SouthLand->CalcHeight(32, 32)) / 8.0f);
                                 WestLand->SouthLand->VHGT->VHGT[32][32] += newOffset;
                                 }
 
                             if(WestLand != NULL)
                                 {
                                 WestLand->VHGT.Load();
-                                newOffset = (SINT8)((*(FLOAT32 *)FieldValue - WestLand->CalcHeight(0, 32)) / 8.0f);
+                                newOffset = (int8_t)((*(float *)FieldValue - WestLand->CalcHeight(0, 32)) / 8.0f);
                                 WestLand->VHGT->VHGT[0][32] += newOffset;
                                 }
 
                             if(EastLand != NULL)
                                 {
                                 EastLand->VHGT.Load();
-                                newOffset = (SINT8)((*(FLOAT32 *)FieldValue - EastLand->VHGT->offset) / 8.0f);
+                                newOffset = (int8_t)((*(float *)FieldValue - EastLand->VHGT->offset) / 8.0f);
                                 EastLand->VHGT->VHGT[0][0] = 0;
-                                EastLand->VHGT->offset = *(FLOAT32 *)FieldValue;
+                                EastLand->VHGT->offset = *(float *)FieldValue;
                                 EastLand->VHGT->VHGT[0][1] -= newOffset;
                                 EastLand->VHGT->VHGT[1][0] -= newOffset;
                                 }
@@ -1134,16 +1134,16 @@ bool LANDRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
                             if(WestLand != NULL)
                                 {
                                 WestLand->VHGT.Load();
-                                newOffset = (SINT8)((*(FLOAT32 *)FieldValue - WestLand->CalcHeight(32, 32)) / 8.0f);
+                                newOffset = (int8_t)((*(float *)FieldValue - WestLand->CalcHeight(32, 32)) / 8.0f);
                                 WestLand->VHGT->VHGT[32][32] += newOffset;
                                 }
 
                             if(NorthLand != NULL)
                                 {
                                 NorthLand->VHGT.Load();
-                                newOffset = (SINT8)((*(FLOAT32 *)FieldValue - NorthLand->VHGT->offset) / 8.0f);
+                                newOffset = (int8_t)((*(float *)FieldValue - NorthLand->VHGT->offset) / 8.0f);
                                 NorthLand->VHGT->VHGT[0][0] = 0;
-                                NorthLand->VHGT->offset = *(FLOAT32 *)FieldValue;
+                                NorthLand->VHGT->offset = *(float *)FieldValue;
                                 NorthLand->VHGT->VHGT[0][1] -= newOffset;
                                 NorthLand->VHGT->VHGT[1][0] -= newOffset;
                                 }
@@ -1151,13 +1151,13 @@ bool LANDRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
                             if(NorthLand != NULL && NorthLand->WestLand != NULL)
                                 {
                                 NorthLand->WestLand->VHGT.Load();
-                                newOffset = (SINT8)((*(FLOAT32 *)FieldValue - NorthLand->WestLand->CalcHeight(0, 32)) / 8.0f);
+                                newOffset = (int8_t)((*(float *)FieldValue - NorthLand->WestLand->CalcHeight(0, 32)) / 8.0f);
                                 NorthLand->WestLand->VHGT->VHGT[0][32] += newOffset;
                                 }
                             else if(WestLand != NULL && WestLand->NorthLand != NULL)
                                 {
                                 WestLand->NorthLand->VHGT.Load();
-                                newOffset = (SINT8)((*(FLOAT32 *)FieldValue - WestLand->NorthLand->CalcHeight(0, 32)) / 8.0f);
+                                newOffset = (int8_t)((*(float *)FieldValue - WestLand->NorthLand->CalcHeight(0, 32)) / 8.0f);
                                 WestLand->NorthLand->VHGT->VHGT[0][32] += newOffset;
                                 }
                             }
@@ -1168,7 +1168,7 @@ bool LANDRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
                             //In between the corners of the western edge, so update overlapped cell
                             if(WestLand != NULL)
                                 {
-                                newOffset = (SINT8)((*(FLOAT32 *)FieldValue - WestLand->CalcHeight(ListIndex, 32)) / 8.0f);
+                                newOffset = (int8_t)((*(float *)FieldValue - WestLand->CalcHeight(ListIndex, 32)) / 8.0f);
                                 WestLand->VHGT->VHGT[ListIndex][32] += newOffset;
                                 }
                             }
@@ -1180,7 +1180,7 @@ bool LANDRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
                         //In between the corners of the western edge, so update overlapped cell
                         if(SouthLand != NULL)
                             {
-                            newOffset = (SINT8)((*(FLOAT32 *)FieldValue - SouthLand->CalcHeight(32, ListX2Index)) / 8.0f);
+                            newOffset = (int8_t)((*(float *)FieldValue - SouthLand->CalcHeight(32, ListX2Index)) / 8.0f);
                             SouthLand->VHGT->VHGT[32][ListX2Index] += newOffset;
                             SouthLand->VHGT->VHGT[32][ListX2Index + 1] -= newOffset;
                             }
@@ -1192,7 +1192,7 @@ bool LANDRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
                         //In between the corners of the western edge, so update overlapped cell
                         if(NorthLand != NULL)
                             {
-                            newOffset = (SINT8)((*(FLOAT32 *)FieldValue - NorthLand->CalcHeight(0, ListX2Index)) / 8.0f);
+                            newOffset = (int8_t)((*(float *)FieldValue - NorthLand->CalcHeight(0, ListX2Index)) / 8.0f);
                             NorthLand->VHGT->VHGT[0][ListX2Index] += newOffset;
                             NorthLand->VHGT->VHGT[0][ListX2Index + 1] -= newOffset;
                             }
@@ -1202,31 +1202,31 @@ bool LANDRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
                     break;
                 case 2: //normalX
                     VNML.Load();
-                    VNML->VNML[ListIndex][ListX2Index].x = *(UINT8 *)FieldValue;
+                    VNML->VNML[ListIndex][ListX2Index].x = *(uint8_t *)FieldValue;
                     break;
                 case 3: //normalY
                     VNML.Load();
-                    VNML->VNML[ListIndex][ListX2Index].y = *(UINT8 *)FieldValue;
+                    VNML->VNML[ListIndex][ListX2Index].y = *(uint8_t *)FieldValue;
                     break;
                 case 4: //normalZ
                     VNML.Load();
-                    VNML->VNML[ListIndex][ListX2Index].z = *(UINT8 *)FieldValue;
+                    VNML->VNML[ListIndex][ListX2Index].z = *(uint8_t *)FieldValue;
                     break;
                 case 5: //red
                     VCLR.Load();
-                    VCLR->VCLR[ListIndex][ListX2Index].red = *(UINT8 *)FieldValue;
+                    VCLR->VCLR[ListIndex][ListX2Index].red = *(uint8_t *)FieldValue;
                     break;
                 case 6: //green
                     VCLR.Load();
-                    VCLR->VCLR[ListIndex][ListX2Index].green = *(UINT8 *)FieldValue;
+                    VCLR->VCLR[ListIndex][ListX2Index].green = *(uint8_t *)FieldValue;
                     break;
                 case 7: //blue
                     VCLR.Load();
-                    VCLR->VCLR[ListIndex][ListX2Index].blue = *(UINT8 *)FieldValue;
+                    VCLR->VCLR[ListIndex][ListX2Index].blue = *(uint8_t *)FieldValue;
                     break;
                 case 8: //baseTexture
                     curQuadrant = CalcQuadrant(ListIndex, ListX2Index);
-                    for(UINT32 x = 0; x < BTXT.value.size(); ++x)
+                    for(uint32_t x = 0; x < BTXT.value.size(); ++x)
                         if(BTXT.value[x]->quadrant == curQuadrant)
                             {
                             BTXT.value[x]->texture = *(FORMID *)FieldValue;
@@ -1243,7 +1243,7 @@ bool LANDRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
                     return true;
                 case 9: //alphaLayer1Texture
                     curQuadrant = CalcQuadrant(ListIndex, ListX2Index);
-                    for(UINT32 x = 0; x < Layers.value.size(); ++x)
+                    for(uint32_t x = 0; x < Layers.value.size(); ++x)
                         if(Layers.value[x]->ATXT.value.quadrant == curQuadrant && Layers.value[x]->ATXT.value.layer == 0)
                             {
                             Layers.value[x]->ATXT.value.texture = *(FORMID *)FieldValue;
@@ -1258,20 +1258,20 @@ bool LANDRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
                 case 10: //alphaLayer1Opacity
                     curQuadrant = CalcQuadrant(ListIndex, ListX2Index);
                     curPosition = CalcPosition(curQuadrant, ListIndex, ListX2Index);
-                    for(UINT32 x = 0; x < Layers.value.size(); ++x)
+                    for(uint32_t x = 0; x < Layers.value.size(); ++x)
                         if(Layers.value[x]->ATXT.value.quadrant == curQuadrant && Layers.value[x]->ATXT.value.layer == 0)
-                            for(UINT32 y = 0; y < Layers.value[x]->VTXT.value.size(); ++y)
+                            for(uint32_t y = 0; y < Layers.value[x]->VTXT.value.size(); ++y)
                                 if(Layers.value[x]->VTXT.value[y].position == curPosition)
                                     {
-                                    Layers.value[x]->VTXT.value[y].opacity = *(FLOAT32 *)FieldValue;
+                                    Layers.value[x]->VTXT.value[y].opacity = *(float *)FieldValue;
                                     return false;
                                     }
                     //No existing VTXT, so make one
-                    for(UINT32 x = 0; x < Layers.value.size(); ++x)
+                    for(uint32_t x = 0; x < Layers.value.size(); ++x)
                         if(Layers.value[x]->ATXT.value.quadrant == curQuadrant && Layers.value[x]->ATXT.value.layer == 0)
                             {
                             curVTXT.position = curPosition;
-                            curVTXT.opacity = *(FLOAT32 *)FieldValue;
+                            curVTXT.opacity = *(float *)FieldValue;
                             Layers.value[x]->VTXT.value.push_back(curVTXT);
                             return false;
                             }
@@ -1279,7 +1279,7 @@ bool LANDRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
                     break;
                 case 11: //alphaLayer2Texture
                     curQuadrant = CalcQuadrant(ListIndex, ListX2Index);
-                    for(UINT32 x = 0; x < Layers.value.size(); ++x)
+                    for(uint32_t x = 0; x < Layers.value.size(); ++x)
                         if(Layers.value[x]->ATXT.value.quadrant == curQuadrant && Layers.value[x]->ATXT.value.layer == 1)
                             {
                             Layers.value[x]->ATXT.value.texture = *(FORMID *)FieldValue;
@@ -1294,20 +1294,20 @@ bool LANDRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
                 case 12: //alphaLayer2Opacity
                     curQuadrant = CalcQuadrant(ListIndex, ListX2Index);
                     curPosition = CalcPosition(curQuadrant, ListIndex, ListX2Index);
-                    for(UINT32 x = 0; x < Layers.value.size(); ++x)
+                    for(uint32_t x = 0; x < Layers.value.size(); ++x)
                         if(Layers.value[x]->ATXT.value.quadrant == curQuadrant && Layers.value[x]->ATXT.value.layer == 1)
-                            for(UINT32 y = 0; y < Layers.value[x]->VTXT.value.size(); ++y)
+                            for(uint32_t y = 0; y < Layers.value[x]->VTXT.value.size(); ++y)
                                 if(Layers.value[x]->VTXT.value[y].position == curPosition)
                                     {
-                                    Layers.value[x]->VTXT.value[y].opacity = *(FLOAT32 *)FieldValue;
+                                    Layers.value[x]->VTXT.value[y].opacity = *(float *)FieldValue;
                                     return false;
                                     }
                     //No existing VTXT, so make one
-                    for(UINT32 x = 0; x < Layers.value.size(); ++x)
+                    for(uint32_t x = 0; x < Layers.value.size(); ++x)
                         if(Layers.value[x]->ATXT.value.quadrant == curQuadrant && Layers.value[x]->ATXT.value.layer == 1)
                             {
                             curVTXT.position = curPosition;
-                            curVTXT.opacity = *(FLOAT32 *)FieldValue;
+                            curVTXT.opacity = *(float *)FieldValue;
                             Layers.value[x]->VTXT.value.push_back(curVTXT);
                             return false;
                             }
@@ -1315,7 +1315,7 @@ bool LANDRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
                     return false;
                 case 13: //alphaLayer3Texture
                     curQuadrant = CalcQuadrant(ListIndex, ListX2Index);
-                    for(UINT32 x = 0; x < Layers.value.size(); ++x)
+                    for(uint32_t x = 0; x < Layers.value.size(); ++x)
                         if(Layers.value[x]->ATXT.value.quadrant == curQuadrant && Layers.value[x]->ATXT.value.layer == 2)
                             {
                             Layers.value[x]->ATXT.value.texture = *(FORMID *)FieldValue;
@@ -1330,20 +1330,20 @@ bool LANDRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
                 case 14: //alphaLayer3Opacity
                     curQuadrant = CalcQuadrant(ListIndex, ListX2Index);
                     curPosition = CalcPosition(curQuadrant, ListIndex, ListX2Index);
-                    for(UINT32 x = 0; x < Layers.value.size(); ++x)
+                    for(uint32_t x = 0; x < Layers.value.size(); ++x)
                         if(Layers.value[x]->ATXT.value.quadrant == curQuadrant && Layers.value[x]->ATXT.value.layer == 2)
-                            for(UINT32 y = 0; y < Layers.value[x]->VTXT.value.size(); ++y)
+                            for(uint32_t y = 0; y < Layers.value[x]->VTXT.value.size(); ++y)
                                 if(Layers.value[x]->VTXT.value[y].position == curPosition)
                                     {
-                                    Layers.value[x]->VTXT.value[y].opacity = *(FLOAT32 *)FieldValue;
+                                    Layers.value[x]->VTXT.value[y].opacity = *(float *)FieldValue;
                                     return false;
                                     }
                     //No existing VTXT, so make one
-                    for(UINT32 x = 0; x < Layers.value.size(); ++x)
+                    for(uint32_t x = 0; x < Layers.value.size(); ++x)
                         if(Layers.value[x]->ATXT.value.quadrant == curQuadrant && Layers.value[x]->ATXT.value.layer == 2)
                             {
                             curVTXT.position = curPosition;
-                            curVTXT.opacity = *(FLOAT32 *)FieldValue;
+                            curVTXT.opacity = *(float *)FieldValue;
                             Layers.value[x]->VTXT.value.push_back(curVTXT);
                             return false;
                             }
@@ -1351,7 +1351,7 @@ bool LANDRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
                     return false;
                 case 15: //alphaLayer4Texture
                     curQuadrant = CalcQuadrant(ListIndex, ListX2Index);
-                    for(UINT32 x = 0; x < Layers.value.size(); ++x)
+                    for(uint32_t x = 0; x < Layers.value.size(); ++x)
                         if(Layers.value[x]->ATXT.value.quadrant == curQuadrant && Layers.value[x]->ATXT.value.layer == 3)
                             {
                             Layers.value[x]->ATXT.value.texture = *(FORMID *)FieldValue;
@@ -1366,20 +1366,20 @@ bool LANDRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
                 case 16: //alphaLayer4Opacity
                     curQuadrant = CalcQuadrant(ListIndex, ListX2Index);
                     curPosition = CalcPosition(curQuadrant, ListIndex, ListX2Index);
-                    for(UINT32 x = 0; x < Layers.value.size(); ++x)
+                    for(uint32_t x = 0; x < Layers.value.size(); ++x)
                         if(Layers.value[x]->ATXT.value.quadrant == curQuadrant && Layers.value[x]->ATXT.value.layer == 3)
-                            for(UINT32 y = 0; y < Layers.value[x]->VTXT.value.size(); ++y)
+                            for(uint32_t y = 0; y < Layers.value[x]->VTXT.value.size(); ++y)
                                 if(Layers.value[x]->VTXT.value[y].position == curPosition)
                                     {
-                                    Layers.value[x]->VTXT.value[y].opacity = *(FLOAT32 *)FieldValue;
+                                    Layers.value[x]->VTXT.value[y].opacity = *(float *)FieldValue;
                                     return false;
                                     }
                     //No existing VTXT, so make one
-                    for(UINT32 x = 0; x < Layers.value.size(); ++x)
+                    for(uint32_t x = 0; x < Layers.value.size(); ++x)
                         if(Layers.value[x]->ATXT.value.quadrant == curQuadrant && Layers.value[x]->ATXT.value.layer == 3)
                             {
                             curVTXT.position = curPosition;
-                            curVTXT.opacity = *(FLOAT32 *)FieldValue;
+                            curVTXT.opacity = *(float *)FieldValue;
                             Layers.value[x]->VTXT.value.push_back(curVTXT);
                             return false;
                             }
@@ -1387,7 +1387,7 @@ bool LANDRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
                     return false;
                 case 17: //alphaLayer5Texture
                     curQuadrant = CalcQuadrant(ListIndex, ListX2Index);
-                    for(UINT32 x = 0; x < Layers.value.size(); ++x)
+                    for(uint32_t x = 0; x < Layers.value.size(); ++x)
                         if(Layers.value[x]->ATXT.value.quadrant == curQuadrant && Layers.value[x]->ATXT.value.layer == 4)
                             {
                             Layers.value[x]->ATXT.value.texture = *(FORMID *)FieldValue;
@@ -1402,20 +1402,20 @@ bool LANDRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
                 case 18: //alphaLayer5Opacity
                     curQuadrant = CalcQuadrant(ListIndex, ListX2Index);
                     curPosition = CalcPosition(curQuadrant, ListIndex, ListX2Index);
-                    for(UINT32 x = 0; x < Layers.value.size(); ++x)
+                    for(uint32_t x = 0; x < Layers.value.size(); ++x)
                         if(Layers.value[x]->ATXT.value.quadrant == curQuadrant && Layers.value[x]->ATXT.value.layer == 4)
-                            for(UINT32 y = 0; y < Layers.value[x]->VTXT.value.size(); ++y)
+                            for(uint32_t y = 0; y < Layers.value[x]->VTXT.value.size(); ++y)
                                 if(Layers.value[x]->VTXT.value[y].position == curPosition)
                                     {
-                                    Layers.value[x]->VTXT.value[y].opacity = *(FLOAT32 *)FieldValue;
+                                    Layers.value[x]->VTXT.value[y].opacity = *(float *)FieldValue;
                                     return false;
                                     }
                     //No existing VTXT, so make one
-                    for(UINT32 x = 0; x < Layers.value.size(); ++x)
+                    for(uint32_t x = 0; x < Layers.value.size(); ++x)
                         if(Layers.value[x]->ATXT.value.quadrant == curQuadrant && Layers.value[x]->ATXT.value.layer == 4)
                             {
                             curVTXT.position = curPosition;
-                            curVTXT.opacity = *(FLOAT32 *)FieldValue;
+                            curVTXT.opacity = *(float *)FieldValue;
                             Layers.value[x]->VTXT.value.push_back(curVTXT);
                             return false;
                             }
@@ -1423,7 +1423,7 @@ bool LANDRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
                     return false;
                 case 19: //alphaLayer6Texture
                     curQuadrant = CalcQuadrant(ListIndex, ListX2Index);
-                    for(UINT32 x = 0; x < Layers.value.size(); ++x)
+                    for(uint32_t x = 0; x < Layers.value.size(); ++x)
                         if(Layers.value[x]->ATXT.value.quadrant == curQuadrant && Layers.value[x]->ATXT.value.layer == 5)
                             {
                             Layers.value[x]->ATXT.value.texture = *(FORMID *)FieldValue;
@@ -1438,20 +1438,20 @@ bool LANDRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
                 case 20: //alphaLayer6Opacity
                     curQuadrant = CalcQuadrant(ListIndex, ListX2Index);
                     curPosition = CalcPosition(curQuadrant, ListIndex, ListX2Index);
-                    for(UINT32 x = 0; x < Layers.value.size(); ++x)
+                    for(uint32_t x = 0; x < Layers.value.size(); ++x)
                         if(Layers.value[x]->ATXT.value.quadrant == curQuadrant && Layers.value[x]->ATXT.value.layer == 5)
-                            for(UINT32 y = 0; y < Layers.value[x]->VTXT.value.size(); ++y)
+                            for(uint32_t y = 0; y < Layers.value[x]->VTXT.value.size(); ++y)
                                 if(Layers.value[x]->VTXT.value[y].position == curPosition)
                                     {
-                                    Layers.value[x]->VTXT.value[y].opacity = *(FLOAT32 *)FieldValue;
+                                    Layers.value[x]->VTXT.value[y].opacity = *(float *)FieldValue;
                                     return false;
                                     }
                     //No existing VTXT, so make one
-                    for(UINT32 x = 0; x < Layers.value.size(); ++x)
+                    for(uint32_t x = 0; x < Layers.value.size(); ++x)
                         if(Layers.value[x]->ATXT.value.quadrant == curQuadrant && Layers.value[x]->ATXT.value.layer == 5)
                             {
                             curVTXT.position = curPosition;
-                            curVTXT.opacity = *(FLOAT32 *)FieldValue;
+                            curVTXT.opacity = *(float *)FieldValue;
                             Layers.value[x]->VTXT.value.push_back(curVTXT);
                             return false;
                             }
@@ -1459,7 +1459,7 @@ bool LANDRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
                     return false;
                 case 21: //alphaLayer7Texture
                     curQuadrant = CalcQuadrant(ListIndex, ListX2Index);
-                    for(UINT32 x = 0; x < Layers.value.size(); ++x)
+                    for(uint32_t x = 0; x < Layers.value.size(); ++x)
                         if(Layers.value[x]->ATXT.value.quadrant == curQuadrant && Layers.value[x]->ATXT.value.layer == 6)
                             {
                             Layers.value[x]->ATXT.value.texture = *(FORMID *)FieldValue;
@@ -1474,20 +1474,20 @@ bool LANDRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
                 case 22: //alphaLayer7Opacity
                     curQuadrant = CalcQuadrant(ListIndex, ListX2Index);
                     curPosition = CalcPosition(curQuadrant, ListIndex, ListX2Index);
-                    for(UINT32 x = 0; x < Layers.value.size(); ++x)
+                    for(uint32_t x = 0; x < Layers.value.size(); ++x)
                         if(Layers.value[x]->ATXT.value.quadrant == curQuadrant && Layers.value[x]->ATXT.value.layer == 6)
-                            for(UINT32 y = 0; y < Layers.value[x]->VTXT.value.size(); ++y)
+                            for(uint32_t y = 0; y < Layers.value[x]->VTXT.value.size(); ++y)
                                 if(Layers.value[x]->VTXT.value[y].position == curPosition)
                                     {
-                                    Layers.value[x]->VTXT.value[y].opacity = *(FLOAT32 *)FieldValue;
+                                    Layers.value[x]->VTXT.value[y].opacity = *(float *)FieldValue;
                                     return false;
                                     }
                     //No existing VTXT, so make one
-                    for(UINT32 x = 0; x < Layers.value.size(); ++x)
+                    for(uint32_t x = 0; x < Layers.value.size(); ++x)
                         if(Layers.value[x]->ATXT.value.quadrant == curQuadrant && Layers.value[x]->ATXT.value.layer == 6)
                             {
                             curVTXT.position = curPosition;
-                            curVTXT.opacity = *(FLOAT32 *)FieldValue;
+                            curVTXT.opacity = *(float *)FieldValue;
                             Layers.value[x]->VTXT.value.push_back(curVTXT);
                             return false;
                             }
@@ -1495,7 +1495,7 @@ bool LANDRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
                     return false;
                 case 23: //alphaLayer8Texture
                     curQuadrant = CalcQuadrant(ListIndex, ListX2Index);
-                    for(UINT32 x = 0; x < Layers.value.size(); ++x)
+                    for(uint32_t x = 0; x < Layers.value.size(); ++x)
                         if(Layers.value[x]->ATXT.value.quadrant == curQuadrant && Layers.value[x]->ATXT.value.layer == 7)
                             {
                             Layers.value[x]->ATXT.value.texture = *(FORMID *)FieldValue;
@@ -1510,20 +1510,20 @@ bool LANDRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
                 case 24: //alphaLayer8Opacity
                     curQuadrant = CalcQuadrant(ListIndex, ListX2Index);
                     curPosition = CalcPosition(curQuadrant, ListIndex, ListX2Index);
-                    for(UINT32 x = 0; x < Layers.value.size(); ++x)
+                    for(uint32_t x = 0; x < Layers.value.size(); ++x)
                         if(Layers.value[x]->ATXT.value.quadrant == curQuadrant && Layers.value[x]->ATXT.value.layer == 7)
-                            for(UINT32 y = 0; y < Layers.value[x]->VTXT.value.size(); ++y)
+                            for(uint32_t y = 0; y < Layers.value[x]->VTXT.value.size(); ++y)
                                 if(Layers.value[x]->VTXT.value[y].position == curPosition)
                                     {
-                                    Layers.value[x]->VTXT.value[y].opacity = *(FLOAT32 *)FieldValue;
+                                    Layers.value[x]->VTXT.value[y].opacity = *(float *)FieldValue;
                                     return false;
                                     }
                     //No existing VTXT, so make one
-                    for(UINT32 x = 0; x < Layers.value.size(); ++x)
+                    for(uint32_t x = 0; x < Layers.value.size(); ++x)
                         if(Layers.value[x]->ATXT.value.quadrant == curQuadrant && Layers.value[x]->ATXT.value.layer == 7)
                             {
                             curVTXT.position = curPosition;
-                            curVTXT.opacity = *(FLOAT32 *)FieldValue;
+                            curVTXT.opacity = *(float *)FieldValue;
                             Layers.value[x]->VTXT.value.push_back(curVTXT);
                             return false;
                             }
@@ -1547,8 +1547,8 @@ void LANDRecord::DeleteField(FIELD_IDENTIFIERS)
     LANDGENTXT defaultGENTXT;
     LANDVTXT defaultVTXT;
 
-    UINT8  curQuadrant;
-    UINT16 curPosition;
+    uint8_t  curQuadrant;
+    uint16_t curPosition;
 
     switch(FieldID)
         {
@@ -1575,7 +1575,7 @@ void LANDRecord::DeleteField(FIELD_IDENTIFIERS)
                 {
                 if(VNML.IsLoaded())
                     {
-                    for(UINT32 x = 0; x < 33; ++x)
+                    for(uint32_t x = 0; x < 33; ++x)
                         {
                         VNML->VNML[ListIndex][x].x = defaultVNML.x;
                         VNML->VNML[ListIndex][x].y = defaultVNML.y;
@@ -1623,7 +1623,7 @@ void LANDRecord::DeleteField(FIELD_IDENTIFIERS)
             if(ListX2FieldID == 0) //heightsSize
                 {
                 if(VHGT.IsLoaded())
-                    for(UINT32 x = 0; x < 33; ++x)
+                    for(uint32_t x = 0; x < 33; ++x)
                         VHGT->VHGT[ListIndex][x] = defaultVHGT.VHGT[ListIndex][x];
                 return;
                 }
@@ -1662,7 +1662,7 @@ void LANDRecord::DeleteField(FIELD_IDENTIFIERS)
             if(ListX2FieldID == 0) //heightsSize
                 {
                 if(VCLR.IsLoaded())
-                    for(UINT32 x = 0; x < 33; ++x)
+                    for(uint32_t x = 0; x < 33; ++x)
                         {
                         VCLR->VCLR[ListIndex][x].red = defaultVCLR.VCLR[ListIndex][x].red;
                         VCLR->VCLR[ListIndex][x].green = defaultVCLR.VCLR[ListIndex][x].green;
@@ -1807,7 +1807,7 @@ void LANDRecord::DeleteField(FIELD_IDENTIFIERS)
 
             if(ListX2FieldID == 0) //PositionSize
                 {
-                for(UINT32 x = 1; x <= 24; ++x)
+                for(uint32_t x = 1; x <= 24; ++x)
                     DeleteField(FieldID, ListIndex, ListFieldID, ListX2Index, x, ListX3Index, ListX3FieldID);
                 return;
                 }
@@ -1843,7 +1843,7 @@ void LANDRecord::DeleteField(FIELD_IDENTIFIERS)
                     return;
                 case 8: //baseTexture
                     curQuadrant = CalcQuadrant(ListIndex, ListX2Index);
-                    for(UINT32 x = 0; x < BTXT.value.size(); ++x)
+                    for(uint32_t x = 0; x < BTXT.value.size(); ++x)
                         if(BTXT.value[x]->quadrant == curQuadrant)
                             {
                             BTXT.value[x]->texture = defaultGENTXT.texture;
@@ -1853,7 +1853,7 @@ void LANDRecord::DeleteField(FIELD_IDENTIFIERS)
                     return;
                 case 9: //alphaLayer1Texture
                     curQuadrant = CalcQuadrant(ListIndex, ListX2Index);
-                    for(UINT32 x = 0; x < Layers.value.size(); ++x)
+                    for(uint32_t x = 0; x < Layers.value.size(); ++x)
                         if(Layers.value[x]->ATXT.value.quadrant == curQuadrant && Layers.value[x]->ATXT.value.layer == 0)
                             {
                             Layers.value[x]->ATXT.value.texture = defaultGENTXT.texture;
@@ -1864,9 +1864,9 @@ void LANDRecord::DeleteField(FIELD_IDENTIFIERS)
                 case 10: //alphaLayer1Opacity
                     curQuadrant = CalcQuadrant(ListIndex, ListX2Index);
                     curPosition = CalcPosition(curQuadrant, ListIndex, ListX2Index);
-                    for(UINT32 x = 0; x < Layers.value.size(); ++x)
+                    for(uint32_t x = 0; x < Layers.value.size(); ++x)
                         if(Layers.value[x]->ATXT.value.quadrant == curQuadrant && Layers.value[x]->ATXT.value.layer == 0)
-                            for(UINT32 y = 0; y < Layers.value[x]->VTXT.value.size(); ++y)
+                            for(uint32_t y = 0; y < Layers.value[x]->VTXT.value.size(); ++y)
                                 if(Layers.value[x]->VTXT.value[y].position == curPosition)
                                     {
                                     Layers.value[x]->VTXT.value[y].opacity = defaultVTXT.opacity;
@@ -1876,7 +1876,7 @@ void LANDRecord::DeleteField(FIELD_IDENTIFIERS)
                     return;
                 case 11: //alphaLayer2Texture
                     curQuadrant = CalcQuadrant(ListIndex, ListX2Index);
-                    for(UINT32 x = 0; x < Layers.value.size(); ++x)
+                    for(uint32_t x = 0; x < Layers.value.size(); ++x)
                         if(Layers.value[x]->ATXT.value.quadrant == curQuadrant && Layers.value[x]->ATXT.value.layer == 1)
                             {
                             Layers.value[x]->ATXT.value.texture = defaultGENTXT.texture;
@@ -1887,9 +1887,9 @@ void LANDRecord::DeleteField(FIELD_IDENTIFIERS)
                 case 12: //alphaLayer2Opacity
                     curQuadrant = CalcQuadrant(ListIndex, ListX2Index);
                     curPosition = CalcPosition(curQuadrant, ListIndex, ListX2Index);
-                    for(UINT32 x = 0; x < Layers.value.size(); ++x)
+                    for(uint32_t x = 0; x < Layers.value.size(); ++x)
                         if(Layers.value[x]->ATXT.value.quadrant == curQuadrant && Layers.value[x]->ATXT.value.layer == 1)
-                            for(UINT32 y = 0; y < Layers.value[x]->VTXT.value.size(); ++y)
+                            for(uint32_t y = 0; y < Layers.value[x]->VTXT.value.size(); ++y)
                                 if(Layers.value[x]->VTXT.value[y].position == curPosition)
                                     {
                                     Layers.value[x]->VTXT.value[y].opacity = defaultVTXT.opacity;
@@ -1899,7 +1899,7 @@ void LANDRecord::DeleteField(FIELD_IDENTIFIERS)
                     return;
                 case 13: //alphaLayer3Texture
                     curQuadrant = CalcQuadrant(ListIndex, ListX2Index);
-                    for(UINT32 x = 0; x < Layers.value.size(); ++x)
+                    for(uint32_t x = 0; x < Layers.value.size(); ++x)
                         if(Layers.value[x]->ATXT.value.quadrant == curQuadrant && Layers.value[x]->ATXT.value.layer == 2)
                             {
                             Layers.value[x]->ATXT.value.texture = defaultGENTXT.texture;
@@ -1910,9 +1910,9 @@ void LANDRecord::DeleteField(FIELD_IDENTIFIERS)
                 case 14: //alphaLayer3Opacity
                     curQuadrant = CalcQuadrant(ListIndex, ListX2Index);
                     curPosition = CalcPosition(curQuadrant, ListIndex, ListX2Index);
-                    for(UINT32 x = 0; x < Layers.value.size(); ++x)
+                    for(uint32_t x = 0; x < Layers.value.size(); ++x)
                         if(Layers.value[x]->ATXT.value.quadrant == curQuadrant && Layers.value[x]->ATXT.value.layer == 2)
-                            for(UINT32 y = 0; y < Layers.value[x]->VTXT.value.size(); ++y)
+                            for(uint32_t y = 0; y < Layers.value[x]->VTXT.value.size(); ++y)
                                 if(Layers.value[x]->VTXT.value[y].position == curPosition)
                                     {
                                     Layers.value[x]->VTXT.value[y].opacity = defaultVTXT.opacity;
@@ -1922,7 +1922,7 @@ void LANDRecord::DeleteField(FIELD_IDENTIFIERS)
                     return;
                 case 15: //alphaLayer4Texture
                     curQuadrant = CalcQuadrant(ListIndex, ListX2Index);
-                    for(UINT32 x = 0; x < Layers.value.size(); ++x)
+                    for(uint32_t x = 0; x < Layers.value.size(); ++x)
                         if(Layers.value[x]->ATXT.value.quadrant == curQuadrant && Layers.value[x]->ATXT.value.layer == 3)
                             {
                             Layers.value[x]->ATXT.value.texture = defaultGENTXT.texture;
@@ -1933,9 +1933,9 @@ void LANDRecord::DeleteField(FIELD_IDENTIFIERS)
                 case 16: //alphaLayer4Opacity
                     curQuadrant = CalcQuadrant(ListIndex, ListX2Index);
                     curPosition = CalcPosition(curQuadrant, ListIndex, ListX2Index);
-                    for(UINT32 x = 0; x < Layers.value.size(); ++x)
+                    for(uint32_t x = 0; x < Layers.value.size(); ++x)
                         if(Layers.value[x]->ATXT.value.quadrant == curQuadrant && Layers.value[x]->ATXT.value.layer == 3)
-                            for(UINT32 y = 0; y < Layers.value[x]->VTXT.value.size(); ++y)
+                            for(uint32_t y = 0; y < Layers.value[x]->VTXT.value.size(); ++y)
                                 if(Layers.value[x]->VTXT.value[y].position == curPosition)
                                     {
                                     Layers.value[x]->VTXT.value[y].opacity = defaultVTXT.opacity;
@@ -1945,7 +1945,7 @@ void LANDRecord::DeleteField(FIELD_IDENTIFIERS)
                     return;
                 case 17: //alphaLayer5Texture
                     curQuadrant = CalcQuadrant(ListIndex, ListX2Index);
-                    for(UINT32 x = 0; x < Layers.value.size(); ++x)
+                    for(uint32_t x = 0; x < Layers.value.size(); ++x)
                         if(Layers.value[x]->ATXT.value.quadrant == curQuadrant && Layers.value[x]->ATXT.value.layer == 4)
                             {
                             Layers.value[x]->ATXT.value.texture = defaultGENTXT.texture;
@@ -1956,9 +1956,9 @@ void LANDRecord::DeleteField(FIELD_IDENTIFIERS)
                 case 18: //alphaLayer5Opacity
                     curQuadrant = CalcQuadrant(ListIndex, ListX2Index);
                     curPosition = CalcPosition(curQuadrant, ListIndex, ListX2Index);
-                    for(UINT32 x = 0; x < Layers.value.size(); ++x)
+                    for(uint32_t x = 0; x < Layers.value.size(); ++x)
                         if(Layers.value[x]->ATXT.value.quadrant == curQuadrant && Layers.value[x]->ATXT.value.layer == 4)
-                            for(UINT32 y = 0; y < Layers.value[x]->VTXT.value.size(); ++y)
+                            for(uint32_t y = 0; y < Layers.value[x]->VTXT.value.size(); ++y)
                                 if(Layers.value[x]->VTXT.value[y].position == curPosition)
                                     {
                                     Layers.value[x]->VTXT.value[y].opacity = defaultVTXT.opacity;
@@ -1968,7 +1968,7 @@ void LANDRecord::DeleteField(FIELD_IDENTIFIERS)
                     return;
                 case 19: //alphaLayer6Texture
                     curQuadrant = CalcQuadrant(ListIndex, ListX2Index);
-                    for(UINT32 x = 0; x < Layers.value.size(); ++x)
+                    for(uint32_t x = 0; x < Layers.value.size(); ++x)
                         if(Layers.value[x]->ATXT.value.quadrant == curQuadrant && Layers.value[x]->ATXT.value.layer == 5)
                             {
                             Layers.value[x]->ATXT.value.texture = defaultGENTXT.texture;
@@ -1979,9 +1979,9 @@ void LANDRecord::DeleteField(FIELD_IDENTIFIERS)
                 case 20: //alphaLayer6Opacity
                     curQuadrant = CalcQuadrant(ListIndex, ListX2Index);
                     curPosition = CalcPosition(curQuadrant, ListIndex, ListX2Index);
-                    for(UINT32 x = 0; x < Layers.value.size(); ++x)
+                    for(uint32_t x = 0; x < Layers.value.size(); ++x)
                         if(Layers.value[x]->ATXT.value.quadrant == curQuadrant && Layers.value[x]->ATXT.value.layer == 5)
-                            for(UINT32 y = 0; y < Layers.value[x]->VTXT.value.size(); ++y)
+                            for(uint32_t y = 0; y < Layers.value[x]->VTXT.value.size(); ++y)
                                 if(Layers.value[x]->VTXT.value[y].position == curPosition)
                                     {
                                     Layers.value[x]->VTXT.value[y].opacity = defaultVTXT.opacity;
@@ -1991,7 +1991,7 @@ void LANDRecord::DeleteField(FIELD_IDENTIFIERS)
                     return;
                 case 21: //alphaLayer7Texture
                     curQuadrant = CalcQuadrant(ListIndex, ListX2Index);
-                    for(UINT32 x = 0; x < Layers.value.size(); ++x)
+                    for(uint32_t x = 0; x < Layers.value.size(); ++x)
                         if(Layers.value[x]->ATXT.value.quadrant == curQuadrant && Layers.value[x]->ATXT.value.layer == 6)
                             {
                             Layers.value[x]->ATXT.value.texture = defaultGENTXT.texture;
@@ -2002,9 +2002,9 @@ void LANDRecord::DeleteField(FIELD_IDENTIFIERS)
                 case 22: //alphaLayer7Opacity
                     curQuadrant = CalcQuadrant(ListIndex, ListX2Index);
                     curPosition = CalcPosition(curQuadrant, ListIndex, ListX2Index);
-                    for(UINT32 x = 0; x < Layers.value.size(); ++x)
+                    for(uint32_t x = 0; x < Layers.value.size(); ++x)
                         if(Layers.value[x]->ATXT.value.quadrant == curQuadrant && Layers.value[x]->ATXT.value.layer == 6)
-                            for(UINT32 y = 0; y < Layers.value[x]->VTXT.value.size(); ++y)
+                            for(uint32_t y = 0; y < Layers.value[x]->VTXT.value.size(); ++y)
                                 if(Layers.value[x]->VTXT.value[y].position == curPosition)
                                     {
                                     Layers.value[x]->VTXT.value[y].opacity = defaultVTXT.opacity;
@@ -2014,7 +2014,7 @@ void LANDRecord::DeleteField(FIELD_IDENTIFIERS)
                     return;
                 case 23: //alphaLayer8Texture
                     curQuadrant = CalcQuadrant(ListIndex, ListX2Index);
-                    for(UINT32 x = 0; x < Layers.value.size(); ++x)
+                    for(uint32_t x = 0; x < Layers.value.size(); ++x)
                         if(Layers.value[x]->ATXT.value.quadrant == curQuadrant && Layers.value[x]->ATXT.value.layer == 7)
                             {
                             Layers.value[x]->ATXT.value.texture = defaultGENTXT.texture;
@@ -2025,9 +2025,9 @@ void LANDRecord::DeleteField(FIELD_IDENTIFIERS)
                 case 24: //alphaLayer8Opacity
                     curQuadrant = CalcQuadrant(ListIndex, ListX2Index);
                     curPosition = CalcPosition(curQuadrant, ListIndex, ListX2Index);
-                    for(UINT32 x = 0; x < Layers.value.size(); ++x)
+                    for(uint32_t x = 0; x < Layers.value.size(); ++x)
                         if(Layers.value[x]->ATXT.value.quadrant == curQuadrant && Layers.value[x]->ATXT.value.layer == 7)
-                            for(UINT32 y = 0; y < Layers.value[x]->VTXT.value.size(); ++y)
+                            for(uint32_t y = 0; y < Layers.value[x]->VTXT.value.size(); ++y)
                                 if(Layers.value[x]->VTXT.value[y].position == curPosition)
                                     {
                                     Layers.value[x]->VTXT.value[y].opacity = defaultVTXT.opacity;

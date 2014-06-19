@@ -85,7 +85,7 @@ bool TACTRecord::VisitFormIDs(FormIDOp &op)
 
     if(MODL.IsLoaded())
         {
-        for(UINT32 x = 0; x < MODL->Textures.MODS.size(); x++)
+        for(uint32_t x = 0; x < MODL->Textures.MODS.size(); x++)
             op.Accept(MODL->Textures.MODS[x]->texture);
         }
 
@@ -93,7 +93,7 @@ bool TACTRecord::VisitFormIDs(FormIDOp &op)
         op.Accept(SCRI.value);
     if(Destructable.IsLoaded())
         {
-        for(UINT32 x = 0; x < Destructable->Stages.value.size(); ++x)
+        for(uint32_t x = 0; x < Destructable->Stages.value.size(); ++x)
             {
             op.Accept(Destructable->Stages.value[x]->DSTD.value.explosion);
             op.Accept(Destructable->Stages.value[x]->DSTD.value.debris);
@@ -109,34 +109,34 @@ bool TACTRecord::VisitFormIDs(FormIDOp &op)
     return op.Stop();
     }
 
-UINT32 TACTRecord::GetType()
+uint32_t TACTRecord::GetType()
     {
     return REV32(TACT);
     }
 
-STRING TACTRecord::GetStrType()
+char * TACTRecord::GetStrType()
     {
     return "TACT";
     }
 
-SINT32 TACTRecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk)
+int32_t TACTRecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk)
     {
-    UINT32 subType = 0;
-    UINT32 subSize = 0;
+    uint32_t subType = 0;
+    uint32_t subSize = 0;
     while(buffer < end_buffer){
-        subType = *(UINT32 *)buffer;
+        subType = *(uint32_t *)buffer;
         buffer += 4;
         switch(subType)
             {
             case REV32(XXXX):
                 buffer += 2;
-                subSize = *(UINT32 *)buffer;
+                subSize = *(uint32_t *)buffer;
                 buffer += 4;
-                subType = *(UINT32 *)buffer;
+                subType = *(uint32_t *)buffer;
                 buffer += 6;
                 break;
             default:
-                subSize = *(UINT16 *)buffer;
+                subSize = *(uint16_t *)buffer;
                 buffer += 2;
                 break;
             }
@@ -220,7 +220,7 @@ SINT32 TACTRecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer,
     return 0;
     }
 
-SINT32 TACTRecord::Unload()
+int32_t TACTRecord::Unload()
     {
     IsChanged(false);
     IsLoaded(false);
@@ -236,7 +236,7 @@ SINT32 TACTRecord::Unload()
     return 1;
     }
 
-SINT32 TACTRecord::WriteRecord(FileWriter &writer)
+int32_t TACTRecord::WriteRecord(FileWriter &writer)
     {
     WRITE(EDID);
     WRITE(OBND);

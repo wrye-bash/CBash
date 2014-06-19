@@ -37,7 +37,7 @@
 #include "Visitors.h"
 #include "Oblivion/Records/MGEFRecord.h"
 
-FormIDMatchCounter::FormIDMatchCounter(const UINT32 &_FormIDToMatch):
+FormIDMatchCounter::FormIDMatchCounter(const uint32_t &_FormIDToMatch):
     FormIDOp(),
     FormIDToMatch(_FormIDToMatch)
     {
@@ -49,14 +49,14 @@ FormIDMatchCounter::~FormIDMatchCounter()
     //
     }
 
-bool FormIDMatchCounter::Accept(UINT32 &curFormID)
+bool FormIDMatchCounter::Accept(uint32_t &curFormID)
     {
     if(curFormID == FormIDToMatch)
         ++count;
     return stop;
     }
 
-bool FormIDMatchCounter::AcceptMGEF(UINT32 &curMgefCode)
+bool FormIDMatchCounter::AcceptMGEF(uint32_t &curMgefCode)
     {
     if(curMgefCode == FormIDToMatch)
         ++count;
@@ -99,7 +99,7 @@ bool RecordIDRetriever::Accept(Record *&curRecord)
     return stop;
     }
 
-FormIDSwapper::FormIDSwapper(const UINT32 &_FormIDToMatch, const UINT32 &_FormIDToSwap, FormIDHandlerClass &_FormIDHandler):
+FormIDSwapper::FormIDSwapper(const uint32_t &_FormIDToMatch, const uint32_t &_FormIDToSwap, FormIDHandlerClass &_FormIDHandler):
     FormIDOp(),
     FormIDToMatch(_FormIDToMatch),
     FormIDToSwap(_FormIDToSwap),
@@ -113,7 +113,7 @@ FormIDSwapper::~FormIDSwapper()
     //
     }
 
-bool FormIDSwapper::Accept(UINT32 &curFormID)
+bool FormIDSwapper::Accept(uint32_t &curFormID)
     {
     result = curFormID == FormIDToMatch;
     if(result)
@@ -125,7 +125,7 @@ bool FormIDSwapper::Accept(UINT32 &curFormID)
     return stop;
     }
 
-bool FormIDSwapper::AcceptMGEF(UINT32 &curMgefCode)
+bool FormIDSwapper::AcceptMGEF(uint32_t &curMgefCode)
     {
     result = curMgefCode == FormIDToMatch;
     if(result)

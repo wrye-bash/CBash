@@ -45,7 +45,7 @@ class NAVMRecord : public FNVRecord //Navigation Mesh
         struct NAVMDATA //Data
             {
             FORMID  cell;
-            UINT32  numVertices, numTriangles, numConnections, numNVCA, numDoors;
+            uint32_t  numVertices, numTriangles, numConnections, numNVCA, numDoors;
 
             NAVMDATA();
             ~NAVMDATA();
@@ -56,7 +56,7 @@ class NAVMRecord : public FNVRecord //Navigation Mesh
 
         struct NAVMVertex //Vertex
             {
-            FLOAT32 x, y, z;
+            float x, y, z;
 
             NAVMVertex();
             ~NAVMVertex();
@@ -67,9 +67,9 @@ class NAVMRecord : public FNVRecord //Navigation Mesh
 
         struct NAVMNVTR //Triangle
             {
-            SINT16  vertex1, vertex2, vertex3;
-            SINT16  edge1, edge2, edge3;
-            UINT32  flags;
+            int16_t  vertex1, vertex2, vertex3;
+            int16_t  edge1, edge2, edge3;
+            uint32_t  flags;
 
             enum flagsFlags
                 {
@@ -174,8 +174,8 @@ class NAVMRecord : public FNVRecord //Navigation Mesh
             void   IsUnknown31(bool value);
             bool   IsUnknown32();
             void   IsUnknown32(bool value);
-            bool   IsFlagMask(UINT32 Mask, bool Exact=false);
-            void   SetFlagMask(UINT32 Mask);
+            bool   IsFlagMask(uint32_t Mask, bool Exact=false);
+            void   SetFlagMask(uint32_t Mask);
 
             bool operator ==(const NAVMNVTR &other) const;
             bool operator !=(const NAVMNVTR &other) const;
@@ -184,8 +184,8 @@ class NAVMRecord : public FNVRecord //Navigation Mesh
         struct NAVMNVDP //Door
             {
             FORMID  door;
-            UINT16  unknown1;
-            UINT8   unused1[2];
+            uint16_t  unknown1;
+            uint8_t   unused1[2];
 
             NAVMNVDP();
             ~NAVMNVDP();
@@ -198,9 +198,9 @@ class NAVMRecord : public FNVRecord //Navigation Mesh
         #pragma pack(2)
         struct NAVMNVEX //External Connection
             {
-            UINT8   unknown1[4];
+            uint8_t   unknown1[4];
             FORMID  mesh; //Navigation Mesh
-            UINT16  triangle;
+            uint16_t  triangle;
 
             NAVMNVEX();
             ~NAVMNVEX();
@@ -212,11 +212,11 @@ class NAVMRecord : public FNVRecord //Navigation Mesh
 
     public:
         StringRecord EDID; //Editor ID
-        ReqSimpleSubRecord<UINT32> NVER; //Version
+        ReqSimpleSubRecord<uint32_t> NVER; //Version
         ReqSubRecord<NAVMDATA> DATA; //Data
         UnorderedPackedArray<NAVMVertex> NVVX; //Vertices
         UnorderedPackedArray<NAVMNVTR> NVTR; //Triangles
-        UnorderedPackedArray<SINT16> NVCA; //Unknown
+        UnorderedPackedArray<int16_t> NVCA; //Unknown
         UnorderedPackedArray<NAVMNVDP> NVDP; //Doors
         RawRecord NVGD; //Unknown
         UnorderedPackedArray<NAVMNVEX> NVEX; //External Connections
@@ -227,17 +227,17 @@ class NAVMRecord : public FNVRecord //Navigation Mesh
 
         bool   VisitFormIDs(FormIDOp &op);
 
-        UINT32 GetFieldAttribute(DEFAULTED_FIELD_IDENTIFIERS, UINT32 WhichAttribute=0);
+        uint32_t GetFieldAttribute(DEFAULTED_FIELD_IDENTIFIERS, uint32_t WhichAttribute=0);
         void * GetField(DEFAULTED_FIELD_IDENTIFIERS, void **FieldValues=NULL);
-        bool   SetField(DEFAULTED_FIELD_IDENTIFIERS, void *FieldValue=NULL, UINT32 ArraySize=0);
+        bool   SetField(DEFAULTED_FIELD_IDENTIFIERS, void *FieldValue=NULL, uint32_t ArraySize=0);
         void   DeleteField(DEFAULTED_FIELD_IDENTIFIERS);
 
-        UINT32 GetType();
-        STRING GetStrType();
+        uint32_t GetType();
+        char * GetStrType();
 
-        SINT32 ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk=false);
-        SINT32 Unload();
-        SINT32 WriteRecord(FileWriter &writer);
+        int32_t ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk=false);
+        int32_t Unload();
+        int32_t WriteRecord(FileWriter &writer);
 
         bool operator ==(const NAVMRecord &other) const;
         bool operator !=(const NAVMRecord &other) const;

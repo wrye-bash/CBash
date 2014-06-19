@@ -38,7 +38,7 @@
 
 namespace Ob
 {
-UINT32 PACKRecord::GetFieldAttribute(FIELD_IDENTIFIERS, UINT32 WhichAttribute)
+uint32_t PACKRecord::GetFieldAttribute(FIELD_IDENTIFIERS, uint32_t WhichAttribute)
     {
     Function_Arguments_Iterator curCTDAFunction;
 
@@ -117,7 +117,7 @@ UINT32 PACKRecord::GetFieldAttribute(FIELD_IDENTIFIERS, UINT32 WhichAttribute)
                     case 0: //fieldType
                         return LIST_FIELD;
                     case 1: //fieldSize
-                        return (UINT32)CTDA.value.size();
+                        return (uint32_t)CTDA.value.size();
                     default:
                         return UNKNOWN_FIELD;
                     }
@@ -300,24 +300,24 @@ void * PACKRecord::GetField(FIELD_IDENTIFIERS, void **FieldValues)
     return NULL;
     }
 
-bool PACKRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
+bool PACKRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, uint32_t ArraySize)
     {
     switch(FieldID)
         {
         case 1: //flags1
-            SetHeaderFlagMask(*(UINT32 *)FieldValue);
+            SetHeaderFlagMask(*(uint32_t *)FieldValue);
             break;
         case 3: //flags2
-            SetHeaderUnknownFlagMask(*(UINT32 *)FieldValue);
+            SetHeaderUnknownFlagMask(*(uint32_t *)FieldValue);
             break;
         case 4: //eid
-            EDID.Copy((STRING)FieldValue);
+            EDID.Copy((char *)FieldValue);
             break;
         case 5: //flags
-            SetFlagMask(*(UINT32 *)FieldValue);
+            SetFlagMask(*(uint32_t *)FieldValue);
             break;
         case 6: //aiType
-            SetAIType(*(UINT8 *)FieldValue);
+            SetAIType(*(uint8_t *)FieldValue);
             break;
         case 7: //unused1
             if(ArraySize != 3)
@@ -327,7 +327,7 @@ bool PACKRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             PKDT.value.unused1[2] = ((UINT8ARRAY)FieldValue)[2];
             break;
         case 8: //locType
-            SetLocType(*(SINT32 *)FieldValue);
+            SetLocType(*(int32_t *)FieldValue);
             return true;
         case 9: //locId
             PLDT.Load();
@@ -335,33 +335,33 @@ bool PACKRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             return true;
         case 10: //locRadius
             PLDT.Load();
-            PLDT->locRadius = *(SINT32 *)FieldValue;
+            PLDT->locRadius = *(int32_t *)FieldValue;
             break;
         case 11: //month
-            PSDT.value.month = *(SINT8 *)FieldValue;
+            PSDT.value.month = *(int8_t *)FieldValue;
             break;
         case 12: //day
-            PSDT.value.day = *(SINT8 *)FieldValue;
+            PSDT.value.day = *(int8_t *)FieldValue;
             break;
         case 13: //date
-            PSDT.value.date = *(UINT8 *)FieldValue;
+            PSDT.value.date = *(uint8_t *)FieldValue;
             break;
         case 14: //time
-            PSDT.value.time = *(SINT8 *)FieldValue;
+            PSDT.value.time = *(int8_t *)FieldValue;
             break;
         case 15: //duration
-            PSDT.value.duration = *(SINT32 *)FieldValue;
+            PSDT.value.duration = *(int32_t *)FieldValue;
             break;
         case 16: //targetType
-            SetTargetType(*(SINT32 *)FieldValue);
+            SetTargetType(*(int32_t *)FieldValue);
             return true;
         case 17: //targetId
             PTDT.Load();
-            PTDT->targetId = *(UINT32 *)FieldValue;
+            PTDT->targetId = *(uint32_t *)FieldValue;
             return true;
         case 18: //targetCount
             PTDT.Load();
-            PTDT->targetCount = *(SINT32 *)FieldValue;
+            PTDT->targetCount = *(int32_t *)FieldValue;
             break;
         case 19: //conditions
             if(ListFieldID == 0) //conditionsSize
@@ -376,7 +376,7 @@ bool PACKRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             switch(ListFieldID)
                 {
                 case 1: //operType
-                    CTDA.value[ListIndex]->operType = *(UINT8 *)FieldValue;
+                    CTDA.value[ListIndex]->operType = *(uint8_t *)FieldValue;
                     break;
                 case 2: //unused1
                     if(ArraySize != 3)
@@ -389,13 +389,13 @@ bool PACKRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
                     CTDA.value[ListIndex]->compValue = *(FORMID_OR_FLOAT32 *)FieldValue;
                     return true;
                 case 4: //ifunc
-                    CTDA.value[ListIndex]->ifunc = *(UINT32 *)FieldValue;
+                    CTDA.value[ListIndex]->ifunc = *(uint32_t *)FieldValue;
                     return true;
                 case 5: //param1
-                    CTDA.value[ListIndex]->param1 = *(UINT32 *)FieldValue;
+                    CTDA.value[ListIndex]->param1 = *(uint32_t *)FieldValue;
                     return true;
                 case 6: //param2
-                    CTDA.value[ListIndex]->param2 = *(UINT32 *)FieldValue;
+                    CTDA.value[ListIndex]->param2 = *(uint32_t *)FieldValue;
                     return true;
                 case 7: //unused2
                     if(ArraySize != 4)

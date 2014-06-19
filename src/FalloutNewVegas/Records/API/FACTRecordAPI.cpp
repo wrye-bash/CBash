@@ -38,7 +38,7 @@
 
 namespace FNV
 {
-UINT32 FACTRecord::GetFieldAttribute(FIELD_IDENTIFIERS, UINT32 WhichAttribute)
+uint32_t FACTRecord::GetFieldAttribute(FIELD_IDENTIFIERS, uint32_t WhichAttribute)
     {
     switch(FieldID)
         {
@@ -84,7 +84,7 @@ UINT32 FACTRecord::GetFieldAttribute(FIELD_IDENTIFIERS, UINT32 WhichAttribute)
                     case 0: //fieldType
                         return LIST_FIELD;
                     case 1: //fieldSize
-                        return (UINT32)XNAM.value.size();
+                        return (uint32_t)XNAM.value.size();
                     default:
                         return UNKNOWN_FIELD;
                     }
@@ -128,7 +128,7 @@ UINT32 FACTRecord::GetFieldAttribute(FIELD_IDENTIFIERS, UINT32 WhichAttribute)
                     case 0: //fieldType
                         return LIST_FIELD;
                     case 1: //fieldSize
-                        return (UINT32)RNAM.value.size();
+                        return (uint32_t)RNAM.value.size();
                     default:
                         return UNKNOWN_FIELD;
                     }
@@ -228,12 +228,12 @@ void * FACTRecord::GetField(FIELD_IDENTIFIERS, void **FieldValues)
     return NULL;
     }
 
-bool FACTRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
+bool FACTRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, uint32_t ArraySize)
     {
     switch(FieldID)
         {
         case 1: //flags1
-            SetHeaderFlagMask(*(UINT32 *)FieldValue);
+            SetHeaderFlagMask(*(uint32_t *)FieldValue);
             break;
         case 3: //versionControl1
             if(ArraySize != 4)
@@ -244,10 +244,10 @@ bool FACTRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             ((UINT8ARRAY)&flagsUnk)[3] = ((UINT8ARRAY)FieldValue)[3];
             break;
         case 4: //eid
-            EDID.Copy((STRING)FieldValue);
+            EDID.Copy((char *)FieldValue);
             break;
         case 5: //formVersion
-            formVersion = *(UINT16 *)FieldValue;
+            formVersion = *(uint16_t *)FieldValue;
             break;
         case 6: //versionControl2
             if(ArraySize != 2)
@@ -256,7 +256,7 @@ bool FACTRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             versionControl2[1] = ((UINT8ARRAY)FieldValue)[1];
             break;
         case 7: //full
-            FULL.Copy((STRING)FieldValue);
+            FULL.Copy((char *)FieldValue);
             break;
         case 8: //relations
             if(ListFieldID == 0) //relationsSize
@@ -274,17 +274,17 @@ bool FACTRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
                     XNAM.value[ListIndex]->faction = *(FORMID *)FieldValue;
                     return true;
                 case 2: //mod
-                    XNAM.value[ListIndex]->mod = *(SINT32 *)FieldValue;
+                    XNAM.value[ListIndex]->mod = *(int32_t *)FieldValue;
                     break;
                 case 3: //groupReactionType
-                    XNAM.value[ListIndex]->SetType(*(UINT32 *)FieldValue);
+                    XNAM.value[ListIndex]->SetType(*(uint32_t *)FieldValue);
                     break;
                 default:
                     break;
                 }
             break;
         case 9: //flags
-            SetFlagMask(*(UINT8 *)FieldValue);
+            SetFlagMask(*(uint8_t *)FieldValue);
             break;
         case 10: //unused1
             if(ArraySize != 2)
@@ -294,7 +294,7 @@ bool FACTRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             break;
         case 11: //crimeGoldMultiplier
             CNAM.Load();
-            *CNAM.value = *(FLOAT32 *)FieldValue;
+            *CNAM.value = *(float *)FieldValue;
             break;
         case 12: //ranks
             if(ListFieldID == 0) //ranksSize
@@ -309,16 +309,16 @@ bool FACTRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, UINT32 ArraySize)
             switch(ListFieldID)
                 {
                 case 1: //rank
-                    RNAM.value[ListIndex]->RNAM.value = *(SINT32 *)FieldValue;
+                    RNAM.value[ListIndex]->RNAM.value = *(int32_t *)FieldValue;
                     break;
                 case 2: //male
-                    RNAM.value[ListIndex]->MNAM.Copy((STRING)FieldValue);
+                    RNAM.value[ListIndex]->MNAM.Copy((char *)FieldValue);
                     break;
                 case 3: //female
-                    RNAM.value[ListIndex]->FNAM.Copy((STRING)FieldValue);
+                    RNAM.value[ListIndex]->FNAM.Copy((char *)FieldValue);
                     break;
                 case 4: //insigniaPath
-                    RNAM.value[ListIndex]->INAM.Copy((STRING)FieldValue);
+                    RNAM.value[ListIndex]->INAM.Copy((char *)FieldValue);
                     break;
                 default:
                     break;

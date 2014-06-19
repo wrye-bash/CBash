@@ -114,23 +114,23 @@ CELLRecord::CELLRecord(CELLRecord *srcRecord):
 
 CELLRecord::~CELLRecord()
     {
-    for(UINT32 x = 0; x < ACHR.size(); ++x)
+    for(uint32_t x = 0; x < ACHR.size(); ++x)
         delete ACHR[x];
-    for(UINT32 x = 0; x < ACRE.size(); ++x)
+    for(uint32_t x = 0; x < ACRE.size(); ++x)
         delete ACRE[x];
-    for(UINT32 x = 0; x < REFR.size(); ++x)
+    for(uint32_t x = 0; x < REFR.size(); ++x)
         delete REFR[x];
-    for(UINT32 x = 0; x < PGRE.size(); ++x)
+    for(uint32_t x = 0; x < PGRE.size(); ++x)
         delete PGRE[x];
-    for(UINT32 x = 0; x < PMIS.size(); ++x)
+    for(uint32_t x = 0; x < PMIS.size(); ++x)
         delete PMIS[x];
-    for(UINT32 x = 0; x < PBEA.size(); ++x)
+    for(uint32_t x = 0; x < PBEA.size(); ++x)
         delete PBEA[x];
-    for(UINT32 x = 0; x < PFLA.size(); ++x)
+    for(uint32_t x = 0; x < PFLA.size(); ++x)
         delete PFLA[x];
-    for(UINT32 x = 0; x < PCBE.size(); ++x)
+    for(uint32_t x = 0; x < PCBE.size(); ++x)
         delete PCBE[x];
-    for(UINT32 x = 0; x < NAVM.size(); ++x)
+    for(uint32_t x = 0; x < NAVM.size(); ++x)
         delete NAVM[x];
     delete LAND;
     }
@@ -140,13 +140,13 @@ bool CELLRecord::VisitFormIDs(FormIDOp &op)
     if(!IsLoaded())
         return false;
 
-    for(UINT32 ListIndex = 0; ListIndex < IMPS.value.size(); ListIndex++)
+    for(uint32_t ListIndex = 0; ListIndex < IMPS.value.size(); ListIndex++)
         {
         op.Accept(IMPS.value[ListIndex]->oldImpact);
         op.Accept(IMPS.value[ListIndex]->newImpact);
         }
     op.Accept(LTMP.value);
-    for(UINT32 x = 0; x < XCLR.value.size(); x++)
+    for(uint32_t x = 0; x < XCLR.value.size(); x++)
         op.Accept(XCLR.value[x]);
     if(XCIM.IsLoaded())
         op.Accept(XCIM.value);
@@ -249,12 +249,12 @@ void CELLRecord::IsBehaveLikeExterior(bool value)
     SETBIT(DATA.value, fBehaveLikeExterior, value);
     }
 
-bool CELLRecord::IsFlagMask(UINT8 Mask, bool Exact)
+bool CELLRecord::IsFlagMask(uint8_t Mask, bool Exact)
     {
     return Exact ? ((DATA.value & Mask) == Mask) : ((DATA.value & Mask) != 0);
     }
 
-void CELLRecord::SetFlagMask(UINT8 Mask)
+void CELLRecord::SetFlagMask(uint8_t Mask)
     {
     DATA.value = Mask;
     }
@@ -307,13 +307,13 @@ void CELLRecord::IsQuad4ForceHidden(bool value)
     SETBIT(XCLC->flags, fIsQuad4ForceHidden, value);
     }
 
-bool CELLRecord::IsQuadFlagMask(UINT32 Mask, bool Exact)
+bool CELLRecord::IsQuadFlagMask(uint32_t Mask, bool Exact)
     {
     if(!XCLC.IsLoaded()) return false;
     return Exact ? ((XCLC->flags & Mask) == Mask) : ((XCLC->flags & Mask) != 0);
     }
 
-void CELLRecord::SetQuadFlagMask(UINT32 Mask)
+void CELLRecord::SetQuadFlagMask(uint32_t Mask)
     {
     XCLC.Load();
     XCLC->flags = Mask;
@@ -409,44 +409,44 @@ void CELLRecord::IsLightFogPowerInherited(bool value)
     SETBIT(LNAM.value, fIsFogPowerInherited, value);
     }
 
-bool CELLRecord::IsLightFlagMask(UINT32 Mask, bool Exact)
+bool CELLRecord::IsLightFlagMask(uint32_t Mask, bool Exact)
     {
     return Exact ? ((LNAM.value & Mask) == Mask) : ((LNAM.value & Mask) != 0);
     }
 
-void CELLRecord::SetLightFlagMask(UINT32 Mask)
+void CELLRecord::SetLightFlagMask(uint32_t Mask)
     {
     LNAM.value = Mask;
     }
 
-UINT32 CELLRecord::GetType()
+uint32_t CELLRecord::GetType()
     {
     return REV32(CELL);
     }
 
-STRING CELLRecord::GetStrType()
+char * CELLRecord::GetStrType()
     {
     return "CELL";
     }
 
-SINT32 CELLRecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk)
+int32_t CELLRecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk)
     {
-    UINT32 subType = 0;
-    UINT32 subSize = 0;
+    uint32_t subType = 0;
+    uint32_t subSize = 0;
     while(buffer < end_buffer){
-        subType = *(UINT32 *)buffer;
+        subType = *(uint32_t *)buffer;
         buffer += 4;
         switch(subType)
             {
             case REV32(XXXX):
                 buffer += 2;
-                subSize = *(UINT32 *)buffer;
+                subSize = *(uint32_t *)buffer;
                 buffer += 4;
-                subType = *(UINT32 *)buffer;
+                subType = *(uint32_t *)buffer;
                 buffer += 6;
                 break;
             default:
-                subSize = *(UINT16 *)buffer;
+                subSize = *(uint16_t *)buffer;
                 buffer += 2;
                 break;
             }
@@ -533,7 +533,7 @@ SINT32 CELLRecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer,
     return 0;
     }
 
-SINT32 CELLRecord::Unload()
+int32_t CELLRecord::Unload()
     {
     IsChanged(false);
     IsLoaded(false);
@@ -561,7 +561,7 @@ SINT32 CELLRecord::Unload()
     return 1;
     }
 
-SINT32 CELLRecord::WriteRecord(FileWriter &writer)
+int32_t CELLRecord::WriteRecord(FileWriter &writer)
     {
     WRITE(EDID);
     WRITE(FULL);
@@ -678,39 +678,39 @@ bool CELLRecord::deep_equals(Record *master, RecordOp &read_self, RecordOp &read
             return false;
         }
 
-    for(UINT32 ListIndex = 0; ListIndex < ACHR.size(); ++ListIndex)
+    for(uint32_t ListIndex = 0; ListIndex < ACHR.size(); ++ListIndex)
         if(identical_records.count(ACHR[ListIndex]) == 0)
             return false;
 
-    for(UINT32 ListIndex = 0; ListIndex < ACRE.size(); ++ListIndex)
+    for(uint32_t ListIndex = 0; ListIndex < ACRE.size(); ++ListIndex)
         if(identical_records.count(ACRE[ListIndex]) == 0)
             return false;
 
-    for(UINT32 ListIndex = 0; ListIndex < REFR.size(); ++ListIndex)
+    for(uint32_t ListIndex = 0; ListIndex < REFR.size(); ++ListIndex)
         if(identical_records.count(REFR[ListIndex]) == 0)
             return false;
 
-    for(UINT32 ListIndex = 0; ListIndex < PGRE.size(); ++ListIndex)
+    for(uint32_t ListIndex = 0; ListIndex < PGRE.size(); ++ListIndex)
         if(identical_records.count(PGRE[ListIndex]) == 0)
             return false;
 
-    for(UINT32 ListIndex = 0; ListIndex < PMIS.size(); ++ListIndex)
+    for(uint32_t ListIndex = 0; ListIndex < PMIS.size(); ++ListIndex)
         if(identical_records.count(PMIS[ListIndex]) == 0)
             return false;
 
-    for(UINT32 ListIndex = 0; ListIndex < PBEA.size(); ++ListIndex)
+    for(uint32_t ListIndex = 0; ListIndex < PBEA.size(); ++ListIndex)
         if(identical_records.count(PBEA[ListIndex]) == 0)
             return false;
 
-    for(UINT32 ListIndex = 0; ListIndex < PFLA.size(); ++ListIndex)
+    for(uint32_t ListIndex = 0; ListIndex < PFLA.size(); ++ListIndex)
         if(identical_records.count(PFLA[ListIndex]) == 0)
             return false;
 
-    for(UINT32 ListIndex = 0; ListIndex < PCBE.size(); ++ListIndex)
+    for(uint32_t ListIndex = 0; ListIndex < PCBE.size(); ++ListIndex)
         if(identical_records.count(PCBE[ListIndex]) == 0)
             return false;
 
-    for(UINT32 ListIndex = 0; ListIndex < NAVM.size(); ++ListIndex)
+    for(uint32_t ListIndex = 0; ListIndex < NAVM.size(); ++ListIndex)
         if(identical_records.count(NAVM[ListIndex]) == 0)
             return false;
     return true;

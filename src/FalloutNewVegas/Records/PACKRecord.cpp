@@ -296,9 +296,9 @@ bool PACKRecord::VisitFormIDs(FormIDOp &op)
         op.Accept(PLD2->locId);
     if(PTDT.IsLoaded() && PTDT->targetType < 2)
         op.Accept(PTDT->targetId);
-    for(UINT32 ListIndex = 0; ListIndex < CTDA.value.size(); ListIndex++)
+    for(uint32_t ListIndex = 0; ListIndex < CTDA.value.size(); ListIndex++)
         CTDA.value[ListIndex]->VisitFormIDs(op);
-    for(UINT32 ListIndex = 0; ListIndex < IDLA.value.size(); ListIndex++)
+    for(uint32_t ListIndex = 0; ListIndex < IDLA.value.size(); ListIndex++)
         op.Accept(IDLA.value[ListIndex]);
     if(CNAM.IsLoaded())
         op.Accept(CNAM.value);
@@ -307,21 +307,21 @@ bool PACKRecord::VisitFormIDs(FormIDOp &op)
     if(PKDD.IsLoaded())
         op.Accept(PKDD->topic);
     op.Accept(BeginINAM.value);
-    for(UINT32 ListIndex = 0; ListIndex < BeginSCR_.value.size(); ListIndex++)
+    for(uint32_t ListIndex = 0; ListIndex < BeginSCR_.value.size(); ListIndex++)
         {
         if(BeginSCR_.value[ListIndex]->isSCRO)
             op.Accept(BeginSCR_.value[ListIndex]->reference);
         }
     op.Accept(BeginTNAM.value);
     op.Accept(EndINAM.value);
-    for(UINT32 ListIndex = 0; ListIndex < EndSCR_.value.size(); ListIndex++)
+    for(uint32_t ListIndex = 0; ListIndex < EndSCR_.value.size(); ListIndex++)
         {
         if(EndSCR_.value[ListIndex]->isSCRO)
             op.Accept(EndSCR_.value[ListIndex]->reference);
         }
     op.Accept(EndTNAM.value);
     op.Accept(ChangeINAM.value);
-    for(UINT32 ListIndex = 0; ListIndex < ChangeSCR_.value.size(); ListIndex++)
+    for(uint32_t ListIndex = 0; ListIndex < ChangeSCR_.value.size(); ListIndex++)
         {
         if(ChangeSCR_.value[ListIndex]->isSCRO)
             op.Accept(ChangeSCR_.value[ListIndex]->reference);
@@ -581,12 +581,12 @@ void PACKRecord::IsNoWarnAttackBehavior(bool value)
     SETBIT(PKDT.value.flags, fIsNoWarnAttackBehavior, value);
     }
 
-bool PACKRecord::IsFlagMask(UINT32 Mask, bool Exact)
+bool PACKRecord::IsFlagMask(uint32_t Mask, bool Exact)
     {
     return Exact ? ((PKDT.value.flags & Mask) == Mask) : ((PKDT.value.flags & Mask) != 0);
     }
 
-void PACKRecord::SetFlagMask(UINT32 Mask)
+void PACKRecord::SetFlagMask(uint32_t Mask)
     {
     PKDT.value.flags = Mask;
     }
@@ -681,12 +681,12 @@ void PACKRecord::IsAvoidRadiation(bool value)
     SETBIT(PKDT.value.behaviorFlags, fIsAvoidRadiation, value);
     }
 
-bool PACKRecord::IsBehaviorFlagMask(UINT16 Mask, bool Exact)
+bool PACKRecord::IsBehaviorFlagMask(uint16_t Mask, bool Exact)
     {
     return Exact ? ((PKDT.value.behaviorFlags & Mask) == Mask) : ((PKDT.value.behaviorFlags & Mask) != 0);
     }
 
-void PACKRecord::SetBehaviorFlagMask(UINT16 Mask)
+void PACKRecord::SetBehaviorFlagMask(uint16_t Mask)
     {
     PKDT.value.behaviorFlags = Mask;
     }
@@ -817,12 +817,12 @@ void PACKRecord::IsAllowStealing(bool value)
     SETBIT(PKDT.value.specificFlags, fIsAllowStealing, value);
     }
 
-bool PACKRecord::IsSpecificFlagMask(UINT16 Mask, bool Exact)
+bool PACKRecord::IsSpecificFlagMask(uint16_t Mask, bool Exact)
     {
     return Exact ? ((PKDT.value.specificFlags & Mask) == Mask) : ((PKDT.value.specificFlags & Mask) != 0);
     }
 
-void PACKRecord::SetSpecificFlagMask(UINT16 Mask)
+void PACKRecord::SetSpecificFlagMask(uint16_t Mask)
     {
     PKDT.value.specificFlags = Mask;
     }
@@ -847,12 +847,12 @@ void PACKRecord::IsDoOnce(bool value)
     SETBIT(IDLF.value, fIsDoOnce, value);
     }
 
-bool PACKRecord::IsIdleFlagMask(UINT8 Mask, bool Exact)
+bool PACKRecord::IsIdleFlagMask(uint8_t Mask, bool Exact)
     {
     return Exact ? ((IDLF.value & Mask) == Mask) : ((IDLF.value & Mask) != 0);
     }
 
-void PACKRecord::SetIdleFlagMask(UINT8 Mask)
+void PACKRecord::SetIdleFlagMask(uint8_t Mask)
     {
     IDLF.value = Mask;
     }
@@ -905,13 +905,13 @@ void PACKRecord::IsHoldFireWhenBlocked(bool value)
     PKW3->flags = value ? (PKW3->flags | fIsHoldFireWhenBlocked) : (PKW3->flags & ~fIsHoldFireWhenBlocked);
     }
 
-bool PACKRecord::IsWeaponFlagMask(UINT32 Mask, bool Exact)
+bool PACKRecord::IsWeaponFlagMask(uint32_t Mask, bool Exact)
     {
     if(!PKW3.IsLoaded()) return false;
     return Exact ? ((PKW3->flags & Mask) == Mask) : ((PKW3->flags & Mask) != 0);
     }
 
-void PACKRecord::SetWeaponFlagMask(UINT32 Mask)
+void PACKRecord::SetWeaponFlagMask(uint32_t Mask)
     {
     PKW3.Load();
     PKW3->flags = Mask;
@@ -941,13 +941,13 @@ void PACKRecord::IsDontControlTargetMovement(bool value)
     PKDD->flags = value ? (PKDD->flags | fIsDontControlTargetMovement) : (PKDD->flags & ~fIsDontControlTargetMovement);
     }
 
-bool PACKRecord::IsDialogueFlagMask(UINT32 Mask, bool Exact)
+bool PACKRecord::IsDialogueFlagMask(uint32_t Mask, bool Exact)
     {
     if(!PKDD.IsLoaded()) return false;
     return Exact ? ((PKDD->flags & Mask) == Mask) : ((PKDD->flags & Mask) != 0);
     }
 
-void PACKRecord::SetDialogueFlagMask(UINT32 Mask)
+void PACKRecord::SetDialogueFlagMask(uint32_t Mask)
     {
     PKDD.Load();
     PKDD->flags = Mask;
@@ -963,12 +963,12 @@ void PACKRecord::IsBeginScriptEnabled(bool value)
     SETBIT(BeginSCHR.value.flags, fIsEnabled, value);
     }
 
-bool PACKRecord::IsBeginScriptFlagMask(UINT16 Mask, bool Exact)
+bool PACKRecord::IsBeginScriptFlagMask(uint16_t Mask, bool Exact)
     {
     return Exact ? (BeginSCHR.value.flags & Mask) == Mask : (BeginSCHR.value.flags & Mask) != 0;
     }
 
-void PACKRecord::SetBeginScriptFlagMask(UINT16 Mask)
+void PACKRecord::SetBeginScriptFlagMask(uint16_t Mask)
     {
     BeginSCHR.value.flags = Mask;
     }
@@ -983,12 +983,12 @@ void PACKRecord::IsEndScriptEnabled(bool value)
     SETBIT(EndSCHR.value.flags, fIsEnabled, value);
     }
 
-bool PACKRecord::IsEndScriptFlagMask(UINT16 Mask, bool Exact)
+bool PACKRecord::IsEndScriptFlagMask(uint16_t Mask, bool Exact)
     {
     return Exact ? (EndSCHR.value.flags & Mask) == Mask : (EndSCHR.value.flags & Mask) != 0;
     }
 
-void PACKRecord::SetEndScriptFlagMask(UINT16 Mask)
+void PACKRecord::SetEndScriptFlagMask(uint16_t Mask)
     {
     EndSCHR.value.flags = Mask;
     }
@@ -1003,12 +1003,12 @@ void PACKRecord::IsChangeScriptEnabled(bool value)
     SETBIT(ChangeSCHR.value.flags, fIsEnabled, value);
     }
 
-bool PACKRecord::IsChangeScriptFlagMask(UINT16 Mask, bool Exact)
+bool PACKRecord::IsChangeScriptFlagMask(uint16_t Mask, bool Exact)
     {
     return Exact ? (ChangeSCHR.value.flags & Mask) == Mask : (ChangeSCHR.value.flags & Mask) != 0;
     }
 
-void PACKRecord::SetChangeScriptFlagMask(UINT16 Mask)
+void PACKRecord::SetChangeScriptFlagMask(uint16_t Mask)
     {
     ChangeSCHR.value.flags = Mask;
     }
@@ -1173,12 +1173,12 @@ void PACKRecord::IsAIUseWeapon(bool value)
     PKDT.value.aiType = value ? eAIUseWeapon : eAIFind;
     }
 
-bool PACKRecord::IsAIType(UINT8 Type)
+bool PACKRecord::IsAIType(uint8_t Type)
     {
     return PKDT.value.aiType == Type;
     }
 
-void PACKRecord::SetAIType(UINT8 Type)
+void PACKRecord::SetAIType(uint8_t Type)
     {
     PKDT.value.aiType = Type;
     }
@@ -1279,13 +1279,13 @@ void PACKRecord::IsLoc1AtPackageLocation(bool value)
     PLDT->locType = value ? eLocAtPackageLocation : eLocNearReference;
     }
 
-bool PACKRecord::IsLoc1Type(SINT32 Type)
+bool PACKRecord::IsLoc1Type(int32_t Type)
     {
     if(!PLDT.IsLoaded()) return false;
     return PLDT->locType == Type;
     }
 
-void PACKRecord::SetLoc1Type(SINT32 Type)
+void PACKRecord::SetLoc1Type(int32_t Type)
     {
     PLDT.Load();
     PLDT->locType = Type;
@@ -1387,13 +1387,13 @@ void PACKRecord::IsLoc2AtPackageLocation(bool value)
     PLD2->locType = value ? eLocAtPackageLocation : eLocNearReference;
     }
 
-bool PACKRecord::IsLoc2Type(SINT32 Type)
+bool PACKRecord::IsLoc2Type(int32_t Type)
     {
     if(!PLD2.IsLoaded()) return false;
     return PLD2->locType == Type;
     }
 
-void PACKRecord::SetLoc2Type(SINT32 Type)
+void PACKRecord::SetLoc2Type(int32_t Type)
     {
     PLD2.Load();
     PLD2->locType = Type;
@@ -1447,13 +1447,13 @@ void PACKRecord::IsTarget1LinkedReference(bool value)
     PTDT->targetType = value ? eTargetLinkedReference : eTargetReference;
     }
 
-bool PACKRecord::IsTarget1Type(SINT32 Type)
+bool PACKRecord::IsTarget1Type(int32_t Type)
     {
     if(!PTDT.IsLoaded()) return false;
     return PTDT->targetType == Type;
     }
 
-void PACKRecord::SetTarget1Type(SINT32 Type)
+void PACKRecord::SetTarget1Type(int32_t Type)
     {
     PTDT.Load();
     PTDT->targetType = Type;
@@ -1507,13 +1507,13 @@ void PACKRecord::IsTarget2LinkedReference(bool value)
     PTD2->targetType = value ? eTargetLinkedReference : eTargetReference;
     }
 
-bool PACKRecord::IsTarget2Type(SINT32 Type)
+bool PACKRecord::IsTarget2Type(int32_t Type)
     {
     if(!PTD2.IsLoaded()) return false;
     return PTD2->targetType == Type;
     }
 
-void PACKRecord::SetTarget2Type(SINT32 Type)
+void PACKRecord::SetTarget2Type(int32_t Type)
     {
     PTD2.Load();
     PTD2->targetType = Type;
@@ -1639,12 +1639,12 @@ void PACKRecord::IsTTh(bool value)
     PSDT.value.day = value ? eTTh : eAnyDay;
     }
 
-bool PACKRecord::IsDayType(SINT8 Type)
+bool PACKRecord::IsDayType(int8_t Type)
     {
     return PSDT.value.day == Type;
     }
 
-void PACKRecord::SetDayType(SINT8 Type)
+void PACKRecord::SetDayType(int8_t Type)
     {
     PSDT.value.day = Type;
     }
@@ -1669,12 +1669,12 @@ void PACKRecord::IsRepeatable(bool value)
     PKPT.value = value ? eRepeatable : eNotRepeatable;
     }
 
-bool PACKRecord::IsRepeatType(UINT16 Type)
+bool PACKRecord::IsRepeatType(uint16_t Type)
     {
     return PKPT.value == Type;
     }
 
-void PACKRecord::SetRepeatType(UINT16 Type)
+void PACKRecord::SetRepeatType(uint16_t Type)
     {
     PKPT.value = Type;
     }
@@ -1703,13 +1703,13 @@ void PACKRecord::IsVolleyFire(bool value)
     PKW3->fireRate = value ? eVolleyFire : eAutoFire;
     }
 
-bool PACKRecord::IsFireType(UINT8 Type)
+bool PACKRecord::IsFireType(uint8_t Type)
     {
     if(!PKW3.IsLoaded()) return false;
     return PKW3->fireRate == Type;
     }
 
-void PACKRecord::SetFireType(UINT8 Type)
+void PACKRecord::SetFireType(uint8_t Type)
     {
     PKW3.Load();
     PKW3->fireRate = Type;
@@ -1739,13 +1739,13 @@ void PACKRecord::IsRepeatFire(bool value)
     PKW3->fireType = value ? eRepeatFire : eNumberOfBursts;
     }
 
-bool PACKRecord::IsFireCountType(UINT8 Type)
+bool PACKRecord::IsFireCountType(uint8_t Type)
     {
     if(!PKW3.IsLoaded()) return false;
     return PKW3->fireType == Type;
     }
 
-void PACKRecord::SetFireCountType(UINT8 Type)
+void PACKRecord::SetFireCountType(uint8_t Type)
     {
     PKW3.Load();
     PKW3->fireType = Type;
@@ -1775,13 +1775,13 @@ void PACKRecord::IsSayTo(bool value)
     PKDD->dialType = value ? eSayTo : eConversation;
     }
 
-bool PACKRecord::IsDialogueType(UINT32 Type)
+bool PACKRecord::IsDialogueType(uint32_t Type)
     {
     if(!PKDD.IsLoaded()) return false;
     return PKDD->dialType == Type;
     }
 
-void PACKRecord::SetDialogueType(UINT32 Type)
+void PACKRecord::SetDialogueType(uint32_t Type)
     {
     PKDD.Load();
     PKDD->dialType = Type;
@@ -1817,12 +1817,12 @@ void PACKRecord::IsBeginEffect(bool value)
     BeginSCHR.value.scriptType = value ? eEffect : eObject;
     }
 
-bool PACKRecord::IsBeginType(UINT16 Type)
+bool PACKRecord::IsBeginType(uint16_t Type)
     {
     return BeginSCHR.value.scriptType == Type;
     }
 
-void PACKRecord::SetBeginType(UINT16 Type)
+void PACKRecord::SetBeginType(uint16_t Type)
     {
     BeginSCHR.value.scriptType = Type;
     }
@@ -1857,12 +1857,12 @@ void PACKRecord::IsEndEffect(bool value)
     EndSCHR.value.scriptType = value ? eEffect : eObject;
     }
 
-bool PACKRecord::IsEndType(UINT16 Type)
+bool PACKRecord::IsEndType(uint16_t Type)
     {
     return EndSCHR.value.scriptType == Type;
     }
 
-void PACKRecord::SetEndType(UINT16 Type)
+void PACKRecord::SetEndType(uint16_t Type)
     {
     EndSCHR.value.scriptType = Type;
     }
@@ -1897,45 +1897,45 @@ void PACKRecord::IsChangeEffect(bool value)
     ChangeSCHR.value.scriptType = value ? eEffect : eObject;
     }
 
-bool PACKRecord::IsChangeType(UINT16 Type)
+bool PACKRecord::IsChangeType(uint16_t Type)
     {
     return ChangeSCHR.value.scriptType == Type;
     }
 
-void PACKRecord::SetChangeType(UINT16 Type)
+void PACKRecord::SetChangeType(uint16_t Type)
     {
     ChangeSCHR.value.scriptType = Type;
     }
 
-UINT32 PACKRecord::GetType()
+uint32_t PACKRecord::GetType()
     {
     return REV32(PACK);
     }
 
-STRING PACKRecord::GetStrType()
+char * PACKRecord::GetStrType()
     {
     return "PACK";
     }
 
-SINT32 PACKRecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk)
+int32_t PACKRecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk)
     {
-    UINT32 subType = 0;
-    UINT32 subSize = 0;
-    UINT32 lastChunk = 0;
+    uint32_t subType = 0;
+    uint32_t subSize = 0;
+    uint32_t lastChunk = 0;
     while(buffer < end_buffer){
-        subType = *(UINT32 *)buffer;
+        subType = *(uint32_t *)buffer;
         buffer += 4;
         switch(subType)
             {
             case REV32(XXXX):
                 buffer += 2;
-                subSize = *(UINT32 *)buffer;
+                subSize = *(uint32_t *)buffer;
                 buffer += 4;
-                subType = *(UINT32 *)buffer;
+                subType = *(uint32_t *)buffer;
                 buffer += 6;
                 break;
             default:
-                subSize = *(UINT16 *)buffer;
+                subSize = *(uint16_t *)buffer;
                 buffer += 2;
                 break;
             }
@@ -1979,7 +1979,7 @@ SINT32 PACKRecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer,
                 IDLF.Read(buffer, subSize);
                 break;
             case REV32(IDLC):
-                //Idle Animation Count (may be a UINT32 instead, but only the lower 8 bits are used, so skip extra)
+                //Idle Animation Count (may be a uint32_t instead, but only the lower 8 bits are used, so skip extra)
                 IDLC.Read(buffer, 1);
                 buffer += subSize - 1;
                 //Testing snippet. Verified that the extra bits aren't in use in FalloutNV.esm
@@ -1991,7 +1991,7 @@ SINT32 PACKRecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer,
                 //    case 4:
                 //        {
                 //        IDLC.Read(buffer, 1);
-                //        UINT32 test = 0;
+                //        uint32_t test = 0;
                 //        _readBuffer(&test, buffer, 3, curPos);
                 //        if(test != 0)
                 //            {
@@ -2300,7 +2300,7 @@ SINT32 PACKRecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer,
     return 0;
     }
 
-SINT32 PACKRecord::Unload()
+int32_t PACKRecord::Unload()
     {
     IsChanged(false);
     IsLoaded(false);
@@ -2348,7 +2348,7 @@ SINT32 PACKRecord::Unload()
     return 1;
     }
 
-SINT32 PACKRecord::WriteRecord(FileWriter &writer)
+int32_t PACKRecord::WriteRecord(FileWriter &writer)
     {
     WRITE(EDID);
     WRITE(PKDT);
@@ -2383,9 +2383,9 @@ SINT32 PACKRecord::WriteRecord(FileWriter &writer)
 
     WRITEEMPTY(POBA);
     WRITEAS(BeginINAM,INAM);
-    BeginSCHR.value.numRefs = (UINT32)BeginSCR_.value.size(); //Just to ensure that the value is correct
+    BeginSCHR.value.numRefs = (uint32_t)BeginSCR_.value.size(); //Just to ensure that the value is correct
     BeginSCHR.value.compiledSize = BeginSCDA.GetSize(); //Just to ensure that the value is correct
-    //for(UINT32 x = 0; x < BeginVARS.value.size(); ++x) //Just to ensure that the value is correct
+    //for(uint32_t x = 0; x < BeginVARS.value.size(); ++x) //Just to ensure that the value is correct
     //    BeginSCHR.value.lastIndex = (BeginSCHR.value.lastIndex > BeginVARS.value[x]->SLSD.value.index) ? BeginSCHR.value.lastIndex : BeginVARS.value[x]->SLSD.value.index;
     WRITEAS(BeginSCHR,SCHR);
     WRITEAS(BeginSCDA,SCDA);
@@ -2396,9 +2396,9 @@ SINT32 PACKRecord::WriteRecord(FileWriter &writer)
 
     WRITEEMPTY(POEA);
     WRITEAS(EndINAM,INAM);
-    EndSCHR.value.numRefs = (UINT32)EndSCR_.value.size(); //Just to ensure that the value is correct
+    EndSCHR.value.numRefs = (uint32_t)EndSCR_.value.size(); //Just to ensure that the value is correct
     EndSCHR.value.compiledSize = EndSCDA.GetSize(); //Just to ensure that the value is correct
-    //for(UINT32 x = 0; x < EndVARS.value.size(); ++x) //Just to ensure that the value is correct
+    //for(uint32_t x = 0; x < EndVARS.value.size(); ++x) //Just to ensure that the value is correct
     //    EndSCHR.value.lastIndex = (EndSCHR.value.lastIndex > EndVARS.value[x]->SLSD.value.index) ? EndSCHR.value.lastIndex : EndVARS.value[x]->SLSD.value.index;
     WRITEAS(EndSCHR,SCHR);
     WRITEAS(EndSCDA,SCDA);
@@ -2409,9 +2409,9 @@ SINT32 PACKRecord::WriteRecord(FileWriter &writer)
 
     WRITEEMPTY(POCA);
     WRITEAS(ChangeINAM,INAM);
-    ChangeSCHR.value.numRefs = (UINT32)ChangeSCR_.value.size(); //Just to ensure that the value is correct
+    ChangeSCHR.value.numRefs = (uint32_t)ChangeSCR_.value.size(); //Just to ensure that the value is correct
     ChangeSCHR.value.compiledSize = ChangeSCDA.GetSize(); //Just to ensure that the value is correct
-    //for(UINT32 x = 0; x < ChangeVARS.value.size(); ++x) //Just to ensure that the value is correct
+    //for(uint32_t x = 0; x < ChangeVARS.value.size(); ++x) //Just to ensure that the value is correct
     //    ChangeSCHR.value.lastIndex = (ChangeSCHR.value.lastIndex > ChangeVARS.value[x]->SLSD.value.index) ? ChangeSCHR.value.lastIndex : ChangeVARS.value[x]->SLSD.value.index;
     WRITEAS(ChangeSCHR,SCHR);
     WRITEAS(ChangeSCDA,SCDA);

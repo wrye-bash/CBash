@@ -80,7 +80,7 @@ bool IDLMRecord::VisitFormIDs(FormIDOp &op)
     if(!IsLoaded())
         return false;
 
-    for(UINT32 x = 0; x < IDLA.value.size(); x++)
+    for(uint32_t x = 0; x < IDLA.value.size(); x++)
         op.Accept(IDLA.value[x]);
 
     return op.Stop();
@@ -106,44 +106,44 @@ void IDLMRecord::IsDoOnce(bool value)
     SETBIT(IDLF.value, fIsDoOnce, value);
     }
 
-bool IDLMRecord::IsFlagMask(UINT8 Mask, bool Exact)
+bool IDLMRecord::IsFlagMask(uint8_t Mask, bool Exact)
     {
     return Exact ? ((IDLF.value & Mask) == Mask) : ((IDLF.value & Mask) != 0);
     }
 
-void IDLMRecord::SetFlagMask(UINT8 Mask)
+void IDLMRecord::SetFlagMask(uint8_t Mask)
     {
     IDLF.value = Mask;
     }
 
-UINT32 IDLMRecord::GetType()
+uint32_t IDLMRecord::GetType()
     {
     return REV32(IDLM);
     }
 
-STRING IDLMRecord::GetStrType()
+char * IDLMRecord::GetStrType()
     {
     return "IDLM";
     }
 
-SINT32 IDLMRecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk)
+int32_t IDLMRecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer, bool CompressedOnDisk)
     {
-    UINT32 subType = 0;
-    UINT32 subSize = 0;
+    uint32_t subType = 0;
+    uint32_t subSize = 0;
     while(buffer < end_buffer){
-        subType = *(UINT32 *)buffer;
+        subType = *(uint32_t *)buffer;
         buffer += 4;
         switch(subType)
             {
             case REV32(XXXX):
                 buffer += 2;
-                subSize = *(UINT32 *)buffer;
+                subSize = *(uint32_t *)buffer;
                 buffer += 4;
-                subType = *(UINT32 *)buffer;
+                subType = *(uint32_t *)buffer;
                 buffer += 6;
                 break;
             default:
-                subSize = *(UINT16 *)buffer;
+                subSize = *(uint16_t *)buffer;
                 buffer += 2;
                 break;
             }
@@ -159,7 +159,7 @@ SINT32 IDLMRecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer,
                 IDLF.Read(buffer, subSize);
                 break;
             case REV32(IDLC):
-                //may be a UINT32 instead, but only the lower 8 bits are used, so skip extra
+                //may be a uint32_t instead, but only the lower 8 bits are used, so skip extra
                 //IDLC.Read(buffer, 1);
                 //buffer += subSize - 1;
                 //Testing snippet. Verified that the extra bits aren't in use in FalloutNV.esm
@@ -171,7 +171,7 @@ SINT32 IDLMRecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer,
                     case 4:
                         {
                         IDLC.Read(buffer, 1);
-                        UINT32 test = 0;
+                        uint32_t test = 0;
                         memcpy(&test, buffer, 3);
                         buffer += 3;
                         if(test != 0)
@@ -211,7 +211,7 @@ SINT32 IDLMRecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer,
     return 0;
     }
 
-SINT32 IDLMRecord::Unload()
+int32_t IDLMRecord::Unload()
     {
     IsChanged(false);
     IsLoaded(false);
@@ -224,7 +224,7 @@ SINT32 IDLMRecord::Unload()
     return 1;
     }
 
-SINT32 IDLMRecord::WriteRecord(FileWriter &writer)
+int32_t IDLMRecord::WriteRecord(FileWriter &writer)
     {
     WRITE(EDID);
     WRITE(OBND);
