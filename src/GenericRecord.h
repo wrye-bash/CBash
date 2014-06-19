@@ -38,8 +38,8 @@
 #include "Common.h"
 #include "GenericChunks.h"
 
-class Record;
-class ModFile;
+struct Record;
+struct ModFile;
 
 class RecordOp
     {
@@ -180,7 +180,7 @@ class RecordProcessor
         //    }
     };
 
-class Record
+struct Record
     {
     protected:
         enum headerFlags

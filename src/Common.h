@@ -179,8 +179,8 @@ class Ex_INVALIDMODINDEX : public std::exception
 int icmps(const char * lhs, const char * rhs);
 int cmps(const char * lhs, const char * rhs);
 
-class ModFile;
-class Record;
+struct ModFile;
+struct Record;
 class StringRecord;
 
 struct sameStr

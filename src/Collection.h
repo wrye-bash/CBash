@@ -67,7 +67,7 @@
 //typedef FormID_Map::iterator FormID_Iterator;
 //typedef EditorID_Map::iterator EditorID_Iterator;
 
-class Collection
+struct Collection
     {
     private:
         char * ModsDir;

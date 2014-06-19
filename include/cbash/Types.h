@@ -51,9 +51,9 @@ extern "C"
 {
 #endif
 
-class Collection;
-class ModFile;
-class Record;
+struct Collection;
+struct ModFile;
+struct Record;
 
 typedef uint32_t FORMID;
 

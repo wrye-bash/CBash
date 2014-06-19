@@ -39,9 +39,9 @@
 #include "GenericRecord.h"
 #include "TES4Record.h" //Is shared across all mod types
 
-class Collection;
+struct Collection;
 
-class ModFile
+struct ModFile
     {
     public:
         boost::iostreams::mapped_file_source file_map;
