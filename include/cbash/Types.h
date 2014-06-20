@@ -54,7 +54,7 @@ extern "C"
 
 typedef struct Collection cb_collection_t;
 typedef struct ModFile cb_mod_t;
-typedef struct Record record_t;
+typedef struct Record cb_record_t;
 
 typedef uint32_t cb_formid_t;
 

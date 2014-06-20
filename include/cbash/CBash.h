@@ -307,14 +307,14 @@ DLLEXTERN int32_t GetModLoadOrderByID(cb_mod_t *ModID);
     @param RecordID The record to get the parent plugin of.
     @returns A plugin pointer, or `NULL` if an error occurred.
 */
-DLLEXTERN cb_mod_t * GetModIDByRecordID(record_t *RecordID);
+DLLEXTERN cb_mod_t * GetModIDByRecordID(cb_record_t *RecordID);
 
 /**
     @brief Get a collection using a record from a plugin in it.
     @param RecordID The record to get the parent plugin's collection from.
     @returns A collection pointer, or `NULL` if an error occurred.
 */
-DLLEXTERN cb_collection_t * GetCollectionIDByRecordID(record_t *RecordID);
+DLLEXTERN cb_collection_t * GetCollectionIDByRecordID(cb_record_t *RecordID);
 
 /**
     @brief Get a collection using a plugin in it.
@@ -385,7 +385,7 @@ DLLEXTERN int32_t GetModOrphansFormIDs(cb_mod_t *ModID, cb_formid_t * FormIDs);
     @param IsMGEFCode Whether or not the FormID passed is a MGEF code. MGEF (Magic Effect) records are special cases that are referenced using their EditorIDs rather than their FormIDs, so need special handling.
     @returns The filename of the plugin referenced by the given FormID, or `NULL` if an error occurred.
 */
-DLLEXTERN char * GetLongIDName(record_t *RecordID, const uint32_t FormID, const bool IsMGEFCode);
+DLLEXTERN char * GetLongIDName(cb_record_t *RecordID, const uint32_t FormID, const bool IsMGEFCode);
 
 /**
     @brief Get a FormID for an object in a plugin.
@@ -413,7 +413,7 @@ DLLEXTERN uint32_t MakeShortFormID(cb_mod_t *ModID, const uint32_t ObjectID, con
     @param CreateFlags Flags that determine how the record is created. These flags are given in ::createFlags.
     @returns A pointer to the created record, or `NULL` if an error was encountered.
 */
-DLLEXTERN record_t * CreateRecord(cb_mod_t *ModID, const uint32_t RecordType, const cb_formid_t RecordFormID, char * const RecordEditorID, record_t *ParentID, const uint32_t CreateFlags);
+DLLEXTERN cb_record_t * CreateRecord(cb_mod_t *ModID, const uint32_t RecordType, const cb_formid_t RecordFormID, char * const RecordEditorID, cb_record_t *ParentID, const uint32_t CreateFlags);
 
 /**
     @brief Copy a record from one plugin into another.
@@ -425,7 +425,7 @@ DLLEXTERN record_t * CreateRecord(cb_mod_t *ModID, const uint32_t RecordType, co
     @param CreateFlags Flags that determine how the record copy is created. These flags are given in ::createFlags.
     @returns A pointer to the record copy, or `NULL` if an error was encountered.
 */
-DLLEXTERN record_t * CopyRecord(record_t *RecordID, cb_mod_t *DestModID, record_t *DestParentID, const cb_formid_t DestRecordFormID, char * const DestRecordEditorID, const uint32_t CreateFlags);
+DLLEXTERN cb_record_t * CopyRecord(cb_record_t *RecordID, cb_mod_t *DestModID, cb_record_t *DestParentID, const cb_formid_t DestRecordFormID, char * const DestRecordEditorID, const uint32_t CreateFlags);
 
 /**
     @brief Unload a record from memory.
@@ -433,7 +433,7 @@ DLLEXTERN record_t * CopyRecord(record_t *RecordID, cb_mod_t *DestModID, record_
     @param RecordID The record to unload.
     @returns `1` on success, `0` on failure.
 */
-DLLEXTERN int32_t UnloadRecord(record_t *RecordID);
+DLLEXTERN int32_t UnloadRecord(cb_record_t *RecordID);
 
 /**
     @brief Discards changes made to a record since it was last saved.
@@ -441,14 +441,14 @@ DLLEXTERN int32_t UnloadRecord(record_t *RecordID);
     @param RecordID The record to reset.
     @returns `1` on success, `0` on failure.
 */
-DLLEXTERN int32_t ResetRecord(record_t *RecordID);
+DLLEXTERN int32_t ResetRecord(cb_record_t *RecordID);
 
 /**
     @brief Delete a record.
     @param RecordID The record to delete.
     @returns `1` on success, `0` on failure.
 */
-DLLEXTERN int32_t DeleteRecord(record_t *RecordID);
+DLLEXTERN int32_t DeleteRecord(cb_record_t *RecordID);
 
 ///@}
 /**************************//**
@@ -463,7 +463,7 @@ DLLEXTERN int32_t DeleteRecord(record_t *RecordID);
     @param RecordEditorID The EditorID to look for, used if the FormID given is `NULL`. If this is also `NULL`, the plugin's TES4 record is returned.
     @returns The specified record, or `NULL` if an error occurred.
 */
-DLLEXTERN record_t * GetRecordID(cb_mod_t *ModID, const cb_formid_t RecordFormID, char * const RecordEditorID);
+DLLEXTERN cb_record_t * GetRecordID(cb_mod_t *ModID, const cb_formid_t RecordFormID, char * const RecordEditorID);
 
 /**
     @brief Get the number of records of a specified type in a plugin.
@@ -480,7 +480,7 @@ DLLEXTERN int32_t GetNumRecords(cb_mod_t *ModID, const uint32_t RecordType);
     @param RecordIDs An array of record pointers, pre-allocated to be of the size given by GetNumRecords(). This function populates the array.
     @returns The number of records retrieved, or `-1` if an error occurred.
 */
-DLLEXTERN int32_t GetRecordIDs(cb_mod_t *ModID, const uint32_t RecordType, record_t ** RecordIDs);
+DLLEXTERN int32_t GetRecordIDs(cb_mod_t *ModID, const uint32_t RecordType, cb_record_t ** RecordIDs);
 
 /**
     @brief Check if the given record is winning any conflict with other records.
@@ -489,7 +489,7 @@ DLLEXTERN int32_t GetRecordIDs(cb_mod_t *ModID, const uint32_t RecordType, recor
     @param GetExtendedConflicts If true, checks for conflicts in plugins loaded with the ::fIsExtendedConflicts flag, otherwise they are ignored.
     @returns `1` if the record is winning, `0` if it is not, and `-1` if an error occurred.
 */
-DLLEXTERN int32_t IsRecordWinning(record_t *RecordID, const bool GetExtendedConflicts);
+DLLEXTERN int32_t IsRecordWinning(cb_record_t *RecordID, const bool GetExtendedConflicts);
 
 /**
     @brief Get the number of conflicting versions of the given record in its parent collection.
@@ -497,7 +497,7 @@ DLLEXTERN int32_t IsRecordWinning(record_t *RecordID, const bool GetExtendedConf
     @param GetExtendedConflicts If true, checks for conflicts in plugins loaded with the ::fIsExtendedConflicts flag, otherwise they are ignored.
     @returns The number of conflicting versions of the record, or `-1` if an error occurred.
 */
-DLLEXTERN int32_t GetNumRecordConflicts(record_t *RecordID, const bool GetExtendedConflicts);
+DLLEXTERN int32_t GetNumRecordConflicts(cb_record_t *RecordID, const bool GetExtendedConflicts);
 
 /**
     @brief Get an array of the different versions of the given record in its parent collection.
@@ -506,7 +506,7 @@ DLLEXTERN int32_t GetNumRecordConflicts(record_t *RecordID, const bool GetExtend
     @param GetExtendedConflicts If true, checks for conflicts in plugins loaded with the ::fIsExtendedConflicts flag, otherwise they are ignored.
     @returns The number of records retrieved, or `-1` if an error occurred.
 */
-DLLEXTERN int32_t GetRecordConflicts(record_t *RecordID, record_t ** RecordIDs, const bool GetExtendedConflicts);
+DLLEXTERN int32_t GetRecordConflicts(cb_record_t *RecordID, cb_record_t ** RecordIDs, const bool GetExtendedConflicts);
 
 /**
     @brief Get an array of the different versions of the given record in its parent collection.
@@ -515,7 +515,7 @@ DLLEXTERN int32_t GetRecordConflicts(record_t *RecordID, record_t ** RecordIDs, 
     @param RecordIDs An array of record pointers, pre-allocated to be of the size given by GetNumRecordConflicts(). This function populates the array.
     @returns The number of records retrieved, or `-1` if an error occurred.
 */
-DLLEXTERN int32_t GetRecordHistory(record_t *RecordID, record_t ** RecordIDs);
+DLLEXTERN int32_t GetRecordHistory(cb_record_t *RecordID, cb_record_t ** RecordIDs);
 
 /**
     @brief Get the number of Identical To Master records in a plugin.
@@ -532,14 +532,14 @@ DLLEXTERN int32_t GetNumIdenticalToMasterRecords(cb_mod_t *ModID);
     @param RecordIDs An array of record pointers, pre-allocated to be of the size given by GetNumIdenticalToMasterRecords(). This function populates the array.
     @returns The number of records the array is populated with, or `-1` if an error occurred.
 */
-DLLEXTERN int32_t GetIdenticalToMasterRecords(cb_mod_t *ModID, record_t ** RecordIDs);
+DLLEXTERN int32_t GetIdenticalToMasterRecords(cb_mod_t *ModID, cb_record_t ** RecordIDs);
 
 /**
     @brief Check if a record's FormID or any of the FormIDs referenced by the record are invalid.
     @param RecordID The record to check.
     @returns `1` if the record has or references an invalid FormID, `0` if all the FormIDs it contains are valid, or `-1` if an error occurred.
 */
-DLLEXTERN int32_t IsRecordsFormIDsInvalid(record_t *RecordID);
+DLLEXTERN int32_t IsRecordsFormIDsInvalid(cb_record_t *RecordID);
 
 ///@}
 /**************************//**
@@ -557,7 +557,7 @@ DLLEXTERN int32_t IsRecordsFormIDsInvalid(record_t *RecordID);
     @param ArraySize The size of the OldFormIDs, NewFormIDs and Changes arrays.
     @returns The total number of updated references, or `-1` if an error occurred.
 */
-DLLEXTERN int32_t UpdateReferences(cb_mod_t *ModID, record_t *RecordID, cb_formid_t * OldFormIDs, cb_formid_t * NewFormIDs, uint32_t * Changes, const uint32_t ArraySize);
+DLLEXTERN int32_t UpdateReferences(cb_mod_t *ModID, cb_record_t *RecordID, cb_formid_t * OldFormIDs, cb_formid_t * NewFormIDs, uint32_t * Changes, const uint32_t ArraySize);
 
 ///@}
 /**************************//**
@@ -571,7 +571,7 @@ DLLEXTERN int32_t UpdateReferences(cb_mod_t *ModID, record_t *RecordID, cb_formi
     @param RecordID The record to query. If `NULL`, all record changes in the collection are discarded.
     @returns `1` if the record has had its references updated, `0` if not, and `-1` if an error occurred.
 */
-DLLEXTERN int32_t GetRecordUpdatedReferences(cb_collection_t *CollectionID, record_t *RecordID);
+DLLEXTERN int32_t GetRecordUpdatedReferences(cb_collection_t *CollectionID, cb_record_t *RecordID);
 
 ///@}
 /**************************//**
@@ -586,7 +586,7 @@ DLLEXTERN int32_t GetRecordUpdatedReferences(cb_collection_t *CollectionID, reco
     @param EditorID The EditorID to set. If the EditorID is already in use by another record in the same plugin, the function will exit with error.
     @returns `1` if the FormID and/or EditorID was changed, or `-1` if nothing was changed or an error occurred.
 */
-DLLEXTERN int32_t SetIDFields(record_t *RecordID, const cb_formid_t FormID, char * const EditorID);
+DLLEXTERN int32_t SetIDFields(cb_record_t *RecordID, const cb_formid_t FormID, char * const EditorID);
 
 /**
     @brief Set a field's value.
@@ -603,7 +603,7 @@ DLLEXTERN int32_t SetIDFields(record_t *RecordID, const cb_formid_t FormID, char
     @param ArraySize The byte size of the value to set.
     @returns
 */
-DLLEXTERN void   SetField(record_t *RecordID, FIELD_IDENTIFIERS, void *FieldValue, const uint32_t ArraySize);
+DLLEXTERN void   SetField(cb_record_t *RecordID, FIELD_IDENTIFIERS, void *FieldValue, const uint32_t ArraySize);
 
 /**
     @brief
@@ -618,7 +618,7 @@ DLLEXTERN void   SetField(record_t *RecordID, FIELD_IDENTIFIERS, void *FieldValu
     @param ListX3FieldID
     @returns
 */
-DLLEXTERN void   DeleteField(record_t *RecordID, FIELD_IDENTIFIERS);
+DLLEXTERN void   DeleteField(cb_record_t *RecordID, FIELD_IDENTIFIERS);
 
 ///@}
 /**************************//**
@@ -640,7 +640,7 @@ DLLEXTERN void   DeleteField(record_t *RecordID, FIELD_IDENTIFIERS);
     @param WhichAttribute
     @returns
 */
-DLLEXTERN uint32_t GetFieldAttribute(record_t *RecordID, FIELD_IDENTIFIERS, const uint32_t WhichAttribute);
+DLLEXTERN uint32_t GetFieldAttribute(cb_record_t *RecordID, FIELD_IDENTIFIERS, const uint32_t WhichAttribute);
 
 /**
     @brief
@@ -656,6 +656,6 @@ DLLEXTERN uint32_t GetFieldAttribute(record_t *RecordID, FIELD_IDENTIFIERS, cons
     @param FieldValues
     @returns
 */
-DLLEXTERN void * GetField(record_t *RecordID, FIELD_IDENTIFIERS, void **FieldValues);
+DLLEXTERN void * GetField(cb_record_t *RecordID, FIELD_IDENTIFIERS, void **FieldValues);
 
 ///@}
