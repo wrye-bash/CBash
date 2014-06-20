@@ -52,7 +52,7 @@ extern "C"
 {
 #endif
 
-typedef struct Collection collection_t;
+typedef struct Collection cb_collection_t;
 typedef struct ModFile mod_t;
 typedef struct Record record_t;
 

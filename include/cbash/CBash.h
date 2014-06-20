@@ -102,9 +102,9 @@ DLLEXTERN void AllowRaising(void (*_RaiseCallback)(const char *));
     @details Collections are used to manage groups of mod plugins and their data in CBash.
     @param ModsPath Specifies the path to the folder containing the mod plugins that are to be added to the collection.
     @param CollectionType Specifies the type of game the collection is for. Valid game types are given by ::whichGameTypes.
-    @returns A pointer to the newly-created collection_t object.
+    @returns A pointer to the newly-created cb_collection_t object.
 */
-DLLEXTERN collection_t * CreateCollection(char * const ModsPath, const uint32_t CollectionType);
+DLLEXTERN cb_collection_t * CreateCollection(char * const ModsPath, const uint32_t CollectionType);
 
 /**
     @brief Delete a plugin collection.
@@ -112,7 +112,7 @@ DLLEXTERN collection_t * CreateCollection(char * const ModsPath, const uint32_t 
     @param CollectionID A pointer to the collection to be deleted.
     @returns `0` on success, `-1` if an error occurred.
 */
-DLLEXTERN int32_t DeleteCollection(collection_t *CollectionID);
+DLLEXTERN int32_t DeleteCollection(cb_collection_t *CollectionID);
 
 /**
     @brief Loads a collection of plugins.
@@ -121,7 +121,7 @@ DLLEXTERN int32_t DeleteCollection(collection_t *CollectionID);
     @param _ProgressCallback A pointer to a function to use as a progress callback. If `NULL`, no progress is reported. The function arguments are the load order position of the plugin currently being loaded, the maximum load order position, and the plugin filename. The function returns a boolean that is currently ignored, but may in future be used to signal cancellation of loading by the client.
     @returns `0` on success, `-1` if an error occurred.
 */
-DLLEXTERN int32_t LoadCollection(collection_t *CollectionID, bool (*_ProgressCallback)(const uint32_t, const uint32_t, const char *));
+DLLEXTERN int32_t LoadCollection(cb_collection_t *CollectionID, bool (*_ProgressCallback)(const uint32_t, const uint32_t, const char *));
 
 /**
     @brief Unloads a collection of plugins.
@@ -129,14 +129,14 @@ DLLEXTERN int32_t LoadCollection(collection_t *CollectionID, bool (*_ProgressCal
     @param CollectionID A pointer to the collection to unload.
     @returns `0` on success, `-1` if an error occurred.
 */
-DLLEXTERN int32_t UnloadCollection(collection_t *CollectionID);
+DLLEXTERN int32_t UnloadCollection(cb_collection_t *CollectionID);
 
 /**
     @brief Get the game type a collection was created for.
     @param CollectionID The collection to get the game type for.
     @returns The collection game type. Valid game types are given by ::whichGameTypes.
 */
-DLLEXTERN int32_t GetCollectionType(collection_t *CollectionID);
+DLLEXTERN int32_t GetCollectionType(cb_collection_t *CollectionID);
 
 /**
     @brief Unload all collections of plugins that have been created by CBash.
@@ -165,7 +165,7 @@ DLLEXTERN int32_t DeleteAllCollections();
     @param ModFlagsField Flags that determine how the plugin is loaded and what can be edited once it has been loaded. These flags are given in ::modFlags.
     @returns A pointer to the plugin object added to the collection.
 */
-DLLEXTERN mod_t * AddMod(collection_t *CollectionID, char * const ModName, const uint32_t ModFlagsField);
+DLLEXTERN mod_t * AddMod(cb_collection_t *CollectionID, char * const ModName, const uint32_t ModFlagsField);
 
 /**
     @brief Load a single plugin.
@@ -211,7 +211,7 @@ DLLEXTERN int32_t SaveMod(mod_t *ModID, const uint32_t SaveFlagsField, char * co
     @param CollectionID The collection to query.
     @returns The number of mods in the given collection, or `-1` if an error occurred.
 */
-DLLEXTERN int32_t GetAllNumMods(collection_t *CollectionID);
+DLLEXTERN int32_t GetAllNumMods(cb_collection_t *CollectionID);
 
 /**
     @brief Get an array of plugin object pointers for the plugins in a collection.
@@ -219,7 +219,7 @@ DLLEXTERN int32_t GetAllNumMods(collection_t *CollectionID);
     @param ModIDs An array of plugin object pointers. The array passed to the function must be preallocated to the correct size, as given by GetAllNumMods(). The array contents are filled by the function to point to the plugin objects within the collection queried.
     @returns `0` on success, `-1` if an error occurred.
 */
-DLLEXTERN int32_t GetAllModIDs(collection_t *CollectionID, mod_t ** ModIDs);
+DLLEXTERN int32_t GetAllModIDs(cb_collection_t *CollectionID, mod_t ** ModIDs);
 
 /**
     @brief Get the number of mods in a collection's load order.
@@ -227,7 +227,7 @@ DLLEXTERN int32_t GetAllModIDs(collection_t *CollectionID, mod_t ** ModIDs);
     @param CollectionID The collection to query.
     @returns The number of mods in the given collection's load order, or `-1` if an error occurred.
 */
-DLLEXTERN int32_t GetLoadOrderNumMods(collection_t *CollectionID);
+DLLEXTERN int32_t GetLoadOrderNumMods(cb_collection_t *CollectionID);
 
 /**
     @brief Get an array of plugin object pointers for the plugins in a collection's load order.
@@ -235,7 +235,7 @@ DLLEXTERN int32_t GetLoadOrderNumMods(collection_t *CollectionID);
     @param ModIDs An array of plugin object pointers. The array passed to the function must be preallocated to the correct size, as given by GetLoadOrderNumMods(). The array contents are filled by the function to point to the plugin objects within the collection queried.
     @returns `0` on success, `-1` if an error occurred.
 */
-DLLEXTERN int32_t GetLoadOrderModIDs(collection_t *CollectionID, mod_t ** ModIDs);
+DLLEXTERN int32_t GetLoadOrderModIDs(cb_collection_t *CollectionID, mod_t ** ModIDs);
 
 /**
     @brief Get a plugin's filename from its object pointer.
@@ -252,7 +252,7 @@ DLLEXTERN char * GetFileNameByID(mod_t *ModID);
     @param ModIndex The load order position to look up.
     @returns The plugin's filename, or `NULL` if an error occurred.
 */
-DLLEXTERN char * GetFileNameByLoadOrder(collection_t *CollectionID, const uint32_t ModIndex);
+DLLEXTERN char * GetFileNameByLoadOrder(cb_collection_t *CollectionID, const uint32_t ModIndex);
 
 /**
     @brief Get a plugin's unghosted filename from its object pointer.
@@ -269,7 +269,7 @@ DLLEXTERN char * GetModNameByID(mod_t *ModID);
     @param ModIndex The load order position to look up, or `NULL` if an error occurred.
     @returns The plugin's unghosted filename, or `NULL` if an error occurred.
 */
-DLLEXTERN char * GetModNameByLoadOrder(collection_t *CollectionID, const uint32_t ModIndex);
+DLLEXTERN char * GetModNameByLoadOrder(cb_collection_t *CollectionID, const uint32_t ModIndex);
 
 /**
     @brief Get a plugin's object using its filename.
@@ -277,7 +277,7 @@ DLLEXTERN char * GetModNameByLoadOrder(collection_t *CollectionID, const uint32_
     @param ModName The plugin filename.
     @returns A pointer to the plugin object, or `NULL` if the plugin was not found.
 */
-DLLEXTERN mod_t * GetModIDByName(collection_t *CollectionID, char * const ModName);
+DLLEXTERN mod_t * GetModIDByName(cb_collection_t *CollectionID, char * const ModName);
 
 /**
     @brief Get a plugin's object using its position in the load order.
@@ -285,7 +285,7 @@ DLLEXTERN mod_t * GetModIDByName(collection_t *CollectionID, char * const ModNam
     @param ModIndex The load order position to look up.
     @returns A pointer to the plugin object, or `NULL` if the plugin was not found.
 */
-DLLEXTERN mod_t * GetModIDByLoadOrder(collection_t *CollectionID, const uint32_t ModIndex);
+DLLEXTERN mod_t * GetModIDByLoadOrder(cb_collection_t *CollectionID, const uint32_t ModIndex);
 
 /**
     @brief Get a plugin's load order position using its filename.
@@ -293,7 +293,7 @@ DLLEXTERN mod_t * GetModIDByLoadOrder(collection_t *CollectionID, const uint32_t
     @param ModName The plugin filename to look up.
     @returns The plugin's load order position, or `-1` if an error occurred.
 */
-DLLEXTERN int32_t GetModLoadOrderByName(collection_t *CollectionID, char * const ModName);
+DLLEXTERN int32_t GetModLoadOrderByName(cb_collection_t *CollectionID, char * const ModName);
 
 /**
     @brief Get a plugin's load order position using its object pointer.
@@ -314,14 +314,14 @@ DLLEXTERN mod_t * GetModIDByRecordID(record_t *RecordID);
     @param RecordID The record to get the parent plugin's collection from.
     @returns A collection pointer, or `NULL` if an error occurred.
 */
-DLLEXTERN collection_t * GetCollectionIDByRecordID(record_t *RecordID);
+DLLEXTERN cb_collection_t * GetCollectionIDByRecordID(record_t *RecordID);
 
 /**
     @brief Get a collection using a plugin in it.
     @param ModID The plugin to get the parent collection of.
     @returns A collection pointer, or `NULL` if an error occurred.
 */
-DLLEXTERN collection_t * GetCollectionIDByModID(mod_t *ModID);
+DLLEXTERN cb_collection_t * GetCollectionIDByModID(mod_t *ModID);
 
 /**
     @brief Check if a plugin contains any records.
@@ -571,7 +571,7 @@ DLLEXTERN int32_t UpdateReferences(mod_t *ModID, record_t *RecordID, cb_formid_t
     @param RecordID The record to query. If `NULL`, all record changes in the collection are discarded.
     @returns `1` if the record has had its references updated, `0` if not, and `-1` if an error occurred.
 */
-DLLEXTERN int32_t GetRecordUpdatedReferences(collection_t *CollectionID, record_t *RecordID);
+DLLEXTERN int32_t GetRecordUpdatedReferences(cb_collection_t *CollectionID, record_t *RecordID);
 
 ///@}
 /**************************//**
