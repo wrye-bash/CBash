@@ -45,15 +45,16 @@
 
 #include <stddef.h>
 #include <stdint.h>
+#include <stdbool.h>
 
 #ifdef __cplusplus
 extern "C"
 {
 #endif
 
-struct Collection;
-struct ModFile;
-struct Record;
+typedef struct Collection collection_t;
+typedef struct ModFile mod_t;
+typedef struct Record record_t;
 
 typedef uint32_t FORMID;
 

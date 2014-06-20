@@ -102,9 +102,9 @@ DLLEXTERN void AllowRaising(void (*_RaiseCallback)(const char *));
     @details Collections are used to manage groups of mod plugins and their data in CBash.
     @param ModsPath Specifies the path to the folder containing the mod plugins that are to be added to the collection.
     @param CollectionType Specifies the type of game the collection is for. Valid game types are given by ::whichGameTypes.
-    @returns A pointer to the newly-created collection object.
+    @returns A pointer to the newly-created collection_t object.
 */
-DLLEXTERN Collection * CreateCollection(char * const ModsPath, const uint32_t CollectionType);
+DLLEXTERN collection_t * CreateCollection(char * const ModsPath, const uint32_t CollectionType);
 
 /**
     @brief Delete a plugin collection.
@@ -112,7 +112,7 @@ DLLEXTERN Collection * CreateCollection(char * const ModsPath, const uint32_t Co
     @param CollectionID A pointer to the collection to be deleted.
     @returns `0` on success, `-1` if an error occurred.
 */
-DLLEXTERN int32_t DeleteCollection(Collection *CollectionID);
+DLLEXTERN int32_t DeleteCollection(collection_t *CollectionID);
 
 /**
     @brief Loads a collection of plugins.
@@ -121,7 +121,7 @@ DLLEXTERN int32_t DeleteCollection(Collection *CollectionID);
     @param _ProgressCallback A pointer to a function to use as a progress callback. If `NULL`, no progress is reported. The function arguments are the load order position of the plugin currently being loaded, the maximum load order position, and the plugin filename. The function returns a boolean that is currently ignored, but may in future be used to signal cancellation of loading by the client.
     @returns `0` on success, `-1` if an error occurred.
 */
-DLLEXTERN int32_t LoadCollection(Collection *CollectionID, bool (*_ProgressCallback)(const uint32_t, const uint32_t, const char *) = NULL);
+DLLEXTERN int32_t LoadCollection(collection_t *CollectionID, bool (*_ProgressCallback)(const uint32_t, const uint32_t, const char *));
 
 /**
     @brief Unloads a collection of plugins.
@@ -129,14 +129,14 @@ DLLEXTERN int32_t LoadCollection(Collection *CollectionID, bool (*_ProgressCallb
     @param CollectionID A pointer to the collection to unload.
     @returns `0` on success, `-1` if an error occurred.
 */
-DLLEXTERN int32_t UnloadCollection(Collection *CollectionID);
+DLLEXTERN int32_t UnloadCollection(collection_t *CollectionID);
 
 /**
     @brief Get the game type a collection was created for.
     @param CollectionID The collection to get the game type for.
     @returns The collection game type. Valid game types are given by ::whichGameTypes.
 */
-DLLEXTERN int32_t GetCollectionType(Collection *CollectionID);
+DLLEXTERN int32_t GetCollectionType(collection_t *CollectionID);
 
 /**
     @brief Unload all collections of plugins that have been created by CBash.
@@ -165,7 +165,7 @@ DLLEXTERN int32_t DeleteAllCollections();
     @param ModFlagsField Flags that determine how the plugin is loaded and what can be edited once it has been loaded. These flags are given in ::modFlags.
     @returns A pointer to the plugin object added to the collection.
 */
-DLLEXTERN ModFile * AddMod(Collection *CollectionID, char * const ModName, const uint32_t ModFlagsField);
+DLLEXTERN mod_t * AddMod(collection_t *CollectionID, char * const ModName, const uint32_t ModFlagsField);
 
 /**
     @brief Load a single plugin.
@@ -173,7 +173,7 @@ DLLEXTERN ModFile * AddMod(Collection *CollectionID, char * const ModName, const
     @param ModID A pointer to the plugin object to load.
     @returns `0` on success, `-1` if an error occurred.
 */
-DLLEXTERN int32_t LoadMod(ModFile *ModID);
+DLLEXTERN int32_t LoadMod(mod_t *ModID);
 
 /**
     @brief Unload a single plugin.
@@ -181,7 +181,7 @@ DLLEXTERN int32_t LoadMod(ModFile *ModID);
     @param ModID A pointer to the plugin object to unload.
     @returns `0` on success, `-1` if an error occurred.
 */
-DLLEXTERN int32_t UnloadMod(ModFile *ModID);
+DLLEXTERN int32_t UnloadMod(mod_t *ModID);
 
 /**
     @brief Remove unreferenced masters from a plugin.
@@ -189,7 +189,7 @@ DLLEXTERN int32_t UnloadMod(ModFile *ModID);
     @param ModID A pointer to the plugin object for which unreferenced masters should be removed.
     @returns `0` on success, `-1` if an error occurred.
 */
-DLLEXTERN int32_t CleanModMasters(ModFile *ModID);
+DLLEXTERN int32_t CleanModMasters(mod_t *ModID);
 
 /**
     @brief Save a single plugin's data to a plugin file.
@@ -198,7 +198,7 @@ DLLEXTERN int32_t CleanModMasters(ModFile *ModID);
     @param DestinationName The output plugin filename.
     @returns `0` on success, `-1` if an error occurred.
 */
-DLLEXTERN int32_t SaveMod(ModFile *ModID, const uint32_t SaveFlagsField, char * const DestinationName);
+DLLEXTERN int32_t SaveMod(mod_t *ModID, const uint32_t SaveFlagsField, char * const DestinationName);
 
 ///@}
 /**************************//**
@@ -211,7 +211,7 @@ DLLEXTERN int32_t SaveMod(ModFile *ModID, const uint32_t SaveFlagsField, char * 
     @param CollectionID The collection to query.
     @returns The number of mods in the given collection, or `-1` if an error occurred.
 */
-DLLEXTERN int32_t GetAllNumMods(Collection *CollectionID);
+DLLEXTERN int32_t GetAllNumMods(collection_t *CollectionID);
 
 /**
     @brief Get an array of plugin object pointers for the plugins in a collection.
@@ -219,7 +219,7 @@ DLLEXTERN int32_t GetAllNumMods(Collection *CollectionID);
     @param ModIDs An array of plugin object pointers. The array passed to the function must be preallocated to the correct size, as given by GetAllNumMods(). The array contents are filled by the function to point to the plugin objects within the collection queried.
     @returns `0` on success, `-1` if an error occurred.
 */
-DLLEXTERN int32_t GetAllModIDs(Collection *CollectionID, ModFile ** ModIDs);
+DLLEXTERN int32_t GetAllModIDs(collection_t *CollectionID, mod_t ** ModIDs);
 
 /**
     @brief Get the number of mods in a collection's load order.
@@ -227,7 +227,7 @@ DLLEXTERN int32_t GetAllModIDs(Collection *CollectionID, ModFile ** ModIDs);
     @param CollectionID The collection to query.
     @returns The number of mods in the given collection's load order, or `-1` if an error occurred.
 */
-DLLEXTERN int32_t GetLoadOrderNumMods(Collection *CollectionID);
+DLLEXTERN int32_t GetLoadOrderNumMods(collection_t *CollectionID);
 
 /**
     @brief Get an array of plugin object pointers for the plugins in a collection's load order.
@@ -235,7 +235,7 @@ DLLEXTERN int32_t GetLoadOrderNumMods(Collection *CollectionID);
     @param ModIDs An array of plugin object pointers. The array passed to the function must be preallocated to the correct size, as given by GetLoadOrderNumMods(). The array contents are filled by the function to point to the plugin objects within the collection queried.
     @returns `0` on success, `-1` if an error occurred.
 */
-DLLEXTERN int32_t GetLoadOrderModIDs(Collection *CollectionID, ModFile ** ModIDs);
+DLLEXTERN int32_t GetLoadOrderModIDs(collection_t *CollectionID, mod_t ** ModIDs);
 
 /**
     @brief Get a plugin's filename from its object pointer.
@@ -243,7 +243,7 @@ DLLEXTERN int32_t GetLoadOrderModIDs(Collection *CollectionID, ModFile ** ModIDs
     @param ModID The object pointer of the plugin to look up.
     @returns The plugin's filename, or `NULL` if an error occurred.
 */
-DLLEXTERN char * GetFileNameByID(ModFile *ModID);
+DLLEXTERN char * GetFileNameByID(mod_t *ModID);
 
 /**
     @brief Get a plugin's filename from its position in the load order.
@@ -252,7 +252,7 @@ DLLEXTERN char * GetFileNameByID(ModFile *ModID);
     @param ModIndex The load order position to look up.
     @returns The plugin's filename, or `NULL` if an error occurred.
 */
-DLLEXTERN char * GetFileNameByLoadOrder(Collection *CollectionID, const uint32_t ModIndex);
+DLLEXTERN char * GetFileNameByLoadOrder(collection_t *CollectionID, const uint32_t ModIndex);
 
 /**
     @brief Get a plugin's unghosted filename from its object pointer.
@@ -260,7 +260,7 @@ DLLEXTERN char * GetFileNameByLoadOrder(Collection *CollectionID, const uint32_t
     @param ModID The object pointer of the plugin to look up.
     @returns The plugin's unghosted filename, or `NULL` if an error occurred.
 */
-DLLEXTERN char * GetModNameByID(ModFile *ModID);
+DLLEXTERN char * GetModNameByID(mod_t *ModID);
 
 /**
     @brief Get a plugin's unghosted filename from its position in the load order.
@@ -269,7 +269,7 @@ DLLEXTERN char * GetModNameByID(ModFile *ModID);
     @param ModIndex The load order position to look up, or `NULL` if an error occurred.
     @returns The plugin's unghosted filename, or `NULL` if an error occurred.
 */
-DLLEXTERN char * GetModNameByLoadOrder(Collection *CollectionID, const uint32_t ModIndex);
+DLLEXTERN char * GetModNameByLoadOrder(collection_t *CollectionID, const uint32_t ModIndex);
 
 /**
     @brief Get a plugin's object using its filename.
@@ -277,7 +277,7 @@ DLLEXTERN char * GetModNameByLoadOrder(Collection *CollectionID, const uint32_t 
     @param ModName The plugin filename.
     @returns A pointer to the plugin object, or `NULL` if the plugin was not found.
 */
-DLLEXTERN ModFile * GetModIDByName(Collection *CollectionID, char * const ModName);
+DLLEXTERN mod_t * GetModIDByName(collection_t *CollectionID, char * const ModName);
 
 /**
     @brief Get a plugin's object using its position in the load order.
@@ -285,7 +285,7 @@ DLLEXTERN ModFile * GetModIDByName(Collection *CollectionID, char * const ModNam
     @param ModIndex The load order position to look up.
     @returns A pointer to the plugin object, or `NULL` if the plugin was not found.
 */
-DLLEXTERN ModFile * GetModIDByLoadOrder(Collection *CollectionID, const uint32_t ModIndex);
+DLLEXTERN mod_t * GetModIDByLoadOrder(collection_t *CollectionID, const uint32_t ModIndex);
 
 /**
     @brief Get a plugin's load order position using its filename.
@@ -293,42 +293,42 @@ DLLEXTERN ModFile * GetModIDByLoadOrder(Collection *CollectionID, const uint32_t
     @param ModName The plugin filename to look up.
     @returns The plugin's load order position, or `-1` if an error occurred.
 */
-DLLEXTERN int32_t GetModLoadOrderByName(Collection *CollectionID, char * const ModName);
+DLLEXTERN int32_t GetModLoadOrderByName(collection_t *CollectionID, char * const ModName);
 
 /**
     @brief Get a plugin's load order position using its object pointer.
     @param ModID The plugin's object pointer.
     @returns The plugin's load order position, or `-1` if an error occurred.
 */
-DLLEXTERN int32_t GetModLoadOrderByID(ModFile *ModID);
+DLLEXTERN int32_t GetModLoadOrderByID(mod_t *ModID);
 
 /**
     @brief Get a plugin using a record from it.
     @param RecordID The record to get the parent plugin of.
     @returns A plugin pointer, or `NULL` if an error occurred.
 */
-DLLEXTERN ModFile * GetModIDByRecordID(Record *RecordID);
+DLLEXTERN mod_t * GetModIDByRecordID(record_t *RecordID);
 
 /**
     @brief Get a collection using a record from a plugin in it.
     @param RecordID The record to get the parent plugin's collection from.
     @returns A collection pointer, or `NULL` if an error occurred.
 */
-DLLEXTERN Collection * GetCollectionIDByRecordID(Record *RecordID);
+DLLEXTERN collection_t * GetCollectionIDByRecordID(record_t *RecordID);
 
 /**
     @brief Get a collection using a plugin in it.
     @param ModID The plugin to get the parent collection of.
     @returns A collection pointer, or `NULL` if an error occurred.
 */
-DLLEXTERN Collection * GetCollectionIDByModID(ModFile *ModID);
+DLLEXTERN collection_t * GetCollectionIDByModID(mod_t *ModID);
 
 /**
     @brief Check if a plugin contains any records.
     @param ModID The plugin to query.
     @returns `1` if the plugin is empty, `0` otherwise.
 */
-DLLEXTERN uint32_t IsModEmpty(ModFile *ModID);
+DLLEXTERN uint32_t IsModEmpty(mod_t *ModID);
 
 /**
     @brief Get the number of different record types in a plugin.
@@ -336,7 +336,7 @@ DLLEXTERN uint32_t IsModEmpty(ModFile *ModID);
     @param ModID The plugin to query.
     @returns The number of record types in the plugin, or `-1` if an error occurred.
 */
-DLLEXTERN int32_t GetModNumTypes(ModFile *ModID);
+DLLEXTERN int32_t GetModNumTypes(mod_t *ModID);
 
 /**
     @brief Get an array of different record types in a plugin.
@@ -345,14 +345,14 @@ DLLEXTERN int32_t GetModNumTypes(ModFile *ModID);
     @param RecordTypes An array of record IDs. Each ID is a four-character sequence in in reverse, eg. `TES4` is stored as `4SET`. The array passed to the function must be preallocated to the correct size, as given by GetModNumTypes(). The array contents are filled by the function.
     @returns `0` on success, `-1` if an error occurred.
 */
-DLLEXTERN int32_t GetModTypes(ModFile *ModID, uint32_t * RecordTypes);
+DLLEXTERN int32_t GetModTypes(mod_t *ModID, uint32_t * RecordTypes);
 
 /**
     @brief Get the number of empty record groups in a plugin.
     @param ModID The plugin to query.
     @returns The number of empty record groups in the plugin, or `-1` if an error occurred.
 */
-DLLEXTERN int32_t GetModNumEmptyGRUPs(ModFile *ModID);
+DLLEXTERN int32_t GetModNumEmptyGRUPs(mod_t *ModID);
 
 /**
     @brief Get the number of orphaned records in a plugin.
@@ -360,7 +360,7 @@ DLLEXTERN int32_t GetModNumEmptyGRUPs(ModFile *ModID);
     @param ModID The plugin to query.
     @returns The number of orphaned records in the plugin, or `-1` if an error occurred.
 */
-DLLEXTERN int32_t GetModNumOrphans(ModFile *ModID);
+DLLEXTERN int32_t GetModNumOrphans(mod_t *ModID);
 
 /**
     @brief Get an array of orphaned record FormIDs in a plugin.
@@ -369,7 +369,7 @@ DLLEXTERN int32_t GetModNumOrphans(ModFile *ModID);
     @param FormIDs An outputted array of the FormIDs of the orphaned records in the plugin. The array passed to the function must be preallocated to the correct size, as given by GetModNumOrphans(). The array contents are filled by the function.
     @returns `0` on success, `-1` if an error occurred.
 */
-DLLEXTERN int32_t GetModOrphansFormIDs(ModFile *ModID, FORMID * FormIDs);
+DLLEXTERN int32_t GetModOrphansFormIDs(mod_t *ModID, FORMID * FormIDs);
 
 ///@}
 /**************************//**
@@ -385,7 +385,7 @@ DLLEXTERN int32_t GetModOrphansFormIDs(ModFile *ModID, FORMID * FormIDs);
     @param IsMGEFCode Whether or not the FormID passed is a MGEF code. MGEF (Magic Effect) records are special cases that are referenced using their EditorIDs rather than their FormIDs, so need special handling.
     @returns The filename of the plugin referenced by the given FormID, or `NULL` if an error occurred.
 */
-DLLEXTERN char * GetLongIDName(Record *RecordID, const uint32_t FormID, const bool IsMGEFCode);
+DLLEXTERN char * GetLongIDName(record_t *RecordID, const uint32_t FormID, const bool IsMGEFCode);
 
 /**
     @brief Get a FormID for an object in a plugin.
@@ -395,7 +395,7 @@ DLLEXTERN char * GetLongIDName(Record *RecordID, const uint32_t FormID, const bo
     @param IsMGEFCode Whether or not the ObjectID passed is for a MGEF code. MGEF (Magic Effect) records are special cases that are referenced using their EditorIDs rather than their FormIDs, so need special handling.
     @returns The FormID produced, or `NULL` if an error occurred.
 */
-DLLEXTERN uint32_t MakeShortFormID(ModFile *ModID, const uint32_t ObjectID, const bool IsMGEFCode);
+DLLEXTERN uint32_t MakeShortFormID(mod_t *ModID, const uint32_t ObjectID, const bool IsMGEFCode);
 
 ///@}
 /**************************//**
@@ -413,7 +413,7 @@ DLLEXTERN uint32_t MakeShortFormID(ModFile *ModID, const uint32_t ObjectID, cons
     @param CreateFlags Flags that determine how the record is created. These flags are given in ::createFlags.
     @returns A pointer to the created record, or `NULL` if an error was encountered.
 */
-DLLEXTERN Record * CreateRecord(ModFile *ModID, const uint32_t RecordType, const FORMID RecordFormID, char * const RecordEditorID, Record *ParentID, const uint32_t CreateFlags);
+DLLEXTERN record_t * CreateRecord(mod_t *ModID, const uint32_t RecordType, const FORMID RecordFormID, char * const RecordEditorID, record_t *ParentID, const uint32_t CreateFlags);
 
 /**
     @brief Copy a record from one plugin into another.
@@ -425,7 +425,7 @@ DLLEXTERN Record * CreateRecord(ModFile *ModID, const uint32_t RecordType, const
     @param CreateFlags Flags that determine how the record copy is created. These flags are given in ::createFlags.
     @returns A pointer to the record copy, or `NULL` if an error was encountered.
 */
-DLLEXTERN Record * CopyRecord(Record *RecordID, ModFile *DestModID, Record *DestParentID, const FORMID DestRecordFormID, char * const DestRecordEditorID, const uint32_t CreateFlags);
+DLLEXTERN record_t * CopyRecord(record_t *RecordID, mod_t *DestModID, record_t *DestParentID, const FORMID DestRecordFormID, char * const DestRecordEditorID, const uint32_t CreateFlags);
 
 /**
     @brief Unload a record from memory.
@@ -433,7 +433,7 @@ DLLEXTERN Record * CopyRecord(Record *RecordID, ModFile *DestModID, Record *Dest
     @param RecordID The record to unload.
     @returns `1` on success, `0` on failure.
 */
-DLLEXTERN int32_t UnloadRecord(Record *RecordID);
+DLLEXTERN int32_t UnloadRecord(record_t *RecordID);
 
 /**
     @brief Discards changes made to a record since it was last saved.
@@ -441,14 +441,14 @@ DLLEXTERN int32_t UnloadRecord(Record *RecordID);
     @param RecordID The record to reset.
     @returns `1` on success, `0` on failure.
 */
-DLLEXTERN int32_t ResetRecord(Record *RecordID);
+DLLEXTERN int32_t ResetRecord(record_t *RecordID);
 
 /**
     @brief Delete a record.
     @param RecordID The record to delete.
     @returns `1` on success, `0` on failure.
 */
-DLLEXTERN int32_t DeleteRecord(Record *RecordID);
+DLLEXTERN int32_t DeleteRecord(record_t *RecordID);
 
 ///@}
 /**************************//**
@@ -463,7 +463,7 @@ DLLEXTERN int32_t DeleteRecord(Record *RecordID);
     @param RecordEditorID The EditorID to look for, used if the FormID given is `NULL`. If this is also `NULL`, the plugin's TES4 record is returned.
     @returns The specified record, or `NULL` if an error occurred.
 */
-DLLEXTERN Record * GetRecordID(ModFile *ModID, const FORMID RecordFormID, char * const RecordEditorID);
+DLLEXTERN record_t * GetRecordID(mod_t *ModID, const FORMID RecordFormID, char * const RecordEditorID);
 
 /**
     @brief Get the number of records of a specified type in a plugin.
@@ -471,7 +471,7 @@ DLLEXTERN Record * GetRecordID(ModFile *ModID, const FORMID RecordFormID, char *
     @param RecordType The record type to look for. This should be its 4-byte name in reverse order, eg. to search for `CELL` records, you would pass `'LLEC'`.
     @returns The number of records of the specified type, or `-1` if an error occurred.
 */
-DLLEXTERN int32_t GetNumRecords(ModFile *ModID, const uint32_t RecordType);
+DLLEXTERN int32_t GetNumRecords(mod_t *ModID, const uint32_t RecordType);
 
 /**
     @brief Get an array of records of a specified type in a plugin.
@@ -480,7 +480,7 @@ DLLEXTERN int32_t GetNumRecords(ModFile *ModID, const uint32_t RecordType);
     @param RecordIDs An array of record pointers, pre-allocated to be of the size given by GetNumRecords(). This function populates the array.
     @returns The number of records retrieved, or `-1` if an error occurred.
 */
-DLLEXTERN int32_t GetRecordIDs(ModFile *ModID, const uint32_t RecordType, Record ** RecordIDs);
+DLLEXTERN int32_t GetRecordIDs(mod_t *ModID, const uint32_t RecordType, record_t ** RecordIDs);
 
 /**
     @brief Check if the given record is winning any conflict with other records.
@@ -489,7 +489,7 @@ DLLEXTERN int32_t GetRecordIDs(ModFile *ModID, const uint32_t RecordType, Record
     @param GetExtendedConflicts If true, checks for conflicts in plugins loaded with the ::fIsExtendedConflicts flag, otherwise they are ignored.
     @returns `1` if the record is winning, `0` if it is not, and `-1` if an error occurred.
 */
-DLLEXTERN int32_t IsRecordWinning(Record *RecordID, const bool GetExtendedConflicts);
+DLLEXTERN int32_t IsRecordWinning(record_t *RecordID, const bool GetExtendedConflicts);
 
 /**
     @brief Get the number of conflicting versions of the given record in its parent collection.
@@ -497,7 +497,7 @@ DLLEXTERN int32_t IsRecordWinning(Record *RecordID, const bool GetExtendedConfli
     @param GetExtendedConflicts If true, checks for conflicts in plugins loaded with the ::fIsExtendedConflicts flag, otherwise they are ignored.
     @returns The number of conflicting versions of the record, or `-1` if an error occurred.
 */
-DLLEXTERN int32_t GetNumRecordConflicts(Record *RecordID, const bool GetExtendedConflicts);
+DLLEXTERN int32_t GetNumRecordConflicts(record_t *RecordID, const bool GetExtendedConflicts);
 
 /**
     @brief Get an array of the different versions of the given record in its parent collection.
@@ -506,7 +506,7 @@ DLLEXTERN int32_t GetNumRecordConflicts(Record *RecordID, const bool GetExtended
     @param GetExtendedConflicts If true, checks for conflicts in plugins loaded with the ::fIsExtendedConflicts flag, otherwise they are ignored.
     @returns The number of records retrieved, or `-1` if an error occurred.
 */
-DLLEXTERN int32_t GetRecordConflicts(Record *RecordID, Record ** RecordIDs, const bool GetExtendedConflicts);
+DLLEXTERN int32_t GetRecordConflicts(record_t *RecordID, record_t ** RecordIDs, const bool GetExtendedConflicts);
 
 /**
     @brief Get an array of the different versions of the given record in its parent collection.
@@ -515,7 +515,7 @@ DLLEXTERN int32_t GetRecordConflicts(Record *RecordID, Record ** RecordIDs, cons
     @param RecordIDs An array of record pointers, pre-allocated to be of the size given by GetNumRecordConflicts(). This function populates the array.
     @returns The number of records retrieved, or `-1` if an error occurred.
 */
-DLLEXTERN int32_t GetRecordHistory(Record *RecordID, Record ** RecordIDs);
+DLLEXTERN int32_t GetRecordHistory(record_t *RecordID, record_t ** RecordIDs);
 
 /**
     @brief Get the number of Identical To Master records in a plugin.
@@ -523,7 +523,7 @@ DLLEXTERN int32_t GetRecordHistory(Record *RecordID, Record ** RecordIDs);
     @param ModID The plugin to query.
     @returns The number of Identical To Master records, or `-1` if an error occurred.
 */
-DLLEXTERN int32_t GetNumIdenticalToMasterRecords(ModFile *ModID);
+DLLEXTERN int32_t GetNumIdenticalToMasterRecords(mod_t *ModID);
 
 /**
     @brief Gets an array of the Identical To Master records in a plugin.
@@ -532,14 +532,14 @@ DLLEXTERN int32_t GetNumIdenticalToMasterRecords(ModFile *ModID);
     @param RecordIDs An array of record pointers, pre-allocated to be of the size given by GetNumIdenticalToMasterRecords(). This function populates the array.
     @returns The number of records the array is populated with, or `-1` if an error occurred.
 */
-DLLEXTERN int32_t GetIdenticalToMasterRecords(ModFile *ModID, Record ** RecordIDs);
+DLLEXTERN int32_t GetIdenticalToMasterRecords(mod_t *ModID, record_t ** RecordIDs);
 
 /**
     @brief Check if a record's FormID or any of the FormIDs referenced by the record are invalid.
     @param RecordID The record to check.
     @returns `1` if the record has or references an invalid FormID, `0` if all the FormIDs it contains are valid, or `-1` if an error occurred.
 */
-DLLEXTERN int32_t IsRecordsFormIDsInvalid(Record *RecordID);
+DLLEXTERN int32_t IsRecordsFormIDsInvalid(record_t *RecordID);
 
 ///@}
 /**************************//**
@@ -557,7 +557,7 @@ DLLEXTERN int32_t IsRecordsFormIDsInvalid(Record *RecordID);
     @param ArraySize The size of the OldFormIDs, NewFormIDs and Changes arrays.
     @returns The total number of updated references, or `-1` if an error occurred.
 */
-DLLEXTERN int32_t UpdateReferences(ModFile *ModID, Record *RecordID, FORMID * OldFormIDs, FORMID * NewFormIDs, uint32_t * Changes, const uint32_t ArraySize);
+DLLEXTERN int32_t UpdateReferences(mod_t *ModID, record_t *RecordID, FORMID * OldFormIDs, FORMID * NewFormIDs, uint32_t * Changes, const uint32_t ArraySize);
 
 ///@}
 /**************************//**
@@ -571,7 +571,7 @@ DLLEXTERN int32_t UpdateReferences(ModFile *ModID, Record *RecordID, FORMID * Ol
     @param RecordID The record to query. If `NULL`, all record changes in the collection are discarded.
     @returns `1` if the record has had its references updated, `0` if not, and `-1` if an error occurred.
 */
-DLLEXTERN int32_t GetRecordUpdatedReferences(Collection *CollectionID, Record *RecordID);
+DLLEXTERN int32_t GetRecordUpdatedReferences(collection_t *CollectionID, record_t *RecordID);
 
 ///@}
 /**************************//**
@@ -586,7 +586,7 @@ DLLEXTERN int32_t GetRecordUpdatedReferences(Collection *CollectionID, Record *R
     @param EditorID The EditorID to set. If the EditorID is already in use by another record in the same plugin, the function will exit with error.
     @returns `1` if the FormID and/or EditorID was changed, or `-1` if nothing was changed or an error occurred.
 */
-DLLEXTERN int32_t SetIDFields(Record *RecordID, const FORMID FormID, char * const EditorID);
+DLLEXTERN int32_t SetIDFields(record_t *RecordID, const FORMID FormID, char * const EditorID);
 
 /**
     @brief Set a field's value.
@@ -603,7 +603,7 @@ DLLEXTERN int32_t SetIDFields(Record *RecordID, const FORMID FormID, char * cons
     @param ArraySize The byte size of the value to set.
     @returns
 */
-DLLEXTERN void   SetField(Record *RecordID, FIELD_IDENTIFIERS, void *FieldValue, const uint32_t ArraySize);
+DLLEXTERN void   SetField(record_t *RecordID, FIELD_IDENTIFIERS, void *FieldValue, const uint32_t ArraySize);
 
 /**
     @brief
@@ -618,7 +618,7 @@ DLLEXTERN void   SetField(Record *RecordID, FIELD_IDENTIFIERS, void *FieldValue,
     @param ListX3FieldID
     @returns
 */
-DLLEXTERN void   DeleteField(Record *RecordID, FIELD_IDENTIFIERS);
+DLLEXTERN void   DeleteField(record_t *RecordID, FIELD_IDENTIFIERS);
 
 ///@}
 /**************************//**
@@ -640,7 +640,7 @@ DLLEXTERN void   DeleteField(Record *RecordID, FIELD_IDENTIFIERS);
     @param WhichAttribute
     @returns
 */
-DLLEXTERN uint32_t GetFieldAttribute(Record *RecordID, FIELD_IDENTIFIERS, const uint32_t WhichAttribute);
+DLLEXTERN uint32_t GetFieldAttribute(record_t *RecordID, FIELD_IDENTIFIERS, const uint32_t WhichAttribute);
 
 /**
     @brief
@@ -656,6 +656,6 @@ DLLEXTERN uint32_t GetFieldAttribute(Record *RecordID, FIELD_IDENTIFIERS, const 
     @param FieldValues
     @returns
 */
-DLLEXTERN void * GetField(Record *RecordID, FIELD_IDENTIFIERS, void **FieldValues);
+DLLEXTERN void * GetField(record_t *RecordID, FIELD_IDENTIFIERS, void **FieldValues);
 
 ///@}
