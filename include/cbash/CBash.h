@@ -369,7 +369,7 @@ DLLEXTERN int32_t GetModNumOrphans(mod_t *ModID);
     @param FormIDs An outputted array of the FormIDs of the orphaned records in the plugin. The array passed to the function must be preallocated to the correct size, as given by GetModNumOrphans(). The array contents are filled by the function.
     @returns `0` on success, `-1` if an error occurred.
 */
-DLLEXTERN int32_t GetModOrphansFormIDs(mod_t *ModID, FORMID * FormIDs);
+DLLEXTERN int32_t GetModOrphansFormIDs(mod_t *ModID, cb_formid_t * FormIDs);
 
 ///@}
 /**************************//**
@@ -413,7 +413,7 @@ DLLEXTERN uint32_t MakeShortFormID(mod_t *ModID, const uint32_t ObjectID, const 
     @param CreateFlags Flags that determine how the record is created. These flags are given in ::createFlags.
     @returns A pointer to the created record, or `NULL` if an error was encountered.
 */
-DLLEXTERN record_t * CreateRecord(mod_t *ModID, const uint32_t RecordType, const FORMID RecordFormID, char * const RecordEditorID, record_t *ParentID, const uint32_t CreateFlags);
+DLLEXTERN record_t * CreateRecord(mod_t *ModID, const uint32_t RecordType, const cb_formid_t RecordFormID, char * const RecordEditorID, record_t *ParentID, const uint32_t CreateFlags);
 
 /**
     @brief Copy a record from one plugin into another.
@@ -425,7 +425,7 @@ DLLEXTERN record_t * CreateRecord(mod_t *ModID, const uint32_t RecordType, const
     @param CreateFlags Flags that determine how the record copy is created. These flags are given in ::createFlags.
     @returns A pointer to the record copy, or `NULL` if an error was encountered.
 */
-DLLEXTERN record_t * CopyRecord(record_t *RecordID, mod_t *DestModID, record_t *DestParentID, const FORMID DestRecordFormID, char * const DestRecordEditorID, const uint32_t CreateFlags);
+DLLEXTERN record_t * CopyRecord(record_t *RecordID, mod_t *DestModID, record_t *DestParentID, const cb_formid_t DestRecordFormID, char * const DestRecordEditorID, const uint32_t CreateFlags);
 
 /**
     @brief Unload a record from memory.
@@ -463,7 +463,7 @@ DLLEXTERN int32_t DeleteRecord(record_t *RecordID);
     @param RecordEditorID The EditorID to look for, used if the FormID given is `NULL`. If this is also `NULL`, the plugin's TES4 record is returned.
     @returns The specified record, or `NULL` if an error occurred.
 */
-DLLEXTERN record_t * GetRecordID(mod_t *ModID, const FORMID RecordFormID, char * const RecordEditorID);
+DLLEXTERN record_t * GetRecordID(mod_t *ModID, const cb_formid_t RecordFormID, char * const RecordEditorID);
 
 /**
     @brief Get the number of records of a specified type in a plugin.
@@ -557,7 +557,7 @@ DLLEXTERN int32_t IsRecordsFormIDsInvalid(record_t *RecordID);
     @param ArraySize The size of the OldFormIDs, NewFormIDs and Changes arrays.
     @returns The total number of updated references, or `-1` if an error occurred.
 */
-DLLEXTERN int32_t UpdateReferences(mod_t *ModID, record_t *RecordID, FORMID * OldFormIDs, FORMID * NewFormIDs, uint32_t * Changes, const uint32_t ArraySize);
+DLLEXTERN int32_t UpdateReferences(mod_t *ModID, record_t *RecordID, cb_formid_t * OldFormIDs, cb_formid_t * NewFormIDs, uint32_t * Changes, const uint32_t ArraySize);
 
 ///@}
 /**************************//**
@@ -586,7 +586,7 @@ DLLEXTERN int32_t GetRecordUpdatedReferences(collection_t *CollectionID, record_
     @param EditorID The EditorID to set. If the EditorID is already in use by another record in the same plugin, the function will exit with error.
     @returns `1` if the FormID and/or EditorID was changed, or `-1` if nothing was changed or an error occurred.
 */
-DLLEXTERN int32_t SetIDFields(record_t *RecordID, const FORMID FormID, char * const EditorID);
+DLLEXTERN int32_t SetIDFields(record_t *RecordID, const cb_formid_t FormID, char * const EditorID);
 
 /**
     @brief Set a field's value.
