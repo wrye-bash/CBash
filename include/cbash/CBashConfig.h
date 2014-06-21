@@ -109,7 +109,75 @@
         // Cleanup
         #undef CBASH_NO_BOOST_ZLIB
     #endif
+    // And prevent short name aliases for API functions
+    #undef CBASH_SHORT_NAMES
 #elif defined CBASH_DLL
     // Not compiling, just an API user of the DLL
     #define DLLEXTERN DLLIMPORT
+#endif
+
+
+// Allow the user to specify they want macro aliases of the API functions
+// to use the non-prefixed function names
+#ifdef CBASH_SHORT_NAMES
+    #define GetVersionMajor(...) cb_GetVersionMajor(__VA_ARGS__)
+    #define GetVersionMinor(...) cb_GetVersionMinor(__VA_ARGS__)
+    #define GetVersionRevision(...) cb_GetVersionRevision(__VA_ARGS__)
+    #define CreateCollection(...) cb_CreateCollection(__VA_ARGS__)
+    #define DeleteCollection(...) cb_DeleteCollection(__VA_ARGS__)
+    #define LoadCollection(...) cb_LoadCollection(__VA_ARGS__)
+    #define UnloadCollection(...) cb_UnloadCollection(__VA_ARGS__)
+    #define GetCollectionType(...) cb_GetCollectionType(__VA_ARGS__)
+    #define UnloadAllCollections(...) cb_UnloadAllCollections(__VA_ARGS__)
+    #define DeleteAllCollections(...) cb_DeleteAllCollections(__VA_ARGS__)
+    #define AddMod(...) cb_AddMod(__VA_ARGS__)
+    #define LoadMod(...) cb_LoadMod(__VA_ARGS__)
+    #define UnloadMod(...) cb_UnloadMod(__VA_ARGS__)
+    #define CleanModMasters(...) cb_CleanModMasters(__VA_ARGS__)
+    #define SaveMod(...) cb_SaveMod(__VA_ARGS__)
+    #define GetAllNumMods(...) cb_GetAllNumMods(__VA_ARGS__)
+    #define GetAllModIDs(...) cb_GetAllModIDs(__VA_ARGS__)
+    #define GetLoadOrderNumMods(...) cb_GetLoadOrderNumMods(__VA_ARGS__)
+    #define GetLoadOrderModIDs(...) cb_GetLoadOrderModIDs(__VA_ARGS__)
+    #define GetFileNameByID(...) cb_GetFileNameByID(__VA_ARGS__)
+    #define GetFileNameByLoadOrder(...) cb_GetFileNameByLoadOrder(__VA_ARGS__)
+    #define GetModNameByID(...) cb_GetModNameByID(__VA_ARGS__)
+    #define GetModNameByLoadOrder(...) cb_GetModNameByLoadOrder(__VA_ARGS__)
+    #define GetModIDByName(...) cb_GetModIDByName(__VA_ARGS__)
+    #define GetModIDByLoadOrder(...) cb_GetModIDByLoadOrder(__VA_ARGS__)
+    #define GetModLoadOrderByName(...) cb_GetModLoadOrderByName(__VA_ARGS__)
+    #define GetModLoadOrderByID(...) cb_GetModLoadOrderByID(__VA_ARGS__)
+    #define GetModIDByRecordID(...) cb_GetModIDByRecordID(__VA_ARGS__)
+    #define GetCollectionIDByRecordID(...) cb_GetCollectionIDByRecordID(__VA_ARGS__)
+    #define GetCollectionIDByModID(...) cb_GetCollectionIDByModID(__VA_ARGS__)
+    #define IsModEmpty(...) cb_IsModEmpty(__VA_ARGS__)
+    #define GetModNumTypes(...) cb_GetModNumTypes(__VA_ARGS__)
+    #define GetModTypes(...) cb_GetModTypes(__VA_ARGS__)
+    #define GetModNumEmptyGRUPs(...) cb_GetModNumEmptyGRUPs(__VA_ARGS__)
+    #define GetModNumOrphans(...) cb_GetModNumOrphans(__VA_ARGS__)
+    #define GetModOrphansFormIDs(...) cb_GetModOrphansFormIDs(__VA_ARGS__)
+    #define GetLongIDName(...) cb_GetLongIDName(__VA_ARGS__)
+    #define MakeShortFormID(...) cb_MakeShortFormID(__VA_ARGS__)
+    #define CreateRecord(...) cb_CreateRecord(__VA_ARGS__)
+    #define CopyRecord(...) cb_CopyRecord(__VA_ARGS__)
+    #define UnloadRecord(...) cb_UnloadRecord(__VA_ARGS__)
+    #define ResetRecord(...) cb_ResetRecord(__VA_ARGS__)
+    #define DeleteRecord(...) cb_DeleteRecord(__VA_ARGS__)
+    #define GetRecordID(...) cb_GetRecordID(__VA_ARGS__)
+    #define GetNumRecords(...) cb_GetNumRecords(__VA_ARGS__)
+    #define GetRecordIDs(...) cb_GetRecordIDs(__VA_ARGS__)
+    #define IsRecordWinning(...) cb_IsRecordWinning(__VA_ARGS__)
+    #define GetNumRecordConflicts(...) cb_GetNumRecordConflicts(__VA_ARGS__)
+    #define GetRecordConflicts(...) cb_GetRecordConflicts(__VA_ARGS__)
+    #define GetRecordHistory(...) cb_GetRecordHistory(__VA_ARGS__)
+    #define GetNumIdenticalToMasterRecords(...) cb_GetNumIdenticalToMasterRecords(__VA_ARGS__)
+    #define GetIdenticalToMasterRecords(...) cb_GetIdenticalToMasterRecords(__VA_ARGS__)
+    #define IsRecordFormIDsInvalid(...) cb_IsRecordFormIDsInvalid(__VA_ARGS__)
+    #define UpdateReferences(...) cb_UpdateReferences(__VA_ARGS__)
+    #define GetRecordUpdatedReferences(...) cb_GetRecordUpdatedReferences(__VA_ARGS__)
+    #define SetIDFields(...) cb_SetIDFields(__VA_ARGS__)
+    #define SetField(...) cb_SetField(__VA_ARGS__)
+    #define DeleteField(...) cb_DeleteField(__VA_ARGS__)
+    #define GetFieldAttribute(...) cb_GetFieldAttribute(__VA_ARGS__)
+    #define GetField(...) cb_GetField(__VA_ARGS__)
 #endif

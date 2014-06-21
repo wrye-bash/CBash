@@ -52,11 +52,11 @@ extern "C"
 {
 #endif
 
-typedef struct Collection collection_t;
-typedef struct ModFile mod_t;
-typedef struct Record record_t;
+typedef struct Collection cb_collection_t;
+typedef struct ModFile cb_mod_t;
+typedef struct Record cb_record_t;
 
-typedef uint32_t FORMID;
+typedef uint32_t cb_formid_t;
 
 #ifndef FIELD_IDENTIFIERS
     #define FIELD_IDENTIFIERS const uint32_t FieldID, const uint32_t ListIndex, const uint32_t ListFieldID, const uint32_t ListX2Index, const uint32_t ListX2FieldID, const uint32_t ListX3Index, const uint32_t ListX3FieldID

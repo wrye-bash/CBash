@@ -240,6 +240,7 @@
     #define VATSFUNCTIONSIZE 18
 #endif
 
+typedef cb_formid_t FORMID;
 typedef uint32_t MGEFCODE;
 typedef uint32_t ACTORVALUE;
 typedef uint32_t FORMID_OR_UINT32;
