@@ -734,8 +734,8 @@ CreationFlags::CreationFlags():
     }
 
 CreationFlags::CreationFlags(uint32_t nFlags):
-    SetAsOverride((nFlags & fSetAsOverride) != 0),
-    CopyWinningParent((nFlags & fCopyWinningParent) != 0),
+    SetAsOverride((nFlags & CB_SET_AS_OVERRIDE) != 0),
+    CopyWinningParent((nFlags & CB_COPY_WINNING_PARENT) != 0),
     ExistingReturned(false)
     {
     //
@@ -750,9 +750,9 @@ uint32_t CreationFlags::GetFlags()
     {
     uint32_t flags = 0;
     if(SetAsOverride)
-        flags |= fSetAsOverride;
+        flags |= CB_SET_AS_OVERRIDE;
     if(CopyWinningParent)
-        flags |= fCopyWinningParent;
+        flags |= CB_COPY_WINNING_PARENT;
     return flags;
     }
 
@@ -777,21 +777,21 @@ ModFlags::ModFlags():
     }
 
 ModFlags::ModFlags(uint32_t _Flags):
-    IsMinLoad((_Flags & fIsMinLoad) != 0 && (_Flags & fIsFullLoad) == 0),
-    IsFullLoad((_Flags & fIsFullLoad) != 0),
+    IsMinLoad((_Flags & CB_MIN_LOAD) != 0 && (_Flags & CB_FULL_LOAD) == 0),
+    IsFullLoad((_Flags & CB_FULL_LOAD) != 0),
     IsNoLoad(!(IsMinLoad || IsFullLoad)),
-    IsSkipNewRecords((_Flags & fIsSkipNewRecords) != 0),
-    IsSkipAllRecords((_Flags & fIsSkipAllRecords) != 0),
-    IsInLoadOrder((_Flags & fIsInLoadOrder) != 0),
-    IsSaveable(((_Flags & fIsInLoadOrder) != 0) ? ((_Flags & fIsSaveable) != 0) : false),
-    IsAddMasters(((_Flags & fIsIgnoreInactiveMasters) != 0) ? false : ((_Flags & fIsAddMasters) != 0)),
-    IsLoadMasters((_Flags & fIsLoadMasters) != 0),
-    IsExtendedConflicts((_Flags & fIsExtendedConflicts) != 0),
-    IsTrackNewTypes((_Flags & fIsTrackNewTypes) != 0),
-    IsIndexLANDs((_Flags & fIsIndexLANDs) != 0),
-    IsFixupPlaceables((_Flags & fIsFixupPlaceables) != 0),
-    IsCreateNew((_Flags & fIsCreateNew) != 0),
-    IsIgnoreInactiveMasters((_Flags & fIsIgnoreInactiveMasters) != 0),
+    IsSkipNewRecords((_Flags & CB_SKIP_NEW_RECORDS) != 0),
+    IsSkipAllRecords((_Flags & CB_SKIP_ALL_RECORDS) != 0),
+    IsInLoadOrder((_Flags & CB_IN_LOAD_ORDER) != 0),
+    IsSaveable(((_Flags & CB_IN_LOAD_ORDER) != 0) ? ((_Flags & CB_SAVEABLE) != 0) : false),
+    IsAddMasters(((_Flags & CB_IGNORE_INACTIVE_MASTERS) != 0) ? false : ((_Flags & CB_ADD_MASTERS) != 0)),
+    IsLoadMasters((_Flags & CB_LOAD_MASTERS) != 0),
+    IsExtendedConflicts((_Flags & CB_EXTENDED_CONFLICTS) != 0),
+    IsTrackNewTypes((_Flags & CB_TRACK_NEW_TYPES) != 0),
+    IsIndexLANDs((_Flags & CB_INDEX_LANDS) != 0),
+    IsFixupPlaceables((_Flags & CB_FIXUP_PLACEABLES) != 0),
+    IsCreateNew((_Flags & CB_CREATE_NEW) != 0),
+    IsIgnoreInactiveMasters((_Flags & CB_IGNORE_INACTIVE_MASTERS) != 0),
     LoadedGRUPs(false)
     {
     //
@@ -806,43 +806,43 @@ uint32_t ModFlags::GetFlags()
     {
     uint32_t flags = 0;
     if(IsMinLoad)
-        flags |= fIsMinLoad;
+        flags |= CB_MIN_LOAD;
     if(IsFullLoad)
         {
-        flags |= fIsFullLoad;
-        flags &= ~fIsMinLoad;
+        flags |= CB_FULL_LOAD;
+        flags &= ~CB_MIN_LOAD;
         }
     if(IsNoLoad)
         {
-        flags &= ~fIsFullLoad;
-        flags &= ~fIsMinLoad;
+        flags &= ~CB_FULL_LOAD;
+        flags &= ~CB_MIN_LOAD;
         }
     if(IsSkipNewRecords)
-        flags |= fIsSkipNewRecords;
+        flags |= CB_SKIP_NEW_RECORDS;
     if(IsSkipAllRecords)
-        flags |= fIsSkipAllRecords;
+        flags |= CB_SKIP_ALL_RECORDS;
     if(IsInLoadOrder)
-        flags |= fIsInLoadOrder;
+        flags |= CB_IN_LOAD_ORDER;
     if(IsSaveable)
-        flags |= fIsSaveable;
+        flags |= CB_SAVEABLE;
     if(IsAddMasters)
-        flags |= fIsAddMasters;
+        flags |= CB_ADD_MASTERS;
     if(IsLoadMasters)
-        flags |= fIsLoadMasters;
+        flags |= CB_LOAD_MASTERS;
     if(IsExtendedConflicts)
-        flags |= fIsExtendedConflicts;
+        flags |= CB_EXTENDED_CONFLICTS;
     if(IsTrackNewTypes)
-        flags |= fIsTrackNewTypes;
+        flags |= CB_TRACK_NEW_TYPES;
     if(IsIndexLANDs)
-        flags |= fIsIndexLANDs;
+        flags |= CB_INDEX_LANDS;
     if(IsFixupPlaceables)
-        flags |= fIsFixupPlaceables;
+        flags |= CB_FIXUP_PLACEABLES;
     if(IsCreateNew)
-        flags |= fIsCreateNew;
+        flags |= CB_CREATE_NEW;
     if(IsIgnoreInactiveMasters)
         {
-        flags &= ~fIsAddMasters;
-        flags |= fIsIgnoreInactiveMasters;
+        flags &= ~CB_ADD_MASTERS;
+        flags |= CB_IGNORE_INACTIVE_MASTERS;
         }
     return flags;
     }
@@ -855,8 +855,8 @@ SaveFlags::SaveFlags():
     }
 
 SaveFlags::SaveFlags(uint32_t _Flags):
-    IsCleanMasters((_Flags & fIsCleanMasters) != 0),
-    IsCloseCollection((_Flags & fIsCloseCollection) != 0)
+    IsCleanMasters((_Flags & CB_CLEAN_MASTERS) != 0),
+    IsCloseCollection((_Flags & CB_CLOSE_COLLECTION) != 0)
     {
     //
     }

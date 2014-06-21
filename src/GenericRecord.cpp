@@ -197,7 +197,7 @@ void Record::IsExtendedWinning(bool value)
 
 uint32_t Record::GetFieldAttribute(FIELD_IDENTIFIERS, uint32_t WhichAttribute)
     {
-    return UNKNOWN_FIELD;
+    return CB_UNKNOWN_FIELD;
     }
 
 void * Record::GetField(FIELD_IDENTIFIERS, void **FieldValues)

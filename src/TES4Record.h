@@ -58,7 +58,7 @@ class TES4Record : public Record
 
     public:
         // Common
-        whichGameTypes whichGame;
+        cb_game_type_t whichGame;
         ReqSubRecord<TES4HEDR> HEDR; //Header
         RawRecord OFST; //Unknown
         RawRecord DELE; //Unknown
