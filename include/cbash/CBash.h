@@ -38,7 +38,7 @@
     @file CBash.h
     @brief This file declares the C API functions.
 
-    @details This documentation was not written by the original developer, and so may be inaccurate. In particular, GetRecordHistory() and IsRecordsFormIDsInvalid() may be documented incorrectly.
+    @details This documentation was not written by the original developer, and so may be inaccurate. In particular, cb_GetRecordHistory() and cb_IsRecordsFormIDsInvalid() may be documented incorrectly.
 */
 
 #pragma once
@@ -101,10 +101,10 @@ DLLEXTERN void cb_AllowRaising(void (*_RaiseCallback)(const char *));
     @brief Create a plugin collection.
     @details Collections are used to manage groups of mod plugins and their data in CBash.
     @param ModsPath Specifies the path to the folder containing the mod plugins that are to be added to the collection.
-    @param CollectionType Specifies the type of game the collection is for. Valid game types are given by ::whichGameTypes.
+    @param CollectionType Specifies the type of game the collection is for.
     @returns A pointer to the newly-created cb_collection_t object.
 */
-DLLEXTERN cb_collection_t * cb_CreateCollection(char * const ModsPath, const uint32_t CollectionType);
+DLLEXTERN cb_collection_t * cb_CreateCollection(char * const ModsPath, const cb_game_type_t CollectionType);
 
 /**
     @brief Delete a plugin collection.
@@ -134,20 +134,20 @@ DLLEXTERN int32_t cb_UnloadCollection(cb_collection_t *CollectionID);
 /**
     @brief Get the game type a collection was created for.
     @param CollectionID The collection to get the game type for.
-    @returns The collection game type. Valid game types are given by ::whichGameTypes.
+    @returns The collection game type.
 */
 DLLEXTERN int32_t cb_GetCollectionType(cb_collection_t *CollectionID);
 
 /**
     @brief Unload all collections of plugins that have been created by CBash.
-    @details Unloads all loaded collections from memory, without deleting them. Has the same effect as calling UnloadCollection() for each collection that has been created.
+    @details Unloads all loaded collections from memory, without deleting them. Has the same effect as calling cb_UnloadCollection() for each collection that has been created.
     @returns `0` on success, `-1` if an error occurred.
 */
 DLLEXTERN int32_t cb_UnloadAllCollections();
 
 /**
     @brief Delete all plugin collections created by CBash.
-    @details Has the same effect as calling UnloadCollection() for each collection that has been created.
+    @details Has the same effect as calling cb_UnloadCollection() for each collection that has been created.
     @returns `0` on success, `-1` if an error occurred.
 */
 DLLEXTERN int32_t cb_DeleteAllCollections();
@@ -162,10 +162,10 @@ DLLEXTERN int32_t cb_DeleteAllCollections();
     @brief Add a plugin to a collection.
     @param CollectionID The collection to add the plugin to.
     @param ModName The filename of the plugin to add.
-    @param ModFlagsField Flags that determine how the plugin is loaded and what can be edited once it has been loaded. These flags are given in ::modFlags.
+    @param ModFlagsField Flags that determine how the plugin is loaded and what can be edited once it has been loaded.
     @returns A pointer to the plugin object added to the collection.
 */
-DLLEXTERN cb_mod_t * cb_AddMod(cb_collection_t *CollectionID, char * const ModName, const uint32_t ModFlagsField);
+DLLEXTERN cb_mod_t * cb_AddMod(cb_collection_t *CollectionID, char * const ModName, const cb_mod_flags_t ModFlagsField);
 
 /**
     @brief Load a single plugin.
@@ -194,11 +194,11 @@ DLLEXTERN int32_t cb_CleanModMasters(cb_mod_t *ModID);
 /**
     @brief Save a single plugin's data to a plugin file.
     @param ModID A pointer to the plugin object to save.
-    @param SaveFlagsField Flags that determine how the plugin is saved. These flags are given in ::saveFlags.
+    @param SaveFlagsField Flags that determine how the plugin is saved.
     @param DestinationName The output plugin filename.
     @returns `0` on success, `-1` if an error occurred.
 */
-DLLEXTERN int32_t cb_SaveMod(cb_mod_t *ModID, const uint32_t SaveFlagsField, char * const DestinationName);
+DLLEXTERN int32_t cb_SaveMod(cb_mod_t *ModID, const cb_save_flags_t SaveFlagsField, char * const DestinationName);
 
 ///@}
 /**************************//**
@@ -216,14 +216,14 @@ DLLEXTERN int32_t cb_GetAllNumMods(cb_collection_t *CollectionID);
 /**
     @brief Get an array of plugin object pointers for the plugins in a collection.
     @param CollectionID The collection to query.
-    @param ModIDs An array of plugin object pointers. The array passed to the function must be preallocated to the correct size, as given by GetAllNumMods(). The array contents are filled by the function to point to the plugin objects within the collection queried.
+    @param ModIDs An array of plugin object pointers. The array passed to the function must be preallocated to the correct size, as given by cb_GetAllNumMods(). The array contents are filled by the function to point to the plugin objects within the collection queried.
     @returns `0` on success, `-1` if an error occurred.
 */
 DLLEXTERN int32_t cb_GetAllModIDs(cb_collection_t *CollectionID, cb_mod_t ** ModIDs);
 
 /**
     @brief Get the number of mods in a collection's load order.
-    @details Returns the number of plugins that were added to the collection with the ::fIsInLoadOrder flag.
+    @details Returns the number of plugins that were added to the collection with the ::CB_IN_LOAD_ORDER flag.
     @param CollectionID The collection to query.
     @returns The number of mods in the given collection's load order, or `-1` if an error occurred.
 */
@@ -232,7 +232,7 @@ DLLEXTERN int32_t cb_GetLoadOrderNumMods(cb_collection_t *CollectionID);
 /**
     @brief Get an array of plugin object pointers for the plugins in a collection's load order.
     @param CollectionID The collection to query.
-    @param ModIDs An array of plugin object pointers. The array passed to the function must be preallocated to the correct size, as given by GetLoadOrderNumMods(). The array contents are filled by the function to point to the plugin objects within the collection queried.
+    @param ModIDs An array of plugin object pointers. The array passed to the function must be preallocated to the correct size, as given by cb_GetLoadOrderNumMods(). The array contents are filled by the function to point to the plugin objects within the collection queried.
     @returns `0` on success, `-1` if an error occurred.
 */
 DLLEXTERN int32_t cb_GetLoadOrderModIDs(cb_collection_t *CollectionID, cb_mod_t ** ModIDs);
@@ -256,7 +256,7 @@ DLLEXTERN char * cb_GetFileNameByLoadOrder(cb_collection_t *CollectionID, const 
 
 /**
     @brief Get a plugin's unghosted filename from its object pointer.
-    @details Returns the same value as GetFileNameByID() for unghosted plugins, and the filename minus the `.ghost` extension for ghosted plugins.
+    @details Returns the same value as cb_GetFileNameByID() for unghosted plugins, and the filename minus the `.ghost` extension for ghosted plugins.
     @param ModID The object pointer of the plugin to look up.
     @returns The plugin's unghosted filename, or `NULL` if an error occurred.
 */
@@ -264,7 +264,7 @@ DLLEXTERN char * cb_GetModNameByID(cb_mod_t *ModID);
 
 /**
     @brief Get a plugin's unghosted filename from its position in the load order.
-    @details Returns the same value as GetFileNameByLoadOrder() for unghosted plugins, and the filename minus the `.ghost` extension for ghosted plugins.
+    @details Returns the same value as cb_GetFileNameByLoadOrder() for unghosted plugins, and the filename minus the `.ghost` extension for ghosted plugins.
     @param CollectionID The collection to query.
     @param ModIndex The load order position to look up, or `NULL` if an error occurred.
     @returns The plugin's unghosted filename, or `NULL` if an error occurred.
@@ -332,7 +332,7 @@ DLLEXTERN uint32_t cb_IsModEmpty(cb_mod_t *ModID);
 
 /**
     @brief Get the number of different record types in a plugin.
-    @details This function will fail unless the plugin was added to the collection with the ::fIsTrackNewTypes flag.
+    @details This function will fail unless the plugin was added to the collection with the ::CB_TRACK_NEW_TYPES flag.
     @param ModID The plugin to query.
     @returns The number of record types in the plugin, or `-1` if an error occurred.
 */
@@ -340,9 +340,9 @@ DLLEXTERN int32_t cb_GetModNumTypes(cb_mod_t *ModID);
 
 /**
     @brief Get an array of different record types in a plugin.
-    @details This function will fail unless the plugin was added to the collection with the ::fIsTrackNewTypes flag.
+    @details This function will fail unless the plugin was added to the collection with the ::CB_TRACK_NEW_TYPES flag.
     @param ModID The plugin to query.
-    @param RecordTypes An array of record IDs. Each ID is a four-character sequence in in reverse, eg. `TES4` is stored as `4SET`. The array passed to the function must be preallocated to the correct size, as given by GetModNumTypes(). The array contents are filled by the function.
+    @param RecordTypes An array of record IDs. Each ID is a four-character sequence in in reverse, eg. `TES4` is stored as `4SET`. The array passed to the function must be preallocated to the correct size, as given by cb_GetModNumTypes(). The array contents are filled by the function.
     @returns `0` on success, `-1` if an error occurred.
 */
 DLLEXTERN int32_t cb_GetModTypes(cb_mod_t *ModID, uint32_t * RecordTypes);
@@ -366,7 +366,7 @@ DLLEXTERN int32_t cb_GetModNumOrphans(cb_mod_t *ModID);
     @brief Get an array of orphaned record FormIDs in a plugin.
     @details Orphaned records are those which reference a parent record that does not exist.
     @param ModID The plugin to query.
-    @param FormIDs An outputted array of the FormIDs of the orphaned records in the plugin. The array passed to the function must be preallocated to the correct size, as given by GetModNumOrphans(). The array contents are filled by the function.
+    @param FormIDs An outputted array of the FormIDs of the orphaned records in the plugin. The array passed to the function must be preallocated to the correct size, as given by cb_GetModNumOrphans(). The array contents are filled by the function.
     @returns `0` on success, `-1` if an error occurred.
 */
 DLLEXTERN int32_t cb_GetModOrphansFormIDs(cb_mod_t *ModID, cb_formid_t * FormIDs);
@@ -410,10 +410,10 @@ DLLEXTERN uint32_t cb_MakeShortFormID(cb_mod_t *ModID, const uint32_t ObjectID, 
     @param RecordFormID The record FormID.
     @param RecordEditorID The record EditorID.
     @param ParentID The parent record for the record to be created. Some record types, usually worldspace-related, have hierarchies of parent and child records. If no parent is desired, `NULL` can be passed.
-    @param CreateFlags Flags that determine how the record is created. These flags are given in ::createFlags.
+    @param CreateFlags Flags that determine how the record is created.
     @returns A pointer to the created record, or `NULL` if an error was encountered.
 */
-DLLEXTERN cb_record_t * cb_CreateRecord(cb_mod_t *ModID, const uint32_t RecordType, const cb_formid_t RecordFormID, char * const RecordEditorID, cb_record_t *ParentID, const uint32_t CreateFlags);
+DLLEXTERN cb_record_t * cb_CreateRecord(cb_mod_t *ModID, const uint32_t RecordType, const cb_formid_t RecordFormID, char * const RecordEditorID, cb_record_t *ParentID, const cb_create_flags_t CreateFlags);
 
 /**
     @brief Copy a record from one plugin into another.
@@ -422,10 +422,10 @@ DLLEXTERN cb_record_t * cb_CreateRecord(cb_mod_t *ModID, const uint32_t RecordTy
     @param DestParentID The parent record for the record copy. Some record types, usually worldspace-related, have hierarchies of parent and child records. If no parent is desired, `NULL` can be passed.
     @param DestRecordFormID The FormID of the record copy.
     @param DestRecordEditorID The Editor ID of the record copy.
-    @param CreateFlags Flags that determine how the record copy is created. These flags are given in ::createFlags.
+    @param CreateFlags Flags that determine how the record copy is created.
     @returns A pointer to the record copy, or `NULL` if an error was encountered.
 */
-DLLEXTERN cb_record_t * cb_CopyRecord(cb_record_t *RecordID, cb_mod_t *DestModID, cb_record_t *DestParentID, const cb_formid_t DestRecordFormID, char * const DestRecordEditorID, const uint32_t CreateFlags);
+DLLEXTERN cb_record_t * cb_CopyRecord(cb_record_t *RecordID, cb_mod_t *DestModID, cb_record_t *DestParentID, const cb_formid_t DestRecordFormID, char * const DestRecordEditorID, const cb_create_flags_t CreateFlags);
 
 /**
     @brief Unload a record from memory.
@@ -477,7 +477,7 @@ DLLEXTERN int32_t cb_GetNumRecords(cb_mod_t *ModID, const uint32_t RecordType);
     @brief Get an array of records of a specified type in a plugin.
     @param ModID The plugin to query.
     @param RecordType The record type to look for. This should be its 4-byte name in reverse order, eg. to search for `CELL` records, you would pass a `uint32_t RecordType = 'LLEC';`.
-    @param RecordIDs An array of record pointers, pre-allocated to be of the size given by GetNumRecords(). This function populates the array.
+    @param RecordIDs An array of record pointers, pre-allocated to be of the size given by cb_GetNumRecords(). This function populates the array.
     @returns The number of records retrieved, or `-1` if an error occurred.
 */
 DLLEXTERN int32_t cb_GetRecordIDs(cb_mod_t *ModID, const uint32_t RecordType, cb_record_t ** RecordIDs);
@@ -486,7 +486,7 @@ DLLEXTERN int32_t cb_GetRecordIDs(cb_mod_t *ModID, const uint32_t RecordType, cb
     @brief Check if the given record is winning any conflict with other records.
     @details A record wins a conflict if it is the last-loaded version of that record in the load order.
     @param RecordID The record to query.
-    @param GetExtendedConflicts If true, checks for conflicts in plugins loaded with the ::fIsExtendedConflicts flag, otherwise they are ignored.
+    @param GetExtendedConflicts If true, checks for conflicts in plugins loaded with the ::CB_EXTENDED_CONFLICTS flag, otherwise they are ignored.
     @returns `1` if the record is winning, `0` if it is not, and `-1` if an error occurred.
 */
 DLLEXTERN int32_t cb_IsRecordWinning(cb_record_t *RecordID, const bool GetExtendedConflicts);
@@ -494,7 +494,7 @@ DLLEXTERN int32_t cb_IsRecordWinning(cb_record_t *RecordID, const bool GetExtend
 /**
     @brief Get the number of conflicting versions of the given record in its parent collection.
     @param RecordID The record to look for conflicts for.
-    @param GetExtendedConflicts If true, checks for conflicts in plugins loaded with the ::fIsExtendedConflicts flag, otherwise they are ignored.
+    @param GetExtendedConflicts If true, checks for conflicts in plugins loaded with the ::CB_EXTENDED_CONFLICTS flag, otherwise they are ignored.
     @returns The number of conflicting versions of the record, or `-1` if an error occurred.
 */
 DLLEXTERN int32_t cb_GetNumRecordConflicts(cb_record_t *RecordID, const bool GetExtendedConflicts);
@@ -502,17 +502,17 @@ DLLEXTERN int32_t cb_GetNumRecordConflicts(cb_record_t *RecordID, const bool Get
 /**
     @brief Get an array of the different versions of the given record in its parent collection.
     @param RecordID The record to look for conflicts for.
-    @param RecordIDs An array of record pointers, pre-allocated to be of the size given by GetNumRecordConflicts(). This function populates the array.
-    @param GetExtendedConflicts If true, checks for conflicts in plugins loaded with the ::fIsExtendedConflicts flag, otherwise they are ignored.
+    @param RecordIDs An array of record pointers, pre-allocated to be of the size given by cb_GetNumRecordConflicts(). This function populates the array.
+    @param GetExtendedConflicts If true, checks for conflicts in plugins loaded with the ::CB_EXTENDED_CONFLICTS flag, otherwise they are ignored.
     @returns The number of records retrieved, or `-1` if an error occurred.
 */
 DLLEXTERN int32_t cb_GetRecordConflicts(cb_record_t *RecordID, cb_record_t ** RecordIDs, const bool GetExtendedConflicts);
 
 /**
     @brief Get an array of the different versions of the given record in its parent collection.
-    @details Unlike GetRecordConflicts(), this function will fail if the given record's parent plugin was loaded with the ::fIsExtendedConflicts flag set, and doesn't include the record passed in the outputted array.
+    @details Unlike cb_GetRecordConflicts(), this function will fail if the given record's parent plugin was loaded with the ::CB_EXTENDED_CONFLICTS flag set, and doesn't include the record passed in the outputted array.
     @param RecordID The record to look for conflicts for.
-    @param RecordIDs An array of record pointers, pre-allocated to be of the size given by GetNumRecordConflicts(). This function populates the array.
+    @param RecordIDs An array of record pointers, pre-allocated to be of the size given by cb_GetNumRecordConflicts(). This function populates the array.
     @returns The number of records retrieved, or `-1` if an error occurred.
 */
 DLLEXTERN int32_t cb_GetRecordHistory(cb_record_t *RecordID, cb_record_t ** RecordIDs);
@@ -529,7 +529,7 @@ DLLEXTERN int32_t cb_GetNumIdenticalToMasterRecords(cb_mod_t *ModID);
     @brief Gets an array of the Identical To Master records in a plugin.
     @details Identical To Master records are unedited copies of records present in a plugin's masters.
     @param ModID The plugin to query.
-    @param RecordIDs An array of record pointers, pre-allocated to be of the size given by GetNumIdenticalToMasterRecords(). This function populates the array.
+    @param RecordIDs An array of record pointers, pre-allocated to be of the size given by cb_GetNumIdenticalToMasterRecords(). This function populates the array.
     @returns The number of records the array is populated with, or `-1` if an error occurred.
 */
 DLLEXTERN int32_t cb_GetIdenticalToMasterRecords(cb_mod_t *ModID, cb_record_t ** RecordIDs);

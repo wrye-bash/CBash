@@ -45,23 +45,23 @@ uint32_t EYESRecord::GetFieldAttribute(FIELD_IDENTIFIERS, uint32_t WhichAttribut
         case 0: //recType
             return GetType();
         case 1: //flags1
-            return UINT32_FLAG_FIELD;
+            return CB_UINT32_FLAG_FIELD;
         case 2: //fid
-            return FORMID_FIELD;
+            return CB_FORMID_FIELD;
         case 3: //flags2
-            return UINT32_FLAG_FIELD;
+            return CB_UINT32_FLAG_FIELD;
         case 4: //eid
-            return ISTRING_FIELD;
+            return CB_ISTRING_FIELD;
         case 5: //full
-            return STRING_FIELD;
+            return CB_STRING_FIELD;
         case 6: //iconPath
-            return ISTRING_FIELD;
+            return CB_ISTRING_FIELD;
         case 7: //flags
-            return UINT8_FLAG_FIELD;
+            return CB_UINT8_FLAG_FIELD;
         default:
-            return UNKNOWN_FIELD;
+            return CB_UNKNOWN_FIELD;
         }
-    return UNKNOWN_FIELD;
+    return CB_UNKNOWN_FIELD;
     }
 
 void * EYESRecord::GetField(FIELD_IDENTIFIERS, void **FieldValues)

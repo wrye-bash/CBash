@@ -45,22 +45,22 @@ uint32_t GLOBRecord::GetFieldAttribute(FIELD_IDENTIFIERS, uint32_t WhichAttribut
         case 0: //recType
             return GetType();
         case 1: //flags1
-            return UINT32_FLAG_FIELD;
+            return CB_UINT32_FLAG_FIELD;
         case 2: //fid
-            return FORMID_FIELD;
+            return CB_FORMID_FIELD;
         case 3: //flags2
-            return UINT32_FLAG_FIELD;
+            return CB_UINT32_FLAG_FIELD;
         case 4: //eid
-            return ISTRING_FIELD;
+            return CB_ISTRING_FIELD;
         case 5: //format
-            return CHAR_FIELD;
+            return CB_CHAR_FIELD;
         case 6: //value
             //Regardless of format, it is always stored as a float. Go figure.
-            return FLOAT32_FIELD;
+            return CB_FLOAT32_FIELD;
         default:
-            return UNKNOWN_FIELD;
+            return CB_UNKNOWN_FIELD;
         }
-    return UNKNOWN_FIELD;
+    return CB_UNKNOWN_FIELD;
     }
 
 void * GLOBRecord::GetField(FIELD_IDENTIFIERS, void **FieldValues)

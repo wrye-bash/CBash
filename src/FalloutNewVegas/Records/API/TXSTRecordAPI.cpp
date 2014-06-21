@@ -45,111 +45,111 @@ uint32_t TXSTRecord::GetFieldAttribute(FIELD_IDENTIFIERS, uint32_t WhichAttribut
         case 0: //recType
             return GetType();
         case 1: //flags1
-            return UINT32_FLAG_FIELD;
+            return CB_UINT32_FLAG_FIELD;
         case 2: //fid
-            return FORMID_FIELD;
+            return CB_FORMID_FIELD;
         case 3: //versionControl1
             switch(WhichAttribute)
                 {
                 case 0: //fieldType
-                    return UINT8_ARRAY_FIELD;
+                    return CB_UINT8_ARRAY_FIELD;
                 case 1: //fieldSize
                     return 4;
                 default:
-                    return UNKNOWN_FIELD;
+                    return CB_UNKNOWN_FIELD;
                 }
-            return UNKNOWN_FIELD;
+            return CB_UNKNOWN_FIELD;
         case 4: //eid
-            return ISTRING_FIELD;
+            return CB_ISTRING_FIELD;
         case 5: //formVersion
-            return UINT16_FIELD;
+            return CB_UINT16_FIELD;
         case 6: //versionControl2
             switch(WhichAttribute)
                 {
                 case 0: //fieldType
-                    return UINT8_ARRAY_FIELD;
+                    return CB_UINT8_ARRAY_FIELD;
                 case 1: //fieldSize
                     return 2;
                 default:
-                    return UNKNOWN_FIELD;
+                    return CB_UNKNOWN_FIELD;
                 }
-            return UNKNOWN_FIELD;
+            return CB_UNKNOWN_FIELD;
         case 7: //boundX1
-            return SINT16_FIELD;
+            return CB_SINT16_FIELD;
         case 8: //boundY1
-            return SINT16_FIELD;
+            return CB_SINT16_FIELD;
         case 9: //boundZ1
-            return SINT16_FIELD;
+            return CB_SINT16_FIELD;
         case 10: //boundX2
-            return SINT16_FIELD;
+            return CB_SINT16_FIELD;
         case 11: //boundY2
-            return SINT16_FIELD;
+            return CB_SINT16_FIELD;
         case 12: //boundZ2
-            return SINT16_FIELD;
+            return CB_SINT16_FIELD;
         case 13: //baseImageOrTransparency
-            return ISTRING_FIELD;
+            return CB_ISTRING_FIELD;
         case 14: //normalMapOrSpecular
-            return ISTRING_FIELD;
+            return CB_ISTRING_FIELD;
         case 15: //envMapMaskOrUnk
-            return ISTRING_FIELD;
+            return CB_ISTRING_FIELD;
         case 16: //glowMapOrUnused
-            return ISTRING_FIELD;
+            return CB_ISTRING_FIELD;
         case 17: //parallaxMapOrUnused
-            return ISTRING_FIELD;
+            return CB_ISTRING_FIELD;
         case 18: //envMapOrUnused
-            return ISTRING_FIELD;
+            return CB_ISTRING_FIELD;
         case 19: //decalMinWidth
-            return FLOAT32_FIELD;
+            return CB_FLOAT32_FIELD;
         case 20: //decalMaxWidth
-            return FLOAT32_FIELD;
+            return CB_FLOAT32_FIELD;
         case 21: //decalMinHeight
-            return FLOAT32_FIELD;
+            return CB_FLOAT32_FIELD;
         case 22: //decalMaxHeight
-            return FLOAT32_FIELD;
+            return CB_FLOAT32_FIELD;
         case 23: //decalDepth
-            return FLOAT32_FIELD;
+            return CB_FLOAT32_FIELD;
         case 24: //decalShininess
-            return FLOAT32_FIELD;
+            return CB_FLOAT32_FIELD;
         case 25: //decalScale
-            return FLOAT32_FIELD;
+            return CB_FLOAT32_FIELD;
         case 26: //decalPasses
-            return UINT8_FIELD;
+            return CB_UINT8_FIELD;
         case 27: //decalFlags
-            return UINT8_FLAG_FIELD;
+            return CB_UINT8_FLAG_FIELD;
         case 28: //decalUnused1
             switch(WhichAttribute)
                 {
                 case 0: //fieldType
-                    return UINT8_ARRAY_FIELD;
+                    return CB_UINT8_ARRAY_FIELD;
                 case 1: //fieldSize
                     return DODT.IsLoaded() ? 2 : 0;
                 default:
-                    return UNKNOWN_FIELD;
+                    return CB_UNKNOWN_FIELD;
                 }
-            return UNKNOWN_FIELD;
+            return CB_UNKNOWN_FIELD;
         case 29: //decalRed
-            return UINT8_FIELD;
+            return CB_UINT8_FIELD;
         case 30: //decalGreen
-            return UINT8_FIELD;
+            return CB_UINT8_FIELD;
         case 31: //decalBlue
-            return UINT8_FIELD;
+            return CB_UINT8_FIELD;
         case 32: //decalUnused2
             switch(WhichAttribute)
                 {
                 case 0: //fieldType
-                    return UINT8_ARRAY_FIELD;
+                    return CB_UINT8_ARRAY_FIELD;
                 case 1: //fieldSize
                     return DODT.IsLoaded() ? 1 : 0;
                 default:
-                    return UNKNOWN_FIELD;
+                    return CB_UNKNOWN_FIELD;
                 }
-            return UNKNOWN_FIELD;
+            return CB_UNKNOWN_FIELD;
         case 33: //flags
-            return UINT16_FLAG_FIELD;
+            return CB_UINT16_FLAG_FIELD;
         default:
-            return UNKNOWN_FIELD;
+            return CB_UNKNOWN_FIELD;
         }
-    return UNKNOWN_FIELD;
+    return CB_UNKNOWN_FIELD;
     }
 
 void * TXSTRecord::GetField(FIELD_IDENTIFIERS, void **FieldValues)

@@ -45,494 +45,494 @@ uint32_t NPC_Record::GetFieldAttribute(FIELD_IDENTIFIERS, uint32_t WhichAttribut
         case 0: //recType
             return GetType();
         case 1: //flags1
-            return UINT32_FLAG_FIELD;
+            return CB_UINT32_FLAG_FIELD;
         case 2: //fid
-            return FORMID_FIELD;
+            return CB_FORMID_FIELD;
         case 3: //versionControl1
             switch(WhichAttribute)
                 {
                 case 0: //fieldType
-                    return UINT8_ARRAY_FIELD;
+                    return CB_UINT8_ARRAY_FIELD;
                 case 1: //fieldSize
                     return 4;
                 default:
-                    return UNKNOWN_FIELD;
+                    return CB_UNKNOWN_FIELD;
                 }
-            return UNKNOWN_FIELD;
+            return CB_UNKNOWN_FIELD;
         case 4: //eid
-            return ISTRING_FIELD;
+            return CB_ISTRING_FIELD;
         case 5: //formVersion
-            return UINT16_FIELD;
+            return CB_UINT16_FIELD;
         case 6: //versionControl2
             switch(WhichAttribute)
                 {
                 case 0: //fieldType
-                    return UINT8_ARRAY_FIELD;
+                    return CB_UINT8_ARRAY_FIELD;
                 case 1: //fieldSize
                     return 2;
                 default:
-                    return UNKNOWN_FIELD;
+                    return CB_UNKNOWN_FIELD;
                 }
-            return UNKNOWN_FIELD;
+            return CB_UNKNOWN_FIELD;
         case 7: //boundX1
-            return SINT16_FIELD;
+            return CB_SINT16_FIELD;
         case 8: //boundY1
-            return SINT16_FIELD;
+            return CB_SINT16_FIELD;
         case 9: //boundZ1
-            return SINT16_FIELD;
+            return CB_SINT16_FIELD;
         case 10: //boundX2
-            return SINT16_FIELD;
+            return CB_SINT16_FIELD;
         case 11: //boundY2
-            return SINT16_FIELD;
+            return CB_SINT16_FIELD;
         case 12: //boundZ2
-            return SINT16_FIELD;
+            return CB_SINT16_FIELD;
         case 13: //full
-            return STRING_FIELD;
+            return CB_STRING_FIELD;
         case 14: //modPath
-            return ISTRING_FIELD;
+            return CB_ISTRING_FIELD;
         case 15: //modb
-            return FLOAT32_FIELD;
+            return CB_FLOAT32_FIELD;
         case 16: //modt_p
             switch(WhichAttribute)
                 {
                 case 0: //fieldType
-                    return UINT8_ARRAY_FIELD;
+                    return CB_UINT8_ARRAY_FIELD;
                 case 1: //fieldSize
                     return MODL.IsLoaded() ? MODL->MODT.GetSize() : 0;
                 default:
-                    return UNKNOWN_FIELD;
+                    return CB_UNKNOWN_FIELD;
                 }
-            return UNKNOWN_FIELD;
+            return CB_UNKNOWN_FIELD;
         case 17: //altTextures
             if(!MODL.IsLoaded())
-                return UNKNOWN_FIELD;
+                return CB_UNKNOWN_FIELD;
 
             if(ListFieldID == 0) //altTextures
                 {
                 switch(WhichAttribute)
                     {
                     case 0: //fieldType
-                        return LIST_FIELD;
+                        return CB_LIST_FIELD;
                     case 1: //fieldSize
                         return (uint32_t)MODL->Textures.MODS.size();
                     default:
-                        return UNKNOWN_FIELD;
+                        return CB_UNKNOWN_FIELD;
                     }
                 }
 
             if(ListIndex >= MODL->Textures.MODS.size())
-                return UNKNOWN_FIELD;
+                return CB_UNKNOWN_FIELD;
 
             switch(ListFieldID)
                 {
                 case 1: //name
-                    return STRING_FIELD;
+                    return CB_STRING_FIELD;
                 case 2: //texture
-                    return FORMID_FIELD;
+                    return CB_FORMID_FIELD;
                 case 3: //index
-                    return SINT32_FIELD;
+                    return CB_SINT32_FIELD;
                 default:
-                    return UNKNOWN_FIELD;
+                    return CB_UNKNOWN_FIELD;
                 }
-            return UNKNOWN_FIELD;
+            return CB_UNKNOWN_FIELD;
         case 18: //modelFlags
-            return UINT8_FLAG_FIELD;
+            return CB_UINT8_FLAG_FIELD;
         case 19: //flags
-            return UINT32_FLAG_FIELD;
+            return CB_UINT32_FLAG_FIELD;
         case 20: //fatigue
-            return UINT16_FIELD;
+            return CB_UINT16_FIELD;
         case 21: //barterGold
-            return UINT16_FIELD;
+            return CB_UINT16_FIELD;
         case 22: //level
-            return SINT16_FIELD;
+            return CB_SINT16_FIELD;
         case 23: //calcMin
-            return UINT16_FIELD;
+            return CB_UINT16_FIELD;
         case 24: //calcMax
-            return UINT16_FIELD;
+            return CB_UINT16_FIELD;
         case 25: //speedMult
-            return UINT16_FIELD;
+            return CB_UINT16_FIELD;
         case 26: //karma
-            return FLOAT32_FIELD;
+            return CB_FLOAT32_FIELD;
         case 27: //dispBase
-            return SINT16_FIELD;
+            return CB_SINT16_FIELD;
         case 28: //templateFlags
-            return UINT16_FLAG_FIELD;
+            return CB_UINT16_FLAG_FIELD;
         case 29: //factions
             if(ListFieldID == 0) //factions
                 {
                 switch(WhichAttribute)
                     {
                     case 0: //fieldType
-                        return LIST_FIELD;
+                        return CB_LIST_FIELD;
                     case 1: //fieldSize
                         return (uint32_t)SNAM.value.size();
                     default:
-                        return UNKNOWN_FIELD;
+                        return CB_UNKNOWN_FIELD;
                     }
                 }
 
             if(ListIndex >= SNAM.value.size())
-                return UNKNOWN_FIELD;
+                return CB_UNKNOWN_FIELD;
 
             switch(ListFieldID)
                 {
                 case 1: //faction
-                    return FORMID_FIELD;
+                    return CB_FORMID_FIELD;
                 case 2: //rank
-                    return UINT8_FIELD;
+                    return CB_UINT8_FIELD;
                 case 3: //unused1
                     switch(WhichAttribute)
                         {
                         case 0: //fieldType
-                            return UINT8_ARRAY_FIELD;
+                            return CB_UINT8_ARRAY_FIELD;
                         case 1: //fieldSize
                             return 3;
                         default:
-                            return UNKNOWN_FIELD;
+                            return CB_UNKNOWN_FIELD;
                         }
-                    return UNKNOWN_FIELD;
+                    return CB_UNKNOWN_FIELD;
                 default:
-                    return UNKNOWN_FIELD;
+                    return CB_UNKNOWN_FIELD;
                 }
-            return UNKNOWN_FIELD;
+            return CB_UNKNOWN_FIELD;
         case 30: //deathItem
-            return FORMID_FIELD;
+            return CB_FORMID_FIELD;
         case 31: //voice
-            return FORMID_FIELD;
+            return CB_FORMID_FIELD;
         case 32: //template
-            return FORMID_FIELD;
+            return CB_FORMID_FIELD;
         case 33: //race
-            return FORMID_FIELD;
+            return CB_FORMID_FIELD;
         case 34: //actorEffects
             switch(WhichAttribute)
                 {
                 case 0: //fieldType
-                    return FORMID_ARRAY_FIELD;
+                    return CB_FORMID_ARRAY_FIELD;
                 case 1: //fieldSize
                     return (uint32_t)SPLO.value.size();
                 default:
-                    return UNKNOWN_FIELD;
+                    return CB_UNKNOWN_FIELD;
                 }
-            return UNKNOWN_FIELD;
+            return CB_UNKNOWN_FIELD;
         case 35: //unarmedEffect
-            return FORMID_FIELD;
+            return CB_FORMID_FIELD;
         case 36: //unarmedAnim
-            return UINT16_TYPE_FIELD;
+            return CB_UINT16_TYPE_FIELD;
         case 37: //destructableHealth
-            return SINT32_FIELD;
+            return CB_SINT32_FIELD;
         case 38: //destructableCount
-            return UINT8_FIELD;
+            return CB_UINT8_FIELD;
         case 39: //destructableFlags
-            return UINT8_FLAG_FIELD;
+            return CB_UINT8_FLAG_FIELD;
         case 40: //destructableUnused1
             switch(WhichAttribute)
                 {
                 case 0: //fieldType
-                    return UINT8_ARRAY_FIELD;
+                    return CB_UINT8_ARRAY_FIELD;
                 case 1: //fieldSize
                     return Destructable.IsLoaded() ? 2 : 0;
                 default:
-                    return UNKNOWN_FIELD;
+                    return CB_UNKNOWN_FIELD;
                 }
-            return UNKNOWN_FIELD;
+            return CB_UNKNOWN_FIELD;
         case 41: //destructableStages
             if(!Destructable.IsLoaded())
-                return UNKNOWN_FIELD;
+                return CB_UNKNOWN_FIELD;
 
             if(ListFieldID == 0) //destructableStages
                 {
                 switch(WhichAttribute)
                     {
                     case 0: //fieldType
-                        return LIST_FIELD;
+                        return CB_LIST_FIELD;
                     case 1: //fieldSize
                         return (uint32_t)Destructable->Stages.value.size();
                     default:
-                        return UNKNOWN_FIELD;
+                        return CB_UNKNOWN_FIELD;
                     }
                 }
 
             if(ListIndex >= Destructable->Stages.value.size())
-                return UNKNOWN_FIELD;
+                return CB_UNKNOWN_FIELD;
 
             switch(ListFieldID)
                 {
                 case 1: //health
-                    return UINT8_FIELD;
+                    return CB_UINT8_FIELD;
                 case 2: //index
-                    return UINT8_FIELD;
+                    return CB_UINT8_FIELD;
                 case 3: //stage
-                    return UINT8_FIELD;
+                    return CB_UINT8_FIELD;
                 case 4: //flags
-                    return UINT8_FLAG_FIELD;
+                    return CB_UINT8_FLAG_FIELD;
                 case 5: //dps
-                    return SINT32_FIELD;
+                    return CB_SINT32_FIELD;
                 case 6: //explosion
-                    return FORMID_FIELD;
+                    return CB_FORMID_FIELD;
                 case 7: //debris
-                    return FORMID_FIELD;
+                    return CB_FORMID_FIELD;
                 case 8: //debrisCount
-                    return SINT32_FIELD;
+                    return CB_SINT32_FIELD;
                 case 9: //modPath
-                    return ISTRING_FIELD;
+                    return CB_ISTRING_FIELD;
                 case 10: //modt_p
                     switch(WhichAttribute)
                         {
                         case 0: //fieldType
-                            return UINT8_ARRAY_FIELD;
+                            return CB_UINT8_ARRAY_FIELD;
                         case 1: //fieldSize
                             return Destructable->Stages.value[ListIndex]->DMDT.GetSize();
                         default:
-                            return UNKNOWN_FIELD;
+                            return CB_UNKNOWN_FIELD;
                         }
                 default:
-                    return UNKNOWN_FIELD;
+                    return CB_UNKNOWN_FIELD;
                 }
-            return UNKNOWN_FIELD;
+            return CB_UNKNOWN_FIELD;
         case 42: //script
-            return FORMID_FIELD;
+            return CB_FORMID_FIELD;
         case 43: //items
             if(ListFieldID == 0) //items
                 {
                 switch(WhichAttribute)
                     {
                     case 0: //fieldType
-                        return LIST_FIELD;
+                        return CB_LIST_FIELD;
                     case 1: //fieldSize
                         return (uint32_t)CNTO.value.size();
                     default:
-                        return UNKNOWN_FIELD;
+                        return CB_UNKNOWN_FIELD;
                     }
-                return UNKNOWN_FIELD;
+                return CB_UNKNOWN_FIELD;
                 }
 
             if(ListIndex >= CNTO.value.size())
-                return UNKNOWN_FIELD;
+                return CB_UNKNOWN_FIELD;
 
             switch(ListFieldID)
                 {
                 case 1: //item
-                    return FORMID_FIELD;
+                    return CB_FORMID_FIELD;
                 case 2: //count
-                    return SINT32_FIELD;
+                    return CB_SINT32_FIELD;
                 case 3: //owner
-                    return FORMID_FIELD;
+                    return CB_FORMID_FIELD;
                 case 4: //globalOrRank
                     switch(WhichAttribute)
                         {
                         case 0: //fieldType
-                            return UNKNOWN_OR_FORMID_OR_UINT32_FIELD;
+                            return CB_UNKNOWN_OR_FORMID_OR_UINT32_FIELD;
                         case 2: //WhichType
-                            return CNTO.value[ListIndex]->IsGlobal() ? FORMID_FIELD : UINT32_FIELD;
+                            return CNTO.value[ListIndex]->IsGlobal() ? CB_FORMID_FIELD : CB_UINT32_FIELD;
                         default:
-                            return UNKNOWN_FIELD;
+                            return CB_UNKNOWN_FIELD;
                         }
-                    return UNKNOWN_FIELD;
+                    return CB_UNKNOWN_FIELD;
                 case 5: //condition
-                    return FLOAT32_FIELD;
+                    return CB_FLOAT32_FIELD;
                 default:
-                    return UNKNOWN_FIELD;
+                    return CB_UNKNOWN_FIELD;
                 }
-            return UNKNOWN_FIELD;
+            return CB_UNKNOWN_FIELD;
         case 44: //aggression
-            return UINT8_TYPE_FIELD;
+            return CB_UINT8_TYPE_FIELD;
         case 45: //confidence
-            return UINT8_TYPE_FIELD;
+            return CB_UINT8_TYPE_FIELD;
         case 46: //energyLevel
-            return UINT8_FIELD;
+            return CB_UINT8_FIELD;
         case 47: //responsibility
-            return UINT8_TYPE_FIELD;
+            return CB_UINT8_TYPE_FIELD;
         case 48: //mood
-            return UINT8_TYPE_FIELD;
+            return CB_UINT8_TYPE_FIELD;
         case 49: //unused1
             switch(WhichAttribute)
                 {
                 case 0: //fieldType
-                    return UINT8_ARRAY_FIELD;
+                    return CB_UINT8_ARRAY_FIELD;
                 case 1: //fieldSize
                     return 3;
                 default:
-                    return UNKNOWN_FIELD;
+                    return CB_UNKNOWN_FIELD;
                 }
-            return UNKNOWN_FIELD;
+            return CB_UNKNOWN_FIELD;
         case 50: //services
-            return UINT32_FLAG_FIELD;
+            return CB_UINT32_FLAG_FIELD;
         case 51: //trainSkill
-            return SINT8_TYPE_FIELD;
+            return CB_SINT8_TYPE_FIELD;
         case 52: //trainLevel
-            return UINT8_FIELD;
+            return CB_UINT8_FIELD;
         case 53: //assistance
-            return UINT8_TYPE_FIELD;
+            return CB_UINT8_TYPE_FIELD;
         case 54: //aggroFlags
-            return UINT8_FLAG_FIELD;
+            return CB_UINT8_FLAG_FIELD;
         case 55: //aggroRadius
-            return SINT32_FIELD;
+            return CB_SINT32_FIELD;
         case 56: //aiPackages
             switch(WhichAttribute)
                 {
                 case 0: //fieldType
-                    return FORMID_ARRAY_FIELD;
+                    return CB_FORMID_ARRAY_FIELD;
                 case 1: //fieldSize
                     return (uint32_t)PKID.value.size();
                 default:
-                    return UNKNOWN_FIELD;
+                    return CB_UNKNOWN_FIELD;
                 }
-            return UNKNOWN_FIELD;
+            return CB_UNKNOWN_FIELD;
         case 57: //iclass
-            return FORMID_FIELD;
+            return CB_FORMID_FIELD;
         case 58: //baseHealth
-            return SINT32_FIELD;
+            return CB_SINT32_FIELD;
         case 59: //strength
-            return UINT8_FIELD;
+            return CB_UINT8_FIELD;
         case 60: //perception
-            return UINT8_FIELD;
+            return CB_UINT8_FIELD;
         case 61: //endurance
-            return UINT8_FIELD;
+            return CB_UINT8_FIELD;
         case 62: //charisma
-            return UINT8_FIELD;
+            return CB_UINT8_FIELD;
         case 63: //intelligence
-            return UINT8_FIELD;
+            return CB_UINT8_FIELD;
         case 64: //agility
-            return UINT8_FIELD;
+            return CB_UINT8_FIELD;
         case 65: //luck
-            return UINT8_FIELD;
+            return CB_UINT8_FIELD;
         case 66: //barter
-            return UINT8_FIELD;
+            return CB_UINT8_FIELD;
         case 67: //bigGuns
-            return UINT8_FIELD;
+            return CB_UINT8_FIELD;
         case 68: //energy
-            return UINT8_FIELD;
+            return CB_UINT8_FIELD;
         case 69: //explosives
-            return UINT8_FIELD;
+            return CB_UINT8_FIELD;
         case 70: //lockpick
-            return UINT8_FIELD;
+            return CB_UINT8_FIELD;
         case 71: //medicine
-            return UINT8_FIELD;
+            return CB_UINT8_FIELD;
         case 72: //melee
-            return UINT8_FIELD;
+            return CB_UINT8_FIELD;
         case 73: //repair
-            return UINT8_FIELD;
+            return CB_UINT8_FIELD;
         case 74: //science
-            return UINT8_FIELD;
+            return CB_UINT8_FIELD;
         case 75: //guns
-            return UINT8_FIELD;
+            return CB_UINT8_FIELD;
         case 76: //sneak
-            return UINT8_FIELD;
+            return CB_UINT8_FIELD;
         case 77: //speech
-            return UINT8_FIELD;
+            return CB_UINT8_FIELD;
         case 78: //survival
-            return UINT8_FIELD;
+            return CB_UINT8_FIELD;
         case 79: //unarmed
-            return UINT8_FIELD;
+            return CB_UINT8_FIELD;
         case 80: //barterBoost
-            return UINT8_FIELD;
+            return CB_UINT8_FIELD;
         case 81: //bigGunsBoost
-            return UINT8_FIELD;
+            return CB_UINT8_FIELD;
         case 82: //energyBoost
-            return UINT8_FIELD;
+            return CB_UINT8_FIELD;
         case 83: //explosivesBoost
-            return UINT8_FIELD;
+            return CB_UINT8_FIELD;
         case 84: //lockpickBoost
-            return UINT8_FIELD;
+            return CB_UINT8_FIELD;
         case 85: //medicineBoost
-            return UINT8_FIELD;
+            return CB_UINT8_FIELD;
         case 86: //meleeBoost
-            return UINT8_FIELD;
+            return CB_UINT8_FIELD;
         case 87: //repairBoost
-            return UINT8_FIELD;
+            return CB_UINT8_FIELD;
         case 88: //scienceBoost
-            return UINT8_FIELD;
+            return CB_UINT8_FIELD;
         case 89: //gunsBoost
-            return UINT8_FIELD;
+            return CB_UINT8_FIELD;
         case 90: //sneakBoost
-            return UINT8_FIELD;
+            return CB_UINT8_FIELD;
         case 91: //speechBoost
-            return UINT8_FIELD;
+            return CB_UINT8_FIELD;
         case 92: //survivalBoost
-            return UINT8_FIELD;
+            return CB_UINT8_FIELD;
         case 93: //unarmedBoost
-            return UINT8_FIELD;
+            return CB_UINT8_FIELD;
         case 94: //headParts
             switch(WhichAttribute)
                 {
                 case 0: //fieldType
-                    return FORMID_ARRAY_FIELD;
+                    return CB_FORMID_ARRAY_FIELD;
                 case 1: //fieldSize
                     return (uint32_t)PNAM.value.size();
                 default:
-                    return UNKNOWN_FIELD;
+                    return CB_UNKNOWN_FIELD;
                 }
-            return UNKNOWN_FIELD;
+            return CB_UNKNOWN_FIELD;
         case 95: //hair
-            return FORMID_FIELD;
+            return CB_FORMID_FIELD;
         case 96: //hairLength
-            return FLOAT32_FIELD;
+            return CB_FLOAT32_FIELD;
         case 97: //eyes
-            return FORMID_FIELD;
+            return CB_FORMID_FIELD;
         case 98: //hairRed
-            return UINT8_FIELD;
+            return CB_UINT8_FIELD;
         case 99: //hairGreen
-            return UINT8_FIELD;
+            return CB_UINT8_FIELD;
         case 100: //hairBlue
-            return UINT8_FIELD;
+            return CB_UINT8_FIELD;
         case 101: //unused2
             switch(WhichAttribute)
                 {
                 case 0: //fieldType
-                    return UINT8_ARRAY_FIELD;
+                    return CB_UINT8_ARRAY_FIELD;
                 case 1: //fieldSize
                     return 1;
                 default:
-                    return UNKNOWN_FIELD;
+                    return CB_UNKNOWN_FIELD;
                 }
-            return UNKNOWN_FIELD;
+            return CB_UNKNOWN_FIELD;
         case 102: //combatStyle
-            return FORMID_FIELD;
+            return CB_FORMID_FIELD;
         case 103: //impactType
-            return UINT32_TYPE_FIELD;
+            return CB_UINT32_TYPE_FIELD;
         case 104: //fggs_p
             switch(WhichAttribute)
                 {
                 case 0: //fieldType
-                    return UINT8_ARRAY_FIELD;
+                    return CB_UINT8_ARRAY_FIELD;
                 case 1: //fieldSize
                     return FGGS.GetSize();
                 default:
-                    return UNKNOWN_FIELD;
+                    return CB_UNKNOWN_FIELD;
                 }
-            return UNKNOWN_FIELD;
+            return CB_UNKNOWN_FIELD;
         case 105: //fgga_p
             switch(WhichAttribute)
                 {
                 case 0: //fieldType
-                    return UINT8_ARRAY_FIELD;
+                    return CB_UINT8_ARRAY_FIELD;
                 case 1: //fieldSize
                     return FGGA.GetSize();
                 default:
-                    return UNKNOWN_FIELD;
+                    return CB_UNKNOWN_FIELD;
                 }
-            return UNKNOWN_FIELD;
+            return CB_UNKNOWN_FIELD;
         case 106: //fgts_p
             switch(WhichAttribute)
                 {
                 case 0: //fieldType
-                    return UINT8_ARRAY_FIELD;
+                    return CB_UINT8_ARRAY_FIELD;
                 case 1: //fieldSize
                     return FGTS.GetSize();
                 default:
-                    return UNKNOWN_FIELD;
+                    return CB_UNKNOWN_FIELD;
                 }
-            return UNKNOWN_FIELD;
+            return CB_UNKNOWN_FIELD;
         case 107: //unknown
-            return UINT16_FIELD;
+            return CB_UINT16_FIELD;
         case 108: //height
-            return FLOAT32_FIELD;
+            return CB_FLOAT32_FIELD;
         case 109: //weight
-            return FLOAT32_FIELD;
+            return CB_FLOAT32_FIELD;
         default:
-            return UNKNOWN_FIELD;
+            return CB_UNKNOWN_FIELD;
         }
-    return UNKNOWN_FIELD;
+    return CB_UNKNOWN_FIELD;
     }
 
 void * NPC_Record::GetField(FIELD_IDENTIFIERS, void **FieldValues)

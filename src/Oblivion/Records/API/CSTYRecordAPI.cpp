@@ -45,199 +45,199 @@ uint32_t CSTYRecord::GetFieldAttribute(FIELD_IDENTIFIERS, uint32_t WhichAttribut
         case 0: //recType
             return GetType();
         case 1: //flags1
-            return UINT32_FLAG_FIELD;
+            return CB_UINT32_FLAG_FIELD;
         case 2: //fid
-            return FORMID_FIELD;
+            return CB_FORMID_FIELD;
         case 3: //flags2
-            return UINT32_FLAG_FIELD;
+            return CB_UINT32_FLAG_FIELD;
         case 4: //eid
-            return ISTRING_FIELD;
+            return CB_ISTRING_FIELD;
         case 5: //dodgeChance
-            return UINT8_FIELD;
+            return CB_UINT8_FIELD;
         case 6: //lrChance
-            return UINT8_FIELD;
+            return CB_UINT8_FIELD;
         case 7: //unused1
             switch(WhichAttribute)
                 {
                 case 0: //fieldType
-                    return UINT8_ARRAY_FIELD;
+                    return CB_UINT8_ARRAY_FIELD;
                 case 1: //fieldSize
                     return 2;
                 default:
-                    return UNKNOWN_FIELD;
+                    return CB_UNKNOWN_FIELD;
                 }
-            return UNKNOWN_FIELD;
+            return CB_UNKNOWN_FIELD;
         case 8: //lrTimerMin
-            return FLOAT32_FIELD;
+            return CB_FLOAT32_FIELD;
         case 9: //lrTimerMax
-            return FLOAT32_FIELD;
+            return CB_FLOAT32_FIELD;
         case 10: //forTimerMin
-            return FLOAT32_FIELD;
+            return CB_FLOAT32_FIELD;
         case 11: //forTimerMax
-            return FLOAT32_FIELD;
+            return CB_FLOAT32_FIELD;
         case 12: //backTimerMin
-            return FLOAT32_FIELD;
+            return CB_FLOAT32_FIELD;
         case 13: //backTimerMax
-            return FLOAT32_FIELD;
+            return CB_FLOAT32_FIELD;
         case 14: //idleTimerMin
-            return FLOAT32_FIELD;
+            return CB_FLOAT32_FIELD;
         case 15: //idleTimerMax
-            return FLOAT32_FIELD;
+            return CB_FLOAT32_FIELD;
         case 16: //blkChance
-            return UINT8_FIELD;
+            return CB_UINT8_FIELD;
         case 17: //atkChance
-            return UINT8_FIELD;
+            return CB_UINT8_FIELD;
         case 18: //unused2
             switch(WhichAttribute)
                 {
                 case 0: //fieldType
-                    return UINT8_ARRAY_FIELD;
+                    return CB_UINT8_ARRAY_FIELD;
                 case 1: //fieldSize
                     return 2;
                 default:
-                    return UNKNOWN_FIELD;
+                    return CB_UNKNOWN_FIELD;
                 }
-            return UNKNOWN_FIELD;
+            return CB_UNKNOWN_FIELD;
         case 19: //atkBRecoil
-            return FLOAT32_FIELD;
+            return CB_FLOAT32_FIELD;
         case 20: //atkBUnc
-            return FLOAT32_FIELD;
+            return CB_FLOAT32_FIELD;
         case 21: //atkBh2h
-            return FLOAT32_FIELD;
+            return CB_FLOAT32_FIELD;
         case 22: //pAtkChance
-            return UINT8_FIELD;
+            return CB_UINT8_FIELD;
         case 23: //unused3
             switch(WhichAttribute)
                 {
                 case 0: //fieldType
-                    return UINT8_ARRAY_FIELD;
+                    return CB_UINT8_ARRAY_FIELD;
                 case 1: //fieldSize
                     return 3;
                 default:
-                    return UNKNOWN_FIELD;
+                    return CB_UNKNOWN_FIELD;
                 }
-            return UNKNOWN_FIELD;
+            return CB_UNKNOWN_FIELD;
         case 24: //pAtkBRecoil
-            return FLOAT32_FIELD;
+            return CB_FLOAT32_FIELD;
         case 25: //pAtkBUnc
-            return FLOAT32_FIELD;
+            return CB_FLOAT32_FIELD;
         case 26: //pAtkNormal
-            return UINT8_FIELD;
+            return CB_UINT8_FIELD;
         case 27: //pAtkFor
-            return UINT8_FIELD;
+            return CB_UINT8_FIELD;
         case 28: //pAtkBack
-            return UINT8_FIELD;
+            return CB_UINT8_FIELD;
         case 29: //pAtkL
-            return UINT8_FIELD;
+            return CB_UINT8_FIELD;
         case 30: //pAtkR
-            return UINT8_FIELD;
+            return CB_UINT8_FIELD;
         case 31: //unused4
             switch(WhichAttribute)
                 {
                 case 0: //fieldType
-                    return UINT8_ARRAY_FIELD;
+                    return CB_UINT8_ARRAY_FIELD;
                 case 1: //fieldSize
                     return 3;
                 default:
-                    return UNKNOWN_FIELD;
+                    return CB_UNKNOWN_FIELD;
                 }
-            return UNKNOWN_FIELD;
+            return CB_UNKNOWN_FIELD;
         case 32: //holdTimerMin
-            return FLOAT32_FIELD;
+            return CB_FLOAT32_FIELD;
         case 33: //holdTimerMax
-            return FLOAT32_FIELD;
+            return CB_FLOAT32_FIELD;
         case 34: //flagsA
-            return UINT8_FLAG_FIELD;
+            return CB_UINT8_FLAG_FIELD;
         case 35: //acroDodge
-            return UINT8_FIELD;
+            return CB_UINT8_FIELD;
         case 36: //unused5
             switch(WhichAttribute)
                 {
                 case 0: //fieldType
-                    return UINT8_ARRAY_FIELD;
+                    return CB_UINT8_ARRAY_FIELD;
                 case 1: //fieldSize
                     return 2;
                 default:
-                    return UNKNOWN_FIELD;
+                    return CB_UNKNOWN_FIELD;
                 }
-            return UNKNOWN_FIELD;
+            return CB_UNKNOWN_FIELD;
         case 37: //rMultOpt
-            return FLOAT32_FIELD;
+            return CB_FLOAT32_FIELD;
         case 38: //rMultMax
-            return FLOAT32_FIELD;
+            return CB_FLOAT32_FIELD;
         case 39: //mDistance
-            return FLOAT32_FIELD;
+            return CB_FLOAT32_FIELD;
         case 40: //rDistance
-            return FLOAT32_FIELD;
+            return CB_FLOAT32_FIELD;
         case 41: //buffStand
-            return FLOAT32_FIELD;
+            return CB_FLOAT32_FIELD;
         case 42: //rStand
-            return FLOAT32_FIELD;
+            return CB_FLOAT32_FIELD;
         case 43: //groupStand
-            return FLOAT32_FIELD;
+            return CB_FLOAT32_FIELD;
         case 44: //rushChance
-            return UINT8_FIELD;
+            return CB_UINT8_FIELD;
         case 45: //unused6
             switch(WhichAttribute)
                 {
                 case 0: //fieldType
-                    return UINT8_ARRAY_FIELD;
+                    return CB_UINT8_ARRAY_FIELD;
                 case 1: //fieldSize
                     return 3;
                 default:
-                    return UNKNOWN_FIELD;
+                    return CB_UNKNOWN_FIELD;
                 }
-            return UNKNOWN_FIELD;
+            return CB_UNKNOWN_FIELD;
         case 46: //rushMult
-            return FLOAT32_FIELD;
+            return CB_FLOAT32_FIELD;
         case 47: //flagsB
-            return UINT32_FLAG_FIELD;
+            return CB_UINT32_FLAG_FIELD;
         case 48: //dodgeFMult
-            return FLOAT32_FIELD;
+            return CB_FLOAT32_FIELD;
         case 49: //dodgeFBase
-            return FLOAT32_FIELD;
+            return CB_FLOAT32_FIELD;
         case 50: //encSBase
-            return FLOAT32_FIELD;
+            return CB_FLOAT32_FIELD;
         case 51: //encSMult
-            return FLOAT32_FIELD;
+            return CB_FLOAT32_FIELD;
         case 52: //dodgeAtkMult
-            return FLOAT32_FIELD;
+            return CB_FLOAT32_FIELD;
         case 53: //dodgeNAtkMult
-            return FLOAT32_FIELD;
+            return CB_FLOAT32_FIELD;
         case 54: //dodgeBAtkMult
-            return FLOAT32_FIELD;
+            return CB_FLOAT32_FIELD;
         case 55: //dodgeBNAtkMult
-            return FLOAT32_FIELD;
+            return CB_FLOAT32_FIELD;
         case 56: //dodgeFAtkMult
-            return FLOAT32_FIELD;
+            return CB_FLOAT32_FIELD;
         case 57: //dodgeFNAtkMult
-            return FLOAT32_FIELD;
+            return CB_FLOAT32_FIELD;
         case 58: //blockMult
-            return FLOAT32_FIELD;
+            return CB_FLOAT32_FIELD;
         case 59: //blockBase
-            return FLOAT32_FIELD;
+            return CB_FLOAT32_FIELD;
         case 60: //blockAtkMult
-            return FLOAT32_FIELD;
+            return CB_FLOAT32_FIELD;
         case 61: //blockNAtkMult
-            return FLOAT32_FIELD;
+            return CB_FLOAT32_FIELD;
         case 62: //atkMult
-            return FLOAT32_FIELD;
+            return CB_FLOAT32_FIELD;
         case 63: //atkBase
-            return FLOAT32_FIELD;
+            return CB_FLOAT32_FIELD;
         case 64: //atkAtkMult
-            return FLOAT32_FIELD;
+            return CB_FLOAT32_FIELD;
         case 65: //atkNAtkMult
-            return FLOAT32_FIELD;
+            return CB_FLOAT32_FIELD;
         case 66: //atkBlockMult
-            return FLOAT32_FIELD;
+            return CB_FLOAT32_FIELD;
         case 67: //pAtkFBase
-            return FLOAT32_FIELD;
+            return CB_FLOAT32_FIELD;
         case 68: //pAtkFMult
-            return FLOAT32_FIELD;
+            return CB_FLOAT32_FIELD;
         default:
-            return UNKNOWN_FIELD;
+            return CB_UNKNOWN_FIELD;
         }
-    return UNKNOWN_FIELD;
+    return CB_UNKNOWN_FIELD;
     }
 
 void * CSTYRecord::GetField(FIELD_IDENTIFIERS, void **FieldValues)

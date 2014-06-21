@@ -45,88 +45,88 @@ uint32_t ROADRecord::GetFieldAttribute(FIELD_IDENTIFIERS, uint32_t WhichAttribut
         case 0: //recType
             return GetType();
         case 1: //flags1
-            return UINT32_FLAG_FIELD;
+            return CB_UINT32_FLAG_FIELD;
         case 2: //fid
-            return FORMID_FIELD;
+            return CB_FORMID_FIELD;
         case 3: //flags2
-            return UINT32_FLAG_FIELD;
+            return CB_UINT32_FLAG_FIELD;
         case 4: //eid
-            return MISSING_FIELD;
+            return CB_MISSING_FIELD;
         case 5: //pgrp
             if(ListFieldID == 0) //pgrp
                 {
                 switch(WhichAttribute)
                     {
                     case 0: //fieldType
-                        return LIST_FIELD;
+                        return CB_LIST_FIELD;
                     case 1: //fieldSize
                         return (uint32_t)PGRP.value.size();
                     default:
-                        return UNKNOWN_FIELD;
+                        return CB_UNKNOWN_FIELD;
                     }
                 }
 
             if(ListIndex >= PGRP.value.size())
-                return UNKNOWN_FIELD;
+                return CB_UNKNOWN_FIELD;
 
             switch(ListFieldID)
                 {
                 case 1: //x
-                    return FLOAT32_FIELD;
+                    return CB_FLOAT32_FIELD;
                 case 2: //y
-                    return FLOAT32_FIELD;
+                    return CB_FLOAT32_FIELD;
                 case 3: //z
-                    return FLOAT32_FIELD;
+                    return CB_FLOAT32_FIELD;
                 case 4: //connections
-                    return UINT8_FIELD;
+                    return CB_UINT8_FIELD;
                 case 5: //unused1
                     switch(WhichAttribute)
                         {
                         case 0: //fieldType
-                            return UINT8_ARRAY_FIELD;
+                            return CB_UINT8_ARRAY_FIELD;
                         case 1: //fieldSize
                             return 3;
                         default:
-                            return UNKNOWN_FIELD;
+                            return CB_UNKNOWN_FIELD;
                         }
                 default:
-                    return UNKNOWN_FIELD;
+                    return CB_UNKNOWN_FIELD;
                 }
-            return UNKNOWN_FIELD;
+            return CB_UNKNOWN_FIELD;
         case 6: //pgrr
             if(ListFieldID == 0) //pgrr
                 {
                 switch(WhichAttribute)
                     {
                     case 0: //fieldType
-                        return LIST_FIELD;
+                        return CB_LIST_FIELD;
                     case 1: //fieldSize
                         return (uint32_t)PGRR.value.size();
                     default:
-                        return UNKNOWN_FIELD;
+                        return CB_UNKNOWN_FIELD;
                     }
                 }
 
             if(ListIndex >= PGRR.value.size())
-                return UNKNOWN_FIELD;
+                return CB_UNKNOWN_FIELD;
 
             switch(ListFieldID)
                 {
                 case 1: //x
-                    return FLOAT32_FIELD;
+                    return CB_FLOAT32_FIELD;
                 case 2: //y
-                    return FLOAT32_FIELD;
+                    return CB_FLOAT32_FIELD;
                 case 3: //z
-                    return FLOAT32_FIELD;
+                    return CB_FLOAT32_FIELD;
                 default:
-                    return UNKNOWN_FIELD;
+                    return CB_UNKNOWN_FIELD;
                 }
         case 7: //Parent
-            return PARENTRECORD_FIELD;
+            return CB_PARENTRECORD_FIELD;
         default:
-            return UNKNOWN_FIELD;
+            return CB_UNKNOWN_FIELD;
         }
-    return UNKNOWN_FIELD;
+    return CB_UNKNOWN_FIELD;
     }
 
 void * ROADRecord::GetField(FIELD_IDENTIFIERS, void **FieldValues)

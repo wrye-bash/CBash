@@ -45,71 +45,71 @@ uint32_t CSNORecord::GetFieldAttribute(FIELD_IDENTIFIERS, uint32_t WhichAttribut
         case 0: //recType
             return GetType();
         case 1: //flags1
-            return UINT32_FLAG_FIELD;
+            return CB_UINT32_FLAG_FIELD;
         case 2: //fid
-            return FORMID_FIELD;
+            return CB_FORMID_FIELD;
         case 3: //versionControl1
             switch(WhichAttribute)
                 {
                 case 0: //fieldType
-                    return UINT8_ARRAY_FIELD;
+                    return CB_UINT8_ARRAY_FIELD;
                 case 1: //fieldSize
                     return 4;
                 default:
-                    return UNKNOWN_FIELD;
+                    return CB_UNKNOWN_FIELD;
                 }
-            return UNKNOWN_FIELD;
+            return CB_UNKNOWN_FIELD;
         case 4: //eid
-            return ISTRING_FIELD;
+            return CB_ISTRING_FIELD;
         case 5: //formVersion
-            return UINT16_FIELD;
+            return CB_UINT16_FIELD;
         case 6: //versionControl2
             switch(WhichAttribute)
                 {
                 case 0: //fieldType
-                    return UINT8_ARRAY_FIELD;
+                    return CB_UINT8_ARRAY_FIELD;
                 case 1: //fieldSize
                     return 2;
                 default:
-                    return UNKNOWN_FIELD;
+                    return CB_UNKNOWN_FIELD;
                 }
-            return UNKNOWN_FIELD;
+            return CB_UNKNOWN_FIELD;
         case 7: //full
-            return STRING_FIELD;
+            return CB_STRING_FIELD;
         case 8: //data DATA ,, Struct
-            return FLOAT32_FIELD;
+            return CB_FLOAT32_FIELD;
         case 9: //data DATA ,, Struct
-            return FLOAT32_FIELD;
+            return CB_FLOAT32_FIELD;
         case 10: //data DATA ,, Struct
-            return UINT32_FIELD;
+            return CB_UINT32_FIELD;
         case 11: //data DATA ,, Struct
-            return UINT32_FIELD;
+            return CB_UINT32_FIELD;
         case 12: //data DATA ,, Struct
-            return UINT32_FIELD;
+            return CB_UINT32_FIELD;
         case 13: //data DATA ,, Struct
-            return FORMID_FIELD;
+            return CB_FORMID_FIELD;
         case 14: //data DATA ,, Struct
-            return FORMID_FIELD;
+            return CB_FORMID_FIELD;
         case 15: //data DATA ,, Struct
-            return UINT32_FIELD;
+            return CB_UINT32_FIELD;
         case 16: //modl Roulette Chip
-            return ISTRING_FIELD;
+            return CB_ISTRING_FIELD;
         case 17: //modl Slot Machine Model
-            return ISTRING_FIELD;
+            return CB_ISTRING_FIELD;
         case 18: //mod2 Slot Machine Model (again?)
-            return ISTRING_FIELD;
+            return CB_ISTRING_FIELD;
         case 19: //mod3 BlackJack Table Model
-            return ISTRING_FIELD;
+            return CB_ISTRING_FIELD;
         case 20: //mod4 Roulette Table Model
-            return ISTRING_FIELD;
+            return CB_ISTRING_FIELD;
         case 21: //icon Symbol W
-            return ISTRING_FIELD;
+            return CB_ISTRING_FIELD;
         case 22: //ico2 Deck 4
-            return ISTRING_FIELD;
+            return CB_ISTRING_FIELD;
         default:
-            return UNKNOWN_FIELD;
+            return CB_UNKNOWN_FIELD;
         }
-    return UNKNOWN_FIELD;
+    return CB_UNKNOWN_FIELD;
     }
 
 void * CSNORecord::GetField(FIELD_IDENTIFIERS, void **FieldValues)

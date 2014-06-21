@@ -45,346 +45,346 @@ uint32_t ARMORecord::GetFieldAttribute(FIELD_IDENTIFIERS, uint32_t WhichAttribut
         case 0: //recType
             return GetType();
         case 1: //flags1
-            return UINT32_FLAG_FIELD;
+            return CB_UINT32_FLAG_FIELD;
         case 2: //fid
-            return FORMID_FIELD;
+            return CB_FORMID_FIELD;
         case 3: //versionControl1
             switch(WhichAttribute)
                 {
                 case 0: //fieldType
-                    return UINT8_ARRAY_FIELD;
+                    return CB_UINT8_ARRAY_FIELD;
                 case 1: //fieldSize
                     return 4;
                 default:
-                    return UNKNOWN_FIELD;
+                    return CB_UNKNOWN_FIELD;
                 }
-            return UNKNOWN_FIELD;
+            return CB_UNKNOWN_FIELD;
         case 4: //eid
-            return ISTRING_FIELD;
+            return CB_ISTRING_FIELD;
         case 5: //formVersion
-            return UINT16_FIELD;
+            return CB_UINT16_FIELD;
         case 6: //versionControl2
             switch(WhichAttribute)
                 {
                 case 0: //fieldType
-                    return UINT8_ARRAY_FIELD;
+                    return CB_UINT8_ARRAY_FIELD;
                 case 1: //fieldSize
                     return 2;
                 default:
-                    return UNKNOWN_FIELD;
+                    return CB_UNKNOWN_FIELD;
                 }
-            return UNKNOWN_FIELD;
+            return CB_UNKNOWN_FIELD;
         case 7: //boundX1
-            return SINT16_FIELD;
+            return CB_SINT16_FIELD;
         case 8: //boundY1
-            return SINT16_FIELD;
+            return CB_SINT16_FIELD;
         case 9: //boundZ1
-            return SINT16_FIELD;
+            return CB_SINT16_FIELD;
         case 10: //boundX2
-            return SINT16_FIELD;
+            return CB_SINT16_FIELD;
         case 11: //boundY2
-            return SINT16_FIELD;
+            return CB_SINT16_FIELD;
         case 12: //boundZ2
-            return SINT16_FIELD;
+            return CB_SINT16_FIELD;
         case 13: //full
-            return STRING_FIELD;
+            return CB_STRING_FIELD;
         case 14: //script
-            return FORMID_FIELD;
+            return CB_FORMID_FIELD;
         case 15: //effect
-            return FORMID_FIELD;
+            return CB_FORMID_FIELD;
         case 16: //flags
-            return UINT32_FLAG_FIELD;
+            return CB_UINT32_FLAG_FIELD;
         case 17: //extraFlags
-            return UINT8_FLAG_FIELD;
+            return CB_UINT8_FLAG_FIELD;
         case 18: //unused1
             switch(WhichAttribute)
                 {
                 case 0: //fieldType
-                    return UINT8_ARRAY_FIELD;
+                    return CB_UINT8_ARRAY_FIELD;
                 case 1: //fieldSize
                     return 3;
                 default:
-                    return UNKNOWN_FIELD;
+                    return CB_UNKNOWN_FIELD;
                 }
-            return UNKNOWN_FIELD;
+            return CB_UNKNOWN_FIELD;
         case 19: //male_modPath
-            return ISTRING_FIELD;
+            return CB_ISTRING_FIELD;
         case 20: //male_modt_p
             switch(WhichAttribute)
                 {
                 case 0: //fieldType
-                    return UINT8_ARRAY_FIELD;
+                    return CB_UINT8_ARRAY_FIELD;
                 case 1: //fieldSize
                     return MODL.IsLoaded() ? MODL->MODT.GetSize() : 0;
                 default:
-                    return UNKNOWN_FIELD;
+                    return CB_UNKNOWN_FIELD;
                 }
-            return UNKNOWN_FIELD;
+            return CB_UNKNOWN_FIELD;
         case 21: //male_altTextures
             if(!MODL.IsLoaded())
-                return UNKNOWN_FIELD;
+                return CB_UNKNOWN_FIELD;
 
             if(ListFieldID == 0) //altTextures
                 {
                 switch(WhichAttribute)
                     {
                     case 0: //fieldType
-                        return LIST_FIELD;
+                        return CB_LIST_FIELD;
                     case 1: //fieldSize
                         return (uint32_t)MODL->Textures.MODS.size();
                     default:
-                        return UNKNOWN_FIELD;
+                        return CB_UNKNOWN_FIELD;
                     }
-                return UNKNOWN_FIELD;
+                return CB_UNKNOWN_FIELD;
                 }
 
             if(ListIndex >= MODL->Textures.MODS.size())
-                return UNKNOWN_FIELD;
+                return CB_UNKNOWN_FIELD;
 
             switch(ListFieldID)
                 {
                 case 1: //name
-                    return STRING_FIELD;
+                    return CB_STRING_FIELD;
                 case 2: //texture
-                    return FORMID_FIELD;
+                    return CB_FORMID_FIELD;
                 case 3: //index
-                    return SINT32_FIELD;
+                    return CB_SINT32_FIELD;
                 default:
-                    return UNKNOWN_FIELD;
+                    return CB_UNKNOWN_FIELD;
                 }
-            return UNKNOWN_FIELD;
+            return CB_UNKNOWN_FIELD;
         case 22: //male_modelFlags
-            return UINT8_FLAG_FIELD;
+            return CB_UINT8_FLAG_FIELD;
         case 23: //maleWorld_modPath
-            return ISTRING_FIELD;
+            return CB_ISTRING_FIELD;
         case 24: //maleWorld_modt_p
             switch(WhichAttribute)
                 {
                 case 0: //fieldType
-                    return UINT8_ARRAY_FIELD;
+                    return CB_UINT8_ARRAY_FIELD;
                 case 1: //fieldSize
                     return MOD2.IsLoaded() ? MOD2->MODT.GetSize() : 0;
                 default:
-                    return UNKNOWN_FIELD;
+                    return CB_UNKNOWN_FIELD;
                 }
-            return UNKNOWN_FIELD;
+            return CB_UNKNOWN_FIELD;
         case 25: //maleWorld_altTextures
             if(!MOD2.IsLoaded())
-                return UNKNOWN_FIELD;
+                return CB_UNKNOWN_FIELD;
 
             if(ListFieldID == 0) //altTextures
                 {
                 switch(WhichAttribute)
                     {
                     case 0: //fieldType
-                        return LIST_FIELD;
+                        return CB_LIST_FIELD;
                     case 1: //fieldSize
                         return (uint32_t)MOD2->Textures.MODS.size();
                     default:
-                        return UNKNOWN_FIELD;
+                        return CB_UNKNOWN_FIELD;
                     }
-                return UNKNOWN_FIELD;
+                return CB_UNKNOWN_FIELD;
                 }
 
             if(ListIndex >= MOD2->Textures.MODS.size())
-                return UNKNOWN_FIELD;
+                return CB_UNKNOWN_FIELD;
 
             switch(ListFieldID)
                 {
                 case 1: //name
-                    return STRING_FIELD;
+                    return CB_STRING_FIELD;
                 case 2: //texture
-                    return FORMID_FIELD;
+                    return CB_FORMID_FIELD;
                 case 3: //index
-                    return SINT32_FIELD;
+                    return CB_SINT32_FIELD;
                 default:
-                    return UNKNOWN_FIELD;
+                    return CB_UNKNOWN_FIELD;
                 }
-            return UNKNOWN_FIELD;
+            return CB_UNKNOWN_FIELD;
         case 26: //maleIconPath
-            return ISTRING_FIELD;
+            return CB_ISTRING_FIELD;
         case 27: //maleSmallIconPath
-            return ISTRING_FIELD;
+            return CB_ISTRING_FIELD;
         case 28: //female_modPath
-            return ISTRING_FIELD;
+            return CB_ISTRING_FIELD;
         case 29: //female_modt_p
             switch(WhichAttribute)
                 {
                 case 0: //fieldType
-                    return UINT8_ARRAY_FIELD;
+                    return CB_UINT8_ARRAY_FIELD;
                 case 1: //fieldSize
                     return MOD3.IsLoaded() ? MOD3->MODT.GetSize() : 0;
                 default:
-                    return UNKNOWN_FIELD;
+                    return CB_UNKNOWN_FIELD;
                 }
-            return UNKNOWN_FIELD;
+            return CB_UNKNOWN_FIELD;
         case 30: //female_altTextures
             if(!MOD3.IsLoaded())
-                return UNKNOWN_FIELD;
+                return CB_UNKNOWN_FIELD;
 
             if(ListFieldID == 0) //altTextures
                 {
                 switch(WhichAttribute)
                     {
                     case 0: //fieldType
-                        return LIST_FIELD;
+                        return CB_LIST_FIELD;
                     case 1: //fieldSize
                         return (uint32_t)MOD3->Textures.MODS.size();
                     default:
-                        return UNKNOWN_FIELD;
+                        return CB_UNKNOWN_FIELD;
                     }
                 }
 
             if(ListIndex >= MOD3->Textures.MODS.size())
-                return UNKNOWN_FIELD;
+                return CB_UNKNOWN_FIELD;
 
             switch(ListFieldID)
                 {
                 case 1: //name
-                    return STRING_FIELD;
+                    return CB_STRING_FIELD;
                 case 2: //texture
-                    return FORMID_FIELD;
+                    return CB_FORMID_FIELD;
                 case 3: //index
-                    return SINT32_FIELD;
+                    return CB_SINT32_FIELD;
                 default:
-                    return UNKNOWN_FIELD;
+                    return CB_UNKNOWN_FIELD;
                 }
-            return UNKNOWN_FIELD;
+            return CB_UNKNOWN_FIELD;
         case 31: //female_modelFlags
-            return UINT8_FLAG_FIELD;
+            return CB_UINT8_FLAG_FIELD;
         case 32: //femaleWorld_modPath
-            return ISTRING_FIELD;
+            return CB_ISTRING_FIELD;
         case 33: //femaleWorld_modt_p
             switch(WhichAttribute)
                 {
                 case 0: //fieldType
-                    return UINT8_ARRAY_FIELD;
+                    return CB_UINT8_ARRAY_FIELD;
                 case 1: //fieldSize
                     return MOD4.IsLoaded() ? MOD4->MODT.GetSize() : 0;
                 default:
-                    return UNKNOWN_FIELD;
+                    return CB_UNKNOWN_FIELD;
                 }
-            return UNKNOWN_FIELD;
+            return CB_UNKNOWN_FIELD;
         case 34: //femaleWorld_altTextures
             if(!MOD4.IsLoaded())
-                return UNKNOWN_FIELD;
+                return CB_UNKNOWN_FIELD;
 
             if(ListFieldID == 0) //altTextures
                 {
                 switch(WhichAttribute)
                     {
                     case 0: //fieldType
-                        return LIST_FIELD;
+                        return CB_LIST_FIELD;
                     case 1: //fieldSize
                         return (uint32_t)MOD4->Textures.MODS.size();
                     default:
-                        return UNKNOWN_FIELD;
+                        return CB_UNKNOWN_FIELD;
                     }
                 }
 
             if(ListIndex >= MOD4->Textures.MODS.size())
-                return UNKNOWN_FIELD;
+                return CB_UNKNOWN_FIELD;
 
             switch(ListFieldID)
                 {
                 case 1: //name
-                    return STRING_FIELD;
+                    return CB_STRING_FIELD;
                 case 2: //texture
-                    return FORMID_FIELD;
+                    return CB_FORMID_FIELD;
                 case 3: //index
-                    return SINT32_FIELD;
+                    return CB_SINT32_FIELD;
                 default:
-                    return UNKNOWN_FIELD;
+                    return CB_UNKNOWN_FIELD;
                 }
-            return UNKNOWN_FIELD;
+            return CB_UNKNOWN_FIELD;
         case 35: //femaleIconPath
-            return ISTRING_FIELD;
+            return CB_ISTRING_FIELD;
         case 36: //femaleSmallIconPath
-            return ISTRING_FIELD;
+            return CB_ISTRING_FIELD;
         case 37: //ragdollTemplatePath
-            return ISTRING_FIELD;
+            return CB_ISTRING_FIELD;
         case 38: //repairList
-            return FORMID_FIELD;
+            return CB_FORMID_FIELD;
         case 39: //modelList
-            return FORMID_FIELD;
+            return CB_FORMID_FIELD;
         case 40: //equipmentType
-            return SINT32_TYPE_FIELD;
+            return CB_SINT32_TYPE_FIELD;
         case 41: //pickupSound
-            return FORMID_FIELD;
+            return CB_FORMID_FIELD;
         case 42: //dropSound
-            return FORMID_FIELD;
+            return CB_FORMID_FIELD;
         case 43: //value
-            return SINT32_FIELD;
+            return CB_SINT32_FIELD;
         case 44: //health
-            return SINT32_FIELD;
+            return CB_SINT32_FIELD;
         case 45: //weight
-            return FLOAT32_FIELD;
+            return CB_FLOAT32_FIELD;
         case 46: //AR
-            return SINT16_FIELD;
+            return CB_SINT16_FIELD;
         case 47: //voiceFlags
-            return UINT16_FLAG_FIELD;
+            return CB_UINT16_FLAG_FIELD;
         case 48: //DT
-            return FLOAT32_FIELD;
+            return CB_FLOAT32_FIELD;
         case 49: //unknown1
             switch(WhichAttribute)
                 {
                 case 0: //fieldType
-                    return UINT8_ARRAY_FIELD;
+                    return CB_UINT8_ARRAY_FIELD;
                 case 1: //fieldSize
                     return 4;
                 default:
-                    return UNKNOWN_FIELD;
+                    return CB_UNKNOWN_FIELD;
                 }
-            return UNKNOWN_FIELD;
+            return CB_UNKNOWN_FIELD;
         case 50: //overrideSounds
-            return UINT32_TYPE_FIELD;
+            return CB_UINT32_TYPE_FIELD;
         case 51: //sounds
             if(ListFieldID == 0) //altTextures
                 {
                 switch(WhichAttribute)
                     {
                     case 0: //fieldType
-                        return LIST_FIELD;
+                        return CB_LIST_FIELD;
                     case 1: //fieldSize
                         return (uint32_t)Sounds.value.size();
                     default:
-                        return UNKNOWN_FIELD;
+                        return CB_UNKNOWN_FIELD;
                     }
-                return UNKNOWN_FIELD;
+                return CB_UNKNOWN_FIELD;
                 }
 
             if(ListIndex >= Sounds.value.size())
-                return UNKNOWN_FIELD;
+                return CB_UNKNOWN_FIELD;
 
             switch(ListFieldID)
                 {
                 case 1: //sound
-                    return FORMID_FIELD;
+                    return CB_FORMID_FIELD;
                 case 2: //chance
-                    return UINT8_FIELD;
+                    return CB_UINT8_FIELD;
                 case 3: //unused1
                     switch(WhichAttribute)
                         {
                         case 0: //fieldType
-                            return UINT8_ARRAY_FIELD;
+                            return CB_UINT8_ARRAY_FIELD;
                         case 1: //fieldSize
                             return 3;
                         default:
-                            return UNKNOWN_FIELD;
+                            return CB_UNKNOWN_FIELD;
                         }
-                    return UNKNOWN_FIELD;
+                    return CB_UNKNOWN_FIELD;
                 case 4: //type
-                    return UINT32_TYPE_FIELD;
+                    return CB_UINT32_TYPE_FIELD;
                 default:
-                    return UNKNOWN_FIELD;
+                    return CB_UNKNOWN_FIELD;
                 }
-            return UNKNOWN_FIELD;
+            return CB_UNKNOWN_FIELD;
         case 52: //soundsTemplate
-            return FORMID_FIELD;
+            return CB_FORMID_FIELD;
         default:
-            return UNKNOWN_FIELD;
+            return CB_UNKNOWN_FIELD;
         }
-    return UNKNOWN_FIELD;
+    return CB_UNKNOWN_FIELD;
     }
 
 void * ARMORecord::GetField(FIELD_IDENTIFIERS, void **FieldValues)

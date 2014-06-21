@@ -45,37 +45,37 @@ uint32_t GMSTRecord::GetFieldAttribute(FIELD_IDENTIFIERS, uint32_t WhichAttribut
         case 0: //recType
             return GetType();
         case 1: //flags1
-            return UINT32_FLAG_FIELD;
+            return CB_UINT32_FLAG_FIELD;
         case 2: //fid
-            return FORMID_FIELD;
+            return CB_FORMID_FIELD;
         case 3: //flags2
-            return UINT32_FLAG_FIELD;
+            return CB_UINT32_FLAG_FIELD;
         case 4: //eid
-            return ISTRING_FIELD;
+            return CB_ISTRING_FIELD;
         case 5: //value
             switch(WhichAttribute)
                 {
                 case 0: //fieldType
-                    return STRING_OR_FLOAT32_OR_SINT32_FIELD;
+                    return CB_STRING_OR_FLOAT32_OR_SINT32_FIELD;
                 case 2: //WhichType
                     switch(DATA.format)
                         {
                         case 's':
-                            return STRING_FIELD;
+                            return CB_STRING_FIELD;
                         case 'i':
-                            return SINT32_FIELD;
+                            return CB_SINT32_FIELD;
                         case 'f':
-                            return FLOAT32_FIELD;
+                            return CB_FLOAT32_FIELD;
                         default:
-                            return UNKNOWN_FIELD;
+                            return CB_UNKNOWN_FIELD;
                         }
                 default:
-                    return UNKNOWN_FIELD;
+                    return CB_UNKNOWN_FIELD;
                 }
         default:
-            return UNKNOWN_FIELD;
+            return CB_UNKNOWN_FIELD;
         }
-    return UNKNOWN_FIELD;
+    return CB_UNKNOWN_FIELD;
     }
 
 void * GMSTRecord::GetField(FIELD_IDENTIFIERS, void **FieldValues)

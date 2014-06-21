@@ -1873,7 +1873,7 @@ CPPDLLEXTERN uint32_t cb_GetFieldAttribute(Record *RecordID, FIELD_IDENTIFIERS, 
     printer("WhichAttribute: %i\n\n", WhichAttribute);
     if(RaiseCallback != NULL)
         RaiseCallback(__FUNCTION__);
-    return UNKNOWN_FIELD;
+    return CB_UNKNOWN_FIELD;
     }
 
 CPPDLLEXTERN void * cb_GetField(Record *RecordID, FIELD_IDENTIFIERS, void **FieldValues)

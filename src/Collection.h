@@ -75,7 +75,7 @@ struct Collection
         std::vector<Record *> sortedConflicts;
 
     public:
-        whichGameTypes CollectionType;
+        cb_game_type_t CollectionType;
 
         std::vector<ModFile *> ModFiles;
         std::vector<ModFile *> LoadOrder255;

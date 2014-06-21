@@ -45,136 +45,136 @@ uint32_t RGDLRecord::GetFieldAttribute(FIELD_IDENTIFIERS, uint32_t WhichAttribut
         case 0: //recType
             return GetType();
         case 1: //flags1
-            return UINT32_FLAG_FIELD;
+            return CB_UINT32_FLAG_FIELD;
         case 2: //fid
-            return FORMID_FIELD;
+            return CB_FORMID_FIELD;
         case 3: //versionControl1
             switch(WhichAttribute)
                 {
                 case 0: //fieldType
-                    return UINT8_ARRAY_FIELD;
+                    return CB_UINT8_ARRAY_FIELD;
                 case 1: //fieldSize
                     return 4;
                 default:
-                    return UNKNOWN_FIELD;
+                    return CB_UNKNOWN_FIELD;
                 }
-            return UNKNOWN_FIELD;
+            return CB_UNKNOWN_FIELD;
         case 4: //eid
-            return ISTRING_FIELD;
+            return CB_ISTRING_FIELD;
         case 5: //formVersion
-            return UINT16_FIELD;
+            return CB_UINT16_FIELD;
         case 6: //versionControl2
             switch(WhichAttribute)
                 {
                 case 0: //fieldType
-                    return UINT8_ARRAY_FIELD;
+                    return CB_UINT8_ARRAY_FIELD;
                 case 1: //fieldSize
                     return 2;
                 default:
-                    return UNKNOWN_FIELD;
+                    return CB_UNKNOWN_FIELD;
                 }
-            return UNKNOWN_FIELD;
+            return CB_UNKNOWN_FIELD;
         case 7: //nver Version
-            return UINT32_FIELD;
+            return CB_UINT32_FIELD;
         case 8: //data DATA ,, Struct
-            return UINT32_FIELD;
+            return CB_UINT32_FIELD;
         case 9: //data_p DATA ,, Struct
             switch(WhichAttribute)
                 {
                 case 0: //fieldType
-                    return UINT8_ARRAY_FIELD;
+                    return CB_UINT8_ARRAY_FIELD;
                 case 1: //fieldSize
                     return 4;
                 default:
-                    return UNKNOWN_FIELD;
+                    return CB_UNKNOWN_FIELD;
                 }
-            return UNKNOWN_FIELD;
+            return CB_UNKNOWN_FIELD;
         case 10: //data DATA ,, Struct
-            return UINT8_FIELD;
+            return CB_UINT8_FIELD;
         case 11: //data DATA ,, Struct
-            return UINT8_FIELD;
+            return CB_UINT8_FIELD;
         case 12: //data DATA ,, Struct
-            return UINT8_FIELD;
+            return CB_UINT8_FIELD;
         case 13: //data DATA ,, Struct
-            return UINT8_FIELD;
+            return CB_UINT8_FIELD;
         case 14: //data DATA ,, Struct
-            return UINT8_FIELD;
+            return CB_UINT8_FIELD;
         case 15: //data_p DATA ,, Struct
             switch(WhichAttribute)
                 {
                 case 0: //fieldType
-                    return UINT8_ARRAY_FIELD;
+                    return CB_UINT8_ARRAY_FIELD;
                 case 1: //fieldSize
                     return 1;
                 default:
-                    return UNKNOWN_FIELD;
+                    return CB_UNKNOWN_FIELD;
                 }
-            return UNKNOWN_FIELD;
+            return CB_UNKNOWN_FIELD;
         case 16: //xnam Actor Base
-            return FORMID_FIELD;
+            return CB_FORMID_FIELD;
         case 17: //tnam Body Part Data
-            return FORMID_FIELD;
+            return CB_FORMID_FIELD;
         case 18: //rafd RAFD ,, Struct
-            return FLOAT32_FIELD;
+            return CB_FLOAT32_FIELD;
         case 19: //rafd RAFD ,, Struct
-            return FLOAT32_FIELD;
+            return CB_FLOAT32_FIELD;
         case 20: //rafd RAFD ,, Struct
-            return FLOAT32_FIELD;
+            return CB_FLOAT32_FIELD;
         case 21: //rafd RAFD ,, Struct
-            return FLOAT32_FIELD;
+            return CB_FLOAT32_FIELD;
         case 22: //rafd RAFD ,, Struct
-            return FLOAT32_FIELD;
+            return CB_FLOAT32_FIELD;
         case 23: //rafd RAFD ,, Struct
-            return FLOAT32_FIELD;
+            return CB_FLOAT32_FIELD;
         case 24: //rafd RAFD ,, Struct
-            return FLOAT32_FIELD;
+            return CB_FLOAT32_FIELD;
         case 25: //rafd RAFD ,, Struct
-            return FLOAT32_FIELD;
+            return CB_FLOAT32_FIELD;
         case 26: //rafd RAFD ,, Struct
-            return FLOAT32_FIELD;
+            return CB_FLOAT32_FIELD;
         case 27: //rafd RAFD ,, Struct
-            return FLOAT32_FIELD;
+            return CB_FLOAT32_FIELD;
         case 28: //rafd RAFD ,, Struct
-            return FLOAT32_FIELD;
+            return CB_FLOAT32_FIELD;
         case 29: //rafd RAFD ,, Struct
-            return FLOAT32_FIELD;
+            return CB_FLOAT32_FIELD;
         case 30: //rafd RAFD ,, Struct
-            return FLOAT32_FIELD;
+            return CB_FLOAT32_FIELD;
         case 31: //rafd RAFD ,, Struct
-            return SINT32_FIELD;
+            return CB_SINT32_FIELD;
         case 32: //rafd RAFD ,, Struct
-            return SINT32_FIELD;
+            return CB_SINT32_FIELD;
         case 33: //rafb Feedback Dynamic Bones
-            return UNKNOWN_FIELD; // UNPARSED_FIELD
+            return CB_UNKNOWN_FIELD; // UNPARSED_FIELD
         case 34: //raps RAPS ,, Struct
-            return UINT16_FIELD;
+            return CB_UINT16_FIELD;
         case 35: //raps RAPS ,, Struct
-            return UINT8_FIELD;
+            return CB_UINT8_FIELD;
         case 36: //raps_p RAPS ,, Struct
             switch(WhichAttribute)
                 {
                 case 0: //fieldType
-                    return UINT8_ARRAY_FIELD;
+                    return CB_UINT8_ARRAY_FIELD;
                 case 1: //fieldSize
                     return 1;
                 default:
-                    return UNKNOWN_FIELD;
+                    return CB_UNKNOWN_FIELD;
                 }
-            return UNKNOWN_FIELD;
+            return CB_UNKNOWN_FIELD;
         case 37: //raps RAPS ,, Struct
-            return FLOAT32_FIELD;
+            return CB_FLOAT32_FIELD;
         case 38: //raps RAPS ,, Struct
-            return FLOAT32_FIELD;
+            return CB_FLOAT32_FIELD;
         case 39: //raps RAPS ,, Struct
-            return FLOAT32_FIELD;
+            return CB_FLOAT32_FIELD;
         case 40: //raps RAPS ,, Struct
-            return FLOAT32_FIELD;
+            return CB_FLOAT32_FIELD;
         case 41: //anam Death Pose
-            return ISTRING_FIELD;
+            return CB_ISTRING_FIELD;
         default:
-            return UNKNOWN_FIELD;
+            return CB_UNKNOWN_FIELD;
         }
-    return UNKNOWN_FIELD;
+    return CB_UNKNOWN_FIELD;
     }
 
 void * RGDLRecord::GetField(FIELD_IDENTIFIERS, void **FieldValues)

@@ -45,119 +45,119 @@ uint32_t REGNRecord::GetFieldAttribute(FIELD_IDENTIFIERS, uint32_t WhichAttribut
         case 0: //recType
             return GetType();
         case 1: //flags1
-            return UINT32_FLAG_FIELD;
+            return CB_UINT32_FLAG_FIELD;
         case 2: //fid
-            return FORMID_FIELD;
+            return CB_FORMID_FIELD;
         case 3: //flags2
-            return UINT32_FLAG_FIELD;
+            return CB_UINT32_FLAG_FIELD;
         case 4: //eid
-            return ISTRING_FIELD;
+            return CB_ISTRING_FIELD;
         case 5: //iconPath
-            return ISTRING_FIELD;
+            return CB_ISTRING_FIELD;
         case 6: //mapRed
-            return UINT8_FIELD;
+            return CB_UINT8_FIELD;
         case 7: //mapGreen
-            return UINT8_FIELD;
+            return CB_UINT8_FIELD;
         case 8: //mapBlue
-            return UINT8_FIELD;
+            return CB_UINT8_FIELD;
         case 9: //unused1
             switch(WhichAttribute)
                 {
                 case 0: //fieldType
-                    return UINT8_ARRAY_FIELD;
+                    return CB_UINT8_ARRAY_FIELD;
                 case 1: //fieldSize
                     return 1;
                 default:
-                    return UNKNOWN_FIELD;
+                    return CB_UNKNOWN_FIELD;
                 }
-            return UNKNOWN_FIELD;
+            return CB_UNKNOWN_FIELD;
         case 10: //worldspace
-            return FORMID_FIELD;
+            return CB_FORMID_FIELD;
         case 11: //areas
             if(ListFieldID == 0) //areas
                 {
                 switch(WhichAttribute)
                     {
                     case 0: //fieldType
-                        return LIST_FIELD;
+                        return CB_LIST_FIELD;
                     case 1: //fieldSize
                         return (uint32_t)Areas.value.size();
                     default:
-                        return UNKNOWN_FIELD;
+                        return CB_UNKNOWN_FIELD;
                     }
                 }
 
             if(ListIndex >= Areas.value.size())
-                return UNKNOWN_FIELD;
+                return CB_UNKNOWN_FIELD;
 
             switch(ListFieldID)
                 {
                 case 1: //edgeFalloff
-                    return FORMID_FIELD;
+                    return CB_FORMID_FIELD;
                 case 2: //points
                     if(ListX2FieldID == 0) //points
                         {
                         switch(WhichAttribute)
                             {
                             case 0: //fieldType
-                                return LIST_FIELD;
+                                return CB_LIST_FIELD;
                             case 1: //fieldSize
                                 return (uint32_t)Areas.value[ListIndex]->RPLD.value.size();
                             default:
-                                return UNKNOWN_FIELD;
+                                return CB_UNKNOWN_FIELD;
                             }
                         }
 
                     if(ListX2Index >= Areas.value[ListIndex]->RPLD.value.size())
-                        return UNKNOWN_FIELD;
+                        return CB_UNKNOWN_FIELD;
 
                     switch(ListX2FieldID)
                         {
                         case 1: //posX
-                            return FLOAT32_FIELD;
+                            return CB_FLOAT32_FIELD;
                         case 2: //posY
-                            return FLOAT32_FIELD;
+                            return CB_FLOAT32_FIELD;
                         default:
-                            return UNKNOWN_FIELD;
+                            return CB_UNKNOWN_FIELD;
                         }
                 default:
-                    return UNKNOWN_FIELD;
+                    return CB_UNKNOWN_FIELD;
                 }
-            return UNKNOWN_FIELD;
+            return CB_UNKNOWN_FIELD;
         case 12: //entries
             if(ListFieldID == 0) //entries
                 {
                 switch(WhichAttribute)
                     {
                     case 0: //fieldType
-                        return LIST_FIELD;
+                        return CB_LIST_FIELD;
                     case 1: //fieldSize
                         return (uint32_t)Entries.value.size();
                     default:
-                        return UNKNOWN_FIELD;
+                        return CB_UNKNOWN_FIELD;
                     }
                 }
 
             if(ListIndex >= Entries.value.size())
-                return UNKNOWN_FIELD;
+                return CB_UNKNOWN_FIELD;
 
             switch(ListFieldID)
                 {
                 case 1: //entryType
-                    return UINT32_TYPE_FIELD;
+                    return CB_UINT32_TYPE_FIELD;
                 case 2: //flags
-                    return UINT8_FLAG_FIELD;
+                    return CB_UINT8_FLAG_FIELD;
                 case 3: //priority
-                    return UINT8_FIELD;
+                    return CB_UINT8_FIELD;
                 case 4: //unused1
                     switch(WhichAttribute)
                         {
                         case 0: //fieldType
-                            return UINT8_ARRAY_FIELD;
+                            return CB_UINT8_ARRAY_FIELD;
                         case 1: //fieldSize
                             return 2;
                         default:
-                            return UNKNOWN_FIELD;
+                            return CB_UNKNOWN_FIELD;
                         }
                 case 5: //objects
                     if(ListX2FieldID == 0) //points
@@ -165,161 +165,161 @@ uint32_t REGNRecord::GetFieldAttribute(FIELD_IDENTIFIERS, uint32_t WhichAttribut
                         switch(WhichAttribute)
                             {
                             case 0: //fieldType
-                                return LIST_FIELD;
+                                return CB_LIST_FIELD;
                             case 1: //fieldSize
                                 return (uint32_t)Entries.value[ListIndex]->RDOT.value.size();
                             default:
-                                return UNKNOWN_FIELD;
+                                return CB_UNKNOWN_FIELD;
                             }
                         }
 
                     if(ListX2Index >= Entries.value[ListIndex]->RDOT.value.size())
-                        return UNKNOWN_FIELD;
+                        return CB_UNKNOWN_FIELD;
 
                     switch(ListX2FieldID)
                         {
                         case 1: //objectId
-                            return FORMID_FIELD;
+                            return CB_FORMID_FIELD;
                         case 2: //parentIndex
-                            return UINT16_FIELD;
+                            return CB_UINT16_FIELD;
                         case 3: //unused1
                             switch(WhichAttribute)
                                 {
                                 case 0: //fieldType
-                                    return UINT8_ARRAY_FIELD;
+                                    return CB_UINT8_ARRAY_FIELD;
                                 case 1: //fieldSize
                                     return 2;
                                 default:
-                                    return UNKNOWN_FIELD;
+                                    return CB_UNKNOWN_FIELD;
                                 }
                         case 4: //density
-                            return FLOAT32_FIELD;
+                            return CB_FLOAT32_FIELD;
                         case 5: //clustering
-                            return UINT8_FIELD;
+                            return CB_UINT8_FIELD;
                         case 6: //minSlope
-                            return UINT8_FIELD;
+                            return CB_UINT8_FIELD;
                         case 7: //maxSlope
-                            return UINT8_FIELD;
+                            return CB_UINT8_FIELD;
                         case 8: //flags
-                            return UINT8_FLAG_FIELD;
+                            return CB_UINT8_FLAG_FIELD;
                         case 9: //radiusWRTParent
-                            return UINT16_FIELD;
+                            return CB_UINT16_FIELD;
                         case 10: //radius
-                            return UINT16_FIELD;
+                            return CB_UINT16_FIELD;
                         case 11: //unk1
                             switch(WhichAttribute)
                                 {
                                 case 0: //fieldType
-                                    return UINT8_ARRAY_FIELD;
+                                    return CB_UINT8_ARRAY_FIELD;
                                 case 1: //fieldSize
                                     return 4;
                                 default:
-                                    return UNKNOWN_FIELD;
+                                    return CB_UNKNOWN_FIELD;
                                 }
                         case 12: //maxHeight
-                            return FLOAT32_FIELD;
+                            return CB_FLOAT32_FIELD;
                         case 13: //sink
-                            return FLOAT32_FIELD;
+                            return CB_FLOAT32_FIELD;
                         case 14: //sinkVar
-                            return FLOAT32_FIELD;
+                            return CB_FLOAT32_FIELD;
                         case 15: //sizeVar
-                            return FLOAT32_FIELD;
+                            return CB_FLOAT32_FIELD;
                         case 16: //angleVarX
-                            return UINT16_FIELD;
+                            return CB_UINT16_FIELD;
                         case 17: //angleVarY
-                            return UINT16_FIELD;
+                            return CB_UINT16_FIELD;
                         case 18: //angleVarZ
-                            return UINT16_FIELD;
+                            return CB_UINT16_FIELD;
                         case 19: //unused2
                             switch(WhichAttribute)
                                 {
                                 case 0: //fieldType
-                                    return UINT8_ARRAY_FIELD;
+                                    return CB_UINT8_ARRAY_FIELD;
                                 case 1: //fieldSize
                                     return 2;
                                 default:
-                                    return UNKNOWN_FIELD;
+                                    return CB_UNKNOWN_FIELD;
                                 }
                         case 20: //unk2
                             switch(WhichAttribute)
                                 {
                                 case 0: //fieldType
-                                    return UINT8_ARRAY_FIELD;
+                                    return CB_UINT8_ARRAY_FIELD;
                                 case 1: //fieldSize
                                     return 4;
                                 default:
-                                    return UNKNOWN_FIELD;
+                                    return CB_UNKNOWN_FIELD;
                                 }
                         default:
-                            return UNKNOWN_FIELD;
+                            return CB_UNKNOWN_FIELD;
                         }
                 case 6: //mapName
-                    return STRING_FIELD;
+                    return CB_STRING_FIELD;
                 case 7: //iconPath
-                    return ISTRING_FIELD;
+                    return CB_ISTRING_FIELD;
                 case 8: //grasses
                     if(ListX2FieldID == 0) //grasses
                         {
                         switch(WhichAttribute)
                             {
                             case 0: //fieldType
-                                return LIST_FIELD;
+                                return CB_LIST_FIELD;
                             case 1: //fieldSize
                                 return (uint32_t)Entries.value[ListIndex]->RDGS.value.size();
                             default:
-                                return UNKNOWN_FIELD;
+                                return CB_UNKNOWN_FIELD;
                             }
                         }
 
                     if(ListX2Index >= Entries.value[ListIndex]->RDGS.value.size())
-                        return UNKNOWN_FIELD;
+                        return CB_UNKNOWN_FIELD;
 
                     switch(ListX2FieldID)
                         {
                         case 1: //grass
-                            return FORMID_FIELD;
+                            return CB_FORMID_FIELD;
                         case 2: //unk1
                             switch(WhichAttribute)
                                 {
                                 case 0: //fieldType
-                                    return UINT8_ARRAY_FIELD;
+                                    return CB_UINT8_ARRAY_FIELD;
                                 case 1: //fieldSize
                                     return 4;
                                 default:
-                                    return UNKNOWN_FIELD;
+                                    return CB_UNKNOWN_FIELD;
                                 }
                         default:
-                            return UNKNOWN_FIELD;
+                            return CB_UNKNOWN_FIELD;
                         }
                 case 9: //musicType
-                    return UINT32_TYPE_FIELD;
+                    return CB_UINT32_TYPE_FIELD;
                 case 10: //sounds
                     if(ListX2FieldID == 0) //sounds
                         {
                         switch(WhichAttribute)
                             {
                             case 0: //fieldType
-                                return LIST_FIELD;
+                                return CB_LIST_FIELD;
                             case 1: //fieldSize
                                 return (uint32_t)Entries.value[ListIndex]->RDSD.value.size();
                             default:
-                                return UNKNOWN_FIELD;
+                                return CB_UNKNOWN_FIELD;
                             }
                         }
 
                     if(ListX2Index >= Entries.value[ListIndex]->RDSD.value.size())
-                        return UNKNOWN_FIELD;
+                        return CB_UNKNOWN_FIELD;
 
                     switch(ListX2FieldID)
                         {
                         case 1: //sound
-                            return FORMID_FIELD;
+                            return CB_FORMID_FIELD;
                         case 2: //flags
-                            return UINT32_FLAG_FIELD;
+                            return CB_UINT32_FLAG_FIELD;
                         case 3: //chance
-                            return UINT32_FIELD;
+                            return CB_UINT32_FIELD;
                         default:
-                            return UNKNOWN_FIELD;
+                            return CB_UNKNOWN_FIELD;
                         }
                 case 11: //weathers
                     if(ListX2FieldID == 0) //weathers
@@ -327,33 +327,33 @@ uint32_t REGNRecord::GetFieldAttribute(FIELD_IDENTIFIERS, uint32_t WhichAttribut
                         switch(WhichAttribute)
                             {
                             case 0: //fieldType
-                                return LIST_FIELD;
+                                return CB_LIST_FIELD;
                             case 1: //fieldSize
                                 return (uint32_t)Entries.value[ListIndex]->RDWT.value.size();
                             default:
-                                return UNKNOWN_FIELD;
+                                return CB_UNKNOWN_FIELD;
                             }
                         }
 
                     if(ListX2Index >= Entries.value[ListIndex]->RDWT.value.size())
-                        return UNKNOWN_FIELD;
+                        return CB_UNKNOWN_FIELD;
 
                     switch(ListX2FieldID)
                         {
                         case 1: //weather
-                            return FORMID_FIELD;
+                            return CB_FORMID_FIELD;
                         case 2: //chance
-                            return UINT32_FIELD;
+                            return CB_UINT32_FIELD;
                         default:
-                            return UNKNOWN_FIELD;
+                            return CB_UNKNOWN_FIELD;
                         }
                 default:
-                    return UNKNOWN_FIELD;
+                    return CB_UNKNOWN_FIELD;
                 }
         default:
-            return UNKNOWN_FIELD;
+            return CB_UNKNOWN_FIELD;
         }
-    return UNKNOWN_FIELD;
+    return CB_UNKNOWN_FIELD;
     }
 
 void * REGNRecord::GetField(FIELD_IDENTIFIERS, void **FieldValues)

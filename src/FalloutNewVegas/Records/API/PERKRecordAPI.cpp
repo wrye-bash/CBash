@@ -45,235 +45,235 @@ uint32_t PERKRecord::GetFieldAttribute(FIELD_IDENTIFIERS, uint32_t WhichAttribut
         case 0: //recType
             return GetType();
         case 1: //flags1
-            return UINT32_FLAG_FIELD;
+            return CB_UINT32_FLAG_FIELD;
         case 2: //fid
-            return FORMID_FIELD;
+            return CB_FORMID_FIELD;
         case 3: //versionControl1
             switch(WhichAttribute)
                 {
                 case 0: //fieldType
-                    return UINT8_ARRAY_FIELD;
+                    return CB_UINT8_ARRAY_FIELD;
                 case 1: //fieldSize
                     return 4;
                 default:
-                    return UNKNOWN_FIELD;
+                    return CB_UNKNOWN_FIELD;
                 }
-            return UNKNOWN_FIELD;
+            return CB_UNKNOWN_FIELD;
         case 4: //eid
-            return ISTRING_FIELD;
+            return CB_ISTRING_FIELD;
         case 5: //formVersion
-            return UINT16_FIELD;
+            return CB_UINT16_FIELD;
         case 6: //versionControl2
             switch(WhichAttribute)
                 {
                 case 0: //fieldType
-                    return UINT8_ARRAY_FIELD;
+                    return CB_UINT8_ARRAY_FIELD;
                 case 1: //fieldSize
                     return 2;
                 default:
-                    return UNKNOWN_FIELD;
+                    return CB_UNKNOWN_FIELD;
                 }
-            return UNKNOWN_FIELD;
+            return CB_UNKNOWN_FIELD;
         case 7: //full
-            return STRING_FIELD;
+            return CB_STRING_FIELD;
         case 8: //description
-            return STRING_FIELD;
+            return CB_STRING_FIELD;
         case 9: //iconPath
-            return ISTRING_FIELD;
+            return CB_ISTRING_FIELD;
         case 10: //smallIconPath
-            return ISTRING_FIELD;
+            return CB_ISTRING_FIELD;
         case 11: //ctda Conditions
-            return UINT8_FIELD;
+            return CB_UINT8_FIELD;
         case 12: //ctda_p Conditions
             switch(WhichAttribute)
                 {
                 case 0: //fieldType
-                    return UINT8_ARRAY_FIELD;
+                    return CB_UINT8_ARRAY_FIELD;
                 case 1: //fieldSize
                     return 3;
                 default:
-                    return UNKNOWN_FIELD;
+                    return CB_UNKNOWN_FIELD;
                 }
-            return UNKNOWN_FIELD;
+            return CB_UNKNOWN_FIELD;
         case 13: //ctda Conditions
-            return UNKNOWN_FIELD; // UNPARSED_FIELD;
+            return CB_UNKNOWN_FIELD; // UNPARSED_FIELD;
         case 14: //ctda Conditions
-            return UINT32_FIELD;
+            return CB_UINT32_FIELD;
         case 15: //ctda_p Conditions
             switch(WhichAttribute)
                 {
                 case 0: //fieldType
-                    return UINT8_ARRAY_FIELD;
+                    return CB_UINT8_ARRAY_FIELD;
                 case 1: //fieldSize
                     return 4;
                 default:
-                    return UNKNOWN_FIELD;
+                    return CB_UNKNOWN_FIELD;
                 }
-            return UNKNOWN_FIELD;
+            return CB_UNKNOWN_FIELD;
         case 16: //ctda_p Conditions
             switch(WhichAttribute)
                 {
                 case 0: //fieldType
-                    return UINT8_ARRAY_FIELD;
+                    return CB_UINT8_ARRAY_FIELD;
                 case 1: //fieldSize
                     return 4;
                 default:
-                    return UNKNOWN_FIELD;
+                    return CB_UNKNOWN_FIELD;
                 }
-            return UNKNOWN_FIELD;
+            return CB_UNKNOWN_FIELD;
         case 17: //ctda Conditions
-            return UINT32_FIELD;
+            return CB_UINT32_FIELD;
         case 18: //ctda Conditions
-            return UNKNOWN_FIELD; // UNPARSED_FIELD;
+            return CB_UNKNOWN_FIELD; // UNPARSED_FIELD;
         case 19: //data DATA ,, Struct
-            return UINT8_FIELD;
+            return CB_UINT8_FIELD;
         case 20: //data DATA ,, Struct
-            return UINT8_FIELD;
+            return CB_UINT8_FIELD;
         case 21: //data DATA ,, Struct
-            return UINT8_FIELD;
+            return CB_UINT8_FIELD;
         case 22: //data DATA ,, Struct
-            return UINT8_FIELD;
+            return CB_UINT8_FIELD;
         case 23: //data DATA ,, Struct
-            return UINT8_FIELD;
+            return CB_UINT8_FIELD;
         case 24: //prke PRKE ,, Struct
-            return UINT8_FIELD;
+            return CB_UINT8_FIELD;
         case 25: //prke PRKE ,, Struct
-            return UINT8_FIELD;
+            return CB_UINT8_FIELD;
         case 26: //prke PRKE ,, Struct
-            return UINT8_FIELD;
+            return CB_UINT8_FIELD;
         case 27: //prke PRKE ,, Struct
-            return FORMID_FIELD;
+            return CB_FORMID_FIELD;
         case 28: //prke PRKE ,, Struct
-            return FORMID_FIELD;
+            return CB_FORMID_FIELD;
         case 29: //prke PRKE ,, Struct
-            return UINT8_FIELD;
+            return CB_UINT8_FIELD;
         case 30: //prke PRKE ,, Struct
-            return UINT8_FIELD;
+            return CB_UINT8_FIELD;
         case 31: //prke PRKE ,, Struct
-            return UINT8_FIELD;
+            return CB_UINT8_FIELD;
         case 32: //prkc Run On
-            return SINT8_FIELD;
+            return CB_SINT8_FIELD;
         case 33: //ctda Conditions
-            return UINT8_FIELD;
+            return CB_UINT8_FIELD;
         case 34: //ctda_p Conditions
             switch(WhichAttribute)
                 {
                 case 0: //fieldType
-                    return UINT8_ARRAY_FIELD;
+                    return CB_UINT8_ARRAY_FIELD;
                 case 1: //fieldSize
                     return 3;
                 default:
-                    return UNKNOWN_FIELD;
+                    return CB_UNKNOWN_FIELD;
                 }
-            return UNKNOWN_FIELD;
+            return CB_UNKNOWN_FIELD;
         case 35: //ctda Conditions
-            return UNKNOWN_FIELD; // UNPARSED_FIELD;
+            return CB_UNKNOWN_FIELD; // UNPARSED_FIELD;
         case 36: //ctda Conditions
-            return UINT32_FIELD;
+            return CB_UINT32_FIELD;
         case 37: //ctda_p Conditions
             switch(WhichAttribute)
                 {
                 case 0: //fieldType
-                    return UINT8_ARRAY_FIELD;
+                    return CB_UINT8_ARRAY_FIELD;
                 case 1: //fieldSize
                     return 4;
                 default:
-                    return UNKNOWN_FIELD;
+                    return CB_UNKNOWN_FIELD;
                 }
-            return UNKNOWN_FIELD;
+            return CB_UNKNOWN_FIELD;
         case 38: //ctda_p Conditions
             switch(WhichAttribute)
                 {
                 case 0: //fieldType
-                    return UINT8_ARRAY_FIELD;
+                    return CB_UINT8_ARRAY_FIELD;
                 case 1: //fieldSize
                     return 4;
                 default:
-                    return UNKNOWN_FIELD;
+                    return CB_UNKNOWN_FIELD;
                 }
-            return UNKNOWN_FIELD;
+            return CB_UNKNOWN_FIELD;
         case 39: //ctda Conditions
-            return UINT32_FIELD;
+            return CB_UINT32_FIELD;
         case 40: //ctda Conditions
-            return UNKNOWN_FIELD; // UNPARSED_FIELD;
+            return CB_UNKNOWN_FIELD; // UNPARSED_FIELD;
         case 41: //epft Type
-            return UINT8_FIELD;
+            return CB_UINT8_FIELD;
         case 42: //data Leveled Item
-            return FORMID_FIELD;
+            return CB_FORMID_FIELD;
         case 43: //epf2 Button Label
-            return ISTRING_FIELD;
+            return CB_ISTRING_FIELD;
         case 44: //epf3 Script Flags
-            return UINT16_FIELD;
+            return CB_UINT16_FIELD;
         case 45: //schr_p Basic Script Data
             switch(WhichAttribute)
                 {
                 case 0: //fieldType
-                    return UINT8_ARRAY_FIELD;
+                    return CB_UINT8_ARRAY_FIELD;
                 case 1: //fieldSize
                     return 4;
                 default:
-                    return UNKNOWN_FIELD;
+                    return CB_UNKNOWN_FIELD;
                 }
-            return UNKNOWN_FIELD;
+            return CB_UNKNOWN_FIELD;
         case 46: //schr Basic Script Data
-            return UINT32_FIELD;
+            return CB_UINT32_FIELD;
         case 47: //schr Basic Script Data
-            return UINT32_FIELD;
+            return CB_UINT32_FIELD;
         case 48: //schr Basic Script Data
-            return UINT32_FIELD;
+            return CB_UINT32_FIELD;
         case 49: //schr Basic Script Data
-            return UINT16_FIELD;
+            return CB_UINT16_FIELD;
         case 50: //schr Basic Script Data
-            return UINT16_FIELD;
+            return CB_UINT16_FIELD;
         case 51: //scda_p Compiled Embedded Script
             switch(WhichAttribute)
                 {
                 case 0: //fieldType
-                    return UINT8_ARRAY_FIELD;
+                    return CB_UINT8_ARRAY_FIELD;
                 case 1: //fieldSize
                     return 0; // SCDA.GetSize();
                 default:
-                    return UNKNOWN_FIELD;
+                    return CB_UNKNOWN_FIELD;
                 }
-            return UNKNOWN_FIELD;
+            return CB_UNKNOWN_FIELD;
         case 52: //sctx Embedded Script Source
-            return ISTRING_FIELD;
+            return CB_ISTRING_FIELD;
         case 53: //slsd Local Variable Data
-            return UINT32_FIELD;
+            return CB_UINT32_FIELD;
         case 54: //slsd_p Local Variable Data
             switch(WhichAttribute)
                 {
                 case 0: //fieldType
-                    return UINT8_ARRAY_FIELD;
+                    return CB_UINT8_ARRAY_FIELD;
                 case 1: //fieldSize
                     return 12;
                 default:
-                    return UNKNOWN_FIELD;
+                    return CB_UNKNOWN_FIELD;
                 }
-            return UNKNOWN_FIELD;
+            return CB_UNKNOWN_FIELD;
         case 55: //slsd Local Variable Data
-            return UINT8_FIELD;
+            return CB_UINT8_FIELD;
         case 56: //slsd_p Local Variable Data
             switch(WhichAttribute)
                 {
                 case 0: //fieldType
-                    return UINT8_ARRAY_FIELD;
+                    return CB_UINT8_ARRAY_FIELD;
                 case 1: //fieldSize
                     return 7;
                 default:
-                    return UNKNOWN_FIELD;
+                    return CB_UNKNOWN_FIELD;
                 }
-            return UNKNOWN_FIELD;
+            return CB_UNKNOWN_FIELD;
         case 57: //scvr Name
-            return ISTRING_FIELD;
+            return CB_ISTRING_FIELD;
         case 58: //scro Global Reference
-            return FORMID_FIELD;
+            return CB_FORMID_FIELD;
         case 59: //scrv Local Variable
-            return UINT32_FIELD;
+            return CB_UINT32_FIELD;
         default:
-            return UNKNOWN_FIELD;
+            return CB_UNKNOWN_FIELD;
         }
-    return UNKNOWN_FIELD;
+    return CB_UNKNOWN_FIELD;
     }
 
 void * PERKRecord::GetField(FIELD_IDENTIFIERS, void **FieldValues)

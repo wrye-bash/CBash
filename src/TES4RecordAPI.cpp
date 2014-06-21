@@ -43,98 +43,98 @@ uint32_t TES4Record::GetFieldAttribute(FIELD_IDENTIFIERS, uint32_t WhichAttribut
         case 0: //recType
             return GetType();
         case 1: //flags1
-            return UINT32_FLAG_FIELD;
+            return CB_UINT32_FLAG_FIELD;
         case 2: //fid
-            return MISSING_FIELD;
+            return CB_MISSING_FIELD;
         case 3: //flags2 or versionControl1 for FNV
             switch(WhichAttribute)
                 {
                 case 0: //fieldType
-                    return UINT8_ARRAY_FIELD;// UINT32_FLAG_FIELD; for Ob
+                    return CB_UINT8_ARRAY_FIELD;// CB_UINT32_FLAG_FIELD; for Ob
                 case 1: //fieldSize
                     return 4;
                 default:
-                    return UNKNOWN_FIELD;
+                    return CB_UNKNOWN_FIELD;
                 }
         case 4: //eid
-            return MISSING_FIELD;
+            return CB_MISSING_FIELD;
         case 5: //version
-            return FLOAT32_FIELD;
+            return CB_FLOAT32_FIELD;
         case 6: //numRecords
-            return UINT32_FIELD;
+            return CB_UINT32_FIELD;
         case 7: //nextObject
-            return UINT32_FIELD;
+            return CB_UINT32_FIELD;
         case 8: //ofst_p
             switch(WhichAttribute)
                 {
                 case 0: //fieldType
-                    return UINT8_ARRAY_FIELD;
+                    return CB_UINT8_ARRAY_FIELD;
                 case 1: //fieldSize
                     return OFST.GetSize();
                 default:
-                    return UNKNOWN_FIELD;
+                    return CB_UNKNOWN_FIELD;
                 }
         case 9: //dele_p
             switch(WhichAttribute)
                 {
                 case 0: //fieldType
-                    return UINT8_ARRAY_FIELD;
+                    return CB_UINT8_ARRAY_FIELD;
                 case 1: //fieldSize
                     return DELE.GetSize();
                 default:
-                    return UNKNOWN_FIELD;
+                    return CB_UNKNOWN_FIELD;
                 }
         case 10: //author
-            return STRING_FIELD;
+            return CB_STRING_FIELD;
         case 11: //description
-            return STRING_FIELD;
+            return CB_STRING_FIELD;
         case 12: //masters
             switch(WhichAttribute)
                 {
                 case 0: //fieldType
-                    return ISTRING_ARRAY_FIELD;
+                    return CB_ISTRING_ARRAY_FIELD;
                 case 1: //fieldSize
                     return (uint32_t)MAST.size();
                 default:
-                    return UNKNOWN_FIELD;
+                    return CB_UNKNOWN_FIELD;
                 }
         case 13: //DATA
-            return JUNK_FIELD;
+            return CB_JUNK_FIELD;
         //FNV Specific
         case 14: //formVersion
-            return UINT16_FIELD;
+            return CB_UINT16_FIELD;
         case 15: //versionControl2
             switch(WhichAttribute)
                 {
                 case 0: //fieldType
-                    return UINT8_ARRAY_FIELD;
+                    return CB_UINT8_ARRAY_FIELD;
                 case 1: //fieldSize
                     return 2;
                 default:
-                    return UNKNOWN_FIELD;
+                    return CB_UNKNOWN_FIELD;
                 }
         case 16: //overrides
             switch(WhichAttribute)
                 {
                 case 0: //fieldType
-                    return FORMID_ARRAY_FIELD;
+                    return CB_FORMID_ARRAY_FIELD;
                 case 1: //fieldSize
                     return (uint32_t)ONAM.value.size();
                 default:
-                    return UNKNOWN_FIELD;
+                    return CB_UNKNOWN_FIELD;
                 }
         case 17: //screenshot_p
             switch(WhichAttribute)
                 {
                 case 0: //fieldType
-                    return UINT8_ARRAY_FIELD;
+                    return CB_UINT8_ARRAY_FIELD;
                 case 1: //fieldSize
                     return SCRN.GetSize();
                 default:
-                    return UNKNOWN_FIELD;
+                    return CB_UNKNOWN_FIELD;
                 }
         default:
-            return UNKNOWN_FIELD;
+            return CB_UNKNOWN_FIELD;
         }
     }
 
@@ -145,7 +145,7 @@ void * TES4Record::GetField(FIELD_IDENTIFIERS, void **FieldValues)
         case 1: //flags1
             return &flags;
         case 3: //flags2
-            if(whichGame == eIsOblivion)
+            if(whichGame == CB_OBLIVION)
                 return &flagsUnk;
             else
                 {

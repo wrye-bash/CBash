@@ -45,195 +45,195 @@ uint32_t NAVMRecord::GetFieldAttribute(FIELD_IDENTIFIERS, uint32_t WhichAttribut
         case 0: //recType
             return GetType();
         case 1: //flags1
-            return UINT32_FLAG_FIELD;
+            return CB_UINT32_FLAG_FIELD;
         case 2: //fid
-            return FORMID_FIELD;
+            return CB_FORMID_FIELD;
         case 3: //versionControl1
             switch(WhichAttribute)
                 {
                 case 0: //fieldType
-                    return UINT8_ARRAY_FIELD;
+                    return CB_UINT8_ARRAY_FIELD;
                 case 1: //fieldSize
                     return 4;
                 default:
-                    return UNKNOWN_FIELD;
+                    return CB_UNKNOWN_FIELD;
                 }
-            return UNKNOWN_FIELD;
+            return CB_UNKNOWN_FIELD;
         case 4: //eid
-            return ISTRING_FIELD;
+            return CB_ISTRING_FIELD;
         case 5: //formVersion
-            return UINT16_FIELD;
+            return CB_UINT16_FIELD;
         case 6: //versionControl2
             switch(WhichAttribute)
                 {
                 case 0: //fieldType
-                    return UINT8_ARRAY_FIELD;
+                    return CB_UINT8_ARRAY_FIELD;
                 case 1: //fieldSize
                     return 2;
                 default:
-                    return UNKNOWN_FIELD;
+                    return CB_UNKNOWN_FIELD;
                 }
-            return UNKNOWN_FIELD;
+            return CB_UNKNOWN_FIELD;
         case 7: //version
-            return UINT32_FIELD;
+            return CB_UINT32_FIELD;
         case 8: //cell
-            return FORMID_FIELD;
+            return CB_FORMID_FIELD;
         case 9: //numVertices
-            return UINT32_FIELD;
+            return CB_UINT32_FIELD;
         case 10: //numTriangles
-            return UINT32_FIELD;
+            return CB_UINT32_FIELD;
         case 11: //numConnections
-            return UINT32_FIELD;
+            return CB_UINT32_FIELD;
         case 12: //numUnknown
-            return UINT32_FIELD;
+            return CB_UINT32_FIELD;
         case 13: //numDoors
-            return UINT32_FIELD;
+            return CB_UINT32_FIELD;
         case 14: //vertices
             if(ListFieldID == 0) //vertices
                 {
                 switch(WhichAttribute)
                     {
                     case 0: //fieldType
-                        return LIST_FIELD;
+                        return CB_LIST_FIELD;
                     case 1: //fieldSize
                         return (uint32_t)NVVX.value.size();
                     default:
-                        return UNKNOWN_FIELD;
+                        return CB_UNKNOWN_FIELD;
                     }
-                return UNKNOWN_FIELD;
+                return CB_UNKNOWN_FIELD;
                 }
 
             if(ListIndex >= NVVX.value.size())
-                return UNKNOWN_FIELD;
+                return CB_UNKNOWN_FIELD;
 
             switch(ListFieldID)
                 {
                 case 1: //x
-                    return FLOAT32_FIELD;
+                    return CB_FLOAT32_FIELD;
                 case 2: //y
-                    return FLOAT32_FIELD;
+                    return CB_FLOAT32_FIELD;
                 case 3: //z
-                    return FLOAT32_FIELD;
+                    return CB_FLOAT32_FIELD;
                 default:
-                    return UNKNOWN_FIELD;
+                    return CB_UNKNOWN_FIELD;
                 }
-            return UNKNOWN_FIELD;
+            return CB_UNKNOWN_FIELD;
         case 15: //triangles
             if(ListFieldID == 0) //triangles
                 {
                 switch(WhichAttribute)
                     {
                     case 0: //fieldType
-                        return LIST_FIELD;
+                        return CB_LIST_FIELD;
                     case 1: //fieldSize
                         return (uint32_t)NVTR.value.size();
                     default:
-                        return UNKNOWN_FIELD;
+                        return CB_UNKNOWN_FIELD;
                     }
-                return UNKNOWN_FIELD;
+                return CB_UNKNOWN_FIELD;
                 }
 
             if(ListIndex >= NVTR.value.size())
-                return UNKNOWN_FIELD;
+                return CB_UNKNOWN_FIELD;
 
             switch(ListFieldID)
                 {
                 case 1: //vertex1
-                    return SINT16_FIELD;
+                    return CB_SINT16_FIELD;
                 case 2: //vertex2
-                    return SINT16_FIELD;
+                    return CB_SINT16_FIELD;
                 case 3: //vertex3
-                    return SINT16_FIELD;
+                    return CB_SINT16_FIELD;
                 case 4: //edge1
-                    return SINT16_FIELD;
+                    return CB_SINT16_FIELD;
                 case 5: //edge2
-                    return SINT16_FIELD;
+                    return CB_SINT16_FIELD;
                 case 6: //edge3
-                    return SINT16_FIELD;
+                    return CB_SINT16_FIELD;
                 case 7: //flags
-                    return UINT32_FLAG_FIELD;
+                    return CB_UINT32_FLAG_FIELD;
                 default:
-                    return UNKNOWN_FIELD;
+                    return CB_UNKNOWN_FIELD;
                 }
-            return UNKNOWN_FIELD;
+            return CB_UNKNOWN_FIELD;
         case 16: //unknown1
             switch(WhichAttribute)
                 {
                 case 0: //fieldType
-                    return SINT16_ARRAY_FIELD;
+                    return CB_SINT16_ARRAY_FIELD;
                 case 1: //fieldSize
                     return (uint32_t)NVCA.value.size();
                 default:
-                    return UNKNOWN_FIELD;
+                    return CB_UNKNOWN_FIELD;
                 }
-            return UNKNOWN_FIELD;
+            return CB_UNKNOWN_FIELD;
         case 17: //doors
             if(ListFieldID == 0) //doors
                 {
                 switch(WhichAttribute)
                     {
                     case 0: //fieldType
-                        return LIST_FIELD;
+                        return CB_LIST_FIELD;
                     case 1: //fieldSize
                         return (uint32_t)NVDP.value.size();
                     default:
-                        return UNKNOWN_FIELD;
+                        return CB_UNKNOWN_FIELD;
                     }
-                return UNKNOWN_FIELD;
+                return CB_UNKNOWN_FIELD;
                 }
 
             if(ListIndex >= NVDP.value.size())
-                return UNKNOWN_FIELD;
+                return CB_UNKNOWN_FIELD;
 
             switch(ListFieldID)
                 {
                 case 1: //door
-                    return FORMID_FIELD;
+                    return CB_FORMID_FIELD;
                 case 2: //unknown1
-                    return UINT16_FIELD;
+                    return CB_UINT16_FIELD;
                 case 3: //unused1
                     switch(WhichAttribute)
                         {
                         case 0: //fieldType
-                            return UINT8_ARRAY_FIELD;
+                            return CB_UINT8_ARRAY_FIELD;
                         case 1: //fieldSize
                             return 2;
                         default:
-                            return UNKNOWN_FIELD;
+                            return CB_UNKNOWN_FIELD;
                         }
-                    return UNKNOWN_FIELD;
+                    return CB_UNKNOWN_FIELD;
                 default:
-                    return UNKNOWN_FIELD;
+                    return CB_UNKNOWN_FIELD;
                 }
-            return UNKNOWN_FIELD;
+            return CB_UNKNOWN_FIELD;
         case 18: //nvgd_p
             switch(WhichAttribute)
                 {
                 case 0: //fieldType
-                    return UINT8_ARRAY_FIELD;
+                    return CB_UINT8_ARRAY_FIELD;
                 case 1: //fieldSize
                     return NVGD.GetSize();
                 default:
-                    return UNKNOWN_FIELD;
+                    return CB_UNKNOWN_FIELD;
                 }
-            return UNKNOWN_FIELD;
+            return CB_UNKNOWN_FIELD;
         case 19: //connections
             if(ListFieldID == 0) //connections
                 {
                 switch(WhichAttribute)
                     {
                     case 0: //fieldType
-                        return LIST_FIELD;
+                        return CB_LIST_FIELD;
                     case 1: //fieldSize
                         return (uint32_t)NVEX.value.size();
                     default:
-                        return UNKNOWN_FIELD;
+                        return CB_UNKNOWN_FIELD;
                     }
-                return UNKNOWN_FIELD;
+                return CB_UNKNOWN_FIELD;
                 }
 
             if(ListIndex >= NVEX.value.size())
-                return UNKNOWN_FIELD;
+                return CB_UNKNOWN_FIELD;
 
             switch(ListFieldID)
                 {
@@ -241,27 +241,27 @@ uint32_t NAVMRecord::GetFieldAttribute(FIELD_IDENTIFIERS, uint32_t WhichAttribut
                     switch(WhichAttribute)
                         {
                         case 0: //fieldType
-                            return UINT8_ARRAY_FIELD;
+                            return CB_UINT8_ARRAY_FIELD;
                         case 1: //fieldSize
                             return 4;
                         default:
-                            return UNKNOWN_FIELD;
+                            return CB_UNKNOWN_FIELD;
                         }
-                    return UNKNOWN_FIELD;
+                    return CB_UNKNOWN_FIELD;
                 case 2: //mesh
-                    return FORMID_FIELD;
+                    return CB_FORMID_FIELD;
                 case 3: //triangle
-                    return UINT16_FIELD;
+                    return CB_UINT16_FIELD;
                 default:
-                    return UNKNOWN_FIELD;
+                    return CB_UNKNOWN_FIELD;
                 }
-            return UNKNOWN_FIELD;
+            return CB_UNKNOWN_FIELD;
         case 20: //Parent
-            return PARENTRECORD_FIELD;
+            return CB_PARENTRECORD_FIELD;
         default:
-            return UNKNOWN_FIELD;
+            return CB_UNKNOWN_FIELD;
         }
-    return UNKNOWN_FIELD;
+    return CB_UNKNOWN_FIELD;
     }
 
 void * NAVMRecord::GetField(FIELD_IDENTIFIERS, void **FieldValues)

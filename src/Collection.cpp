@@ -157,9 +157,9 @@ Collection::Collection(char * const &ModsPath, uint32_t _CollectionType):
     filter_wspaces(),
     filter_inclusive(false)
     {
-    if(_CollectionType >= eIsUnknownGameType)
+    if (_CollectionType >= CB_UNKNOWN_GAME_TYPE)
         throw std::exception("CreateCollection: Error - Unable to create the collection. Invalid collection type specified.\n");
-    CollectionType = (whichGameTypes)_CollectionType;
+    CollectionType = (cb_game_type_t)_CollectionType;
     ModsDir = new char[strlen(ModsPath)+1];
     strcpy_s(ModsDir, strlen(ModsPath)+1, ModsPath);
     }
@@ -226,21 +226,21 @@ ModFile * Collection::AddMod(char * const &_FileName, ModFlags &flags, bool IsPr
 
     switch(CollectionType)
         {
-        case eIsOblivion:
+        case CB_OBLIVION:
             ModFiles.push_back(new TES4File(this, FileName, ModName, flags.GetFlags()));
-            ModFiles.back()->TES4.whichGame = eIsOblivion;
+            ModFiles.back()->TES4.whichGame = CB_OBLIVION;
             break;
-        case eIsFallout3:
+        case CB_FALLOUT3:
             printer("AddMod: Error - Unable to add mod \"%s\". Fallout 3 mod support is unimplemented.\n", ModName);
             delete []ModName;
             return NULL;
-        case eIsFalloutNewVegas:
+        case CB_FALLOUT_NEW_VEGAS:
             ModFiles.push_back(new FNVFile(this, FileName, ModName, flags.GetFlags()));
-            ModFiles.back()->TES4.whichGame = eIsFalloutNewVegas;
+            ModFiles.back()->TES4.whichGame = CB_FALLOUT_NEW_VEGAS;
             break;
-        case eIsSkyrim:
+        case CB_SKYRIM:
             ModFiles.push_back(new TES5File(this, FileName, ModName, flags.GetFlags()));
-            ModFiles.back()->TES4.whichGame = eIsSkyrim;
+            ModFiles.back()->TES4.whichGame = CB_SKYRIM;
             break;
         default:
             printer("AddMod: Error - Unable to add mod \"%s\". Invalid collection type.\n", ModName);

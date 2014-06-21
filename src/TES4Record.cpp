@@ -251,7 +251,7 @@ int32_t TES4Record::WriteRecord(FileWriter &writer)
     uint8_t DATA[8] = {0};
     switch(whichGame)
     {
-    case eIsOblivion:
+    case CB_OBLIVION:
         WRITE(HEDR);
         WRITE(OFST);
         WRITE(DELE);
@@ -263,10 +263,10 @@ int32_t TES4Record::WriteRecord(FileWriter &writer)
             writer.record_write_subrecord(REV32(DATA), &DATA[0], sizeof(DATA));
         }
         break;
-    case eIsFallout3:
+    case CB_FALLOUT3:
         printer("TES4Record::WriteRecord: Error - Unable to write TES4 record. Fallout 3 support not yet implemented.\n");
         return -1;
-    case eIsFalloutNewVegas:
+    case CB_FALLOUT_NEW_VEGAS:
         WRITE(HEDR);
         WRITE(OFST);
         WRITE(DELE);
@@ -280,7 +280,7 @@ int32_t TES4Record::WriteRecord(FileWriter &writer)
         WRITE(ONAM);
         WRITE(SCRN);
         break;
-    case eIsSkyrim:
+    case CB_SKYRIM:
         WRITE(HEDR);
         WRITE(OFST);
         WRITE(DELE);
@@ -319,12 +319,12 @@ uint32_t TES4Record::Write(FileWriter &writer, const bool &bMastersChanged, Form
     writer.file_write(&formID, 4);
     writer.file_write(&flagsUnk, 4);
 
-    if(whichGame == eIsFalloutNewVegas)
+    if(whichGame == CB_FALLOUT_NEW_VEGAS)
     {
         writer.file_write(&formVersion, 2);
         writer.file_write(&versionControl2[0], 2);
     }
-    else if(whichGame == eIsSkyrim)
+    else if(whichGame == CB_SKYRIM)
     {
         writer.file_write(&formVersion, 2);
         writer.file_write(&versionControl2[0], 2);
@@ -338,9 +338,9 @@ uint32_t TES4Record::Write(FileWriter &writer, const bool &bMastersChanged, Form
     else
         Unload();
 
-    if(whichGame == eIsFalloutNewVegas)
+    if(whichGame == CB_FALLOUT_NEW_VEGAS)
         return recSize + 24;
-    else if(whichGame == eIsSkyrim)
+    else if(whichGame == CB_SKYRIM)
         return recSize + 24;
     else
         return recSize + 20;

@@ -67,27 +67,27 @@ typedef uint32_t cb_formid_t;
     @details The game type determines the file format CBash should assume when reading and writing plugin data.
 */
 typedef enum {
-    eIsOblivion = 0, ///< TES IV: Oblivion game type.
-    eIsFallout3, ///< Fallout 3 game type.
-    eIsFalloutNewVegas, ///< Fallout: New Vegas game type.
-    eIsSkyrim, ///< TES V: Skyrim game type.
-    eIsUnknownGameType
-} whichGameTypes;
+    CB_OBLIVION = 0, ///< TES IV: Oblivion game type.
+    CB_FALLOUT3, ///< Fallout 3 game type.
+    CB_FALLOUT_NEW_VEGAS, ///< Fallout: New Vegas game type.
+    CB_SKYRIM, ///< TES V: Skyrim game type.
+    CB_UNKNOWN_GAME_TYPE
+} cb_game_type_t;
 
 /**
     @brief Flags that specify how a plugin is to be loaded.
-    @details ::fIsMinLoad and ::fIsFullLoad are exclusive. If both are set, ::fIsFullLoad takes
+    @details ::CB_MIN_LOAD and ::CB_FULL_LOAD are exclusive. If both are set, ::CB_FULL_LOAD takes
              priority. If neither is set, the mod isn't loaded.
 
              Only the following combinations are tested via Bash:
-             - Normal:  (::fIsMinLoad or ::fIsFullLoad) + ::fIsInLoadOrder + ::fIsSaveable + ::fIsAddMasters + ::fIsLoadMasters
-             - Dummy:    ::fIsAddMasters
-             - Merged:  (::fIsMinLoad or ::fIsFullLoad) + ::fIsSkipNewRecords + ::fIsIgnoreInactiveMasters
-             - Scanned: (::fIsMinLoad or ::fIsFullLoad) + ::fIsSkipNewRecords + ::fIsExtendedConflicts
+             - Normal:  (::CB_MIN_LOAD or ::CB_FULL_LOAD) + ::CB_IN_LOAD_ORDER + ::CB_SAVEABLE + ::CB_ADD_MASTERS + ::CB_LOAD_MASTERS
+             - Dummy:    ::CB_ADD_MASTERS
+             - Merged:  (::CB_MIN_LOAD or ::CB_FULL_LOAD) + ::CB_SKIP_NEW_RECORDS + ::CB_IGNORE_INACTIVE_MASTERS
+             - Scanned: (::CB_MIN_LOAD or ::CB_FULL_LOAD) + ::CB_SKIP_NEW_RECORDS + ::CB_EXTENDED_CONFLICTS
 */
 typedef enum {
-    fIsMinLoad               = 0x00000001,  ///< Causes only the TES4 header record to be loaded.
-    fIsFullLoad              = 0x00000002,  ///< Causes all records to be loaded (unless overriden by another flag).
+    CB_MIN_LOAD               = 0x00000001,  ///< Causes only the TES4 header record to be loaded.
+    CB_FULL_LOAD              = 0x00000002,  ///< Causes all records to be loaded (unless overridden by another flag).
     /**
         @brief Causes any new record to be ignored when the mod is loaded.
         @details This may leave broken records behind (such as a quest override
@@ -95,43 +95,43 @@ typedef enum {
                  used if planning on copying records unless you check that
                  there are no new records being referenced.
     */
-    fIsSkipNewRecords        = 0x00000004,
+    CB_SKIP_NEW_RECORDS        = 0x00000004,
     /**
         @brief Makes the mod count towards the 255 limit and enables record creation and copying as new.
         @details If it is false, it forces Saveable to be false.
                  Any mod with new records should have this set unless you're ignoring the new records.
-                 It causes the mod to be reported by GetLoadOrderNumMods(), GetLoadOrderModIDs().
+                 It causes the mod to be reported by cb_GetLoadOrderNumMods(), cb_GetLoadOrderModIDs().
     */
-    fIsInLoadOrder           = 0x00000008,
-    fIsSaveable              = 0x00000010,  ///< Allows the mod to be saved.
+    CB_IN_LOAD_ORDER           = 0x00000008,
+    CB_SAVEABLE              = 0x00000010,  ///< Allows the mod to be saved.
     /**
         @brief Causes the mod's masters to be added to the load order.
         @details This is essential for most mod editing functions.
     */
-    fIsAddMasters            = 0x00000020,
+    CB_ADD_MASTERS            = 0x00000020,
     /**
         @brief Causes the mod's masters to be loaded into memory after being added.
-        @details This has no effect if ::fIsAddMasters is false. This is
+        @details This has no effect if ::CB_ADD_MASTERS is false. This is
                  required if you want to lookup overridden records.
     */
-    fIsLoadMasters           = 0x00000040,
+    CB_LOAD_MASTERS           = 0x00000040,
     /**
         @brief Causes any conflicting records to be ignored by most functions.
-        @details IsRecordWinning(), GetNumRecordConflicts(), GetRecordConflicts() will report the extended conflicts only if asked.
+        @details cb_IsRecordWinning(), cb_GetNumRecordConflicts(), cb_GetRecordConflicts() will report the extended conflicts only if asked.
     */
-    fIsExtendedConflicts     = 0x00000080,
+    CB_EXTENDED_CONFLICTS     = 0x00000080,
     /**
         @brief Causes the loader to track which record types in a mod are new and not overrides.
-        @details Increases load time per mod. It enables GetModNumTypes() and GetModTypes() for the mod.
+        @details Increases load time per mod. It enables cb_GetModNumTypes() and cb_GetModTypes() for the mod.
     */
-    fIsTrackNewTypes         = 0x00000100,
+    CB_TRACK_NEW_TYPES         = 0x00000100,
     /**
         @brief Causes LAND records to have extra indexing.
         @details Increases load time per mod. It allows the safe editing of
                  land records' heights. Modifying one LAND may require changes
                  in an adjacent LAND to prevent seams.
     */
-    fIsIndexLANDs            = 0x00000200,
+    CB_INDEX_LANDS            = 0x00000200,
     /**
         @brief Mmoves any REFR,ACHR,ACRE records in a world cell to the actual
                cell they belong to.
@@ -139,16 +139,16 @@ typedef enum {
                  iterating through every placeable in a specific cell, so that
                  you don't have to check the world cell as well.
     */
-    fIsFixupPlaceables       = 0x00000400,
-    fIsCreateNew             = 0x00000800,  ///< Creates a new mod instead of loading an existing one.
+    CB_FIXUP_PLACEABLES       = 0x00000400,
+    CB_CREATE_NEW             = 0x00000800,  ///< Creates a new mod instead of loading an existing one.
     /**
         @brief Causes any records that override masters not in the load order to be dropped.
         @details If it is true, it forces IsAddMasters to be false.  Allows
                  mods not in load order to copy records.
     */
-    fIsIgnoreInactiveMasters = 0x00001000,
-    fIsSkipAllRecords        = 0x00002000,  ///< Causes all records in groups to be skipped once one of each type is read.
-} modFlags;
+    CB_IGNORE_INACTIVE_MASTERS = 0x00001000,
+    CB_SKIP_ALL_RECORDS        = 0x00002000,  ///< Causes all records in groups to be skipped once one of each type is read.
+} cb_mod_flags_t;
 
 /**
     @brief Flags that specify how a plugin is to be saved.
@@ -157,94 +157,94 @@ typedef enum {
     /**
         @brief Cleans the mod's masters.
         @details Removed any unreferenced masters. Requires the mod to have
-                 been loaded with the ::fIsInLoadOrder flag.
+                 been loaded with the ::CB_IN_LOAD_ORDER flag.
     */
-    fIsCleanMasters    = 0x00000001,
-    fIsCloseCollection = 0x00000002  ///< Delete the parent collection after the mod is saved.
-} saveFlags;
+    CB_CLEAN_MASTERS    = 0x00000001,
+    CB_CLOSE_COLLECTION = 0x00000002  ///< Delete the parent collection after the mod is saved.
+} cb_save_flags_t;
 
 /**
     @brief Flags that specify how a record is to be created.
 */
 typedef enum {
-    fSetAsOverride     = 0x00000001,  ///< Create the record as an override of the source record.
-    fCopyWinningParent = 0x00000002   ///< Populate the record using data from the winning parent.
-} createFlags;
+    CB_SET_AS_OVERRIDE     = 0x00000001,  ///< Create the record as an override of the source record.
+    CB_COPY_WINNING_PARENT = 0x00000002   ///< Populate the record using data from the winning parent.
+} cb_create_flags_t;
 
 /**
     @brief Flags that specify the type of a field.
 */
 typedef enum {
-    UNKNOWN_FIELD = 0,
-    MISSING_FIELD,
-    JUNK_FIELD,
-    BOOL_FIELD,
-    SINT8_FIELD,
-    UINT8_FIELD,
-    SINT16_FIELD,
-    UINT16_FIELD,
-    SINT32_FIELD,
-    UINT32_FIELD,
-    FLOAT32_FIELD,
-    RADIAN_FIELD,
-    FORMID_FIELD,
-    MGEFCODE_FIELD,
-    ACTORVALUE_FIELD,
-    FORMID_OR_UINT32_FIELD,
-    FORMID_OR_FLOAT32_FIELD,
-    UINT8_OR_UINT32_FIELD,
-    FORMID_OR_STRING_FIELD,
-    UNKNOWN_OR_FORMID_OR_UINT32_FIELD,
-    UNKNOWN_OR_SINT32_FIELD,
-    UNKNOWN_OR_UINT32_FLAG_FIELD,
-    MGEFCODE_OR_CHAR4_FIELD,
-    FORMID_OR_MGEFCODE_OR_ACTORVALUE_OR_UINT32_FIELD,
-    RESOLVED_MGEFCODE_FIELD,
-    STATIC_MGEFCODE_FIELD,
-    RESOLVED_ACTORVALUE_FIELD,
-    STATIC_ACTORVALUE_FIELD,
-    CHAR_FIELD,
-    CHAR4_FIELD,
-    STRING_FIELD,
-    ISTRING_FIELD,
-    STRING_OR_FLOAT32_OR_SINT32_FIELD,
-    LIST_FIELD,
-    PARENTRECORD_FIELD,
-    SUBRECORD_FIELD,
-    SINT8_FLAG_FIELD,
-    SINT8_TYPE_FIELD,
-    SINT8_FLAG_TYPE_FIELD,
-    SINT8_ARRAY_FIELD,
-    UINT8_FLAG_FIELD,
-    UINT8_TYPE_FIELD,
-    UINT8_FLAG_TYPE_FIELD,
-    UINT8_ARRAY_FIELD,
-    SINT16_FLAG_FIELD,
-    SINT16_TYPE_FIELD,
-    SINT16_FLAG_TYPE_FIELD,
-    SINT16_ARRAY_FIELD,
-    UINT16_FLAG_FIELD,
-    UINT16_TYPE_FIELD,
-    UINT16_FLAG_TYPE_FIELD,
-    UINT16_ARRAY_FIELD,
-    SINT32_FLAG_FIELD,
-    SINT32_TYPE_FIELD,
-    SINT32_FLAG_TYPE_FIELD,
-    SINT32_ARRAY_FIELD,
-    UINT32_FLAG_FIELD,
-    UINT32_TYPE_FIELD,
-    UINT32_FLAG_TYPE_FIELD,
-    UINT32_ARRAY_FIELD,
-    FLOAT32_ARRAY_FIELD,
-    RADIAN_ARRAY_FIELD,
-    FORMID_ARRAY_FIELD,
-    FORMID_OR_UINT32_ARRAY_FIELD,
-    MGEFCODE_OR_UINT32_ARRAY_FIELD,
-    STRING_ARRAY_FIELD,
-    ISTRING_ARRAY_FIELD,
-    SUBRECORD_ARRAY_FIELD,
-    UNDEFINED_FIELD
-} fieldTypes;
+    CB_UNKNOWN_FIELD = 0,
+    CB_MISSING_FIELD,
+    CB_JUNK_FIELD,
+    CB_BOOL_FIELD,
+    CB_SINT8_FIELD,
+    CB_UINT8_FIELD,
+    CB_SINT16_FIELD,
+    CB_UINT16_FIELD,
+    CB_SINT32_FIELD,
+    CB_UINT32_FIELD,
+    CB_FLOAT32_FIELD,
+    CB_RADIAN_FIELD,
+    CB_FORMID_FIELD,
+    CB_MGEFCODE_FIELD,
+    CB_ACTORVALUE_FIELD,
+    CB_FORMID_OR_UINT32_FIELD,
+    CB_FORMID_OR_FLOAT32_FIELD,
+    CB_UINT8_OR_UINT32_FIELD,
+    CB_FORMID_OR_STRING_FIELD,
+    CB_UNKNOWN_OR_FORMID_OR_UINT32_FIELD,
+    CB_UNKNOWN_OR_SINT32_FIELD,
+    CB_UNKNOWN_OR_UINT32_FLAG_FIELD,
+    CB_MGEFCODE_OR_CHAR4_FIELD,
+    CB_FORMID_OR_MGEFCODE_OR_ACTORVALUE_OR_UINT32_FIELD,
+    CB_RESOLVED_MGEFCODE_FIELD,
+    CB_STATIC_MGEFCODE_FIELD,
+    CB_RESOLVED_ACTORVALUE_FIELD,
+    CB_STATIC_ACTORVALUE_FIELD,
+    CB_CHAR_FIELD,
+    CB_CHAR4_FIELD,
+    CB_STRING_FIELD,
+    CB_ISTRING_FIELD,
+    CB_STRING_OR_FLOAT32_OR_SINT32_FIELD,
+    CB_LIST_FIELD,
+    CB_PARENTRECORD_FIELD,
+    CB_SUBRECORD_FIELD,
+    CB_SINT8_FLAG_FIELD,
+    CB_SINT8_TYPE_FIELD,
+    CB_SINT8_FLAG_TYPE_FIELD,
+    CB_SINT8_ARRAY_FIELD,
+    CB_UINT8_FLAG_FIELD,
+    CB_UINT8_TYPE_FIELD,
+    CB_UINT8_FLAG_TYPE_FIELD,
+    CB_UINT8_ARRAY_FIELD,
+    CB_SINT16_FLAG_FIELD,
+    CB_SINT16_TYPE_FIELD,
+    CB_SINT16_FLAG_TYPE_FIELD,
+    CB_SINT16_ARRAY_FIELD,
+    CB_UINT16_FLAG_FIELD,
+    CB_UINT16_TYPE_FIELD,
+    CB_UINT16_FLAG_TYPE_FIELD,
+    CB_UINT16_ARRAY_FIELD,
+    CB_SINT32_FLAG_FIELD,
+    CB_SINT32_TYPE_FIELD,
+    CB_SINT32_FLAG_TYPE_FIELD,
+    CB_SINT32_ARRAY_FIELD,
+    CB_UINT32_FLAG_FIELD,
+    CB_UINT32_TYPE_FIELD,
+    CB_UINT32_FLAG_TYPE_FIELD,
+    CB_UINT32_ARRAY_FIELD,
+    CB_FLOAT32_ARRAY_FIELD,
+    CB_RADIAN_ARRAY_FIELD,
+    CB_FORMID_ARRAY_FIELD,
+    CB_FORMID_OR_UINT32_ARRAY_FIELD,
+    CB_MGEFCODE_OR_UINT32_ARRAY_FIELD,
+    CB_STRING_ARRAY_FIELD,
+    CB_ISTRING_ARRAY_FIELD,
+    CB_SUBRECORD_ARRAY_FIELD,
+    CB_UNDEFINED_FIELD
+} cb_field_type_t;
 
 #ifdef __cplusplus
 }
