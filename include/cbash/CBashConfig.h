@@ -86,24 +86,29 @@
 
 // DLLExport/Import
 #ifdef __cplusplus
-    #define DLLEXPORT extern "C" __declspec(dllexport)
-    #define DLLIMPORT extern "C" __declspec(dllimport)
+    #define CBEXTERN extern "C"
 #else
-    #define DLLEXPORT __declspec(dllexport)
-    #define DLLIMPORT __declspec(dllimport)
+    #define CBEXTERN
 #endif
+#define DLLEXPORT CBEXTERN __declspec(dllexport)
+#define DLLIMPORT CBEXTERN __declspec(dllimport)
 
 
 // Setup some defines/includes for use in CBash.h/.cpp
-#ifdef CBASH_STATIC
-    #define DLLEXTERN
-    #define CPPDLLEXTERN
-#elif defined COMPILING_CBASH
-    #define DLLEXTERN DLLEXPORT
-    #define CPPDLLEXTERN DLLEXPORT
+#ifdef COMPILING_CBASH
+    // Compiling either CBash static or dynamic library
+    #ifdef CBASH_STATIC
+        // Static (CBash.lib)
+        #define DLLEXTERN CBEXTERN
+        #define CPPDLLEXTERN CBEXTERN
+    #else
+        // Dynamic (CBash.dll)
+        #define DLLEXTERN DLLEXPORT
+        #define CPPDLLEXTERN DLLEXPORT
+    #endif
     // Also, link against the Boost zlib library
     #if !defined(CBASH_NO_BOOST_ZLIB)
-        #define BOOST_LIB_NAME "boost_zlib"
+        #define BOOST_LIB_NAME boost_zlib
         #include <boost/config/auto_link.hpp>
     #else
         // Cleanup
@@ -111,8 +116,11 @@
     #endif
     // And prevent short name aliases for API functions
     #undef CBASH_SHORT_NAMES
+#elif defined CBASH_STATIC
+    // Linking to static CBash.lib
+    #define DLLEXTERN CBEXTERN
 #elif defined CBASH_DLL
-    // Not compiling, just an API user of the DLL
+    // Linking to dynamic CBash.dll
     #define DLLEXTERN DLLIMPORT
 #endif
 
