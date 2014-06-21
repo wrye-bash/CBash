@@ -167,6 +167,7 @@ bool AACTRecord::SetField(FIELD_IDENTIFIERS, void *FieldValue, uint32_t ArraySiz
 
 void AACTRecord::DeleteField(FIELD_IDENTIFIERS)
     {
+    GENCNAM defaultCNAM;
     switch(FieldID)
         {
         case 1: //flags1
@@ -186,8 +187,14 @@ void AACTRecord::DeleteField(FIELD_IDENTIFIERS)
             versionControl2[1] = 0;
             return;
         case 7:  // CNAM.red
+            CNAM->red = defaultCNAM.red;
+            return;
         case 8:  // CNAM.green
+            CNAM->green = defaultCNAM.green;
+            return;
         case 9:  // CNAM.blue
+            CNAM->blue = defaultCNAM.blue;
+            return;
         case 10: // CNAM.unk1
             CNAM.Unload();
             return;

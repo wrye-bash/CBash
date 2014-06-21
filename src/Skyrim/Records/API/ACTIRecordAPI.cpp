@@ -826,10 +826,10 @@ void ACTIRecord::DeleteField(FIELD_IDENTIFIERS)
         return;
     case 24: //colorGreen
         PNAM->green = defaultCNAM.green;
-        break;
+        return;
     case 25: //colorBlue
         PNAM->blue = defaultCNAM.blue;
-        break;
+        return;
     case 26: //colorUnk
         PNAM->unk1 = defaultCNAM.unk1;
         return;
