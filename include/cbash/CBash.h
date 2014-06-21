@@ -589,8 +589,8 @@ DLLEXTERN int32_t cb_GetRecordUpdatedReferences(cb_collection_t *CollectionID, c
 DLLEXTERN int32_t cb_SetIDFields(cb_record_t *RecordID, const cb_formid_t FormID, char * const EditorID);
 
 /**
-    @brief Set a field's value.
-    @details
+    @brief Set a record field's value.
+    @details The parameters \p FieldID, \p ListIndex, \p ListFieldID, \p ListX2Index, \p ListX2FieldID, \p ListX3Index and \p ListX3FieldID take values that vary on a per-record and per-field level. To determine valid values for a particular record field, read the comments in the corresponding functions for the record's `*RecordAPI.cpp` file.
     @param RecordID The record in which the field is found.
     @param FieldID
     @param ListIndex
@@ -599,15 +599,15 @@ DLLEXTERN int32_t cb_SetIDFields(cb_record_t *RecordID, const cb_formid_t FormID
     @param ListX2FieldID
     @param ListX3Index
     @param ListX3FieldID
-    @param FieldValue The value to set.
-    @param ArraySize The byte size of the value to set.
+    @param FieldValue The value to set. Any memory allocated for the data passed can be freed once the function has completed, as CBash makes a copy of the data.
+    @param ArraySize The length of the data to be set as the field's value.
     @returns
 */
 DLLEXTERN void cb_SetField(cb_record_t *RecordID, FIELD_IDENTIFIERS, void *FieldValue, const uint32_t ArraySize);
 
 /**
-    @brief
-    @details
+    @brief Delete a field from a record.
+    @details The parameters \p FieldID, \p ListIndex, \p ListFieldID, \p ListX2Index, \p ListX2FieldID, \p ListX3Index and \p ListX3FieldID take values that vary on a per-record and per-field level. To determine valid values for a particular record field, read the comments in the corresponding functions for the record's `*RecordAPI.cpp` file.
     @param RecordID The record in which the field is found.
     @param FieldID
     @param ListIndex
@@ -616,7 +616,6 @@ DLLEXTERN void cb_SetField(cb_record_t *RecordID, FIELD_IDENTIFIERS, void *Field
     @param ListX2FieldID
     @param ListX3Index
     @param ListX3FieldID
-    @returns
 */
 DLLEXTERN void cb_DeleteField(cb_record_t *RecordID, FIELD_IDENTIFIERS);
 
@@ -627,8 +626,8 @@ DLLEXTERN void cb_DeleteField(cb_record_t *RecordID, FIELD_IDENTIFIERS);
 ///@{
 
 /**
-    @brief
-    @details
+    @brief Get the type of a field's value.
+    @details The parameters \p FieldID, \p ListIndex, \p ListFieldID, \p ListX2Index, \p ListX2FieldID, \p ListX3Index, \p ListX3FieldID and \p WhichAttribute take values that vary on a per-record and per-field level. To determine valid values for a particular record field, read the comments in the corresponding functions for the record's `*RecordAPI.cpp` file.
     @param RecordID The record in which the field is found.
     @param FieldID
     @param ListIndex
@@ -637,14 +636,14 @@ DLLEXTERN void cb_DeleteField(cb_record_t *RecordID, FIELD_IDENTIFIERS);
     @param ListX2FieldID
     @param ListX3Index
     @param ListX3FieldID
-    @param WhichAttribute
-    @returns
+    @param WhichAttribute For fields that consist of more than one attribute value, this specifies which attribute to get. For single-attribute fields, it is ignored.
+    @returns A ::cb_field_type_t value.
 */
 DLLEXTERN uint32_t cb_GetFieldAttribute(cb_record_t *RecordID, FIELD_IDENTIFIERS, const uint32_t WhichAttribute);
 
 /**
-    @brief
-    @details
+    @brief Get a field's value.
+    @details The parameters \p FieldID, \p ListIndex, \p ListFieldID, \p ListX2Index, \p ListX2FieldID, \p ListX3Index and \p ListX3FieldID take values that vary on a per-record and per-field level. To determine valid values for a particular record field, read the comments in the corresponding functions for the record's `*RecordAPI.cpp` file.
     @param RecordID The record in which the field is found.
     @param FieldID
     @param ListIndex

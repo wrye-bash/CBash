@@ -175,75 +175,75 @@ typedef enum {
     @brief Flags that specify the type of a field.
 */
 typedef enum {
-    CB_UNKNOWN_FIELD = 0,
-    CB_MISSING_FIELD,
-    CB_JUNK_FIELD,
-    CB_BOOL_FIELD,
-    CB_SINT8_FIELD,
-    CB_UINT8_FIELD,
-    CB_SINT16_FIELD,
-    CB_UINT16_FIELD,
-    CB_SINT32_FIELD,
-    CB_UINT32_FIELD,
-    CB_FLOAT32_FIELD,
-    CB_RADIAN_FIELD,
-    CB_FORMID_FIELD,
-    CB_MGEFCODE_FIELD,
-    CB_ACTORVALUE_FIELD,
-    CB_FORMID_OR_UINT32_FIELD,
-    CB_FORMID_OR_FLOAT32_FIELD,
-    CB_UINT8_OR_UINT32_FIELD,
-    CB_FORMID_OR_STRING_FIELD,
-    CB_UNKNOWN_OR_FORMID_OR_UINT32_FIELD,
-    CB_UNKNOWN_OR_SINT32_FIELD,
-    CB_UNKNOWN_OR_UINT32_FLAG_FIELD,
-    CB_MGEFCODE_OR_CHAR4_FIELD,
-    CB_FORMID_OR_MGEFCODE_OR_ACTORVALUE_OR_UINT32_FIELD,
-    CB_RESOLVED_MGEFCODE_FIELD,
-    CB_STATIC_MGEFCODE_FIELD,
-    CB_RESOLVED_ACTORVALUE_FIELD,
-    CB_STATIC_ACTORVALUE_FIELD,
-    CB_CHAR_FIELD,
-    CB_CHAR4_FIELD,
-    CB_STRING_FIELD,
-    CB_ISTRING_FIELD,
-    CB_STRING_OR_FLOAT32_OR_SINT32_FIELD,
-    CB_LIST_FIELD,
-    CB_PARENTRECORD_FIELD,
-    CB_SUBRECORD_FIELD,
-    CB_SINT8_FLAG_FIELD,
-    CB_SINT8_TYPE_FIELD,
-    CB_SINT8_FLAG_TYPE_FIELD,
-    CB_SINT8_ARRAY_FIELD,
-    CB_UINT8_FLAG_FIELD,
-    CB_UINT8_TYPE_FIELD,
-    CB_UINT8_FLAG_TYPE_FIELD,
-    CB_UINT8_ARRAY_FIELD,
-    CB_SINT16_FLAG_FIELD,
-    CB_SINT16_TYPE_FIELD,
-    CB_SINT16_FLAG_TYPE_FIELD,
-    CB_SINT16_ARRAY_FIELD,
-    CB_UINT16_FLAG_FIELD,
-    CB_UINT16_TYPE_FIELD,
-    CB_UINT16_FLAG_TYPE_FIELD,
-    CB_UINT16_ARRAY_FIELD,
-    CB_SINT32_FLAG_FIELD,
-    CB_SINT32_TYPE_FIELD,
-    CB_SINT32_FLAG_TYPE_FIELD,
-    CB_SINT32_ARRAY_FIELD,
-    CB_UINT32_FLAG_FIELD,
-    CB_UINT32_TYPE_FIELD,
-    CB_UINT32_FLAG_TYPE_FIELD,
-    CB_UINT32_ARRAY_FIELD,
-    CB_FLOAT32_ARRAY_FIELD,
-    CB_RADIAN_ARRAY_FIELD,
-    CB_FORMID_ARRAY_FIELD,
-    CB_FORMID_OR_UINT32_ARRAY_FIELD,
-    CB_MGEFCODE_OR_UINT32_ARRAY_FIELD,
-    CB_STRING_ARRAY_FIELD,
-    CB_ISTRING_ARRAY_FIELD,
-    CB_SUBRECORD_ARRAY_FIELD,
-    CB_UNDEFINED_FIELD
+    CB_UNKNOWN_FIELD = 0,  ///< Data of an unknown type.
+    CB_MISSING_FIELD,  ///< The field is missing. Used for some fields that are not quite universal, eg. Editor IDs.
+    CB_JUNK_FIELD,  ///< Junk data of unknown type.
+    CB_BOOL_FIELD,  ///< A boolean value.
+    CB_SINT8_FIELD,  ///< An 8-bit signed integer.
+    CB_UINT8_FIELD,  ///< An 8-bit unsigned integer.
+    CB_SINT16_FIELD,  ///< A 16-bit signed integer.
+    CB_UINT16_FIELD,  ///< A 16-bit unsigned integer.
+    CB_SINT32_FIELD,  ///< A 32-bit signed integer.
+    CB_UINT32_FIELD,  ///< A 32-bit unsigned integer.
+    CB_FLOAT32_FIELD,  ///< A 32-bit floating point value.
+    CB_RADIAN_FIELD,  ///< A 32-bit floating point value that should be interpreted as an angle measured in radians.
+    CB_FORMID_FIELD,  ///< A 32-bit unsigned integer that should be interpreted as a FormID.
+    CB_MGEFCODE_FIELD,  ///< A 32-bit unsigned integer that should be interpreted as an MGEF code.
+    CB_ACTORVALUE_FIELD,  ///< A 32-bit unsigned integer that should be interpreted as an actor value.
+    CB_FORMID_OR_UINT32_FIELD,  ///< A 32-bit unsigned integer that may be a FormID or not.
+    CB_FORMID_OR_FLOAT32_FIELD,  ///< A FormID or a 32-bit floating point value.
+    CB_UINT8_OR_UINT32_FIELD,  ///< An 8-bit or 32-bit unsigned integer.
+    CB_FORMID_OR_STRING_FIELD,  ///< A FormID or a C string.
+    CB_UNKNOWN_OR_FORMID_OR_UINT32_FIELD,  ///< A FormID, a 32-bit unsigned integer, or some unknown type.
+    CB_UNKNOWN_OR_SINT32_FIELD,  ///< A 32-bit signed integer, or some unknown type.
+    CB_UNKNOWN_OR_UINT32_FLAG_FIELD,  ///< 32 bits of bit flag values, or some unknown type.
+    CB_MGEFCODE_OR_CHAR4_FIELD,  ///< An MGEF code or 4 8-bit characters.
+    CB_FORMID_OR_MGEFCODE_OR_ACTORVALUE_OR_UINT32_FIELD,  ///< A FormID, an MGEF code, an actor value or a 32-bit unsigned integer.
+    CB_RESOLVED_MGEFCODE_FIELD,  ///< A mod-added MGEF code.
+    CB_STATIC_MGEFCODE_FIELD,  ///< A standard MGEF code.
+    CB_RESOLVED_ACTORVALUE_FIELD,  ///< A mod-added actor value.
+    CB_STATIC_ACTORVALUE_FIELD,  ///< A standard actor value.
+    CB_CHAR_FIELD,  ///< An 8-bit character.
+    CB_CHAR4_FIELD,  ///< 4 8-bit characters.
+    CB_STRING_FIELD,  ///< A C string.
+    CB_ISTRING_FIELD,  ///< A C string that is handled case-insensitively by CBash.
+    CB_STRING_OR_FLOAT32_OR_SINT32_FIELD,  ///< A C string, 32-bit floating point value, or 32-bit signed integer.
+    CB_LIST_FIELD,  ///< The field is actually a list of fields.
+    CB_PARENTRECORD_FIELD,  ///< A parent record of the current record. Eg. each `DIAL` record can have `INFO` record children.
+    CB_SUBRECORD_FIELD,  ///< A child record associated with the current record (which is the parent). Eg. each `INFO` record is a child of a `DIAL` record.
+    CB_SINT8_FLAG_FIELD,  ///< Unused.
+    CB_SINT8_TYPE_FIELD,  ///< An 8-bit signed integer that should be interpreted as some enum value.
+    CB_SINT8_FLAG_TYPE_FIELD,  ///< Unused.
+    CB_SINT8_ARRAY_FIELD,  ///< Unused.
+    CB_UINT8_FLAG_FIELD,  ///< 8 bits of bit flag values.
+    CB_UINT8_TYPE_FIELD,  ///< An 8-bit unsigned integer that should be interpreted as some enum value.
+    CB_UINT8_FLAG_TYPE_FIELD,  ///< An 8-bit unsigned integer that is either a collection of bit flag values or some enum value.
+    CB_UINT8_ARRAY_FIELD,  ///< An array of 8-bit unsigned integers.
+    CB_SINT16_FLAG_FIELD,  ///< Unused.
+    CB_SINT16_TYPE_FIELD,  ///< Unused.
+    CB_SINT16_FLAG_TYPE_FIELD,  ///< Unused.
+    CB_SINT16_ARRAY_FIELD,  ///< An array of 16-bit unsigned integers.
+    CB_UINT16_FLAG_FIELD,  ///< 16 bits of bit flag values.
+    CB_UINT16_TYPE_FIELD,  ///< A 16-bit unsigned integer that should be interpreted as some enum value.
+    CB_UINT16_FLAG_TYPE_FIELD,  ///< Unused.
+    CB_UINT16_ARRAY_FIELD,  ///< Unused.
+    CB_SINT32_FLAG_FIELD,  ///< Unused.
+    CB_SINT32_TYPE_FIELD,  ///< A 32-bit signed integer that should be interpreted as some enum value.
+    CB_SINT32_FLAG_TYPE_FIELD,  ///< Unused.
+    CB_SINT32_ARRAY_FIELD,  ///< Unused.
+    CB_UINT32_FLAG_FIELD,  ///< 32 bits of bit flag values.
+    CB_UINT32_TYPE_FIELD,  ///< A 32-bit unsigned integer that should be interpreted as some enum value.
+    CB_UINT32_FLAG_TYPE_FIELD,  ///< Unused.
+    CB_UINT32_ARRAY_FIELD,  ///< An array of 32-bit unsigned integers.
+    CB_FLOAT32_ARRAY_FIELD,  ///< Unused.
+    CB_RADIAN_ARRAY_FIELD,  ///< Unused.
+    CB_FORMID_ARRAY_FIELD,  ///< An array of FormIDs.
+    CB_FORMID_OR_UINT32_ARRAY_FIELD,  ///< An array of FormIDs or 32-bit unsigned integers.
+    CB_MGEFCODE_OR_UINT32_ARRAY_FIELD,  ///< An array of MGEF codes or 32-bit unsigned integers.
+    CB_STRING_ARRAY_FIELD,  ///< Unused.
+    CB_ISTRING_ARRAY_FIELD,  ///< An array of C strings that are handled case-insensitively by CBash.
+    CB_SUBRECORD_ARRAY_FIELD,  ///< An array of records that are children associated with the current record (which is their parent). Eg. each `DIAL` record can have `INFO` record children.
+    CB_UNDEFINED_FIELD  ///< Unused.
 } cb_field_type_t;
 
 #ifdef __cplusplus
