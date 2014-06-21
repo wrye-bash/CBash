@@ -45,55 +45,55 @@ uint32_t SOUNRecord::GetFieldAttribute(FIELD_IDENTIFIERS, uint32_t WhichAttribut
         case 0: //recType
             return GetType();
         case 1: //flags1
-            return UINT32_FLAG_FIELD;
+            return CB_UINT32_FLAG_FIELD;
         case 2: //fid
-            return FORMID_FIELD;
+            return CB_FORMID_FIELD;
         case 3: //flags2
-            return UINT32_FLAG_FIELD;
+            return CB_UINT32_FLAG_FIELD;
         case 4: //eid
-            return ISTRING_FIELD;
+            return CB_ISTRING_FIELD;
         case 5: //soundPath
-            return ISTRING_FIELD;
+            return CB_ISTRING_FIELD;
         case 6: //minDistance
-            return UINT8_FIELD;
+            return CB_UINT8_FIELD;
         case 7: //maxDistance
-            return UINT8_FIELD;
+            return CB_UINT8_FIELD;
         case 8: //freqAdjustment
-            return SINT8_FIELD;
+            return CB_SINT8_FIELD;
         case 9: //unused1
             switch(WhichAttribute)
                 {
                 case 0: //fieldType
-                    return UINT8_ARRAY_FIELD;
+                    return CB_UINT8_ARRAY_FIELD;
                 case 1: //fieldSize
                     return 1;
                 default:
-                    return UNKNOWN_FIELD;
+                    return CB_UNKNOWN_FIELD;
                 }
-            return UNKNOWN_FIELD;
+            return CB_UNKNOWN_FIELD;
         case 10: //flags
-            return UINT16_FLAG_FIELD;
+            return CB_UINT16_FLAG_FIELD;
         case 11: //unused2
             switch(WhichAttribute)
                 {
                 case 0: //fieldType
-                    return UINT8_ARRAY_FIELD;
+                    return CB_UINT8_ARRAY_FIELD;
                 case 1: //fieldSize
                     return 2;
                 default:
-                    return UNKNOWN_FIELD;
+                    return CB_UNKNOWN_FIELD;
                 }
-            return UNKNOWN_FIELD;
+            return CB_UNKNOWN_FIELD;
         case 12: //staticAtten
-            return SINT16_FIELD;
+            return CB_SINT16_FIELD;
         case 13: //stopTime
-            return UINT8_FIELD;
+            return CB_UINT8_FIELD;
         case 14: //startTime
-            return UINT8_FIELD;
+            return CB_UINT8_FIELD;
         default:
-            return UNKNOWN_FIELD;
+            return CB_UNKNOWN_FIELD;
         }
-    return UNKNOWN_FIELD;
+    return CB_UNKNOWN_FIELD;
     }
 
 void * SOUNRecord::GetField(FIELD_IDENTIFIERS, void **FieldValues)

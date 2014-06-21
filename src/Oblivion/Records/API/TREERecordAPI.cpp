@@ -45,65 +45,65 @@ uint32_t TREERecord::GetFieldAttribute(FIELD_IDENTIFIERS, uint32_t WhichAttribut
         case 0: //recType
             return GetType();
         case 1: //flags1
-            return UINT32_FLAG_FIELD;
+            return CB_UINT32_FLAG_FIELD;
         case 2: //fid
-            return FORMID_FIELD;
+            return CB_FORMID_FIELD;
         case 3: //flags2
-            return UINT32_FLAG_FIELD;
+            return CB_UINT32_FLAG_FIELD;
         case 4: //eid
-            return ISTRING_FIELD;
+            return CB_ISTRING_FIELD;
         case 5: //modPath
-            return ISTRING_FIELD;
+            return CB_ISTRING_FIELD;
         case 6: //modb
-            return FLOAT32_FIELD;
+            return CB_FLOAT32_FIELD;
         case 7: //modt_p
             switch(WhichAttribute)
                 {
                 case 0: //fieldType
-                    return UINT8_ARRAY_FIELD;
+                    return CB_UINT8_ARRAY_FIELD;
                 case 1: //fieldSize
                     return MODL.IsLoaded() ? MODL->MODT.GetSize() : 0;
                 default:
-                    return UNKNOWN_FIELD;
+                    return CB_UNKNOWN_FIELD;
                 }
-            return UNKNOWN_FIELD;
+            return CB_UNKNOWN_FIELD;
         case 8: //iconPath
-            return ISTRING_FIELD;
+            return CB_ISTRING_FIELD;
         case 9: //speedTree
             switch(WhichAttribute)
                 {
                 case 0: //fieldType
-                    return UINT32_ARRAY_FIELD;
+                    return CB_UINT32_ARRAY_FIELD;
                 case 1: //fieldSize
                     return (uint32_t)SNAM.value.size();
                 default:
-                    return UNKNOWN_FIELD;
+                    return CB_UNKNOWN_FIELD;
                 }
-            return UNKNOWN_FIELD;
+            return CB_UNKNOWN_FIELD;
         case 10: //curvature
-            return FLOAT32_FIELD;
+            return CB_FLOAT32_FIELD;
         case 11: //minAngle
-            return FLOAT32_FIELD;
+            return CB_FLOAT32_FIELD;
         case 12: //maxAngle
-            return FLOAT32_FIELD;
+            return CB_FLOAT32_FIELD;
         case 13: //branchDim
-            return FLOAT32_FIELD;
+            return CB_FLOAT32_FIELD;
         case 14: //leafDim
-            return FLOAT32_FIELD;
+            return CB_FLOAT32_FIELD;
         case 15: //shadowRadius
-            return SINT32_FIELD;
+            return CB_SINT32_FIELD;
         case 16: //rockSpeed
-            return FLOAT32_FIELD;
+            return CB_FLOAT32_FIELD;
         case 17: //rustleSpeed
-            return FLOAT32_FIELD;
+            return CB_FLOAT32_FIELD;
         case 18: //widthBill
-            return FLOAT32_FIELD;
+            return CB_FLOAT32_FIELD;
         case 19: //heightBill
-            return FLOAT32_FIELD;
+            return CB_FLOAT32_FIELD;
         default:
-            return UNKNOWN_FIELD;
+            return CB_UNKNOWN_FIELD;
         }
-    return UNKNOWN_FIELD;
+    return CB_UNKNOWN_FIELD;
     }
 
 void * TREERecord::GetField(FIELD_IDENTIFIERS, void **FieldValues)

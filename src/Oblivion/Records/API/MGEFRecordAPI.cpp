@@ -45,93 +45,93 @@ uint32_t MGEFRecord::GetFieldAttribute(FIELD_IDENTIFIERS, uint32_t WhichAttribut
         case 0: //recType
             return GetType();
         case 1: //flags1
-            return UINT32_FLAG_FIELD;
+            return CB_UINT32_FLAG_FIELD;
         case 2: //fid
-            return FORMID_FIELD;
+            return CB_FORMID_FIELD;
         case 3: //flags2
-            return UINT32_FLAG_FIELD;
+            return CB_UINT32_FLAG_FIELD;
         case 4: //eid
-            return ISTRING_FIELD;
+            return CB_ISTRING_FIELD;
         case 5: //full
-            return STRING_FIELD;
+            return CB_STRING_FIELD;
         case 6: //text
-            return STRING_FIELD;
+            return CB_STRING_FIELD;
         case 7: //iconPath
-            return ISTRING_FIELD;
+            return CB_ISTRING_FIELD;
         case 8: //modPath
-            return ISTRING_FIELD;
+            return CB_ISTRING_FIELD;
         case 9: //modb
-            return FLOAT32_FIELD;
+            return CB_FLOAT32_FIELD;
         case 10: //modt_p
             switch(WhichAttribute)
                 {
                 case 0: //fieldType
-                    return UINT8_ARRAY_FIELD;
+                    return CB_UINT8_ARRAY_FIELD;
                 case 1: //fieldSize
                     return MODL.IsLoaded() ? MODL->MODT.GetSize() : 0;
                 default:
-                    return UNKNOWN_FIELD;
+                    return CB_UNKNOWN_FIELD;
                 }
-            return UNKNOWN_FIELD;
+            return CB_UNKNOWN_FIELD;
         case 11: //flags
-            return UINT32_FLAG_FIELD;
+            return CB_UINT32_FLAG_FIELD;
         case 12: //baseCost
-            return FLOAT32_FIELD;
+            return CB_FLOAT32_FIELD;
         case 13: //associated
-            return FORMID_FIELD;
+            return CB_FORMID_FIELD;
         case 14: //school
-            return UINT32_TYPE_FIELD;
+            return CB_UINT32_TYPE_FIELD;
         case 15: //resistValue
-            return UINT32_FIELD;
+            return CB_UINT32_FIELD;
         case 16: //numCounters
-            return UINT16_FIELD;
+            return CB_UINT16_FIELD;
         case 17: //unused1
             switch(WhichAttribute)
                 {
                 case 0: //fieldType
-                    return UINT8_ARRAY_FIELD;
+                    return CB_UINT8_ARRAY_FIELD;
                 case 1: //fieldSize
                     return 2;
                 default:
-                    return UNKNOWN_FIELD;
+                    return CB_UNKNOWN_FIELD;
                 }
-            return UNKNOWN_FIELD;
+            return CB_UNKNOWN_FIELD;
         case 18: //light
-            return FORMID_FIELD;
+            return CB_FORMID_FIELD;
         case 19: //projectileSpeed
-            return FLOAT32_FIELD;
+            return CB_FLOAT32_FIELD;
         case 20: //effectShader
-            return FORMID_FIELD;
+            return CB_FORMID_FIELD;
         case 21: //enchantEffect
-            return FORMID_FIELD;
+            return CB_FORMID_FIELD;
         case 22: //castingSound
-            return FORMID_FIELD;
+            return CB_FORMID_FIELD;
         case 23: //boltSound
-            return FORMID_FIELD;
+            return CB_FORMID_FIELD;
         case 24: //hitSound
-            return FORMID_FIELD;
+            return CB_FORMID_FIELD;
         case 25: //areaSound
-            return FORMID_FIELD;
+            return CB_FORMID_FIELD;
         case 26: //cefEnchantment
-            return FLOAT32_FIELD;
+            return CB_FLOAT32_FIELD;
         case 27: //cefBarter
-            return FLOAT32_FIELD;
+            return CB_FLOAT32_FIELD;
         case 28: //counterEffects
             if(ListFieldID == 0) //counterEffects
                 {
                 switch(WhichAttribute)
                     {
                     case 0: //fieldType
-                        return MGEFCODE_OR_UINT32_ARRAY_FIELD;
+                        return CB_MGEFCODE_OR_UINT32_ARRAY_FIELD;
                     case 1: //fieldSize
                         return (uint32_t)ESCE.value.size();
                     default:
-                        return UNKNOWN_FIELD;
+                        return CB_UNKNOWN_FIELD;
                     }
                 }
 
             if(ListIndex >= ESCE.value.size())
-                return UNKNOWN_FIELD;
+                return CB_UNKNOWN_FIELD;
 
             switch(ListFieldID)
                 {
@@ -141,91 +141,91 @@ uint32_t MGEFRecord::GetFieldAttribute(FIELD_IDENTIFIERS, uint32_t WhichAttribut
                         switch(WhichAttribute)
                             {
                             case 0: //fieldType
-                                return MGEFCODE_OR_CHAR4_FIELD;
+                                return CB_MGEFCODE_OR_CHAR4_FIELD;
                             case 2: //WhichType
-                                return ((ESCE.value[ListIndex] >= 0x80000000) ? RESOLVED_MGEFCODE_FIELD : STATIC_MGEFCODE_FIELD);
+                                return ((ESCE.value[ListIndex] >= 0x80000000) ? CB_RESOLVED_MGEFCODE_FIELD : CB_STATIC_MGEFCODE_FIELD);
                             default:
-                                return UNKNOWN_FIELD;
+                                return CB_UNKNOWN_FIELD;
                             }
                         }
                     else
-                        return CHAR4_FIELD;
+                        return CB_CHAR4_FIELD;
                 default:
-                    return UNKNOWN_FIELD;
+                    return CB_UNKNOWN_FIELD;
                 }
         //OBME Fields
         case 29: //recordVersion
-            return UINT8_FIELD;
+            return CB_UINT8_FIELD;
         case 30: //betaVersion
-            return UINT8_FIELD;
+            return CB_UINT8_FIELD;
         case 31: //minorVersion
-            return UINT8_FIELD;
+            return CB_UINT8_FIELD;
         case 32: //majorVersion
-            return UINT8_FIELD;
+            return CB_UINT8_FIELD;
         case 33: //mgefParamAInfo
-            return UINT8_FIELD;
+            return CB_UINT8_FIELD;
         case 34: //mgefParamBInfo
-            return UINT8_FIELD;
+            return CB_UINT8_FIELD;
         case 35: //reserved1
             switch(WhichAttribute)
                 {
                 case 0: //fieldType
-                    return UINT8_ARRAY_FIELD;
+                    return CB_UINT8_ARRAY_FIELD;
                 case 1: //fieldSize
                     return OBME.IsLoaded() ? 0x2 : 0;
                 default:
-                    return UNKNOWN_FIELD;
+                    return CB_UNKNOWN_FIELD;
                 }
-            return UNKNOWN_FIELD;
+            return CB_UNKNOWN_FIELD;
         case 36: //handlerCode
-            return UINT32_FIELD;
+            return CB_UINT32_FIELD;
         case 37: //OBMEFlags
-            return UINT32_FLAG_FIELD;
+            return CB_UINT32_FLAG_FIELD;
         case 38: //mgefParamB
-            return UINT32_FIELD;
+            return CB_UINT32_FIELD;
         case 39: //reserved2
             switch(WhichAttribute)
                 {
                 case 0: //fieldType
-                    return UINT8_ARRAY_FIELD;
+                    return CB_UINT8_ARRAY_FIELD;
                 case 1: //fieldSize
                     return OBME.IsLoaded() ? 0x1C : 0;
                 default:
-                    return UNKNOWN_FIELD;
+                    return CB_UNKNOWN_FIELD;
                 }
-            return UNKNOWN_FIELD;
+            return CB_UNKNOWN_FIELD;
         case 40: //mgefCode
             switch(WhichAttribute)
                 {
                 case 0: //fieldType
-                    return MGEFCODE_FIELD;
+                    return CB_MGEFCODE_FIELD;
                 case 2: //WhichType
                     if(OBME.IsLoaded())
                         {
                         if(*(MGEFCODE *)&OBME->EDDX.value.mgefCode[0] >= 0x80000000)
-                            return RESOLVED_MGEFCODE_FIELD;
-                        return STATIC_MGEFCODE_FIELD;
+                            return CB_RESOLVED_MGEFCODE_FIELD;
+                        return CB_STATIC_MGEFCODE_FIELD;
                         }
                     else
-                        return UNKNOWN_FIELD;
+                        return CB_UNKNOWN_FIELD;
                 default:
-                    return UNKNOWN_FIELD;
+                    return CB_UNKNOWN_FIELD;
                 }
-            return UNKNOWN_FIELD;
+            return CB_UNKNOWN_FIELD;
         case 41: //datx_p
             switch(WhichAttribute)
                 {
                 case 0: //fieldType
-                    return UINT8_ARRAY_FIELD;
+                    return CB_UINT8_ARRAY_FIELD;
                 case 1: //fieldSize
                     return (OBME.IsLoaded() && OBME->DATX.IsLoaded()) ? 0x20 : 0;
                 default:
-                    return UNKNOWN_FIELD;
+                    return CB_UNKNOWN_FIELD;
                 }
         default:
-            return UNKNOWN_FIELD;
+            return CB_UNKNOWN_FIELD;
         }
-    return UNKNOWN_FIELD;
+    return CB_UNKNOWN_FIELD;
     }
 
 void * MGEFRecord::GetField(FIELD_IDENTIFIERS, void **FieldValues)

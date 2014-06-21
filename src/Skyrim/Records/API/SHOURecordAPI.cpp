@@ -45,71 +45,71 @@ uint32_t SHOURecord::GetFieldAttribute(FIELD_IDENTIFIERS, uint32_t WhichAttribut
     case 0: //recType
         return GetType();
     case 1: //flags1
-        return UINT32_FLAG_FIELD;
+        return CB_UINT32_FLAG_FIELD;
     case 2: //fid
-        return FORMID_FIELD;
+        return CB_FORMID_FIELD;
     case 3: //versionControl1
         switch(WhichAttribute)
         {
         case 0: //fieldType
-            return UINT8_ARRAY_FIELD;
+            return CB_UINT8_ARRAY_FIELD;
         case 1: //fieldSize
             return 4;
         default:
-            return UNKNOWN_FIELD;
+            return CB_UNKNOWN_FIELD;
         }
-        return UNKNOWN_FIELD;
+        return CB_UNKNOWN_FIELD;
     case 4: //eid
-        return ISTRING_FIELD;
+        return CB_ISTRING_FIELD;
     case 5: //formVersion
-        return UINT16_FIELD;
+        return CB_UINT16_FIELD;
     case 6: //versionControl2
         switch(WhichAttribute)
         {
         case 0: //fieldType
-            return UINT8_ARRAY_FIELD;
+            return CB_UINT8_ARRAY_FIELD;
         case 1: //fieldSize
             return 2;
         default:
-            return UNKNOWN_FIELD;
+            return CB_UNKNOWN_FIELD;
         }
-        return UNKNOWN_FIELD;
+        return CB_UNKNOWN_FIELD;
     case 7: //full
-        return STRING_FIELD;
+        return CB_STRING_FIELD;
     case 8: //model
-        return FORMID_FIELD;
+        return CB_FORMID_FIELD;
     case 9: //words
         if (ListFieldID == 0)
         {
             switch (WhichAttribute)
             {
             case 0: //fieldType
-                return LIST_FIELD;
+                return CB_LIST_FIELD;
             case 1: //fieldSize
                 return SNAM.value.size();
             default:
-                return UNKNOWN_FIELD;
+                return CB_UNKNOWN_FIELD;
             }
-            return UNKNOWN_FIELD;
+            return CB_UNKNOWN_FIELD;
         }
         if (ListFieldID >= SNAM.value.size())
-            return UNKNOWN_FIELD;
+            return CB_UNKNOWN_FIELD;
         switch (ListFieldID)
         {
         case 1: //word
-            return FORMID_FIELD;
+            return CB_FORMID_FIELD;
         case 2: //spell
-            return FORMID_FIELD;
+            return CB_FORMID_FIELD;
         case 3: //recovery
-            return FLOAT32_FIELD;
+            return CB_FLOAT32_FIELD;
         default:
-            return UNKNOWN_FIELD;
+            return CB_UNKNOWN_FIELD;
         }
-        return UNKNOWN_FIELD;
+        return CB_UNKNOWN_FIELD;
     default:
-        return UNKNOWN_FIELD;
+        return CB_UNKNOWN_FIELD;
     }
-    return UNKNOWN_FIELD;
+    return CB_UNKNOWN_FIELD;
 }
 
 void * SHOURecord::GetField(FIELD_IDENTIFIERS, void **FieldValues)

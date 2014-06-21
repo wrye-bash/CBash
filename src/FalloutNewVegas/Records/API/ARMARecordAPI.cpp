@@ -45,172 +45,172 @@ uint32_t ARMARecord::GetFieldAttribute(FIELD_IDENTIFIERS, uint32_t WhichAttribut
         case 0: //recType
             return GetType();
         case 1: //flags1
-            return UINT32_FLAG_FIELD;
+            return CB_UINT32_FLAG_FIELD;
         case 2: //fid
-            return FORMID_FIELD;
+            return CB_FORMID_FIELD;
         case 3: //versionControl1
             switch(WhichAttribute)
                 {
                 case 0: //fieldType
-                    return UINT8_ARRAY_FIELD;
+                    return CB_UINT8_ARRAY_FIELD;
                 case 1: //fieldSize
                     return 4;
                 default:
-                    return UNKNOWN_FIELD;
+                    return CB_UNKNOWN_FIELD;
                 }
-            return UNKNOWN_FIELD;
+            return CB_UNKNOWN_FIELD;
         case 4: //eid
-            return ISTRING_FIELD;
+            return CB_ISTRING_FIELD;
         case 5: //formVersion
-            return UINT16_FIELD;
+            return CB_UINT16_FIELD;
         case 6: //versionControl2
             switch(WhichAttribute)
                 {
                 case 0: //fieldType
-                    return UINT8_ARRAY_FIELD;
+                    return CB_UINT8_ARRAY_FIELD;
                 case 1: //fieldSize
                     return 2;
                 default:
-                    return UNKNOWN_FIELD;
+                    return CB_UNKNOWN_FIELD;
                 }
-            return UNKNOWN_FIELD;
+            return CB_UNKNOWN_FIELD;
         case 7: //boundX
-            return SINT16_FIELD;
+            return CB_SINT16_FIELD;
         case 8: //boundY
-            return SINT16_FIELD;
+            return CB_SINT16_FIELD;
         case 9: //boundZ
-            return SINT16_FIELD;
+            return CB_SINT16_FIELD;
         case 10: //full
-            return STRING_FIELD;
+            return CB_STRING_FIELD;
         case 11: //bmdt Biped Data
-            return UINT32_FIELD;
+            return CB_UINT32_FIELD;
         case 12: //bmdt Biped Data
-            return UINT8_FIELD;
+            return CB_UINT8_FIELD;
         case 13: //bmdt_p Biped Data
             switch(WhichAttribute)
                 {
                 case 0: //fieldType
-                    return UINT8_ARRAY_FIELD;
+                    return CB_UINT8_ARRAY_FIELD;
                 case 1: //fieldSize
                     return 3;
                 default:
-                    return UNKNOWN_FIELD;
+                    return CB_UNKNOWN_FIELD;
                 }
-            return UNKNOWN_FIELD;
+            return CB_UNKNOWN_FIELD;
         case 14: //modPath
-            return ISTRING_FIELD;
+            return CB_ISTRING_FIELD;
         case 15: //modt_p
             switch(WhichAttribute)
                 {
                 case 0: //fieldType
-                    return UINT8_ARRAY_FIELD;
+                    return CB_UINT8_ARRAY_FIELD;
                 case 1: //fieldSize
                     return MODL.IsLoaded() ? MODL->MODT.GetSize() : 0;
                 default:
-                    return UNKNOWN_FIELD;
+                    return CB_UNKNOWN_FIELD;
                 }
-            return UNKNOWN_FIELD;
+            return CB_UNKNOWN_FIELD;
         case 16: //mods Alternate Texture
-            return ISTRING_FIELD;
+            return CB_ISTRING_FIELD;
         case 17: //mods Alternate Texture
-            return FORMID_FIELD;
+            return CB_FORMID_FIELD;
         case 18: //mods Alternate Texture
-            return SINT32_FIELD;
+            return CB_SINT32_FIELD;
         case 19: //modelFlags
-            return UINT8_FIELD;
+            return CB_UINT8_FIELD;
         case 20: //mod2 Model Filename
-            return ISTRING_FIELD;
+            return CB_ISTRING_FIELD;
         case 21: //mo2t_p Texture Files Hashes
             switch(WhichAttribute)
                 {
                 case 0: //fieldType
-                    return UINT8_ARRAY_FIELD;
+                    return CB_UINT8_ARRAY_FIELD;
                 case 1: //fieldSize
                     return MOD2->MODT.GetSize();
                 default:
-                    return UNKNOWN_FIELD;
+                    return CB_UNKNOWN_FIELD;
                 }
-            return UNKNOWN_FIELD;
+            return CB_UNKNOWN_FIELD;
         case 22: //mo2s Alternate Texture
-            return ISTRING_FIELD;
+            return CB_ISTRING_FIELD;
         case 23: //mo2s Alternate Texture
-            return FORMID_FIELD;
+            return CB_FORMID_FIELD;
         case 24: //mo2s Alternate Texture
-            return SINT32_FIELD;
+            return CB_SINT32_FIELD;
         case 25: //icon Male icon filename
-            return ISTRING_FIELD;
+            return CB_ISTRING_FIELD;
         case 26: //mico Male mico filename
-            return ISTRING_FIELD;
+            return CB_ISTRING_FIELD;
         case 27: //mod3 Model Filename
-            return ISTRING_FIELD;
+            return CB_ISTRING_FIELD;
         case 28: //mo3t_p Texture Files Hashes
             switch(WhichAttribute)
                 {
                 case 0: //fieldType
-                    return UINT8_ARRAY_FIELD;
+                    return CB_UINT8_ARRAY_FIELD;
                 case 1: //fieldSize
                     return MOD3->MODT.GetSize();
                 default:
-                    return UNKNOWN_FIELD;
+                    return CB_UNKNOWN_FIELD;
                 }
-            return UNKNOWN_FIELD;
+            return CB_UNKNOWN_FIELD;
         case 29: //mo3s Alternate Texture
-            return ISTRING_FIELD;
+            return CB_ISTRING_FIELD;
         case 30: //mo3s Alternate Texture
-            return FORMID_FIELD;
+            return CB_FORMID_FIELD;
         case 31: //mo3s Alternate Texture
-            return SINT32_FIELD;
+            return CB_SINT32_FIELD;
         case 32: //mosd FaceGen Model Flags
-            return UINT8_FIELD;
+            return CB_UINT8_FIELD;
         case 33: //mod4 Model Filename
-            return ISTRING_FIELD;
+            return CB_ISTRING_FIELD;
         case 34: //mo4t_p Texture Files Hashes
             switch(WhichAttribute)
                 {
                 case 0: //fieldType
-                    return UINT8_ARRAY_FIELD;
+                    return CB_UINT8_ARRAY_FIELD;
                 case 1: //fieldSize
                     return MOD4->MODT.GetSize();
                 default:
-                    return UNKNOWN_FIELD;
+                    return CB_UNKNOWN_FIELD;
                 }
-            return UNKNOWN_FIELD;
+            return CB_UNKNOWN_FIELD;
         case 35: //mo4s Alternate Texture
-            return ISTRING_FIELD;
+            return CB_ISTRING_FIELD;
         case 36: //mo4s Alternate Texture
-            return FORMID_FIELD;
+            return CB_FORMID_FIELD;
         case 37: //mo4s Alternate Texture
-            return SINT32_FIELD;
+            return CB_SINT32_FIELD;
         case 38: //ico2 Female icon filename
-            return ISTRING_FIELD;
+            return CB_ISTRING_FIELD;
         case 39: //mic2 Female mico filename
-            return ISTRING_FIELD;
+            return CB_ISTRING_FIELD;
         case 40: //etyp Equipment Type
-            return SINT32_FIELD;
+            return CB_SINT32_FIELD;
         case 41: //data DATA ,, Struct
-            return SINT32_FIELD;
+            return CB_SINT32_FIELD;
         case 42: //data DATA ,, Struct
-            return SINT32_FIELD;
+            return CB_SINT32_FIELD;
         case 43: //data DATA ,, Struct
-            return FLOAT32_FIELD;
+            return CB_FLOAT32_FIELD;
         case 44: //dnam DNAM ,, Struct
-            return SINT16_FIELD;
+            return CB_SINT16_FIELD;
         case 45: //dnam DNAM ,, Struct
-            return UINT16_FIELD;
+            return CB_UINT16_FIELD;
         case 46: //dnam_p DNAM ,, Struct
             switch(WhichAttribute)
                 {
                 case 0: //fieldType
-                    return UINT8_ARRAY_FIELD;
+                    return CB_UINT8_ARRAY_FIELD;
                 case 1: //fieldSize
                     return DNAM.GetSize();
                 default:
-                    return UNKNOWN_FIELD;
+                    return CB_UNKNOWN_FIELD;
                 }
         default:
-            return UNKNOWN_FIELD;
+            return CB_UNKNOWN_FIELD;
         }
-    return UNKNOWN_FIELD;
+    return CB_UNKNOWN_FIELD;
     }
 
 void * ARMARecord::GetField(FIELD_IDENTIFIERS, void **FieldValues)

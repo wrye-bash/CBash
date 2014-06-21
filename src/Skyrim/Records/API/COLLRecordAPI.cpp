@@ -44,66 +44,66 @@ uint32_t COLLRecord::GetFieldAttribute(FIELD_IDENTIFIERS, uint32_t WhichAttribut
     case 0: //recType
         return GetType();
     case 1: //flags1
-        return UINT32_FLAG_FIELD;
+        return CB_UINT32_FLAG_FIELD;
     case 2: //fid
-        return FORMID_FIELD;
+        return CB_FORMID_FIELD;
     case 3: //versionControl1
         switch(WhichAttribute)
         {
         case 0: //fieldType
-            return UINT8_ARRAY_FIELD;
+            return CB_UINT8_ARRAY_FIELD;
         case 1: //fieldSize
             return 4;
         default:
-            return UNKNOWN_FIELD;
+            return CB_UNKNOWN_FIELD;
         }
-        return UNKNOWN_FIELD;
+        return CB_UNKNOWN_FIELD;
     case 4: //eid
-        return ISTRING_FIELD;
+        return CB_ISTRING_FIELD;
     case 5: //formVersion
-        return UINT16_FIELD;
+        return CB_UINT16_FIELD;
     case 6: //versionControl2
         switch(WhichAttribute)
         {
         case 0: //fieldType
-            return UINT8_ARRAY_FIELD;
+            return CB_UINT8_ARRAY_FIELD;
         case 1: //fieldSize
             return 2;
         default:
-            return UNKNOWN_FIELD;
+            return CB_UNKNOWN_FIELD;
         }
-        return UNKNOWN_FIELD;
+        return CB_UNKNOWN_FIELD;
     case 7: //description
-        return STRING_FIELD;
+        return CB_STRING_FIELD;
     case 8: //id
-        return UINT32_FIELD;
+        return CB_UINT32_FIELD;
     case 9: //debugColor.red
-        return UINT8_FIELD;
+        return CB_UINT8_FIELD;
     case 10: //debugColor.green
-        return UINT8_FIELD;
+        return CB_UINT8_FIELD;
     case 11: //debugColor.blue
-        return UINT8_FIELD;
+        return CB_UINT8_FIELD;
     case 12: //debugColor.unknown
-        return UINT8_FIELD;
+        return CB_UINT8_FIELD;
     case 13: //flags
-        return UINT32_FLAG_FIELD;
+        return CB_UINT32_FLAG_FIELD;
     case 14: //name
-        return ISTRING_FIELD;
+        return CB_ISTRING_FIELD;
     case 15: //collidesWith
         switch(WhichAttribute)
         {
         case 0: //fieldType
-            return FORMID_ARRAY_FIELD;
+            return CB_FORMID_ARRAY_FIELD;
         case 1: //fieldSize
             return (uint32_t)CNAM.value.size();
         default:
-            return UNKNOWN_FIELD;
+            return CB_UNKNOWN_FIELD;
         }
-        return UNKNOWN_FIELD;
+        return CB_UNKNOWN_FIELD;
     default:
-        return UNKNOWN_FIELD;
+        return CB_UNKNOWN_FIELD;
     }
-    return UNKNOWN_FIELD;
+    return CB_UNKNOWN_FIELD;
 }
 
 void * COLLRecord::GetField(FIELD_IDENTIFIERS, void **FieldValues)

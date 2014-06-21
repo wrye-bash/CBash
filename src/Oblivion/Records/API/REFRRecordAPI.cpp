@@ -45,165 +45,165 @@ uint32_t REFRRecord::GetFieldAttribute(FIELD_IDENTIFIERS, uint32_t WhichAttribut
         case 0: //recType
             return GetType();
         case 1: //flags1
-            return UINT32_FLAG_FIELD;
+            return CB_UINT32_FLAG_FIELD;
         case 2: //fid
-            return FORMID_FIELD;
+            return CB_FORMID_FIELD;
         case 3: //flags2
-            return UINT32_FLAG_FIELD;
+            return CB_UINT32_FLAG_FIELD;
         case 4: //eid
-            return ISTRING_FIELD;
+            return CB_ISTRING_FIELD;
         case 5: //base
-            return FORMID_FIELD;
+            return CB_FORMID_FIELD;
         case 6: //destination
-            return FORMID_FIELD;
+            return CB_FORMID_FIELD;
         case 7: //destinationPosX
-            return FLOAT32_FIELD;
+            return CB_FLOAT32_FIELD;
         case 8: //destinationPosY
-            return FLOAT32_FIELD;
+            return CB_FLOAT32_FIELD;
         case 9: //destinationPosZ
-            return FLOAT32_FIELD;
+            return CB_FLOAT32_FIELD;
         case 10: //destinationRotX
-            return RADIAN_FIELD;
+            return CB_RADIAN_FIELD;
         case 11: //destinationRotY
-            return RADIAN_FIELD;
+            return CB_RADIAN_FIELD;
         case 12: //destinationRotZ
-            return RADIAN_FIELD;
+            return CB_RADIAN_FIELD;
         case 13: //lockLevel
-            return UINT8_FIELD;
+            return CB_UINT8_FIELD;
         case 14: //unused1
             switch(WhichAttribute)
                 {
                 case 0: //fieldType
-                    return UINT8_ARRAY_FIELD;
+                    return CB_UINT8_ARRAY_FIELD;
                 case 1: //fieldSize
                     return Data.IsLoaded() && Data->XLOC.IsLoaded() ? 3: 0;
                 default:
-                    return UNKNOWN_FIELD;
+                    return CB_UNKNOWN_FIELD;
                 }
-            return UNKNOWN_FIELD;
+            return CB_UNKNOWN_FIELD;
         case 15: //lockKey
-            return FORMID_FIELD;
+            return CB_FORMID_FIELD;
         case 16: //unused2
             switch(WhichAttribute)
                 {
                 case 0: //fieldType
-                    return UINT8_ARRAY_FIELD;
+                    return CB_UINT8_ARRAY_FIELD;
                 case 1: //fieldSize
                     return Data.IsLoaded() && Data->XLOC.IsLoaded() ? 4: 0;
                 default:
-                    return UNKNOWN_FIELD;
+                    return CB_UNKNOWN_FIELD;
                 }
-            return UNKNOWN_FIELD;
+            return CB_UNKNOWN_FIELD;
         case 17: //lockFlags
-            return UINT8_FLAG_FIELD;
+            return CB_UINT8_FLAG_FIELD;
         case 18: //unused3
             switch(WhichAttribute)
                 {
                 case 0: //fieldType
-                    return UINT8_ARRAY_FIELD;
+                    return CB_UINT8_ARRAY_FIELD;
                 case 1: //fieldSize
                     return Data.IsLoaded() && Data->XLOC.IsLoaded() ? 3: 0;
                 default:
-                    return UNKNOWN_FIELD;
+                    return CB_UNKNOWN_FIELD;
                 }
-            return UNKNOWN_FIELD;
+            return CB_UNKNOWN_FIELD;
         case 19: //owner
-            return FORMID_FIELD;
+            return CB_FORMID_FIELD;
         case 20: //rank
-            return SINT32_FIELD;
+            return CB_SINT32_FIELD;
         case 21: //globalVariable
-            return FORMID_FIELD;
+            return CB_FORMID_FIELD;
         case 22: //parent
-            return FORMID_FIELD;
+            return CB_FORMID_FIELD;
         case 23: //parentFlags
-            return UINT8_FLAG_FIELD;
+            return CB_UINT8_FLAG_FIELD;
         case 24: //unused4
             switch(WhichAttribute)
                 {
                 case 0: //fieldType
-                    return UINT8_ARRAY_FIELD;
+                    return CB_UINT8_ARRAY_FIELD;
                 case 1: //fieldSize
                     return Data.IsLoaded() && Data->XESP.IsLoaded() ? 3: 0;
                 default:
-                    return UNKNOWN_FIELD;
+                    return CB_UNKNOWN_FIELD;
                 }
-            return UNKNOWN_FIELD;
+            return CB_UNKNOWN_FIELD;
         case 25: //target
-            return FORMID_FIELD;
+            return CB_FORMID_FIELD;
         case 26: //seed
             switch(WhichAttribute)
                 {
                 case 0: //fieldType
-                    return UINT8_OR_UINT32_FIELD;
+                    return CB_UINT8_OR_UINT32_FIELD;
                 case 2: //WhichType
                     if(Data.IsLoaded() && Data->XSED.IsLoaded())
-                        return Data->XSED->isOffset ? UINT8_FIELD : UINT32_FIELD;
-                    return UINT32_FIELD;
+                        return Data->XSED->isOffset ? CB_UINT8_FIELD : CB_UINT32_FIELD;
+                    return CB_UINT32_FIELD;
                 default:
-                    return UNKNOWN_FIELD;
+                    return CB_UNKNOWN_FIELD;
                 }
-            return UNKNOWN_FIELD;
+            return CB_UNKNOWN_FIELD;
         case 27: //lod1
-            return FLOAT32_FIELD;
+            return CB_FLOAT32_FIELD;
         case 28: //lod2
-            return FLOAT32_FIELD;
+            return CB_FLOAT32_FIELD;
         case 29: //lod3
-            return FLOAT32_FIELD;
+            return CB_FLOAT32_FIELD;
         case 30: //charge
-            return FLOAT32_FIELD;
+            return CB_FLOAT32_FIELD;
         case 31: //health
-            return SINT32_FIELD;
+            return CB_SINT32_FIELD;
         case 32: //unknownXPCIFormID
-            return FORMID_FIELD;
+            return CB_FORMID_FIELD;
         case 33: //unknownXPCIString
-            return ISTRING_FIELD;
+            return CB_ISTRING_FIELD;
         case 34: //levelMod
-            return SINT32_FIELD;
+            return CB_SINT32_FIELD;
         case 35: //unknownXRTMFormID
-            return FORMID_FIELD;
+            return CB_FORMID_FIELD;
         case 36: //actionFlags
-            return UINT32_FLAG_FIELD;
+            return CB_UINT32_FLAG_FIELD;
         case 37: //count
-            return SINT32_FIELD;
+            return CB_SINT32_FIELD;
         case 38: //markerFlags
-            return UINT8_FLAG_FIELD;
+            return CB_UINT8_FLAG_FIELD;
         case 39: //markerName
-            return STRING_FIELD;
+            return CB_STRING_FIELD;
         case 40: //markerType
-            return UINT8_TYPE_FIELD;
+            return CB_UINT8_TYPE_FIELD;
         case 41: //markerUnused
             switch(WhichAttribute)
                 {
                 case 0: //fieldType
-                    return UINT8_ARRAY_FIELD;
+                    return CB_UINT8_ARRAY_FIELD;
                 case 1: //fieldSize
                     return Data.IsLoaded() && Data->Marker.IsLoaded() ? 1: 0;
                 default:
-                    return UNKNOWN_FIELD;
+                    return CB_UNKNOWN_FIELD;
                 }
-            return UNKNOWN_FIELD;
+            return CB_UNKNOWN_FIELD;
         case 42: //scale
-            return FLOAT32_FIELD;
+            return CB_FLOAT32_FIELD;
         case 43: //soulType
-            return UINT8_TYPE_FIELD;
+            return CB_UINT8_TYPE_FIELD;
         case 44: //posX
-            return FLOAT32_FIELD;
+            return CB_FLOAT32_FIELD;
         case 45: //posY
-            return FLOAT32_FIELD;
+            return CB_FLOAT32_FIELD;
         case 46: //posZ
-            return FLOAT32_FIELD;
+            return CB_FLOAT32_FIELD;
         case 47: //rotX
-            return RADIAN_FIELD;
+            return CB_RADIAN_FIELD;
         case 48: //rotY
-            return RADIAN_FIELD;
+            return CB_RADIAN_FIELD;
         case 49: //rotZ
-            return RADIAN_FIELD;
+            return CB_RADIAN_FIELD;
         case 50: //Parent
-            return PARENTRECORD_FIELD;
+            return CB_PARENTRECORD_FIELD;
         default:
-            return UNKNOWN_FIELD;
+            return CB_UNKNOWN_FIELD;
         }
-    return UNKNOWN_FIELD;
+    return CB_UNKNOWN_FIELD;
     }
 
 void * REFRRecord::GetField(FIELD_IDENTIFIERS, void **FieldValues)

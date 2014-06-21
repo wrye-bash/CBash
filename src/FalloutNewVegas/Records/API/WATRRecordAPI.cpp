@@ -45,222 +45,222 @@ uint32_t WATRRecord::GetFieldAttribute(FIELD_IDENTIFIERS, uint32_t WhichAttribut
         case 0: //recType
             return GetType();
         case 1: //flags1
-            return UINT32_FLAG_FIELD;
+            return CB_UINT32_FLAG_FIELD;
         case 2: //fid
-            return FORMID_FIELD;
+            return CB_FORMID_FIELD;
         case 3: //versionControl1
             switch(WhichAttribute)
                 {
                 case 0: //fieldType
-                    return UINT8_ARRAY_FIELD;
+                    return CB_UINT8_ARRAY_FIELD;
                 case 1: //fieldSize
                     return 4;
                 default:
-                    return UNKNOWN_FIELD;
+                    return CB_UNKNOWN_FIELD;
                 }
-            return UNKNOWN_FIELD;
+            return CB_UNKNOWN_FIELD;
         case 4: //eid
-            return ISTRING_FIELD;
+            return CB_ISTRING_FIELD;
         case 5: //formVersion
-            return UINT16_FIELD;
+            return CB_UINT16_FIELD;
         case 6: //versionControl2
             switch(WhichAttribute)
                 {
                 case 0: //fieldType
-                    return UINT8_ARRAY_FIELD;
+                    return CB_UINT8_ARRAY_FIELD;
                 case 1: //fieldSize
                     return 2;
                 default:
-                    return UNKNOWN_FIELD;
+                    return CB_UNKNOWN_FIELD;
                 }
-            return UNKNOWN_FIELD;
+            return CB_UNKNOWN_FIELD;
         case 7: //full
-            return STRING_FIELD;
+            return CB_STRING_FIELD;
         case 8: //noisePath
-            return ISTRING_FIELD;
+            return CB_ISTRING_FIELD;
         case 9: //opacity
-            return UINT8_FIELD;
+            return CB_UINT8_FIELD;
         case 10: //flags
-            return UINT8_FIELD;
+            return CB_UINT8_FIELD;
         case 11: //material
-            return ISTRING_FIELD;
+            return CB_ISTRING_FIELD;
         case 12: //sound
-            return FORMID_FIELD;
+            return CB_FORMID_FIELD;
         case 13: //effect
-            return FORMID_FIELD;
+            return CB_FORMID_FIELD;
         case 14: //damage
-            return UINT16_FIELD;
+            return CB_UINT16_FIELD;
         case 15: //unknown1
-            return FLOAT32_FIELD;
+            return CB_FLOAT32_FIELD;
         case 16: //unknown2
-            return FLOAT32_FIELD;
+            return CB_FLOAT32_FIELD;
         case 17: //unknown3
-            return FLOAT32_FIELD;
+            return CB_FLOAT32_FIELD;
         case 18: //unknown4
-            return FLOAT32_FIELD;
+            return CB_FLOAT32_FIELD;
         case 19: //sunPower
-            return FLOAT32_FIELD;
+            return CB_FLOAT32_FIELD;
         case 20: //reflectAmt
-            return FLOAT32_FIELD;
+            return CB_FLOAT32_FIELD;
         case 21: //fresnelAmt
-            return FLOAT32_FIELD;
+            return CB_FLOAT32_FIELD;
         case 22: //unused1
             switch(WhichAttribute)
                 {
                 case 0: //fieldType
-                    return UINT8_ARRAY_FIELD;
+                    return CB_UINT8_ARRAY_FIELD;
                 case 1: //fieldSize
                     return 4;
                 default:
-                    return UNKNOWN_FIELD;
+                    return CB_UNKNOWN_FIELD;
                 }
-            return UNKNOWN_FIELD;
+            return CB_UNKNOWN_FIELD;
         case 23: //fogNear
-            return FLOAT32_FIELD;
+            return CB_FLOAT32_FIELD;
         case 24: //fogFar
-            return FLOAT32_FIELD;
+            return CB_FLOAT32_FIELD;
         case 25: //shallow.red
-            return UINT8_FIELD;
+            return CB_UINT8_FIELD;
         case 26: //shallow.green
-            return UINT8_FIELD;
+            return CB_UINT8_FIELD;
         case 27: //shallow.blue
-            return UINT8_FIELD;
+            return CB_UINT8_FIELD;
         case 28: //unused2
             switch(WhichAttribute)
                 {
                 case 0: //fieldType
-                    return UINT8_ARRAY_FIELD;
+                    return CB_UINT8_ARRAY_FIELD;
                 case 1: //fieldSize
                     return 1;
                 default:
-                    return UNKNOWN_FIELD;
+                    return CB_UNKNOWN_FIELD;
                 }
-            return UNKNOWN_FIELD;
+            return CB_UNKNOWN_FIELD;
         case 29: //deep.red
-            return UINT8_FIELD;
+            return CB_UINT8_FIELD;
         case 30: //deep.green
-            return UINT8_FIELD;
+            return CB_UINT8_FIELD;
         case 31: //deep.blue
-            return UINT8_FIELD;
+            return CB_UINT8_FIELD;
         case 32: //unused3
             switch(WhichAttribute)
                 {
                 case 0: //fieldType
-                    return UINT8_ARRAY_FIELD;
+                    return CB_UINT8_ARRAY_FIELD;
                 case 1: //fieldSize
                     return 1;
                 default:
-                    return UNKNOWN_FIELD;
+                    return CB_UNKNOWN_FIELD;
                 }
-            return UNKNOWN_FIELD;
+            return CB_UNKNOWN_FIELD;
         case 33: //refl.red
-            return UINT8_FIELD;
+            return CB_UINT8_FIELD;
         case 34: //refl.green
-            return UINT8_FIELD;
+            return CB_UINT8_FIELD;
         case 35: //refl.blue
-            return UINT8_FIELD;
+            return CB_UINT8_FIELD;
         case 36: //unused4
             switch(WhichAttribute)
                 {
                 case 0: //fieldType
-                    return UINT8_ARRAY_FIELD;
+                    return CB_UINT8_ARRAY_FIELD;
                 case 1: //fieldSize
                     return 1;
                 default:
-                    return UNKNOWN_FIELD;
+                    return CB_UNKNOWN_FIELD;
                 }
-            return UNKNOWN_FIELD;
+            return CB_UNKNOWN_FIELD;
         case 37: //unused5
             switch(WhichAttribute)
                 {
                 case 0: //fieldType
-                    return UINT8_ARRAY_FIELD;
+                    return CB_UINT8_ARRAY_FIELD;
                 case 1: //fieldSize
                     return 4;
                 default:
-                    return UNKNOWN_FIELD;
+                    return CB_UNKNOWN_FIELD;
                 }
-            return UNKNOWN_FIELD;
+            return CB_UNKNOWN_FIELD;
         case 38: //rainForce
-            return FLOAT32_FIELD;
+            return CB_FLOAT32_FIELD;
         case 39: //rainVelocity
-            return FLOAT32_FIELD;
+            return CB_FLOAT32_FIELD;
         case 40: //rainFalloff
-            return FLOAT32_FIELD;
+            return CB_FLOAT32_FIELD;
         case 41: //rainDampner
-            return FLOAT32_FIELD;
+            return CB_FLOAT32_FIELD;
         case 42: //dispSize
-            return FLOAT32_FIELD;
+            return CB_FLOAT32_FIELD;
         case 43: //dispForce
-            return FLOAT32_FIELD;
+            return CB_FLOAT32_FIELD;
         case 44: //dispVelocity
-            return FLOAT32_FIELD;
+            return CB_FLOAT32_FIELD;
         case 45: //dispFalloff
-            return FLOAT32_FIELD;
+            return CB_FLOAT32_FIELD;
         case 46: //dispDampner
-            return FLOAT32_FIELD;
+            return CB_FLOAT32_FIELD;
         case 47: //rainSize
-            return FLOAT32_FIELD;
+            return CB_FLOAT32_FIELD;
         case 48: //normalsNoiseScale
-            return FLOAT32_FIELD;
+            return CB_FLOAT32_FIELD;
         case 49: //noise1Direction
-            return FLOAT32_FIELD;
+            return CB_FLOAT32_FIELD;
         case 50: //noise2Direction
-            return FLOAT32_FIELD;
+            return CB_FLOAT32_FIELD;
         case 51: //noise3Direction
-            return FLOAT32_FIELD;
+            return CB_FLOAT32_FIELD;
         case 52: //noise1Speed
-            return FLOAT32_FIELD;
+            return CB_FLOAT32_FIELD;
         case 53: //noise2Speed
-            return FLOAT32_FIELD;
+            return CB_FLOAT32_FIELD;
         case 54: //noise3Speed
-            return FLOAT32_FIELD;
+            return CB_FLOAT32_FIELD;
         case 55: //normalsFalloffStart
-            return FLOAT32_FIELD;
+            return CB_FLOAT32_FIELD;
         case 56: //normalsFalloffEnd
-            return FLOAT32_FIELD;
+            return CB_FLOAT32_FIELD;
         case 57: //fogAmt
-            return FLOAT32_FIELD;
+            return CB_FLOAT32_FIELD;
         case 58: //normalsUVScale
-            return FLOAT32_FIELD;
+            return CB_FLOAT32_FIELD;
         case 59: //underFogAmt
-            return FLOAT32_FIELD;
+            return CB_FLOAT32_FIELD;
         case 60: //underFogNear
-            return FLOAT32_FIELD;
+            return CB_FLOAT32_FIELD;
         case 61: //underFogFar
-            return FLOAT32_FIELD;
+            return CB_FLOAT32_FIELD;
         case 62: //distAmt
-            return FLOAT32_FIELD;
+            return CB_FLOAT32_FIELD;
         case 63: //shininess
-            return FLOAT32_FIELD;
+            return CB_FLOAT32_FIELD;
         case 64: //hdrMult
-            return FLOAT32_FIELD;
+            return CB_FLOAT32_FIELD;
         case 65: //lightRadius
-            return FLOAT32_FIELD;
+            return CB_FLOAT32_FIELD;
         case 66: //lightBright
-            return FLOAT32_FIELD;
+            return CB_FLOAT32_FIELD;
         case 67: //noise1UVScale
-            return FLOAT32_FIELD;
+            return CB_FLOAT32_FIELD;
         case 68: //noise2UVScale
-            return FLOAT32_FIELD;
+            return CB_FLOAT32_FIELD;
         case 69: //noise3UVScale
-            return FLOAT32_FIELD;
+            return CB_FLOAT32_FIELD;
         case 70: //noise1AmpScale
-            return FLOAT32_FIELD;
+            return CB_FLOAT32_FIELD;
         case 71: //noise2AmpScale
-            return FLOAT32_FIELD;
+            return CB_FLOAT32_FIELD;
         case 72: //noise3AmpScale
-            return FLOAT32_FIELD;
+            return CB_FLOAT32_FIELD;
         case 73: //dayWater
-            return FORMID_FIELD;
+            return CB_FORMID_FIELD;
         case 74: //nightWater
-            return FORMID_FIELD;
+            return CB_FORMID_FIELD;
         case 75: //underWater
-            return FORMID_FIELD;
+            return CB_FORMID_FIELD;
         default:
-            return UNKNOWN_FIELD;
+            return CB_UNKNOWN_FIELD;
         }
-    return UNKNOWN_FIELD;
+    return CB_UNKNOWN_FIELD;
     }
 
 void * WATRRecord::GetField(FIELD_IDENTIFIERS, void **FieldValues)

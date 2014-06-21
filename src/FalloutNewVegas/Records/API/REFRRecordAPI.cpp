@@ -45,174 +45,174 @@ uint32_t REFRRecord::GetFieldAttribute(FIELD_IDENTIFIERS, uint32_t WhichAttribut
         case 0: //recType
             return GetType();
         case 1: //flags1
-            return UINT32_FLAG_FIELD;
+            return CB_UINT32_FLAG_FIELD;
         case 2: //fid
-            return FORMID_FIELD;
+            return CB_FORMID_FIELD;
         case 3: //versionControl1
             switch(WhichAttribute)
                 {
                 case 0: //fieldType
-                    return UINT8_ARRAY_FIELD;
+                    return CB_UINT8_ARRAY_FIELD;
                 case 1: //fieldSize
                     return 4;
                 default:
-                    return UNKNOWN_FIELD;
+                    return CB_UNKNOWN_FIELD;
                 }
-            return UNKNOWN_FIELD;
+            return CB_UNKNOWN_FIELD;
         case 4: //eid
-            return ISTRING_FIELD;
+            return CB_ISTRING_FIELD;
         case 5: //formVersion
-            return UINT16_FIELD;
+            return CB_UINT16_FIELD;
         case 6: //versionControl2
             switch(WhichAttribute)
                 {
                 case 0: //fieldType
-                    return UINT8_ARRAY_FIELD;
+                    return CB_UINT8_ARRAY_FIELD;
                 case 1: //fieldSize
                     return 2;
                 default:
-                    return UNKNOWN_FIELD;
+                    return CB_UNKNOWN_FIELD;
                 }
-            return UNKNOWN_FIELD;
+            return CB_UNKNOWN_FIELD;
         case 7: //base
-            return FORMID_FIELD;
+            return CB_FORMID_FIELD;
         case 8: //encounterZone
-            return FORMID_FIELD;
+            return CB_FORMID_FIELD;
         case 9: //xrgd_p
             switch(WhichAttribute)
                 {
                 case 0: //fieldType
-                    return UINT8_ARRAY_FIELD;
+                    return CB_UINT8_ARRAY_FIELD;
                 case 1: //fieldSize
                     return XRGD.GetSize();
                 default:
-                    return UNKNOWN_FIELD;
+                    return CB_UNKNOWN_FIELD;
                 }
-            return UNKNOWN_FIELD;
+            return CB_UNKNOWN_FIELD;
         case 10: //xrgb_p
             switch(WhichAttribute)
                 {
                 case 0: //fieldType
-                    return UINT8_ARRAY_FIELD;
+                    return CB_UINT8_ARRAY_FIELD;
                 case 1: //fieldSize
                     return XRGB.GetSize();
                 default:
-                    return UNKNOWN_FIELD;
+                    return CB_UNKNOWN_FIELD;
                 }
-            return UNKNOWN_FIELD;
+            return CB_UNKNOWN_FIELD;
         case 11: //idleTime
-            return FLOAT32_FIELD;
+            return CB_FLOAT32_FIELD;
         case 12: //idle
-            return FORMID_FIELD;
+            return CB_FORMID_FIELD;
         case 13: //unused1
             switch(WhichAttribute)
                 {
                 case 0: //fieldType
-                    return UINT8_ARRAY_FIELD;
+                    return CB_UINT8_ARRAY_FIELD;
                 case 1: //fieldSize
                     return Patrol.IsLoaded() ? 4 : 0;
                 default:
-                    return UNKNOWN_FIELD;
+                    return CB_UNKNOWN_FIELD;
                 }
-            return UNKNOWN_FIELD;
+            return CB_UNKNOWN_FIELD;
         case 14: //numRefs
-            return UINT32_FIELD;
+            return CB_UINT32_FIELD;
         case 15: //compiledSize
-            return UINT32_FIELD;
+            return CB_UINT32_FIELD;
         case 16: //lastIndex
-            return UINT32_FIELD;
+            return CB_UINT32_FIELD;
         case 17: //scriptType
-            return UINT16_TYPE_FIELD;
+            return CB_UINT16_TYPE_FIELD;
         case 18: //scriptFlags
-            return UINT16_FLAG_FIELD;
+            return CB_UINT16_FLAG_FIELD;
         case 19: //compiled_p
             switch(WhichAttribute)
                 {
                 case 0: //fieldType
-                    return UINT8_ARRAY_FIELD;
+                    return CB_UINT8_ARRAY_FIELD;
                 case 1: //fieldSize
                     return Patrol.IsLoaded() ? Patrol->SCDA.GetSize() : 0;
                 default:
-                    return UNKNOWN_FIELD;
+                    return CB_UNKNOWN_FIELD;
                 }
-            return UNKNOWN_FIELD;
+            return CB_UNKNOWN_FIELD;
         case 20: //scriptText
-            return ISTRING_FIELD;
+            return CB_ISTRING_FIELD;
         case 21: //vars
             if(!Patrol.IsLoaded())
-                return UNKNOWN_FIELD;
+                return CB_UNKNOWN_FIELD;
 
             if(ListFieldID == 0) //vars
                 {
                 switch(WhichAttribute)
                     {
                     case 0: //fieldType
-                        return LIST_FIELD;
+                        return CB_LIST_FIELD;
                     case 1: //fieldSize
                         return (uint32_t)Patrol->VARS.value.size();
                     default:
-                        return UNKNOWN_FIELD;
+                        return CB_UNKNOWN_FIELD;
                     }
-                return UNKNOWN_FIELD;
+                return CB_UNKNOWN_FIELD;
                 }
 
             if(ListIndex >= Patrol->VARS.value.size())
-                return UNKNOWN_FIELD;
+                return CB_UNKNOWN_FIELD;
 
             switch(ListFieldID)
                 {
                 case 1: //index
-                    return UINT32_FIELD;
+                    return CB_UINT32_FIELD;
                 case 2: //unused1
                     switch(WhichAttribute)
                         {
                         case 0: //fieldType
-                            return UINT8_ARRAY_FIELD;
+                            return CB_UINT8_ARRAY_FIELD;
                         case 1: //fieldSize
                             return 12;
                         default:
-                            return UNKNOWN_FIELD;
+                            return CB_UNKNOWN_FIELD;
                         }
-                    return UNKNOWN_FIELD;
+                    return CB_UNKNOWN_FIELD;
                 case 3: //flags
-                    return UINT8_FLAG_FIELD;
+                    return CB_UINT8_FLAG_FIELD;
                 case 4: //unused2
                     switch(WhichAttribute)
                         {
                         case 0: //fieldType
-                            return UINT8_ARRAY_FIELD;
+                            return CB_UINT8_ARRAY_FIELD;
                         case 1: //fieldSize
                             return 7;
                         default:
-                            return UNKNOWN_FIELD;
+                            return CB_UNKNOWN_FIELD;
                         }
-                    return UNKNOWN_FIELD;
+                    return CB_UNKNOWN_FIELD;
                 case 5: //name
-                    return ISTRING_FIELD;
+                    return CB_ISTRING_FIELD;
                 default:
-                    return UNKNOWN_FIELD;
+                    return CB_UNKNOWN_FIELD;
                 }
-            return UNKNOWN_FIELD;
+            return CB_UNKNOWN_FIELD;
         case 22: //references
             if(!Patrol.IsLoaded())
-                return UNKNOWN_FIELD;
+                return CB_UNKNOWN_FIELD;
 
             if(ListFieldID == 0) //references
                 {
                 switch(WhichAttribute)
                     {
                     case 0: //fieldType
-                        return FORMID_OR_UINT32_ARRAY_FIELD;
+                        return CB_FORMID_OR_UINT32_ARRAY_FIELD;
                     case 1: //fieldSize
                         return (uint32_t)Patrol->SCR_.value.size();
                     default:
-                        return UNKNOWN_FIELD;
+                        return CB_UNKNOWN_FIELD;
                     }
-                return UNKNOWN_FIELD;
+                return CB_UNKNOWN_FIELD;
                 }
 
             if(ListIndex >= Patrol->SCR_.value.size())
-                return UNKNOWN_FIELD;
+                return CB_UNKNOWN_FIELD;
 
             switch(ListFieldID)
                 {
@@ -220,493 +220,493 @@ uint32_t REFRRecord::GetFieldAttribute(FIELD_IDENTIFIERS, uint32_t WhichAttribut
                     switch(WhichAttribute)
                         {
                         case 0: //fieldType
-                            return FORMID_OR_UINT32_FIELD;
+                            return CB_FORMID_OR_UINT32_FIELD;
                         case 2: //WhichType
-                            return Patrol->SCR_.value[ListIndex]->isSCRO ? FORMID_FIELD : UINT32_FIELD;
+                            return Patrol->SCR_.value[ListIndex]->isSCRO ? CB_FORMID_FIELD : CB_UINT32_FIELD;
                         default:
-                            return UNKNOWN_FIELD;
+                            return CB_UNKNOWN_FIELD;
                         }
-                    return UNKNOWN_FIELD;
+                    return CB_UNKNOWN_FIELD;
                 default:
-                    return UNKNOWN_FIELD;
+                    return CB_UNKNOWN_FIELD;
                 }
-            return UNKNOWN_FIELD;
+            return CB_UNKNOWN_FIELD;
         case 23: //topic
-            return FORMID_FIELD;
+            return CB_FORMID_FIELD;
         case 24: //levelMod
-            return SINT32_FIELD;
+            return CB_SINT32_FIELD;
         case 25: //owner
-            return FORMID_FIELD;
+            return CB_FORMID_FIELD;
         case 26: //rank
-            return SINT32_FIELD;
+            return CB_SINT32_FIELD;
         case 27: //count
-            return SINT32_FIELD;
+            return CB_SINT32_FIELD;
         case 28: //radius
-            return FLOAT32_FIELD;
+            return CB_FLOAT32_FIELD;
         case 29: //health
-            return FLOAT32_FIELD;
+            return CB_FLOAT32_FIELD;
         case 30: //radiation
-            return FLOAT32_FIELD;
+            return CB_FLOAT32_FIELD;
         case 31: //charge
-            return FLOAT32_FIELD;
+            return CB_FLOAT32_FIELD;
         case 32: //decals
             if(ListFieldID == 0) //decals
                 {
                 switch(WhichAttribute)
                     {
                     case 0: //fieldType
-                        return LIST_FIELD;
+                        return CB_LIST_FIELD;
                     case 1: //fieldSize
                         return (uint32_t)XDCR.value.size();
                     default:
-                        return UNKNOWN_FIELD;
+                        return CB_UNKNOWN_FIELD;
                     }
-                return UNKNOWN_FIELD;
+                return CB_UNKNOWN_FIELD;
                 }
 
             if(ListIndex >= XDCR.value.size())
-                return UNKNOWN_FIELD;
+                return CB_UNKNOWN_FIELD;
 
             switch(ListFieldID)
                 {
                 case 1: //reference
-                    return FORMID_FIELD;
+                    return CB_FORMID_FIELD;
                 case 2: //unknown1
                     switch(WhichAttribute)
                         {
                         case 0: //fieldType
-                            return UINT8_ARRAY_FIELD;
+                            return CB_UINT8_ARRAY_FIELD;
                         case 1: //fieldSize
                             return 24;
                         default:
-                            return UNKNOWN_FIELD;
+                            return CB_UNKNOWN_FIELD;
                         }
-                    return UNKNOWN_FIELD;
+                    return CB_UNKNOWN_FIELD;
                 default:
-                    return UNKNOWN_FIELD;
+                    return CB_UNKNOWN_FIELD;
                 }
-            return UNKNOWN_FIELD;
+            return CB_UNKNOWN_FIELD;
         case 33: //linkedReference
-            return FORMID_FIELD;
+            return CB_FORMID_FIELD;
         case 34: //startRed
-            return UINT8_FIELD;
+            return CB_UINT8_FIELD;
         case 35: //startRed
-            return UINT8_FIELD;
+            return CB_UINT8_FIELD;
         case 36: //startBlue
-            return UINT8_FIELD;
+            return CB_UINT8_FIELD;
         case 37: //unused2
             switch(WhichAttribute)
                 {
                 case 0: //fieldType
-                    return UINT8_ARRAY_FIELD;
+                    return CB_UINT8_ARRAY_FIELD;
                 case 1: //fieldSize
                     return XCLP.IsLoaded() ? 1 : 0;
                 default:
-                    return UNKNOWN_FIELD;
+                    return CB_UNKNOWN_FIELD;
                 }
-            return UNKNOWN_FIELD;
+            return CB_UNKNOWN_FIELD;
         case 38: //endRed
-            return UINT8_FIELD;
+            return CB_UINT8_FIELD;
         case 39: //endGreen
-            return UINT8_FIELD;
+            return CB_UINT8_FIELD;
         case 40: //endBlue
-            return UINT8_FIELD;
+            return CB_UINT8_FIELD;
         case 41: //unused3
             switch(WhichAttribute)
                 {
                 case 0: //fieldType
-                    return UINT8_ARRAY_FIELD;
+                    return CB_UINT8_ARRAY_FIELD;
                 case 1: //fieldSize
                     return XCLP.IsLoaded() ? 1 : 0;
                 default:
-                    return UNKNOWN_FIELD;
+                    return CB_UNKNOWN_FIELD;
                 }
-            return UNKNOWN_FIELD;
+            return CB_UNKNOWN_FIELD;
         case 42: //rclr_p
             switch(WhichAttribute)
                 {
                 case 0: //fieldType
-                    return UINT8_ARRAY_FIELD;
+                    return CB_UINT8_ARRAY_FIELD;
                 case 1: //fieldSize
                     return RCLR.GetSize();
                 default:
-                    return UNKNOWN_FIELD;
+                    return CB_UNKNOWN_FIELD;
                 }
-            return UNKNOWN_FIELD;
+            return CB_UNKNOWN_FIELD;
         case 43: //activateParentFlags
-            return UINT8_FLAG_FIELD;
+            return CB_UINT8_FLAG_FIELD;
         case 44: //activateParentRefs
             if(!ActivateParents.IsLoaded())
-                return UNKNOWN_FIELD;
+                return CB_UNKNOWN_FIELD;
 
             if(ListFieldID == 0) //activateParentRefs
                 {
                 switch(WhichAttribute)
                     {
                     case 0: //fieldType
-                        return LIST_FIELD;
+                        return CB_LIST_FIELD;
                     case 1: //fieldSize
                         return (uint32_t)ActivateParents->XAPR.value.size();
                     default:
-                        return UNKNOWN_FIELD;
+                        return CB_UNKNOWN_FIELD;
                     }
-                return UNKNOWN_FIELD;
+                return CB_UNKNOWN_FIELD;
                 }
 
             if(ListIndex >= ActivateParents->XAPR.value.size())
-                return UNKNOWN_FIELD;
+                return CB_UNKNOWN_FIELD;
 
             switch(ListFieldID)
                 {
                 case 1: //reference
-                    return FORMID_FIELD;
+                    return CB_FORMID_FIELD;
                 case 2: //delay
-                    return FLOAT32_FIELD;
+                    return CB_FLOAT32_FIELD;
                 default:
-                    return UNKNOWN_FIELD;
+                    return CB_UNKNOWN_FIELD;
                 }
-            return UNKNOWN_FIELD;
+            return CB_UNKNOWN_FIELD;
         case 45: //prompt
-            return STRING_FIELD;
+            return CB_STRING_FIELD;
         case 46: //parent
-            return FORMID_FIELD;
+            return CB_FORMID_FIELD;
         case 47: //parentFlags
-            return UINT8_FLAG_FIELD;
+            return CB_UINT8_FLAG_FIELD;
         case 48: //unused4
             switch(WhichAttribute)
                 {
                 case 0: //fieldType
-                    return UINT8_ARRAY_FIELD;
+                    return CB_UINT8_ARRAY_FIELD;
                 case 1: //fieldSize
                     return XESP.IsLoaded() ? 3 : 0;
                 default:
-                    return UNKNOWN_FIELD;
+                    return CB_UNKNOWN_FIELD;
                 }
-            return UNKNOWN_FIELD;
+            return CB_UNKNOWN_FIELD;
         case 49: //emittance
-            return FORMID_FIELD;
+            return CB_FORMID_FIELD;
         case 50: //boundRef
-            return FORMID_FIELD;
+            return CB_FORMID_FIELD;
         case 51: //primitiveX
-            return FLOAT32_FIELD;
+            return CB_FLOAT32_FIELD;
         case 52: //primitiveY
-            return FLOAT32_FIELD;
+            return CB_FLOAT32_FIELD;
         case 53: //primitiveZ
-            return FLOAT32_FIELD;
+            return CB_FLOAT32_FIELD;
         case 54: //primitiveRed
-            return FLOAT32_FIELD;
+            return CB_FLOAT32_FIELD;
         case 55: //primitiveGreen
-            return FLOAT32_FIELD;
+            return CB_FLOAT32_FIELD;
         case 56: //primitiveBlue
-            return FLOAT32_FIELD;
+            return CB_FLOAT32_FIELD;
         case 57: //primitiveUnknown
-            return FLOAT32_FIELD;
+            return CB_FLOAT32_FIELD;
         case 58: //primitiveType
-            return UINT32_TYPE_FIELD;
+            return CB_UINT32_TYPE_FIELD;
         case 59: //collisionType
-            return UINT32_TYPE_FIELD;
+            return CB_UINT32_TYPE_FIELD;
         case 60: //extentX
-            return FLOAT32_FIELD;
+            return CB_FLOAT32_FIELD;
         case 61: //extentY
-            return FLOAT32_FIELD;
+            return CB_FLOAT32_FIELD;
         case 62: //extentZ
-            return FLOAT32_FIELD;
+            return CB_FLOAT32_FIELD;
         case 63: //destinationFid
-            return FORMID_FIELD;
+            return CB_FORMID_FIELD;
         case 64: //destinationPosX
-            return FLOAT32_FIELD;
+            return CB_FLOAT32_FIELD;
         case 65: //destinationPosY
-            return FLOAT32_FIELD;
+            return CB_FLOAT32_FIELD;
         case 66: //destinationPosZ
-            return FLOAT32_FIELD;
+            return CB_FLOAT32_FIELD;
         case 67: //destinationRotX
-            return RADIAN_FIELD;
+            return CB_RADIAN_FIELD;
         case 68: //destinationRotY
-            return RADIAN_FIELD;
+            return CB_RADIAN_FIELD;
         case 69: //destinationRotZ
-            return RADIAN_FIELD;
+            return CB_RADIAN_FIELD;
         case 70: //destinationFlags
-            return UINT32_FLAG_FIELD;
+            return CB_UINT32_FLAG_FIELD;
         case 71: //markerFlags
-            return UINT8_FLAG_FIELD;
+            return CB_UINT8_FLAG_FIELD;
         case 72: //markerFull
-            return STRING_FIELD;
+            return CB_STRING_FIELD;
         case 73: //markerType
-            return UINT8_TYPE_FIELD;
+            return CB_UINT8_TYPE_FIELD;
         case 74: //unused5
             switch(WhichAttribute)
                 {
                 case 0: //fieldType
-                    return UINT8_ARRAY_FIELD;
+                    return CB_UINT8_ARRAY_FIELD;
                 case 1: //fieldSize
                     return MapData.IsLoaded() ? 1 : 0;
                 default:
-                    return UNKNOWN_FIELD;
+                    return CB_UNKNOWN_FIELD;
                 }
-            return UNKNOWN_FIELD;
+            return CB_UNKNOWN_FIELD;
         case 75: //markerReputation
-            return FORMID_FIELD;
+            return CB_FORMID_FIELD;
         case 76: //audioFull_p
             switch(WhichAttribute)
                 {
                 case 0: //fieldType
-                    return UINT8_ARRAY_FIELD;
+                    return CB_UINT8_ARRAY_FIELD;
                 case 1: //fieldSize
                     return AudioData.IsLoaded() ? AudioData->FULL.GetSize() : 0;
                 default:
-                    return UNKNOWN_FIELD;
+                    return CB_UNKNOWN_FIELD;
                 }
-            return UNKNOWN_FIELD;
+            return CB_UNKNOWN_FIELD;
         case 77: //audioLocation
-            return FORMID_FIELD;
+            return CB_FORMID_FIELD;
         case 78: //audioBnam_p
             switch(WhichAttribute)
                 {
                 case 0: //fieldType
-                    return UINT8_ARRAY_FIELD;
+                    return CB_UINT8_ARRAY_FIELD;
                 case 1: //fieldSize
                     return AudioData.IsLoaded() ? AudioData->BNAM.GetSize() : 0;
                 default:
-                    return UNKNOWN_FIELD;
+                    return CB_UNKNOWN_FIELD;
                 }
-            return UNKNOWN_FIELD;
+            return CB_UNKNOWN_FIELD;
         case 79: //audioUnknown1
-            return FLOAT32_FIELD;
+            return CB_FLOAT32_FIELD;
         case 80: //audioUnknown2
-            return FLOAT32_FIELD;
+            return CB_FLOAT32_FIELD;
         case 81: //xsrf_p
             switch(WhichAttribute)
                 {
                 case 0: //fieldType
-                    return UINT8_ARRAY_FIELD;
+                    return CB_UINT8_ARRAY_FIELD;
                 case 1: //fieldSize
                     return XSRF.GetSize();
                 default:
-                    return UNKNOWN_FIELD;
+                    return CB_UNKNOWN_FIELD;
                 }
-            return UNKNOWN_FIELD;
+            return CB_UNKNOWN_FIELD;
         case 82: //xsrd_p
             switch(WhichAttribute)
                 {
                 case 0: //fieldType
-                    return UINT8_ARRAY_FIELD;
+                    return CB_UINT8_ARRAY_FIELD;
                 case 1: //fieldSize
                     return XSRD.GetSize();
                 default:
-                    return UNKNOWN_FIELD;
+                    return CB_UNKNOWN_FIELD;
                 }
-            return UNKNOWN_FIELD;
+            return CB_UNKNOWN_FIELD;
         case 83: //target
-            return FORMID_FIELD;
+            return CB_FORMID_FIELD;
         case 84: //rangeRadius
-            return FLOAT32_FIELD;
+            return CB_FLOAT32_FIELD;
         case 85: //rangeType
-            return UINT32_TYPE_FIELD;
+            return CB_UINT32_TYPE_FIELD;
         case 86: //staticPercentage
-            return FLOAT32_FIELD;
+            return CB_FLOAT32_FIELD;
         case 87: //positionReference
-            return FORMID_FIELD;
+            return CB_FORMID_FIELD;
         case 88: //lockLevel
-            return UINT8_FIELD;
+            return CB_UINT8_FIELD;
         case 89: //unused6
             switch(WhichAttribute)
                 {
                 case 0: //fieldType
-                    return UINT8_ARRAY_FIELD;
+                    return CB_UINT8_ARRAY_FIELD;
                 case 1: //fieldSize
                     return XLOC.IsLoaded() ? 3 : 0;
                 default:
-                    return UNKNOWN_FIELD;
+                    return CB_UNKNOWN_FIELD;
                 }
-            return UNKNOWN_FIELD;
+            return CB_UNKNOWN_FIELD;
         case 90: //lockKey
-            return FORMID_FIELD;
+            return CB_FORMID_FIELD;
         case 91: //lockFlags
-            return UINT8_FLAG_FIELD;
+            return CB_UINT8_FLAG_FIELD;
         case 92: //unused7
             switch(WhichAttribute)
                 {
                 case 0: //fieldType
-                    return UINT8_ARRAY_FIELD;
+                    return CB_UINT8_ARRAY_FIELD;
                 case 1: //fieldSize
                     return XLOC.IsLoaded() ? 3 : 0;
                 default:
-                    return UNKNOWN_FIELD;
+                    return CB_UNKNOWN_FIELD;
                 }
-            return UNKNOWN_FIELD;
+            return CB_UNKNOWN_FIELD;
         case 93: //lockUnknown1
             switch(WhichAttribute)
                 {
                 case 0: //fieldType
-                    return UINT8_ARRAY_FIELD;
+                    return CB_UINT8_ARRAY_FIELD;
                 case 1: //fieldSize
                     return XLOC.IsLoaded() ? 8 : 0;
                 default:
-                    return UNKNOWN_FIELD;
+                    return CB_UNKNOWN_FIELD;
                 }
-            return UNKNOWN_FIELD;
+            return CB_UNKNOWN_FIELD;
         case 94: //ammo
-            return FORMID_FIELD;
+            return CB_FORMID_FIELD;
         case 95: //ammoCount
-            return SINT32_FIELD;
+            return CB_SINT32_FIELD;
         case 96: //reflrefrs
             if(ListFieldID == 0) //reflrefrs
                 {
                 switch(WhichAttribute)
                     {
                     case 0: //fieldType
-                        return LIST_FIELD;
+                        return CB_LIST_FIELD;
                     case 1: //fieldSize
                         return (uint32_t)XPWR.value.size();
                     default:
-                        return UNKNOWN_FIELD;
+                        return CB_UNKNOWN_FIELD;
                     }
-                return UNKNOWN_FIELD;
+                return CB_UNKNOWN_FIELD;
                 }
 
             if(ListIndex >= XPWR.value.size())
-                return UNKNOWN_FIELD;
+                return CB_UNKNOWN_FIELD;
 
             switch(ListFieldID)
                 {
                 case 1: //reference
-                    return FORMID_FIELD;
+                    return CB_FORMID_FIELD;
                 case 2: //type
-                    return UINT32_TYPE_FIELD;
+                    return CB_UINT32_TYPE_FIELD;
                 default:
-                    return UNKNOWN_FIELD;
+                    return CB_UNKNOWN_FIELD;
                 }
-            return UNKNOWN_FIELD;
+            return CB_UNKNOWN_FIELD;
         case 97: //litWaters
             switch(WhichAttribute)
                 {
                 case 0: //fieldType
-                    return FORMID_ARRAY_FIELD;
+                    return CB_FORMID_ARRAY_FIELD;
                 case 1: //fieldSize
                     return (uint32_t)XLTW.value.size();
                 default:
-                    return UNKNOWN_FIELD;
+                    return CB_UNKNOWN_FIELD;
                 }
-            return UNKNOWN_FIELD;
+            return CB_UNKNOWN_FIELD;
         case 98: //actionFlags
-            return UINT32_FLAG_FIELD;
+            return CB_UINT32_FLAG_FIELD;
         case 99: //navMesh
-            return FORMID_FIELD;
+            return CB_FORMID_FIELD;
         case 100: //navUnknown1
-            return UINT16_FIELD;
+            return CB_UINT16_FIELD;
         case 101: //unused8
             switch(WhichAttribute)
                 {
                 case 0: //fieldType
-                    return UINT8_ARRAY_FIELD;
+                    return CB_UINT8_ARRAY_FIELD;
                 case 1: //fieldSize
                     return XNDP.IsLoaded() ? 2 : 0;
                 default:
-                    return UNKNOWN_FIELD;
+                    return CB_UNKNOWN_FIELD;
                 }
-            return UNKNOWN_FIELD;
+            return CB_UNKNOWN_FIELD;
         case 102: //portalLinkedRoom1
-            return FORMID_FIELD;
+            return CB_FORMID_FIELD;
         case 103: //portalLinkedRoom2
-            return FORMID_FIELD;
+            return CB_FORMID_FIELD;
         case 104: //portalWidth
-            return FLOAT32_FIELD;
+            return CB_FLOAT32_FIELD;
         case 105: //portalHeight
-            return FLOAT32_FIELD;
+            return CB_FLOAT32_FIELD;
         case 106: //portalPosX
-            return FLOAT32_FIELD;
+            return CB_FLOAT32_FIELD;
         case 107: //portalPosY
-            return FLOAT32_FIELD;
+            return CB_FLOAT32_FIELD;
         case 108: //portalPosZ
-            return FLOAT32_FIELD;
+            return CB_FLOAT32_FIELD;
         case 109: //portalQ1
-            return FLOAT32_FIELD;
+            return CB_FLOAT32_FIELD;
         case 110: //portalQ2
-            return FLOAT32_FIELD;
+            return CB_FLOAT32_FIELD;
         case 111: //portalQ3
-            return FLOAT32_FIELD;
+            return CB_FLOAT32_FIELD;
         case 112: //portalQ4
-            return FLOAT32_FIELD;
+            return CB_FLOAT32_FIELD;
         case 113: //seed
-            return UINT8_FIELD;
+            return CB_UINT8_FIELD;
         case 114: //roomCount
-            return UINT16_FIELD;
+            return CB_UINT16_FIELD;
         case 115: //roomUnknown1
             switch(WhichAttribute)
                 {
                 case 0: //fieldType
-                    return UINT8_ARRAY_FIELD;
+                    return CB_UINT8_ARRAY_FIELD;
                 case 1: //fieldSize
                     return Room.IsLoaded() && Room->XRMR.IsLoaded() ? 2 : 0;
                 default:
-                    return UNKNOWN_FIELD;
+                    return CB_UNKNOWN_FIELD;
                 }
-            return UNKNOWN_FIELD;
+            return CB_UNKNOWN_FIELD;
         case 116: //rooms
             switch(WhichAttribute)
                 {
                 case 0: //fieldType
-                    return FORMID_ARRAY_FIELD;
+                    return CB_FORMID_ARRAY_FIELD;
                 case 1: //fieldSize
                     return Room.IsLoaded() ? (uint32_t)Room->XLRM.value.size() : 0;
                 default:
-                    return UNKNOWN_FIELD;
+                    return CB_UNKNOWN_FIELD;
                 }
-            return UNKNOWN_FIELD;
+            return CB_UNKNOWN_FIELD;
         case 117: //occPlaneWidth
-            return FLOAT32_FIELD;
+            return CB_FLOAT32_FIELD;
         case 118: //occPlaneHeight
-            return FLOAT32_FIELD;
+            return CB_FLOAT32_FIELD;
         case 119: //occPlanePosX
-            return FLOAT32_FIELD;
+            return CB_FLOAT32_FIELD;
         case 120: //occPlanePosY
-            return FLOAT32_FIELD;
+            return CB_FLOAT32_FIELD;
         case 121: //occPlanePosZ
-            return FLOAT32_FIELD;
+            return CB_FLOAT32_FIELD;
         case 122: //occPlaneQ1
-            return FLOAT32_FIELD;
+            return CB_FLOAT32_FIELD;
         case 123: //occPlaneQ2
-            return FLOAT32_FIELD;
+            return CB_FLOAT32_FIELD;
         case 124: //occPlaneQ3
-            return FLOAT32_FIELD;
+            return CB_FLOAT32_FIELD;
         case 125: //occPlaneQ4
-            return FLOAT32_FIELD;
+            return CB_FLOAT32_FIELD;
         case 126: //occPlaneRight
-            return FORMID_FIELD;
+            return CB_FORMID_FIELD;
         case 127: //occPlaneLeft
-            return FORMID_FIELD;
+            return CB_FORMID_FIELD;
         case 128: //occPlaneBottom
-            return FORMID_FIELD;
+            return CB_FORMID_FIELD;
         case 129: //occPlaneTop
-            return FORMID_FIELD;
+            return CB_FORMID_FIELD;
         case 130: //lod1
-            return FLOAT32_FIELD;
+            return CB_FLOAT32_FIELD;
         case 131: //lod2
-            return FLOAT32_FIELD;
+            return CB_FLOAT32_FIELD;
         case 132: //lod3
-            return FLOAT32_FIELD;
+            return CB_FLOAT32_FIELD;
         case 133: //ignoredBySandbox
-            return BOOL_FIELD;
+            return CB_BOOL_FIELD;
         case 134: //scale
-            return FLOAT32_FIELD;
+            return CB_FLOAT32_FIELD;
         case 135: //posX
-            return FLOAT32_FIELD;
+            return CB_FLOAT32_FIELD;
         case 136: //posY
-            return FLOAT32_FIELD;
+            return CB_FLOAT32_FIELD;
         case 137: //posZ
-            return FLOAT32_FIELD;
+            return CB_FLOAT32_FIELD;
         case 138: //rotX
-            return RADIAN_FIELD;
+            return CB_RADIAN_FIELD;
         case 139: //rotY
-            return RADIAN_FIELD;
+            return CB_RADIAN_FIELD;
         case 140: //rotZ
-            return RADIAN_FIELD;
+            return CB_RADIAN_FIELD;
         case 141: //Parent
-            return PARENTRECORD_FIELD;
+            return CB_PARENTRECORD_FIELD;
         default:
-            return UNKNOWN_FIELD;
+            return CB_UNKNOWN_FIELD;
         }
-    return UNKNOWN_FIELD;
+    return CB_UNKNOWN_FIELD;
     }
 
 void * REFRRecord::GetField(FIELD_IDENTIFIERS, void **FieldValues)

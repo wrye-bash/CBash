@@ -45,808 +45,808 @@ uint32_t WTHRRecord::GetFieldAttribute(FIELD_IDENTIFIERS, uint32_t WhichAttribut
         case 0: //recType
             return GetType();
         case 1: //flags1
-            return UINT32_FLAG_FIELD;
+            return CB_UINT32_FLAG_FIELD;
         case 2: //fid
-            return FORMID_FIELD;
+            return CB_FORMID_FIELD;
         case 3: //flags2
-            return UINT32_FLAG_FIELD;
+            return CB_UINT32_FLAG_FIELD;
         case 4: //eid
-            return ISTRING_FIELD;
+            return CB_ISTRING_FIELD;
         case 5: //lowerLayerPath
-            return ISTRING_FIELD;
+            return CB_ISTRING_FIELD;
         case 6: //upperLayerPath
-            return ISTRING_FIELD;
+            return CB_ISTRING_FIELD;
         case 7: //modPath
-            return ISTRING_FIELD;
+            return CB_ISTRING_FIELD;
         case 8: //modb
-            return FLOAT32_FIELD;
+            return CB_FLOAT32_FIELD;
         case 9: //modt_p
             switch(WhichAttribute)
                 {
                 case 0: //fieldType
-                    return UINT8_ARRAY_FIELD;
+                    return CB_UINT8_ARRAY_FIELD;
                 case 1: //fieldSize
                     return MODL.IsLoaded() ? MODL->MODT.GetSize() : 0;
                 default:
-                    return UNKNOWN_FIELD;
+                    return CB_UNKNOWN_FIELD;
                 }
-            return UNKNOWN_FIELD;
+            return CB_UNKNOWN_FIELD;
         case 10: //upperSky.rise.red
-            return UINT8_FIELD;
+            return CB_UINT8_FIELD;
         case 11: //upperSky.rise.green
-            return UINT8_FIELD;
+            return CB_UINT8_FIELD;
         case 12: //upperSky.rise.blue
-            return UINT8_FIELD;
+            return CB_UINT8_FIELD;
         case 13: //upperSky.rise.unused1
             switch(WhichAttribute)
                 {
                 case 0: //fieldType
-                    return UINT8_ARRAY_FIELD;
+                    return CB_UINT8_ARRAY_FIELD;
                 case 1: //fieldSize
                     return 1;
                 default:
-                    return UNKNOWN_FIELD;
+                    return CB_UNKNOWN_FIELD;
                 }
-            return UNKNOWN_FIELD;
+            return CB_UNKNOWN_FIELD;
         case 14: //upperSky.day.red
-            return UINT8_FIELD;
+            return CB_UINT8_FIELD;
         case 15: //upperSky.day.green
-            return UINT8_FIELD;
+            return CB_UINT8_FIELD;
         case 16: //upperSky.day.blue
-            return UINT8_FIELD;
+            return CB_UINT8_FIELD;
         case 17: //upperSky.day.unused1
             switch(WhichAttribute)
                 {
                 case 0: //fieldType
-                    return UINT8_ARRAY_FIELD;
+                    return CB_UINT8_ARRAY_FIELD;
                 case 1: //fieldSize
                     return 1;
                 default:
-                    return UNKNOWN_FIELD;
+                    return CB_UNKNOWN_FIELD;
                 }
-            return UNKNOWN_FIELD;
+            return CB_UNKNOWN_FIELD;
         case 18: //upperSky.set.red
-            return UINT8_FIELD;
+            return CB_UINT8_FIELD;
         case 19: //upperSky.set.green
-            return UINT8_FIELD;
+            return CB_UINT8_FIELD;
         case 20: //upperSky.set.blue
-            return UINT8_FIELD;
+            return CB_UINT8_FIELD;
         case 21: //upperSky.set.unused1
             switch(WhichAttribute)
                 {
                 case 0: //fieldType
-                    return UINT8_ARRAY_FIELD;
+                    return CB_UINT8_ARRAY_FIELD;
                 case 1: //fieldSize
                     return 1;
                 default:
-                    return UNKNOWN_FIELD;
+                    return CB_UNKNOWN_FIELD;
                 }
-            return UNKNOWN_FIELD;
+            return CB_UNKNOWN_FIELD;
         case 22: //upperSky.night.red
-            return UINT8_FIELD;
+            return CB_UINT8_FIELD;
         case 23: //upperSky.night.green
-            return UINT8_FIELD;
+            return CB_UINT8_FIELD;
         case 24: //upperSky.night.blue
-            return UINT8_FIELD;
+            return CB_UINT8_FIELD;
         case 25: //upperSky.night.unused1
             switch(WhichAttribute)
                 {
                 case 0: //fieldType
-                    return UINT8_ARRAY_FIELD;
+                    return CB_UINT8_ARRAY_FIELD;
                 case 1: //fieldSize
                     return 1;
                 default:
-                    return UNKNOWN_FIELD;
+                    return CB_UNKNOWN_FIELD;
                 }
-            return UNKNOWN_FIELD;
+            return CB_UNKNOWN_FIELD;
         case 26: //fog.rise.red
-            return UINT8_FIELD;
+            return CB_UINT8_FIELD;
         case 27: //fog.rise.green
-            return UINT8_FIELD;
+            return CB_UINT8_FIELD;
         case 28: //fog.rise.blue
-            return UINT8_FIELD;
+            return CB_UINT8_FIELD;
         case 29: //fog.rise.unused1
             switch(WhichAttribute)
                 {
                 case 0: //fieldType
-                    return UINT8_ARRAY_FIELD;
+                    return CB_UINT8_ARRAY_FIELD;
                 case 1: //fieldSize
                     return 1;
                 default:
-                    return UNKNOWN_FIELD;
+                    return CB_UNKNOWN_FIELD;
                 }
-            return UNKNOWN_FIELD;
+            return CB_UNKNOWN_FIELD;
         case 30: //fog.day.red
-            return UINT8_FIELD;
+            return CB_UINT8_FIELD;
         case 31: //fog.day.green
-            return UINT8_FIELD;
+            return CB_UINT8_FIELD;
         case 32: //fog.day.blue
-            return UINT8_FIELD;
+            return CB_UINT8_FIELD;
         case 33: //fog.day.unused1
             switch(WhichAttribute)
                 {
                 case 0: //fieldType
-                    return UINT8_ARRAY_FIELD;
+                    return CB_UINT8_ARRAY_FIELD;
                 case 1: //fieldSize
                     return 1;
                 default:
-                    return UNKNOWN_FIELD;
+                    return CB_UNKNOWN_FIELD;
                 }
-            return UNKNOWN_FIELD;
+            return CB_UNKNOWN_FIELD;
         case 34: //fog.set.red
-            return UINT8_FIELD;
+            return CB_UINT8_FIELD;
         case 35: //fog.set.green
-            return UINT8_FIELD;
+            return CB_UINT8_FIELD;
         case 36: //fog.set.blue
-            return UINT8_FIELD;
+            return CB_UINT8_FIELD;
         case 37: //fog.set.unused1
             switch(WhichAttribute)
                 {
                 case 0: //fieldType
-                    return UINT8_ARRAY_FIELD;
+                    return CB_UINT8_ARRAY_FIELD;
                 case 1: //fieldSize
                     return 1;
                 default:
-                    return UNKNOWN_FIELD;
+                    return CB_UNKNOWN_FIELD;
                 }
-            return UNKNOWN_FIELD;
+            return CB_UNKNOWN_FIELD;
         case 38: //fog.night.red
-            return UINT8_FIELD;
+            return CB_UINT8_FIELD;
         case 39: //fog.night.green
-            return UINT8_FIELD;
+            return CB_UINT8_FIELD;
         case 40: //fog.night.blue
-            return UINT8_FIELD;
+            return CB_UINT8_FIELD;
         case 41: //fog.night.unused1
             switch(WhichAttribute)
                 {
                 case 0: //fieldType
-                    return UINT8_ARRAY_FIELD;
+                    return CB_UINT8_ARRAY_FIELD;
                 case 1: //fieldSize
                     return 1;
                 default:
-                    return UNKNOWN_FIELD;
+                    return CB_UNKNOWN_FIELD;
                 }
-            return UNKNOWN_FIELD;
+            return CB_UNKNOWN_FIELD;
         case 42: //lowerClouds.rise.red
-            return UINT8_FIELD;
+            return CB_UINT8_FIELD;
         case 43: //lowerClouds.rise.green
-            return UINT8_FIELD;
+            return CB_UINT8_FIELD;
         case 44: //lowerClouds.rise.blue
-            return UINT8_FIELD;
+            return CB_UINT8_FIELD;
         case 45: //lowerClouds.unused1
             switch(WhichAttribute)
                 {
                 case 0: //fieldType
-                    return UINT8_ARRAY_FIELD;
+                    return CB_UINT8_ARRAY_FIELD;
                 case 1: //fieldSize
                     return 1;
                 default:
-                    return UNKNOWN_FIELD;
+                    return CB_UNKNOWN_FIELD;
                 }
-            return UNKNOWN_FIELD;
+            return CB_UNKNOWN_FIELD;
         case 46: //lowerClouds.day.red
-            return UINT8_FIELD;
+            return CB_UINT8_FIELD;
         case 47: //lowerClouds.day.green
-            return UINT8_FIELD;
+            return CB_UINT8_FIELD;
         case 48: //lowerClouds.day.blue
-            return UINT8_FIELD;
+            return CB_UINT8_FIELD;
         case 49: //lowerClouds.day.unused1
             switch(WhichAttribute)
                 {
                 case 0: //fieldType
-                    return UINT8_ARRAY_FIELD;
+                    return CB_UINT8_ARRAY_FIELD;
                 case 1: //fieldSize
                     return 1;
                 default:
-                    return UNKNOWN_FIELD;
+                    return CB_UNKNOWN_FIELD;
                 }
-            return UNKNOWN_FIELD;
+            return CB_UNKNOWN_FIELD;
         case 50: //lowerClouds.set.red
-            return UINT8_FIELD;
+            return CB_UINT8_FIELD;
         case 51: //lowerClouds.set.green
-            return UINT8_FIELD;
+            return CB_UINT8_FIELD;
         case 52: //lowerClouds.set.blue
-            return UINT8_FIELD;
+            return CB_UINT8_FIELD;
         case 53: //lowerClouds.set.unused1
             switch(WhichAttribute)
                 {
                 case 0: //fieldType
-                    return UINT8_ARRAY_FIELD;
+                    return CB_UINT8_ARRAY_FIELD;
                 case 1: //fieldSize
                     return 1;
                 default:
-                    return UNKNOWN_FIELD;
+                    return CB_UNKNOWN_FIELD;
                 }
-            return UNKNOWN_FIELD;
+            return CB_UNKNOWN_FIELD;
         case 54: //lowerClouds.night.red
-            return UINT8_FIELD;
+            return CB_UINT8_FIELD;
         case 55: //lowerClouds.night.green
-            return UINT8_FIELD;
+            return CB_UINT8_FIELD;
         case 56: //lowerClouds.night.blue
-            return UINT8_FIELD;
+            return CB_UINT8_FIELD;
         case 57: //lowerClouds.night.unused1
             switch(WhichAttribute)
                 {
                 case 0: //fieldType
-                    return UINT8_ARRAY_FIELD;
+                    return CB_UINT8_ARRAY_FIELD;
                 case 1: //fieldSize
                     return 1;
                 default:
-                    return UNKNOWN_FIELD;
+                    return CB_UNKNOWN_FIELD;
                 }
-            return UNKNOWN_FIELD;
+            return CB_UNKNOWN_FIELD;
         case 58: //ambient.rise.red
-            return UINT8_FIELD;
+            return CB_UINT8_FIELD;
         case 59: //ambient.rise.green
-            return UINT8_FIELD;
+            return CB_UINT8_FIELD;
         case 60: //ambient.rise.blue
-            return UINT8_FIELD;
+            return CB_UINT8_FIELD;
         case 61: //ambient.unused1
             switch(WhichAttribute)
                 {
                 case 0: //fieldType
-                    return UINT8_ARRAY_FIELD;
+                    return CB_UINT8_ARRAY_FIELD;
                 case 1: //fieldSize
                     return 1;
                 default:
-                    return UNKNOWN_FIELD;
+                    return CB_UNKNOWN_FIELD;
                 }
-            return UNKNOWN_FIELD;
+            return CB_UNKNOWN_FIELD;
         case 62: //ambient.day.red
-            return UINT8_FIELD;
+            return CB_UINT8_FIELD;
         case 63: //ambient.day.green
-            return UINT8_FIELD;
+            return CB_UINT8_FIELD;
         case 64: //ambient.day.blue
-            return UINT8_FIELD;
+            return CB_UINT8_FIELD;
         case 65: //ambient.day.unused1
             switch(WhichAttribute)
                 {
                 case 0: //fieldType
-                    return UINT8_ARRAY_FIELD;
+                    return CB_UINT8_ARRAY_FIELD;
                 case 1: //fieldSize
                     return 1;
                 default:
-                    return UNKNOWN_FIELD;
+                    return CB_UNKNOWN_FIELD;
                 }
-            return UNKNOWN_FIELD;
+            return CB_UNKNOWN_FIELD;
         case 66: //ambient.set.red
-            return UINT8_FIELD;
+            return CB_UINT8_FIELD;
         case 67: //ambient.set.green
-            return UINT8_FIELD;
+            return CB_UINT8_FIELD;
         case 68: //ambient.set.blue
-            return UINT8_FIELD;
+            return CB_UINT8_FIELD;
         case 69: //ambient.set.unused1
             switch(WhichAttribute)
                 {
                 case 0: //fieldType
-                    return UINT8_ARRAY_FIELD;
+                    return CB_UINT8_ARRAY_FIELD;
                 case 1: //fieldSize
                     return 1;
                 default:
-                    return UNKNOWN_FIELD;
+                    return CB_UNKNOWN_FIELD;
                 }
-            return UNKNOWN_FIELD;
+            return CB_UNKNOWN_FIELD;
         case 70: //ambient.night.red
-            return UINT8_FIELD;
+            return CB_UINT8_FIELD;
         case 71: //ambient.night.green
-            return UINT8_FIELD;
+            return CB_UINT8_FIELD;
         case 72: //ambient.night.blue
-            return UINT8_FIELD;
+            return CB_UINT8_FIELD;
         case 73: //ambient.night.unused1
             switch(WhichAttribute)
                 {
                 case 0: //fieldType
-                    return UINT8_ARRAY_FIELD;
+                    return CB_UINT8_ARRAY_FIELD;
                 case 1: //fieldSize
                     return 1;
                 default:
-                    return UNKNOWN_FIELD;
+                    return CB_UNKNOWN_FIELD;
                 }
-            return UNKNOWN_FIELD;
+            return CB_UNKNOWN_FIELD;
         case 74: //sunlight.rise.red
-            return UINT8_FIELD;
+            return CB_UINT8_FIELD;
         case 75: //sunlight.rise.green
-            return UINT8_FIELD;
+            return CB_UINT8_FIELD;
         case 76: //sunlight.rise.blue
-            return UINT8_FIELD;
+            return CB_UINT8_FIELD;
         case 77: //sunlight.rise.unused1
             switch(WhichAttribute)
                 {
                 case 0: //fieldType
-                    return UINT8_ARRAY_FIELD;
+                    return CB_UINT8_ARRAY_FIELD;
                 case 1: //fieldSize
                     return 1;
                 default:
-                    return UNKNOWN_FIELD;
+                    return CB_UNKNOWN_FIELD;
                 }
-            return UNKNOWN_FIELD;
+            return CB_UNKNOWN_FIELD;
         case 78: //sunlight.day.red
-            return UINT8_FIELD;
+            return CB_UINT8_FIELD;
         case 79: //sunlight.day.green
-            return UINT8_FIELD;
+            return CB_UINT8_FIELD;
         case 80: //sunlight.day.blue
-            return UINT8_FIELD;
+            return CB_UINT8_FIELD;
         case 81: //sunlight.day.unused1
             switch(WhichAttribute)
                 {
                 case 0: //fieldType
-                    return UINT8_ARRAY_FIELD;
+                    return CB_UINT8_ARRAY_FIELD;
                 case 1: //fieldSize
                     return 1;
                 default:
-                    return UNKNOWN_FIELD;
+                    return CB_UNKNOWN_FIELD;
                 }
-            return UNKNOWN_FIELD;
+            return CB_UNKNOWN_FIELD;
         case 82: //sunlight.set.red
-            return UINT8_FIELD;
+            return CB_UINT8_FIELD;
         case 83: //sunlight.set.green
-            return UINT8_FIELD;
+            return CB_UINT8_FIELD;
         case 84: //sunlight.set.blue
-            return UINT8_FIELD;
+            return CB_UINT8_FIELD;
         case 85: //sunlight.set.unused1
             switch(WhichAttribute)
                 {
                 case 0: //fieldType
-                    return UINT8_ARRAY_FIELD;
+                    return CB_UINT8_ARRAY_FIELD;
                 case 1: //fieldSize
                     return 1;
                 default:
-                    return UNKNOWN_FIELD;
+                    return CB_UNKNOWN_FIELD;
                 }
-            return UNKNOWN_FIELD;
+            return CB_UNKNOWN_FIELD;
         case 86: //sunlight.night.red
-            return UINT8_FIELD;
+            return CB_UINT8_FIELD;
         case 87: //sunlight.night.green
-            return UINT8_FIELD;
+            return CB_UINT8_FIELD;
         case 88: //sunlight.night.blue
-            return UINT8_FIELD;
+            return CB_UINT8_FIELD;
         case 89: //sunlight.night.unused1
             switch(WhichAttribute)
                 {
                 case 0: //fieldType
-                    return UINT8_ARRAY_FIELD;
+                    return CB_UINT8_ARRAY_FIELD;
                 case 1: //fieldSize
                     return 1;
                 default:
-                    return UNKNOWN_FIELD;
+                    return CB_UNKNOWN_FIELD;
                 }
-            return UNKNOWN_FIELD;
+            return CB_UNKNOWN_FIELD;
         case 90: //sun.rise.red
-            return UINT8_FIELD;
+            return CB_UINT8_FIELD;
         case 91: //sun.rise.green
-            return UINT8_FIELD;
+            return CB_UINT8_FIELD;
         case 92: //sun.rise.blue
-            return UINT8_FIELD;
+            return CB_UINT8_FIELD;
         case 93: //sun.rise.unused1
             switch(WhichAttribute)
                 {
                 case 0: //fieldType
-                    return UINT8_ARRAY_FIELD;
+                    return CB_UINT8_ARRAY_FIELD;
                 case 1: //fieldSize
                     return 1;
                 default:
-                    return UNKNOWN_FIELD;
+                    return CB_UNKNOWN_FIELD;
                 }
-            return UNKNOWN_FIELD;
+            return CB_UNKNOWN_FIELD;
         case 94: //sun.day.red
-            return UINT8_FIELD;
+            return CB_UINT8_FIELD;
         case 95: //sun.day.green
-            return UINT8_FIELD;
+            return CB_UINT8_FIELD;
         case 96: //sun.day.blue
-            return UINT8_FIELD;
+            return CB_UINT8_FIELD;
         case 97: //sun.day.unused1
             switch(WhichAttribute)
                 {
                 case 0: //fieldType
-                    return UINT8_ARRAY_FIELD;
+                    return CB_UINT8_ARRAY_FIELD;
                 case 1: //fieldSize
                     return 1;
                 default:
-                    return UNKNOWN_FIELD;
+                    return CB_UNKNOWN_FIELD;
                 }
-            return UNKNOWN_FIELD;
+            return CB_UNKNOWN_FIELD;
         case 98: //sun.set.red
-            return UINT8_FIELD;
+            return CB_UINT8_FIELD;
         case 99: //sun.set.green
-            return UINT8_FIELD;
+            return CB_UINT8_FIELD;
         case 100: //sun.set.blue
-            return UINT8_FIELD;
+            return CB_UINT8_FIELD;
         case 101: //sun.set.unused1
             switch(WhichAttribute)
                 {
                 case 0: //fieldType
-                    return UINT8_ARRAY_FIELD;
+                    return CB_UINT8_ARRAY_FIELD;
                 case 1: //fieldSize
                     return 1;
                 default:
-                    return UNKNOWN_FIELD;
+                    return CB_UNKNOWN_FIELD;
                 }
-            return UNKNOWN_FIELD;
+            return CB_UNKNOWN_FIELD;
         case 102: //sun.night.red
-            return UINT8_FIELD;
+            return CB_UINT8_FIELD;
         case 103: //sun.night.green
-            return UINT8_FIELD;
+            return CB_UINT8_FIELD;
         case 104: //sun.night.blue
-            return UINT8_FIELD;
+            return CB_UINT8_FIELD;
         case 105: //sun.night.unused1
             switch(WhichAttribute)
                 {
                 case 0: //fieldType
-                    return UINT8_ARRAY_FIELD;
+                    return CB_UINT8_ARRAY_FIELD;
                 case 1: //fieldSize
                     return 1;
                 default:
-                    return UNKNOWN_FIELD;
+                    return CB_UNKNOWN_FIELD;
                 }
-            return UNKNOWN_FIELD;
+            return CB_UNKNOWN_FIELD;
         case 106: //stars.rise.red
-            return UINT8_FIELD;
+            return CB_UINT8_FIELD;
         case 107: //stars.rise.green
-            return UINT8_FIELD;
+            return CB_UINT8_FIELD;
         case 108: //stars.rise.blue
-            return UINT8_FIELD;
+            return CB_UINT8_FIELD;
         case 109: //stars.rise.unused1
             switch(WhichAttribute)
                 {
                 case 0: //fieldType
-                    return UINT8_ARRAY_FIELD;
+                    return CB_UINT8_ARRAY_FIELD;
                 case 1: //fieldSize
                     return 1;
                 default:
-                    return UNKNOWN_FIELD;
+                    return CB_UNKNOWN_FIELD;
                 }
-            return UNKNOWN_FIELD;
+            return CB_UNKNOWN_FIELD;
         case 110: //stars.day.red
-            return UINT8_FIELD;
+            return CB_UINT8_FIELD;
         case 111: //stars.day.green
-            return UINT8_FIELD;
+            return CB_UINT8_FIELD;
         case 112: //stars.day.blue
-            return UINT8_FIELD;
+            return CB_UINT8_FIELD;
         case 113: //stars.day.unused1
             switch(WhichAttribute)
                 {
                 case 0: //fieldType
-                    return UINT8_ARRAY_FIELD;
+                    return CB_UINT8_ARRAY_FIELD;
                 case 1: //fieldSize
                     return 1;
                 default:
-                    return UNKNOWN_FIELD;
+                    return CB_UNKNOWN_FIELD;
                 }
-            return UNKNOWN_FIELD;
+            return CB_UNKNOWN_FIELD;
         case 114: //stars.set.red
-            return UINT8_FIELD;
+            return CB_UINT8_FIELD;
         case 115: //stars.set.green
-            return UINT8_FIELD;
+            return CB_UINT8_FIELD;
         case 116: //stars.set.blue
-            return UINT8_FIELD;
+            return CB_UINT8_FIELD;
         case 117: //stars.set.unused1
             switch(WhichAttribute)
                 {
                 case 0: //fieldType
-                    return UINT8_ARRAY_FIELD;
+                    return CB_UINT8_ARRAY_FIELD;
                 case 1: //fieldSize
                     return 1;
                 default:
-                    return UNKNOWN_FIELD;
+                    return CB_UNKNOWN_FIELD;
                 }
-            return UNKNOWN_FIELD;
+            return CB_UNKNOWN_FIELD;
         case 118: //stars.night.red
-            return UINT8_FIELD;
+            return CB_UINT8_FIELD;
         case 119: //stars.night.green
-            return UINT8_FIELD;
+            return CB_UINT8_FIELD;
         case 120: //stars.night.blue
-            return UINT8_FIELD;
+            return CB_UINT8_FIELD;
         case 121: //stars.night.unused1
             switch(WhichAttribute)
                 {
                 case 0: //fieldType
-                    return UINT8_ARRAY_FIELD;
+                    return CB_UINT8_ARRAY_FIELD;
                 case 1: //fieldSize
                     return 1;
                 default:
-                    return UNKNOWN_FIELD;
+                    return CB_UNKNOWN_FIELD;
                 }
-            return UNKNOWN_FIELD;
+            return CB_UNKNOWN_FIELD;
         case 122: //lowerSky.rise.red
-            return UINT8_FIELD;
+            return CB_UINT8_FIELD;
         case 123: //lowerSky.rise.green
-            return UINT8_FIELD;
+            return CB_UINT8_FIELD;
         case 124: //lowerSky.rise.blue
-            return UINT8_FIELD;
+            return CB_UINT8_FIELD;
         case 125: //lowerSky.rise.unused1
             switch(WhichAttribute)
                 {
                 case 0: //fieldType
-                    return UINT8_ARRAY_FIELD;
+                    return CB_UINT8_ARRAY_FIELD;
                 case 1: //fieldSize
                     return 1;
                 default:
-                    return UNKNOWN_FIELD;
+                    return CB_UNKNOWN_FIELD;
                 }
-            return UNKNOWN_FIELD;
+            return CB_UNKNOWN_FIELD;
         case 126: //lowerSky.day.red
-            return UINT8_FIELD;
+            return CB_UINT8_FIELD;
         case 127: //lowerSky.day.green
-            return UINT8_FIELD;
+            return CB_UINT8_FIELD;
         case 128: //lowerSky.day.blue
-            return UINT8_FIELD;
+            return CB_UINT8_FIELD;
         case 129: //lowerSky.day.unused1
             switch(WhichAttribute)
                 {
                 case 0: //fieldType
-                    return UINT8_ARRAY_FIELD;
+                    return CB_UINT8_ARRAY_FIELD;
                 case 1: //fieldSize
                     return 1;
                 default:
-                    return UNKNOWN_FIELD;
+                    return CB_UNKNOWN_FIELD;
                 }
-            return UNKNOWN_FIELD;
+            return CB_UNKNOWN_FIELD;
         case 130: //lowerSky.set.red
-            return UINT8_FIELD;
+            return CB_UINT8_FIELD;
         case 131: //lowerSky.set.green
-            return UINT8_FIELD;
+            return CB_UINT8_FIELD;
         case 132: //lowerSky.set.blue
-            return UINT8_FIELD;
+            return CB_UINT8_FIELD;
         case 133: //lowerSky.set.unused1
             switch(WhichAttribute)
                 {
                 case 0: //fieldType
-                    return UINT8_ARRAY_FIELD;
+                    return CB_UINT8_ARRAY_FIELD;
                 case 1: //fieldSize
                     return 1;
                 default:
-                    return UNKNOWN_FIELD;
+                    return CB_UNKNOWN_FIELD;
                 }
-            return UNKNOWN_FIELD;
+            return CB_UNKNOWN_FIELD;
         case 134: //lowerSky.night.red
-            return UINT8_FIELD;
+            return CB_UINT8_FIELD;
         case 135: //lowerSky.night.green
-            return UINT8_FIELD;
+            return CB_UINT8_FIELD;
         case 136: //lowerSky.night.blue
-            return UINT8_FIELD;
+            return CB_UINT8_FIELD;
         case 137: //lowerSky.night.unused1
             switch(WhichAttribute)
                 {
                 case 0: //fieldType
-                    return UINT8_ARRAY_FIELD;
+                    return CB_UINT8_ARRAY_FIELD;
                 case 1: //fieldSize
                     return 1;
                 default:
-                    return UNKNOWN_FIELD;
+                    return CB_UNKNOWN_FIELD;
                 }
-            return UNKNOWN_FIELD;
+            return CB_UNKNOWN_FIELD;
         case 138: //horizon.rise.red
-            return UINT8_FIELD;
+            return CB_UINT8_FIELD;
         case 139: //horizon.rise.green
-            return UINT8_FIELD;
+            return CB_UINT8_FIELD;
         case 140: //horizon.rise.blue
-            return UINT8_FIELD;
+            return CB_UINT8_FIELD;
         case 141: //horizon.rise.unused1
             switch(WhichAttribute)
                 {
                 case 0: //fieldType
-                    return UINT8_ARRAY_FIELD;
+                    return CB_UINT8_ARRAY_FIELD;
                 case 1: //fieldSize
                     return 1;
                 default:
-                    return UNKNOWN_FIELD;
+                    return CB_UNKNOWN_FIELD;
                 }
-            return UNKNOWN_FIELD;
+            return CB_UNKNOWN_FIELD;
         case 142: //horizon.day.red
-            return UINT8_FIELD;
+            return CB_UINT8_FIELD;
         case 143: //horizon.day.green
-            return UINT8_FIELD;
+            return CB_UINT8_FIELD;
         case 144: //horizon.day.blue
-            return UINT8_FIELD;
+            return CB_UINT8_FIELD;
         case 145: //horizon.day.unused1
             switch(WhichAttribute)
                 {
                 case 0: //fieldType
-                    return UINT8_ARRAY_FIELD;
+                    return CB_UINT8_ARRAY_FIELD;
                 case 1: //fieldSize
                     return 1;
                 default:
-                    return UNKNOWN_FIELD;
+                    return CB_UNKNOWN_FIELD;
                 }
-            return UNKNOWN_FIELD;
+            return CB_UNKNOWN_FIELD;
         case 146: //horizon.set.red
-            return UINT8_FIELD;
+            return CB_UINT8_FIELD;
         case 147: //horizon.set.green
-            return UINT8_FIELD;
+            return CB_UINT8_FIELD;
         case 148: //horizon.set.blue
-            return UINT8_FIELD;
+            return CB_UINT8_FIELD;
         case 149: //horizon.set.unused1
             switch(WhichAttribute)
                 {
                 case 0: //fieldType
-                    return UINT8_ARRAY_FIELD;
+                    return CB_UINT8_ARRAY_FIELD;
                 case 1: //fieldSize
                     return 1;
                 default:
-                    return UNKNOWN_FIELD;
+                    return CB_UNKNOWN_FIELD;
                 }
-            return UNKNOWN_FIELD;
+            return CB_UNKNOWN_FIELD;
         case 150: //horizon.night.red
-            return UINT8_FIELD;
+            return CB_UINT8_FIELD;
         case 151: //horizon.night.green
-            return UINT8_FIELD;
+            return CB_UINT8_FIELD;
         case 152: //horizon.night.blue
-            return UINT8_FIELD;
+            return CB_UINT8_FIELD;
         case 153: //horizon.night.unused1
             switch(WhichAttribute)
                 {
                 case 0: //fieldType
-                    return UINT8_ARRAY_FIELD;
+                    return CB_UINT8_ARRAY_FIELD;
                 case 1: //fieldSize
                     return 1;
                 default:
-                    return UNKNOWN_FIELD;
+                    return CB_UNKNOWN_FIELD;
                 }
-            return UNKNOWN_FIELD;
+            return CB_UNKNOWN_FIELD;
         case 154: //upperClouds.rise.red
-            return UINT8_FIELD;
+            return CB_UINT8_FIELD;
         case 155: //upperClouds.rise.green
-            return UINT8_FIELD;
+            return CB_UINT8_FIELD;
         case 156: //upperClouds.rise.blue
-            return UINT8_FIELD;
+            return CB_UINT8_FIELD;
         case 157: //upperClouds.rise.unused1
             switch(WhichAttribute)
                 {
                 case 0: //fieldType
-                    return UINT8_ARRAY_FIELD;
+                    return CB_UINT8_ARRAY_FIELD;
                 case 1: //fieldSize
                     return 1;
                 default:
-                    return UNKNOWN_FIELD;
+                    return CB_UNKNOWN_FIELD;
                 }
-            return UNKNOWN_FIELD;
+            return CB_UNKNOWN_FIELD;
         case 158: //upperClouds.day.red
-            return UINT8_FIELD;
+            return CB_UINT8_FIELD;
         case 159: //upperClouds.day.green
-            return UINT8_FIELD;
+            return CB_UINT8_FIELD;
         case 160: //upperClouds.day.blue
-            return UINT8_FIELD;
+            return CB_UINT8_FIELD;
         case 161: //upperClouds.day.unused1
             switch(WhichAttribute)
                 {
                 case 0: //fieldType
-                    return UINT8_ARRAY_FIELD;
+                    return CB_UINT8_ARRAY_FIELD;
                 case 1: //fieldSize
                     return 1;
                 default:
-                    return UNKNOWN_FIELD;
+                    return CB_UNKNOWN_FIELD;
                 }
-            return UNKNOWN_FIELD;
+            return CB_UNKNOWN_FIELD;
         case 162: //upperClouds.set.red
-            return UINT8_FIELD;
+            return CB_UINT8_FIELD;
         case 163: //upperClouds.set.green
-            return UINT8_FIELD;
+            return CB_UINT8_FIELD;
         case 164: //upperClouds.set.blue
-            return UINT8_FIELD;
+            return CB_UINT8_FIELD;
         case 165: //upperClouds.set.unused1
             switch(WhichAttribute)
                 {
                 case 0: //fieldType
-                    return UINT8_ARRAY_FIELD;
+                    return CB_UINT8_ARRAY_FIELD;
                 case 1: //fieldSize
                     return 1;
                 default:
-                    return UNKNOWN_FIELD;
+                    return CB_UNKNOWN_FIELD;
                 }
-            return UNKNOWN_FIELD;
+            return CB_UNKNOWN_FIELD;
         case 166: //upperClouds.night.red
-            return UINT8_FIELD;
+            return CB_UINT8_FIELD;
         case 167: //upperClouds.night.green
-            return UINT8_FIELD;
+            return CB_UINT8_FIELD;
         case 168: //upperClouds.night.blue
-            return UINT8_FIELD;
+            return CB_UINT8_FIELD;
         case 169: //upperClouds.night.unused1
             switch(WhichAttribute)
                 {
                 case 0: //fieldType
-                    return UINT8_ARRAY_FIELD;
+                    return CB_UINT8_ARRAY_FIELD;
                 case 1: //fieldSize
                     return 1;
                 default:
-                    return UNKNOWN_FIELD;
+                    return CB_UNKNOWN_FIELD;
                 }
-            return UNKNOWN_FIELD;
+            return CB_UNKNOWN_FIELD;
         case 170: //fogDayNear
-            return FLOAT32_FIELD;
+            return CB_FLOAT32_FIELD;
         case 171: //fogDayFar
-            return FLOAT32_FIELD;
+            return CB_FLOAT32_FIELD;
         case 172: //fogNightNear
-            return FLOAT32_FIELD;
+            return CB_FLOAT32_FIELD;
         case 173: //fogNightFar
-            return FLOAT32_FIELD;
+            return CB_FLOAT32_FIELD;
         case 174: //eyeAdaptSpeed
-            return FLOAT32_FIELD;
+            return CB_FLOAT32_FIELD;
         case 175: //blurRadius
-            return FLOAT32_FIELD;
+            return CB_FLOAT32_FIELD;
         case 176: //blurPasses
-            return FLOAT32_FIELD;
+            return CB_FLOAT32_FIELD;
         case 177: //emissiveMult
-            return FLOAT32_FIELD;
+            return CB_FLOAT32_FIELD;
         case 178: //targetLum
-            return FLOAT32_FIELD;
+            return CB_FLOAT32_FIELD;
         case 179: //upperLumClamp
-            return FLOAT32_FIELD;
+            return CB_FLOAT32_FIELD;
         case 180: //brightScale
-            return FLOAT32_FIELD;
+            return CB_FLOAT32_FIELD;
         case 181: //brightClamp
-            return FLOAT32_FIELD;
+            return CB_FLOAT32_FIELD;
         case 182: //lumRampNoTex
-            return FLOAT32_FIELD;
+            return CB_FLOAT32_FIELD;
         case 183: //lumRampMin
-            return FLOAT32_FIELD;
+            return CB_FLOAT32_FIELD;
         case 184: //lumRampMax
-            return FLOAT32_FIELD;
+            return CB_FLOAT32_FIELD;
         case 185: //sunlightDimmer
-            return FLOAT32_FIELD;
+            return CB_FLOAT32_FIELD;
         case 186: //grassDimmer
-            return FLOAT32_FIELD;
+            return CB_FLOAT32_FIELD;
         case 187: //treeDimmer
-            return FLOAT32_FIELD;
+            return CB_FLOAT32_FIELD;
         case 188: //windSpeed
-            return UINT8_FIELD;
+            return CB_UINT8_FIELD;
         case 189: //lowerCloudSpeed
-            return UINT8_FIELD;
+            return CB_UINT8_FIELD;
         case 190: //upperCloudSpeed
-            return UINT8_FIELD;
+            return CB_UINT8_FIELD;
         case 191: //transDelta
-            return UINT8_FIELD;
+            return CB_UINT8_FIELD;
         case 192: //sunGlare
-            return UINT8_FIELD;
+            return CB_UINT8_FIELD;
         case 193: //sunDamage
-            return UINT8_FIELD;
+            return CB_UINT8_FIELD;
         case 194: //rainFadeIn
-            return UINT8_FIELD;
+            return CB_UINT8_FIELD;
         case 195: //rainFadeOut
-            return UINT8_FIELD;
+            return CB_UINT8_FIELD;
         case 196: //boltFadeIn
-            return UINT8_FIELD;
+            return CB_UINT8_FIELD;
         case 197: //boltFadeOut
-            return UINT8_FIELD;
+            return CB_UINT8_FIELD;
         case 198: //boltFrequency
-            return UINT8_FIELD;
+            return CB_UINT8_FIELD;
         case 199: //weatherType
-            return UINT8_TYPE_FIELD;
+            return CB_UINT8_TYPE_FIELD;
         case 200: //boltRed
-            return UINT8_FIELD;
+            return CB_UINT8_FIELD;
         case 201: //boltGreen
-            return UINT8_FIELD;
+            return CB_UINT8_FIELD;
         case 202: //boltBlue
-            return UINT8_FIELD;
+            return CB_UINT8_FIELD;
         case 203: //sounds
             if(ListFieldID == 0) //sounds
                 {
                 switch(WhichAttribute)
                     {
                     case 0: //fieldType
-                        return LIST_FIELD;
+                        return CB_LIST_FIELD;
                     case 1: //fieldSize
                         return (uint32_t)Sounds.value.size();
                     default:
-                        return UNKNOWN_FIELD;
+                        return CB_UNKNOWN_FIELD;
                     }
                 }
 
             if(ListIndex >= Sounds.value.size())
-                return UNKNOWN_FIELD;
+                return CB_UNKNOWN_FIELD;
 
             switch(ListFieldID)
                 {
                 case 1: //sound
-                    return FORMID_FIELD;
+                    return CB_FORMID_FIELD;
                 case 2: //type
-                    return UINT32_TYPE_FIELD;
+                    return CB_UINT32_TYPE_FIELD;
                 default:
-                    return UNKNOWN_FIELD;
+                    return CB_UNKNOWN_FIELD;
                 }
         default:
-            return UNKNOWN_FIELD;
+            return CB_UNKNOWN_FIELD;
         }
-    return UNKNOWN_FIELD;
+    return CB_UNKNOWN_FIELD;
     }
 
 void * WTHRRecord::GetField(FIELD_IDENTIFIERS, void **FieldValues)

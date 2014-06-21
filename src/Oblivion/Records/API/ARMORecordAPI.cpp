@@ -45,99 +45,99 @@ uint32_t ARMORecord::GetFieldAttribute(FIELD_IDENTIFIERS, uint32_t WhichAttribut
         case 0: //recType
             return GetType();
         case 1: //flags1
-            return UINT32_FLAG_FIELD;
+            return CB_UINT32_FLAG_FIELD;
         case 2: //fid
-            return FORMID_FIELD;
+            return CB_FORMID_FIELD;
         case 3: //flags2
-            return UINT32_FLAG_FIELD;
+            return CB_UINT32_FLAG_FIELD;
         case 4: //eid
-            return ISTRING_FIELD;
+            return CB_ISTRING_FIELD;
         case 5: //full
-            return STRING_FIELD;
+            return CB_STRING_FIELD;
         case 6: //script
-            return FORMID_FIELD;
+            return CB_FORMID_FIELD;
         case 7: //enchantment
-            return FORMID_FIELD;
+            return CB_FORMID_FIELD;
         case 8: //enchantPoints
-            return UINT16_FIELD;
+            return CB_UINT16_FIELD;
         case 9: //flags
-            return UINT32_FLAG_FIELD;
+            return CB_UINT32_FLAG_FIELD;
         case 10: //maleBody_modPath
-            return STRING_FIELD;
+            return CB_STRING_FIELD;
         case 11: //maleBody_modb
-            return FLOAT32_FIELD;
+            return CB_FLOAT32_FIELD;
         case 12: //maleBody_modt_p
             switch(WhichAttribute)
                 {
                 case 0: //fieldType
-                    return UINT8_ARRAY_FIELD;
+                    return CB_UINT8_ARRAY_FIELD;
                 case 1: //fieldSize
                     return MODL.IsLoaded() ? MODL->MODT.GetSize() : 0;
                 default:
-                    return UNKNOWN_FIELD;
+                    return CB_UNKNOWN_FIELD;
                 }
-            return UNKNOWN_FIELD;
+            return CB_UNKNOWN_FIELD;
         case 13: //maleWorld_modPath
-            return STRING_FIELD;
+            return CB_STRING_FIELD;
         case 14: //maleWorld_modb
-            return FLOAT32_FIELD;
+            return CB_FLOAT32_FIELD;
         case 15: //maleWorld_modt_p
             switch(WhichAttribute)
                 {
                 case 0: //fieldType
-                    return UINT8_ARRAY_FIELD;
+                    return CB_UINT8_ARRAY_FIELD;
                 case 1: //fieldSize
                     return MOD2.IsLoaded() ? MOD2->MODT.GetSize() : 0;
                 default:
-                    return UNKNOWN_FIELD;
+                    return CB_UNKNOWN_FIELD;
                 }
-            return UNKNOWN_FIELD;
+            return CB_UNKNOWN_FIELD;
         case 16: //maleIconPath
-            return ISTRING_FIELD;
+            return CB_ISTRING_FIELD;
         case 17: //femaleBody_modPath
-            return STRING_FIELD;
+            return CB_STRING_FIELD;
         case 18: //femaleBody_modb
-            return FLOAT32_FIELD;
+            return CB_FLOAT32_FIELD;
         case 19: //femaleBody_modt_p
             switch(WhichAttribute)
                 {
                 case 0: //fieldType
-                    return UINT8_ARRAY_FIELD;
+                    return CB_UINT8_ARRAY_FIELD;
                 case 1: //fieldSize
                     return MOD3.IsLoaded() ? MOD3->MODT.GetSize() : 0;
                 default:
-                    return UNKNOWN_FIELD;
+                    return CB_UNKNOWN_FIELD;
                 }
-            return UNKNOWN_FIELD;
+            return CB_UNKNOWN_FIELD;
         case 20: //femaleWorld_modPath
-            return STRING_FIELD;
+            return CB_STRING_FIELD;
         case 21: //femaleWorld_modb
-            return FLOAT32_FIELD;
+            return CB_FLOAT32_FIELD;
         case 22: //femaleWorld_modt_p
             switch(WhichAttribute)
                 {
                 case 0: //fieldType
-                    return UINT8_ARRAY_FIELD;
+                    return CB_UINT8_ARRAY_FIELD;
                 case 1: //fieldSize
                     return MOD4.IsLoaded() ? MOD4->MODT.GetSize() : 0;
                 default:
-                    return UNKNOWN_FIELD;
+                    return CB_UNKNOWN_FIELD;
                 }
-            return UNKNOWN_FIELD;
+            return CB_UNKNOWN_FIELD;
         case 23: //femaleIconPath
-            return ISTRING_FIELD;
+            return CB_ISTRING_FIELD;
         case 24: //strength
-            return UINT16_FIELD;
+            return CB_UINT16_FIELD;
         case 25: //value
-            return UINT32_FIELD;
+            return CB_UINT32_FIELD;
         case 26: //health
-            return UINT32_FIELD;
+            return CB_UINT32_FIELD;
         case 27: //weight
-            return FLOAT32_FIELD;
+            return CB_FLOAT32_FIELD;
         default:
-            return UNKNOWN_FIELD;
+            return CB_UNKNOWN_FIELD;
         }
-    return UNKNOWN_FIELD;
+    return CB_UNKNOWN_FIELD;
     }
 
 void * ARMORecord::GetField(FIELD_IDENTIFIERS, void **FieldValues)

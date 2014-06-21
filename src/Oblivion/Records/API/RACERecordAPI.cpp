@@ -45,422 +45,422 @@ uint32_t RACERecord::GetFieldAttribute(FIELD_IDENTIFIERS, uint32_t WhichAttribut
         case 0: //recType
             return GetType();
         case 1: //flags1
-            return UINT32_FLAG_FIELD;
+            return CB_UINT32_FLAG_FIELD;
         case 2: //fid
-            return FORMID_FIELD;
+            return CB_FORMID_FIELD;
         case 3: //flags2
-            return UINT32_FLAG_FIELD;
+            return CB_UINT32_FLAG_FIELD;
         case 4: //eid
-            return ISTRING_FIELD;
+            return CB_ISTRING_FIELD;
         case 5: //full
-            return STRING_FIELD;
+            return CB_STRING_FIELD;
         case 6: //text
-            return STRING_FIELD;
+            return CB_STRING_FIELD;
         case 7: //spells
             switch(WhichAttribute)
                 {
                 case 0: //fieldType
-                    return FORMID_ARRAY_FIELD;
+                    return CB_FORMID_ARRAY_FIELD;
                 case 1: //fieldSize
                     return (uint32_t)SPLO.value.size();
                 default:
-                    return UNKNOWN_FIELD;
+                    return CB_UNKNOWN_FIELD;
                 }
-            return UNKNOWN_FIELD;
+            return CB_UNKNOWN_FIELD;
         case 8: //relations
             if(ListFieldID == 0) //relations
                 {
                 switch(WhichAttribute)
                     {
                     case 0: //fieldType
-                        return LIST_FIELD;
+                        return CB_LIST_FIELD;
                     case 1: //fieldSize
                         return (uint32_t)XNAM.value.size();
                     default:
-                        return UNKNOWN_FIELD;
+                        return CB_UNKNOWN_FIELD;
                     }
                 }
 
             if(ListIndex >= XNAM.value.size())
-                return UNKNOWN_FIELD;
+                return CB_UNKNOWN_FIELD;
 
             switch(ListFieldID)
                 {
                 case 1: //faction
-                    return FORMID_FIELD;
+                    return CB_FORMID_FIELD;
                 case 2: //mod
-                    return SINT32_FIELD;
+                    return CB_SINT32_FIELD;
                 default:
-                    return UNKNOWN_FIELD;
+                    return CB_UNKNOWN_FIELD;
                 }
-            return UNKNOWN_FIELD;
+            return CB_UNKNOWN_FIELD;
         case 9: //skill1
-            return SINT8_FIELD;
+            return CB_SINT8_FIELD;
         case 10: //skill1Boost
-            return SINT8_FIELD;
+            return CB_SINT8_FIELD;
         case 11: //skill2
-            return SINT8_FIELD;
+            return CB_SINT8_FIELD;
         case 12: //skill2Boost
-            return SINT8_FIELD;
+            return CB_SINT8_FIELD;
         case 13: //skill3
-            return SINT8_FIELD;
+            return CB_SINT8_FIELD;
         case 14: //skill3Boost
-            return SINT8_FIELD;
+            return CB_SINT8_FIELD;
         case 15: //skill4
-            return SINT8_FIELD;
+            return CB_SINT8_FIELD;
         case 16: //skill4Boost
-            return SINT8_FIELD;
+            return CB_SINT8_FIELD;
         case 17: //skill5
-            return SINT8_FIELD;
+            return CB_SINT8_FIELD;
         case 18: //skill5Boost
-            return SINT8_FIELD;
+            return CB_SINT8_FIELD;
         case 19: //skill6
-            return SINT8_FIELD;
+            return CB_SINT8_FIELD;
         case 20: //skill6Boost
-            return SINT8_FIELD;
+            return CB_SINT8_FIELD;
         case 21: //skill7
-            return SINT8_FIELD;
+            return CB_SINT8_FIELD;
         case 22: //skill7Boost
-            return SINT8_FIELD;
+            return CB_SINT8_FIELD;
         case 23: //unused1
             switch(WhichAttribute)
                 {
                 case 0: //fieldType
-                    return UINT8_ARRAY_FIELD;
+                    return CB_UINT8_ARRAY_FIELD;
                 case 1: //fieldSize
                     return 2;
                 default:
-                    return UNKNOWN_FIELD;
+                    return CB_UNKNOWN_FIELD;
                 }
-            return UNKNOWN_FIELD;
+            return CB_UNKNOWN_FIELD;
         case 24: //maleHeight
-            return FLOAT32_FIELD;
+            return CB_FLOAT32_FIELD;
         case 25: //femaleHeight
-            return FLOAT32_FIELD;
+            return CB_FLOAT32_FIELD;
         case 26: //maleWeight
-            return FLOAT32_FIELD;
+            return CB_FLOAT32_FIELD;
         case 27: //femaleWeight
-            return FLOAT32_FIELD;
+            return CB_FLOAT32_FIELD;
         case 28: //flags
-            return UINT32_FLAG_FIELD;
+            return CB_UINT32_FLAG_FIELD;
         case 29: //maleVoice
-            return FORMID_FIELD;
+            return CB_FORMID_FIELD;
         case 30: //femaleVoice
-            return FORMID_FIELD;
+            return CB_FORMID_FIELD;
         case 31: //defaultHairMale
-            return FORMID_FIELD;
+            return CB_FORMID_FIELD;
         case 32: //defaultHairFemale
-            return FORMID_FIELD;
+            return CB_FORMID_FIELD;
         case 33: //defaultHairColor
-            return UINT8_FIELD;
+            return CB_UINT8_FIELD;
         case 34: //mainClamp
-            return FLOAT32_FIELD;
+            return CB_FLOAT32_FIELD;
         case 35: //faceClamp
-            return FLOAT32_FIELD;
+            return CB_FLOAT32_FIELD;
         case 36: //maleStrength
-            return UINT8_FIELD;
+            return CB_UINT8_FIELD;
         case 37: //maleIntelligence
-            return UINT8_FIELD;
+            return CB_UINT8_FIELD;
         case 38: //maleWillpower
-            return UINT8_FIELD;
+            return CB_UINT8_FIELD;
         case 39: //maleAgility
-            return UINT8_FIELD;
+            return CB_UINT8_FIELD;
         case 40: //maleSpeed
-            return UINT8_FIELD;
+            return CB_UINT8_FIELD;
         case 41: //maleEndurance
-            return UINT8_FIELD;
+            return CB_UINT8_FIELD;
         case 42: //malePersonality
-            return UINT8_FIELD;
+            return CB_UINT8_FIELD;
         case 43: //maleLuck
-            return UINT8_FIELD;
+            return CB_UINT8_FIELD;
         case 44: //femaleStrength
-            return UINT8_FIELD;
+            return CB_UINT8_FIELD;
         case 45: //femaleIntelligence
-            return UINT8_FIELD;
+            return CB_UINT8_FIELD;
         case 46: //femaleWillpower
-            return UINT8_FIELD;
+            return CB_UINT8_FIELD;
         case 47: //femaleAgility
-            return UINT8_FIELD;
+            return CB_UINT8_FIELD;
         case 48: //femaleSpeed
-            return UINT8_FIELD;
+            return CB_UINT8_FIELD;
         case 49: //femaleEndurance
-            return UINT8_FIELD;
+            return CB_UINT8_FIELD;
         case 50: //femalePersonality
-            return UINT8_FIELD;
+            return CB_UINT8_FIELD;
         case 51: //femaleLuck
-            return UINT8_FIELD;
+            return CB_UINT8_FIELD;
         case 52: //head_modPath
-            return ISTRING_FIELD;
+            return CB_ISTRING_FIELD;
         case 53: //head_modb
-            return FLOAT32_FIELD;
+            return CB_FLOAT32_FIELD;
         case 54: //head_iconPath
-            return ISTRING_FIELD;
+            return CB_ISTRING_FIELD;
         case 55: //head_modt_p
             switch(WhichAttribute)
                 {
                 case 0: //fieldType
-                    return UINT8_ARRAY_FIELD;
+                    return CB_UINT8_ARRAY_FIELD;
                 case 1: //fieldSize
                     return MOD0.IsLoaded() ? MOD0->MODT.GetSize() : 0;
                 default:
-                    return UNKNOWN_FIELD;
+                    return CB_UNKNOWN_FIELD;
                 }
-            return UNKNOWN_FIELD;
+            return CB_UNKNOWN_FIELD;
         case 56: //maleEars_modPath
-            return ISTRING_FIELD;
+            return CB_ISTRING_FIELD;
         case 57: //maleEars_modb
-            return FLOAT32_FIELD;
+            return CB_FLOAT32_FIELD;
         case 58: //maleEars_iconPath
-            return ISTRING_FIELD;
+            return CB_ISTRING_FIELD;
         case 59: //maleEars_modt_p
             switch(WhichAttribute)
                 {
                 case 0: //fieldType
-                    return UINT8_ARRAY_FIELD;
+                    return CB_UINT8_ARRAY_FIELD;
                 case 1: //fieldSize
                     return MOD1.IsLoaded() ? MOD1->MODT.GetSize() : 0;
                 default:
-                    return UNKNOWN_FIELD;
+                    return CB_UNKNOWN_FIELD;
                 }
-            return UNKNOWN_FIELD;
+            return CB_UNKNOWN_FIELD;
         case 60: //femaleEars_modPath
-            return ISTRING_FIELD;
+            return CB_ISTRING_FIELD;
         case 61: //femaleEars_modb
-            return FLOAT32_FIELD;
+            return CB_FLOAT32_FIELD;
         case 62: //femaleEars_iconPath
-            return ISTRING_FIELD;
+            return CB_ISTRING_FIELD;
         case 63: //femaleEars_modt_p
             switch(WhichAttribute)
                 {
                 case 0: //fieldType
-                    return UINT8_ARRAY_FIELD;
+                    return CB_UINT8_ARRAY_FIELD;
                 case 1: //fieldSize
                     return MOD2.IsLoaded() ? MOD2->MODT.GetSize() : 0;
                 default:
-                    return UNKNOWN_FIELD;
+                    return CB_UNKNOWN_FIELD;
                 }
-            return UNKNOWN_FIELD;
+            return CB_UNKNOWN_FIELD;
         case 64: //mouth_modPath
-            return ISTRING_FIELD;
+            return CB_ISTRING_FIELD;
         case 65: //mouth_modb
-            return FLOAT32_FIELD;
+            return CB_FLOAT32_FIELD;
         case 66: //mouth_iconPath
-            return ISTRING_FIELD;
+            return CB_ISTRING_FIELD;
         case 67: //mouth_modt_p
             switch(WhichAttribute)
                 {
                 case 0: //fieldType
-                    return UINT8_ARRAY_FIELD;
+                    return CB_UINT8_ARRAY_FIELD;
                 case 1: //fieldSize
                     return MOD3.IsLoaded() ? MOD3->MODT.GetSize() : 0;
                 default:
-                    return UNKNOWN_FIELD;
+                    return CB_UNKNOWN_FIELD;
                 }
-            return UNKNOWN_FIELD;
+            return CB_UNKNOWN_FIELD;
         case 68: //teethLower_modPath
-            return ISTRING_FIELD;
+            return CB_ISTRING_FIELD;
         case 69: //teethLower_modb
-            return FLOAT32_FIELD;
+            return CB_FLOAT32_FIELD;
         case 70: //teethLower_iconPath
-            return ISTRING_FIELD;
+            return CB_ISTRING_FIELD;
         case 71: //teethLower_modt_p
             switch(WhichAttribute)
                 {
                 case 0: //fieldType
-                    return UINT8_ARRAY_FIELD;
+                    return CB_UINT8_ARRAY_FIELD;
                 case 1: //fieldSize
                     return MOD4.IsLoaded() ? MOD4->MODT.GetSize() : 0;
                 default:
-                    return UNKNOWN_FIELD;
+                    return CB_UNKNOWN_FIELD;
                 }
-            return UNKNOWN_FIELD;
+            return CB_UNKNOWN_FIELD;
         case 72: //teethUpper_modPath
-            return ISTRING_FIELD;
+            return CB_ISTRING_FIELD;
         case 73: //teethUpper_modb
-            return FLOAT32_FIELD;
+            return CB_FLOAT32_FIELD;
         case 74: //teethUpper_iconPath
-            return ISTRING_FIELD;
+            return CB_ISTRING_FIELD;
         case 75: //teethUpper_modt_p
             switch(WhichAttribute)
                 {
                 case 0: //fieldType
-                    return UINT8_ARRAY_FIELD;
+                    return CB_UINT8_ARRAY_FIELD;
                 case 1: //fieldSize
                     return MOD5.IsLoaded() ? MOD5->MODT.GetSize() : 0;
                 default:
-                    return UNKNOWN_FIELD;
+                    return CB_UNKNOWN_FIELD;
                 }
-            return UNKNOWN_FIELD;
+            return CB_UNKNOWN_FIELD;
         case 76: //tongue_modPath
-            return ISTRING_FIELD;
+            return CB_ISTRING_FIELD;
         case 77: //tongue_modb
-            return FLOAT32_FIELD;
+            return CB_FLOAT32_FIELD;
         case 78: //tongue_iconPath
-            return ISTRING_FIELD;
+            return CB_ISTRING_FIELD;
         case 79: //tongue_modt_p
             switch(WhichAttribute)
                 {
                 case 0: //fieldType
-                    return UINT8_ARRAY_FIELD;
+                    return CB_UINT8_ARRAY_FIELD;
                 case 1: //fieldSize
                     return MOD6.IsLoaded() ? MOD6->MODT.GetSize() : 0;
                 default:
-                    return UNKNOWN_FIELD;
+                    return CB_UNKNOWN_FIELD;
                 }
-            return UNKNOWN_FIELD;
+            return CB_UNKNOWN_FIELD;
         case 80: //leftEye_modPath
-            return ISTRING_FIELD;
+            return CB_ISTRING_FIELD;
         case 81: //leftEye_modb
-            return FLOAT32_FIELD;
+            return CB_FLOAT32_FIELD;
         case 82: //leftEye_iconPath
-            return ISTRING_FIELD;
+            return CB_ISTRING_FIELD;
         case 83: //leftEye_modt_p
             switch(WhichAttribute)
                 {
                 case 0: //fieldType
-                    return UINT8_ARRAY_FIELD;
+                    return CB_UINT8_ARRAY_FIELD;
                 case 1: //fieldSize
                     return MOD7.IsLoaded() ? MOD7->MODT.GetSize() : 0;
                 default:
-                    return UNKNOWN_FIELD;
+                    return CB_UNKNOWN_FIELD;
                 }
-            return UNKNOWN_FIELD;
+            return CB_UNKNOWN_FIELD;
         case 84: //rightEye_modPath
-            return ISTRING_FIELD;
+            return CB_ISTRING_FIELD;
         case 85: //rightEye_modb
-            return FLOAT32_FIELD;
+            return CB_FLOAT32_FIELD;
         case 86: //rightEye_iconPath
-            return ISTRING_FIELD;
+            return CB_ISTRING_FIELD;
         case 87: //rightEye_modt_p
             switch(WhichAttribute)
                 {
                 case 0: //fieldType
-                    return UINT8_ARRAY_FIELD;
+                    return CB_UINT8_ARRAY_FIELD;
                 case 1: //fieldSize
                     return MOD8.IsLoaded() ? MOD8->MODT.GetSize() : 0;
                 default:
-                    return UNKNOWN_FIELD;
+                    return CB_UNKNOWN_FIELD;
                 }
-            return UNKNOWN_FIELD;
+            return CB_UNKNOWN_FIELD;
         case 88: //maleTail_modPath
-            return ISTRING_FIELD;
+            return CB_ISTRING_FIELD;
         case 89: //maleTail_modb
-            return FLOAT32_FIELD;
+            return CB_FLOAT32_FIELD;
         case 90: //maleTail_modt_p
             switch(WhichAttribute)
                 {
                 case 0: //fieldType
-                    return UINT8_ARRAY_FIELD;
+                    return CB_UINT8_ARRAY_FIELD;
                 case 1: //fieldSize
                     return MMODL.IsLoaded() ? MMODL->MODT.GetSize() : 0;
                 default:
-                    return UNKNOWN_FIELD;
+                    return CB_UNKNOWN_FIELD;
                 }
-            return UNKNOWN_FIELD;
+            return CB_UNKNOWN_FIELD;
         case 91: //maleUpperBodyPath
-            return ISTRING_FIELD;
+            return CB_ISTRING_FIELD;
         case 92: //maleLowerBodyPath
-            return ISTRING_FIELD;
+            return CB_ISTRING_FIELD;
         case 93: //maleHandPath
-            return ISTRING_FIELD;
+            return CB_ISTRING_FIELD;
         case 94: //maleFootPath
-            return ISTRING_FIELD;
+            return CB_ISTRING_FIELD;
         case 95: //maleTailPath
-            return ISTRING_FIELD;
+            return CB_ISTRING_FIELD;
         case 96: //femaleTail_modPath
-            return ISTRING_FIELD;
+            return CB_ISTRING_FIELD;
         case 97: //femaleTail_modb
-            return FLOAT32_FIELD;
+            return CB_FLOAT32_FIELD;
         case 98: //femaleTail_modt_p
             switch(WhichAttribute)
                 {
                 case 0: //fieldType
-                    return UINT8_ARRAY_FIELD;
+                    return CB_UINT8_ARRAY_FIELD;
                 case 1: //fieldSize
                     return FMODL.IsLoaded() ? FMODL->MODT.GetSize() : 0;
                 default:
-                    return UNKNOWN_FIELD;
+                    return CB_UNKNOWN_FIELD;
                 }
-            return UNKNOWN_FIELD;
+            return CB_UNKNOWN_FIELD;
         case 99: //femaleUpperBodyPath
-            return ISTRING_FIELD;
+            return CB_ISTRING_FIELD;
         case 100: //femaleLowerBodyPath
-            return ISTRING_FIELD;
+            return CB_ISTRING_FIELD;
         case 101: //femaleHandPath
-            return ISTRING_FIELD;
+            return CB_ISTRING_FIELD;
         case 102: //femaleFootPath
-            return ISTRING_FIELD;
+            return CB_ISTRING_FIELD;
         case 103: //femaleTailPath
-            return ISTRING_FIELD;
+            return CB_ISTRING_FIELD;
         case 104: //hairs
             switch(WhichAttribute)
                 {
                 case 0: //fieldType
-                    return FORMID_ARRAY_FIELD;
+                    return CB_FORMID_ARRAY_FIELD;
                 case 1: //fieldSize
                     return (uint32_t)HNAM.value.size();
                 default:
-                    return UNKNOWN_FIELD;
+                    return CB_UNKNOWN_FIELD;
                 }
-            return UNKNOWN_FIELD;
+            return CB_UNKNOWN_FIELD;
         case 105: //eyes
             switch(WhichAttribute)
                 {
                 case 0: //fieldType
-                    return FORMID_ARRAY_FIELD;
+                    return CB_FORMID_ARRAY_FIELD;
                 case 1: //fieldSize
                     return (uint32_t)ENAM.value.size();
                 default:
-                    return UNKNOWN_FIELD;
+                    return CB_UNKNOWN_FIELD;
                 }
-            return UNKNOWN_FIELD;
+            return CB_UNKNOWN_FIELD;
         case 106: //fggs_p
             switch(WhichAttribute)
                 {
                 case 0: //fieldType
-                    return UINT8_ARRAY_FIELD;
+                    return CB_UINT8_ARRAY_FIELD;
                 case 1: //fieldSize
                     return FGGS.IsLoaded() ? 200 : 0;
                 default:
-                    return UNKNOWN_FIELD;
+                    return CB_UNKNOWN_FIELD;
                 }
-            return UNKNOWN_FIELD;
+            return CB_UNKNOWN_FIELD;
         case 107: //fgga_p
             switch(WhichAttribute)
                 {
                 case 0: //fieldType
-                    return UINT8_ARRAY_FIELD;
+                    return CB_UINT8_ARRAY_FIELD;
                 case 1: //fieldSize
                     return FGGA.IsLoaded() ? 120 : 0;
                 default:
-                    return UNKNOWN_FIELD;
+                    return CB_UNKNOWN_FIELD;
                 }
-            return UNKNOWN_FIELD;
+            return CB_UNKNOWN_FIELD;
         case 108: //fgts_p
             switch(WhichAttribute)
                 {
                 case 0: //fieldType
-                    return UINT8_ARRAY_FIELD;
+                    return CB_UINT8_ARRAY_FIELD;
                 case 1: //fieldSize
                     return FGTS.IsLoaded() ? 200 : 0;
                 default:
-                    return UNKNOWN_FIELD;
+                    return CB_UNKNOWN_FIELD;
                 }
-            return UNKNOWN_FIELD;
+            return CB_UNKNOWN_FIELD;
         case 109: //snam_p
             switch(WhichAttribute)
                 {
                 case 0: //fieldType
-                    return UINT8_ARRAY_FIELD;
+                    return CB_UINT8_ARRAY_FIELD;
                 case 1: //fieldSize
                     return 2;
                 default:
-                    return UNKNOWN_FIELD;
+                    return CB_UNKNOWN_FIELD;
                 }
         default:
-            return UNKNOWN_FIELD;
+            return CB_UNKNOWN_FIELD;
         }
-    return UNKNOWN_FIELD;
+    return CB_UNKNOWN_FIELD;
     }
 
 void * RACERecord::GetField(FIELD_IDENTIFIERS, void **FieldValues)
