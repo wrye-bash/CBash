@@ -237,7 +237,7 @@ bool SKCTDA::VisitFormIDs(FormIDOp &op)
     if (IsUseGlobal())
         op.Accept(compValue);
 
-    if (curCTDAFunction != Function_Arguments.end())
+    if (curCTDAFunction != SKFunction_Arguments.end())
     {
         const FunctionArguments &CTDAFunction = curCTDAFunction->second;
         if (CTDAFunction.first == eFORMID)
