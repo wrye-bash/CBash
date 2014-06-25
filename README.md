@@ -2,6 +2,8 @@
 
 CBash is a C/C++ library for reading and writing TES IV: Oblivion, TES V: Skyrim and Fallout: New Vegas plugin files. It's used by the [Wrye Bash](https://github.com/wrye-bash/wrye-bash) modding utility to build its Bashed Patch plugins.
 
+For bugs and feature request, feel free to open a new Issue in the Issue tracker.  For other discussions, open a new thread [here](http://ost.io/@lojack5/CBash "ost.io"), for example asking questions about what specific parts of the code do, etc.
+
 Instructions on how to build CBash can be found [here](docs/BUILD.md). If linking to a static build of CBash, be sure to define `CBASH_STATIC`. Otherwise, if linking to a dynamic build, define `CBASH_DLL`.
 
 The plugin file formats are documented at the following locations:
