@@ -212,7 +212,7 @@ int handle_program_memory_depletion(size_t size)
     return 0;
     }
 
-CPPDLLEXTERN Collection * cb_CreateCollection(char * const ModsPath, const uint32_t CollectionType)
+CPPDLLEXTERN Collection * cb_CreateCollection(char * const ModsPath, const cb_game_type_t CollectionType)
     {
     PROFILE_FUNC
 
@@ -466,7 +466,7 @@ CPPDLLEXTERN int32_t cb_DeleteAllCollections()
 ////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////
 //Mod action functions
-CPPDLLEXTERN ModFile * cb_AddMod(Collection *CollectionID, char * const ModName, const uint32_t ModFlagsField)
+CPPDLLEXTERN ModFile * cb_AddMod(Collection *CollectionID, char * const ModName, const cb_mod_flags_t ModFlagsField)
     {
     PROFILE_FUNC
 
@@ -567,7 +567,7 @@ CPPDLLEXTERN int32_t cb_CleanModMasters(ModFile *ModID)
     return -1;
     }
 
-CPPDLLEXTERN int32_t cb_SaveMod(ModFile *ModID, const uint32_t SaveFlagsField, char * const DestinationName)
+CPPDLLEXTERN int32_t cb_SaveMod(ModFile *ModID, const cb_save_flags_t SaveFlagsField, char * const DestinationName)
     {
     int32_t err = 0;
     SaveFlags flags(SaveFlagsField);
@@ -1184,7 +1184,7 @@ CPPDLLEXTERN uint32_t cb_MakeShortFormID(ModFile *ModID, const uint32_t ObjectID
 ////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////
 //Record action functions
-CPPDLLEXTERN Record * cb_CreateRecord(ModFile *ModID, const uint32_t RecordType, const FORMID RecordFormID, char * const RecordEditorID, Record *ParentID, const uint32_t CreateFlags)
+CPPDLLEXTERN Record * cb_CreateRecord(ModFile *ModID, const uint32_t RecordType, const FORMID RecordFormID, char * const RecordEditorID, Record *ParentID, const cb_create_flags_t CreateFlags)
     {
     PROFILE_FUNC
 
@@ -1209,7 +1209,7 @@ CPPDLLEXTERN Record * cb_CreateRecord(ModFile *ModID, const uint32_t RecordType,
     return 0;
     }
 
-CPPDLLEXTERN Record * cb_CopyRecord(Record *RecordID, ModFile *DestModID, Record *DestParentID, const FORMID DestRecordFormID, char * const DestRecordEditorID, const uint32_t CreateFlags)
+CPPDLLEXTERN Record * cb_CopyRecord(Record *RecordID, ModFile *DestModID, Record *DestParentID, const FORMID DestRecordFormID, char * const DestRecordEditorID, const cb_create_flags_t CreateFlags)
     {
     PROFILE_FUNC
 
