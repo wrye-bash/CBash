@@ -19,22 +19,6 @@ set (Boost_USE_STATIC_LIBS ON)
 set (Boost_USE_MULTITHREADED ON)
 set (Boost_USE_STATIC_RUNTIME PROJECT_STATIC_RUNTIME)
 
-SET (BOOST_ROOT C:/local/boost_1_55_0/)
-SET (BOOST_LIBRARYDIR C:/local/boost_1_55_0/lib32-msvc-12.0/)
-SET (ZLIB_ROOT C:/local/zlib/)
-
-file (GLOB_RECURSE CBASH_FONV "${CMAKE_SOURCE_DIR}/src/FalloutNewVegas/*.cpp" )
-
-file (GLOB_RECURSE CBASH_FONV_HDRS 	"${CMAKE_SOURCE_DIR}/src/FalloutNewVegas/*.h" )
-	
-file (GLOB_RECURSE CBASH_OBLIVION "${CMAKE_SOURCE_DIR}/src/Oblivion/*.cpp" )
-
-file (GLOB_RECURSE CBASH_OBLIVION_HDRS "${CMAKE_SOURCE_DIR}/src/Oblivion/*.h" )
-
-file (GLOB_RECURSE CBASH_SKYRIM "${CMAKE_SOURCE_DIR}/src/Skyrim/*.cpp" )
-
-file (GLOB_RECURSE CBASH_SKYRIM_HDRS "${CMAKE_SOURCE_DIR}/src/Skyrim/*.h" )
-
 file (GLOB_RECURSE CBASH_GEN_HDRS "${CMAKE_SOURCE_DIR}/src/*.h" )
 
 set (CBASH_SRC  "${CMAKE_SOURCE_DIR}/src/CBash.cpp"
@@ -47,18 +31,7 @@ set (CBASH_SRC  "${CMAKE_SOURCE_DIR}/src/CBash.cpp"
                 "${CMAKE_SOURCE_DIR}/src/TES4RecordAPI.cpp"
                 "${CMAKE_SOURCE_DIR}/src/Visitors.cpp"
                 "${CMAKE_SOURCE_DIR}/src/CBash.rc"
-                ${CBASH_FONV}
-                ${CBASH_OBLIVION}
-                ${CBASH_SKYRIM}
                 )
-				
-set (CBASH_HDRS 
-	${CBASH_GEN_HDRS}
-	${CBASH_FONV_HDRS}
-    ${CBASH_OBLIVION_HDRS}
-    ${CBASH_SKYRIM_HDRS}
-	)
-	
 
 
 file(GLOB_RECURSE TMP_FILES_HDRS
@@ -138,5 +111,5 @@ ENDIF ()
 ##############################
 
 # Build CBash.
-add_library           (CBash ${CBASH_SRC} ${CBASH_HDRS} )
+add_library           (CBash ${CBASH_SRC} ${CBASH_GEN_HDRS} )
 target_link_libraries (CBash ${Boost_LIBRARIES} ${CBASH_LIBS})
