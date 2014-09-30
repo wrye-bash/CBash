@@ -21,6 +21,10 @@ set (Boost_USE_STATIC_RUNTIME PROJECT_STATIC_RUNTIME)
 
 file (GLOB_RECURSE CBASH_GEN_HDRS "${CMAKE_SOURCE_DIR}/src/*.h" )
 
+file (GLOB_RECURSE CBASH_FONV "${CMAKE_SOURCE_DIR}/src/FalloutNewVegas/*.cpp")
+file (GLOB_RECURSE CBASH_OBLIVION "${CMAKE_SOURCE_DIR}/src/Oblivion/*.cpp")
+file (GLOB_RECURSE CBASH_SKYRIM "${CMAKE_SOURCE_DIR}/src/Skyrim/*.cpp")
+
 set (CBASH_SRC  "${CMAKE_SOURCE_DIR}/src/CBash.cpp"
                 "${CMAKE_SOURCE_DIR}/src/Collection.cpp"
                 "${CMAKE_SOURCE_DIR}/src/Common.cpp"
@@ -31,6 +35,9 @@ set (CBASH_SRC  "${CMAKE_SOURCE_DIR}/src/CBash.cpp"
                 "${CMAKE_SOURCE_DIR}/src/TES4RecordAPI.cpp"
                 "${CMAKE_SOURCE_DIR}/src/Visitors.cpp"
                 "${CMAKE_SOURCE_DIR}/src/CBash.rc"
+                ${CBASH_FONV}
+                ${CBASH_OBLIVION}
+                ${CBASH_SKYRIM}
                 )
 
 
@@ -47,6 +54,21 @@ foreach(f ${TMP_FILES_HDRS})
     # Extract the folder, ie remove the filename part
     string(REGEX REPLACE "(.*)(/[^/]*)$" "\\1" SRCGR ${SRCGR})
 
+    # Source_group expects \\ (double antislash), not / (slash)
+    string(REPLACE / \\ SRCGR ${SRCGR})
+    source_group("${SRCGR}" FILES ${f})
+endforeach()
+
+file(GLOB_RECURSE TMP_FILES
+    "${CMAKE_SOURCE_DIR}/src/*.cpp"
+)
+foreach(f ${TMP_FILES})
+    # Get the path of the file relative to ${DIRECTORY},
+    # then alter it (not compulsory)
+    file(RELATIVE_PATH SRCGR "${CMAKE_SOURCE_DIR}/src/" ${f})
+    set(SRCGR "Source Files/${SRCGR}")
+    # Extract the folder, ie remove the filename part
+    string(REGEX REPLACE "(.*)(/[^/]*)$" "\\1" SRCGR ${SRCGR})
     # Source_group expects \\ (double antislash), not / (slash)
     string(REPLACE / \\ SRCGR ${SRCGR})
     source_group("${SRCGR}" FILES ${f})
