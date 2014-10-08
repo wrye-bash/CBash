@@ -19,6 +19,8 @@ set (Boost_USE_STATIC_LIBS ON)
 set (Boost_USE_MULTITHREADED ON)
 set (Boost_USE_STATIC_RUNTIME PROJECT_STATIC_RUNTIME)
 
+file (GLOB_RECURSE CBASH_GEN_HDRS "${CMAKE_SOURCE_DIR}/src/*.h" )
+
 file (GLOB_RECURSE CBASH_FONV "${CMAKE_SOURCE_DIR}/src/FalloutNewVegas/*.cpp")
 file (GLOB_RECURSE CBASH_OBLIVION "${CMAKE_SOURCE_DIR}/src/Oblivion/*.cpp")
 file (GLOB_RECURSE CBASH_SKYRIM "${CMAKE_SOURCE_DIR}/src/Skyrim/*.cpp")
@@ -37,6 +39,40 @@ set (CBASH_SRC  "${CMAKE_SOURCE_DIR}/src/CBash.cpp"
                 ${CBASH_OBLIVION}
                 ${CBASH_SKYRIM}
                 )
+
+
+file(GLOB_RECURSE TMP_FILES_HDRS
+    "${CMAKE_SOURCE_DIR}/src/*.h"
+)
+
+foreach(f ${TMP_FILES_HDRS})
+    # Get the path of the file relative to ${DIRECTORY},
+    # then alter it (not compulsory)
+    file(RELATIVE_PATH SRCGR "${CMAKE_SOURCE_DIR}/src/" ${f})
+    set(SRCGR "Headers/${SRCGR}")
+
+    # Extract the folder, ie remove the filename part
+    string(REGEX REPLACE "(.*)(/[^/]*)$" "\\1" SRCGR ${SRCGR})
+
+    # Source_group expects \\ (double antislash), not / (slash)
+    string(REPLACE / \\ SRCGR ${SRCGR})
+    source_group("${SRCGR}" FILES ${f})
+endforeach()
+
+file(GLOB_RECURSE TMP_FILES
+    "${CMAKE_SOURCE_DIR}/src/*.cpp"
+)
+foreach(f ${TMP_FILES})
+    # Get the path of the file relative to ${DIRECTORY},
+    # then alter it (not compulsory)
+    file(RELATIVE_PATH SRCGR "${CMAKE_SOURCE_DIR}/src/" ${f})
+    set(SRCGR "Source Files/${SRCGR}")
+    # Extract the folder, ie remove the filename part
+    string(REGEX REPLACE "(.*)(/[^/]*)$" "\\1" SRCGR ${SRCGR})
+    # Source_group expects \\ (double antislash), not / (slash)
+    string(REPLACE / \\ SRCGR ${SRCGR})
+    source_group("${SRCGR}" FILES ${f})
+endforeach()
 
 IF (CBASH_NO_BOOST_ZLIB)
     add_definitions(-DCBASH_NO_BOOST_ZLIB)
@@ -97,5 +133,5 @@ ENDIF ()
 ##############################
 
 # Build CBash.
-add_library           (CBash ${CBASH_SRC})
+add_library           (CBash ${CBASH_SRC} ${CBASH_GEN_HDRS} )
 target_link_libraries (CBash ${Boost_LIBRARIES} ${CBASH_LIBS})
