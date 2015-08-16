@@ -70,7 +70,7 @@ void VMADRecord::Load()
 
 void VMADRecord::Unload()
 {
-    for (uint16_t i = 0; i, scripts.size(); ++i)
+    for (uint16_t i = 0; i < scripts.size(); ++i)
         delete scripts[i];
     scripts.clear();
     delete fragment;
