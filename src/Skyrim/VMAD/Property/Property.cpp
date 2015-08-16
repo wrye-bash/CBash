@@ -151,8 +151,6 @@ void Property::Read(unsigned char *&buffer, const int16_t &version, const int16_
 void Property::Write(FileWriter &writer)
 {
     // name
-    uint16_t nameSize = (uint16_t)name.GetSize();
-    writer.record_write(&nameSize, sizeof(nameSize));
     name.Write16(writer);
     // type
     writer.record_write(&type, sizeof(type));
