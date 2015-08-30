@@ -183,7 +183,7 @@ void FragmentSCEN::Write(FileWriter &writer) const
         beginFragment->scriptName.Write16(writer);
         beginFragment->fragmentName.Write16(writer);
     }
-    uint16_t count = phases.size();
+    uint16_t count = static_cast<uint16_t>(phases.size());
     writer.record_write(&count, sizeof(count));
     for (uint16_t i = 0; i < count; ++i)
     {

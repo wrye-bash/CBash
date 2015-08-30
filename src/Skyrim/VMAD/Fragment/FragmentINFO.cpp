@@ -93,7 +93,7 @@ uint32_t FragmentINFO::GetSize() const
 void FragmentINFO::Write(FileWriter &writer) const
 {
     writer.record_write(&unk1, sizeof(unk1));
-    uint16_t count = fragments.size();
+    uint16_t count = static_cast<uint16_t>(fragments.size());
     writer.record_write(&count, sizeof(count));
     fileName.Write16(writer);
     for (uint16_t i = 0; i < count; ++i)

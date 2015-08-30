@@ -153,7 +153,7 @@ void Script::Write(FileWriter &writer)
 {
     name.Write16(writer);
     writer.record_write(&status, sizeof(status));
-    uint16_t count = properties.size();
+    uint16_t count = static_cast<uint16_t>(properties.size());
     writer.record_write(&count, sizeof(count));
     for (uint16_t i = 0; i < count; ++i)
         properties[i]->Write(writer);

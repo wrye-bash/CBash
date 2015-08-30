@@ -176,7 +176,7 @@ void VMADRecord::ReqWrite(uint32_t _Type, FileWriter &writer)
     writer.record_write(&objFormat, 2);
 
     // scriptCount
-    uint16_t count = scripts.size();
+    uint16_t count = static_cast<uint16_t>(scripts.size());
     writer.record_write(&count, 2);
 
     // scripts

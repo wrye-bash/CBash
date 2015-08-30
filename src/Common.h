@@ -195,6 +195,7 @@ char * DeGhostModName(char * const ModName);
 bool FileExists(char * const FileName);
 char * GetTemporaryFileName(char * FileName, bool IsBackup=false);
 bool AlmostEqual(float A, float B, int32_t maxUlps);
+void UnrecognizedSubRecord(cb_formid_t formID, uint32_t subType, uint32_t subSize, unsigned char *&buffer, unsigned char *end_buffer);
 
 class FileWriter
     {
@@ -2523,7 +2524,7 @@ class ReqCounted : public T
 public:
     void Write(FileWriter &writer)
     {
-        countType count = value.size();
+        countType count = static_cast<countType>(value.size());
         writer.record_write_subrecord(countRecord, &count, sizeof(count));
         for (uint32_t p = 0; p < value.size(); p++)
             value[p]->Write(writer);
@@ -2531,7 +2532,7 @@ public:
 
     void Write(uint32_t _Type, FileWriter &writer)
     {
-        countType count = value.size();
+        countType count = static_cast<countType>(value.size());
         writer.record_write_subrecord(countRecord, &count, sizeof(count));
         T::Write(_Type, writer);
     }

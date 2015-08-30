@@ -468,11 +468,7 @@ int32_t PERKRecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer
                 //PRKF.Read(buffer, subSize); //FILL IN MANUALLY
                 break;
             default:
-                //printf("FileName = %s\n", FileName);
-                printf("  PERK: %08X - Unknown subType = %04x\n", formID, subType);
-                printf("  Size = %i\n", subSize);
-                printf("  CurPos = %04x\n\n", buffer - 6);
-                buffer = end_buffer;
+                UnrecognizedSubRecord(formID, subType, subSize, buffer, end_buffer);
                 break;
             }
         };

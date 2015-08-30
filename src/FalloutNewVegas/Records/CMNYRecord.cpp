@@ -176,11 +176,7 @@ int32_t CMNYRecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer
                 DATA.Read(buffer, subSize);
                 break;
             default:
-                //printf("FileName = %s\n", FileName);
-                printf("  CMNY: %08X - Unknown subType = %04x\n", formID, subType);
-                printf("  Size = %i\n", subSize);
-                printf("  CurPos = %04x\n\n", buffer - 6);
-                buffer = end_buffer;
+                UnrecognizedSubRecord(formID, subType, subSize, buffer, end_buffer);
                 break;
             }
         };

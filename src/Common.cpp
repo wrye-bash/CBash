@@ -318,6 +318,15 @@ bool AlmostEqual(float A, float B, int32_t maxUlps)
     return false;
     }
 
+void UnrecognizedSubRecord(cb_formid_t formID, uint32_t subType, uint32_t subSize, unsigned char *&buffer, unsigned char *end_buffer)
+{
+    //printf("FileName = %s\n", FileName);
+    printf("  BPTD: %08X - Unknown subType = %04x\n", formID, subType);
+    printf("  Size = %i\n", subSize);
+    printf("  CurPos = %04x\n\n", reinterpret_cast<unsigned int>(buffer - 6));
+    buffer = end_buffer;
+}
+
 FileWriter::FileWriter(char * filename, uint32_t size):
     file_buffer(NULL),
     record_buffer(NULL),
