@@ -96,6 +96,12 @@
 
 // Setup some defines/includes for use in CBash.h/.cpp
 #ifdef COMPILING_CBASH
+    // On MSVC 2005 and greater, prevent warnings about insecure CRT functions
+    // Make sure this is defined before any other includes, so as to be defined
+    // before any CRT headers are included (for example, via boost/config/auto_link.hpp)
+    #if defined(_MSC_VER) && _MSC_VER >= 1400
+        #define _CRT_SECURE_CPP_OVERLOAD_STANDARD_NAMES 1
+    #endif
     // Compiling either CBash static or dynamic library
     #ifdef CBASH_STATIC
         // Static (CBash.lib)
