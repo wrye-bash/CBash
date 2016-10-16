@@ -112,39 +112,35 @@ bool sortMod(ModFile *lhs, ModFile *rhs)
         #define LHS_BEFORE_RHS true
         #define LHS_AFTER_RHS false
     #endif
-    if(lhs->TES4.IsESM())
-        {
-        if(rhs->TES4.IsESM())
-            {
-            if(lhs->ModTime == 0)
-                {
-                if(rhs->ModTime == 0)
-                    return LHS_BEFORE_RHS;
-                return LHS_AFTER_RHS;
-                }
-            if(rhs->ModTime == 0)
-                return LHS_BEFORE_RHS;
-            return lhs->ModTime < rhs->ModTime;
-            }
-        return LHS_BEFORE_RHS;
-        }
-    if(rhs->TES4.IsESM())
-        return LHS_AFTER_RHS;
 
-    if(lhs->Flags.IsCreateNew)
-        {
-        if(rhs->Flags.IsCreateNew)
-            return LHS_BEFORE_RHS;
-        return LHS_AFTER_RHS;
-        }
-    if(rhs->Flags.IsCreateNew)
-        return LHS_BEFORE_RHS;
+    const time_t MIN_TIME = std::numeric_limits<time_t>::min();
+    const time_t MAX_TIME = std::numeric_limits<time_t>::max();
 
-    if(lhs->ModTime == 0)
-        return LHS_BEFORE_RHS;
-    if(rhs->ModTime == 0)
-        return LHS_AFTER_RHS;
-    return lhs->ModTime < rhs->ModTime;
+    bool leftEsm = lhs->TES4.IsESM();
+    bool rightEsm = rhs->TES4.IsESM();
+
+    bool leftNew = (lhs->ModTime == 0) || lhs->Flags.IsCreateNew;
+    bool rightNew = (rhs->ModTime == 0) || rhs->Flags.IsCreateNew;
+
+    time_t leftTime = leftNew ? MAX_TIME : lhs->ModTime;
+    time_t rightTime = rightNew ? MAX_TIME : rhs->ModTime;
+
+    if (leftEsm != rightEsm)
+        {
+            return leftEsm ? LHS_BEFORE_RHS : LHS_AFTER_RHS;
+        }
+    else if (leftNew != rightNew)
+        {
+            return leftNew ? LHS_AFTER_RHS : LHS_BEFORE_RHS;
+        }
+    else 
+        // They are in the same "partition", strict ordering applies within each
+        {
+            return leftTime < rightTime;
+        }
+
+    // should never reach here, but not important enough to assert IMO.
+    return LHS_BEFORE_RHS;
     }
 
 Collection::Collection(char * const &ModsPath, uint32_t _CollectionType):

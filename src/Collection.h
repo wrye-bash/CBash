@@ -41,6 +41,7 @@
 #include "Skyrim/TES5File.h"
 #include <vector>
 #include <map>
+#include <limits>
 #include "Visitors.h"
 
 //class SortedRecords
