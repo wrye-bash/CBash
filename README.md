@@ -1,5 +1,7 @@
 # CBash
 
+**DISCLAIMER**: Keep in mind that binaries produced from this code aren't compatible yet with the current Wrye Bash _(current means: the 'dev' branch on Wrye-Bash here.)_ The incompatibility lies in some changes to published functions that broke the API provided to `cint.py`.
+
 CBash is a C/C++ library for reading and writing TES IV: Oblivion, TES V: Skyrim and Fallout: New Vegas plugin files. It's used by the [Wrye Bash](https://github.com/wrye-bash/wrye-bash) modding utility to build its Bashed Patch plugins.
 
 For bugs and feature request, feel free to open a new Issue in the Issue tracker.  For other discussions, open a new thread [here](http://ost.io/@lojack5/CBash "ost.io"), for example asking questions about what specific parts of the code do, etc.
