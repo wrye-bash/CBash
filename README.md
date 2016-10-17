@@ -15,3 +15,5 @@ The plugin file formats are documented at the following locations:
 The CBash API is currently sparsely documented. There is some Doxygen-style documentation of the API in the [include headers](include/cbash).
 
 CBash's record and field support is incomplete. For information on what has and has not ben implemented, see the [wiki](https://github.com/lojack5/CBash/wiki).
+
+This repository was created from the [current state](https://github.com/lojack5/CBash/commit/) (as of 10/15/2016) of Lojack's [CBash repository](https://github.com/lojack5/CBash).
