@@ -16,4 +16,6 @@ The CBash API is currently sparsely documented. There is some Doxygen-style docu
 
 CBash's record and field support is incomplete. For information on what has and has not ben implemented, see the [wiki](https://github.com/lojack5/CBash/wiki).
 
-This repository was created from the [current state](https://github.com/lojack5/CBash/commit/) (as of 10/15/2016) of Lojack's [CBash repository](https://github.com/lojack5/CBash).
+This repository was created from the [current state](https://github.com/lojack5/CBash/commit/1f90085a27c6847685d6eb9589a1d7fda5c85862) (as of 10/15/2016) of Lojack's [CBash repository](https://github.com/lojack5/CBash).
+
+The WIKI is still to be ported, so use the [original location](https://github.com/lojack5/CBash/wiki) until we are finished with the move.
