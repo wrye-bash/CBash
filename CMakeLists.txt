@@ -17,6 +17,7 @@ option(CBASH_NO_BOOST_ZLIB "Build with external Zlib" OFF)
 
 set (Boost_USE_STATIC_LIBS ON)
 set (Boost_USE_MULTITHREADED ON)
+set (Boost_NO_BOOST_CMAKE ON)
 set (Boost_USE_STATIC_RUNTIME ${PROJECT_STATIC_RUNTIME})
 
 file (GLOB_RECURSE CBASH_GEN_HDRS "${CMAKE_SOURCE_DIR}/src/*.h" )
