@@ -328,7 +328,7 @@ int32_t Collection::Load(bool (*_ProgressCallback)(const uint32_t, const uint32_
         //for(uint32_t x = 0; x < ModFiles.size(); ++x)
         //    printer("%02X: %s\n", x, ModFiles[x]->FileName);
         //printer("\n");
-        std::_Insertion_sort(ModFiles.begin(), ModFiles.end(), sortMod);
+        std::_Insertion_sort_unchecked(ModFiles.begin(), ModFiles.end(), sortMod);
         std::vector<char *> strLoadOrder255;
         std::vector<char *> strTempLoadOrder;
         std::vector< std::vector<char *> > strAllLoadOrder;
