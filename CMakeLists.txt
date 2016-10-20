@@ -140,3 +140,6 @@ ENDIF ()
 # Build CBash.
 add_library           (CBash ${CBASH_SRC} ${CBASH_GEN_HDRS} )
 target_link_libraries (CBash ${Boost_LIBRARIES} ${CBASH_LIBS})
+
+add_subdirectory (deps/pybind11)
+
