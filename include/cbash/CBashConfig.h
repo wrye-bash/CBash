@@ -113,7 +113,7 @@
         #define CPPDLLEXTERN DLLEXPORT
     #endif
     // Also, link against the Boost zlib library
-    #if !defined(CBASH_NO_BOOST_ZLIB)
+    #if !defined(CBash_NO_BOOST_ZLIB)
         #define BOOST_LIB_NAME boost_zlib
         #include <boost/config/auto_link.hpp>
     #else

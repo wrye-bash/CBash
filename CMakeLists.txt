@@ -1,8 +1,8 @@
 # Settings passed on the command line:
 #
-# BUILD_SHARED_LIBS
-# PROJECT_STATIC_RUNTIME
-# CBASH_NO_BOOST_ZLIB
+# CBash_BUILD_SHARED_LIBS
+# CBash_USE_STATIC_RUNTIME
+# CBash_NO_BOOST_ZLIB
 
 ##############################
 # General Settings
@@ -11,14 +11,14 @@
 cmake_minimum_required (VERSION 3.0)
 project (CBash)
 
-option(BUILD_SHARED_LIBS "Build a shared library" ON)
-option(PROJECT_STATIC_RUNTIME "Build with static runtime libs (/MT)" ON)
-option(CBASH_NO_BOOST_ZLIB "Build with external Zlib" OFF)
+option(CBash_BUILD_SHARED_LIBS "Build a shared library" ON)
+option(CBash_USE_STATIC_RUNTIME "Build with static runtime libs (/MT)" ON)
+option(CBash_NO_BOOST_ZLIB "Build with external Zlib" ON)
 
 set (Boost_USE_STATIC_LIBS ON)
 set (Boost_USE_MULTITHREADED ON)
 set (Boost_NO_BOOST_CMAKE ON)
-set (Boost_USE_STATIC_RUNTIME ${PROJECT_STATIC_RUNTIME})
+set (Boost_USE_STATIC_RUNTIME ${CBash_USE_STATIC_RUNTIME})
 
 file (GLOB_RECURSE CBASH_GEN_HDRS "${CMAKE_SOURCE_DIR}/src/*.h" )
 
@@ -75,8 +75,8 @@ foreach(f ${TMP_FILES})
     source_group("${SRCGR}" FILES ${f})
 endforeach()
 
-IF (CBASH_NO_BOOST_ZLIB)
-    add_definitions(-DCBASH_NO_BOOST_ZLIB)
+IF (CBash_NO_BOOST_ZLIB)
+    add_definitions(-DCBash_NO_BOOST_ZLIB)
     find_package(Boost REQUIRED COMPONENTS iostreams)
     find_package(ZLIB REQUIRED)
     set (CBASH_LIBS ${ZLIB_LIBRARY})
@@ -99,7 +99,7 @@ include_directories ("${CMAKE_SOURCE_DIR}/include/cbash"
 # Settings when compiling for Windows. Since it's a Windows-only app this is always true, but useful to check for copy/paste into other projects.
 IF (CMAKE_SYSTEM_NAME MATCHES "Windows")
     add_definitions (-DUNICODE -D_UNICODE -DNDEBUG -DWIN32 -D_WINDOWS)
-    IF (BUILD_SHARED_LIBS)
+    IF (CBash_BUILD_SHARED_LIBS)
         add_definitions (-DCBASH_DLL)
     ELSE ()
         add_definitions (-DCBASH_STATIC)
@@ -114,7 +114,7 @@ IF (MSVC)
     ENDIF ()
 
     # Force static C++ runtime linkage.
-    IF (PROJECT_STATIC_RUNTIME)
+    IF (CBash_USE_STATIC_RUNTIME)
         FOREACH(flag
             CMAKE_C_FLAGS_RELEASE CMAKE_C_FLAGS_RELWITHDEBINFO
             CMAKE_C_FLAGS_DEBUG CMAKE_C_FLAGS_DEBUG_INIT
