@@ -141,5 +141,15 @@ ENDIF ()
 add_library           (CBash ${CBASH_SRC} ${CBASH_GEN_HDRS} )
 target_link_libraries (CBash ${Boost_LIBRARIES} ${CBASH_LIBS})
 
+# Always write the output file directly into the 'tests' directory (even on MSVC)
+if(NOT CMAKE_LIBRARY_OUTPUT_DIRECTORY)
+  set_target_properties(CBash PROPERTIES LIBRARY_OUTPUT_DIRECTORY ${CBASH_RELEASE})
+  foreach(config ${CMAKE_CONFIGURATION_TYPES})
+    string(TOUPPER ${config} config)
+    set_target_properties(CBash PROPERTIES LIBRARY_OUTPUT_DIRECTORY_${config} ${CBASH_RELEASE})
+  endforeach()
+endif()
+
 add_subdirectory (deps/pybind11)
+add_subdirectory (pyd)
 
