@@ -20,22 +20,26 @@ set (Boost_USE_MULTITHREADED ON)
 set (Boost_NO_BOOST_CMAKE ON)
 set (Boost_USE_STATIC_RUNTIME ${CBash_USE_STATIC_RUNTIME})
 
-file (GLOB_RECURSE CBASH_GEN_HDRS "${CMAKE_SOURCE_DIR}/src/*.h" )
+set(CBASH_RELEASE ${CMAKE_SOURCE_DIR}/release)
+set(CBASH_TESTS ${CMAKE_SOURCE_DIR}/tests)
+set(CBASH_SOURCE ${CMAKE_SOURCE_DIR}/src)
 
-file (GLOB_RECURSE CBASH_FONV "${CMAKE_SOURCE_DIR}/src/FalloutNewVegas/*.cpp")
-file (GLOB_RECURSE CBASH_OBLIVION "${CMAKE_SOURCE_DIR}/src/Oblivion/*.cpp")
-file (GLOB_RECURSE CBASH_SKYRIM "${CMAKE_SOURCE_DIR}/src/Skyrim/*.cpp")
+file (GLOB_RECURSE CBASH_GEN_HDRS "${CBASH_SOURCE}/*.h" )
 
-set (CBASH_SRC  "${CMAKE_SOURCE_DIR}/src/CBash.cpp"
-                "${CMAKE_SOURCE_DIR}/src/Collection.cpp"
-                "${CMAKE_SOURCE_DIR}/src/Common.cpp"
-                "${CMAKE_SOURCE_DIR}/src/GenericChunks.cpp"
-                "${CMAKE_SOURCE_DIR}/src/GenericRecord.cpp"
-                "${CMAKE_SOURCE_DIR}/src/ModFile.cpp"
-                "${CMAKE_SOURCE_DIR}/src/TES4Record.cpp"
-                "${CMAKE_SOURCE_DIR}/src/TES4RecordAPI.cpp"
-                "${CMAKE_SOURCE_DIR}/src/Visitors.cpp"
-                "${CMAKE_SOURCE_DIR}/src/CBash.rc"
+file (GLOB_RECURSE CBASH_FONV "${CBASH_SOURCE}/FalloutNewVegas/*.cpp")
+file (GLOB_RECURSE CBASH_OBLIVION "${CBASH_SOURCE}/Oblivion/*.cpp")
+file (GLOB_RECURSE CBASH_SKYRIM "${CBASH_SOURCE}/Skyrim/*.cpp")
+
+set (CBASH_SRC  "${CBASH_SOURCE}/CBash.cpp"
+                "${CBASH_SOURCE}/Collection.cpp"
+                "${CBASH_SOURCE}/Common.cpp"
+                "${CBASH_SOURCE}/GenericChunks.cpp"
+                "${CBASH_SOURCE}/GenericRecord.cpp"
+                "${CBASH_SOURCE}/ModFile.cpp"
+                "${CBASH_SOURCE}/TES4Record.cpp"
+                "${CBASH_SOURCE}/TES4RecordAPI.cpp"
+                "${CBASH_SOURCE}/Visitors.cpp"
+                "${CBASH_SOURCE}/CBash.rc"
                 ${CBASH_FONV}
                 ${CBASH_OBLIVION}
                 ${CBASH_SKYRIM}
@@ -43,13 +47,13 @@ set (CBASH_SRC  "${CMAKE_SOURCE_DIR}/src/CBash.cpp"
 
 
 file(GLOB_RECURSE TMP_FILES_HDRS
-    "${CMAKE_SOURCE_DIR}/src/*.h"
+    "${CBASH_SOURCE}/*.h"
 )
 
 foreach(f ${TMP_FILES_HDRS})
     # Get the path of the file relative to ${DIRECTORY},
     # then alter it (not compulsory)
-    file(RELATIVE_PATH SRCGR "${CMAKE_SOURCE_DIR}/src/" ${f})
+    file(RELATIVE_PATH SRCGR "${CBASH_SOURCE}/" ${f})
     set(SRCGR "Headers/${SRCGR}")
 
     # Extract the folder, ie remove the filename part
@@ -61,12 +65,12 @@ foreach(f ${TMP_FILES_HDRS})
 endforeach()
 
 file(GLOB_RECURSE TMP_FILES
-    "${CMAKE_SOURCE_DIR}/src/*.cpp"
+    "${CBASH_SOURCE}/*.cpp"
 )
 foreach(f ${TMP_FILES})
     # Get the path of the file relative to ${DIRECTORY},
     # then alter it (not compulsory)
-    file(RELATIVE_PATH SRCGR "${CMAKE_SOURCE_DIR}/src/" ${f})
+    file(RELATIVE_PATH SRCGR "${CBASH_SOURCE}/" ${f})
     set(SRCGR "Source Files/${SRCGR}")
     # Extract the folder, ie remove the filename part
     string(REGEX REPLACE "(.*)(/[^/]*)$" "\\1" SRCGR ${SRCGR})
