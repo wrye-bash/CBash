@@ -1,7 +1,6 @@
 ## Root folders to ignore
 /build/
 /release/
-/deps/
 
 ## Visual Studio 2015 private folder
 .vs/
