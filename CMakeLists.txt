@@ -11,6 +11,9 @@
 cmake_minimum_required (VERSION 3.0)
 project (CBash)
 
+set (CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/deps/cotire/CMake")
+include(cotire)
+
 option(CBash_BUILD_SHARED_LIBS "Build a shared library" ON)
 option(CBash_USE_STATIC_RUNTIME "Build with static runtime libs (/MT)" ON)
 option(CBash_NO_BOOST_ZLIB "Build with external Zlib" ON)
@@ -44,7 +47,6 @@ set (CBASH_SRC  "${CBASH_SOURCE}/CBash.cpp"
                 ${CBASH_OBLIVION}
                 ${CBASH_SKYRIM}
                 )
-
 
 file(GLOB_RECURSE TMP_FILES_HDRS
     "${CBASH_SOURCE}/*.h"
@@ -152,4 +154,6 @@ endif()
 
 add_subdirectory (deps/pybind11)
 add_subdirectory (pyd)
+
+cotire(CBash)
 
