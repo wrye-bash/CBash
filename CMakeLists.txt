@@ -11,7 +11,8 @@
 cmake_minimum_required (VERSION 3.0)
 project (CBash)
 
-set (CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/deps/cotire/CMake")
+add_subdirectory (deps/pybind11)
+LIST(APPEND CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/deps/cotire/CMake")
 include(cotire)
 
 option(CBash_BUILD_SHARED_LIBS "Build a shared library" ON)
@@ -152,7 +153,6 @@ if(NOT CMAKE_LIBRARY_OUTPUT_DIRECTORY)
   endforeach()
 endif()
 
-add_subdirectory (deps/pybind11)
 add_subdirectory (pyd)
 
 cotire(CBash)
