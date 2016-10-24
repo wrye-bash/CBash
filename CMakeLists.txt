@@ -19,6 +19,7 @@ option(CBash_BUILD_SHARED_LIBS "Build a shared library" ON)
 option(CBash_USE_STATIC_RUNTIME "Build with static runtime libs (/MT)" ON)
 option(CBash_NO_BOOST_ZLIB "Build with external Zlib" ON)
 
+set (BUILD_SHARED_LIBS ${CBash_BUILD_SHARED_LIBS})
 set (Boost_USE_STATIC_LIBS ON)
 set (Boost_USE_MULTITHREADED ON)
 set (Boost_NO_BOOST_CMAKE ON)
