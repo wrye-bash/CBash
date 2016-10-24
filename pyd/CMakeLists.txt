@@ -5,14 +5,16 @@ if(NOT CMAKE_BUILD_TYPE AND NOT CMAKE_CONFIGURATION_TYPES)
     "MinSizeRel" "RelWithDebInfo")
 endif()
 
-set(CINT_FILES
-  base.cpp
-)
+
+SET(CINT_SOURCE_DIR ${CMAKE_CURRENT_LIST_DIR})
+
+file(GLOB_RECURSE CINT_SOURCES "${CINT_SOURCE_DIR}/*.cpp")
+file(GLOB_RECURSE CINT_HEADERS "${CINT_SOURCE_DIR}/*.h")
 
 file(GLOB CINT_PYTEST_FILES "${CBASH_TESTS}/test_*.py")
 
 # Create the binding library
-pybind11_add_module(cint cint.cpp ${CINT_FILES} ${PYBIND11_HEADERS})
+pybind11_add_module(cint ${CINT_SOURCES} ${CINT_HEADERS} ${PYBIND11_HEADERS})
 
 pybind11_enable_warnings(cint)
 
