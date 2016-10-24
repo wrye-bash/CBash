@@ -143,7 +143,13 @@ bool RecordProcessor::Accept(RecordHeader &header)
         if (result.second == false)
         {
             if (IsAddMasters) //If not, can cause any new records to be given a duplicate ID
-                printer("RecordProcessor: Warning - Information lost. Record skipped with duplicate formID: %08X\n", header.formID);
+            {
+                // TODO: Make a helper method to do this conversion
+                auto typeStr = reinterpret_cast<const char* const>(&header.type);
+                auto recordType = std::string(&typeStr[0], &typeStr[4]);
+                printer("WARNING -> RecordProcessor: Information lost. Record skipped due to duplicate FORMID. [MOD=(%s), MODID=(%02X), FORMID=(%08X) TYPE=(%-4s)]\n", curModFile->FileName, curModFile->ModID, header.formID, recordType.c_str());
+            }
+            
             return false;
         }
 
