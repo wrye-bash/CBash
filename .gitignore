@@ -5,10 +5,14 @@
 ## Visual Studio 2015 private folder
 .vs/
 
+## Visual Studio Code settings folder
+.vscode/
+
 ## PyCharm projects
 .idea/
 
 ## Generated/Compiler products
 *.pdb
 *.pyc
+*.ilk
 
