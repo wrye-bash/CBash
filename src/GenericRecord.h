@@ -105,56 +105,7 @@ class RecordProcessor
             filter_wspaces = WorldSpaces;
         }
 
-        bool Accept(RecordHeader &header)
-            {
-
-            /* this assumes records are read serial (all records belonging
-             * to a specific worldspace are between this WRLD and the next WRLD)
-             */
-            if (header.type == REV32(WRLD))
-                activewspace = header.formID;
-
-            /* only allow those in the set */
-            if (filter_inclusive) {
-                if (filter_records.count(header.type) == 0)
-                    return false;
-                if (header.type != REV32(LTEX))
-                if (header.type != REV32(TXST))
-                if (header.type != REV32(MATT))
-                if (filter_wspaces.count(activewspace) == 0)
-                    return false;
-            }
-            /* only allow those not in the set */
-            else {
-                if (filter_records.count(header.type) != 0)
-                    return false;
-                if (header.type != REV32(LTEX))
-                if (header.type != REV32(TXST))
-                if (header.type != REV32(MATT))
-                if (filter_wspaces.count(activewspace) != 0)
-                    return false;
-            }
-
-            expander.Accept(header.formID);
-
-            if((IsTrackNewTypes || IsSkipNewRecords) && ((header.formID >> 24) == ExpandedIndex))
-                {
-                if(IsTrackNewTypes)
-                    NewTypes.insert(header.type);
-                if(IsSkipNewRecords)
-                    return false;
-                }
-
-            //Make sure the formID is unique within the mod
-            if(UsedFormIDs.insert(header.formID).second == false)
-                {
-                if(IsAddMasters) //If not, can cause any new records to be given a duplicate ID
-                    printer("RecordProcessor: Warning - Information lost. Record skipped with duplicate formID: %08X\n", header.formID);
-                return false;
-                }
-
-            return IsKeepRecords;
-            }
+        bool Accept(RecordHeader &header);
 
         //template<bool IsKeyedByEditorID, typename U>
         //typename boost::enable_if_c<IsKeyedByEditorID,bool>::type Accept(U &header)
