@@ -5,8 +5,9 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{f2b2012b-5ff9-4eaa-8005-e30e88a07e0e}</ProjectGuid>
     <ProjectHome />
-    <StartupFile>test1.py</StartupFile>
-    <SearchPath>..\release\</SearchPath>
+    <StartupFile>test2.py</StartupFile>
+    <SearchPath>
+    </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
     <OutputPath>.</OutputPath>
     <ProjectTypeGuids>{888888a0-9f3d-457c-b088-3a5042f75d52}</ProjectTypeGuids>
@@ -23,8 +24,14 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="cintold.py" />
+    <Compile Include="helpers.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="ObTest.py" />
     <Compile Include="test1.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="test2.py">
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>
