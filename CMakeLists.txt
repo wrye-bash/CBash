@@ -28,6 +28,7 @@ set (Boost_USE_STATIC_RUNTIME ${CBash_USE_STATIC_RUNTIME})
 set(CBASH_RELEASE ${CMAKE_SOURCE_DIR}/release)
 set(CBASH_TESTS ${CMAKE_SOURCE_DIR}/tests)
 set(CBASH_SOURCE ${CMAKE_SOURCE_DIR}/src)
+set(CBASH_INCLUDE ${CMAKE_SOURCE_DIR}/include/cbash)
 
 file (GLOB_RECURSE CBASH_GEN_HDRS "${CBASH_SOURCE}/*.h" )
 
@@ -95,7 +96,7 @@ ELSE ()
 ENDIF ()
 
 # Include source and library directories.
-include_directories ("${CMAKE_SOURCE_DIR}/include/cbash"
+include_directories (${CBASH_INCLUDE}
                      ${Boost_INCLUDE_DIRS}
                      ${ZLIB_INCLUDE_DIR})
 
