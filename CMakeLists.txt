@@ -31,6 +31,7 @@ set(CBASH_SOURCE ${CMAKE_SOURCE_DIR}/src)
 set(CBASH_INCLUDE ${CMAKE_SOURCE_DIR}/include/cbash)
 
 file (GLOB_RECURSE CBASH_GEN_HDRS "${CBASH_SOURCE}/*.h" )
+file (GLOB_RECURSE CBASH_PUB_HDRS "${CBASH_INCLUDE}/*.h" )
 
 file (GLOB_RECURSE CBASH_FONV "${CBASH_SOURCE}/FalloutNewVegas/*.cpp")
 file (GLOB_RECURSE CBASH_OBLIVION "${CBASH_SOURCE}/Oblivion/*.cpp")
@@ -143,7 +144,7 @@ ENDIF ()
 ##############################
 
 # Build CBash.
-add_library           (CBash ${CBASH_SRC} ${CBASH_GEN_HDRS} )
+add_library           (CBash ${CBASH_SRC} ${CBASH_PUB_HDRS} ${CBASH_GEN_HDRS})
 target_link_libraries (CBash ${Boost_LIBRARIES} ${CBASH_LIBS})
 
 # Always write the output file directly into the 'tests' directory (even on MSVC)
