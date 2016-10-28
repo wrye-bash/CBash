@@ -1132,7 +1132,7 @@ bool NonNullStringRecord::Read(unsigned char *&buffer, const uint32_t &subSize, 
     else
         {
         DiskSize = subSize;
-        _value = (char *)buffer;
+        _value = subSize > 0 ? (char *)buffer : nullptr;
         }
     buffer += subSize;
     return true;
