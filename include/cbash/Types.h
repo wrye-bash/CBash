@@ -43,9 +43,7 @@
     @details This documentation was not written by the original developer, and so may be inaccurate.
 */
 
-#include <stddef.h>
-#include <stdint.h>
-#include <stdbool.h>
+#include <cstdint>
 
 #ifdef __cplusplus
 extern "C"
