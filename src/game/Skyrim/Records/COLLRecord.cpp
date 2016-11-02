@@ -132,7 +132,7 @@ int32_t COLLRecord::ParseRecord(unsigned char *buffer, unsigned char *end_buffer
 {
     uint32_t subType = 0;
     uint32_t subSize = 0;
-    StringLookups *LookupStrings = GetParentMod()->TES4.LookupStrings;
+    auto LookupStrings = GetParentMod()->LookupStrings();
     while(buffer < end_buffer)
     {
         subType = *(uint32_t *)buffer;

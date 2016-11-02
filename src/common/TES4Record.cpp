@@ -132,6 +132,16 @@ void TES4Record::IsESM(bool value)
     SETBIT(flags, fIsESM, value);
 }
 
+// bool TES4Record::IsLookupStrings() const
+// {
+//     // fIsTurnOffFire = LookupStrings
+//     return IsLoaded() ? (flags & fIsTurnOffFire) != 0 : false;
+// }
+
+// void TES4Record::IsLookupStrings(bool value)
+// {
+//     SETBIT(flags, fIsTurnOffFire, value);
+// }
 
 uint32_t TES4Record::GetType()
 {
