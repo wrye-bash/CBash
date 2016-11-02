@@ -37,23 +37,29 @@
 #include "common/Common.h"
 #include "common/GenericRecord.h"
 #include "TES5File.h"
+#include "TES5Record.h"
 #include "SkyrimCommon.h"
 
 TES5File::TES5File(Collection *_Parent, char * FileName, char * ModName, const uint32_t _flags):
-    ModFile(_Parent, FileName, ModName, _flags)
+    TES5ModFile(_Parent, FileName, ModName, _flags), _lookupStrings(NULL)
     {
     //
     }
 
 TES5File::~TES5File()
     {
-    //
+    delete _lookupStrings;
     }
 
 void TES5File::SetFilter(bool inclusive, boost::unordered_set<uint32_t> &RecordTypes, boost::unordered_set<FORMID> &WorldSpaces) {
   filter_inclusive = inclusive;
   filter_records = RecordTypes;
   filter_wspaces = WorldSpaces;
+}
+
+StringLookups * TES5File::LookupStrings() const
+{
+    return this->_lookupStrings;
 }
 
 int32_t TES5File::LoadTES4()
@@ -230,7 +236,8 @@ int32_t TES5File::Load(RecordOp &read_parser, RecordOp &indexer, std::vector<For
         }
 
     // Load translation strings
-    TES4.LoadStringLookups(FileName);
+    _lookupStrings = new StringLookups();
+    _lookupStrings->Open(FileName);
 
     Flags.LoadedGRUPs = true;
     unsigned char *group_buffer_end = NULL;

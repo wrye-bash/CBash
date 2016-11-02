@@ -76,7 +76,6 @@ class TES4Record : public Record
         // Skyrim
         RawRecord INTV; //Unknown
         RawRecord INCC; //Unknown
-        StringLookups *LookupStrings;
 
         TES4Record(unsigned char *_recData=NULL);
         TES4Record(TES4Record *srcRecord);
@@ -86,10 +85,6 @@ class TES4Record : public Record
 
         bool IsESM() const;
         void IsESM(bool value);
-        bool IsLookupStrings() const;
-        void IsLookupStrings(bool value);
-
-        void LoadStringLookups(char * FileName);
 
         uint32_t GetFieldAttribute(DEFAULTED_FIELD_IDENTIFIERS, uint32_t WhichAttribute=0);
         void * GetField(DEFAULTED_FIELD_IDENTIFIERS, void **FieldValues=NULL);

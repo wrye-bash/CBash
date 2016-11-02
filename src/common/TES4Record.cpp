@@ -35,7 +35,6 @@
  * ***** END LICENSE BLOCK ***** */
 #include "Common.h"
 #include "TES4Record.h"
-#include "Skyrim\SkyrimCommon.h" // StringLookups
 #include "zlib.h"
 
 TES4Record::TES4HEDR::TES4HEDR(float _version, uint32_t _numRecords, uint32_t _nextObject):
@@ -66,15 +65,13 @@ bool TES4Record::TES4HEDR::operator != (const TES4HEDR &other) const
 
 TES4Record::TES4Record(unsigned char *_recData):
     Record(_recData),
-    formVersion(0),
-    LookupStrings(NULL)
+    formVersion(0)
 {
     memset(&versionControl2[0], 0x00, 2);
 }
 
 TES4Record::TES4Record(TES4Record *srcRecord):
-    Record(),
-    LookupStrings(NULL)
+    Record()
 {
     if(srcRecord == NULL)
         return;
@@ -110,7 +107,6 @@ TES4Record::TES4Record(TES4Record *srcRecord):
 
 TES4Record::~TES4Record()
 {
-    delete LookupStrings;
 }
 
 bool TES4Record::VisitFormIDs(FormIDOp &op)
@@ -136,25 +132,6 @@ void TES4Record::IsESM(bool value)
     SETBIT(flags, fIsESM, value);
 }
 
-bool TES4Record::IsLookupStrings() const
-{
-    // fIsTurnOffFire = LookupStrings
-    return IsLoaded() ? (flags & fIsTurnOffFire) != 0 : false;
-}
-
-void TES4Record::IsLookupStrings(bool value)
-{
-    SETBIT(flags, fIsTurnOffFire, value);
-}
-
-void TES4Record::LoadStringLookups(char * FileName)
-{
-    if (LookupStrings != NULL)
-        return;
-
-    LookupStrings = new StringLookups;
-    LookupStrings->Open(FileName);
-}
 
 uint32_t TES4Record::GetType()
 {

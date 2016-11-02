@@ -40,6 +40,11 @@
 #include "common/GenericRecord.h"
 
 #include "GRUPRecord.h"
+
+#include "TES5Record.h"
+#include "TES5ModFile.h"
+#include "SkyrimCommon.h"
+
 // Only need to include Top Types
 #include "Records/AACTRecord.h"
 #include "Records/ACTIRecord.h"
@@ -161,13 +166,17 @@
 
 
 // Helper macros
+#ifndef GRUP
 #define GRUP(Type) \
     TES5GRUPRecords<Sk::Type##Record, REV32(Type), 5> Type
+#endif
+
+#ifndef GRUP_EDID
 #define GRUP_EDID(Type) \
     TES5GRUPRecords<Sk::Type##Record, REV32(Type), 5, true> Type
+#endif
 
-
-class TES5File : public ModFile
+class TES5File : public TES5ModFile
     {
     public:
         GRUP(AACT);
@@ -304,6 +313,10 @@ class TES5File : public ModFile
 
         void     VisitAllRecords(RecordOp &op);
         void     VisitRecords(const uint32_t &RecordType, RecordOp &op);
+
+        StringLookups *LookupStrings() const;
+    private:
+        StringLookups* _lookupStrings;
     };
 
 // Clean up
