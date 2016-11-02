@@ -34,9 +34,9 @@
  *
  * ***** END LICENSE BLOCK ***** */
 #pragma once
-#include "..\..\Common.h"
-#include "..\..\GenericRecord.h"
-#include "..\..\Allocator.h"
+#include "common/Common.h"
+#include "common/GenericRecord.h"
+#include "common/Allocator.h"
 #include "ACHRRecord.h"
 #include "ACRERecord.h"
 #include "REFRRecord.h"

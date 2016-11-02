@@ -35,8 +35,7 @@
  *
  * ***** END LICENSE BLOCK ***** */
 #pragma once
-#include "..\..\GenericRecord.h"
-
+#include "common/GenericRecord.h"
 
 namespace Sk {
 

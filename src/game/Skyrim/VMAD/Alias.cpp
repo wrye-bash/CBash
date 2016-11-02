@@ -37,7 +37,7 @@
 
 #include "Alias.h"
 #include "Script.h"
-#include "../../GenericChunks.h"
+#include "common/GenericChunks.h"
 
 Alias::Alias():
 formId(0), aliasId(0)

@@ -35,10 +35,11 @@
  * ***** END LICENSE BLOCK ***** */
 #pragma once
 // TES4File.h
-#include "../Common.h"
-#include "../ModFile.h"
-#include "../GenericRecord.h"
-#include "../GRUPRecord.h"
+#include "common/Common.h"
+#include "common/ModFile.h"
+#include "common/GenericRecord.h"
+#include "GRUPRecord.h"
+
 #include "Records/GMSTRecord.h"
 #include "Records/GLOBRecord.h"
 #include "Records/CLASRecord.h"

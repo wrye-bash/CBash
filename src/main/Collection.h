@@ -35,7 +35,7 @@
  * ***** END LICENSE BLOCK ***** */
 #pragma once
 // Collection.h
-#include "ModFile.h"
+#include "common/ModFile.h"
 #include "Oblivion/TES4File.h"
 #include "FalloutNewVegas/FNVFile.h"
 #include "Skyrim/TES5File.h"

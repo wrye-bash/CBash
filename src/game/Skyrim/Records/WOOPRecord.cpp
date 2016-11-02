@@ -34,8 +34,8 @@
  * the terms of any one of the MPL, the GPL or the LGPL.
  *
  * ***** END LICENSE BLOCK ***** */
+#include "common/ModFile.h"
 #include "WOOPRecord.h"
-#include "..\..\ModFile.h"
 
 namespace Sk {
 

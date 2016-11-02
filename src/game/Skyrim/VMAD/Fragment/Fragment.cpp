@@ -36,7 +36,7 @@
 // Fragment.cpp
 
 #include "Fragment.h"
-#include "../../../GenericChunks.h"
+#include "common/GenericChunks.h"
 
 GenFragment & GenFragment::operator = (const GenFragment &other)
 {

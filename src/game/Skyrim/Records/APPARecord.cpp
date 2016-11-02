@@ -34,8 +34,8 @@
  * the terms of any one of the MPL, the GPL or the LGPL.
  *
  * ***** END LICENSE BLOCK ***** */
-#include "..\..\Common.h"
-#include "..\..\ModFile.h"
+#include "common/Common.h"
+#include "common/ModFile.h"
 #include "APPARecord.h"
 
 namespace Sk {

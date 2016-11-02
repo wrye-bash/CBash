@@ -36,7 +36,7 @@
  * ***** END LICENSE BLOCK ***** */
 #pragma once
 #include "..\SkyrimCommon.h"
-#include "..\..\GenericRecord.h"
+#include "common/GenericRecord.h"
 
 
 namespace Sk {

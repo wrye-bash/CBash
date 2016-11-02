@@ -42,7 +42,7 @@
 #include "Fragment/FragmentQUST.h"
 #include "Fragment/FragmentSCEN.h"
 #include "Script.h"
-#include "../../GenericChunks.h"
+#include "common/GenericChunks.h"
 
 
 VMADRecord::VMADRecord() :

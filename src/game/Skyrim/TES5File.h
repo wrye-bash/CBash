@@ -35,11 +35,11 @@
  * ***** END LICENSE BLOCK ***** */
 #pragma once
 // TES5File.h
-#include "../Common.h"
-#include "../ModFile.h"
-#include "../GenericRecord.h"
-#include "../GRUPRecord.h"
+#include "common/Common.h"
+#include "common/ModFile.h"
+#include "common/GenericRecord.h"
 
+#include "GRUPRecord.h"
 // Only need to include Top Types
 #include "Records/AACTRecord.h"
 #include "Records/ACTIRecord.h"

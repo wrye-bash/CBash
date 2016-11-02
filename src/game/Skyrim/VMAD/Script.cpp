@@ -42,7 +42,7 @@
 #include "Property/PropertyInt.h"
 #include "Property/PropertyFloat.h"
 #include "Property/PropertyBool.h"
-#include "../../GenericChunks.h"
+#include "common/GenericChunks.h"
 
 Script::Script() :
 status(fDefault)

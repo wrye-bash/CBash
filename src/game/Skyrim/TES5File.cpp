@@ -34,8 +34,8 @@
  *
  * ***** END LICENSE BLOCK ***** */
 // TES5File.cpp
-#include "../Common.h"
-#include "../GenericRecord.h"
+#include "common/Common.h"
+#include "common/GenericRecord.h"
 #include "TES5File.h"
 #include "SkyrimCommon.h"
 

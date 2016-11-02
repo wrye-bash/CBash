@@ -34,7 +34,7 @@
  * the terms of any one of the MPL, the GPL or the LGPL.
  *
  * ***** END LICENSE BLOCK ***** */
-#include "..\..\..\Common.h"
+#include "common/Common.h"
 #include "..\MATTRecord.h"
 
 namespace Sk

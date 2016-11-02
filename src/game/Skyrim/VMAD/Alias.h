@@ -36,7 +36,7 @@
 // Alias.h
 #pragma once
 
-#include "../../Common.h"
+#include "common/Common.h"
 #include <vector>
 
 class Script;

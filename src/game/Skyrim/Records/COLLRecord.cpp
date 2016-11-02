@@ -35,7 +35,7 @@
  *
  * ***** END LICENSE BLOCK ***** */
 #include "COLLRecord.h"
-#include "..\..\ModFile.h"
+#include "common/ModFile.h"
 
 namespace Sk {
 

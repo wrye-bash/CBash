@@ -35,9 +35,9 @@
  *
  * ***** END LICENSE BLOCK ***** */
 #pragma once
-#include "..\..\Common.h"
-#include "..\..\GenericRecord.h"
-#include "..\SkyrimChunks.h"
+#include "common/Common.h"
+#include "common/GenericRecord.h"
+#include "../SkyrimChunks.h"
 
 namespace Sk
 {

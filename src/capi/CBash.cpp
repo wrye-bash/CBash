@@ -45,7 +45,7 @@
 // included.  CBashConfig.h is included from CBash.h, so defining it here works.
 #define COMPILING_CBASH
 #include "CBash.h"
-#include "Collection.h"
+#include "main/Collection.h"
 #include "Version.h"
 #include <vector>
 #include <stdarg.h>

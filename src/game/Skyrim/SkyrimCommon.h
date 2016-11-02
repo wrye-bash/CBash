@@ -37,7 +37,7 @@
 #pragma once
 // SkyrimCommon.h
 
-#include "../Common.h"
+#include "common/Common.h"
 #include "VMAD/VMAD.h"
 #include <map>
 

@@ -35,7 +35,7 @@
  *
  * ***** END LICENSE BLOCK ***** */
 #pragma once
-#include "..\..\GenericRecord.h"
+#include "common/GenericRecord.h"
 #include "..\SkyrimCommon.h"
 #include "..\SkyrimChunks.h"
 

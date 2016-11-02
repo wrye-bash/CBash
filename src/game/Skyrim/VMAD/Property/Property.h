@@ -36,7 +36,7 @@
 #pragma once
 // Property.h
 
-#include "../../../Common.h"
+#include "common/Common.h"
 
 class Property
 {

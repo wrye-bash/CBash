@@ -35,8 +35,8 @@
  * ***** END LICENSE BLOCK ***** */
 #pragma once
 // Visitors.h
-#include "GenericRecord.h"
-#include "ModFile.h"
+#include "common/GenericRecord.h"
+#include "common/ModFile.h"
 
 class FormIDMatchCounter : public FormIDOp
     {

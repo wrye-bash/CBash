@@ -35,10 +35,12 @@
  * ***** END LICENSE BLOCK ***** */
 #pragma once
 // FNVFile.h
-#include "../Common.h"
-#include "../ModFile.h"
-#include "../GenericRecord.h"
-#include "../GRUPRecord.h"
+#include "common/Common.h"
+#include "common/ModFile.h"
+#include "common/GenericRecord.h"
+
+#include "GRUPRecord.h"
+
 #include "Records/GMSTRecord.h"
 #include "Records/TXSTRecord.h"
 #include "Records/MICNRecord.h"

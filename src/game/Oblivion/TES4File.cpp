@@ -34,8 +34,8 @@
  *
  * ***** END LICENSE BLOCK ***** */
 // TES4File.cpp
-#include "../Common.h"
-#include "../GenericRecord.h"
+#include "common/Common.h"
+#include "common/GenericRecord.h"
 #include "TES4File.h"
 
 TES4File::TES4File(Collection *_Parent, char * FileName, char * ModName, const uint32_t _flags):

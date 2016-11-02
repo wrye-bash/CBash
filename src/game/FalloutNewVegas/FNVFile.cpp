@@ -34,8 +34,8 @@
  *
  * ***** END LICENSE BLOCK ***** */
 // FNVFile.cpp
-#include "../Common.h"
-#include "../GenericRecord.h"
+#include "common/Common.h"
+#include "common/GenericRecord.h"
 #include "FNVFile.h"
 
 FNVFile::FNVFile(Collection *_Parent, char * FileName, char * ModName, const uint32_t _flags):

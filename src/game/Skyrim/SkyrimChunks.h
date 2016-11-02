@@ -36,7 +36,7 @@
  * ***** END LICENSE BLOCK ***** */
 #pragma once
 
-#include "../GenericChunks.h"
+#include "common/GenericChunks.h"
 
 namespace Sk {
 
