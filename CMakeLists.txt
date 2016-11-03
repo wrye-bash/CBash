@@ -11,9 +11,13 @@
 cmake_minimum_required (VERSION 3.0)
 project (CBash)
 
+include(CMakeToolsHelpers OPTIONAL)
+
 add_subdirectory (deps/pybind11)
 LIST(APPEND CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/deps/cotire/CMake")
 include(cotire)
+
+set_property(DIRECTORY . PROPERTY COTIRE_ADD_UNITY_BUILD FALSE)
 
 option(CBash_BUILD_SHARED_LIBS "Build a shared library" ON)
 option(CBash_USE_STATIC_RUNTIME "Build with static runtime libs (/MT)" ON)
@@ -30,60 +34,6 @@ set(CBASH_TESTS ${CMAKE_SOURCE_DIR}/tests)
 set(CBASH_SOURCE ${CMAKE_SOURCE_DIR}/src)
 set(CBASH_INCLUDE ${CMAKE_SOURCE_DIR}/include/cbash)
 
-file (GLOB_RECURSE CBASH_GEN_HDRS "${CBASH_SOURCE}/*.h" )
-file (GLOB_RECURSE CBASH_PUB_HDRS "${CBASH_INCLUDE}/*.h" )
-
-file (GLOB_RECURSE CBASH_FONV "${CBASH_SOURCE}/FalloutNewVegas/*.cpp")
-file (GLOB_RECURSE CBASH_OBLIVION "${CBASH_SOURCE}/Oblivion/*.cpp")
-file (GLOB_RECURSE CBASH_SKYRIM "${CBASH_SOURCE}/Skyrim/*.cpp")
-
-set (CBASH_SRC  "${CBASH_SOURCE}/CBash.cpp"
-                "${CBASH_SOURCE}/Collection.cpp"
-                "${CBASH_SOURCE}/Common.cpp"
-                "${CBASH_SOURCE}/GenericChunks.cpp"
-                "${CBASH_SOURCE}/GenericRecord.cpp"
-                "${CBASH_SOURCE}/ModFile.cpp"
-                "${CBASH_SOURCE}/TES4Record.cpp"
-                "${CBASH_SOURCE}/TES4RecordAPI.cpp"
-                "${CBASH_SOURCE}/Visitors.cpp"
-                "${CBASH_SOURCE}/CBash.rc"
-                ${CBASH_FONV}
-                ${CBASH_OBLIVION}
-                ${CBASH_SKYRIM}
-                )
-
-file(GLOB_RECURSE TMP_FILES_HDRS
-    "${CBASH_SOURCE}/*.h"
-)
-
-foreach(f ${TMP_FILES_HDRS})
-    # Get the path of the file relative to ${DIRECTORY},
-    # then alter it (not compulsory)
-    file(RELATIVE_PATH SRCGR "${CBASH_SOURCE}/" ${f})
-    set(SRCGR "Headers/${SRCGR}")
-
-    # Extract the folder, ie remove the filename part
-    string(REGEX REPLACE "(.*)(/[^/]*)$" "\\1" SRCGR ${SRCGR})
-
-    # Source_group expects \\ (double antislash), not / (slash)
-    string(REPLACE / \\ SRCGR ${SRCGR})
-    source_group("${SRCGR}" FILES ${f})
-endforeach()
-
-file(GLOB_RECURSE TMP_FILES
-    "${CBASH_SOURCE}/*.cpp"
-)
-foreach(f ${TMP_FILES})
-    # Get the path of the file relative to ${DIRECTORY},
-    # then alter it (not compulsory)
-    file(RELATIVE_PATH SRCGR "${CBASH_SOURCE}/" ${f})
-    set(SRCGR "Source Files/${SRCGR}")
-    # Extract the folder, ie remove the filename part
-    string(REGEX REPLACE "(.*)(/[^/]*)$" "\\1" SRCGR ${SRCGR})
-    # Source_group expects \\ (double antislash), not / (slash)
-    string(REPLACE / \\ SRCGR ${SRCGR})
-    source_group("${SRCGR}" FILES ${f})
-endforeach()
 
 IF (CBash_NO_BOOST_ZLIB)
     add_definitions(-DCBash_NO_BOOST_ZLIB)
@@ -97,9 +47,13 @@ ELSE ()
 ENDIF ()
 
 # Include source and library directories.
-include_directories (${CBASH_INCLUDE}
-                     ${Boost_INCLUDE_DIRS}
-                     ${ZLIB_INCLUDE_DIR})
+include_directories (   
+        ${CBASH_INCLUDE}
+        ${Boost_INCLUDE_DIRS}
+        ${ZLIB_INCLUDE_DIR}
+        ${CBASH_SOURCE}
+        ${CBASH_SOURCE}/game
+)
 
 
 ##############################
@@ -139,26 +93,9 @@ IF (MSVC)
 ENDIF ()
 
 
-##############################
-# Actual Building
-##############################
-
-# Build CBash.
-add_library           (CBash ${CBASH_SRC} ${CBASH_PUB_HDRS} ${CBASH_GEN_HDRS})
-target_link_libraries (CBash ${Boost_LIBRARIES} ${CBASH_LIBS})
-
-# Always write the output file directly into the 'tests' directory (even on MSVC)
-if(NOT CMAKE_LIBRARY_OUTPUT_DIRECTORY)
-  set_target_properties(CBash PROPERTIES LIBRARY_OUTPUT_DIRECTORY ${CBASH_RELEASE})
-  set_target_properties(CBash PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${CBASH_RELEASE})
-  foreach(config ${CMAKE_CONFIGURATION_TYPES})
-    string(TOUPPER ${config} config)
-    set_target_properties(CBash PROPERTIES LIBRARY_OUTPUT_DIRECTORY_${config} ${CBASH_RELEASE})
-    set_target_properties(CBash PROPERTIES RUNTIME_OUTPUT_DIRECTORY_${config} ${CBASH_RELEASE})
-  endforeach()
-endif()
-
+add_subdirectory(src/common)
+add_subdirectory(src/game)
+add_subdirectory(src/main)
+add_subdirectory(src/capi)
 add_subdirectory (pyd)
-
-cotire(CBash)
 
