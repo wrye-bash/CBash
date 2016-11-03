@@ -97,5 +97,5 @@ add_subdirectory(src/common)
 add_subdirectory(src/game)
 add_subdirectory(src/main)
 add_subdirectory(src/capi)
-add_subdirectory (pyd)
+add_subdirectory (src/papi)
 
