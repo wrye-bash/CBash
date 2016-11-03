@@ -35,6 +35,7 @@
  *
  * ***** END LICENSE BLOCK ***** */
 #include "common/ModFile.h"
+#include "../TES5Record.h"
 #include "WOOPRecord.h"
 
 namespace Sk {

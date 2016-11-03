@@ -36,6 +36,7 @@
 #pragma once
 #include "common/Common.h"
 #include "common/GenericRecord.h"
+#include "../FNVRecord.h"
 
 namespace FNV
 {

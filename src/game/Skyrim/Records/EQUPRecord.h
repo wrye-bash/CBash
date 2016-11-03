@@ -36,6 +36,7 @@
  * ***** END LICENSE BLOCK ***** */
 #pragma once
 #include "common/GenericRecord.h"
+#include "../TES5Record.h"
 
 namespace Sk {
 

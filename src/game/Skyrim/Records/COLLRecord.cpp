@@ -36,6 +36,8 @@
  * ***** END LICENSE BLOCK ***** */
 #include "COLLRecord.h"
 #include "common/ModFile.h"
+#include "../TES5Record.h"
+#include "../TES5File.h"
 
 namespace Sk {
 

@@ -37,6 +37,7 @@
 #pragma once
 #include "common/Common.h"
 #include "common/GenericRecord.h"
+#include "../TES5Record.h"
 
 namespace Sk
 {

@@ -38,6 +38,7 @@
 #include "common/Common.h"
 #include "common/GenericRecord.h"
 #include "../SkyrimChunks.h"
+#include "../TES5Record.h"
 
 namespace Sk
 {

@@ -36,6 +36,7 @@
  * ***** END LICENSE BLOCK ***** */
 #include "common/Common.h"
 #include "AACTRecord.h"
+#include "../TES5Record.h"
 
 namespace Sk {
 

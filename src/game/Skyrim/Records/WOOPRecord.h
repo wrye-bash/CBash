@@ -38,6 +38,7 @@
 #include "..\SkyrimCommon.h"
 #include "common/GenericRecord.h"
 
+#include "../TES5Record.h"
 
 namespace Sk {
 
