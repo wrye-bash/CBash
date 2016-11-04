@@ -1,14 +1,6 @@
-import unittest
 
-class Test_ImportCint(unittest.TestCase):
-    def test_import(self):
-        import cint
-        help(cint)
+def test_import():
+    import cint
 
-class Test_Submodule(unittest.TestCase):
-    def test_submodule(self):
-        from cint import submodule
-
-
-if __name__ == '__main__':
-    unittest.main()
+def test_submodule():
+    from cint import submodule

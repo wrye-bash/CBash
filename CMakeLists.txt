@@ -98,4 +98,5 @@ add_subdirectory(src/game)
 add_subdirectory(src/main)
 add_subdirectory(src/capi)
 add_subdirectory (src/papi)
+add_subdirectory(tests)
 
