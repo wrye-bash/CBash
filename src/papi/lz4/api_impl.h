@@ -13,7 +13,7 @@ namespace lz4 { namespace api {
         return _detail::LZ4_compressBound(input.length());
         };
 
-    inline int compress_default(const span<char> source, span<char> dest)
+    inline int compress_default(const span<const char> source, const span<char> dest)
         {
         return _detail::LZ4_compress_default(source.data(), dest.data(), source.length(), dest.length());
         };

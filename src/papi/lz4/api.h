@@ -73,7 +73,7 @@ namespace lz4 { namespace api {
         @return The number of bytes written into buffer 'dest' (necessarily <= dest.length())
             or 0 if compression fails
     */
-    int compress_default(const span<char> source, span<char> dest);
+    int compress_default(const span<const char> source, const span<char> dest);
 
     int decompress_safe (const span<char> source, span<char> dest);
     int sizeofState();
