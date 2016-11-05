@@ -16,3 +16,5 @@
 *.pyc
 *.ilk
 
+## Test status cache (from pytest? or cmake?)
+.cache/
