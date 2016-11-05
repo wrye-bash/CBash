@@ -7,4 +7,5 @@ def lz4():
 
 
 def testVersion(lz4):
-    assert lz4.version() == 10702
+    assert lz4.versionNumber() == 10702
+    assert lz4.version() == (1, 7, 2)
