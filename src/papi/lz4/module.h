@@ -6,12 +6,18 @@
 
 #include "api.h"    
 
+namespace py = pybind11;
+using namespace pybind11::literals;
+
 namespace lz4 {
+
 
     class context {
         context();
         ~context();
     };
 
+
+    py::bytes compress(const py::bytes& buffer);
 };
 #endif // __CINT_LZ4_MODULE__
