@@ -53,7 +53,7 @@ namespace lz4 { namespace api {
                 or 0, if input size is too large ( > MAX_INPUT_SIZE)
     */
     int compressBound(int inputSize);
-    int compressBound(const span<char> input);
+    int compressBound(const span<const char> input);
 
     /**
         Compresses buffer 'source' into already allocated 'dest' buffer.
@@ -75,12 +75,12 @@ namespace lz4 { namespace api {
     */
     int compress_default(const span<const char> source, const span<char> dest);
 
-    int decompress_safe (const span<char> source, span<char> dest);
+    int decompress_safe (const span<const char> source, span<char> dest);
     int sizeofState();
-    int compress_fast_extState(span<byte> state, const span<char> source, span<char> dest, int acceleration);
+    int compress_fast_extState(span<byte> state, const span<const char> source, span<char> dest, int acceleration);
     int compress_destSize (span<char>& source, span<char> dest);
-    int decompress_fast (const span<char> source, span<char> dest, int uncompressedSize);
-    int decompress_safe_partial (const span<char> source, span<char> dest, int targetOutputSize);
+    int decompress_fast (const span<const char> source, span<char> dest, int uncompressedSize);
+    int decompress_safe_partial (const span<const char> source, span<char> dest, int targetOutputSize);
 };
 };
 
