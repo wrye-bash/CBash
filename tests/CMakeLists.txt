@@ -7,8 +7,7 @@ endif()
 
 
 set (CINT_PYTEST_FILES
-    test1.py
-    #test2.py
+    papi
   )
 
 
