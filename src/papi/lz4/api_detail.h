@@ -14,6 +14,7 @@ namespace lz4 { namespace api {
             constexpr auto VERSION_MAJOR = LZ4_VERSION_MAJOR;
             constexpr auto VERSION_MINOR = LZ4_VERSION_MINOR;
             constexpr auto VERSION_RELEASE = LZ4_VERSION_RELEASE;
+            constexpr const char VERSION_STRING[] = LZ4_VERSION_STRING; 
 
             template<int Size>
                 constexpr auto COMPRESSBOUND = LZ4_COMPRESSBOUND(Size);

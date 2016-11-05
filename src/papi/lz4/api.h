@@ -2,6 +2,7 @@
 #define __CINT_LZ4_API__
 #pragma once
 
+#include <string>
 #include <gsl/gsl>
 #include "module.h"
 #include "api_detail.h"
@@ -34,6 +35,11 @@ namespace lz4 { namespace api {
         {
             return _detail::VERSION_RELEASE;
         };        
+
+    constexpr auto VERSION_STRING() 
+        {
+            return _detail::VERSION_STRING;
+        };
 
     /**
         Provides the maximum size that LZ4 compression may output in a "worst case" scenario (input data not compressible)
