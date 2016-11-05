@@ -7,39 +7,42 @@
 #include "module.h"
 #include "api_detail.h"
 
-namespace lz4 { namespace api {
+namespace lz4 { 
 
-    using namespace gsl;
-
-    constexpr int MAX_INPUT_SIZE = _detail::MAX_INPUT_SIZE;
+    constexpr int MAX_INPUT_SIZE = api::_detail::MAX_INPUT_SIZE;
     
     template<int Size>
-        constexpr int COMPRESSBOUND = _detail::_COMPRESSBOUND<Size>; 
+        constexpr int COMPRESSBOUND = api::_detail::_COMPRESSBOUND<Size>; 
 
     constexpr int VERSION_NUMBER()
         {
-            return _detail::VERSION_NUMBER;
+            return api::_detail::VERSION_NUMBER;
         };
 
     constexpr int VERSION_MAJOR()
         {
-            return _detail::VERSION_MAJOR;
+            return api::_detail::VERSION_MAJOR;
         };
 
     constexpr int VERSION_MINOR()
         {
-            return _detail::VERSION_MINOR;
+            return api::_detail::VERSION_MINOR;
         };        
 
     constexpr int VERSION_RELEASE()
         {
-            return _detail::VERSION_RELEASE;
+            return api::_detail::VERSION_RELEASE;
         };        
 
     constexpr auto VERSION_STRING() 
         {
-            return _detail::VERSION_STRING;
+            return api::_detail::VERSION_STRING;
         };
+
+namespace api {
+
+    using namespace gsl;
+
 
     /**
         Provides the maximum size that LZ4 compression may output in a "worst case" scenario (input data not compressible)
