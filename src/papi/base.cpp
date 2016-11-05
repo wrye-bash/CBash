@@ -14,7 +14,7 @@ std::string submodule_func() {
     return "submodule_func()";
 }
 
-test_initializer modules([](py::module &m) {
+static test_initializer modules([](py::module &m) {
     py::module m_sub = m.def_submodule("submodule");
     m_sub.def("submodule_func", &submodule_func);
 
