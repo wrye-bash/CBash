@@ -6,6 +6,7 @@ pushd %THIS%..\build
 SET BOOST_ROOT=%1
 SET ZLIB_ROOT=%2
 SET LZ4_ROOT=%3
+SET GSL_ROOT=%4
 
 IF "%BOOST_ROOT%"=="" (
     ECHO Usage %~nx0 $BOOST_ROOT $ZLIB_ROOT
@@ -31,6 +32,10 @@ SET OPT=%OPT% -DZLIB_LIBRARY_RELEASE=%ZLIB_ROOT%\build\Release\zlibstatic.lib
 SET OPT=%OPT% -DZLIB_LIBRARY_DEBUG=%ZLIB_ROOT%\build\Debug\zlibstaticd.lib
 IF NOT "%LZ4_ROOT%"==""  (
 SET OPT=%OPT% -DLZ4_ROOT=%LZ4_ROOT%
+)
+
+IF NOT "%GSL_ROOT%"==""  (
+SET OPT=%OPT% -DGSL_ROOT=%GSL_ROOT%
 )
 
 cmake .. %OPT%

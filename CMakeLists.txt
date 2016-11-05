@@ -24,10 +24,13 @@ option(CBash_USE_STATIC_RUNTIME "Build with static runtime libs (/MT)" ON)
 option(CBash_NO_BOOST_ZLIB "Build with external Zlib" ON)
 
 set(LZ4_ROOT "" CACHE PATH "Path to the root of the LZ4 distribution (https://git.io/vX8JZ)")
+set(GSL_ROOT "" CACHE PATH "Path to the root of the GSL distribution (https://git.io/vX8Ln)")
 
 
 set(LZ4_INCLUDE_DIR ${LZ4_ROOT}/lib)
 set(LZ4_LIBRARY_DIR ${LZ4_ROOT}/visual/VS2010/bin/Win32/$<CONFIG>)
+
+set(GSL_INCLUDE ${GSL_ROOT})
 
 set(LZ4_LIBRARY ${LZ4_LIBRARY_DIR}/liblz4.lib)
 
@@ -58,6 +61,7 @@ ENDIF ()
 include_directories (   
         ${CBASH_INCLUDE}
         ${Boost_INCLUDE_DIRS}
+        ${GSL_INCLUDE}
         ${ZLIB_INCLUDE_DIR}
         ${LZ4_INCLUDE_DIR}
         ${CBASH_SOURCE}
