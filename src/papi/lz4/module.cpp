@@ -2,23 +2,25 @@
 
 #include "module.h"
 
-#include <pybind11/pybind11.h>
 #include <gsl/gsl>
 #include <string>
 #include <vector>
 #include <tuple>
 
-using namespace gsl;
+
 
 static test_initializer modules([](py::module &m) {
 
+    using namespace gsl;
+    using namespace lz4;
+
     m.def_submodule("lz4")
-        .def("VERSION_NUMBER", lz4::api::VERSION_NUMBER)
+        .def("VERSION_NUMBER", VERSION_NUMBER)
         .def("VERSION", [](){
-            return py::make_tuple(lz4::api::VERSION_MAJOR(), lz4::api::VERSION_MINOR(), lz4::api::VERSION_RELEASE());
+            return py::make_tuple(VERSION_MAJOR(), VERSION_MINOR(), VERSION_RELEASE());
         })
         .def("__version__", [](){
-            return py::str(lz4::api::VERSION_STRING());
+            return py::str(VERSION_STRING());
         })
         .def("compress", [](const py::bytes& buffer){
 

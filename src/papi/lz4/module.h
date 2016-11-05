@@ -2,6 +2,8 @@
 #define __CINT_LZ4_MODULE__
 #pragma once
 
+#include <pybind11/pybind11.h>
+
 #include "api.h"    
 
 namespace lz4 {
