@@ -18,7 +18,7 @@ namespace lz4 { namespace api {
         return _detail::LZ4_compress_default(source.data(), dest.data(), source.length(), dest.length());
         };
 
-    inline int decompress_safe (const span<const char> source, span<char>  dest)
+    inline int decompress_safe (const span<const char> source, const span<char>  dest)
         {
         return _detail::LZ4_decompress_safe(source.data(), dest.data(), source.length(), dest.length());
         };
@@ -28,12 +28,12 @@ namespace lz4 { namespace api {
         return _detail::LZ4_sizeofState();
         };
 
-    inline int compress_fast_extState(span<byte> state, const span<const char> source, span<char> dest, int acceleration)
+    inline int compress_fast_extState(span<byte> state, const span<const char> source, const span<char> dest, int acceleration)
         {
         return _detail::LZ4_compress_fast_extState(state.data(), source.data(), dest.data(), source.length(), dest.length(), acceleration);
         };
         
-    inline int compress_destSize (span<char>& source, span<char> dest)
+    inline int compress_destSize (span<const char>& source, const span<char> dest)
         {
         auto sourceSize = source.length();
         volatile int sourceUsed = sourceSize;
@@ -44,12 +44,12 @@ namespace lz4 { namespace api {
         return _detail::LZ4_compress_destSize(source.data(), dest.data(), const_cast<int*>(&sourceUsed), dest.length());
         };
 
-    inline int decompress_fast (const span<const char> source, span<char> dest, int uncompressedSize)
+    inline int decompress_fast (const span<const char> source, const span<char> dest, int uncompressedSize)
         {
         return _detail::LZ4_decompress_fast(source.data(), dest.data(), uncompressedSize);
         };
 
-    inline int decompress_safe_partial (const span<const char> source, span<char> dest, int targetOutputSize)
+    inline int decompress_safe_partial (const span<const char> source, const span<char> dest, int targetOutputSize)
         {
         return _detail::LZ4_decompress_safe_partial (source.data(), dest.data(), source.length(), targetOutputSize, dest.length());    
         };    

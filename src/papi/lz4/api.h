@@ -75,12 +75,12 @@ namespace lz4 { namespace api {
     */
     int compress_default(const span<const char> source, const span<char> dest);
 
-    int decompress_safe (const span<const char> source, span<char> dest);
+    int decompress_safe (const span<const char> source, const span<char> dest);
     int sizeofState();
-    int compress_fast_extState(span<byte> state, const span<const char> source, span<char> dest, int acceleration);
-    int compress_destSize (span<char>& source, span<char> dest);
-    int decompress_fast (const span<const char> source, span<char> dest, int uncompressedSize);
-    int decompress_safe_partial (const span<const char> source, span<char> dest, int targetOutputSize);
+    int compress_fast_extState(span<byte> state, const span<const char> source, const span<char> dest, int acceleration);
+    int compress_destSize (span<const char>& source, const span<char> dest);
+    int decompress_fast (const span<const char> source, const span<char> dest, int uncompressedSize);
+    int decompress_safe_partial (const span<const char> source, const span<char> dest, int targetOutputSize);
 };
 };
 
