@@ -1,7 +1,7 @@
 
 
-file(GLOB CINT_SOURCES "*.cpp")
-file(GLOB CINT_HEADERS "*.h")
+file(GLOB_RECURSE CINT_SOURCES "*.cpp")
+file(GLOB_RECURSE CINT_HEADERS "*.h")
 
 # Create the binding library
 pybind11_add_module(cint ${CINT_SOURCES} ${CINT_HEADERS} ${PYBIND11_HEADERS})
@@ -20,4 +20,6 @@ if(NOT CMAKE_LIBRARY_OUTPUT_DIRECTORY)
     set_target_properties(cint PROPERTIES LIBRARY_OUTPUT_DIRECTORY_${config} ${CBASH_RELEASE})
   endforeach()
 endif()
+
+target_link_libraries(cint PRIVATE ${LZ4_LIBRARY})
 
