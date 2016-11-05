@@ -6,13 +6,9 @@
 #include "module.h"
 
 namespace lz4 { namespace api {
+    namespace _detail{};
 
     using namespace gsl;
-
-    constexpr auto MAX_INPUT_SIZE = 0x7E000000;
-
-    template<int Size>
-    constexpr auto COMPRESSBOUND  = ((unsigned)(Size) > (unsigned)MAX_INPUT_SIZE ? 0 : (Size) + ((Size)/255) + 16)
 
     /**
         Provides the maximum size that LZ4 compression may output in a "worst case" scenario (input data not compressible)
@@ -54,6 +50,76 @@ namespace lz4 { namespace api {
     int compress_destSize (span<char>& source, span<char> dest);
     int decompress_fast (const span<char> source, span<char> dest, int uncompressedSize);
     int decompress_safe_partial (const span<char> source, span<char> dest, int targetOutputSize);
+
+
+    namespace _detail {
+        #include <lz4.h>
+
+        constexpr auto VERSION_NUMBER = LZ4_VERSION_NUMBER;
+        constexpr auto MAX_INPUT_SIZE = LZ4_MAX_INPUT_SIZE;
+
+        template<int Size>
+            constexpr auto COMPRESSBOUND = LZ4_COMPRESSBOUND(Size);
+    };
+
+    using _detail::MAX_INPUT_SIZE; 
+    using _detail::COMPRESSBOUND;
+
+    constexpr int versionNumber()
+        {
+            return _detail::VERSION_NUMBER;
+        };
+
+    inline int compressBound(int inputSize)
+        {
+        return _detail::LZ4_compressBound(inputSize);
+        };
+
+    inline int compressBound(const span<char> input)
+        {
+        return _detail::LZ4_compressBound(input.length());
+        };
+
+    inline int compress_default(const span<char> source, span<char> dest)
+        {
+        return _detail::LZ4_compress_default(source.data(), dest.data(), source.length(), dest.length());
+        };
+
+    inline int decompress_safe (const span<char> source, span<char>  dest)
+        {
+        return _detail::LZ4_decompress_safe(source.data(), dest.data(), source.length(), dest.length());
+        };
+
+    inline int sizeofState()
+        {
+        return _detail::LZ4_sizeofState();
+        };
+
+    inline int compress_fast_extState(span<byte> state, const span<char> source, span<char> dest, int acceleration)
+        {
+        return _detail::LZ4_compress_fast_extState(state.data(), source.data(), dest.data(), source.length(), dest.length(), acceleration);
+        };
+        
+    inline int compress_destSize (span<char>& source, span<char> dest)
+        {
+        auto sourceSize = source.length();
+        volatile int sourceUsed = sourceSize;
+        auto atExit = finally([&](){
+            source = source.subspan(sourceSize - sourceUsed);
+        });
+
+        return _detail::LZ4_compress_destSize(source.data(), dest.data(), const_cast<int*>(&sourceUsed), dest.length());
+        };
+
+    inline int decompress_fast (const span<char> source, span<char> dest, int uncompressedSize)
+        {
+        return _detail::LZ4_decompress_fast(source.data(), dest.data(), uncompressedSize);
+        };
+
+    inline int decompress_safe_partial (const span<char> source, span<char> dest, int targetOutputSize)
+        {
+        return _detail::LZ4_decompress_safe_partial (source.data(), dest.data(), source.length(), targetOutputSize, dest.length());    
+        };    
 };
 };
 
