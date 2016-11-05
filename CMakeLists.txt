@@ -23,6 +23,14 @@ option(CBash_BUILD_SHARED_LIBS "Build a shared library" ON)
 option(CBash_USE_STATIC_RUNTIME "Build with static runtime libs (/MT)" ON)
 option(CBash_NO_BOOST_ZLIB "Build with external Zlib" ON)
 
+set(LZ4_ROOT "" CACHE PATH "Path to the root of the LZ4 distribution (https://git.io/vX8JZ)")
+
+
+set(LZ4_INCLUDE_DIR ${LZ4_ROOT}/lib)
+set(LZ4_LIBRARY_DIR ${LZ4_ROOT}/visual/VS2010/bin/Win32/$<CONFIG>)
+
+set(LZ4_LIBRARY ${LZ4_LIBRARY_DIR}/liblz4.lib)
+
 set (BUILD_SHARED_LIBS ${CBash_BUILD_SHARED_LIBS})
 set (Boost_USE_STATIC_LIBS ON)
 set (Boost_USE_MULTITHREADED ON)
@@ -51,6 +59,7 @@ include_directories (
         ${CBASH_INCLUDE}
         ${Boost_INCLUDE_DIRS}
         ${ZLIB_INCLUDE_DIR}
+        ${LZ4_INCLUDE_DIR}
         ${CBASH_SOURCE}
         ${CBASH_SOURCE}/game
 )

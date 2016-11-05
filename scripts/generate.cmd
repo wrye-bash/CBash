@@ -5,6 +5,7 @@ pushd %THIS%..\build
 
 SET BOOST_ROOT=%1
 SET ZLIB_ROOT=%2
+SET LZ4_ROOT=%3
 
 IF "%BOOST_ROOT%"=="" (
     ECHO Usage %~nx0 $BOOST_ROOT $ZLIB_ROOT
@@ -28,6 +29,9 @@ SET OPT=%OPT% -DBOOST_LIBRARYDIR=%BOOST_ROOT%\stage\lib
 SET OPT=%OPT% -DZLIB_INCLUDE_DIR=%ZLIB_ROOT%
 SET OPT=%OPT% -DZLIB_LIBRARY_RELEASE=%ZLIB_ROOT%\build\Release\zlibstatic.lib
 SET OPT=%OPT% -DZLIB_LIBRARY_DEBUG=%ZLIB_ROOT%\build\Debug\zlibstaticd.lib
+IF NOT "%LZ4_ROOT%"==""  (
+SET OPT=%OPT% -DLZ4_ROOT=%LZ4_ROOT%
+)
 
 cmake .. %OPT%
 
