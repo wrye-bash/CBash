@@ -18,7 +18,9 @@ namespace lz4 { namespace api {
 
             template<int Size>
                 constexpr auto COMPRESSBOUND = LZ4_COMPRESSBOUND(Size);
-        };        
+
+            #include <lz4frame.h>
+        };  
     };
 };
 };
