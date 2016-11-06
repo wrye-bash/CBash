@@ -39,3 +39,10 @@ def testCompress(lz4, datadir):
     assert len(output) == len(compressed_data)
     assert output == compressed_data
 
+def testDecompress(lz4, datadir):
+    uncompressed_data = datadir.join("testdata.txt").read_binary()
+    compressed_data = datadir.join("testdata-1.txt.lz4").read_binary()
+       
+    output = lz4.decompress(compressed_data, len(uncompressed_data))
+    assert len(output) == len(uncompressed_data)
+    assert output == uncompressed_data
