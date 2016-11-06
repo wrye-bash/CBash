@@ -1,6 +1,6 @@
-import pytest
+from pytest import fixture
 
-@pytest.fixture
+@fixture
 def lz4():
     from cint import lz4
     return lz4
