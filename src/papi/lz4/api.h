@@ -12,7 +12,7 @@ namespace lz4 {
     constexpr int MAX_INPUT_SIZE = api::_detail::MAX_INPUT_SIZE;
     
     template<int Size>
-        constexpr int COMPRESSBOUND = api::_detail::_COMPRESSBOUND<Size>; 
+        constexpr int COMPRESSBOUND = api::_detail::COMPRESSBOUND<Size>; 
 
     constexpr int VERSION_NUMBER()
         {
