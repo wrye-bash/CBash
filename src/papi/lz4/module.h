@@ -19,5 +19,6 @@ namespace lz4 {
 
 
     py::bytes compress(const py::bytes& buffer);
+    py::bytes decompress(const py::bytes& buffer, int expectedSize = 0);
 };
 #endif // __CINT_LZ4_MODULE__
