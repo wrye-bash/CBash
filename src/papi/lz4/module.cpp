@@ -1,5 +1,3 @@
-#include "../cint.h"
-
 #include "module.h"
 
 #include <boost/format.hpp>
