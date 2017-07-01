@@ -38,9 +38,31 @@ If using the prebuilt Boost binaries, download and install them, then make a not
 
 Although it is not necessary to build a zlib binary when using the prebuilt binaries, the header files are still required for linking, so download and extract the zlib source. Make a note of where the source is extracted to.
 
-### Building From Source
+Skip the next sections on building the dependences.
+
+### Building Dependences From Source
 
 If building from source, extract the source archives and make a note of the paths they were extracted to. See the instructions below for how to build them on Windows using MSVC.
+
+#### Variables
+
+I'm gonna use some variables during this explanation to represent the fact that you'd have to chose some directories in your machine where the downloaded/cloned sources are going to be placed.
+
+I cannot hard-code this folders nor give you exact paths for them, so I'll be using symbolic names for the rest of this explanation, as if they were environment variables defined on your system. But it's **not** required to define them as env variables at all... you can take this explanation and search and replace all appearances of a variable with the real path and everything should work.
+
+As an example, in my own setup, I have everything related to third party libraries located in my 'C:\Sources\3rdparty folder', where for each library I create a root folder inside that to hold the possibly different version of libraries that my project could require. 
+
+These are the variables that we're going to need:
+
+```dos
+set CMAKE_GENERATOR="Visual Studio 14 2015"
+set ZLIB_BASE=<PATH TO EMPTY DIR BASE FOR ZLIB SOURCES>   
+set BOOST_BASE=<PATH TO EMPTY DIR BASE FOR BOOST SOURCES>
+```
+
+* **CMAKE_GENERATOR**: Used for CMAKE generate command. Change this to the version of VS you got. You can Use: CMAKE --help and look in the Generators list at the end of the help dump
+* **ZLIB_BASE**: Any directory will do _(preferably an empty one)_. Example from my own setup: 'C:\Sources\3rdparty\ZLIB', but it can be whatever else works for you.
+* **BOOST_BASE**: Same as above. Example from my own setup: 'C:\Sources\3rdparty\Boost'.
 
 #### Boost
 
