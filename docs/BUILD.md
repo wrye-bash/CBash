@@ -88,7 +88,7 @@ cmake -G %CMAKE_GENERATOR% ..
 ```batch
 cmake --build . --target --config %CONFIG%
 ```
-3. Lastly, copy `zconf.h` to the main ZLIB directory, as their build process don't do that autmatically.
+4. Finally, copy `zconf.h` to the main ZLIB directory, as their build process don't do that autmatically.
 ```batch
 copy zconf.h ..
 ```
