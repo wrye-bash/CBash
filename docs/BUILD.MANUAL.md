@@ -1,3 +1,7 @@
+**DISCLAIMER**: For Windows, this method is discouraged at the moment, and the explanation is probably outdated but won't be corrected/ammended. 
+
+It will probably will become MORE outdated as the CBash build process gets more complicated.  In fact, this method won't work for generating the Python bindings in the future, as the `pybind11` integration depends on CMake scripts to work and there will be no plans to change that, at least at the present.
+
 # Building CBash "Manually"
 
 These instructions are for building CBash on Windows by manually creating a Microsoft Visual Studio solution. The instructions were written using MSVC 2013, so slight changes may be required if you are using a different version.
