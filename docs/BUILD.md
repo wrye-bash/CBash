@@ -9,12 +9,26 @@ The instructions for both methods are tailored to the creation of MSVC 2013 solu
 
 Make sure you have satisfied the dependencies below before following the instructions for either build method.
 
+## Requirements/Tools
+
+The build process raquires that the user has a modern Python distribution installed, and if he choses to go the CMake route, then a CMake installation is, of course, required.
+
+* [Python](https://www.python.org/downloads/) - Last version used: 2.7.13
+* [CMake](https://cmake.org/download/) - Last version used: 3.7.0-rc2
+
+## C++ compiler
+
+A compiler of your choice, but it must be C++11 compliant at least. This code was last built and developed using Visual Studio Community Edition 2015 on Windows, so I'd recommend sticking to that (or a later version) unless you know what you're doing. For the purposes of this write-up I'm asumming that you'll go that route and direct you to the corresponding downloads.
+
+* [Visual Studio Community Edition](https://www.visualstudio.com/downloads/) - Can be downloaded for free from MS, use at least v14.0 (VS2015). Only the compilers and runtimes are strictly required.
+* *OPTIONAL*: [Visual Studio Code Editor](https://code.visualstudio.com) - This is what I've been using for coding lately, and it's much more light-weight than the full-blown VS IDE and has many useful functions. I'd recommend to give it a try if you hate the VS IDE, like I do :)
+
 ## Dependencies
 
 CBash depends on two external libraries:
 
-* [Boost](http://www.boost.org)
-* [Zlib](http://zlib.net)
+* [Boost](http://www.boost.org) - Last version used: 1.64.0
+* [Zlib](http://zlib.net) - Last version used: 1.2.11
 
 Both libraries can be built from source. However, it is generally easier to install the [prebuilt Boost binaries](http://sourceforge.net/projects/boost/files/boost-binaries/), which also include zlib binaries. Both build methods allow for either approach.
 
