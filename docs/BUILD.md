@@ -127,4 +127,57 @@ In the command above `link`, `runtime-link` and `address-model` can all be modif
 
 All of the above was pre-requisite. Now is the actual stuff that's needed to produce CBash.dll and other outputs.
 
+1. First, let us set some variables to simplify the following commands a bit:
+
+```batch
+SET ZLIB_ROOT=%ZLIB_BASE%\zlib.git
+SET BOOST_ROOT=%BOOST_BASE%\boost.git
+```
+
+* **ZLIB_ROOT**: Just points to the folder where we just built the ZLIB sources.
+* **BOOST_BASE**: Same as above, for Boost.
+
+2. Get a copy of the source
+```batch
+git clone https://github.com/wrye-bash/CBash.git CBash.git -b wip
+cd CBash.git
+git submodule init
+git submodule update
+```
+
+3. Prepare for building (the actual `build` directory could be anywhere, though)
+```batch
+mkdir build && cd build
+```
+
+4. CMake Generate
+```batch
+cmake -G %CMAKE_GENERATOR% ..
+ -DCBash_BUILD_SHARED_LIBS=ON
+ -DBoost_NO_SYSTEM_PATHS=ON
+ -DCBash_USE_STATIC_RUNTIME=OFF
+ -DCBash_NO_BOOST_ZLIB=ON
+ -DBOOST_ROOT=%BOOST_ROOT%
+ -DBOOST_INCLUDEDIR=%BOOST_ROOT%
+ -DBOOST_LIBRARYDIR=%BOOST_ROOT%\stage\lib
+ -DZLIB_INCLUDE_DIR=%ZLIB_ROOT%
+ -DZLIB_LIBRARY_RELEASE=%ZLIB_ROOT%\build\Release\zlibstatic.lib
+ -DZLIB_LIBRARY_DEBUG=%ZLIB_ROOT%\build\Debug\zlibstaticd.lib
+```
+
+Lets explain the options, since there are many:
+* **CBash_BUILD_SHARED_LIBS**: Instructs the CMake process to generate a `CBash.dll` output. You can set this to OFF and generate a static library instead.
+* **CBash_USE_STATIC_RUNTIME**: Switch to chose if the runtimes are to be linked statically or dynamically. Preferred option is dynamically, due to the fact that if static linkage is needed, then you'd have to change the build options for Boost and ZLIB to have the same requirements as dynamic and static runtimes cannot be mixed in the same link.
+* **CBash_NO_BOOST_ZLIB**:  Instruct CBash not to search for Boost's provided ZLIB implementation, because we're using the real ZLIB here.
+* **Boost_NO_SYSTEM_PATHS**: Instruct the CMake's FindBoost command NOT to look on the user's system paths for Boost, as some compilers bring their own Boost distributions (Borland's C++Builder notably) which could be very outdated w.r.t. current Boost implementation, and CMake insists in prioritizing those detected paths instead of the ones we want.
+* **BOOST_INCLUDEDIR**: Simply a path to the boost's includes
+* **BOOST_LIBRARYDIR**: Path to the boost's produced libraries (*.lib)
+* **ZLIB_INCLUDE_DIR**: Path to ZLIB includes
+* **ZLIB_LIBRARY_RELEASE**: Path to ZLIB release version of the compiled library file.
+* **ZLIB_LIBRARY_DEBUG**: Path to ZLIB debug version of the compiled library file.
+
+5. Once everything is generated, we can actually compile CBash, either from CMake or by opening generated VS solution files from the `build` directory.
+```batch
+cmake --build . --target --config %CONFIG%
+```
 
