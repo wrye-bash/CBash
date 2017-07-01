@@ -60,7 +60,7 @@ set ZLIB_BASE=<PATH TO EMPTY DIR BASE FOR ZLIB SOURCES>
 set BOOST_BASE=<PATH TO EMPTY DIR BASE FOR BOOST SOURCES>
 ```
 
-* **CMAKE_GENERATOR**: Used for CMAKE generate command. Change this to the version of VS you got. You can Use: CMAKE --help and look in the Generators list at the end of the help dump
+* **CMAKE_GENERATOR**: Used for CMAKE generate command. Change this to the version of VS you got. You can Use: ```CMAKE --help``` and look in the Generators list at the end of the help dump
 * **ZLIB_BASE**: Any directory will do _(preferably an empty one)_. Example from my own setup: 'C:\Sources\3rdparty\ZLIB', but it can be whatever else works for you.
 * **BOOST_BASE**: Same as above. Example from my own setup: 'C:\Sources\3rdparty\Boost'.
 
