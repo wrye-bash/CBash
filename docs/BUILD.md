@@ -56,17 +56,21 @@ These are the variables that we're going to need:
 
 ```batch
 set CMAKE_GENERATOR="Visual Studio 14 2015"
-set ZLIB_BASE=<PATH> :: EMPTY DIR BASE FOR ZLIB SOURCES
-set BOOST_BASE=<PATH> :: EMPTY DIR BASE FOR BOOST SOURCES
+set ZLIB_BASE=<PATH>
+set BOOST_BASE=<PATH>
 
-set ZLIB_VERSION=<ZLIB TAG> :: Use v1.2.11 or later.
-set CONFIG=Release  :: Either Release -or- Debug
+set ZLIB_VERSION=<ZLIB TAG>
+set BOOST_VERSION=boost-X.YY.Z
+
+set CONFIG=Release
 ```
 
 * **CMAKE_GENERATOR**: Used for CMAKE generate command. Change this to the version of VS you got. You can Use: ```CMAKE --help``` and look in the Generators list at the end of the help dump
 * **ZLIB_BASE**: Any directory will do _(preferably an empty one)_. Example from my own setup: 'C:\Sources\3rdparty\ZLIB', but it can be whatever else works for you.
 * **BOOST_BASE**: Same as above. Example from my own setup: 'C:\Sources\3rdparty\Boost'.
-
+* **ZLIB_VERSION**: Use `v1.2.11` or later. Look at https://github.com/madler/zlib for the latest tag.
+* **BOOST_VERSION**: Use `boost-1.64.0` or look at https://github.com/boostorg/boost and check for a later tag.
+* **CONFIG**: Type of binary to generate, either `Release` -or- `Debug`.
 
 #### Zlib
 
