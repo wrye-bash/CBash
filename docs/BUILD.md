@@ -56,13 +56,42 @@ These are the variables that we're going to need:
 
 ```batch
 set CMAKE_GENERATOR="Visual Studio 14 2015"
-set ZLIB_BASE=<PATH TO EMPTY DIR BASE FOR ZLIB SOURCES>
-set BOOST_BASE=<PATH TO EMPTY DIR BASE FOR BOOST SOURCES>
+set ZLIB_BASE=<PATH> :: EMPTY DIR BASE FOR ZLIB SOURCES
+set BOOST_BASE=<PATH> :: EMPTY DIR BASE FOR BOOST SOURCES
+
+set ZLIB_VERSION=<ZLIB TAG> :: Use v1.2.11 or later.
+set CONFIG=Release  :: Either Release -or- Debug
 ```
 
 * **CMAKE_GENERATOR**: Used for CMAKE generate command. Change this to the version of VS you got. You can Use: ```CMAKE --help``` and look in the Generators list at the end of the help dump
 * **ZLIB_BASE**: Any directory will do _(preferably an empty one)_. Example from my own setup: 'C:\Sources\3rdparty\ZLIB', but it can be whatever else works for you.
 * **BOOST_BASE**: Same as above. Example from my own setup: 'C:\Sources\3rdparty\Boost'.
+
+
+#### Zlib
+
+There are a variety of ways to build zlib: for details, see the zlib documentation. I'm gonna describe how to quickly build ZLIB using CMake here.
+
+1. First, clone source ZLIB repo:
+```batch
+cd %ZLIB_BASE%
+git clone https://github.com/madler/zlib zlib.git -b %ZLIB_VERSION%
+cd zlib.git
+```
+2. Generate the binaries:
+```batch
+mkdir build
+cd build
+cmake -G %CMAKE_GENERATOR% ..
+```
+3. Compile the generated projects (you can open the generated projects in VS and compile them from there):
+```batch
+cmake --build . --target --config %CONFIG%
+```
+3. Lastly, copy `zconf.h` to the main ZLIB directory, as their build process don't do that autmatically.
+```batch
+copy zconf.h ..
+```
 
 #### Boost
 
@@ -75,9 +104,3 @@ b2 toolset=msvc link=static runtime-link=static variant=release address-model=32
 
 `link`, `runtime-link` and `address-model` can all be modified if shared linking or 64 bit builds are desired. CBash uses statically-linked Boost libraries by default: to change this, edit [CMakeLists.txt](../CMakeLists.txt).
 
-#### Zlib
-
-There are a variety of ways to build zlib: for details, see the zlib documentation. To build zlib using CMake, do the following:
-
-1. Configure CMake and generate a build system for Visual Studio by running CMake with keys `-DCMAKE_ARCHIVE_OUTPUT_DIRECTORY=build`.
-2. Open the generated solution file, and build target `zlibstatic` with `Release` configuration.
