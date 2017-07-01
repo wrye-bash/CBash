@@ -1,5 +1,7 @@
 # Building CBash
 
+This is the documentation that offers the details needed to build CBash from the sources on [this repository](https://github.com/wrye-bash/CBash)
+
 ## Requirements/Tools
 
 The build process requires that the user has a modern Python distribution installed, and if he choses to go the CMake route as I assume you're doing since you're reading this, then a CMake installation is, of course, required.
