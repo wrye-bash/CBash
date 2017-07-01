@@ -99,12 +99,32 @@ copy zconf.h ..
 
 #### Boost
 
-The Boost.Iostreams library must be built, which can be done using the commands below.
+CBash requires the Boost.Iostreams library, which for that reason must be built. Also, we generate the static libraries because CBash links to Boost statically, but the C++ runtime is always dynamically linked.
 
+1. First and longest step: clone Boost repo. Go take a walk, or get some tea/coffee while this runs :)
+```batch
+cd %BOOST_BASE%
+git clone https://github.com/boostorg/boost boost.git -b %BOOST_VERSION%
+``` 
+2. Second step, and close second in longest time too... another drink maybe?
+```batch
+cd boost.git
+git submodule init
+git submodule update
 ```
+3. Bootstrap, which creates the B2 build system needed for the next step.
+```batch
 bootstrap.bat
-b2 toolset=msvc link=static runtime-link=static variant=release address-model=32 --with-iostreams
+```
+4. The actual Boost building
+```batch
+b2 --layout=versioned toolset=msvc-14.0 -sZLIB_LIBPATH=%ZLIB_ROOT% -sZLIB_INCLUDE=%ZLIB_ROOT% address-model=32 link=static variant=release,debug runtime-link=shared threading=multi stage release
 ```
 
-`link`, `runtime-link` and `address-model` can all be modified if shared linking or 64 bit builds are desired. CBash uses statically-linked Boost libraries by default: to change this, edit [CMakeLists.txt](../CMakeLists.txt).
+In the command above `link`, `runtime-link` and `address-model` can all be modified if shared linking is desired or if creating 64 bit builds are desired. CBash uses statically-linked Boost libraries by default: but this can be controlled by specifying CMake options to CBash build.
+
+#### CBash building
+
+All of the above was pre-requisite. Now is the actual stuff that's needed to produce CBash.dll and other outputs.
+
 
