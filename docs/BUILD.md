@@ -54,9 +54,9 @@ As an example, in my own setup, I have everything related to third party librari
 
 These are the variables that we're going to need:
 
-```dos
+```batch
 set CMAKE_GENERATOR="Visual Studio 14 2015"
-set ZLIB_BASE=<PATH TO EMPTY DIR BASE FOR ZLIB SOURCES>   
+set ZLIB_BASE=<PATH TO EMPTY DIR BASE FOR ZLIB SOURCES>
 set BOOST_BASE=<PATH TO EMPTY DIR BASE FOR BOOST SOURCES>
 ```
 
