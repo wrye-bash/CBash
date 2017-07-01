@@ -1,6 +1,6 @@
 # Building CBash Using CMake
 
-These instructions were used to build CBash using Microsoft Visual Studio 2012 and Microsoft Visual Studio Express 2013 for Desktop, though they should also apply to other compilers with minimal adaptation.
+These instructions were used to build CBash using Microsoft Visual Studio 2012, and Microsoft Visual Studio Express 2013 for Desktop, and the new Visual Studio Community Edition 2015 and forward, though they should also apply to other compilers with minimal adaptation.
 
 CBash's CMake configuration builds an executable that can be run on Windows XP, but this support has only been implemented for MSVC 2012, 2013 and 2015 - other versions of MSVC may require editing of CBash's [CMakeLists.txt](../CMakeLists.txt) file.
 
@@ -20,23 +20,7 @@ Depending on your configuration, you may also need to define the `BOOST_ROOT`, `
 3. Configure CMake, then generate a build system for Visual Studio 2013.
 4. Open the generated solution file, and build it.
 
-
-
-## Requirements/Tools
-
-The build process raquires that the user has a modern Python distribution installed, and if he choses to go the CMake route, then a CMake installation is, of course, required.
-
-* [Python](https://www.python.org/downloads/) - Last version used: 2.7.13
-* [CMake](https://cmake.org/download/) - Last version used: 3.7.0-rc2
-
-## C++ compiler
-
-A compiler of your choice, but it must be C++11 compliant at least. This code was last built and developed using Visual Studio Community Edition 2015 on Windows, so I'd recommend sticking to that (or a later version) unless you know what you're doing. For the purposes of this write-up I'm asumming that you'll go that route and direct you to the corresponding downloads.
-
-* [Visual Studio Community Edition](https://www.visualstudio.com/downloads/) - Can be downloaded for free from MS, use at least v14.0 (VS2015). Only the compilers and runtimes are strictly required.
-* *OPTIONAL*: [Visual Studio Code Editor](https://code.visualstudio.com) - This is what I've been using for coding lately, and it's much more light-weight than the full-blown VS IDE and has many useful functions. I'd recommend to give it a try if you hate the VS IDE, like I do :)
-
-## Dependencies
+## Compile-time Dependencies
 
 CBash depends on two external libraries:
 
@@ -51,7 +35,7 @@ If using the prebuilt Boost binaries, download and install them, then make a not
 
 Although it is not necessary to build a zlib binary when using the prebuilt binaries, the header files are still required for linking, so download and extract the zlib source. Make a note of where the source is extracted to.
 
-Skip the next sections on building the dependences.
+Skip the next sections on building the dependencies if you're using the prebuilt binaries for them.
 
 ### Building Dependences From Source
 
