@@ -42,5 +42,5 @@
 #endif
 
 #ifndef REVISION_VERSION
-    #define REVISION_VERSION    0
+    #define REVISION_VERSION    1
 #endif

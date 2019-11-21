@@ -61,7 +61,7 @@ GMSTRecord::GMSTDATA::GMSTDATA(float _DATA):
 
 GMSTRecord::GMSTDATA::GMSTDATA():
     format(0),
-    i(0)
+    s(NULL)
     {
     //
     }
