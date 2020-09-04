@@ -28,4 +28,4 @@ This repository was created from the [current state](https://github.com/lojack5/
 
 ## License
 
-See [gpl.txt](gpl.txt)
+See [LICENSE](LICENSE)
